@@ -93,6 +93,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         // Expanded
         node.addRegionFigure => [
             setAsExpandedView
+            addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
                 addStatesArea(label.nullOrEmpty);
             } else {
@@ -108,14 +109,15 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             }
             // Add Button after area to assure correct overlapping
             if (!CIRCUIT.booleanValue)
-                addButton("[-]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
+            addDoubleClickAction(ReferenceExpandAction::ID)
             if (CIRCUIT.booleanValue)
-                addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
         
 
@@ -152,15 +154,17 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             node.addRegionFigure => [
                 setAsExpandedView;
                 addStatesArea(true);
+                addDoubleClickAction(ReferenceExpandAction::ID)
                 // Add Button after area to assure correct overlapping
                 // Use special expand action to resolve references
-                addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);
+                addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
             ]
     
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView;
-                addButton("[+]").addDoubleClickAction(ReferenceExpandAction::ID);
+                addDoubleClickAction(ReferenceExpandAction::ID)
+                addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
             ]
         }
 

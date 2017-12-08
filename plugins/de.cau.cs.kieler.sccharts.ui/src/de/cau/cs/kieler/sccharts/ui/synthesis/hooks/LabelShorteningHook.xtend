@@ -46,7 +46,7 @@ class LabelShorteningHook extends SynthesisActionHook {
     /** The sub category for the label management */
     public static final SynthesisOption LABEL_MANAGEMENT_CATEGORY = GeneralSynthesisOptions::LAYOUT
     /** The synthesis option to generally hide/show labels */
-    public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption("Hide Transition Labels",
+    public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption("Transition Labels",
         false).setCategory(LABEL_MANAGEMENT_CATEGORY).setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
     /** The synthesis option to shorten labels */
     public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Label Management",

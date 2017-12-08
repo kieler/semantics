@@ -17,23 +17,15 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-
-import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 
 /**
  * Shows or hides state declarations.
@@ -44,25 +36,16 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
  * 
  */
 @ViewSynthesisShared
-class DeclarationsHook extends SynthesisActionHook {
+class DeclarationsHook extends SynthesisHook {
 
     @Inject extension StateStyles
     @Inject extension ControlflowRegionStyles
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsDataflowRegionExtensions
-
-    @Inject
-    extension KRenderingExtensions
-    extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
     public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption("Declarations", true).
-        setCategory(GeneralSynthesisOptions::APPEARANCE).setUpdateAction(DeclarationsHook.ID); // Add this action as updater
-    /** Property to save position of the container */
-    private static final IProperty<Integer> INDEX = new Property<Integer>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.declarations.index", 0);
+        setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_DECLARATIONS)
@@ -75,9 +58,7 @@ class DeclarationsHook extends SynthesisActionHook {
 
             if (declarations != null) {
                 val idx = container.children.indexOf(declarations)
-                declarations.setProperty(INDEX, idx);
                 container.children.remove(declarations);
-                container.addInvisiblePlaceholder(idx);
             }
         }
     }
@@ -90,60 +71,8 @@ class DeclarationsHook extends SynthesisActionHook {
             // Hide declarations
             if (declarations != null && container != null) {
                 val idx = container.children.indexOf(declarations)
-                declarations.setProperty(INDEX, idx);
                 container.children.remove(declarations);
-                container.addInvisiblePlaceholder(idx);
             }
         }
-    }
-
-    override executeAction(KNode rootNode) {
-        for (KNode node : rootNode.eAllContentsOfType(KNode).toIterable) {
-            if (usedContext.getSourceElement(node) instanceof Scope) {
-                val scope = usedContext.getSourceElement(node) as Scope;
-                if (!scope.declarations.empty) {
-                    var KContainerRendering container;
-                    var KContainerRendering declarations;
-                    var innerContent = false;
-                    // Element specific retrieving of the correct container
-                    if (scope instanceof ControlflowRegion) {
-                        innerContent = !(scope as ControlflowRegion).states.nullOrEmpty
-                        val parent = node.regionExtendedContainer
-                        container = parent?.children?.filter(KContainerRendering)?.head;
-                        declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER)
-                    } else if (scope instanceof State) {
-                        val state = scope as State;
-                        innerContent = state.controlflowRegionsContainStates || state.containsDataflowRegions;
-                        container = node.contentContainer;
-                        declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
-                    }
-                    // Show or hide declarations
-                    if (declarations != null) {
-                        if (SHOW_DECLARATIONS.booleanValue && !scope.declarations.empty) {
-                            // Insert actions in correct position
-                            val pos = declarations.getProperty(INDEX);
-                            container.children.remove(pos);
-                            container.children.add(pos, declarations);
-                        } else {
-                            val idx = container.children.indexOf(declarations)
-                            declarations.setProperty(INDEX, idx);
-                            container.children.remove(declarations);
-                            container.addInvisiblePlaceholder(idx);
-                        }
-                    }
-                }
-            }
-        }
-        return ActionResult.createResult(true);
-    }
-    
-    /** 
-     * Adds an invisible places holder to the given container in the specific position.
-     */
-    private def addInvisiblePlaceholder(KContainerRendering container, int index) {
-        val rendering = createKRectangle() => [
-            invisible = true;
-        ]
-        container.children.add(index, rendering);
     }
 }

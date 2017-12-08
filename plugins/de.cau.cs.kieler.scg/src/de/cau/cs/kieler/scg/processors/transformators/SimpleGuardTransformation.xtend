@@ -49,13 +49,14 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /** 
  * @author ssm
  * @kieler.design 2017-08-10 proposed 
  * @kieler.rating 2017-08-10 proposed yellow
  */
-class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> {
+class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> implements Traceable {
         
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions

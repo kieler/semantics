@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -82,7 +82,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGDependencyHook extends SynthesisActionHook {
+class SCGDependencyHook extends SynthesisHook {
 
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -104,25 +104,19 @@ class SCGDependencyHook extends SynthesisActionHook {
 	public static final String JOB_NAME = "Calculating SCG Dependencies";
 	/** The related synthesis option */
 	public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-		"Show SCG Dependencies", false)
+		"SCG Dependencies", false)
 		.setCategory(GeneralSynthesisOptions::DEBUGGING)
 		.setUpdateStrategy(SimpleUpdateStrategy.ID)
-		// Deactivated to force Simple Update Strategy
-		//.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** The related synthesis option for regions */
     public static final SynthesisOption SCG_DEPENDENCY_TYPES = SynthesisOption.createChoiceOption("Dependency Types",
         newArrayList(DepType.Elements, DepType.Regions),
         DepType.Elements).setCategory(GeneralSynthesisOptions::DEBUGGING)
         .setUpdateStrategy(SimpleUpdateStrategy.ID)
-        // Deactivated to force Simple Update Strategy
-        //.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
     /** Option to show only dependencies of selected elements */
 	public static final SynthesisOption SHOW_SELECTED_DEPENDENCIES = SynthesisOption.createCheckOption(
 		"Show only Dependencies of selected Elements", false)
 		.setCategory(GeneralSynthesisOptions::DEBUGGING)
 		.setUpdateStrategy(SimpleUpdateStrategy.ID)
-        // Deactivated to force Simple Update Strategy
-        //.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** Property to store analysis results */
 	private static final IProperty<HashMultimap<DepType, KEdge>> DEPENDENCY_EDGES = new Property<HashMultimap<DepType, KEdge>>(
 		"de.cau.cs.kieler.sccharts.ui.synthesis.hooks.dependency.edges", null);
@@ -188,24 +182,6 @@ class SCGDependencyHook extends SynthesisActionHook {
 			val contextViewer = usedContext.getViewer()?.getContextViewer();
             contextViewer?.removeSelectionChangedListener(selectionListener);
 		}
-	}
-
-	override executeAction(KNode rootNode) {
-//	    var boolean relayout = false
-//		if (SHOW_SCG_DEPENDENCIES.booleanValue) {
-//			relayout = rootNode.showDependencies(usedContext.inputModel);
-//		} else {
-//			rootNode.hideDependencies;
-//		}
-//		val contextViewer = usedContext.getViewer().getContextViewer();
-//		if (SHOW_SELECTED_DEPENDENCIES.booleanValue) {
-//			rootNode.hideDependencies
-//			contextViewer.addSelectionChangedListener(selectionListener);
-//        } else {
-//            contextViewer.removeSelectionChangedListener(selectionListener);
-//		}
-//		return ActionResult.createResult(relayout);
-      return ActionResult.createResult(false);
 	}
 
 	/** 

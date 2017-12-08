@@ -39,6 +39,8 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.processors.transformators.For
+import org.eclipse.elk.core.options.EdgeLabelPlacement
+import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -71,7 +73,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
-            node.setLayoutOption(LayeredOptions::EDGE_LABELS_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
+            node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY,
+                CenterEdgeLabelPlacementStrategy::TAIL_LAYER);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
@@ -96,6 +99,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure => [
                 setAsExpandedView
                 associateWith(region)
+                addDoubleClickAction(ReferenceExpandAction::ID)
                 if (region.declarations.empty) {
                     addStatesArea(!label.nullOrEmpty);
                 } else {
@@ -110,14 +114,15 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                 }
                 // Add Button after area to assure correct overlapping
-                addButton("[-]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView
                 associateWith(region)
-                addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addDoubleClickAction(ReferenceExpandAction::ID)
+                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Add inner states
@@ -164,17 +169,19 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         // Expanded
         node.addRegionFigure => [
-            setAsExpandedView;
-            addStatesArea(false);
+            setAsExpandedView
+            addStatesArea(false)
+            addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);
+            addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID)
         ]
 
         // Collapsed
         node.addRegionFigure => [
-            setAsCollapsedView;
-            addButton("[+]").addDoubleClickAction(ReferenceExpandAction::ID);
+            setAsCollapsedView
+            addDoubleClickAction(ReferenceExpandAction::ID)
+            addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID)
         ]
 
         return node;

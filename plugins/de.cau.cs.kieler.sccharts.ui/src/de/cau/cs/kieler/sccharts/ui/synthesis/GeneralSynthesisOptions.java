@@ -36,7 +36,9 @@ public final class GeneralSynthesisOptions {
     //-- CATEGORIES --
     
     /** The appearance category */
-    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
+    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");    
+    /** The navigation category */
+    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation");
     /** The debugging category */
     public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Analysis / Debugging", false);
     /** The layout category */
@@ -56,9 +58,9 @@ public final class GeneralSynthesisOptions {
             "Adaptive Zoom", false).setCategory(APPEARANCE);
     
     public static final SynthesisOption SHOW_ALL_SCCHARTS =
-            SynthesisOption.createCheckOption("Show all SCCharts", false).setCategory(APPEARANCE);
+            SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE);
     
     public static final SynthesisOption SHOW_COMMENTS =
-            SynthesisOption.createCheckOption("Show comment nodes", true).setCategory(APPEARANCE);
+            SynthesisOption.createCheckOption("Comment Nodes", true).setCategory(APPEARANCE);
 
 }
