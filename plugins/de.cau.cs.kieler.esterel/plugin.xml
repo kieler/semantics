@@ -126,13 +126,15 @@
            ePackageName="esterel"
            editor_id="de.cau.cs.kieler.esterel.Esterel"
            extensionName="strl"
-           isXMI="false">
+           isXMI="false"
+           predicate="de.cau.cs.kieler.esterel.scest.EsterelPredicate">
      </ExtensionInformation>
      <ExtensionInformation
-           ePackageName="scest"
+           ePackageName="esterel"
            editor_id="de.cau.cs.kieler.esterel.scest.SCEst"
            extensionName="scest"
-           isXMI="false">
+           isXMI="false"
+           predicate="de.cau.cs.kieler.esterel.scest.SCEstPredicate">
      </ExtensionInformation>
   </extension>
   <extension

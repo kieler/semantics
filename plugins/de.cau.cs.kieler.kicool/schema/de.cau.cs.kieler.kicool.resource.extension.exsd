@@ -84,6 +84,16 @@ This extension point allows the contribution of a resource extension for seriali
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="predicate" type="string">
+            <annotation>
+               <documentation>
+                  Filters extension information if multiple definitions match the same ePackage
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.google.common.base.Predicate"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

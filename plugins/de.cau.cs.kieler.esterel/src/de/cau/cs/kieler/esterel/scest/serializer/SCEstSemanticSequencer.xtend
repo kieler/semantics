@@ -44,47 +44,47 @@ class SCEstSemanticSequencer extends AbstractSCEstSemanticSequencer {
         feeder.finish
     }
     
-    protected override sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
-        if (!semanticObject.statements.nullOrEmpty) {
-            val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-            val g = grammarAccess.esterelThreadAccess
-            
-            if (semanticObject.statements.size > 1) {
-                for (idxStm : semanticObject.statements.indexed) {
-                    // Do not serialize threads with only one statement
-                    val stm = if (idxStm.value instanceof EsterelThread) {
-                        val thread = idxStm.value as EsterelThread
-                        if (thread.statements.size == 1) {
-                            thread.statements.head
-                        } else {
-                            thread
-                        }
-                    } else {
-                        idxStm.value
-                    }
-                    
-                    if (stm.isSCLStatement) {
-                        switch (idxStm.key) {
-                            case 0: {
-                                feeder.accept(g.getEsterelThreadStatementsAction_1_1_0, stm, idxStm.key)
-                            }
-                            default: feeder.accept(g.getStatementsEsterelThreadParserRuleCall_1_1_1_0, idxStm.value, idxStm.key)
-                        }
-                    } else {
-                        switch (idxStm.key) {
-                            case 0: {
-                                feeder.accept(g.getEsterelThreadStatementsAction_0_1_0, stm, idxStm.key)
-                            }
-                            default: feeder.accept(g.getStatementsEsterelThreadParserRuleCall_0_1_1_1_0, idxStm.value, idxStm.key)
-                        }
-                    }
-                }
-            } else {
-                // Will not happen
-                throw new IllegalStateException("Should not happen")
-            }
-            feeder.finish
-        }
-        
-    }
+//    protected override sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
+//        if (!semanticObject.statements.nullOrEmpty) {
+//            val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+//            val g = grammarAccess.esterelThreadAccess
+//            
+//            if (semanticObject.statements.size > 1) {
+//                for (idxStm : semanticObject.statements.indexed) {
+//                    // Do not serialize threads with only one statement
+//                    val stm = if (idxStm.value instanceof EsterelThread) {
+//                        val thread = idxStm.value as EsterelThread
+//                        if (thread.statements.size == 1) {
+//                            thread.statements.head
+//                        } else {
+//                            thread
+//                        }
+//                    } else {
+//                        idxStm.value
+//                    }
+//                    
+//                    if (stm.isSCLStatement) {
+//                        switch (idxStm.key) {
+//                            case 0: {
+//                                feeder.accept(g.getEsterelThreadStatementsAction_1_1_0, stm, idxStm.key)
+//                            }
+//                            default: feeder.accept(g.getStatementsEsterelThreadParserRuleCall_1_1_1_0, idxStm.value, idxStm.key)
+//                        }
+//                    } else {
+//                        switch (idxStm.key) {
+//                            case 0: {
+//                                feeder.accept(g.getEsterelThreadStatementsAction_0_1_0, stm, idxStm.key)
+//                            }
+//                            default: feeder.accept(g.getStatementsEsterelThreadParserRuleCall_0_1_1_1_0, idxStm.value, idxStm.key)
+//                        }
+//                    }
+//                }
+//            } else {
+//                // Will not happen
+//                throw new IllegalStateException("Should not happen")
+//            }
+//            feeder.finish
+//        }
+//        
+//    }
 }

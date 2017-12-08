@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.kitt.tracing.internal;
+package de.cau.cs.kieler.kicool.ui.kitt.tracing;
 
 import java.util.Set;
 
@@ -19,8 +19,8 @@ import org.eclipse.elk.core.util.Pair;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
 
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions.TracingMode;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping;
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions.TracingMode;
 
 /**
  * Contains Properties for marking tracing diagrams.

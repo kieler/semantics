@@ -28,6 +28,8 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.environments.Environment
 import org.eclipse.ui.IEditorPart
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 
 /**
  * @author ssm
@@ -69,6 +71,9 @@ class CompilationAction {
         
         if (view.compileInplaceToggle.checked) {
             cc.startEnvironment.setProperty(Environment.INPLACE, true)
+        }
+        if (view.compileTracingToggle.checked) {
+            cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
         }
         if (view.debugEnvironmentModelsToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEBUG_ENVIRONMENT_MODELS, true)

@@ -12,15 +12,15 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
-import de.cau.cs.kieler.klighd.IAction
-import de.cau.cs.kieler.klighd.IAction.ActionContext
-import de.cau.cs.kieler.klighd.IAction.ActionResult
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ui.synthesis.Container
+import de.cau.cs.kieler.klighd.IAction
+
+import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
+
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 
 /**
