@@ -70,7 +70,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
      * @generated
      */
-    int SCHEDULABLE = 24;
+    int SCHEDULABLE = 26;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -444,7 +444,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 23;
+    int REFERENCEABLE = 25;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -1204,6 +1204,80 @@ public interface KExpressionsPackage extends EPackage {
     int PRINT_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomCallImpl <em>Random Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.RandomCallImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomCall()
+     * @generated
+     */
+    int RANDOM_CALL = 23;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOM_CALL__SCHEDULE = CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOM_CALL__PARAMETERS = CALL__PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Random Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOM_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl <em>Randomize Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomizeCall()
+     * @generated
+     */
+    int RANDOMIZE_CALL = 24;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL__SCHEDULE = CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL__PARAMETERS = CALL__PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Randomize Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Referenceable</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1220,7 +1294,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 25;
+    int COMBINE_OPERATOR = 27;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1230,7 +1304,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 26;
+    int OPERATOR_TYPE = 28;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1240,7 +1314,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 27;
+    int VALUE_TYPE = 29;
 
 
     /**
@@ -1251,7 +1325,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
      * @generated
      */
-    int SCHEDULE_PRIORITY_TYPE = 28;
+    int SCHEDULE_PRIORITY_TYPE = 30;
 
 
     /**
@@ -1775,6 +1849,26 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getPrintCall();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.RandomCall <em>Random Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Random Call</em>'.
+     * @see de.cau.cs.kieler.kexpressions.RandomCall
+     * @generated
+     */
+    EClass getRandomCall();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.RandomizeCall <em>Randomize Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Randomize Call</em>'.
+     * @see de.cau.cs.kieler.kexpressions.RandomizeCall
+     * @generated
+     */
+    EClass getRandomizeCall();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
@@ -2442,6 +2536,26 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass PRINT_CALL = eINSTANCE.getPrintCall();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomCallImpl <em>Random Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.RandomCallImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomCall()
+         * @generated
+         */
+        EClass RANDOM_CALL = eINSTANCE.getRandomCall();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl <em>Randomize Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomizeCall()
+         * @generated
+         */
+        EClass RANDOMIZE_CALL = eINSTANCE.getRandomizeCall();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.

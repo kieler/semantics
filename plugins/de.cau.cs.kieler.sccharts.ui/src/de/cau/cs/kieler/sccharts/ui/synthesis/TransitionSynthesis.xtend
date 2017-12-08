@@ -80,6 +80,12 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (transition.isImplicitlyImmediate) {
             edge.setImmediateStyle
         }
+        if (transition.nondeterministic) {
+            edge.setNondeterministicStyle
+        }
+        else if (transition.triggerProbability > 0) {
+            edge.setProbabilityStyle
+        }
 
         switch (transition.history) {
             case SHALLOW: edge.addShallowHistoryDecorator
@@ -115,6 +121,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             label.append(transition.serializeHR);
         } else {
             label.append(transition.label);
+        }
+        if (transition.triggerProbability > 0) {
+            if (label.length > 0) label.append(", ")
+            label.append("Pr=" + transition.triggerProbability)
         }
         if (transition.sourceState.outgoingTransitions.size > 1) {
             label.insert(0, ": ");

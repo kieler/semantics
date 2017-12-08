@@ -159,7 +159,16 @@ class KExpressionsValuedObjectExtensions {
         createValuedObject() => [
             setName(valuedObjectName)
         ]
+    }
+    
+    def ValuedObject createValuedObject(Declaration declaration, String valuedObjectName) {
+        val vo = createValuedObject() => [
+            setName(valuedObjectName)
+        ]
+        declaration.attach(vo)
+        vo
     }     
+         
 
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
         declaration => [ valuedObjects += valuedObject ]

@@ -3347,11 +3347,37 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_5()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getRandomCallParserRuleCall_5()); 
     }
-    this_TextExpression_7=ruleTextExpression
+    this_RandomCall_7=ruleRandomCall
     { 
-        $current = $this_TextExpression_7.current; 
+        $current = $this_RandomCall_7.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getRandomizeCallParserRuleCall_6()); 
+    }
+    this_RandomizeCall_8=ruleRandomizeCall
+    { 
+        $current = $this_RandomizeCall_8.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_7()); 
+    }
+    this_TextExpression_9=ruleTextExpression
+    { 
+        $current = $this_TextExpression_9.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -3836,6 +3862,82 @@ ruleReferenceCall returns [EObject current=null]
     	newLeafNode(otherlv_6, grammarAccess.getReferenceCallAccess().getLeftParenthesisRightParenthesisKeyword_1_1());
     }
 ))
+;
+
+
+
+
+
+// Entry rule entryRuleRandomCall
+entryRuleRandomCall returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getRandomCallRule()); }
+	 iv_ruleRandomCall=ruleRandomCall 
+	 { $current=$iv_ruleRandomCall.current; } 
+	 EOF 
+;
+
+// Rule RandomCall
+ruleRandomCall returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getRandomCallAccess().getRandomCallAction_0(),
+            $current);
+    }
+)	otherlv_1='random' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getRandomCallAccess().getRandomKeyword_1());
+    }
+(	otherlv_2='()' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+    }
+)?)
+;
+
+
+
+
+
+// Entry rule entryRuleRandomizeCall
+entryRuleRandomizeCall returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getRandomizeCallRule()); }
+	 iv_ruleRandomizeCall=ruleRandomizeCall 
+	 { $current=$iv_ruleRandomizeCall.current; } 
+	 EOF 
+;
+
+// Rule RandomizeCall
+ruleRandomizeCall returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getRandomizeCallAccess().getRandomizeCallAction_0(),
+            $current);
+    }
+)	otherlv_1='randomize' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getRandomizeCallAccess().getRandomizeKeyword_1());
+    }
+(	otherlv_2='()' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+    }
+)?)
 ;
 
 
@@ -5482,6 +5584,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     }
 )
     ;
+
+
+
+
 
 
 

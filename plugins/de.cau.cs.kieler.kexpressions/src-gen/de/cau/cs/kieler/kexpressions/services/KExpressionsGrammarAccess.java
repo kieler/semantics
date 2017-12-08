@@ -1265,7 +1265,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cFunctionCallParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cTextExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cRandomCallParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cRandomizeCallParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cTextExpressionParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//// Atomic Expression Rule
 		//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
@@ -1277,10 +1279,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| '(' BoolExpression ')'
 		//	| ReferenceCall
 		//	| FunctionCall
+		//	| RandomCall
+		//	| RandomizeCall
 		//	| TextExpression;
 		@Override public ParserRule getRule() { return rule; }
 
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | FunctionCall | TextExpression
+		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | FunctionCall | RandomCall |
+		//RandomizeCall | TextExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//BoolValue
@@ -1307,8 +1312,14 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//FunctionCall
 		public RuleCall getFunctionCallParserRuleCall_4() { return cFunctionCallParserRuleCall_4; }
 
+		//RandomCall
+		public RuleCall getRandomCallParserRuleCall_5() { return cRandomCallParserRuleCall_5; }
+
+		//RandomizeCall
+		public RuleCall getRandomizeCallParserRuleCall_6() { return cRandomizeCallParserRuleCall_6; }
+
 		//TextExpression
-		public RuleCall getTextExpressionParserRuleCall_5() { return cTextExpressionParserRuleCall_5; }
+		public RuleCall getTextExpressionParserRuleCall_7() { return cTextExpressionParserRuleCall_7; }
 	}
 
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -1617,6 +1628,60 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getLeftParenthesisRightParenthesisKeyword_1_1() { return cLeftParenthesisRightParenthesisKeyword_1_1; }
 	}
 
+	public class RandomCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.RandomCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRandomCallAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cRandomKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//// Random Call Rule
+		//// Calls the random function. 
+		//RandomCall:
+		//	{RandomCall}
+		//	'random' '()'?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{RandomCall} 'random' '()'?
+		public Group getGroup() { return cGroup; }
+
+		//{RandomCall}
+		public Action getRandomCallAction_0() { return cRandomCallAction_0; }
+
+		//'random'
+		public Keyword getRandomKeyword_1() { return cRandomKeyword_1; }
+
+		//'()'?
+		public Keyword getLeftParenthesisRightParenthesisKeyword_2() { return cLeftParenthesisRightParenthesisKeyword_2; }
+	}
+
+	public class RandomizeCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.RandomizeCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRandomizeCallAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cRandomizeKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//// Random Call Rule
+		//// Calls the random function. 
+		//RandomizeCall:
+		//	{RandomizeCall}
+		//	'randomize' '()'?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{RandomizeCall} 'randomize' '()'?
+		public Group getGroup() { return cGroup; }
+
+		//{RandomizeCall}
+		public Action getRandomizeCallAction_0() { return cRandomizeCallAction_0; }
+
+		//'randomize'
+		public Keyword getRandomizeKeyword_1() { return cRandomizeKeyword_1; }
+
+		//'()'?
+		public Keyword getLeftParenthesisRightParenthesisKeyword_2() { return cLeftParenthesisRightParenthesisKeyword_2; }
+	}
+
 	public class FunctionCallElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.FunctionCall");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1637,7 +1702,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Function Call Rule
 		//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-		//// Deprecated?
 		//FunctionCall:
 		//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		//	| '()');
@@ -2542,6 +2606,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ValuedObjectReferenceElements pValuedObjectReference;
 	private final ScheduleObjectReferenceElements pScheduleObjectReference;
 	private final ReferenceCallElements pReferenceCall;
+	private final RandomCallElements pRandomCall;
+	private final RandomizeCallElements pRandomizeCall;
 	private final FunctionCallElements pFunctionCall;
 	private final ParameterElements pParameter;
 	private final TextExpressionElements pTextExpression;
@@ -2623,6 +2689,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pValuedObjectReference = new ValuedObjectReferenceElements();
 		this.pScheduleObjectReference = new ScheduleObjectReferenceElements();
 		this.pReferenceCall = new ReferenceCallElements();
+		this.pRandomCall = new RandomCallElements();
+		this.pRandomizeCall = new RandomizeCallElements();
 		this.pFunctionCall = new FunctionCallElements();
 		this.pParameter = new ParameterElements();
 		this.pTextExpression = new TextExpressionElements();
@@ -3043,6 +3111,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
+	//	| RandomCall
+	//	| RandomizeCall
 	//	| TextExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;
@@ -3133,9 +3203,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceCallAccess().getRule();
 	}
 
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomCall:
+	//	{RandomCall}
+	//	'random' '()'?;
+	public RandomCallElements getRandomCallAccess() {
+		return pRandomCall;
+	}
+	
+	public ParserRule getRandomCallRule() {
+		return getRandomCallAccess().getRule();
+	}
+
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomizeCall:
+	//	{RandomizeCall}
+	//	'randomize' '()'?;
+	public RandomizeCallElements getRandomizeCallAccess() {
+		return pRandomizeCall;
+	}
+	
+	public ParserRule getRandomizeCallRule() {
+		return getRandomizeCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
@@ -3795,6 +3890,26 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 
+	//Double ecore::EDouble:
+	//	FLOAT;
+	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
+		return gaAnnotations.getDoubleAccess();
+	}
+	
+	public ParserRule getDoubleRule() {
+		return getDoubleAccess().getRule();
+	}
+
+	//Doubleger ecore::EDouble:
+	//	'-'? FLOAT;
+	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
+		return gaAnnotations.getDoublegerAccess();
+	}
+	
+	public ParserRule getDoublegerRule() {
+		return getDoublegerAccess().getRule();
+	}
+
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
@@ -3831,7 +3946,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getINTRule();
 	} 
 
-	//terminal FLOAT returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();

@@ -94,6 +94,25 @@ class TransitionStyles {
             lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
         ]
     }
+    
+    /**
+     * Sets the style of the line to a probabilistic transition.
+     */
+    def setProbabilityStyle(KEdge edge) {
+        edge.line => [
+            foreground = TRANSITION_PROBABILITY.color
+        ]
+    }
+    
+    /**
+     * Sets the style of the line to a nondeterminstic transition.
+     */
+    def setNondeterministicStyle(KEdge edge) {
+        edge.line => [
+            foreground = TRANSITION_NONDETERMINISTIC.color
+        ]
+    }    
+    
 
     /**
      * Sets the selection style of the edge.

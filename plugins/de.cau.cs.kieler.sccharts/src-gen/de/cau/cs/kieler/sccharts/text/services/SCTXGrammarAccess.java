@@ -496,313 +496,372 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	public class TransitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsRestrictedTypeAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
-		private final Assignment cPreemptionAssignment_1_0_0 = (Assignment)cGroup_1_0.eContents().get(0);
-		private final Alternatives cPreemptionAlternatives_1_0_0_0 = (Alternatives)cPreemptionAssignment_1_0_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_1_0_0_0_0 = (RuleCall)cPreemptionAlternatives_1_0_0_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1 = (RuleCall)cPreemptionAlternatives_1_0_0_0.eContents().get(1);
-		private final Assignment cTargetStateAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final CrossReference cTargetStateStateCrossReference_1_0_1_0 = (CrossReference)cTargetStateAssignment_1_0_1.eContents().get(0);
-		private final RuleCall cTargetStateStateIDTerminalRuleCall_1_0_1_0_1 = (RuleCall)cTargetStateStateCrossReference_1_0_1_0.eContents().get(1);
-		private final Assignment cDelayAssignment_1_0_2 = (Assignment)cGroup_1_0.eContents().get(2);
-		private final RuleCall cDelayDelayTypeEnumRuleCall_1_0_2_0 = (RuleCall)cDelayAssignment_1_0_2.eContents().get(0);
-		private final Assignment cDeferredAssignment_1_0_3 = (Assignment)cGroup_1_0.eContents().get(3);
-		private final Keyword cDeferredDeferredKeyword_1_0_3_0 = (Keyword)cDeferredAssignment_1_0_3.eContents().get(0);
-		private final Assignment cHistoryAssignment_1_0_4 = (Assignment)cGroup_1_0.eContents().get(4);
-		private final RuleCall cHistoryHistoryTypeEnumRuleCall_1_0_4_0 = (RuleCall)cHistoryAssignment_1_0_4.eContents().get(0);
-		private final Group cGroup_1_0_5 = (Group)cGroup_1_0.eContents().get(5);
-		private final Keyword cIfKeyword_1_0_5_0 = (Keyword)cGroup_1_0_5.eContents().get(0);
-		private final Assignment cTriggerDelayAssignment_1_0_5_1 = (Assignment)cGroup_1_0_5.eContents().get(1);
-		private final RuleCall cTriggerDelayINTTerminalRuleCall_1_0_5_1_0 = (RuleCall)cTriggerDelayAssignment_1_0_5_1.eContents().get(0);
-		private final Alternatives cAlternatives_1_0_5_2 = (Alternatives)cGroup_1_0_5.eContents().get(2);
-		private final Assignment cTriggerAssignment_1_0_5_2_0 = (Assignment)cAlternatives_1_0_5_2.eContents().get(0);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_1_0_5_2_0_0 = (RuleCall)cTriggerAssignment_1_0_5_2_0.eContents().get(0);
-		private final Assignment cTriggerAssignment_1_0_5_2_1 = (Assignment)cAlternatives_1_0_5_2.eContents().get(1);
-		private final RuleCall cTriggerAtomicExpressionParserRuleCall_1_0_5_2_1_0 = (RuleCall)cTriggerAssignment_1_0_5_2_1.eContents().get(0);
-		private final Group cGroup_1_0_6 = (Group)cGroup_1_0.eContents().get(6);
-		private final Keyword cDoKeyword_1_0_6_0 = (Keyword)cGroup_1_0_6.eContents().get(0);
-		private final Assignment cEffectsAssignment_1_0_6_1 = (Assignment)cGroup_1_0_6.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_1_0_6_1_0 = (RuleCall)cEffectsAssignment_1_0_6_1.eContents().get(0);
-		private final Group cGroup_1_0_6_2 = (Group)cGroup_1_0_6.eContents().get(2);
-		private final Keyword cSemicolonKeyword_1_0_6_2_0 = (Keyword)cGroup_1_0_6_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_1_0_6_2_1 = (Assignment)cGroup_1_0_6_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_1_0_6_2_1_0 = (RuleCall)cEffectsAssignment_1_0_6_2_1.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
-		private final Assignment cDelayAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
-		private final RuleCall cDelayDelayTypeEnumRuleCall_1_1_0_0 = (RuleCall)cDelayAssignment_1_1_0.eContents().get(0);
-		private final Group cGroup_1_1_1 = (Group)cGroup_1_1.eContents().get(1);
-		private final Keyword cIfKeyword_1_1_1_0 = (Keyword)cGroup_1_1_1.eContents().get(0);
-		private final Assignment cTriggerDelayAssignment_1_1_1_1 = (Assignment)cGroup_1_1_1.eContents().get(1);
-		private final RuleCall cTriggerDelayINTTerminalRuleCall_1_1_1_1_0 = (RuleCall)cTriggerDelayAssignment_1_1_1_1.eContents().get(0);
-		private final Alternatives cAlternatives_1_1_1_2 = (Alternatives)cGroup_1_1_1.eContents().get(2);
-		private final Assignment cTriggerAssignment_1_1_1_2_0 = (Assignment)cAlternatives_1_1_1_2.eContents().get(0);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_1_1_1_2_0_0 = (RuleCall)cTriggerAssignment_1_1_1_2_0.eContents().get(0);
-		private final Assignment cTriggerAssignment_1_1_1_2_1 = (Assignment)cAlternatives_1_1_1_2.eContents().get(1);
-		private final RuleCall cTriggerAtomicExpressionParserRuleCall_1_1_1_2_1_0 = (RuleCall)cTriggerAssignment_1_1_1_2_1.eContents().get(0);
-		private final Group cGroup_1_1_2 = (Group)cGroup_1_1.eContents().get(2);
-		private final Keyword cDoKeyword_1_1_2_0 = (Keyword)cGroup_1_1_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_1_1_2_1_0 = (RuleCall)cEffectsAssignment_1_1_2_1.eContents().get(0);
-		private final Group cGroup_1_1_2_2 = (Group)cGroup_1_1_2.eContents().get(2);
-		private final Keyword cSemicolonKeyword_1_1_2_2_0 = (Keyword)cGroup_1_1_2_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_1_1_2_2_1 = (Assignment)cGroup_1_1_2_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_1_1_2_2_1_0 = (RuleCall)cEffectsAssignment_1_1_2_2_1.eContents().get(0);
-		private final Assignment cPreemptionAssignment_1_1_3 = (Assignment)cGroup_1_1.eContents().get(3);
-		private final Alternatives cPreemptionAlternatives_1_1_3_0 = (Alternatives)cPreemptionAssignment_1_1_3.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_1_1_3_0_0 = (RuleCall)cPreemptionAlternatives_1_1_3_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_1_1_3_0_1 = (RuleCall)cPreemptionAlternatives_1_1_3_0.eContents().get(1);
-		private final Assignment cTargetStateAssignment_1_1_4 = (Assignment)cGroup_1_1.eContents().get(4);
-		private final CrossReference cTargetStateStateCrossReference_1_1_4_0 = (CrossReference)cTargetStateAssignment_1_1_4.eContents().get(0);
-		private final RuleCall cTargetStateStateIDTerminalRuleCall_1_1_4_0_1 = (RuleCall)cTargetStateStateCrossReference_1_1_4_0.eContents().get(1);
-		private final Assignment cDeferredAssignment_1_1_5 = (Assignment)cGroup_1_1.eContents().get(5);
-		private final Keyword cDeferredDeferredKeyword_1_1_5_0 = (Keyword)cDeferredAssignment_1_1_5.eContents().get(0);
-		private final Assignment cHistoryAssignment_1_1_6 = (Assignment)cGroup_1_1.eContents().get(6);
-		private final RuleCall cHistoryHistoryTypeEnumRuleCall_1_1_6_0 = (RuleCall)cHistoryAssignment_1_1_6.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLabelKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cLabelAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cLabelAssignment_2_1.eContents().get(0);
+		private final Action cTransitionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Assignment cPreemptionAssignment_2_0_0 = (Assignment)cGroup_2_0.eContents().get(0);
+		private final Alternatives cPreemptionAlternatives_2_0_0_0 = (Alternatives)cPreemptionAssignment_2_0_0.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0 = (RuleCall)cPreemptionAlternatives_2_0_0_0.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1 = (RuleCall)cPreemptionAlternatives_2_0_0_0.eContents().get(1);
+		private final Assignment cTargetStateAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final CrossReference cTargetStateStateCrossReference_2_0_1_0 = (CrossReference)cTargetStateAssignment_2_0_1.eContents().get(0);
+		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_0_1_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0_1_0.eContents().get(1);
+		private final Assignment cDelayAssignment_2_0_2 = (Assignment)cGroup_2_0.eContents().get(2);
+		private final RuleCall cDelayDelayTypeEnumRuleCall_2_0_2_0 = (RuleCall)cDelayAssignment_2_0_2.eContents().get(0);
+		private final Assignment cDeferredAssignment_2_0_3 = (Assignment)cGroup_2_0.eContents().get(3);
+		private final Keyword cDeferredDeferredKeyword_2_0_3_0 = (Keyword)cDeferredAssignment_2_0_3.eContents().get(0);
+		private final Assignment cHistoryAssignment_2_0_4 = (Assignment)cGroup_2_0.eContents().get(4);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_2_0_4_0 = (RuleCall)cHistoryAssignment_2_0_4.eContents().get(0);
+		private final Group cGroup_2_0_5 = (Group)cGroup_2_0.eContents().get(5);
+		private final Keyword cIfKeyword_2_0_5_0 = (Keyword)cGroup_2_0_5.eContents().get(0);
+		private final Assignment cTriggerDelayAssignment_2_0_5_1 = (Assignment)cGroup_2_0_5.eContents().get(1);
+		private final RuleCall cTriggerDelayINTTerminalRuleCall_2_0_5_1_0 = (RuleCall)cTriggerDelayAssignment_2_0_5_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_0_5_2 = (Alternatives)cGroup_2_0_5.eContents().get(2);
+		private final Assignment cTriggerAssignment_2_0_5_2_0 = (Assignment)cAlternatives_2_0_5_2.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_0_5_2_0_0 = (RuleCall)cTriggerAssignment_2_0_5_2_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_2_0_5_2_1 = (Assignment)cAlternatives_2_0_5_2.eContents().get(1);
+		private final RuleCall cTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0 = (RuleCall)cTriggerAssignment_2_0_5_2_1.eContents().get(0);
+		private final Group cGroup_2_0_5_3 = (Group)cGroup_2_0_5.eContents().get(3);
+		private final Keyword cPrKeyword_2_0_5_3_0 = (Keyword)cGroup_2_0_5_3.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_2_0_5_3_1 = (Assignment)cGroup_2_0_5_3.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_0_5_3_1.eContents().get(0);
+		private final Assignment cNondeterministicAssignment_2_0_5_4 = (Assignment)cGroup_2_0_5.eContents().get(4);
+		private final Keyword cNondeterministicNondeterministicKeyword_2_0_5_4_0 = (Keyword)cNondeterministicAssignment_2_0_5_4.eContents().get(0);
+		private final Group cGroup_2_0_6 = (Group)cGroup_2_0.eContents().get(6);
+		private final Keyword cDoKeyword_2_0_6_0 = (Keyword)cGroup_2_0_6.eContents().get(0);
+		private final Assignment cEffectsAssignment_2_0_6_1 = (Assignment)cGroup_2_0_6.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_2_0_6_1_0 = (RuleCall)cEffectsAssignment_2_0_6_1.eContents().get(0);
+		private final Group cGroup_2_0_6_2 = (Group)cGroup_2_0_6.eContents().get(2);
+		private final Keyword cSemicolonKeyword_2_0_6_2_0 = (Keyword)cGroup_2_0_6_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_2_0_6_2_1 = (Assignment)cGroup_2_0_6_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_2_0_6_2_1_0 = (RuleCall)cEffectsAssignment_2_0_6_2_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Assignment cDelayAssignment_2_1_0 = (Assignment)cGroup_2_1.eContents().get(0);
+		private final RuleCall cDelayDelayTypeEnumRuleCall_2_1_0_0 = (RuleCall)cDelayAssignment_2_1_0.eContents().get(0);
+		private final Group cGroup_2_1_1 = (Group)cGroup_2_1.eContents().get(1);
+		private final Keyword cIfKeyword_2_1_1_0 = (Keyword)cGroup_2_1_1.eContents().get(0);
+		private final Assignment cTriggerDelayAssignment_2_1_1_1 = (Assignment)cGroup_2_1_1.eContents().get(1);
+		private final RuleCall cTriggerDelayINTTerminalRuleCall_2_1_1_1_0 = (RuleCall)cTriggerDelayAssignment_2_1_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_1_2 = (Alternatives)cGroup_2_1_1.eContents().get(2);
+		private final Assignment cTriggerAssignment_2_1_1_2_0 = (Assignment)cAlternatives_2_1_1_2.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_1_2_0_0 = (RuleCall)cTriggerAssignment_2_1_1_2_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_2_1_1_2_1 = (Assignment)cAlternatives_2_1_1_2.eContents().get(1);
+		private final RuleCall cTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0 = (RuleCall)cTriggerAssignment_2_1_1_2_1.eContents().get(0);
+		private final Group cGroup_2_1_1_3 = (Group)cGroup_2_1_1.eContents().get(3);
+		private final Keyword cPrKeyword_2_1_1_3_0 = (Keyword)cGroup_2_1_1_3.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_2_1_1_3_1 = (Assignment)cGroup_2_1_1_3.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_1_1_3_1.eContents().get(0);
+		private final Assignment cNondeterministicAssignment_2_1_1_4 = (Assignment)cGroup_2_1_1.eContents().get(4);
+		private final Keyword cNondeterministicNondeterministicKeyword_2_1_1_4_0 = (Keyword)cNondeterministicAssignment_2_1_1_4.eContents().get(0);
+		private final Group cGroup_2_1_2 = (Group)cGroup_2_1.eContents().get(2);
+		private final Keyword cDoKeyword_2_1_2_0 = (Keyword)cGroup_2_1_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_2_1_2_1 = (Assignment)cGroup_2_1_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_2_1_2_1_0 = (RuleCall)cEffectsAssignment_2_1_2_1.eContents().get(0);
+		private final Group cGroup_2_1_2_2 = (Group)cGroup_2_1_2.eContents().get(2);
+		private final Keyword cSemicolonKeyword_2_1_2_2_0 = (Keyword)cGroup_2_1_2_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_2_1_2_2_1 = (Assignment)cGroup_2_1_2_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_2_1_2_2_1_0 = (RuleCall)cEffectsAssignment_2_1_2_2_1.eContents().get(0);
+		private final Assignment cPreemptionAssignment_2_1_3 = (Assignment)cGroup_2_1.eContents().get(3);
+		private final Alternatives cPreemptionAlternatives_2_1_3_0 = (Alternatives)cPreemptionAssignment_2_1_3.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0 = (RuleCall)cPreemptionAlternatives_2_1_3_0.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1 = (RuleCall)cPreemptionAlternatives_2_1_3_0.eContents().get(1);
+		private final Assignment cTargetStateAssignment_2_1_4 = (Assignment)cGroup_2_1.eContents().get(4);
+		private final CrossReference cTargetStateStateCrossReference_2_1_4_0 = (CrossReference)cTargetStateAssignment_2_1_4.eContents().get(0);
+		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_1_4_0_1 = (RuleCall)cTargetStateStateCrossReference_2_1_4_0.eContents().get(1);
+		private final Assignment cDeferredAssignment_2_1_5 = (Assignment)cGroup_2_1.eContents().get(5);
+		private final Keyword cDeferredDeferredKeyword_2_1_5_0 = (Keyword)cDeferredAssignment_2_1_5.eContents().get(0);
+		private final Assignment cHistoryAssignment_2_1_6 = (Assignment)cGroup_2_1.eContents().get(6);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_2_1_6_0 = (RuleCall)cHistoryAssignment_2_1_6.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLabelKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cLabelAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cLabelAssignment_3_1.eContents().get(0);
 		
 		//// ------------------ //
 		////  Transition Rules  // 
 		//// ------------------ //
 		//Transition sccharts::Transition:
-		//	annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+		//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
 		//	targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
-		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-		//	effects+=Effect (';' effects+=Effect)*)?
-		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-		//	effects+=Effect (';' effects+=Effect)*)?
+		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
 		//	history=HistoryType?) ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
-		//delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression |
-		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT?
-		//(trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
-		//history=HistoryType?) ('label' label=STRING)?
+		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+		//targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT?
+		//(trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
+		//triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
+		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label'
+		//label=STRING)?
 		public Group getGroup() { return cGroup; }
 
+		//{sccharts::Transition}
+		public Action getTransitionAction_0() { return cTransitionAction_0; }
+
 		//annotations+=RestrictedTypeAnnotation*
-		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 
 		//RestrictedTypeAnnotation
-		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_0_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_0_0; }
+		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
-		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression |
-		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
-		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? |
+		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//history=HistoryType?
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
-		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-		//effects+=Effect (';' effects+=Effect)*)?
-		public Group getGroup_1_0() { return cGroup_1_0; }
+		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy)
-		public Assignment getPreemptionAssignment_1_0_0() { return cPreemptionAssignment_1_0_0; }
+		public Assignment getPreemptionAssignment_2_0_0() { return cPreemptionAssignment_2_0_0; }
 
 		//(PreemptionType | PreemptionTypeLegacy)
-		public Alternatives getPreemptionAlternatives_1_0_0_0() { return cPreemptionAlternatives_1_0_0_0; }
+		public Alternatives getPreemptionAlternatives_2_0_0_0() { return cPreemptionAlternatives_2_0_0_0; }
 
 		//PreemptionType
-		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_1_0_0_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_1_0_0_0_0; }
+		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0; }
 
 		//PreemptionTypeLegacy
-		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1; }
+		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1; }
 
 		//targetState=[sccharts::State]
-		public Assignment getTargetStateAssignment_1_0_1() { return cTargetStateAssignment_1_0_1; }
+		public Assignment getTargetStateAssignment_2_0_1() { return cTargetStateAssignment_2_0_1; }
 
 		//[sccharts::State]
-		public CrossReference getTargetStateStateCrossReference_1_0_1_0() { return cTargetStateStateCrossReference_1_0_1_0; }
+		public CrossReference getTargetStateStateCrossReference_2_0_1_0() { return cTargetStateStateCrossReference_2_0_1_0; }
 
 		//ID
-		public RuleCall getTargetStateStateIDTerminalRuleCall_1_0_1_0_1() { return cTargetStateStateIDTerminalRuleCall_1_0_1_0_1; }
+		public RuleCall getTargetStateStateIDTerminalRuleCall_2_0_1_0_1() { return cTargetStateStateIDTerminalRuleCall_2_0_1_0_1; }
 
 		//delay=DelayType?
-		public Assignment getDelayAssignment_1_0_2() { return cDelayAssignment_1_0_2; }
+		public Assignment getDelayAssignment_2_0_2() { return cDelayAssignment_2_0_2; }
 
 		//DelayType
-		public RuleCall getDelayDelayTypeEnumRuleCall_1_0_2_0() { return cDelayDelayTypeEnumRuleCall_1_0_2_0; }
+		public RuleCall getDelayDelayTypeEnumRuleCall_2_0_2_0() { return cDelayDelayTypeEnumRuleCall_2_0_2_0; }
 
 		//deferred?='deferred'?
-		public Assignment getDeferredAssignment_1_0_3() { return cDeferredAssignment_1_0_3; }
+		public Assignment getDeferredAssignment_2_0_3() { return cDeferredAssignment_2_0_3; }
 
 		//'deferred'
-		public Keyword getDeferredDeferredKeyword_1_0_3_0() { return cDeferredDeferredKeyword_1_0_3_0; }
+		public Keyword getDeferredDeferredKeyword_2_0_3_0() { return cDeferredDeferredKeyword_2_0_3_0; }
 
 		//history=HistoryType?
-		public Assignment getHistoryAssignment_1_0_4() { return cHistoryAssignment_1_0_4; }
+		public Assignment getHistoryAssignment_2_0_4() { return cHistoryAssignment_2_0_4; }
 
 		//HistoryType
-		public RuleCall getHistoryHistoryTypeEnumRuleCall_1_0_4_0() { return cHistoryHistoryTypeEnumRuleCall_1_0_4_0; }
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_2_0_4_0() { return cHistoryHistoryTypeEnumRuleCall_2_0_4_0; }
 
-		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
-		public Group getGroup_1_0_5() { return cGroup_1_0_5; }
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)?
+		public Group getGroup_2_0_5() { return cGroup_2_0_5; }
 
 		//'if'
-		public Keyword getIfKeyword_1_0_5_0() { return cIfKeyword_1_0_5_0; }
+		public Keyword getIfKeyword_2_0_5_0() { return cIfKeyword_2_0_5_0; }
 
 		//triggerDelay=INT?
-		public Assignment getTriggerDelayAssignment_1_0_5_1() { return cTriggerDelayAssignment_1_0_5_1; }
+		public Assignment getTriggerDelayAssignment_2_0_5_1() { return cTriggerDelayAssignment_2_0_5_1; }
 
 		//INT
-		public RuleCall getTriggerDelayINTTerminalRuleCall_1_0_5_1_0() { return cTriggerDelayINTTerminalRuleCall_1_0_5_1_0; }
+		public RuleCall getTriggerDelayINTTerminalRuleCall_2_0_5_1_0() { return cTriggerDelayINTTerminalRuleCall_2_0_5_1_0; }
 
 		//trigger=BoolExpression | trigger=AtomicExpression
-		public Alternatives getAlternatives_1_0_5_2() { return cAlternatives_1_0_5_2; }
+		public Alternatives getAlternatives_2_0_5_2() { return cAlternatives_2_0_5_2; }
 
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_1_0_5_2_0() { return cTriggerAssignment_1_0_5_2_0; }
+		public Assignment getTriggerAssignment_2_0_5_2_0() { return cTriggerAssignment_2_0_5_2_0; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_1_0_5_2_0_0() { return cTriggerBoolExpressionParserRuleCall_1_0_5_2_0_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_2_0_5_2_0_0() { return cTriggerBoolExpressionParserRuleCall_2_0_5_2_0_0; }
 
 		//trigger=AtomicExpression
-		public Assignment getTriggerAssignment_1_0_5_2_1() { return cTriggerAssignment_1_0_5_2_1; }
+		public Assignment getTriggerAssignment_2_0_5_2_1() { return cTriggerAssignment_2_0_5_2_1; }
 
 		//AtomicExpression
-		public RuleCall getTriggerAtomicExpressionParserRuleCall_1_0_5_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_1_0_5_2_1_0; }
+		public RuleCall getTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0; }
+
+		//('Pr=' triggerProbability=Double)?
+		public Group getGroup_2_0_5_3() { return cGroup_2_0_5_3; }
+
+		//'Pr='
+		public Keyword getPrKeyword_2_0_5_3_0() { return cPrKeyword_2_0_5_3_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_2_0_5_3_1() { return cTriggerProbabilityAssignment_2_0_5_3_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0; }
+
+		//nondeterministic?='nondeterministic'?
+		public Assignment getNondeterministicAssignment_2_0_5_4() { return cNondeterministicAssignment_2_0_5_4; }
+
+		//'nondeterministic'
+		public Keyword getNondeterministicNondeterministicKeyword_2_0_5_4_0() { return cNondeterministicNondeterministicKeyword_2_0_5_4_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
-		public Group getGroup_1_0_6() { return cGroup_1_0_6; }
+		public Group getGroup_2_0_6() { return cGroup_2_0_6; }
 
 		//'do'
-		public Keyword getDoKeyword_1_0_6_0() { return cDoKeyword_1_0_6_0; }
+		public Keyword getDoKeyword_2_0_6_0() { return cDoKeyword_2_0_6_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_1_0_6_1() { return cEffectsAssignment_1_0_6_1; }
+		public Assignment getEffectsAssignment_2_0_6_1() { return cEffectsAssignment_2_0_6_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_1_0_6_1_0() { return cEffectsEffectParserRuleCall_1_0_6_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_2_0_6_1_0() { return cEffectsEffectParserRuleCall_2_0_6_1_0; }
 
 		//(';' effects+=Effect)*
-		public Group getGroup_1_0_6_2() { return cGroup_1_0_6_2; }
+		public Group getGroup_2_0_6_2() { return cGroup_2_0_6_2; }
 
 		//';'
-		public Keyword getSemicolonKeyword_1_0_6_2_0() { return cSemicolonKeyword_1_0_6_2_0; }
+		public Keyword getSemicolonKeyword_2_0_6_2_0() { return cSemicolonKeyword_2_0_6_2_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_1_0_6_2_1() { return cEffectsAssignment_1_0_6_2_1; }
+		public Assignment getEffectsAssignment_2_0_6_2_1() { return cEffectsAssignment_2_0_6_2_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_1_0_6_2_1_0() { return cEffectsEffectParserRuleCall_1_0_6_2_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_2_0_6_2_1_0() { return cEffectsEffectParserRuleCall_2_0_6_2_1_0; }
 
-		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect
-		//(';' effects+=Effect)*)? preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
-		//deferred?='deferred'? history=HistoryType?
-		public Group getGroup_1_1() { return cGroup_1_1; }
+		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//history=HistoryType?
+		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//delay=DelayType?
-		public Assignment getDelayAssignment_1_1_0() { return cDelayAssignment_1_1_0; }
+		public Assignment getDelayAssignment_2_1_0() { return cDelayAssignment_2_1_0; }
 
 		//DelayType
-		public RuleCall getDelayDelayTypeEnumRuleCall_1_1_0_0() { return cDelayDelayTypeEnumRuleCall_1_1_0_0; }
+		public RuleCall getDelayDelayTypeEnumRuleCall_2_1_0_0() { return cDelayDelayTypeEnumRuleCall_2_1_0_0; }
 
-		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
-		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)?
+		public Group getGroup_2_1_1() { return cGroup_2_1_1; }
 
 		//'if'
-		public Keyword getIfKeyword_1_1_1_0() { return cIfKeyword_1_1_1_0; }
+		public Keyword getIfKeyword_2_1_1_0() { return cIfKeyword_2_1_1_0; }
 
 		//triggerDelay=INT?
-		public Assignment getTriggerDelayAssignment_1_1_1_1() { return cTriggerDelayAssignment_1_1_1_1; }
+		public Assignment getTriggerDelayAssignment_2_1_1_1() { return cTriggerDelayAssignment_2_1_1_1; }
 
 		//INT
-		public RuleCall getTriggerDelayINTTerminalRuleCall_1_1_1_1_0() { return cTriggerDelayINTTerminalRuleCall_1_1_1_1_0; }
+		public RuleCall getTriggerDelayINTTerminalRuleCall_2_1_1_1_0() { return cTriggerDelayINTTerminalRuleCall_2_1_1_1_0; }
 
 		//trigger=BoolExpression | trigger=AtomicExpression
-		public Alternatives getAlternatives_1_1_1_2() { return cAlternatives_1_1_1_2; }
+		public Alternatives getAlternatives_2_1_1_2() { return cAlternatives_2_1_1_2; }
 
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_1_1_1_2_0() { return cTriggerAssignment_1_1_1_2_0; }
+		public Assignment getTriggerAssignment_2_1_1_2_0() { return cTriggerAssignment_2_1_1_2_0; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_1_1_1_2_0_0() { return cTriggerBoolExpressionParserRuleCall_1_1_1_2_0_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_1_2_0_0() { return cTriggerBoolExpressionParserRuleCall_2_1_1_2_0_0; }
 
 		//trigger=AtomicExpression
-		public Assignment getTriggerAssignment_1_1_1_2_1() { return cTriggerAssignment_1_1_1_2_1; }
+		public Assignment getTriggerAssignment_2_1_1_2_1() { return cTriggerAssignment_2_1_1_2_1; }
 
 		//AtomicExpression
-		public RuleCall getTriggerAtomicExpressionParserRuleCall_1_1_1_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_1_1_1_2_1_0; }
+		public RuleCall getTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0; }
+
+		//('Pr=' triggerProbability=Double)?
+		public Group getGroup_2_1_1_3() { return cGroup_2_1_1_3; }
+
+		//'Pr='
+		public Keyword getPrKeyword_2_1_1_3_0() { return cPrKeyword_2_1_1_3_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_2_1_1_3_1() { return cTriggerProbabilityAssignment_2_1_1_3_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0; }
+
+		//nondeterministic?='nondeterministic'?
+		public Assignment getNondeterministicAssignment_2_1_1_4() { return cNondeterministicAssignment_2_1_1_4; }
+
+		//'nondeterministic'
+		public Keyword getNondeterministicNondeterministicKeyword_2_1_1_4_0() { return cNondeterministicNondeterministicKeyword_2_1_1_4_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
-		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
+		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
 
 		//'do'
-		public Keyword getDoKeyword_1_1_2_0() { return cDoKeyword_1_1_2_0; }
+		public Keyword getDoKeyword_2_1_2_0() { return cDoKeyword_2_1_2_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_1_1_2_1() { return cEffectsAssignment_1_1_2_1; }
+		public Assignment getEffectsAssignment_2_1_2_1() { return cEffectsAssignment_2_1_2_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_1_1_2_1_0() { return cEffectsEffectParserRuleCall_1_1_2_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_2_1_2_1_0() { return cEffectsEffectParserRuleCall_2_1_2_1_0; }
 
 		//(';' effects+=Effect)*
-		public Group getGroup_1_1_2_2() { return cGroup_1_1_2_2; }
+		public Group getGroup_2_1_2_2() { return cGroup_2_1_2_2; }
 
 		//';'
-		public Keyword getSemicolonKeyword_1_1_2_2_0() { return cSemicolonKeyword_1_1_2_2_0; }
+		public Keyword getSemicolonKeyword_2_1_2_2_0() { return cSemicolonKeyword_2_1_2_2_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_1_1_2_2_1() { return cEffectsAssignment_1_1_2_2_1; }
+		public Assignment getEffectsAssignment_2_1_2_2_1() { return cEffectsAssignment_2_1_2_2_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_1_1_2_2_1_0() { return cEffectsEffectParserRuleCall_1_1_2_2_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_2_1_2_2_1_0() { return cEffectsEffectParserRuleCall_2_1_2_2_1_0; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy)
-		public Assignment getPreemptionAssignment_1_1_3() { return cPreemptionAssignment_1_1_3; }
+		public Assignment getPreemptionAssignment_2_1_3() { return cPreemptionAssignment_2_1_3; }
 
 		//(PreemptionType | PreemptionTypeLegacy)
-		public Alternatives getPreemptionAlternatives_1_1_3_0() { return cPreemptionAlternatives_1_1_3_0; }
+		public Alternatives getPreemptionAlternatives_2_1_3_0() { return cPreemptionAlternatives_2_1_3_0; }
 
 		//PreemptionType
-		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_1_1_3_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_1_1_3_0_0; }
+		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0; }
 
 		//PreemptionTypeLegacy
-		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_1_1_3_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_1_1_3_0_1; }
+		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1; }
 
 		//targetState=[sccharts::State]
-		public Assignment getTargetStateAssignment_1_1_4() { return cTargetStateAssignment_1_1_4; }
+		public Assignment getTargetStateAssignment_2_1_4() { return cTargetStateAssignment_2_1_4; }
 
 		//[sccharts::State]
-		public CrossReference getTargetStateStateCrossReference_1_1_4_0() { return cTargetStateStateCrossReference_1_1_4_0; }
+		public CrossReference getTargetStateStateCrossReference_2_1_4_0() { return cTargetStateStateCrossReference_2_1_4_0; }
 
 		//ID
-		public RuleCall getTargetStateStateIDTerminalRuleCall_1_1_4_0_1() { return cTargetStateStateIDTerminalRuleCall_1_1_4_0_1; }
+		public RuleCall getTargetStateStateIDTerminalRuleCall_2_1_4_0_1() { return cTargetStateStateIDTerminalRuleCall_2_1_4_0_1; }
 
 		//deferred?='deferred'?
-		public Assignment getDeferredAssignment_1_1_5() { return cDeferredAssignment_1_1_5; }
+		public Assignment getDeferredAssignment_2_1_5() { return cDeferredAssignment_2_1_5; }
 
 		//'deferred'
-		public Keyword getDeferredDeferredKeyword_1_1_5_0() { return cDeferredDeferredKeyword_1_1_5_0; }
+		public Keyword getDeferredDeferredKeyword_2_1_5_0() { return cDeferredDeferredKeyword_2_1_5_0; }
 
 		//history=HistoryType?
-		public Assignment getHistoryAssignment_1_1_6() { return cHistoryAssignment_1_1_6; }
+		public Assignment getHistoryAssignment_2_1_6() { return cHistoryAssignment_2_1_6; }
 
 		//HistoryType
-		public RuleCall getHistoryHistoryTypeEnumRuleCall_1_1_6_0() { return cHistoryHistoryTypeEnumRuleCall_1_1_6_0; }
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_2_1_6_0() { return cHistoryHistoryTypeEnumRuleCall_2_1_6_0; }
 
 		//('label' label=STRING)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//'label'
-		public Keyword getLabelKeyword_2_0() { return cLabelKeyword_2_0; }
+		public Keyword getLabelKeyword_3_0() { return cLabelKeyword_3_0; }
 
 		//label=STRING
-		public Assignment getLabelAssignment_2_1() { return cLabelAssignment_2_1; }
+		public Assignment getLabelAssignment_3_1() { return cLabelAssignment_3_1; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_2_1_0() { return cLabelSTRINGTerminalRuleCall_2_1_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_3_1_0() { return cLabelSTRINGTerminalRuleCall_3_1_0; }
 	}
 
 	public class RegionElements extends AbstractParserRuleElementFinder {
@@ -1219,6 +1278,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIfKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1234,11 +1297,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//EntryAction sccharts::EntryAction:
 		//	{sccharts::EntryAction}
-		//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	'entry' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label'
-		//label=STRING)?
+		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect
+		//(';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::EntryAction}
@@ -1247,7 +1311,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'entry'
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 
-		//('if' trigger=BoolExpression)?
+		//('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'if'
@@ -1258,6 +1322,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
+
+		//('Pr' triggerProbability=Double)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//'Pr'
+		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1309,6 +1385,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTriggerDelayINTTerminalRuleCall_3_1_0 = (RuleCall)cTriggerDelayAssignment_3_1.eContents().get(0);
 		private final Assignment cTriggerAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_2_0 = (RuleCall)cTriggerAssignment_3_2.eContents().get(0);
+		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
+		private final Keyword cPrKeyword_3_3_0 = (Keyword)cGroup_3_3.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_3_3_1 = (Assignment)cGroup_3_3.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_3_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_3_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cDoKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -1323,12 +1403,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
 		//DuringAction sccharts::DuringAction:
-		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-		//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
+		//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
+		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -1343,7 +1423,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'during'
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression)?
+		//('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'if'
@@ -1360,6 +1440,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_3_2_0() { return cTriggerBoolExpressionParserRuleCall_3_2_0; }
+
+		//('Pr=' triggerProbability=Double)?
+		public Group getGroup_3_3() { return cGroup_3_3; }
+
+		//'Pr='
+		public Keyword getPrKeyword_3_3_0() { return cPrKeyword_3_3_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_3_3_1() { return cTriggerProbabilityAssignment_3_3_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_3_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_3_3_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -1407,6 +1499,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIfKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1422,11 +1518,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction sccharts::ExitAction:
 		//	{sccharts::ExitAction}
-		//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	'exit' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label'
-		//label=STRING)?
+		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect
+		//(';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ExitAction}
@@ -1435,7 +1532,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'exit'
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
 
-		//('if' trigger=BoolExpression)?
+		//('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'if'
@@ -1446,6 +1543,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
+
+		//('Pr' triggerProbability=Double)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//'Pr'
+		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1495,20 +1604,26 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSuspendKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cIfKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cTriggerAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_1_0 = (RuleCall)cTriggerAssignment_4_1.eContents().get(0);
+		private final Assignment cTriggerDelayAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cTriggerDelayINTTerminalRuleCall_4_1_0 = (RuleCall)cTriggerDelayAssignment_4_1.eContents().get(0);
+		private final Assignment cTriggerAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_2_0 = (RuleCall)cTriggerAssignment_4_2.eContents().get(0);
+		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
+		private final Keyword cPrKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_4_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_4_3_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cLabelKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
 		//SuspendAction sccharts::SuspendAction:
-		//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)? ('label'
-		//	label=STRING)?;
+		//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression
+		//	('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)? ('label'
-		//label=STRING)?
+		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
+		//triggerProbability=Double)?)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -1529,17 +1644,35 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'suspend'
 		public Keyword getSuspendKeyword_3() { return cSuspendKeyword_3; }
 
-		//('if' trigger=BoolExpression)?
+		//('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//'if'
 		public Keyword getIfKeyword_4_0() { return cIfKeyword_4_0; }
 
+		//triggerDelay=INT?
+		public Assignment getTriggerDelayAssignment_4_1() { return cTriggerDelayAssignment_4_1; }
+
+		//INT
+		public RuleCall getTriggerDelayINTTerminalRuleCall_4_1_0() { return cTriggerDelayINTTerminalRuleCall_4_1_0; }
+
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_4_1() { return cTriggerAssignment_4_1; }
+		public Assignment getTriggerAssignment_4_2() { return cTriggerAssignment_4_2; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_4_1_0() { return cTriggerBoolExpressionParserRuleCall_4_1_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_4_2_0() { return cTriggerBoolExpressionParserRuleCall_4_2_0; }
+
+		//('Pr=' triggerProbability=Double)?
+		public Group getGroup_4_3() { return cGroup_4_3; }
+
+		//'Pr='
+		public Keyword getPrKeyword_4_3_0() { return cPrKeyword_4_3_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_4_3_1() { return cTriggerProbabilityAssignment_4_3_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_4_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_4_3_1_0; }
 
 		//('label' label=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
@@ -1563,6 +1696,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIfKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1578,11 +1715,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PrecedingAction sccharts::PrecedingAction:
 		//	{sccharts::PrecedingAction}
-		//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	'preceding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::PrecedingAction} 'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//('label' label=STRING)?
+		//{sccharts::PrecedingAction} 'preceding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do'
+		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::PrecedingAction}
@@ -1591,7 +1729,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'preceding'
 		public Keyword getPrecedingKeyword_1() { return cPrecedingKeyword_1; }
 
-		//('if' trigger=BoolExpression)?
+		//('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'if'
@@ -1602,6 +1740,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
+
+		//('Pr' triggerProbability=Double)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//'Pr'
+		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1649,6 +1799,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIfKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1664,11 +1818,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SucceedingAction sccharts::SucceedingAction:
 		//	{sccharts::SucceedingAction}
-		//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	'succeeding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::SucceedingAction} 'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//('label' label=STRING)?
+		//{sccharts::SucceedingAction} 'succeeding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do'
+		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SucceedingAction}
@@ -1677,7 +1832,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'succeeding'
 		public Keyword getSucceedingKeyword_1() { return cSucceedingKeyword_1; }
 
-		//('if' trigger=BoolExpression)?
+		//('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'if'
@@ -1688,6 +1843,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
+
+		//('Pr' triggerProbability=Double)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//'Pr'
+		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
+
+		//triggerProbability=Double
+		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
+
+		//Double
+		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -2121,13 +2288,13 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  Transition Rules  // 
 	//// ------------------ //
 	//Transition sccharts::Transition:
-	//	annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+	//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
 	//	targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
-	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-	//	effects+=Effect (';' effects+=Effect)*)?
-	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-	//	effects+=Effect (';' effects+=Effect)*)?
+	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
 	//	history=HistoryType?) ('label' label=STRING)?;
 	public TransitionElements getTransitionAccess() {
@@ -2229,7 +2396,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//EntryAction sccharts::EntryAction:
 	//	{sccharts::EntryAction}
-	//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	'entry' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public EntryActionElements getEntryActionAccess() {
 		return pEntryAction;
 	}
@@ -2239,8 +2407,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//DuringAction sccharts::DuringAction:
-	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-	//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
+	//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
 	}
@@ -2251,7 +2419,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction sccharts::ExitAction:
 	//	{sccharts::ExitAction}
-	//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	'exit' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public ExitActionElements getExitActionAccess() {
 		return pExitAction;
 	}
@@ -2261,8 +2430,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SuspendAction sccharts::SuspendAction:
-	//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)? ('label'
-	//	label=STRING)?;
+	//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression
+	//	('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?;
 	public SuspendActionElements getSuspendActionAccess() {
 		return pSuspendAction;
 	}
@@ -2273,7 +2442,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//PrecedingAction sccharts::PrecedingAction:
 	//	{sccharts::PrecedingAction}
-	//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	'preceding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public PrecedingActionElements getPrecedingActionAccess() {
 		return pPrecedingAction;
 	}
@@ -2284,7 +2454,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SucceedingAction sccharts::SucceedingAction:
 	//	{sccharts::SucceedingAction}
-	//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	'succeeding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public SucceedingActionElements getSucceedingActionAccess() {
 		return pSucceedingAction;
 	}
@@ -2616,7 +2787,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect;
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+	//	RandomizeCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -2726,15 +2898,29 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 
+	//// Print Call Effect Rule
+	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' parameters+=super::Parameter (',' parameters+=super::Parameter)*;
+	//	'print' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')');
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
 	
 	public ParserRule getPrintCallEffectRule() {
 		return getPrintCallEffectAccess().getRule();
+	}
+
+	//RandomizeCallEffect keffects::RandomizeCallEffect:
+	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+	//	'randomize' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	| '()');
+	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
+		return gaKEffects.getRandomizeCallEffectAccess();
+	}
+	
+	public ParserRule getRandomizeCallEffectRule() {
+		return getRandomizeCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -3110,6 +3296,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
+	//	| RandomCall
+	//	| RandomizeCall
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -3200,9 +3388,34 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceCallAccess().getRule();
 	}
 
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomCall:
+	//	{RandomCall}
+	//	'random' '()'?;
+	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
+		return gaKExpressions.getRandomCallAccess();
+	}
+	
+	public ParserRule getRandomCallRule() {
+		return getRandomCallAccess().getRule();
+	}
+
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomizeCall:
+	//	{RandomizeCall}
+	//	'randomize' '()'?;
+	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
+		return gaKExpressions.getRandomizeCallAccess();
+	}
+	
+	public ParserRule getRandomizeCallRule() {
+		return getRandomizeCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
 	//	| '()');
@@ -3847,6 +4060,26 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 
+	//Double ecore::EDouble:
+	//	FLOAT;
+	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
+		return gaAnnotations.getDoubleAccess();
+	}
+	
+	public ParserRule getDoubleRule() {
+		return getDoubleAccess().getRule();
+	}
+
+	//Doubleger ecore::EDouble:
+	//	'-'? FLOAT;
+	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
+		return gaAnnotations.getDoublegerAccess();
+	}
+	
+	public ParserRule getDoublegerRule() {
+		return getDoublegerAccess().getRule();
+	}
+
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
@@ -3883,7 +4116,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getINTRule();
 	} 
 
-	//terminal FLOAT returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();

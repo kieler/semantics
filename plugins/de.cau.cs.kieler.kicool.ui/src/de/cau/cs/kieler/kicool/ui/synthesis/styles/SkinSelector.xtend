@@ -22,6 +22,6 @@ import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
  */
 class SkinSelector {
     
-    @Accessors static String skinPrefix = "resources/skins/" + SkinSelectionActions.skins.head
+    @Accessors static String skinPrefix = "resources/skins/" + SkinSelectionActions.skins.head.value
     
 }

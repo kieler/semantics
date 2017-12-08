@@ -849,6 +849,38 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//FLOAT
 		public RuleCall getFLOATTerminalRuleCall_1() { return cFLOATTerminalRuleCall_1; }
 	}
+
+	public class DoubleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Double");
+		private final RuleCall cFLOATTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//Double ecore::EDouble:
+		//	FLOAT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//FLOAT
+		public RuleCall getFLOATTerminalRuleCall() { return cFLOATTerminalRuleCall; }
+	}
+
+	public class DoublegerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Doubleger");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cFLOATTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//Doubleger ecore::EDouble:
+		//	'-'? FLOAT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//'-'? FLOAT
+		public Group getGroup() { return cGroup; }
+
+		//'-'?
+		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
+
+		//FLOAT
+		public RuleCall getFLOATTerminalRuleCall_1() { return cFLOATTerminalRuleCall_1; }
+	}
 	
 	
 	private final AnnotationElements pAnnotation;
@@ -874,6 +906,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final QualifiedIDElements pQualifiedID;
 	private final IntegerElements pInteger;
 	private final FloategerElements pFloateger;
+	private final DoubleElements pDouble;
+	private final DoublegerElements pDoubleger;
 	private final TerminalRule tCOMMENT_ANNOTATION;
 	private final TerminalRule tML_COMMENT;
 	private final TerminalRule tSL_COMMENT_ANNOTATION;
@@ -917,6 +951,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pQualifiedID = new QualifiedIDElements();
 		this.pInteger = new IntegerElements();
 		this.pFloateger = new FloategerElements();
+		this.pDouble = new DoubleElements();
+		this.pDoubleger = new DoublegerElements();
 		this.tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.COMMENT_ANNOTATION");
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.ML_COMMENT");
 		this.tSL_COMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.SL_COMMENT_ANNOTATION");
@@ -1234,6 +1270,26 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 
+	//Double ecore::EDouble:
+	//	FLOAT;
+	public DoubleElements getDoubleAccess() {
+		return pDouble;
+	}
+	
+	public ParserRule getDoubleRule() {
+		return getDoubleAccess().getRule();
+	}
+
+	//Doubleger ecore::EDouble:
+	//	'-'? FLOAT;
+	public DoublegerElements getDoublegerAccess() {
+		return pDoubleger;
+	}
+	
+	public ParserRule getDoublegerRule() {
+		return getDoublegerAccess().getRule();
+	}
+
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
@@ -1270,7 +1326,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tINT;
 	} 
 
-	//terminal FLOAT returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;

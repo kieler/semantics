@@ -264,6 +264,24 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.RANDOM_CALL: {
+                RandomCall randomCall = (RandomCall)theEObject;
+                T result = caseRandomCall(randomCall);
+                if (result == null) result = caseCall(randomCall);
+                if (result == null) result = caseExpression(randomCall);
+                if (result == null) result = caseSchedulable(randomCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.RANDOMIZE_CALL: {
+                RandomizeCall randomizeCall = (RandomizeCall)theEObject;
+                T result = caseRandomizeCall(randomizeCall);
+                if (result == null) result = caseCall(randomizeCall);
+                if (result == null) result = caseExpression(randomizeCall);
+                if (result == null) result = caseSchedulable(randomizeCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.REFERENCEABLE: {
                 Referenceable referenceable = (Referenceable)theEObject;
                 T result = caseReferenceable(referenceable);
@@ -532,6 +550,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T casePrintCall(PrintCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Random Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Random Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRandomCall(RandomCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Randomize Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Randomize Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRandomizeCall(RandomizeCall object) {
         return null;
     }
 

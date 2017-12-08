@@ -12,6 +12,8 @@
        <simulationParticipant
              class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder">
        </simulationParticipant>
+       <simulationParticipant
+             class="de.cau.cs.kieler.simulation.ui.views.dataview.DataView"></simulationParticipant>
     </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
@@ -206,6 +208,14 @@
             icon="icons/tableIcon.png"
             id="de.cau.cs.kieler.simulation.ui.dataPoolView"
             name="Data Pool"
+            restorable="true">
+      </view>
+      <view
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.simulation.ui.views.dataview.DataView"
+            icon="icons/signalsViewIcon.png"
+            id="de.cau.cs.kieler.simulation.ui.views.dataview"
+            name="Data View"
             restorable="true">
       </view>
    </extension>

@@ -13,6 +13,8 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -79,6 +81,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         return "extern " + functionCall.functionName + functionCall.parameters.serializeHRParameters 
     }
     
+    def dispatch CharSequence serializeHR(RandomCall randomCall) {
+        return "random"
+    }
+    
+    def dispatch CharSequence serializeHR(RandomizeCall randomizeCall) {
+        return "randomize"
+    }
+        
     def public CharSequence serializeHRParameters(List<Parameter> parameters) {
         val sb = new StringBuilder
         sb.append("(")
