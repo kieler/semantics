@@ -251,7 +251,24 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
                     return processor.environment
                 }
             }
+            
+            val errors = processor.environment.getProperty(ERRORS)
+            if (errors.keySet.contains(model)) {
+                return processor.environment
+            }
+            
+            val warnings = processor.environment.getProperty(WARNINGS)
+            if (warnings.keySet.contains(model)) {
+                return processor.environment
+            }
+            
+            val infos = processor.environment.getProperty(INFOS)
+            if (infos.keySet.contains(model)) {
+                return processor.environment
+            }
+            
         }
+        return null
     }
     
     override cloneObject() {
@@ -325,7 +342,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences) {
         for (processorReference : processorReferences) {
-            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), true)
+            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent)
         }
     }
     

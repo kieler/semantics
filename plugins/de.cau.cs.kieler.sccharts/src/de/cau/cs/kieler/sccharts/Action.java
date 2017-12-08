@@ -51,8 +51,10 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getTriggerDelay <em>Trigger Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Action#getTriggerProbability <em>Trigger Probability</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Action#isNondeterministic <em>Nondeterministic</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction()
@@ -137,6 +139,32 @@ public interface Action extends Annotatable {
     void setTriggerDelay(int value);
 
     /**
+     * Returns the value of the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Trigger Probability</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Trigger Probability</em>' attribute.
+     * @see #setTriggerProbability(double)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_TriggerProbability()
+     * @model
+     * @generated
+     */
+    double getTriggerProbability();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getTriggerProbability <em>Trigger Probability</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Trigger Probability</em>' attribute.
+     * @see #getTriggerProbability()
+     * @generated
+     */
+    void setTriggerProbability(double value);
+
+    /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -191,5 +219,31 @@ public interface Action extends Annotatable {
      * @generated
      */
     void setDelay(DelayType value);
+
+    /**
+     * Returns the value of the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Nondeterministic</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Nondeterministic</em>' attribute.
+     * @see #setNondeterministic(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Nondeterministic()
+     * @model
+     * @generated
+     */
+    boolean isNondeterministic();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isNondeterministic <em>Nondeterministic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Nondeterministic</em>' attribute.
+     * @see #isNondeterministic()
+     * @generated
+     */
+    void setNondeterministic(boolean value);
 
 } // Action

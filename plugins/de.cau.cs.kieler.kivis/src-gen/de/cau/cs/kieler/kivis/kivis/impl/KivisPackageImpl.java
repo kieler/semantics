@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kivis.kivis.impl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kivis.kivis.Action;
@@ -228,6 +230,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     // Initialize simple dependencies
     KExpressionsPackage.eINSTANCE.eClass();
     KibuildPackage.eINSTANCE.eClass();
+    AnnotationsPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theKivisPackage.createPackageContents();

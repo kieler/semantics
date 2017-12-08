@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -32,6 +31,9 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
 import com.google.inject.Singleton
 import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * @author ssm
@@ -51,6 +53,8 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     override dispatch CharSequence serialize(ValueType valueType) {
         if (valueType == ValueType.BOOL) {
             return "char"
+        } else if (valueType == ValueType.STRING) {
+            return "char*"
         } else {
             return valueType.literal
         }
@@ -163,5 +167,23 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         return textExp.text
     }  
     
+    override dispatch CharSequence serialize(RandomCall randomCall) {
+        return "((float) rand() / RAND_MAX)"
+    }
+    
+    override dispatch CharSequence serializeHR(RandomCall randomCall) {
+        return "((float) rand() / RAND_MAX)"
+    }
+    
+    override dispatch CharSequence serialize(RandomizeCallEffect randomizeCallEffect) {
+        return "srand(0)"
+    }
+    
+    override dispatch CharSequence serialize(RandomizeCall randomizeCall) {
+        if (!modifications.containsEntry(INCLUDES, "<time.h>"))
+            modifications.put(INCLUDES, "<time.h>")
+            
+        return "srand(time(NULL))"
+    }
     
 }

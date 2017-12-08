@@ -14,20 +14,22 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.srtg
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.core.options.Direction
-import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -56,7 +58,8 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
     extension ControlflowRegionStyles
     
     @Inject
-    extension SRTGTransitionStyles    
+    extension SRTGTransitionStyles
+    @Inject extension KContainerRenderingExtensions    
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region)
@@ -67,7 +70,7 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
 
         node.addRegionFigure => [
             associateWith(region)
-            addButton("" + label)
+            addText(label)
         ]
 
         val regionStateNode = region.createNode("states")

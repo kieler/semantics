@@ -34,13 +34,14 @@ import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /** 
  * @author ssm
  * @kieler.design 2017-08-07 proposed 
  * @kieler.rating 2017-08-07 proposed yellow
  */
-class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> {
+class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceable {
         
     @Inject extension KEffectsExtensions
     @Inject extension SCGDependencyExtensions

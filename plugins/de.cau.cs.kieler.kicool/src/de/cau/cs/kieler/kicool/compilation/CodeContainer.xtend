@@ -16,6 +16,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 
 /**
+ * A CodeContainer contains a map of files. Each file is represented by a string.
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 

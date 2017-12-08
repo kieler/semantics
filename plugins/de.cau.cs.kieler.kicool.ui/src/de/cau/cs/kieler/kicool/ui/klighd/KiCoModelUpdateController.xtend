@@ -12,18 +12,19 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd
 
+import de.cau.cs.kieler.core.model.util.ModelUtil
 import de.cau.cs.kieler.kicool.KiCoolActivator
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController.ChangeEvent
-import de.cau.cs.kieler.kicool.ui.klighd.internal.ModelUtil
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChain
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import java.io.IOException
+import java.util.Collections
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -35,6 +36,7 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
@@ -59,6 +61,7 @@ import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -143,9 +146,6 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private var Action chainToggleAction
     private static final boolean CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false
     
-    // -- External Contributions --
-    private static val externalUIContributors = <KiCoModelViewUIContributor>newHashSet
-
     // -- Model --
 
     /** Model extracted from editor. */
@@ -247,9 +247,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         }
         chainToggleAction.setId("chainToggleAction")
-        chainToggleAction.setText("Display Transformation Chain")
+        chainToggleAction.setText("Display Tracing Chain")
         chainToggleAction.setToolTipText(
-                "Enable tranformation chain view in displaySideBySide display mode")
+                "Shows tracing chain in side-by-side mode if tracing data is available.")
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN)
         chainToggleAction.setChecked(CHAIN_TOGGLE_ACTION_DEFAULT_STATE)
     }
@@ -327,6 +327,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(diagramPlaceholderToggleAction)
         menu.add(chainToggleAction)
         
+        val externalUIContributors = KiCoModelViewUIContributorRegistry.contributors
         externalUIContributors.forEach[it.contribute(this, toolBar, menu)]
     }
 
@@ -538,6 +539,27 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         }
     }
+    
+    /**
+     * Save a models to the given URI.
+     * 
+     * @param model
+     *            the models to store in the new file
+     * @param uri
+     *            the target file URI
+     * @throws IOException
+     *             if an error occurs while saving
+     */
+    private def saveModel(EObject model, URI uri) throws IOException {
+        // Create a resource set.
+        val resourceSet = new ResourceSetImpl();
+        // Create a resource for this file.
+        val resource = resourceSet.createResource(uri);
+        // Add the model objects to the contents.
+        resource.getContents().add(model);
+        // Save the contents of the resource to the file system.
+        resource.save(Collections.EMPTY_MAP);
+    }
 
     /**
      * Returns the appropriate file extension for the given model.
@@ -555,9 +577,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 filename = filename.substring(0, filename.lastIndexOf('.'))
             }
             // Adding correct file extension if available
-            val ext = KiCoolActivator.getInstance().getResourceExtension(model)
+            val ext = ResourceExtension.getResourceExtension(model)
             if (ext != null) {
-                filename += "." + ext.getExtension()
+                filename += "." + ext.getFileExtension()
             }
             return filename
         }
@@ -637,14 +659,14 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     val tracing = if (cc !== null && cc.startEnvironment.getProperty(Tracing.ACTIVE_TRACING)) {
                         cc.startEnvironment.getProperty(Tracing.TRACING_DATA)
                     }
-                    if (chainToggleAction.isChecked() && tracing != null) {
+                    if (chainToggleAction.isChecked && compilerToggleAction.isChecked && tracing != null) {
                         model = new ModelChain(tracing, getEditor().getTitle(), null)
-                    } else if (compilerToggleAction.isChecked() && compiledModel != null) {
+                    } else if (compilerToggleAction.isChecked && compilerToggleAction.isChecked && compiledModel != null) {
                         model = new ModelChain(sourceModel, compiledModel)
                     } else {
                         model = new ModelChain(sourceModel, sourceModel)
                     }
-                } else if (compilerToggleAction.isChecked() && compiledModel != null) {
+                } else if (compilerToggleAction.isChecked && compiledModel != null) {
                     model = compiledModel
                 } else {
                     model = sourceModel
@@ -705,16 +727,4 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         })
     }
-
-    // -- External UI Contributors
-    // -------------------------------------------------------------------------
-    
-    static def addExternalUIContributor(KiCoModelViewUIContributor contrib) {
-        externalUIContributors.add(contrib)
-    }
-    
-    static def removeExternalUIContributor(KiCoModelViewUIContributor contrib) {
-        externalUIContributors.remove(contrib)
-    }
-
 }

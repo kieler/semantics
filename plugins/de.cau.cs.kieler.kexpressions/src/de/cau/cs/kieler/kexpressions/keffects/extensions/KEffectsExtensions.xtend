@@ -76,7 +76,6 @@ class KEffectsExtensions {
         KEffectsFactory::eINSTANCE.createReferenceCallEffect()
     }
     
-    
     def createEmission() {
         KEffectsFactory::eINSTANCE.createEmission
     }
@@ -99,7 +98,11 @@ class KEffectsExtensions {
     
     // was assingCombined
     def Assignment createCombinedAssignment(ValuedObject valuedObject, Expression newValue) {
-        val op = switch(valuedObject.combineOperator) {
+        return createAssignment(valuedObject, newValue, valuedObject.combineOperator)
+    }
+    
+    def Assignment createAssignment(ValuedObject valuedObject, Expression newValue, CombineOperator combineOperator) {
+        val op = switch(combineOperator) {
             case ADD: AssignOperator.ASSIGNADD
             case AND: AssignOperator.ASSIGNAND
             case MAX: AssignOperator.ASSIGNMAX
@@ -121,11 +124,11 @@ class KEffectsExtensions {
     }
     
     def ValuedObject getValuedObject(Assignment assignment) {
-        if (assignment.reference == null) null else assignment.reference.valuedObject
+        if (assignment.reference === null) null else assignment.reference.valuedObject
     }
     
     def EList<Expression> getIndices(Assignment assignment) {
-        if (assignment.reference == null) {
+        if (assignment.reference === null) {
             return null
         } else {
             return assignment.reference.indices

@@ -122,7 +122,7 @@ class SCGThreadExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            if (nextNode != null)
+            if (nextNode !== null)
             nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
@@ -142,7 +142,7 @@ class SCGThreadExtensions {
                     nextNode = (nextNode as Depth).surface
                     if (!returnList.contains(nextNode)) returnList.add(nextNode)
                 }
-                if (nextNode != null)
+                if (nextNode !== null)
                 nextNode.allPrevious.filter[ 
                     (!returnList.contains(it.eContainer)) && 
                     (!controlFlows.contains(it)) &&
@@ -196,8 +196,11 @@ class SCGThreadExtensions {
         val entryList = <Entry> newArrayList => [
         	add(entry)
         	val previousNode = entry.allPrevious.head?.eContainer as Node
-        	if (previousNode != null) {
-        		addAll(nodeMapping.get(previousNode))
+        	if (previousNode !== null) {
+        	    val nodes = nodeMapping.get(previousNode)
+        	    if (nodes !== null) {
+        		  addAll(nodeMapping.get(previousNode))
+        		}
         	}
         ]
         
@@ -252,7 +255,7 @@ class SCGThreadExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            if (nextNode != null)
+            if (nextNode !== null)
             nextNode.allNext.filter[ 
             	(!nodeSet.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
@@ -283,7 +286,7 @@ class SCGThreadExtensions {
     	            nodeMapping.put(nextNode, entryList)
    	            }
        	    } 
-       	    if (nextNode != null && nextNode != exit.entry) {
+       	    if (nextNode !== null && nextNode != exit.entry) {
 	            nextNode.allPrevious.filter[ 
 	                (!nodeSet.contains(it.eContainer)) && 
 	                (!controlFlows.contains(it)) &&
@@ -350,7 +353,7 @@ class SCGThreadExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            if (nextNode != null)
+            if (nextNode !== null)
             nextNode.allNext.filter[ 
             	(!nodeSet.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
@@ -376,7 +379,7 @@ class SCGThreadExtensions {
                 nextNode = (nextNode as Depth).surface
                 nodeSet.add(nextNode)
             }
-            if (nextNode != null && nextNode != exit.entry)
+            if (nextNode !== null && nextNode != exit.entry)
             nextNode.allPrevious.filter[ 
                 (!nodeSet.contains(it.eContainer)) && 
                 (!controlFlows.contains(it)) &&
@@ -524,7 +527,7 @@ class SCGThreadExtensions {
 //        if (node instanceof Exit) return (node as Exit).entry
         
         val fork = node.getAncestorFork
-        if (fork == null) return null
+        if (fork === null) return null
 
         for (ent : fork.allNext.map[target].filter(typeof(Entry))) {
             if (ent.threadNodes.contains(node)) return ent;
@@ -612,9 +615,12 @@ class SCGThreadExtensions {
     		}
     	}
     	else if (oldType == ThreadPathType::POTENTIALLY_INSTANTANEOUS) {
-    	    if (type == ThreadPathType::DELAYED) {
-                newType = ThreadPathType::DELAYED
-    		}
+    	    newType = oldType
+    	    // FIXME: This is bugged. Potentially instantaneous threads are marked as delayed.
+    	    // Planned revision of the whole thread path type system should solve this. KISEMA-1258
+//    	    if (type == ThreadPathType::DELAYED) {
+//                newType = ThreadPathType::DELAYED
+//    		}
     	}
     	
     	newType
@@ -633,6 +639,11 @@ class SCGThreadExtensions {
     	if (type == ThreadPathType::INSTANTANEOUS) return "Instantaneous"
     	if (type == ThreadPathType::POTENTIALLY_INSTANTANEOUS) return "Potentially instantaneous"
     	return "Unknown"
+    }
+    
+    def toString3(ThreadPathType type) {
+        if (type == ThreadPathType::POTENTIALLY_INSTANTANEOUS) return "Pot. instantaneous"
+        else type.toString2
     }
     
     def ThreadPathType fromString2(String string) {

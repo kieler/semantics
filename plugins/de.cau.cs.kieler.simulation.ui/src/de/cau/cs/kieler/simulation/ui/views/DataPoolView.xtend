@@ -61,11 +61,16 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+import org.eclipse.swt.dnd.DragSource
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DragSourceListener
+import org.eclipse.swt.dnd.DragSourceEvent
+import org.eclipse.swt.dnd.TextTransfer
 
 /**
  * Displays the data of a running simulation.
  * 
- * @author aas
+ * @author aas ssm
  *
  */
 class DataPoolView extends ViewPart {
@@ -122,6 +127,12 @@ class DataPoolView extends ViewPart {
     private var DataPoolFilter filter
     
     /**
+     * Remember the pool for the drag and drop mechanism.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private var DataPool internalDataPool
+    
+    /**
      * Container for the trace mismatches and where they occured.
      * The key is the fully qualified name of a variables.
      * The value is the trace mismatch that occured on this variable.
@@ -167,7 +178,8 @@ class DataPoolView extends ViewPart {
      * Set the data pool to be displayed.
      */
     public def void setDataPool(DataPool pool) {
-        if(pool == null) {
+        internalDataPool = pool
+        if(pool === null) {
             // The simulation stopped. Thus variables are reset.
             viewer.input = null
             traceMismatches = newHashMap
@@ -276,7 +288,7 @@ class DataPoolView extends ViewPart {
         mgr.add(new Action("Reset Selection"){
             override run(){
                 val variable = viewer.structuredSelection.firstElement as Variable
-                if(variable != null) {
+                if(variable !== null) {
                     variable.userValue = null
                     viewer.update(variable, null)
                 } 
@@ -308,12 +320,12 @@ class DataPoolView extends ViewPart {
                 // CTRL + LEFT: step history back
                 if(mod.hasBit(SWT.CTRL)) {
                     if(e.keyCode == SWT.ARROW_RIGHT) {
-                        if(manager != null) {
+                        if(manager !== null) {
                             PromConsole.print("Step History Forward")
                             manager.stepHistoryForward()
                         }
                     } else if(e.keyCode == SWT.ARROW_LEFT) {
-                        if(manager != null) {
+                        if(manager !== null) {
                             PromConsole.print("Step History Back")
                             manager.stepHistoryBack()
                         }
@@ -321,14 +333,14 @@ class DataPoolView extends ViewPart {
                 } else {
                     // No CTRL + RIGHT: Step Macro Tick
                     if(e.keyCode == SWT.ARROW_RIGHT) {
-                        if(manager != null) {
+                        if(manager !== null) {
                             PromConsole.print("Step Macro Tick")
                             manager.stepMacroTick()
                         }
                     }
                     // No CTRL + SPACE: Play Simulation
                     if(e.keyCode == SWT.SPACE) {
-                        if(manager != null) {
+                        if(manager !== null) {
                             PromConsole.print("Playing Simulation")
                             if(manager.isPlaying) {
                                 manager.pause()
@@ -357,7 +369,7 @@ class DataPoolView extends ViewPart {
      * Creates the table to show and edit data pools.
      */
     private def TableViewer createTable(Composite parent) {
-        val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
+        val table = new Table(parent, SWT.BORDER + SWT.FULL_SELECTION + SWT.MULTI)
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
 
@@ -389,7 +401,7 @@ class DataPoolView extends ViewPart {
                 if(element instanceof Variable) {
                     // Add tooltip about trace mismatch of this value
                     val mismatch = getTraceMismatch(element)
-                    if(mismatch != null) {
+                    if(mismatch !== null) {
                         return mismatch.toString
                     }
                 }
@@ -429,17 +441,17 @@ class DataPoolView extends ViewPart {
             override getImage(Object element) {
                 if(element instanceof Variable) {
                     if(element.isInput && element.isOutput) {
-                        if(inputOutputImage == null) {
+                        if(inputOutputImage === null) {
                             inputOutputImage = inputOutputImageDescriptor.createImage    
                         }
                         return inputOutputImage
                     } else if (element.isInput) {
-                        if(inputImage == null) {
+                        if(inputImage === null) {
                             inputImage = inputImageDescriptor.createImage    
                         }
                         return inputImage
                     } else if (element.isOutput) {
-                        if(outputImage == null) {
+                        if(outputImage === null) {
                             outputImage = outputImageDescriptor.createImage    
                         }
                         return outputImage
@@ -496,6 +508,28 @@ class DataPoolView extends ViewPart {
             ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR).bitwiseOr(
             ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
             ColumnViewerEditor.KEYBOARD_ACTIVATION))
+
+
+        val DragSource dndSource = new DragSource(viewer.control, DND.DROP_MOVE + DND.DROP_COPY)
+        dndSource.setTransfer(#[TextTransfer.getInstance()])
+        dndSource.addDragListener(new DragSourceListener () {
+            override dragStart(DragSourceEvent event) {
+            }
+            
+            override dragSetData(DragSourceEvent event) {
+                var vals = ""
+                for (selection : table.selection) {
+                    if (vals != "") { vals = vals + "," }
+                    vals = vals + selection.getText(0)
+                }    
+                
+                event.data = vals
+            }
+            
+            override dragFinished(DragSourceEvent event) {
+            }
+            
+        })
             
         return viewer
     }
@@ -547,7 +581,7 @@ class DataPoolView extends ViewPart {
      */
     private def void setStatusLineText(String value) {
         val bars = getViewSite().getActionBars();
-        if(bars != null) {
+        if(bars !== null) {
             val statusLineManager = bars.getStatusLineManager()
             statusLineManager.setMessage(value);
         }
@@ -575,7 +609,7 @@ class DataPoolView extends ViewPart {
              */
             override update(SimulationEvent e) {
                 dataPoolView = DataPoolView.instance
-                if(dataPoolView == null) {
+                if(dataPoolView === null) {
                     return;
                 }
                 super.update(e)

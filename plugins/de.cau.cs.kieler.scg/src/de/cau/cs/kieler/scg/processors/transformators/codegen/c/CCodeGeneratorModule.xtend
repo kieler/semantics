@@ -92,6 +92,9 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         tick.generateDone
     }
     
+    /**
+     * In C, the generator write creates two files, a header and a c file.
+     */
     override generateWrite(CodeContainer codeContainer) {
         val hFilename = codeFilename + H_EXTENSION
         val cFilename = codeFilename + C_EXTENSION
@@ -112,6 +115,9 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         codeContainer.add(hFilename, hFile.toString)
     }    
     
+    /**
+     * Adds the information header.
+     */
     protected def void addHeader(StringBuilder sb) {
         sb.append(
             "/*\n" + " * Automatically generated C code by\n" + " * KIELER SCCharts - The Key to Efficient Modeling\n" +
@@ -122,6 +128,10 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         }
     }  
     
+    /**
+     * Adds hostcode additions. These can come from internal sources like the serialization, 
+     * but also from the model via hostcode pragmas.
+     */
     protected def void hostcodeAdditions(StringBuilder sb) {
         val includes = modifications.get(CCodeSerializeHRExtensions.INCLUDES)
         for (include : includes)  {
@@ -137,6 +147,10 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         }
     }  
     
+    /**
+     * If debug comments are toggled, information from the context are also saved.
+     * For now this includes a list of executed processors.
+     */
     protected def void addDebugComments(StringBuilder sb) {
         sb.append("/*\n" + " * Debug Comments\n *\n")
         

@@ -11,21 +11,6 @@
       </page>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="de.cau.cs.kieler.Modeling">
-         <newWizardShortcut
-               id="org.eclipse.ui.wizards.new.folder">
-         </newWizardShortcut>
-      </perspectiveExtension>
-      <perspectiveExtension
-            targetID="de.cau.cs.kieler.simulation">
-         <newWizardShortcut
-               id="org.eclipse.ui.wizards.new.folder">
-         </newWizardShortcut>
-      </perspectiveExtension>
-   </extension>
-   <extension
          point="org.eclipse.ui.propertyPages">
       <page
             class="de.cau.cs.kieler.prom.ui.build.KielerModelingProjectProperties"
@@ -74,6 +59,27 @@
             id="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             name="KIELER Modeling">
       </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="org.eclipse.ui.wizards.new.folder">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="de.cau.cs.kieler.prom.ui.ftlFileWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="org.eclipse.ui.wizards.new.folder">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="de.cau.cs.kieler.prom.ui.ftlFileWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
    
    

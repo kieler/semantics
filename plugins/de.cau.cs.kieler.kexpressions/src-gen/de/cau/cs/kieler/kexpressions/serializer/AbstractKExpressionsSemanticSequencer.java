@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.RandomCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
@@ -369,6 +371,104 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 				return; 
+			case KExpressionsPackage.RANDOM_CALL:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_RandomCall(context, (RandomCall) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getRandomCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_RandomCall(context, (RandomCall) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.RANDOMIZE_CALL:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_RandomizeCall(context, (RandomizeCall) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getRandomizeCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_RandomizeCall(context, (RandomizeCall) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.REFERENCE_CALL:
 				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()) {
@@ -940,6 +1040,32 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
+	 *     Root returns RandomCall
+	 *     Expression returns RandomCall
+	 *
+	 * Constraint:
+	 *     schedule+=ScheduleObjectReference*
+	 */
+	protected void sequence_Expression_RandomCall(ISerializationContext context, RandomCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Root returns RandomizeCall
+	 *     Expression returns RandomizeCall
+	 *
+	 * Constraint:
+	 *     schedule+=ScheduleObjectReference*
+	 */
+	protected void sequence_Expression_RandomizeCall(ISerializationContext context, RandomizeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Root returns ReferenceCall
 	 *     Expression returns ReferenceCall
 	 *
@@ -1194,6 +1320,106 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
+	 *     BoolExpression returns RandomCall
+	 *     LogicalOrExpression returns RandomCall
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns RandomCall
+	 *     LogicalAndExpression returns RandomCall
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns RandomCall
+	 *     BitwiseOrExpression returns RandomCall
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns RandomCall
+	 *     BitwiseXOrExpression returns RandomCall
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns RandomCall
+	 *     BitwiseAndExpression returns RandomCall
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns RandomCall
+	 *     CompareOperation returns RandomCall
+	 *     CompareOperation.OperatorExpression_1_0 returns RandomCall
+	 *     NotOrValuedExpression returns RandomCall
+	 *     BitwiseNotExpression returns RandomCall
+	 *     NotExpression returns RandomCall
+	 *     ValuedExpression returns RandomCall
+	 *     ShiftLeftExpression returns RandomCall
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns RandomCall
+	 *     ShiftRightExpression returns RandomCall
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns RandomCall
+	 *     ShiftRightUnsignedExpression returns RandomCall
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns RandomCall
+	 *     AddExpression returns RandomCall
+	 *     AddExpression.OperatorExpression_1_0 returns RandomCall
+	 *     SubExpression returns RandomCall
+	 *     SubExpression.OperatorExpression_1_0 returns RandomCall
+	 *     MultExpression returns RandomCall
+	 *     MultExpression.OperatorExpression_1_0 returns RandomCall
+	 *     DivExpression returns RandomCall
+	 *     DivExpression.OperatorExpression_1_0 returns RandomCall
+	 *     ModExpression returns RandomCall
+	 *     ModExpression.OperatorExpression_1_0 returns RandomCall
+	 *     NegExpression returns RandomCall
+	 *     TernaryOperation returns RandomCall
+	 *     AtomicExpression returns RandomCall
+	 *     AtomicValuedExpression returns RandomCall
+	 *     RandomCall returns RandomCall
+	 *     VectorValueMember returns RandomCall
+	 *
+	 * Constraint:
+	 *     {RandomCall}
+	 */
+	protected void sequence_RandomCall(ISerializationContext context, RandomCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BoolExpression returns RandomizeCall
+	 *     LogicalOrExpression returns RandomizeCall
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     LogicalAndExpression returns RandomizeCall
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     BitwiseOrExpression returns RandomizeCall
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     BitwiseXOrExpression returns RandomizeCall
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     BitwiseAndExpression returns RandomizeCall
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     CompareOperation returns RandomizeCall
+	 *     CompareOperation.OperatorExpression_1_0 returns RandomizeCall
+	 *     NotOrValuedExpression returns RandomizeCall
+	 *     BitwiseNotExpression returns RandomizeCall
+	 *     NotExpression returns RandomizeCall
+	 *     ValuedExpression returns RandomizeCall
+	 *     ShiftLeftExpression returns RandomizeCall
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     ShiftRightExpression returns RandomizeCall
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     ShiftRightUnsignedExpression returns RandomizeCall
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     AddExpression returns RandomizeCall
+	 *     AddExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     SubExpression returns RandomizeCall
+	 *     SubExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     MultExpression returns RandomizeCall
+	 *     MultExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     DivExpression returns RandomizeCall
+	 *     DivExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     ModExpression returns RandomizeCall
+	 *     ModExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     NegExpression returns RandomizeCall
+	 *     TernaryOperation returns RandomizeCall
+	 *     AtomicExpression returns RandomizeCall
+	 *     AtomicValuedExpression returns RandomizeCall
+	 *     RandomizeCall returns RandomizeCall
+	 *     VectorValueMember returns RandomizeCall
+	 *
+	 * Constraint:
+	 *     {RandomizeCall}
+	 */
+	protected void sequence_RandomizeCall(ISerializationContext context, RandomizeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     BoolExpression returns ReferenceCall
 	 *     LogicalOrExpression returns ReferenceCall
 	 *     LogicalOrExpression.OperatorExpression_1_0 returns ReferenceCall
@@ -1257,7 +1483,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.SCHEDULE_OBJECT_REFERENCE__PRIORITY));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
 		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0(), semanticObject.getPriority());
 		feeder.finish();
 	}
