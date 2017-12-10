@@ -142,7 +142,9 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         viewer.selection = new StructuredSelection(ModelAnalyzer.analyzers.findFirst[it.isSupported("sctx")])
         compileChainField.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                currentAnalyzer.compileChain = compileChainField.text
+                if(currentAnalyzer !== null) {
+                    currentAnalyzer.compileChain = compileChainField.text    
+                }
             }
         })
     }
@@ -152,6 +154,24 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      */
     private def void setCurrentAnalyzer(ModelAnalyzer analyzer) {
         this.currentAnalyzer = analyzer
-        compileChainField.text = currentAnalyzer.compileChain
+        if(currentAnalyzer !== null) {
+            compileChainField.text = currentAnalyzer.compileChain    
+        } else {
+            compileChainField.text = ""
+        }
+    }
+    
+    /**
+     * Restore the default values. 
+     */
+    override performDefaults() {
+        // Reset compile chain of model analyzers
+        for(analyzer : ModelAnalyzer.analyzers) {
+            analyzer.compileChain = analyzer.defaultCompileChain
+        }
+        // Update UI
+        setCurrentAnalyzer(currentAnalyzer)
+        
+        super.performDefaults
     }
 }

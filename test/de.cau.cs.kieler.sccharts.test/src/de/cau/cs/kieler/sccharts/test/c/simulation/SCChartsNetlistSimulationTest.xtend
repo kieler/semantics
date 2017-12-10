@@ -96,9 +96,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         try {
             // Build the simulation executable
             try {
-                // Setup model file
-                context.model = scc
-                context.compileModel
+                context.compileModelForSimulation(scc)
             } catch (Exception e) {
                 fail(e.message)
             }
