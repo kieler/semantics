@@ -76,7 +76,6 @@ class KEffectsExtensions {
         KEffectsFactory::eINSTANCE.createReferenceCallEffect()
     }
     
-    
     def createEmission() {
         KEffectsFactory::eINSTANCE.createEmission
     }

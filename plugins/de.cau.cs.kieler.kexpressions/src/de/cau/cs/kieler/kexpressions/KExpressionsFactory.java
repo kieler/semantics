@@ -152,6 +152,24 @@ public interface KExpressionsFactory extends EFactory {
     PrintCall createPrintCall();
 
     /**
+     * Returns a new object of class '<em>Random Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Random Call</em>'.
+     * @generated
+     */
+    RandomCall createRandomCall();
+
+    /**
+     * Returns a new object of class '<em>Randomize Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Randomize Call</em>'.
+     * @generated
+     */
+    RandomizeCall createRandomizeCall();
+
+    /**
      * Returns a new object of class '<em>Parameter</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -90,6 +90,8 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
                 code.append(";\n")
             }
         }
+        
+        code.globalObjectAdditions(serializer)        
     }
     
     override generateDone() {
@@ -139,4 +141,12 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         }                
     }
     
+    protected def void globalObjectAdditions(StringBuilder sb, extension CCodeSerializeHRExtensions serializer) {
+        val globalObjects = modifications.get(JavaCodeSerializeHRExtensions.GLOBAL_OBJECTS)
+        for (object : globalObjects)  {
+            sb.append(indentation + object + "\n")
+        }
+        
+    }  
+        
 }

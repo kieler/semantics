@@ -11,15 +11,15 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.internal.model.action;
+package de.cau.cs.kieler.kicool.ui.klighd.actions;
 
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder;
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.editor.StringBasedEditorInput;
+import de.cau.cs.kieler.kicool.ui.klighd.editor.StringBasedEditorInput;
+import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**

@@ -41,6 +41,8 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.PrintCall
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * C Code Generator Logic Module
@@ -57,7 +59,6 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
-//    @Inject extension CCodeSerializeHRExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     static val LOGIC_NAME = "logic"
@@ -137,7 +138,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 code.append((assignment.expression as TextExpression).text).append("\n")
             } else if (assignment.expression instanceof PrintCall) {
                 indent(conditionalStack.size + 1)
-                code.append((assignment.expression as PrintCall).serializeHR).append(";\n")                    
+                code.append((assignment.expression as PrintCall).serializeHR).append(";\n")
+            } else if (assignment.expression instanceof RandomizeCall) {
+                indent(conditionalStack.size + 1)
+                code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
             } else {
                 throw new NullPointerException("Assigned valued object is null")
             }
@@ -258,7 +262,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     val newAssignment = ScgFactory.eINSTANCE.createAssignment
                     newAssignment.valuedObject = vo
                     for (is : indexStack) {
-                        newAssignment.indices.add(createIntValue(is))
+                        newAssignment.indices.add(0, createIntValue(is))
                     }
                     newAssignment.indices.add(createIntValue(index))
                     newAssignment.expression = v.copy

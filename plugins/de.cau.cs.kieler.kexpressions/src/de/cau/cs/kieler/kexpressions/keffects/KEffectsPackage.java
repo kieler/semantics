@@ -444,6 +444,52 @@ public interface KEffectsPackage extends EPackage {
     int PRINT_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.RandomizeCallEffectImpl <em>Randomize Call Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.RandomizeCallEffectImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getRandomizeCallEffect()
+     * @generated
+     */
+    int RANDOMIZE_CALL_EFFECT = 7;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Randomize Call Effect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -451,7 +497,7 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
      * @generated
      */
-    int ASSIGN_OPERATOR = 7;
+    int ASSIGN_OPERATOR = 8;
 
 
     /**
@@ -589,6 +635,16 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EClass getPrintCallEffect();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect <em>Randomize Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Randomize Call Effect</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+     * @generated
+     */
+    EClass getRandomizeCallEffect();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}'.
@@ -739,6 +795,16 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EClass PRINT_CALL_EFFECT = eINSTANCE.getPrintCallEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.RandomizeCallEffectImpl <em>Randomize Call Effect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.RandomizeCallEffectImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getRandomizeCallEffect()
+         * @generated
+         */
+        EClass RANDOMIZE_CALL_EFFECT = eINSTANCE.getRandomizeCallEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.

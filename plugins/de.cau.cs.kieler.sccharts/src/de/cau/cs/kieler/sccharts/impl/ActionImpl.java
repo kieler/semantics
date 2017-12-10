@@ -46,8 +46,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTriggerDelay <em>Trigger Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTriggerProbability <em>Trigger Probability</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#isNondeterministic <em>Nondeterministic</em>}</li>
  * </ul>
  *
  * @generated
@@ -101,6 +103,26 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
     protected int triggerDelay = TRIGGER_DELAY_EDEFAULT;
 
     /**
+     * The default value of the '{@link #getTriggerProbability() <em>Trigger Probability</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTriggerProbability()
+     * @generated
+     * @ordered
+     */
+    protected static final double TRIGGER_PROBABILITY_EDEFAULT = 0.0;
+
+    /**
+     * The cached value of the '{@link #getTriggerProbability() <em>Trigger Probability</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTriggerProbability()
+     * @generated
+     * @ordered
+     */
+    protected double triggerProbability = TRIGGER_PROBABILITY_EDEFAULT;
+
+    /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -139,6 +161,26 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * @ordered
      */
     protected DelayType delay = DELAY_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isNondeterministic() <em>Nondeterministic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isNondeterministic()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean NONDETERMINISTIC_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isNondeterministic() <em>Nondeterministic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isNondeterministic()
+     * @generated
+     * @ordered
+     */
+    protected boolean nondeterministic = NONDETERMINISTIC_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -240,6 +282,27 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    public double getTriggerProbability() {
+        return triggerProbability;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTriggerProbability(double newTriggerProbability) {
+        double oldTriggerProbability = triggerProbability;
+        triggerProbability = newTriggerProbability;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__TRIGGER_PROBABILITY, oldTriggerProbability, triggerProbability));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public DelayType getDelay() {
         return delay;
     }
@@ -254,6 +317,27 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
         delay = newDelay == null ? DELAY_EDEFAULT : newDelay;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__DELAY, oldDelay, delay));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isNondeterministic() {
+        return nondeterministic;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setNondeterministic(boolean newNondeterministic) {
+        boolean oldNondeterministic = nondeterministic;
+        nondeterministic = newNondeterministic;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__NONDETERMINISTIC, oldNondeterministic, nondeterministic));
     }
 
     /**
@@ -307,10 +391,14 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
                 return getTrigger();
             case SCChartsPackage.ACTION__TRIGGER_DELAY:
                 return getTriggerDelay();
+            case SCChartsPackage.ACTION__TRIGGER_PROBABILITY:
+                return getTriggerProbability();
             case SCChartsPackage.ACTION__LABEL:
                 return getLabel();
             case SCChartsPackage.ACTION__DELAY:
                 return getDelay();
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                return isNondeterministic();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -334,11 +422,17 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__TRIGGER_DELAY:
                 setTriggerDelay((Integer)newValue);
                 return;
+            case SCChartsPackage.ACTION__TRIGGER_PROBABILITY:
+                setTriggerProbability((Double)newValue);
+                return;
             case SCChartsPackage.ACTION__LABEL:
                 setLabel((String)newValue);
                 return;
             case SCChartsPackage.ACTION__DELAY:
                 setDelay((DelayType)newValue);
+                return;
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                setNondeterministic((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -361,11 +455,17 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__TRIGGER_DELAY:
                 setTriggerDelay(TRIGGER_DELAY_EDEFAULT);
                 return;
+            case SCChartsPackage.ACTION__TRIGGER_PROBABILITY:
+                setTriggerProbability(TRIGGER_PROBABILITY_EDEFAULT);
+                return;
             case SCChartsPackage.ACTION__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
             case SCChartsPackage.ACTION__DELAY:
                 setDelay(DELAY_EDEFAULT);
+                return;
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                setNondeterministic(NONDETERMINISTIC_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -385,10 +485,14 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
                 return trigger != null;
             case SCChartsPackage.ACTION__TRIGGER_DELAY:
                 return triggerDelay != TRIGGER_DELAY_EDEFAULT;
+            case SCChartsPackage.ACTION__TRIGGER_PROBABILITY:
+                return triggerProbability != TRIGGER_PROBABILITY_EDEFAULT;
             case SCChartsPackage.ACTION__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case SCChartsPackage.ACTION__DELAY:
                 return delay != DELAY_EDEFAULT;
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                return nondeterministic != NONDETERMINISTIC_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -405,10 +509,14 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (triggerDelay: ");
         result.append(triggerDelay);
+        result.append(", triggerProbability: ");
+        result.append(triggerProbability);
         result.append(", label: ");
         result.append(label);
         result.append(", delay: ");
         result.append(delay);
+        result.append(", nondeterministic: ");
+        result.append(nondeterministic);
         result.append(')');
         return result.toString();
     }

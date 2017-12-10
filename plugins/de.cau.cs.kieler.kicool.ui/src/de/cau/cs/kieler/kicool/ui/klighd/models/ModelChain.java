@@ -11,13 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.internal.model;
+package de.cau.cs.kieler.kicool.ui.klighd.models;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
+import de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis;
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 
 /**

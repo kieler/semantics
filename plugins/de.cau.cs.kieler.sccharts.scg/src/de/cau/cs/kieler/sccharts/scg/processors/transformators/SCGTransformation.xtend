@@ -87,6 +87,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.Call
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -583,6 +587,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof PrintCallEffect) {
                 assignment.setExpression((effect as PrintCallEffect).convertToSCGExpression.trace(transition, effect))
+            } else if (effect instanceof RandomizeCallEffect) {
+                assignment.setExpression((effect as RandomizeCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
@@ -827,6 +833,18 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             printCall.parameters.forEach[ pc.parameters += it.convertToSCGParameter ]
         ]
     }
+    
+    def dispatch Expression convertToSCGExpression(RandomCall randomCall) {
+        createRandomCall.trace(randomCall) => [ rc |
+            randomCall.parameters.forEach [ rc.parameters += it.convertToSCGParameter ]
+        ] 
+    }
+    
+    def dispatch Expression convertToSCGExpression(RandomizeCall randomizeCall) {
+        createRandomizeCall.trace(randomizeCall) => [ rc |
+            randomizeCall.parameters.forEach [ rc.parameters += it.convertToSCGParameter ]
+        ] 
+    }    
     
     def dispatch Expression convertToSCGExpression(ReferenceCall referenceCall) {
         createReferenceCall.trace(referenceCall) => [ rc |

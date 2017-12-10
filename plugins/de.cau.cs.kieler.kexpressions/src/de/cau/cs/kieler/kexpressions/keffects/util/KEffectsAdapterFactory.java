@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.PrintCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.TextExpression;
@@ -107,6 +108,10 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
                 return createPrintCallEffectAdapter();
             }
             @Override
+            public Adapter caseRandomizeCallEffect(RandomizeCallEffect object) {
+                return createRandomizeCallEffectAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -141,6 +146,10 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter casePrintCall(PrintCall object) {
                 return createPrintCallAdapter();
+            }
+            @Override
+            public Adapter caseRandomizeCall(RandomizeCall object) {
+                return createRandomizeCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -257,6 +266,20 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createPrintCallEffectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect <em>Randomize Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+     * @generated
+     */
+    public Adapter createRandomizeCallEffectAdapter() {
         return null;
     }
 
@@ -383,6 +406,20 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createPrintCallAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.RandomizeCall <em>Randomize Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.RandomizeCall
+     * @generated
+     */
+    public Adapter createRandomizeCallAdapter() {
         return null;
     }
 

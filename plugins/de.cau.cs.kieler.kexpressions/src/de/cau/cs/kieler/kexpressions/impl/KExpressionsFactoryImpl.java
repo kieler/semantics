@@ -80,6 +80,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
             case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
             case KExpressionsPackage.PRINT_CALL: return createPrintCall();
+            case KExpressionsPackage.RANDOM_CALL: return createRandomCall();
+            case KExpressionsPackage.RANDOMIZE_CALL: return createRandomizeCall();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -265,6 +267,26 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public PrintCall createPrintCall() {
         PrintCallImpl printCall = new PrintCallImpl();
         return printCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public RandomCall createRandomCall() {
+        RandomCallImpl randomCall = new RandomCallImpl();
+        return randomCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public RandomizeCall createRandomizeCall() {
+        RandomizeCallImpl randomizeCall = new RandomizeCallImpl();
+        return randomizeCall;
     }
 
     /**

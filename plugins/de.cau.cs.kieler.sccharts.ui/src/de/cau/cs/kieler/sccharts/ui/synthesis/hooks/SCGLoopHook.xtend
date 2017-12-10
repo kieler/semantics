@@ -13,37 +13,32 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.klighd.kgraph.KLayoutData
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import java.util.List
-import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.Status
-import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.ui.progress.UIJob
-
-import static de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook.*
-import com.google.common.collect.Multimap
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
@@ -55,7 +50,7 @@ import com.google.common.collect.Multimap
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGLoopHook extends SynthesisActionHook {
+class SCGLoopHook extends SynthesisHook {
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
@@ -65,32 +60,20 @@ class SCGLoopHook extends SynthesisActionHook {
     public static final String JOB_NAME = "Calculating SCG Loops";
     /** The related synthesis option. */
     public static final SynthesisOption SHOW_SCG_LOOPS = SynthesisOption.createCheckOption("SCG Loops", false).
-        setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateAction(SCGLoopHook.ID); // Add this action as updater
-    /** Property to store analysis results. */
-    private static final IProperty<List<KRendering>> LOOP_ELEMENTS = new Property<List<KRendering>>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.loops.elements", null);
+        setCategory(GeneralSynthesisOptions::DEBUGGING)
+        .setUpdateStrategy(SimpleUpdateStrategy.ID)
     /** Property to mark highlighting styles. */
     private static final IProperty<Boolean> IS_HIGHLIGHTING = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.loops.highlighting", false);
 
-// Deactivated until new SCG compilation provides loop information
-//    override getDisplayedSynthesisOptions() {
-//        return newLinkedList(SHOW_SCG_LOOPS);
-//    }
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(SHOW_SCG_LOOPS);
+    }
 
     override finish(Scope model, KNode rootNode) {
         if (SHOW_SCG_LOOPS.booleanValue) {
             rootNode.showLoops(model);
         }
-    }
-
-    override executeAction(KNode rootNode) {
-        if (SHOW_SCG_LOOPS.booleanValue) {
-            rootNode.showLoops(usedContext.inputModel);
-        } else {
-            rootNode.hideLoops;
-        }
-        return ActionResult.createResult(false);
     }
 
     /** 
@@ -101,102 +84,49 @@ class SCGLoopHook extends SynthesisActionHook {
             throw new IllegalArgumentException("Cannot perform SCG analysis on models other than states");
         }
         val scc = model as State;
-        val context = usedContext;
-        val loopElements = rootNode.getProperty(LOOP_ELEMENTS);
-        // If not already calculated
-        if (loopElements == null) {
-            val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
-            if (tracker == null) {
-                throw new IllegalArgumentException("Missing source model tracker");
-            }
-
-            // Create and start background job for compiling
-            new Job(JOB_NAME) {
-
-                override protected run(IProgressMonitor monitor) {
-                    val newLoopElements = calculateSCGLoopElements(rootNode, scc, tracker);
-
-                    // This part should be synchronized with the ui
-                    new UIJob(JOB_NAME) {
-
-                        override runInUIThread(IProgressMonitor monitor) {
-                            if (rootNode.getProperty(LOOP_ELEMENTS) == null) {
-                                rootNode.setProperty(LOOP_ELEMENTS, newLoopElements);
-                                if (context.getOptionValue(SHOW_SCG_LOOPS) as Boolean) {
-                                    newLoopElements.forEach[addHighlighting];
-                                }
-                            }
-                            return Status.OK_STATUS;
-                        }
-
-                    }.schedule
-                    return Status.OK_STATUS;
-                }
-
-            }.schedule;
-        } else {
-            loopElements.forEach[addHighlighting];
+        val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
+        if (tracker == null) {
+            throw new IllegalArgumentException("Missing source model tracker");
         }
-    }
-
-    /** 
-     * Hide the loop highlighting.
-     */
-    private def hideLoops(KNode rootNode) {
-        val propertyHolder = rootNode.data.filter(KLayoutData).head;
-        val loopElements = propertyHolder?.getProperty(LOOP_ELEMENTS);
-        if (loopElements != null) {
-            loopElements.forEach[removeHighlighting];
-        }
+        val newLoopElements = calculateSCGLoopElements(rootNode, scc, tracker);
+        newLoopElements.forEach[addHighlighting];
     }
 
     /** 
      * Calculate diagram elements related to SCG elements on loops.
      */
-    private def List<KRendering> calculateSCGLoopElements(KNode rootNode, State scc,
-        SourceModelTrackingAdapter tracking) {
-
-        // TODO This transformation selection should be sensitive to the user selection in KiCoSelectionView regarding its editor
-        // TODO adapt to kicool
-//        val context = new KielerCompilerContext(SCGFeatures.GUARD_EXPRESSIONS_ID +
-//            ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
-//            scc);
-//        context.setProperty(Tracing.ACTIVE_TRACING, true);
-//        context.advancedSelect = true;
-//        val result = KielerCompiler.compile(context);
-//        val compiledModel = result.object;
-//        val scg = compiledModel as SCGraph;
-//
-//        val loops = result.getAuxiliaryData(PotentialInstantaneousLoopResult)
-//        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
-
-        val List<PotentialInstantaneousLoopResult> loops = null
-        val Multimap<Object, Object> mapping = null
-
-        // Calculate equivalence classes for diagram elements
-        val equivalenceClasses = new TracingMapping(null);
-        for (EObject obj : scc.eAllContents.toIterable) {
-            var elements = tracking.getTargetElements(obj);
-            // If no diagram element is associated with the given model element its container is used to find an appropriate representation
-            if (elements.empty) {
-                var next = obj;
-                while (elements.empty && next != null) {
-                    next = next.eContainer;
-                    elements = tracking.getTargetElements(next);
-                }
-                equivalenceClasses.putAll(obj, elements);
-            }
-        }
-
-        // Analyze loops and tracing
+    private def List<KRendering> calculateSCGLoopElements(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
         val loopElements = newLinkedList;
-        if (mapping != null) {
-            for (PotentialInstantaneousLoopResult loop : loops) {
+
+        val context = compileDependencies(scc);
+        val scgRoot = context.result.getModel
+        if (scgRoot instanceof SCGraphs) {
+            val scg = scgRoot.scgs.head
+            val loops = context.result.getProperty(LoopAnalyzerV2.LOOP_DATA)
+            val mapping = context.startEnvironment.getProperty(Tracing.TRACING_DATA).getMapping(scgRoot, scc.eContainer as SCCharts)
+    
+            if (loops !== null && !loops.criticalNodes.empty && mapping !== null) {
+                // Calculate equivalence classes for diagram elements
+                val equivalenceClasses = new TracingMapping(null);
+                for (EObject obj : scc.eAllContents.toIterable) {
+                    var elements = tracking.getTargetElements(obj);
+                    // If no diagram element is associated with the given model element its container is used to find an appropriate representation
+                    if (elements.empty) {
+                        var next = obj;
+                        while (elements.empty && next != null) {
+                            next = next.eContainer;
+                            elements = tracking.getTargetElements(next);
+                        }
+                        equivalenceClasses.putAll(obj, elements);
+                    }
+                }
+        
+                // Analyze loops and tracing
                 val criticalSCGElements = <Object>newArrayList();
-                criticalSCGElements.addAll(loop.criticalNodes)
-                for (Node node : loop.criticalNodes) {
+                criticalSCGElements.addAll(loops.criticalNodes)
+                for (Node node : loops.criticalNodes) {
                     criticalSCGElements.addAll(node.incoming.filter [
-                        loop.criticalNodes.contains(it.eContainer)
+                        loops.criticalNodes.contains(it.eContainer)
                     ]);
                 }
                 // Get diagram elements form tracing
@@ -217,6 +147,28 @@ class SCGLoopHook extends SynthesisActionHook {
             }
         }
         return loopElements;
+    }
+    
+    /**
+     * Compiles the given SCChart with tracing to get dependencies
+     */
+    private def CompilationContext compileDependencies(State state) {
+        val model = state.eContainer as SCCharts
+        val cc = Compile.createCompilationContext("de.cau.cs.kieler.sccharts.netlist", model)
+        
+        cc.startEnvironment.setProperty(Environment.INPLACE, true)
+        cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
+        
+        val dependecyAnalysis = cc.processorMap.entrySet.findFirst[
+            key.id.equals("de.cau.cs.kieler.scg.processors.transformators.dependency")
+        ]?.value
+        if (dependecyAnalysis === null) throw new NullPointerException("Can not find dependency transformation in compilation system")
+        // Stop after the dependency analysis
+        dependecyAnalysis.environment.setProperty(Environment.CANCEL_COMPILATION, true) 
+        
+        cc.compile
+
+        return cc
     }
 
     /** 

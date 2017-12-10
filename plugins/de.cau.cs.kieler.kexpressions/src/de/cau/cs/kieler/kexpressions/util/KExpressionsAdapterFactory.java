@@ -166,6 +166,14 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createPrintCallAdapter();
             }
             @Override
+            public Adapter caseRandomCall(RandomCall object) {
+                return createRandomCallAdapter();
+            }
+            @Override
+            public Adapter caseRandomizeCall(RandomizeCall object) {
+                return createRandomizeCallAdapter();
+            }
+            @Override
             public Adapter caseReferenceable(Referenceable object) {
                 return createReferenceableAdapter();
             }
@@ -436,6 +444,34 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createPrintCallAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.RandomCall <em>Random Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.RandomCall
+     * @generated
+     */
+    public Adapter createRandomCallAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.RandomizeCall <em>Randomize Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.RandomizeCall
+     * @generated
+     */
+    public Adapter createRandomizeCallAdapter() {
         return null;
     }
 
