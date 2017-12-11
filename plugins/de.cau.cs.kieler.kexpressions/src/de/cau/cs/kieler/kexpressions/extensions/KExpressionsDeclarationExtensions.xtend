@@ -28,6 +28,8 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
+import de.cau.cs.kieler.kexpressions.ExternString
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 
 /**
  * @author ssm
@@ -42,6 +44,10 @@ class KExpressionsDeclarationExtensions {
     
     def dispatch Declaration createDeclaration(ReferenceDeclaration declaration) {
         declaration.createReferenceDeclaration
+    }
+    
+    def dispatch Declaration createDeclaration(ScheduleDeclaration declaration) {
+        declaration.createScheduleDeclaration
     }
     
     /**
@@ -122,12 +128,43 @@ class KExpressionsDeclarationExtensions {
     } 
     
     def ReferenceDeclaration createReferenceDeclaration(ReferenceDeclaration declaration) {
-        (createReferenceDeclaration as ReferenceDeclaration) => [
-            reference = declaration.reference
-            extern = declaration.extern
+        (createReferenceDeclaration as ReferenceDeclaration) => [ d |
+            d.reference = declaration.reference
+            declaration.extern.forEach[
+                d.extern += it.createExternString
+            ]
         ]
     }
     
+    def createExternString(String code) {
+        KExpressionsFactory.eINSTANCE.createExternString => [
+            it.code = code
+        ]
+    }
+    
+    def createExternString(ExternString externString) {
+        createExternString(externString.code) => [ e |
+            externString.annotations.forEach[
+                e.annotations += it.copy
+            ]
+        ]
+    }
+    
+    def ScheduleDeclaration createScheduleDeclaration() {
+        KExpressionsFactory::eINSTANCE.createScheduleDeclaration
+    }
+    
+    def ScheduleDeclaration createScheduleDeclaration(ScheduleDeclaration declaration) {
+        createScheduleDeclaration => [ d |
+            d.name = declaration.name
+            d.global = declaration.global
+            declaration.priorities.forEach[
+                d.priorities.add(it)
+            ]            
+        ]
+    }
+        
+        
     def void delete(Declaration declaration) {
         declaration.valuedObjects.immutableCopy.forEach[ remove ]
         declaration.remove

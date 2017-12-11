@@ -72,6 +72,7 @@
 'float'=48
 'fork'=139
 'function'=83
+'global'=147
 'goto'=135
 'halt'=98
 'handle'=123
@@ -102,7 +103,6 @@
 'pre'=17
 'present'=104
 'print'=148
-'prio'=147
 'procedure'=86
 'pure'=44
 'randomize'=149

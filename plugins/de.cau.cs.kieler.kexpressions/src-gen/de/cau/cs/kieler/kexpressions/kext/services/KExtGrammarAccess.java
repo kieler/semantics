@@ -581,7 +581,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
 		private final Keyword cExternKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
 		private final Assignment cExternAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cExternSTRINGTerminalRuleCall_1_1_1_0 = (RuleCall)cExternAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cExternExternStringParserRuleCall_1_1_1_0 = (RuleCall)cExternAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_1_2 = (Group)cGroup_1_1.eContents().get(2);
+		private final Keyword cCommaKeyword_1_1_2_0 = (Keyword)cGroup_1_1_2.eContents().get(0);
+		private final Assignment cExternAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
+		private final RuleCall cExternExternStringParserRuleCall_1_1_2_1_0 = (RuleCall)cExternAssignment_1_1_2_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_2_0 = (RuleCall)cValuedObjectsAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
@@ -594,12 +598,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 		//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
-		//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+		//	valuedObjects+=ValuedObject)* ';'
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' annotations+=CommentAnnotatonSL?
+		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (','
+		//extern+=ExternString)*) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -608,7 +614,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING
+		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//'ref' reference=[annotations::NamedObject|NamespaceID]
@@ -626,17 +632,29 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//NamespaceID
 		public RuleCall getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1() { return cReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1; }
 
-		//'extern' extern=STRING
+		//'extern' extern+=ExternString (',' extern+=ExternString)*
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//'extern'
 		public Keyword getExternKeyword_1_1_0() { return cExternKeyword_1_1_0; }
 
-		//extern=STRING
+		//extern+=ExternString
 		public Assignment getExternAssignment_1_1_1() { return cExternAssignment_1_1_1; }
 
-		//STRING
-		public RuleCall getExternSTRINGTerminalRuleCall_1_1_1_0() { return cExternSTRINGTerminalRuleCall_1_1_1_0; }
+		//ExternString
+		public RuleCall getExternExternStringParserRuleCall_1_1_1_0() { return cExternExternStringParserRuleCall_1_1_1_0; }
+
+		//(',' extern+=ExternString)*
+		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
+
+		//','
+		public Keyword getCommaKeyword_1_1_2_0() { return cCommaKeyword_1_1_2_0; }
+
+		//extern+=ExternString
+		public Assignment getExternAssignment_1_1_2_1() { return cExternAssignment_1_1_2_1; }
+
+		//ExternString
+		public RuleCall getExternExternStringParserRuleCall_1_1_2_1_0() { return cExternExternStringParserRuleCall_1_1_2_1_0; }
 
 		//valuedObjects+=ValuedObject
 		public Assignment getValuedObjectsAssignment_2() { return cValuedObjectsAssignment_2; }
@@ -680,7 +698,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
 		private final Keyword cExternKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
 		private final Assignment cExternAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cExternSTRINGTerminalRuleCall_1_1_1_0 = (RuleCall)cExternAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cExternExternStringParserRuleCall_1_1_1_0 = (RuleCall)cExternAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_1_2 = (Group)cGroup_1_1.eContents().get(2);
+		private final Keyword cCommaKeyword_1_1_2_0 = (Keyword)cGroup_1_1_2.eContents().get(0);
+		private final Assignment cExternAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
+		private final RuleCall cExternExternStringParserRuleCall_1_1_2_1_0 = (RuleCall)cExternAssignment_1_1_2_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_2_0 = (RuleCall)cValuedObjectsAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
@@ -692,12 +714,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 		//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
-		//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+		//	valuedObjects+=ValuedObject)*
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* annotations+=CommentAnnotatonSL?
+		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (','
+		//extern+=ExternString)*) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -706,7 +730,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING
+		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//'ref' reference=[annotations::NamedObject|NamespaceID]
@@ -724,17 +748,29 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//NamespaceID
 		public RuleCall getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1() { return cReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1; }
 
-		//'extern' extern=STRING
+		//'extern' extern+=ExternString (',' extern+=ExternString)*
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//'extern'
 		public Keyword getExternKeyword_1_1_0() { return cExternKeyword_1_1_0; }
 
-		//extern=STRING
+		//extern+=ExternString
 		public Assignment getExternAssignment_1_1_1() { return cExternAssignment_1_1_1; }
 
-		//STRING
-		public RuleCall getExternSTRINGTerminalRuleCall_1_1_1_0() { return cExternSTRINGTerminalRuleCall_1_1_1_0; }
+		//ExternString
+		public RuleCall getExternExternStringParserRuleCall_1_1_1_0() { return cExternExternStringParserRuleCall_1_1_1_0; }
+
+		//(',' extern+=ExternString)*
+		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
+
+		//','
+		public Keyword getCommaKeyword_1_1_2_0() { return cCommaKeyword_1_1_2_0; }
+
+		//extern+=ExternString
+		public Assignment getExternAssignment_1_1_2_1() { return cExternAssignment_1_1_2_1; }
+
+		//ExternString
+		public RuleCall getExternExternStringParserRuleCall_1_1_2_1_0() { return cExternExternStringParserRuleCall_1_1_2_1_0; }
 
 		//valuedObjects+=ValuedObject
 		public Assignment getValuedObjectsAssignment_2() { return cValuedObjectsAssignment_2; }
@@ -761,6 +797,35 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_4_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_4_0; }
 	}
 
+	public class ExternStringElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsTagAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cCodeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cCodeSTRINGTerminalRuleCall_1_0 = (RuleCall)cCodeAssignment_1.eContents().get(0);
+		
+		//ExternString kexpressions::ExternString:
+		//	annotations+=TagAnnotation*
+		//	code=STRING;
+		@Override public ParserRule getRule() { return rule; }
+
+		//annotations+=TagAnnotation* code=STRING
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=TagAnnotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//TagAnnotation
+		public RuleCall getAnnotationsTagAnnotationParserRuleCall_0_0() { return cAnnotationsTagAnnotationParserRuleCall_0_0; }
+
+		//code=STRING
+		public Assignment getCodeAssignment_1() { return cCodeAssignment_1; }
+
+		//STRING
+		public RuleCall getCodeSTRINGTerminalRuleCall_1_0() { return cCodeSTRINGTerminalRuleCall_1_0; }
+	}
+
 	public class ScheduleDeclarationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.ScheduleDeclaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -769,10 +834,19 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cScheduleKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNamePrimeIDParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Assignment cGlobalAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cGlobalSchedulePriorityTypeEnumRuleCall_3_0 = (RuleCall)cGlobalAssignment_3.eContents().get(0);
-		private final Assignment cPrioritiesAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cPrioritiesSchedulePriorityParserRuleCall_4_0 = (RuleCall)cPrioritiesAssignment_4.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cGlobalKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cGlobalAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cGlobalPriorityProtocolEnumRuleCall_3_1_0 = (RuleCall)cGlobalAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cPrioritiesAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cPrioritiesPriorityProtocolEnumRuleCall_4_1_0 = (RuleCall)cPrioritiesAssignment_4_1.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
+		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Assignment cPrioritiesAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
+		private final RuleCall cPrioritiesPriorityProtocolEnumRuleCall_4_2_1_0 = (RuleCall)cPrioritiesAssignment_4_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		private final Assignment cValuedObjectsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_0 = (RuleCall)cValuedObjectsAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
@@ -785,15 +859,15 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 		//	annotations+=Annotation*
-		//	'schedule' name=PrimeID
-		//	global=SchedulePriorityType?
-		//	priorities+=SchedulePriority*
+		//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+		//	priorities+=PriorityProtocol)* '}')?
 		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* 'schedule' name=PrimeID global=SchedulePriorityType? priorities+=SchedulePriority*
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' annotations+=CommentAnnotatonSL?
+		//annotations+=Annotation* 'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol
+		//(',' priorities+=PriorityProtocol)* '}')? valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -811,17 +885,44 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getNamePrimeIDParserRuleCall_2_0() { return cNamePrimeIDParserRuleCall_2_0; }
 
-		//global=SchedulePriorityType?
-		public Assignment getGlobalAssignment_3() { return cGlobalAssignment_3; }
+		//('global' global=PriorityProtocol)?
+		public Group getGroup_3() { return cGroup_3; }
 
-		//SchedulePriorityType
-		public RuleCall getGlobalSchedulePriorityTypeEnumRuleCall_3_0() { return cGlobalSchedulePriorityTypeEnumRuleCall_3_0; }
+		//'global'
+		public Keyword getGlobalKeyword_3_0() { return cGlobalKeyword_3_0; }
 
-		//priorities+=SchedulePriority*
-		public Assignment getPrioritiesAssignment_4() { return cPrioritiesAssignment_4; }
+		//global=PriorityProtocol
+		public Assignment getGlobalAssignment_3_1() { return cGlobalAssignment_3_1; }
 
-		//SchedulePriority
-		public RuleCall getPrioritiesSchedulePriorityParserRuleCall_4_0() { return cPrioritiesSchedulePriorityParserRuleCall_4_0; }
+		//PriorityProtocol
+		public RuleCall getGlobalPriorityProtocolEnumRuleCall_3_1_0() { return cGlobalPriorityProtocolEnumRuleCall_3_1_0; }
+
+		//('{' priorities+=PriorityProtocol (',' priorities+=PriorityProtocol)* '}')?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_4_0() { return cLeftCurlyBracketKeyword_4_0; }
+
+		//priorities+=PriorityProtocol
+		public Assignment getPrioritiesAssignment_4_1() { return cPrioritiesAssignment_4_1; }
+
+		//PriorityProtocol
+		public RuleCall getPrioritiesPriorityProtocolEnumRuleCall_4_1_0() { return cPrioritiesPriorityProtocolEnumRuleCall_4_1_0; }
+
+		//(',' priorities+=PriorityProtocol)*
+		public Group getGroup_4_2() { return cGroup_4_2; }
+
+		//','
+		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
+
+		//priorities+=PriorityProtocol
+		public Assignment getPrioritiesAssignment_4_2_1() { return cPrioritiesAssignment_4_2_1; }
+
+		//PriorityProtocol
+		public RuleCall getPrioritiesPriorityProtocolEnumRuleCall_4_2_1_0() { return cPrioritiesPriorityProtocolEnumRuleCall_4_2_1_0; }
+
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4_3() { return cRightCurlyBracketKeyword_4_3; }
 
 		//valuedObjects+=ValuedObject
 		public Assignment getValuedObjectsAssignment_5() { return cValuedObjectsAssignment_5; }
@@ -859,10 +960,19 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cScheduleKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNamePrimeIDParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Assignment cGlobalAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cGlobalSchedulePriorityTypeEnumRuleCall_3_0 = (RuleCall)cGlobalAssignment_3.eContents().get(0);
-		private final Assignment cPrioritiesAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cPrioritiesSchedulePriorityParserRuleCall_4_0 = (RuleCall)cPrioritiesAssignment_4.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cGlobalKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cGlobalAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cGlobalPriorityProtocolEnumRuleCall_3_1_0 = (RuleCall)cGlobalAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cPrioritiesAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cPrioritiesPriorityProtocolEnumRuleCall_4_1_0 = (RuleCall)cPrioritiesAssignment_4_1.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
+		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Assignment cPrioritiesAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
+		private final RuleCall cPrioritiesPriorityProtocolEnumRuleCall_4_2_1_0 = (RuleCall)cPrioritiesAssignment_4_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		private final Assignment cValuedObjectsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_0 = (RuleCall)cValuedObjectsAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
@@ -874,15 +984,15 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 		//	annotations+=Annotation*
-		//	'schedule' name=PrimeID
-		//	global=SchedulePriorityType?
-		//	priorities+=SchedulePriority*
+		//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+		//	priorities+=PriorityProtocol)* '}')?
 		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* 'schedule' name=PrimeID global=SchedulePriorityType? priorities+=SchedulePriority*
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* annotations+=CommentAnnotatonSL?
+		//annotations+=Annotation* 'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol
+		//(',' priorities+=PriorityProtocol)* '}')? valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -900,17 +1010,44 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getNamePrimeIDParserRuleCall_2_0() { return cNamePrimeIDParserRuleCall_2_0; }
 
-		//global=SchedulePriorityType?
-		public Assignment getGlobalAssignment_3() { return cGlobalAssignment_3; }
+		//('global' global=PriorityProtocol)?
+		public Group getGroup_3() { return cGroup_3; }
 
-		//SchedulePriorityType
-		public RuleCall getGlobalSchedulePriorityTypeEnumRuleCall_3_0() { return cGlobalSchedulePriorityTypeEnumRuleCall_3_0; }
+		//'global'
+		public Keyword getGlobalKeyword_3_0() { return cGlobalKeyword_3_0; }
 
-		//priorities+=SchedulePriority*
-		public Assignment getPrioritiesAssignment_4() { return cPrioritiesAssignment_4; }
+		//global=PriorityProtocol
+		public Assignment getGlobalAssignment_3_1() { return cGlobalAssignment_3_1; }
 
-		//SchedulePriority
-		public RuleCall getPrioritiesSchedulePriorityParserRuleCall_4_0() { return cPrioritiesSchedulePriorityParserRuleCall_4_0; }
+		//PriorityProtocol
+		public RuleCall getGlobalPriorityProtocolEnumRuleCall_3_1_0() { return cGlobalPriorityProtocolEnumRuleCall_3_1_0; }
+
+		//('{' priorities+=PriorityProtocol (',' priorities+=PriorityProtocol)* '}')?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_4_0() { return cLeftCurlyBracketKeyword_4_0; }
+
+		//priorities+=PriorityProtocol
+		public Assignment getPrioritiesAssignment_4_1() { return cPrioritiesAssignment_4_1; }
+
+		//PriorityProtocol
+		public RuleCall getPrioritiesPriorityProtocolEnumRuleCall_4_1_0() { return cPrioritiesPriorityProtocolEnumRuleCall_4_1_0; }
+
+		//(',' priorities+=PriorityProtocol)*
+		public Group getGroup_4_2() { return cGroup_4_2; }
+
+		//','
+		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
+
+		//priorities+=PriorityProtocol
+		public Assignment getPrioritiesAssignment_4_2_1() { return cPrioritiesAssignment_4_2_1; }
+
+		//PriorityProtocol
+		public RuleCall getPrioritiesPriorityProtocolEnumRuleCall_4_2_1_0() { return cPrioritiesPriorityProtocolEnumRuleCall_4_2_1_0; }
+
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4_3() { return cRightCurlyBracketKeyword_4_3; }
 
 		//valuedObjects+=ValuedObject
 		public Assignment getValuedObjectsAssignment_5() { return cValuedObjectsAssignment_5; }
@@ -935,38 +1072,6 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//CommentAnnotatonSL
 		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_7_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_7_0; }
-	}
-
-	public class SchedulePriorityElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.SchedulePriority");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cPrioKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cPriorityINTTerminalRuleCall_1_0 = (RuleCall)cPriorityAssignment_1.eContents().get(0);
-		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTypeSchedulePriorityTypeEnumRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
-		
-		//SchedulePriority kexpressions::SchedulePriority:
-		//	'prio' priority=INT type=SchedulePriorityType;
-		@Override public ParserRule getRule() { return rule; }
-
-		//'prio' priority=INT type=SchedulePriorityType
-		public Group getGroup() { return cGroup; }
-
-		//'prio'
-		public Keyword getPrioKeyword_0() { return cPrioKeyword_0; }
-
-		//priority=INT
-		public Assignment getPriorityAssignment_1() { return cPriorityAssignment_1; }
-
-		//INT
-		public RuleCall getPriorityINTTerminalRuleCall_1_0() { return cPriorityINTTerminalRuleCall_1_0; }
-
-		//type=SchedulePriorityType
-		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
-
-		//SchedulePriorityType
-		public RuleCall getTypeSchedulePriorityTypeEnumRuleCall_2_0() { return cTypeSchedulePriorityTypeEnumRuleCall_2_0; }
 	}
 
 	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
@@ -1079,15 +1184,15 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	public class SchedulePriorityTypeElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.SchedulePriorityType");
+	public class PriorityProtocolElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.PriorityProtocol");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cCONFLICTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cCONFLICTConflictKeyword_0_0 = (Keyword)cCONFLICTEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cCONFLUENTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cCONFLUENTConfluentKeyword_1_0 = (Keyword)cCONFLUENTEnumLiteralDeclaration_1.eContents().get(0);
 		
-		//enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+		//enum PriorityProtocol returns kexpressions::PriorityProtocol:
 		//	CONFLICT="conflict" | CONFLUENT="confluent";
 		public EnumRule getRule() { return rule; }
 
@@ -1119,10 +1224,10 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	private final NamespaceIDElements pNamespaceID;
 	private final ReferenceDeclarationElements pReferenceDeclaration;
 	private final ReferenceDeclarationWOSemicolonElements pReferenceDeclarationWOSemicolon;
+	private final ExternStringElements pExternString;
 	private final ScheduleDeclarationElements pScheduleDeclaration;
 	private final ScheduleDeclarationWOSemicolonElements pScheduleDeclarationWOSemicolon;
-	private final SchedulePriorityElements pSchedulePriority;
-	private final SchedulePriorityTypeElements eSchedulePriorityType;
+	private final PriorityProtocolElements ePriorityProtocol;
 	private final ValuedObjectElements pValuedObject;
 	
 	private final Grammar grammar;
@@ -1158,10 +1263,10 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		this.pNamespaceID = new NamespaceIDElements();
 		this.pReferenceDeclaration = new ReferenceDeclarationElements();
 		this.pReferenceDeclarationWOSemicolon = new ReferenceDeclarationWOSemicolonElements();
+		this.pExternString = new ExternStringElements();
 		this.pScheduleDeclaration = new ScheduleDeclarationElements();
 		this.pScheduleDeclarationWOSemicolon = new ScheduleDeclarationWOSemicolonElements();
-		this.pSchedulePriority = new SchedulePriorityElements();
-		this.eSchedulePriorityType = new SchedulePriorityTypeElements();
+		this.ePriorityProtocol = new PriorityProtocolElements();
 		this.pValuedObject = new ValuedObjectElements();
 	}
 	
@@ -1348,7 +1453,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
-	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return pReferenceDeclaration;
@@ -1360,7 +1466,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
-	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return pReferenceDeclarationWOSemicolon;
@@ -1370,11 +1477,21 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
 
+	//ExternString kexpressions::ExternString:
+	//	annotations+=TagAnnotation*
+	//	code=STRING;
+	public ExternStringElements getExternStringAccess() {
+		return pExternString;
+	}
+	
+	public ParserRule getExternStringRule() {
+		return getExternStringAccess().getRule();
+	}
+
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID
-	//	global=SchedulePriorityType?
-	//	priorities+=SchedulePriority*
+	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public ScheduleDeclarationElements getScheduleDeclarationAccess() {
@@ -1387,9 +1504,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID
-	//	global=SchedulePriorityType?
-	//	priorities+=SchedulePriority*
+	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
@@ -1400,24 +1516,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getScheduleDeclarationWOSemicolonAccess().getRule();
 	}
 
-	//SchedulePriority kexpressions::SchedulePriority:
-	//	'prio' priority=INT type=SchedulePriorityType;
-	public SchedulePriorityElements getSchedulePriorityAccess() {
-		return pSchedulePriority;
-	}
-	
-	public ParserRule getSchedulePriorityRule() {
-		return getSchedulePriorityAccess().getRule();
-	}
-
-	//enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
 	//	CONFLICT="conflict" | CONFLUENT="confluent";
-	public SchedulePriorityTypeElements getSchedulePriorityTypeAccess() {
-		return eSchedulePriorityType;
+	public PriorityProtocolElements getPriorityProtocolAccess() {
+		return ePriorityProtocol;
 	}
 	
-	public EnumRule getSchedulePriorityTypeRule() {
-		return getSchedulePriorityTypeAccess().getRule();
+	public EnumRule getPriorityProtocolRule() {
+		return getPriorityProtocolAccess().getRule();
 	}
 
 	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
@@ -1685,7 +1791,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}

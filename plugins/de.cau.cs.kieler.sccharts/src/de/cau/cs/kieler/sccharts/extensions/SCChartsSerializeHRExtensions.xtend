@@ -59,7 +59,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     private def CharSequence serialize(Transition transition, boolean hr) {
         val label = new StringBuilder();
 
-        if (transition.trigger != null) {
+        if (transition.trigger !== null) {
             if (transition.triggerDelay > 1) {
                 label.append(transition.triggerDelay).append(" ");
             }
@@ -114,7 +114,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             default: ""
         })
 
-        if (action.trigger != null) {
+        if (action.trigger !== null) {
             components.addText(if (hr) {
                 action.trigger.serializeHR
             } else {
@@ -190,7 +190,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 }
             } else {
                 components.addKeyword("extern")
-                components.addHighlight(declaration.extern)
+                components.addHighlight(declaration.extern.head.code)
             }          
         }
 
@@ -203,7 +203,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             } else {
                 vo.serialize
             })
-            if (vo.initialValue != null) {
+            if (vo.initialValue !== null) {
                 components.addText("=");
                 components.addText(if (hr) {
                     vo.initialValue.serializeHR;
@@ -211,7 +211,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                     vo.initialValue.serialize;
                 })
             }
-            if (vo.combineOperator != null && vo.combineOperator != CombineOperator.NONE) {
+            if (vo.combineOperator !== null && vo.combineOperator != CombineOperator.NONE) {
                 components.addKeyword("combine");
                 components.addText(if (hr) {
                     vo.combineOperator.serializeHR;
@@ -305,7 +305,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }else{
                 text.append(vo.serialize)
             }
-            if (vo.initialValue != null) {
+            if (vo.initialValue !== null) {
                 text.append(" = ");
                 if (hr) {
                     text.append(vo.initialValue.serializeHR);
@@ -363,7 +363,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }else{
                 text.append(vo.serialize)
             }
-            if (vo.initialValue != null) {
+            if (vo.initialValue !== null) {
                 text.append(" = ");
                 if (hr) {
                     text.append(vo.initialValue.serializeHR);
@@ -453,7 +453,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
-        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+        if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeHR
         }        
         vo
@@ -464,7 +464,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
-        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+        if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeHR
         }        
         vo
@@ -479,7 +479,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
         
         res = res + assignment.operator.serializeAssignOperator
-        if (expressionStr != null) {
+        if (expressionStr !== null) {
             res = res + expressionStr
         }
         

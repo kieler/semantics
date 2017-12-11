@@ -31,6 +31,10 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     public static val GLOBAL_OBJECTS = "globalObjects"
     
+    new() {
+        CODE_ANNOTATION = "Java"
+    }
+    
     override dispatch CharSequence serialize(ValueType valueType) {
         if (valueType == ValueType.BOOL) {
             return "boolean"

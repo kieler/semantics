@@ -74,44 +74,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Expression");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final RuleCall cBoolExpressionParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
-		private final RuleCall cValuedExpressionParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cScheduleKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cScheduleAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cScheduleAssignment_1_1.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cBoolExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Expression Rule
 		//// An expression is either a boolean expression or a valued expression.
 		//Expression:
-		//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
+		//	BoolExpression | ValuedExpression;
 		@Override public ParserRule getRule() { return rule; }
 
-		//(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?
-		public Group getGroup() { return cGroup; }
-
 		//BoolExpression | ValuedExpression
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//BoolExpression
-		public RuleCall getBoolExpressionParserRuleCall_0_0() { return cBoolExpressionParserRuleCall_0_0; }
+		public RuleCall getBoolExpressionParserRuleCall_0() { return cBoolExpressionParserRuleCall_0; }
 
 		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_0_1() { return cValuedExpressionParserRuleCall_0_1; }
-
-		//('schedule' schedule+=ScheduleObjectReference+)?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//'schedule'
-		public Keyword getScheduleKeyword_1_0() { return cScheduleKeyword_1_0; }
-
-		//schedule+=ScheduleObjectReference+
-		public Assignment getScheduleAssignment_1_1() { return cScheduleAssignment_1_1; }
-
-		//ScheduleObjectReference
-		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_1_1_0; }
+		public RuleCall getValuedExpressionParserRuleCall_1() { return cValuedExpressionParserRuleCall_1; }
 	}
 
 	public class BoolExpressionElements extends AbstractParserRuleElementFinder {
@@ -2815,7 +2795,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	BoolExpression | ValuedExpression;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}

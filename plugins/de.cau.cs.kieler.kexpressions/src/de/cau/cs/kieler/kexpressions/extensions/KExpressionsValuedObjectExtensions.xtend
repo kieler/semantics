@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
-import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.Declaration
@@ -29,6 +28,9 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 
 /**
  * @author ssm
@@ -40,14 +42,14 @@ class KExpressionsValuedObjectExtensions {
     @Inject
     extension KExpressionsDeclarationExtensions
     
-    def Declaration declaration(ValuedObject valuedObject) {
+    def Declaration getDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
             valuedObject.eContainer as Declaration
         else
             null
     }
     
-    def VariableDeclaration variableDeclaration(ValuedObject valuedObject) {
+    def VariableDeclaration getVariableDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof VariableDeclaration)
             valuedObject.eContainer as VariableDeclaration
         else
@@ -61,21 +63,44 @@ class KExpressionsValuedObjectExtensions {
     def asReferenceDeclaration(EObject eObject) {
         eObject as ReferenceDeclaration
     }
+
+    def asScheduleDeclaration(EObject eObject) {
+        eObject as ScheduleDeclaration
+    }
     
     // Create a ValuedObjectReference to a valuedObject
     def ValuedObjectReference reference(ValuedObject valuedObject) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
             setValuedObject(valuedObject)
         ]
+    }
+
+    def ScheduleObjectReference createScheduleReference(ValuedObject valuedObject) {
+        KExpressionsFactory::eINSTANCE.createScheduleObjectReference() => [
+            setValuedObject(valuedObject)
+        ]
+    }
+    
+    def boolean isVariableReference(ValuedObject valuedObject) {
+        valuedObject.declaration instanceof VariableDeclaration
     }    
     
     def boolean isModelReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof ReferenceDeclaration
     }
     
+    def boolean isExternalReference(ValuedObject valuedObject) {
+        valuedObject.isModelReference && !valuedObject.declaration.asReferenceDeclaration.extern.nullOrEmpty
+    }
+    
+    def boolean isScheduleReference(ValuedObject valuedObject) {
+        valuedObject.declaration instanceof ScheduleDeclaration
+    }
+    
     def ValueType getType(ValuedObject valuedObject) {
         if (valuedObject.isModelReference) return ValueType::REFERENCE;
-        valuedObject.variableDeclaration.type
+        if (valuedObject.isScheduleReference) return ValueType::SCHEDULE;
+        valuedObject.getVariableDeclaration.type
     }
     
     def ImmutableList<ValuedObject> getValuedObjectsFromEObject(EObject eObject) {
@@ -90,27 +115,27 @@ class KExpressionsValuedObjectExtensions {
     }  
     
     def boolean isInput(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return false
+        if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isInput
     }
 
     def boolean isOutput(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return false
+        if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isOutput
     }
 
     def boolean isStatic(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return false
+        if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isStatic
     }
 
     def boolean isConst(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return false
+        if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isConst
     }
 
     def boolean isExtern(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return false
+        if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isExtern
     }
 
@@ -139,7 +164,7 @@ class KExpressionsValuedObjectExtensions {
     }
 
     def boolean isSignal(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return false
+        if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isSignal
     }   
     
@@ -168,8 +193,9 @@ class KExpressionsValuedObjectExtensions {
         declaration.attach(vo)
         vo
     }     
-         
-
+    
+    
+    
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
         declaration => [ valuedObjects += valuedObject ]
     } 
@@ -180,10 +206,10 @@ class KExpressionsValuedObjectExtensions {
     
     
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        if (valuedObjectWithAttributes.initialValue != null) {
+        if (valuedObjectWithAttributes.initialValue !== null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         }
-        if (valuedObjectWithAttributes.combineOperator != null) {
+        if (valuedObjectWithAttributes.combineOperator !== null) {
             valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
         }
         valuedObject.applyCardinalities(valuedObjectWithAttributes)
@@ -192,7 +218,7 @@ class KExpressionsValuedObjectExtensions {
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
         <ValuedObjectReference> newArrayList => [ l |
-        	if (expression == null) {
+        	if (expression === null) {
         	} else if (expression instanceof ValuedObjectReference) { 
         		l += expression
         	} else { 

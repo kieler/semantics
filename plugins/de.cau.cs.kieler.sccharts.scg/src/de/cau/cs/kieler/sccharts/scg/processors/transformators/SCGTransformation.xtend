@@ -91,6 +91,7 @@ import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -581,6 +582,14 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                         assignment.indices += it.convertToSCGExpression.trace(transition, effect)
                     ]
                 }
+                
+                if (!sCChartAssignment.schedule.nullOrEmpty) {
+                    sCChartAssignment.schedule.forEach[ s |
+                        assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
+                            it.priority = s.priority
+                        ]
+                    ]
+                }
             } else if (effect instanceof HostcodeEffect) {
                 assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
@@ -757,6 +766,18 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     // -------------------------------------------------------------------------
     // --              C O N V E R T   E X P R E S S I O N S                  --
     // -------------------------------------------------------------------------
+    def dispatch Expression convertToSCGExpression(ScheduleObjectReference expression) {
+        expression.valuedObject.getSCGValuedObject.createScheduleReference => [ sor |
+            sor.trace(expression)
+            expression.indices.forEach [
+                sor.indices += it.convertToSCGExpression
+            ]
+            expression.schedule.forEach [
+                sor.schedule += it.copy
+            ]
+        ]    
+    }
+    
     // Create a new reference Expression to the corresponding sValuedObject of the expression
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
         expression.valuedObject.getSCGValuedObject.reference => [ vor |
@@ -766,6 +787,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             ]
         ]
     }
+    
 
     // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
     def dispatch Expression convertToSCGExpression(OperatorExpression expression) {

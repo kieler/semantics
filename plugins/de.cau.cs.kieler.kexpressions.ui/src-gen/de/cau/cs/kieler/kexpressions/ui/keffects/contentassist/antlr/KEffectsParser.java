@@ -43,7 +43,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_0_1_2(), "rule__FunctionCallEffect__Alternatives_0_1_2");
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
 					put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
-					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
+					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
@@ -96,8 +96,6 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRandomizeCallEffectAccess().getGroup(), "rule__RandomizeCallEffect__Group__0");
 					put(grammarAccess.getRandomizeCallEffectAccess().getGroup_3_0(), "rule__RandomizeCallEffect__Group_3_0__0");
 					put(grammarAccess.getRandomizeCallEffectAccess().getGroup_3_0_2(), "rule__RandomizeCallEffect__Group_3_0_2__0");
-					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
-					put(grammarAccess.getExpressionAccess().getGroup_1(), "rule__Expression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -233,7 +231,6 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRandomizeCallEffectAccess().getAnnotationsAssignment_1(), "rule__RandomizeCallEffect__AnnotationsAssignment_1");
 					put(grammarAccess.getRandomizeCallEffectAccess().getParametersAssignment_3_0_1(), "rule__RandomizeCallEffect__ParametersAssignment_3_0_1");
 					put(grammarAccess.getRandomizeCallEffectAccess().getParametersAssignment_3_0_2_1(), "rule__RandomizeCallEffect__ParametersAssignment_3_0_2_1");
-					put(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1(), "rule__Expression__ScheduleAssignment_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1");

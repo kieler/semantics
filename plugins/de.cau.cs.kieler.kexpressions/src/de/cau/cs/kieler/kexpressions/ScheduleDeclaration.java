@@ -15,8 +15,8 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities <em>Priorities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities <em>Priorities</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration()
@@ -51,24 +51,26 @@ public interface ScheduleDeclaration extends Declaration {
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Priorities</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.SchedulePriority}.
+     * Returns the value of the '<em><b>Priorities</b></em>' attribute list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Priorities</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Priorities</em>' containment reference list.
+     * @return the value of the '<em>Priorities</em>' attribute list.
+     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration_Priorities()
-     * @model containment="true"
+     * @model
      * @generated
      */
-    EList<SchedulePriority> getPriorities();
+    EList<PriorityProtocol> getPriorities();
 
     /**
      * Returns the value of the '<em><b>Global</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.SchedulePriorityType}.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Global</em>' attribute isn't clear,
@@ -76,23 +78,23 @@ public interface ScheduleDeclaration extends Declaration {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Global</em>' attribute.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
-     * @see #setGlobal(SchedulePriorityType)
+     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
+     * @see #setGlobal(PriorityProtocol)
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration_Global()
      * @model
      * @generated
      */
-    SchedulePriorityType getGlobal();
+    PriorityProtocol getGlobal();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Global</em>' attribute.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
      * @see #getGlobal()
      * @generated
      */
-    void setGlobal(SchedulePriorityType value);
+    void setGlobal(PriorityProtocol value);
 
 } // ScheduleDeclaration

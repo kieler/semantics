@@ -44,6 +44,8 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
+import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 //import org.eclipse.xtext.validation.Check
 
@@ -200,7 +202,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkNoBooleanEmissions(Emission emission) {
-        if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
+        if (emission.getValuedObject() !== null && emission.getValuedObject().eContainer() !== null && emission.getValuedObject().eContainer() instanceof Declaration) {
             val declaration = emission.getValuedObject().declaration
             if (declaration instanceof VariableDeclaration && !(declaration as VariableDeclaration).signal) {
                 warning(NON_SIGNAL_EMISSION, emission, null, -1);
@@ -237,7 +239,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkNoBooleanEmissions(Assignment assignment) {
-        if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
+        if (assignment.getValuedObject() !== null && assignment.getValuedObject().eContainer() !== null && assignment.getValuedObject().eContainer() instanceof Declaration) {
             val declaration = assignment.getValuedObject().declaration
             if (declaration instanceof VariableDeclaration && (declaration as VariableDeclaration).signal) {
                 error(NON_VARIABLE_ASSIGNMENT, assignment, null, -1);
@@ -275,7 +277,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                 if(immediateTransitionWithoutTrigger) {
                     warning(NON_REACHABLE_TRANSITION, trans, null)
                 }
-                if(!immediateTransitionWithoutTrigger && trans.trigger == null) {
+                if(!immediateTransitionWithoutTrigger && trans.trigger === null) {
                     immediateTransitionWithoutTrigger = true
                 }
             } else {
@@ -284,7 +286,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                 if(delayedTransitionWithoutTrigger || immediateTransitionWithoutTrigger) {
                     warning(NON_REACHABLE_TRANSITION, trans, null)
                 }
-                if(!delayedTransitionWithoutTrigger && trans.trigger == null) {
+                if(!delayedTransitionWithoutTrigger && trans.trigger === null) {
                     delayedTransitionWithoutTrigger = true
                 }
             }
@@ -305,7 +307,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                 if(!trans.isImmediate) {
                     warning(NON_IMMEDIATE_CONNECTOR, trans, null)
                 }
-                if(trans.trigger == null) {
+                if(trans.trigger === null) {
                     transitionWithoutTrigger = true
                 }
                 lastTransition = trans
@@ -313,7 +315,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             if(!transitionWithoutTrigger) {
                 warning(NO_DEFAULT_TRANSITION, lastTransition, null)
             }
-            if(lastTransition == null) {
+            if(lastTransition === null) {
                 error(NO_OUTGOING_TRANSITION, state, null)
             }
         }
@@ -349,7 +351,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
-            if(valuedObject.combineOperator == null) {
+            if(valuedObject.combineOperator === null) {
                 warning(NOCOMBINE, valuedObject, null)
             }
         }
@@ -366,7 +368,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
-            if(valuedObject.combineOperator != null) {
+            if(valuedObject.combineOperator !== null) {
                 if (valuedObject.combineOperator.equals(CombineOperator.MIN) || valuedObject.combineOperator.equals(CombineOperator.MAX))
                 warning(MINMAX_COMBINE, valuedObject, null)
             }
@@ -381,14 +383,14 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     public def void checkInitialState(ControlflowRegion region) {
         // Do not consider the root region == SCChart
-        if (region.getParentState() != null) {
+        if (region.getParentState() !== null) {
             // check if parent state has declared any REAL region not only a
             // dummy region for entry/during/exit actions or suspends
             val parentState = region.getParentState
             var int foundInitial = 0;
             if ((parentState.actions.size() > 0) && (parentState.getRegions().size() == 1)
                     && parentState.getRegions().filter(typeof(ControlflowRegion)).head.getStates().size() == 0
-                    && (parentState.getRegions().head.name == null
+                    && (parentState.getRegions().head.name === null
                         || parentState.getRegions().head.name.equals(""))) {
                 foundInitial = 1;
             }
@@ -419,7 +421,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
-            if(regions.isEmpty && state.reference == null) {
+            if(regions.isEmpty && state.reference === null) {
                 error(NO_REGION, state, null, -1);
             }
 
@@ -470,7 +472,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if(state.isHierarchical) {
             for (transition : state.outgoingTransitions) {
                 if ((transition.isStrongAbort || transition.isWeakAbort)
-                    && transition.trigger == null) {
+                    && transition.trigger === null) {
                     warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
                 }
             }
@@ -488,7 +490,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
-            if(valuedObject.combineOperator == null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
+            if(valuedObject.combineOperator === null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
                 warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
             }
         }
@@ -500,7 +502,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     public def void checkStaticVariableIsInitialized(ValuedObject valuedObject) {
-        if(valuedObject.isStatic && valuedObject.initialValue == null) {
+        if(valuedObject.isStatic && valuedObject.initialValue === null) {
             warning(STATIC_VARIABLE_WITHOUT_INITIALIZATION, valuedObject, null)
         }
     } 
@@ -535,9 +537,9 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkAssignmentToConst(Assignment assignment) {
-        if (assignment.getValuedObject() != null) {
+        if (assignment.getValuedObject() !== null) {
             val declaration =  assignment.getValuedObject.variableDeclaration
-            if (declaration != null && declaration.isConst()) {
+            if (declaration !== null && declaration.isConst()) {
                 error(ASSIGNMENT_TO_CONST, assignment, null, -1);
             }
         }
@@ -575,8 +577,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
-        if (state.reference == null) return;
-        if (state.reference.scope == null) return;
+        if (state.reference === null) return;
+        if (state.reference.scope === null) return;
         if (state.terminationTransitions.empty) return;
             
         if (!state.reference.scope.asState.mayTerminate) {
@@ -589,13 +591,13 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     def void checkActionTriggerEffectsWithLabel(Action action) {
         if (!action.label.nullOrEmpty) {
-            if (action.trigger != null) {
+            if (action.trigger !== null) {
                 if (infosEnabled(action))
                     info("The trigger of this action is hidden by the label.", 
                         action, 
                         SCChartsPackage.eINSTANCE.action_Trigger)
             }
-            if (action.effects != null && action.effects.size > 0) {
+            if (action.effects !== null && action.effects.size > 0) {
                 if (infosEnabled(action))
                     info("The effects of this action are hidden by the label.", 
                         action, 
@@ -614,7 +616,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkForRegion(ControlflowRegion region) {
-        if (region.forStart != null && region.forStart instanceof ValuedObjectReference) {
+        if (region.forStart !== null && region.forStart instanceof ValuedObjectReference) {
             val forRange = For.getForRegionRange(region)
             if (forRange.second == -1) {
                 error("The range of the counter variable of the for region is not determinable. The array cardinalities of you array must be an int or a const int.",
@@ -624,17 +626,28 @@ class SCTXValidator extends AbstractSCTXValidator {
         }
     }
     
-    @Check
+    @Check(CheckType.NORMAL)
     def void checkDataflowVectorAssignment(DataflowRegion dataflowRegion) {
         for(equation : dataflowRegion.equations) {
             val reference = equation.reference
             if (reference instanceof ValuedObjectReference) {
                 if (reference.valuedObject.declaration instanceof ReferenceDeclaration) {
-                    if (reference.subReference == null && !(equation.expression instanceof VectorValue)) {
+                    if (reference.subReference === null && !(equation.expression instanceof VectorValue)) {
                         error("You are assigning a scalar value to a reference. You should specify the input variable of the reference or use a vector value instead of a scalar.",
                             equation, null)
                     }
                 }
+            }
+        }
+    }
+    
+    @Check(CheckType.NORMAL)
+    def void checkCorrectExternalReferenceObjects(ValuedObjectReference valuedObjectReference) {
+        val valuedObject = valuedObjectReference.valuedObject
+        if (valuedObject.isExternalReference) {
+            if (!(valuedObjectReference instanceof ReferenceCall)) {
+                warning("You are using an external reference without call syntax. If you want to generate a call, you must add parentheses.", 
+                    valuedObjectReference, null)
             }
         }
     }
@@ -663,9 +676,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     private def boolean infosEnabled(EObject eObject) {
         val scc = eObject.getSCCharts
         val infoPragma = scc.getStringPragmas(INFOS_PRAGMA).head
-        if (infoPragma != null && infoPragma.values.size > 0 && infoPragma.values.head.equals("off")) {
+        if (infoPragma !== null && infoPragma.values.size > 0 && infoPragma.values.head.equals("off")) {
             return false
         }
         return true
     }
+    
+    
 }

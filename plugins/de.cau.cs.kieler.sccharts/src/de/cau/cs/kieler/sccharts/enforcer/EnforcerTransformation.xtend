@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * SCCharts Enforcer Transformation.
@@ -54,6 +55,7 @@ class EnforcerTransformation { //extends AbstractExpansionTransformation impleme
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     
     //--                 K I C O      C O N F I G U R A T I O N              --
     def getId() {
@@ -243,7 +245,7 @@ class EnforcerTransformation { //extends AbstractExpansionTransformation impleme
      */
     protected def Region createTickRegion(State rootState, Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
         val tickFunctionDeclaration = KExpressionsFactory.eINSTANCE.createReferenceDeclaration => [ 
-            extern = "tick"
+            extern += createExternString("tick")
             rootState.declarations += it
         ]
         val tickFunctionVO = KExpressionsFactory.eINSTANCE.createValuedObject => [

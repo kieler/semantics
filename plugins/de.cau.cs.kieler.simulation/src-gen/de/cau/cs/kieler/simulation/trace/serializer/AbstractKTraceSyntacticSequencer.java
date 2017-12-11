@@ -165,9 +165,7 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
-	 *     (rule start) (ambiguity) 'random' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'random' (rule start)
-	 *     (rule start) (ambiguity) 'randomize' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=PreOperator

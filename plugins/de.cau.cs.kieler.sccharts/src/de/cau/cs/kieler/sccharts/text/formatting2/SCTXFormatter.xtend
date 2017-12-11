@@ -178,7 +178,7 @@ class SCTXFormatter extends KExtFormatter {
 			format(annotations, document);
 		}
 	
-		controlflowregion.regionFor.keyword(controlflowRegionAccess.colonKeyword_6_0_0).prepend[ noSpace ].append[ newLine ]
+		controlflowregion.regionFor.keyword(controlflowRegionAccess.colonKeyword_7_0_0).prepend[ noSpace ].append[ newLine ]
 		 
         var EObject lastObject = null
         for (idxDeclaration : controlflowregion.declarations.indexed) {

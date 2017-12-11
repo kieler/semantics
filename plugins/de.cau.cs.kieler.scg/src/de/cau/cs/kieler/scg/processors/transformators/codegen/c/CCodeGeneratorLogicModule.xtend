@@ -41,7 +41,6 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.PrintCall
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
@@ -138,7 +137,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 code.append((assignment.expression as TextExpression).text).append("\n")
             } else if (assignment.expression instanceof PrintCall) {
                 indent(conditionalStack.size + 1)
-                code.append((assignment.expression as PrintCall).serializeHR).append(";\n")
+                code.append((assignment.expression as PrintCall).serialize).append(";\n")
             } else if (assignment.expression instanceof RandomizeCall) {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    

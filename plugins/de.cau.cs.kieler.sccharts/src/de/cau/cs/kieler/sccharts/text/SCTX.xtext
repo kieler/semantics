@@ -41,11 +41,15 @@ State returns sccharts::State:
 	=>'state' name=ID label=STRING?
 	((
 	    'is' reference = ScopeCall
-	)|('{'
+	    ('schedule' schedule+=ScheduleObjectReference+)?
+	)|(
+	    ('schedule' schedule+=ScheduleObjectReference+)?
+	   '{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
-	'}'))?
+	   '}')
+	)?
 	outgoingTransitions+=Transition*;
 	
 
@@ -56,9 +60,9 @@ ImplicitState returns sccharts::State:
 	
 ScopeCall returns sccharts::ScopeCall:
     scope = [sccharts::State|ID]
-    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '(' ')')?;
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
-Parameter returns kexpressions::Parameter:
+ScopeParameter returns kexpressions::Parameter:
     ((pureOutput ?= '!')? callByReference ?= '&')?
     expression = Expression
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
@@ -67,6 +71,10 @@ Parameter returns kexpressions::Parameter:
 // ------------------ //
 //  Transition Rules  // 
 // ------------------ //
+
+BoolScheduleExpression returns kexpressions::Expression:
+    LogicalOrExpression
+    ('schedule' schedule += ScheduleObjectReference);
 
 Transition returns sccharts::Transition:
     {sccharts::Transition}
@@ -79,7 +87,7 @@ Transition returns sccharts::Transition:
         deferred?='deferred'?
         history=HistoryType?
         //                      -> This alternative is only for the serializer to enable forcing of brackets
-	   ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) 
+	   ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
 	       ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
 	   )? 
 	   ('do' effects+=Effect (';' effects+=Effect)*)?
@@ -87,7 +95,7 @@ Transition returns sccharts::Transition:
 	|
 	(
         delay=DelayType?
-        ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) 
+        ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
             ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
         )?
         ('do' effects+=Effect (';' effects+=Effect)*)?
@@ -115,6 +123,7 @@ ControlflowRegion returns sccharts::ControlflowRegion:
     annotations+=Annotation*
     'region' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+    ('schedule' schedule+=ScheduleObjectReference+)?
     ((
         ':'
         declarations+=DeclarationWOSemicolon*
@@ -124,7 +133,8 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         declarations+=DeclarationWOSemicolon*
         (states+=ImplicitState | states+=State+)
         '}'
-    ));
+    ))  
+    ;
 
     
 DataflowRegion returns sccharts::DataflowRegion:
@@ -153,32 +163,32 @@ LocalAction returns sccharts::LocalAction:
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
-	'exit' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
-	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)?
+	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)?
 	('label' label=STRING)?;
       
 PrecedingAction returns sccharts::PrecedingAction:
 	{sccharts::PrecedingAction}
-   'preceding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 SucceedingAction returns sccharts::SucceedingAction:
 	{sccharts::SucceedingAction}
-	'succeeding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
 
