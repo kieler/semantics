@@ -63,8 +63,9 @@ Assignment returns scl::Assignment:
 ;
     
 VariableOrSignalReference returns kexpressions::ValuedObjectReference:
-     VariableReference
+     ValuedObjectReference
    | SignalReferenceExpression
+   | VariableReference
 ;
       
 /* ###################################################
