@@ -6037,15 +6037,21 @@ rule__VariableOrSignalReference__Alternatives
     }
 :
 (
-{ before(grammarAccess.getVariableOrSignalReferenceAccess().getVariableReferenceParserRuleCall_0()); }
-	ruleVariableReference
-{ after(grammarAccess.getVariableOrSignalReferenceAccess().getVariableReferenceParserRuleCall_0()); }
+{ before(grammarAccess.getVariableOrSignalReferenceAccess().getValuedObjectReferenceParserRuleCall_0()); }
+	ruleValuedObjectReference
+{ after(grammarAccess.getVariableOrSignalReferenceAccess().getValuedObjectReferenceParserRuleCall_0()); }
 )
 
     |(
 { before(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); }
 	ruleSignalReferenceExpression
 { after(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); }
+)
+
+    |(
+{ before(grammarAccess.getVariableOrSignalReferenceAccess().getVariableReferenceParserRuleCall_2()); }
+	ruleVariableReference
+{ after(grammarAccess.getVariableOrSignalReferenceAccess().getVariableReferenceParserRuleCall_2()); }
 )
 
 ;

@@ -328,22 +328,27 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public class VariableOrSignalReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.VariableOrSignalReference");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cVariableReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cValuedObjectReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cSignalReferenceExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cVariableReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//VariableOrSignalReference kexpressions::ValuedObjectReference:
-		//	VariableReference
-		//	| SignalReferenceExpression;
+		//	ValuedObjectReference
+		//	| SignalReferenceExpression
+		//	| VariableReference;
 		@Override public ParserRule getRule() { return rule; }
 
-		//VariableReference | SignalReferenceExpression
+		//ValuedObjectReference | SignalReferenceExpression | VariableReference
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//VariableReference
-		public RuleCall getVariableReferenceParserRuleCall_0() { return cVariableReferenceParserRuleCall_0; }
+		//ValuedObjectReference
+		public RuleCall getValuedObjectReferenceParserRuleCall_0() { return cValuedObjectReferenceParserRuleCall_0; }
 
 		//SignalReferenceExpression
 		public RuleCall getSignalReferenceExpressionParserRuleCall_1() { return cSignalReferenceExpressionParserRuleCall_1; }
+
+		//VariableReference
+		public RuleCall getVariableReferenceParserRuleCall_2() { return cVariableReferenceParserRuleCall_2; }
 	}
 
 	public class UnEmitElements extends AbstractParserRuleElementFinder {
@@ -759,8 +764,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableOrSignalReference kexpressions::ValuedObjectReference:
-	//	VariableReference
-	//	| SignalReferenceExpression;
+	//	ValuedObjectReference
+	//	| SignalReferenceExpression
+	//	| VariableReference;
 	public VariableOrSignalReferenceElements getVariableOrSignalReferenceAccess() {
 		return pVariableOrSignalReference;
 	}
