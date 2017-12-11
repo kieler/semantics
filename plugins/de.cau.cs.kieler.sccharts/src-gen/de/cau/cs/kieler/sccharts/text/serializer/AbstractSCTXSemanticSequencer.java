@@ -1017,7 +1017,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *             ) | 
 	 *             ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
 	 *         ) 
-	 *         schedule+=ScheduleObjectReference
+	 *         schedule+=ScheduleObjectReference?
 	 *     )
 	 */
 	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1030,7 +1030,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns BoolValue
 	 *
 	 * Constraint:
-	 *     (value=BOOLEAN schedule+=ScheduleObjectReference)
+	 *     (value=BOOLEAN schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_BoolValue(ISerializationContext context, BoolValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1042,7 +1042,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns FloatValue
 	 *
 	 * Constraint:
-	 *     (value=FLOAT schedule+=ScheduleObjectReference)
+	 *     (value=FLOAT schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_FloatValue(ISerializationContext context, FloatValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1054,7 +1054,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns FunctionCall
 	 *
 	 * Constraint:
-	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference)
+	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1066,7 +1066,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns IntValue
 	 *
 	 * Constraint:
-	 *     (value=INT schedule+=ScheduleObjectReference)
+	 *     (value=INT schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_IntValue(ISerializationContext context, IntValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1078,7 +1078,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns RandomCall
 	 *
 	 * Constraint:
-	 *     schedule+=ScheduleObjectReference
+	 *     schedule+=ScheduleObjectReference?
 	 */
 	protected void sequence_BoolScheduleExpression_RandomCall(ISerializationContext context, RandomCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1090,7 +1090,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns RandomizeCall
 	 *
 	 * Constraint:
-	 *     schedule+=ScheduleObjectReference
+	 *     schedule+=ScheduleObjectReference?
 	 */
 	protected void sequence_BoolScheduleExpression_RandomizeCall(ISerializationContext context, RandomizeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1102,7 +1102,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns ReferenceCall
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference)
+	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1114,7 +1114,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns StringValue
 	 *
 	 * Constraint:
-	 *     (value=STRING schedule+=ScheduleObjectReference)
+	 *     (value=STRING schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_StringValue(ISerializationContext context, StringValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1126,7 +1126,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns TextExpression
 	 *
 	 * Constraint:
-	 *     (text=HOSTCODE schedule+=ScheduleObjectReference)
+	 *     (text=HOSTCODE schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_TextExpression(ISerializationContext context, TextExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1138,7 +1138,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns ValuedObjectReference
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference)
+	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1150,7 +1150,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns VectorValue
 	 *
 	 * Constraint:
-	 *     (values+=VectorValueMember values+=VectorValueMember* schedule+=ScheduleObjectReference)
+	 *     (values+=VectorValueMember values+=VectorValueMember* schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

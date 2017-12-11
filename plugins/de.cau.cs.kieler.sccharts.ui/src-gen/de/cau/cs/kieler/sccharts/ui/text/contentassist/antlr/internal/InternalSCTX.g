@@ -7209,7 +7209,7 @@ rule__BoolScheduleExpression__Group__1__Impl
 :
 (
 { before(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1()); }
-(rule__BoolScheduleExpression__Group_1__0)
+(rule__BoolScheduleExpression__Group_1__0)?
 { after(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1()); }
 )
 

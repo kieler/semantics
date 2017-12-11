@@ -541,16 +541,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		////  Transition Rules  // 
 		//// ------------------ //
 		//BoolScheduleExpression kexpressions::Expression:
-		//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference);
+		//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)
+		//LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?
 		public Group getGroup() { return cGroup; }
 
 		//LogicalOrExpression
 		public RuleCall getLogicalOrExpressionParserRuleCall_0() { return cLogicalOrExpressionParserRuleCall_0; }
 
-		//'schedule' schedule+=ScheduleObjectReference
+		//('schedule' schedule+=ScheduleObjectReference)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//'schedule'
@@ -2374,7 +2374,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  Transition Rules  // 
 	//// ------------------ //
 	//BoolScheduleExpression kexpressions::Expression:
-	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference);
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
 	public BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
 		return pBoolScheduleExpression;
 	}

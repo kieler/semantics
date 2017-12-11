@@ -898,7 +898,7 @@ ruleBoolScheduleExpression returns [EObject current=null]
 	    }
 
 )
-)))
+))?)
 ;
 
 
