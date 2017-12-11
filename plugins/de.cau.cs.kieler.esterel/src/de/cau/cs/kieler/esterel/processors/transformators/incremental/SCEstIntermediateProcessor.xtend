@@ -31,9 +31,28 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.Thread
 import de.cau.cs.kieler.scl.Conditional
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scl.StatementContainer
+import org.eclipse.emf.ecore.EObject
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.ElseScope
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Block
+import de.cau.cs.kieler.esterel.Emit
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EveryDo
+import de.cau.cs.kieler.esterel.Function
+import de.cau.cs.kieler.esterel.Halt
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
+import de.cau.cs.kieler.esterel.Loop
+import de.cau.cs.kieler.esterel.Nothing
+import de.cau.cs.kieler.esterel.ProcedureCall
+import de.cau.cs.kieler.esterel.Repeat
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Set
+import de.cau.cs.kieler.esterel.Suspend
+import de.cau.cs.kieler.esterel.Sustain
+import de.cau.cs.kieler.esterel.UnEmit
 
 /**
  * @author mrb
@@ -63,6 +82,36 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         var EObject obj
         obj.nextStatement
         
+    }
+    
+    def activateSpecificProcessor(EObject obj) {
+        switch (obj) {
+            Abort : return ABORT
+            Await : return AWAIT
+            Block : return BLOCK
+            Do : return DO
+            Emit : return EMIT
+            EsterelParallel : return PARALLEL
+            EveryDo : return EVERYDO
+//            Exec : return EXEC
+            Function : return FUNCTION
+            Halt : return HALT
+            IfTest : return IFTEST
+            LocalSignalDeclaration : return LOCALSIGNAL
+            LocalVariableDeclaration : return LOCALVARIABLE
+            Loop : return LOOP
+            Nothing : return NOTHING
+            Present : return PRESENT
+            ProcedureCall : return PROCCALL
+            Repeat : return REPEAT
+            Run : return RUN
+            Set : return SET
+            Suspend : return SUSPEND
+            Sustain : return SUSTAIN
+            Trap : return TRAP
+            UnEmit : return UNEMIT
+            
+        }
     }
     
     def nextStatement(EObject object) {
@@ -301,10 +350,39 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                 }
                 else if (parent instanceof Conditional) {
-                    // TODO statement in elseScope is in statementcontainer, next step in loop: obj = elsescope
-                    // leads to problem at the moment
-                    
+                    val statements = parent.statements
+                    pos = statements.indexOf(obj)
+                    if (pos+1 < statements.length) {
+                        obj = statements.get(pos+1)
+                        up = false
+                    }
+                    else {
+                        if (parent.^else !== null) {
+                            obj = parent.^else.statements.head
+                            up = false
+                        }
+                        else {
+                            obj = parent
+                            up = true
+                        }
+                    }
                 }
+                else if (parent instanceof ElseScope) {
+                    val statements = parent.statements
+                    pos = statements.indexOf(obj)
+                    if (pos+1 < statements.length) {
+                        obj = statements.get(pos+1)
+                        up = false
+                    }
+                    else {
+                        obj = parent.eContainer
+                        up = true //TODO transform statement
+                    }
+                }
+                
+                // TODO statement in elseScope is in statementcontainer, next step in loop: obj = elsescope
+                // leads to problem at the moment, find similar cases
+                    
                 else if (parent instanceof Module) {
                     // in Run statement or in EsterelProgram
                 }
@@ -334,6 +412,34 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     def boolean isLastModule(Module module) {
         module.containingList.indexOf(module) === module.containingList.length-1
     }
+    
+    public static val ABORT = de.cau.cs.kieler.esterel.processors.transformators.incremental.AbortTransformation.ID
+    public static val AWAIT = de.cau.cs.kieler.esterel.processors.transformators.incremental.AwaitTransformation.ID
+    public static val BLOCK = de.cau.cs.kieler.esterel.processors.transformators.incremental.BlockTransformation.ID
+    public static val CONSTANT = de.cau.cs.kieler.esterel.processors.transformators.incremental.ConstantTransformation.ID
+    public static val DO = de.cau.cs.kieler.esterel.processors.transformators.incremental.DoTransformation.ID
+    public static val EMIT = de.cau.cs.kieler.esterel.processors.transformators.incremental.EmitTransformation.ID
+    public static val PARALLEL = de.cau.cs.kieler.esterel.processors.transformators.incremental.EsterelParallelTransformation.ID
+    public static val EVERYDO = de.cau.cs.kieler.esterel.processors.transformators.incremental.EveryDoTransformation.ID
+//    public static val EXEC = de.cau.cs.kieler.esterel.processors.transformators.incremental.ExecTransformation.ID
+    public static val FUNCTION = de.cau.cs.kieler.esterel.processors.transformators.incremental.FunctionTransformation.ID
+    public static val HALT = de.cau.cs.kieler.esterel.processors.transformators.incremental.HaltTransformation.ID
+    public static val IFTEST = de.cau.cs.kieler.esterel.processors.transformators.incremental.IfTestTransformation.ID
+    public static val LOCALSIGNAL = de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalSignalDeclTransformation.ID
+    public static val LOCALVARIABLE = de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalVariableTransformation.ID
+    public static val LOOP = de.cau.cs.kieler.esterel.processors.transformators.incremental.LoopTransformation.ID
+    public static val NOTHING = de.cau.cs.kieler.esterel.processors.transformators.incremental.NothingTransformation.ID
+    public static val PRESENT = de.cau.cs.kieler.esterel.processors.transformators.incremental.PresentTransformation.ID
+    public static val PROCCALL = de.cau.cs.kieler.esterel.processors.transformators.incremental.ProcCallTransformation.ID
+    public static val REPEAT = de.cau.cs.kieler.esterel.processors.transformators.incremental.RepeatTransformation.ID
+    public static val RUN = de.cau.cs.kieler.esterel.processors.transformators.incremental.RunTransformation.ID
+    public static val SENSOR = de.cau.cs.kieler.esterel.processors.transformators.incremental.SensorTransformation.ID
+    public static val SET = de.cau.cs.kieler.esterel.processors.transformators.incremental.SetTransformation.ID
+    public static val SIGNAL = de.cau.cs.kieler.esterel.processors.transformators.incremental.SignalTransformation.ID
+    public static val SUSPEND = de.cau.cs.kieler.esterel.processors.transformators.incremental.SuspendTransformation.ID
+    public static val SUSTAIN = de.cau.cs.kieler.esterel.processors.transformators.incremental.SustainTransformation.ID
+    public static val TRAP = de.cau.cs.kieler.esterel.processors.transformators.incremental.TrapTransformation.ID
+    public static val UNEMIT  = de.cau.cs.kieler.esterel.processors.transformators.incremental.UnEmitTransformation.ID
     
     
 }
