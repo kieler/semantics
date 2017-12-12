@@ -144,26 +144,27 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             } else {
                 throw new NullPointerException("Assigned valued object is null")
             }
-            return
-        }
-        
-        // Add the assignment.
-        valuedObjectPrefix = struct.getVariableName + struct.separator
-        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
-        if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
-            for (asgn : assignment.splitAssignment) {
-                indent(conditionalStack.size + 1)
-                code.append(asgn.serializeHR).append(";\n")    
-            }
+            
         } else {
-            indent(conditionalStack.size + 1)
-            code.append(assignment.serializeHR).append(";\n")
-        }
-        
-        // Handle pre variable if necessary.
-        if (assignment.expression !== null && assignment.expression instanceof OperatorExpression &&
-            (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
-            (assignment.expression as OperatorExpression).addPreVariable(serializer)                    
+            
+            // Add the assignment.
+            valuedObjectPrefix = struct.getVariableName + struct.separator
+            prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+            if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
+                for (asgn : assignment.splitAssignment) {
+                    indent(conditionalStack.size + 1)
+                    code.append(asgn.serializeHR).append(";\n")    
+                }
+            } else {
+                indent(conditionalStack.size + 1)
+                code.append(assignment.serializeHR).append(";\n")
+            }
+            
+            // Handle pre variable if necessary.
+            if (assignment.expression !== null && assignment.expression instanceof OperatorExpression &&
+                (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
+                (assignment.expression as OperatorExpression).addPreVariable(serializer)                    
+            }
         }
         
         // If a new statement follows, add it to the node list.
