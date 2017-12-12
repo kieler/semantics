@@ -4,7 +4,7 @@
  * @date 2016-02-17
  */
 
-bool global;
+bool ^global;
 bool @alias "globalA" A;
 bool @alias "globalB" B;
 bool @alias "globalC" C;
@@ -26,7 +26,7 @@ scope Y {
 	bool @alias "YF" F;
 
 	@check "scoping.concurrent.Y.literal.global"
-	global = true
+	^global = true
 
 	@check "scoping.concurrent.Y.literal.local"
 	local = true
@@ -45,15 +45,15 @@ scope Y {
 
 	@check "scoping.concurrent.Y.reference.A"
 	@aliasCheck A, YA
-	global = A
+	^global = A
 
 	@check "scoping.concurrent.Y.reference.E"
 	@aliasCheck E, YE
-	global = E
+	^global = E
 	
 	@check "scoping.concurrent.Y.reference.globalC"
 	@aliasCheck C, globalC
-	global = C
+	^global = C
 
 	@check "scoping.concurrent.Y.reference.AToLocal"
 	@aliasCheck A, YA

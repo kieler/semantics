@@ -4,14 +4,14 @@
  * @date 2016-02-10
  */
 
-bool global;
+bool ^global;
 bool @alias "globalA" A;
 bool @alias "globalB" B;
 bool @alias "globalC" C;
 bool @alias "globalD" D;
 
 @check "scoping.global.literal.global"
-global = true
+^global = true
 
 @check "scoping.global.literal.globalA"
 @aliasCheck A, globalA
@@ -23,11 +23,11 @@ B = false
 
 @check "scoping.global.reference.globalA"
 @aliasCheck A, globalA
-global = A
+^global = A
 
 @check "scoping.global.reference.globalB"
 @aliasCheck B, globalB
-global = B
+^global = B
 
 @check "scoping.global.reference.globalBToA"
 @aliasCheck A, globalA
@@ -37,18 +37,18 @@ A = B
 @check "scoping.global.reference.operator#001"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
-global = A & B
+^global = A & B
 
 @check "scoping.global.reference.operator#002"
 @aliasCheck A, globalA
 @strict
-global = pre(A)
+^global = pre(A)
 
 @check "scoping.global.reference.operator#003"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 @aliasCheck C, globalC
-global = A & B & C
+^global = A & B & C
 
 
 scope X {
@@ -59,7 +59,7 @@ scope X {
 	bool @alias "XF" F;
 
 	@check "scoping.X.literal.global"
-	global = true
+	^global = true
 
 	@check "scoping.X.literal.local"
 	local = true
@@ -78,15 +78,15 @@ scope X {
 
 	@check "scoping.X.reference.A"
 	@aliasCheck A, XA
-	global = A
+	^global = A
 
 	@check "scoping.X.reference.E"
 	@aliasCheck E, XE
-	global = E
+	^global = E
 	
 	@check "scoping.X.reference.globalC"
 	@aliasCheck C, globalC
-	global = C
+	^global = C
 
 	@check "scoping.X.reference.AToLocal"
 	@aliasCheck A, XA
