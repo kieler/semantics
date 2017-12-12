@@ -58,13 +58,5 @@
             class="de.cau.cs.kieler.sccharts.prom.SCChartsAnalyzer">
       </analyzer>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.simulation.simulationParticipant">
-      <simulationParticipant
-            class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramHighlighter">
-      </simulationParticipant>
-      <simulationParticipant
-            class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramLiveValues"></simulationParticipant>
-   </extension>
 
 </plugin>

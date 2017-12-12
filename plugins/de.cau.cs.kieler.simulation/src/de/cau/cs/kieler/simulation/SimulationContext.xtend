@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.simulation
 
+import com.google.common.io.Files
+import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
@@ -43,12 +45,8 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.osgi.service.prefs.Preferences
-import de.cau.cs.kieler.kicool.ProcessorEntry
-import com.google.common.io.Files
 
 /**
  * Class to configure and start simulations.
@@ -63,11 +61,6 @@ class SimulationContext {
      * The name of the project in which models are compiled and simulated if none is provided.
      */
     public static val TEMPORARY_PROJECT_NAME = "TEMPORARY_SIM_PROJECT"
-    
-    /**
-     * The name of the attribute that stores the flag to determine if the temporary simulation project should be deleted.
-     */
-    public static val DELETE_TEMPORARY_PROJECT_ATTR = "deleteTemporarySimulationProject"
     
     // Fields for starting the simulation
     /**
@@ -156,6 +149,10 @@ class SimulationContext {
                 }
             }
         }
+        
+        override getName() {
+            return "Delete "+TEMPORARY_PROJECT_NAME
+        }
     }
     
     /**
@@ -164,7 +161,11 @@ class SimulationContext {
      * @param value True if the temporary project should be deleted, false otherwise.
      */
     public static def setDeleteTemporaryProject(boolean value) {
-        preferences.putBoolean(DELETE_TEMPORARY_PROJECT_ATTR, value)
+        if(value) {
+            SimulationManager.enable(listener)
+        } else {
+            SimulationManager.disable(listener)
+        }
     }
     
     /**
@@ -173,7 +174,7 @@ class SimulationContext {
      * @return true if the temporary simulation project should be deleted after the simulation is done
      */
     public static def getDeleteTemporaryProject() {
-        preferences.getBoolean(DELETE_TEMPORARY_PROJECT_ATTR, true)
+        return !SimulationManager.isDisabled(listener)
     }
     
     /**
@@ -190,7 +191,7 @@ class SimulationContext {
      */
     public def void start() {
         // Add simulation listener if not done yet
-        SimulationManager.addListener(listener)
+        SimulationManager.add(listener)
         // In case compilation was canceled, don't start simulation
         if(isCanceled) {
             return
@@ -448,16 +449,11 @@ class SimulationContext {
         val project = root.getProject(TEMPORARY_PROJECT_NAME)
         if (!project.exists) {
             project.create(null)
+        }
+        if(!project.open) {
             project.open(null)
         }
         return project
-    }
-    
-    /**
-     * Returns the preferences in which the attributes are stored.
-     */
-    private static def Preferences getPreferences() {
-        return InstanceScope.INSTANCE.getNode(SimulationPlugin.PLUGIN_ID)
     }
     
     /**

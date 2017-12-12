@@ -16,6 +16,7 @@ import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.simulation.SimulationPlugin
 import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
@@ -28,7 +29,10 @@ import java.util.Set
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.osgi.service.prefs.Preferences
+import java.util.ArrayList
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -80,7 +84,15 @@ class SimulationManager extends Configurable {
     /**
      * List of event listeners
      */
+    @Accessors(PUBLIC_GETTER)
     private static val List<SimulationListener> listeners = newArrayList
+    
+    /**
+     * The disabled listeners that should not receive any events.
+     */
+    private static val Set<SimulationListener> disabledListeners = newHashSet
+    
+    private static val DISABLED_LISTENERS_ATTR = "disabledSimulationListeners"
     
     /**
      * The length of the saved data pool history.
@@ -666,39 +678,110 @@ class SimulationManager extends Configurable {
      * 
      * @param event The Event
      */
-     public def void fireEvent(SimulationEvent event) {
-         for(l : listeners) {
-             l.update(event)
-         }
-     }
+    public def void fireEvent(SimulationEvent event) {
+        for(l : listeners) {
+            if(!isDisabled(l)) {
+               l.update(event)    
+           }
+        }
+    }
      
-     /**
+    /**
      * Notifies all listeners about handling the simulation.
      * 
      * @param operation The operation that triggered this event
      */
-     public def void fireEvent(SimulationOperation operation) {
-         val e = new SimulationControlEvent(operation, currentPool)
-         fireEvent(e)
-     }
+    public def void fireEvent(SimulationOperation operation) {
+        val e = new SimulationControlEvent(operation, currentPool)
+        fireEvent(e)
+    }
      
-     /**
-      * Adds a listener to be notified about simulation events.
-      * 
-      * @param listener The listener
-      */
-     public static def void addListener(SimulationListener listener) {
-         if(!listeners.contains(listener)) {
-             listeners.add(listener)
-         }
-     }
+    /**
+     * Adds a listener to be notified about simulation events.
+     * 
+     * @param listener The listener
+     */
+    public static def void add(SimulationListener listener) {
+        if(!listeners.contains(listener)) {
+            listeners.add(listener)
+        }
+        // Check if this listener was disabled the last time.
+        val disabledNames = getDisabledListenerNames
+        if(disabledNames.contains(listener.name)) {
+            disable(listener)
+        }
+    }
+    
+    /**
+     * Removes a listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void remove(SimulationListener listener) {
+        listeners.remove(listener)
+    }
      
-     /**
-      * Removes a listener.
-      * 
-      * @param listener The listener
-      */
-     public static def void removeListener(SimulationListener listener) {
-         listeners.remove(listener)
-     }
+    /**
+     * Enables a listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void enable(SimulationListener listener) {
+        disabledListeners.remove(listener)
+        // Persist the disabled state
+        val disabledNames = getDisabledListenerNames
+        disabledNames.remove(listener.name)
+        preferences.put(DISABLED_LISTENERS_ATTR, disabledNames.join(","))
+        preferences.flush()
+    }
+    
+    /**
+     * Disables a listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void disable(SimulationListener listener) {
+        if(!disabledListeners.contains(disabledListeners)) {
+            disabledListeners.add(listener)
+        }
+        // Persist the disabled state
+        val disabledNames = getDisabledListenerNames
+        if(!disabledNames.contains(listener.name)) {
+            disabledNames.add(listener.name)
+        }
+        preferences.put(DISABLED_LISTENERS_ATTR, disabledNames.join(","))
+        preferences.flush()
+    }
+    
+    /**
+     * Checks if a listener is disabled.
+     * 
+     * @param listener The listener
+     */
+    public static def boolean isDisabled(SimulationListener listener) {
+        return disabledListeners.contains(listener)
+    }
+    
+    /**
+     * Returns the names of the persisted disabled simulation listeners.
+     * 
+     * @return the names of the persisted disabled simulation listeners.
+     */
+    private static def ArrayList<String> getDisabledListenerNames() {
+        val disabledCSV = preferences.get(DISABLED_LISTENERS_ATTR, "")
+        val result = newArrayList
+        for(name : disabledCSV.split(",")) {
+            if(!name.isNullOrEmpty) {
+                result.add(name)    
+            }
+        }
+        return result
+    }
+     
+    /**
+     * Returns the preferences in which the attributes are stored.
+     */
+    private static def Preferences getPreferences() {
+        return InstanceScope.INSTANCE.getNode(SimulationPlugin.PLUGIN_ID)
+    }
 }
