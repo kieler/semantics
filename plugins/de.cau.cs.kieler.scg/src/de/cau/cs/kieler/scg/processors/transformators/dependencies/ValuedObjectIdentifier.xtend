@@ -58,7 +58,7 @@ class ValuedObjectIdentifier {
     }
     
     def isSpecificIdentifier() {
-        indices != null
+        indices !== null
     }
     
     /**
@@ -66,7 +66,7 @@ class ValuedObjectIdentifier {
      * iff one index is not determinable at compile time.
      */
     protected def List<Expression> removeDynamicIndices(List<Expression> indices) {
-        if (indices == null || indices.size == 0) return null
+        if (indices === null || indices.size == 0) return null
         val indexList = <Expression> newArrayList
         
         for (index : indices) {
@@ -83,17 +83,17 @@ class ValuedObjectIdentifier {
     }
     
     override int hashCode() {
-        if (valuedObject == null) return 0;
+        if (valuedObject === null) return 0;
         valuedObject.hashCode
     }
     
     override boolean equals(Object object) {
         if (object instanceof ValuedObjectIdentifier) {
             if (this.valuedObject != object.valuedObject) return false
-            if (this.indices == null) {
-                if (object.indices == null) return true else return false
+            if (this.indices === null) {
+                if (object.indices === null) return true else return false
             } else {
-                if (object.indices == null) {
+                if (object.indices === null) {
                     return false 
                 } else {
                     if (this.indices.size != object.indices.size) {

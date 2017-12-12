@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -87,6 +88,24 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             edge.setProbabilityStyle
         }
 
+        // User schedules
+        val userSchedule = if (transition.trigger !== null) (transition.trigger.schedule + transition.effects.map[ schedule ].flatten).toSet
+            else (transition.effects.map[ schedule ].flatten).toSet
+        if (userSchedule.size > 0) {
+            val sLabel = new StringBuilder
+            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            for (s : userSchedule) {
+                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
+                if (!exists.contains(existPair)) {
+                    if (s !== userSchedule.head) sLabel.append(", ")
+                    sLabel.append(s.valuedObject.name + " " + s.priority)
+                    exists.add(existPair)
+                }
+            }
+            edge.addTailLabel(sLabel.toString).associateWith(transition)
+            edge.setUserScheduleStyle
+        }
+        
         switch (transition.history) {
             case SHALLOW: edge.addShallowHistoryDecorator
             case DEEP: edge.addDeepHistoryDecorator
@@ -111,7 +130,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     COMMENT_BACKGROUND_GRADIENT_2.color)
             ]
         }     
-
+        
         //Configure selection style
         edge.setSelectionStyle
 

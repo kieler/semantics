@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.processors.transformators.dependencies
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * A ValuedObjectAccess is a storage class for a particular access to an valued object.
@@ -35,12 +36,14 @@ class ValuedObjectAccess {
     
     @Accessors Node node
     @Accessors EObject schedule
+    @Accessors ValuedObject scheduleObject
     @Accessors int priority 
     @Accessors ForkStack forkStack
     
-    new(Node node, EObject schedule, int priority, ForkStack forkStack) {
+    new(Node node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack) {
         this.node = node
         this.schedule = schedule
+        this.scheduleObject = scheduleObject
         this.priority = priority
         this.forkStack = new ForkStack(forkStack)
     }

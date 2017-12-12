@@ -121,7 +121,7 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
         
         VOCalleeMap.clear
         for(referenceDeclaration : scg.declarations.filter(ReferenceDeclaration)) {
-            val calleeTick = referenceDeclaration.extern
+            val calleeTick = referenceDeclaration.extern.head.code
             for(vo : referenceDeclaration.valuedObjects) {
                 VOCalleeMap.put(vo, calleeTick)            
             }

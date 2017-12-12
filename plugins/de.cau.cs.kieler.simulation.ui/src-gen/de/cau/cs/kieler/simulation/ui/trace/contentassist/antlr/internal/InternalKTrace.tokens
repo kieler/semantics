@@ -55,6 +55,7 @@
 'expression'=82
 'extern'=85
 'float'=66
+'global'=87
 'host'=68
 'input'=101
 'int'=65
@@ -67,7 +68,6 @@
 'pause'=77
 'pre'=17
 'print'=93
-'prio'=87
 'pure'=62
 'random'=96
 'randomize'=94

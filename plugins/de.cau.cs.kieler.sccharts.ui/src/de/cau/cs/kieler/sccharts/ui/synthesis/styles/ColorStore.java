@@ -83,6 +83,8 @@ public class ColorStore {
         COMMENT_TEXT(0, 0, 0),
         COMMENT_EDGE(0xf0, 0xf0, 0x24),
         
+        USER_SCHEDULE_COLOR(0x28, 0x99, 0x7E),
+        
         KEYWORD(115, 0, 65);
 
         /** the default color */

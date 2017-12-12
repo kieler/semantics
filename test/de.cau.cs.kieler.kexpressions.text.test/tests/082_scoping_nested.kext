@@ -4,7 +4,7 @@
  * @date 2016-02-17
  */
 
-bool global;
+bool ^global;
 bool @alias "globalA" A;
 bool @alias "globalB" B;
 bool @alias "globalC" C;
@@ -25,7 +25,7 @@ scope X {
 		bool @alias "YH" H; // new local
 	
 		@check "scoping.nested.XY.global"
-		global = true
+		^global = true
 	
 		@check "scoping.nested.XY.local"
 		local = true
@@ -74,37 +74,37 @@ scope X {
 		// global
 		@check "scoping.nested.XY.reference.global"
 		@aliasCheck D, globalD
-		global = D
+		^global = D
 		
 		// parent
 		@check "scoping.nested.XY.reference.parent"
 		@aliasCheck F, XF
-		global = F
+		^global = F
 		
 		// local
 		@check "scoping.nested.XY.reference.local"
 		@aliasCheck H, YH
-		global = H
+		^global = H
 		
 		// overridden global
 		@check "scoping.nested.XY.reference.overridden.global"
 		@aliasCheck C, YC
-		global = C
+		^global = C
 		
 		// overridden parent
 		@check "scoping.nested.XY.reference.overridden.parent"
 		@aliasCheck E, YE
-		global = E
+		^global = E
 		
 		// overridden twice
 		@check "scoping.nested.XY.reference.overridden.twice"
 		@aliasCheck A, YA
-		global = A
+		^global = A
 		
 		// parent override
 		@check "scoping.nested.XY.reference.parent.override"
 		@aliasCheck B, XB
-		global = B
+		^global = B
 
 
 
@@ -200,43 +200,43 @@ scope X {
 		@check "scoping.nested.XY.operator.unary.global"
 		@aliasCheck D, globalD
 		@strict
-		global = pre(D)
+		^global = pre(D)
 		
 		// parent
 		@check "scoping.nested.XY.operator.unary.parent"
 		@aliasCheck F, XF
 		@strict
-		global = pre(F)
+		^global = pre(F)
 		
 		// local
 		@check "scoping.nested.XY.operator.unary.local"
 		@aliasCheck H, YH
 		@strict
-		global = pre(H)
+		^global = pre(H)
 		
 		// overridden global
 		@check "scoping.nested.XY.operator.unary.overridden.global"
 		@aliasCheck C, YC
 		@strict
-		global = pre(C)
+		^global = pre(C)
 		
 		// overridden parent
 		@check "scoping.nested.XY.operator.unary.overridden.parent"
 		@aliasCheck E, YE
 		@strict
-		global = pre(E)
+		^global = pre(E)
 		
 		// overridden twice
 		@check "scoping.nested.XY.operator.unary.overridden.twice"
 		@aliasCheck A, YA
 		@strict
-		global = pre(A)
+		^global = pre(A)
 		
 		// parent override
 		@check "scoping.nested.XY.operator.unary.parent.override"
 		@aliasCheck B, XB
 		@strict
-		global = pre(B)
+		^global = pre(B)
 		
 		
 		

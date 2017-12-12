@@ -1,7 +1,6 @@
 package de.cau.cs.kieler.scg.codegen
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -16,14 +15,13 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 class CodeGeneratorSerializeHRExtensions extends SCGSerializeHRExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KEffectsExtensions
 
     override dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
         val declaration = referenceCall.valuedObject.referenceDeclaration
         if (declaration.extern.nullOrEmpty) { 
             return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
         } else {
-            return declaration.extern + referenceCall.parameters.serializeHRParameters
+            return declaration.extern.head.code + referenceCall.parameters.serializeHRParameters
         }
     }    
     
@@ -32,7 +30,7 @@ class CodeGeneratorSerializeHRExtensions extends SCGSerializeHRExtensions {
         if (declaration.extern.nullOrEmpty) { 
             return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
         } else {
-            return declaration.extern + referenceCall.parameters.serializeParameters
+            return declaration.extern.head.code + referenceCall.parameters.serializeParameters
         }
     }
     
