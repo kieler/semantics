@@ -118,7 +118,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         guardCache.clear
         
         // Timestamp for performance information. Should be moved to the KiCo interface globally.
-        SCGPlugin.log("Nodes: " + scg.nodes.size)  
+//        SCGPlugin.log("Nodes: " + scg.nodes.size)  
         val timestamp = System.currentTimeMillis  
 
         // Create the basic blocks beginning with the first node in the node list.

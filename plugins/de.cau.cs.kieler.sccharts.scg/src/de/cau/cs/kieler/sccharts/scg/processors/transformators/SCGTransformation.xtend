@@ -243,9 +243,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     
     def SCGraph transformSCG(State rootState) {
 
-        SCChartsSCGPlugin.log("Beginning preparation of the SCG generation phase...");
-        var timestamp = System.currentTimeMillis
-
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
 
@@ -291,8 +288,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.
-        System.out.println(" ... ")
-
         stateList.add(rootState)
 
         for (s : stateList) {
@@ -311,18 +306,12 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             stateTypeCache.put(s, stateTypeSet)
         }
 
-        var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Preparation for SCG generation finished (time elapsed: " + (time / 1000) + "s).")
-
         rootStateEntry = sCGraph.addEntry.trace(rootState) => [setExit(sCGraph.addExit.trace(rootState))]
 
         rootState.transformSCGGenerateNodes(sCGraph)
         rootState.transformSCGConnectNodes(sCGraph)
 
         rootState.mappedNode.createControlFlow.trace(rootState) => [rootStateEntry.setNext(it)]
-
-        time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("SCG generation finished (overall time elapsed: " + (time / 1000) + "s).")
 
         // if (state.rootState.regions.size==1) {
         // // Generate nodes and recursively traverse model
@@ -339,22 +328,16 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         // }
         // }
         // Fix superfluous exit nodes
-        timestamp = System.currentTimeMillis
         sCGraph.trimExitNodes.trimConditioanlNodes
-        time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("SCG node trimming completed (additional time elapsed: " + (time / 1000) + "s).")
 
         // Remove superfluous fork constructs 
         // ssm, 04.05.2014
         val scg = if (true) { // (context?.getProperty(ENABLE_SFR)) {
-                timestamp = System.currentTimeMillis
                 val SuperfluousThreadRemover superfluousThreadRemover = Guice.createInjector().
                     getInstance(typeof(SuperfluousThreadRemover))
                 val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().
                     getInstance(typeof(SuperfluousForkRemover))
                 val optimizedSCG = superfluousForkRemover.optimize(superfluousThreadRemover.optimize(sCGraph))
-                time = (System.currentTimeMillis - timestamp) as float
-                System.out.println("SCG optimization completed (additional time elapsed: " + (time / 1000) + "s).")
                 optimizedSCG
             } else {
                 sCGraph
