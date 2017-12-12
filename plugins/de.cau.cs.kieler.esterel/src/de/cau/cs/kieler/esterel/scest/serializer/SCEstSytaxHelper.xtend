@@ -40,10 +40,14 @@ class SCEstSytaxHelper extends EsterelSytaxHelper {
         for (container : program.eAllContents.filter(StatementContainer).toList) {
             if (!(container instanceof EsterelParallel)) {
                 if (container.statements.size > 1) {
-                    val t = createEsterelThread
-                    t.statements.addAll(container.statements)
-                    t.statements.chainSatements
-                    container.statements += t
+//                    if (container instanceof de.cau.cs.kieler.scl.Thread) {
+//                        container.statements.chainSatements
+//                    } else {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.statements)
+                        t.statements.chainSatements
+                        container.statements += t
+//                    }
                 }
                 if (container instanceof Present) {
                     if (container.elseStatements.size > 1) {

@@ -293,8 +293,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getStatementsEsterelThreadParserRuleCall_1_1_1_0() { return cStatementsEsterelThreadParserRuleCall_1_1_1_0; }
 	}
 
-	public class AssignmentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Assignment");
+	public class EsterelAssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.EsterelAssignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cReferenceAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cReferenceVariableOrSignalReferenceParserRuleCall_0_0 = (RuleCall)cReferenceAssignment_0.eContents().get(0);
@@ -302,7 +302,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
-		//@ Override Assignment scl::Assignment:
+		//@ Override EsterelAssignment scl::Assignment:
 		//	reference=VariableOrSignalReference ":=" expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -578,7 +578,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	private final InstructionStatementElements pInstructionStatement;
 	private final SCLStatementElements pSCLStatement;
 	private final EsterelThreadElements pEsterelThread;
-	private final AssignmentElements pAssignment;
+	private final EsterelAssignmentElements pEsterelAssignment;
 	private final VariableOrSignalReferenceElements pVariableOrSignalReference;
 	private final UnEmitElements pUnEmit;
 	private final SetElements pSet;
@@ -626,7 +626,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		this.pInstructionStatement = new InstructionStatementElements();
 		this.pSCLStatement = new SCLStatementElements();
 		this.pEsterelThread = new EsterelThreadElements();
-		this.pAssignment = new AssignmentElements();
+		this.pEsterelAssignment = new EsterelAssignmentElements();
 		this.pVariableOrSignalReference = new VariableOrSignalReferenceElements();
 		this.pUnEmit = new UnEmitElements();
 		this.pSet = new SetElements();
@@ -753,14 +753,14 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterelThreadAccess().getRule();
 	}
 
-	//@ Override Assignment scl::Assignment:
+	//@ Override EsterelAssignment scl::Assignment:
 	//	reference=VariableOrSignalReference ":=" expression=Expression;
-	public AssignmentElements getAssignmentAccess() {
-		return pAssignment;
+	public EsterelAssignmentElements getEsterelAssignmentAccess() {
+		return pEsterelAssignment;
 	}
 	
-	public ParserRule getAssignmentRule() {
-		return getAssignmentAccess().getRule();
+	public ParserRule getEsterelAssignmentRule() {
+		return getEsterelAssignmentAccess().getRule();
 	}
 
 	//VariableOrSignalReference kexpressions::ValuedObjectReference:
@@ -1164,9 +1164,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	// * ###               7.5 Statements                ###
 	// * ###################################################
 	// */ InstructionStatement scl::Statement:
-	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-	//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
-	//	Block | LegacyDo;
+	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | super::EsterelAssignment | Abort | Loop | EveryDo |
+	//	Sustain | Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall |
+	//	Repeat | Block | LegacyDo;
 	public EsterelGrammarAccess.InstructionStatementElements getEsterelInstructionStatementAccess() {
 		return gaEsterel.getInstructionStatementAccess();
 	}
@@ -1268,18 +1268,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSustainRule() {
 		return getSustainAccess().getRule();
-	}
-
-	//// = 7.5.2 Assignment and Procedure Call
-	//// -------------------------------------
-	//EsterelAssignment scl::Assignment:
-	//	reference=VariableReference ":=" expression=Expression;
-	public EsterelGrammarAccess.EsterelAssignmentElements getEsterelAssignmentAccess() {
-		return gaEsterel.getEsterelAssignmentAccess();
-	}
-	
-	public ParserRule getEsterelAssignmentRule() {
-		return getEsterelAssignmentAccess().getRule();
 	}
 
 	//VariableReference kexpressions::ValuedObjectReference:
@@ -2319,6 +2307,20 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getGotoRule() {
 		return getGotoAccess().getRule();
+	}
+
+	//Assignment:
+	//	annotations+=Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=AssignOperator
+	//	expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
+		return gaSCL.getAssignmentAccess();
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
 	}
 
 	//Conditional:

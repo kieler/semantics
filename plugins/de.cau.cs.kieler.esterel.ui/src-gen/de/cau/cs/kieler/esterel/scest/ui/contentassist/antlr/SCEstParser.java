@@ -158,7 +158,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEsterelThreadAccess().getGroup_0_1_1(), "rule__EsterelThread__Group_0_1_1__0");
 					put(grammarAccess.getEsterelThreadAccess().getGroup_1(), "rule__EsterelThread__Group_1__0");
 					put(grammarAccess.getEsterelThreadAccess().getGroup_1_1(), "rule__EsterelThread__Group_1_1__0");
-					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
+					put(grammarAccess.getEsterelAssignmentAccess().getGroup(), "rule__EsterelAssignment__Group__0");
 					put(grammarAccess.getUnEmitAccess().getGroup(), "rule__UnEmit__Group__0");
 					put(grammarAccess.getSetAccess().getGroup(), "rule__Set__Group__0");
 					put(grammarAccess.getSetAccess().getGroup_3(), "rule__Set__Group_3__0");
@@ -231,7 +231,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmitAccess().getGroup_3(), "rule__Emit__Group_3__0");
 					put(grammarAccess.getSustainAccess().getGroup(), "rule__Sustain__Group__0");
 					put(grammarAccess.getSustainAccess().getGroup_3(), "rule__Sustain__Group_3__0");
-					put(grammarAccess.getEsterelAssignmentAccess().getGroup(), "rule__EsterelAssignment__Group__0");
 					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
 					put(grammarAccess.getProcedureCallAccess().getGroup(), "rule__ProcedureCall__Group__0");
 					put(grammarAccess.getProcedureCallAccess().getGroup_3_0(), "rule__ProcedureCall__Group_3_0__0");
@@ -398,6 +397,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
 					put(grammarAccess.getLabelAccess().getGroup(), "rule__Label__Group__0");
 					put(grammarAccess.getGotoAccess().getGroup(), "rule__Goto__Group__0");
+					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
+					put(grammarAccess.getAssignmentAccess().getGroup_4(), "rule__Assignment__Group_4__0");
 					put(grammarAccess.getConditionalAccess().getGroup(), "rule__Conditional__Group__0");
 					put(grammarAccess.getElseScopeAccess().getGroup(), "rule__ElseScope__Group__0");
 					put(grammarAccess.getLegacyConditionalAccess().getGroup(), "rule__LegacyConditional__Group__0");
@@ -552,8 +553,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEsterelModuleAccess().getStatementsAssignment_5(), "rule__EsterelModule__StatementsAssignment_5");
 					put(grammarAccess.getEsterelThreadAccess().getStatementsAssignment_0_1_1_1(), "rule__EsterelThread__StatementsAssignment_0_1_1_1");
 					put(grammarAccess.getEsterelThreadAccess().getStatementsAssignment_1_1_1(), "rule__EsterelThread__StatementsAssignment_1_1_1");
-					put(grammarAccess.getAssignmentAccess().getReferenceAssignment_0(), "rule__Assignment__ReferenceAssignment_0");
-					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2(), "rule__Assignment__ExpressionAssignment_2");
+					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_0(), "rule__EsterelAssignment__ReferenceAssignment_0");
+					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_2(), "rule__EsterelAssignment__ExpressionAssignment_2");
 					put(grammarAccess.getUnEmitAccess().getAnnotationsAssignment_0(), "rule__UnEmit__AnnotationsAssignment_0");
 					put(grammarAccess.getUnEmitAccess().getSignalAssignment_2(), "rule__UnEmit__SignalAssignment_2");
 					put(grammarAccess.getSetAccess().getAnnotationsAssignment_0(), "rule__Set__AnnotationsAssignment_0");
@@ -653,8 +654,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSustainAccess().getAnnotationsAssignment_0(), "rule__Sustain__AnnotationsAssignment_0");
 					put(grammarAccess.getSustainAccess().getSignalAssignment_2(), "rule__Sustain__SignalAssignment_2");
 					put(grammarAccess.getSustainAccess().getExpressionAssignment_3_1(), "rule__Sustain__ExpressionAssignment_3_1");
-					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_0(), "rule__EsterelAssignment__ReferenceAssignment_0");
-					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_2(), "rule__EsterelAssignment__ExpressionAssignment_2");
 					put(grammarAccess.getVariableReferenceAccess().getValuedObjectAssignment_1(), "rule__VariableReference__ValuedObjectAssignment_1");
 					put(grammarAccess.getProcedureCallAccess().getAnnotationsAssignment_0(), "rule__ProcedureCall__AnnotationsAssignment_0");
 					put(grammarAccess.getProcedureCallAccess().getProcedureAssignment_2(), "rule__ProcedureCall__ProcedureAssignment_2");
@@ -874,6 +873,12 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGotoAccess().getAnnotationsAssignment_0(), "rule__Goto__AnnotationsAssignment_0");
 					put(grammarAccess.getGotoAccess().getTargetAssignment_2(), "rule__Goto__TargetAssignment_2");
 					put(grammarAccess.getGotoAccess().getSemicolonAssignment_3(), "rule__Goto__SemicolonAssignment_3");
+					put(grammarAccess.getAssignmentAccess().getAnnotationsAssignment_0(), "rule__Assignment__AnnotationsAssignment_0");
+					put(grammarAccess.getAssignmentAccess().getReferenceAssignment_1(), "rule__Assignment__ReferenceAssignment_1");
+					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_2(), "rule__Assignment__OperatorAssignment_2");
+					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_3(), "rule__Assignment__ExpressionAssignment_3");
+					put(grammarAccess.getAssignmentAccess().getScheduleAssignment_4_1(), "rule__Assignment__ScheduleAssignment_4_1");
+					put(grammarAccess.getAssignmentAccess().getSemicolonAssignment_5(), "rule__Assignment__SemicolonAssignment_5");
 					put(grammarAccess.getConditionalAccess().getAnnotationsAssignment_0(), "rule__Conditional__AnnotationsAssignment_0");
 					put(grammarAccess.getConditionalAccess().getExpressionAssignment_2(), "rule__Conditional__ExpressionAssignment_2");
 					put(grammarAccess.getConditionalAccess().getDeclarationsAssignment_4(), "rule__Conditional__DeclarationsAssignment_4");

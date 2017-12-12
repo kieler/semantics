@@ -695,8 +695,8 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				}
 				else if (rule == grammarAccess.getInstructionStatementRule()
 						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_0_1_0()
-						|| rule == grammarAccess.getEsterelInstructionStatementRule()
-						|| rule == grammarAccess.getEsterelAssignmentRule()) {
+						|| rule == grammarAccess.getEsterelAssignmentRule()
+						|| rule == grammarAccess.getEsterelInstructionStatementRule()) {
 					sequence_EsterelAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
@@ -785,15 +785,40 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     SCLStatement returns Assignment
-	 *     EsterelThread.EsterelThread_1_1_0 returns Assignment
-	 *     Assignment returns Assignment
-	 *     Effect returns Assignment
+	 *     Statement returns Assignment
+	 *     EsterelThread returns Assignment
+	 *     EsterelParallel returns Assignment
+	 *     EsterelParallel.EsterelParallel_1_0 returns Assignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         (reference=VariableOrSignalReference expression=Expression) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             reference=ValuedObjectReference 
+	 *             operator=AssignOperator 
+	 *             expression=Expression 
+	 *             schedule+=ScheduleObjectReference* 
+	 *             semicolon?=';'?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_Assignment_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     InstructionStatement returns Assignment
+	 *     EsterelThread.EsterelThread_0_1_0 returns Assignment
+	 *     EsterelAssignment returns Assignment
+	 *     InstructionStatement returns Assignment
 	 *
 	 * Constraint:
 	 *     (reference=VariableOrSignalReference expression=Expression)
 	 */
-	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+	protected void sequence_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__REFERENCE));
@@ -801,24 +826,9 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAssignmentAccess().getReferenceVariableOrSignalReferenceParserRuleCall_0_0(), semanticObject.getReference());
-		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getEsterelAssignmentAccess().getReferenceVariableOrSignalReferenceParserRuleCall_0_0(), semanticObject.getReference());
+		feeder.accept(grammarAccess.getEsterelAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Statement returns Assignment
-	 *     EsterelThread returns Assignment
-	 *     EsterelParallel returns Assignment
-	 *     EsterelParallel.EsterelParallel_1_0 returns Assignment
-	 *
-	 * Constraint:
-	 *     ((reference=VariableOrSignalReference expression=Expression) | (reference=VariableReference expression=Expression))
-	 */
-	protected void sequence_Assignment_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
