@@ -95,7 +95,7 @@ abstract class ModelAnalyzer {
      * 
      * @return the default compile chain for the supported models
      */
-    protected def String getDefaultCompileChain()
+    public def String getDefaultCompileChain()
     
     /**
      * Returns the name of this analyzer.
