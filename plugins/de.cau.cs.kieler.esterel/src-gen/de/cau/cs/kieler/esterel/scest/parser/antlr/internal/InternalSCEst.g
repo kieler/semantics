@@ -671,11 +671,11 @@ ruleVariableOrSignalReference returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getVariableOrSignalReferenceAccess().getVariableReferenceParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getVariableOrSignalReferenceAccess().getValuedObjectReferenceParserRuleCall_0()); 
     }
-    this_VariableReference_0=ruleVariableReference
+    this_ValuedObjectReference_0=ruleValuedObjectReference
     { 
-        $current = $this_VariableReference_0.current; 
+        $current = $this_ValuedObjectReference_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -689,6 +689,19 @@ ruleVariableOrSignalReference returns [EObject current=null]
     this_SignalReferenceExpression_1=ruleSignalReferenceExpression
     { 
         $current = $this_SignalReferenceExpression_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getVariableOrSignalReferenceAccess().getVariableReferenceParserRuleCall_2()); 
+    }
+    this_VariableReference_2=ruleVariableReference
+    { 
+        $current = $this_VariableReference_2.current; 
         afterParserOrEnumRuleCall();
     }
 )

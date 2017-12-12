@@ -58,13 +58,14 @@ EsterelThread returns scl::Statement:
 ;
 
 @Override
-Assignment returns scl::Assignment:
+EsterelAssignment returns scl::Assignment:
     reference=VariableOrSignalReference ":=" expression=Expression
 ;
     
 VariableOrSignalReference returns kexpressions::ValuedObjectReference:
-     VariableReference
+     ValuedObjectReference
    | SignalReferenceExpression
+   | VariableReference
 ;
       
 /* ###################################################
