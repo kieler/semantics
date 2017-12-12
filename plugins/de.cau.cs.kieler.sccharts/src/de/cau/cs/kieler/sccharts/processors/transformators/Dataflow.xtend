@@ -142,11 +142,13 @@ class Dataflow extends SCChartsProcessor {
             
             eqTrans.addAssignment(equation.value)
             for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
-                val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
-                val replacement = referenceReplacements.get(refPair)
-                if (replacement != null) {
-                    reference.valuedObject = replacement
-                    reference.subReference = null
+                if (reference.subReference !== null) {
+                    val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
+                    val replacement = referenceReplacements.get(refPair)
+                    if (replacement !== null) {
+                        reference.valuedObject = replacement
+                        reference.subReference = null
+                    }
                 }
             }
         }

@@ -118,7 +118,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             switch(node) {
                 Assignment: {
                     node.processAssignment(forkStack, valuedObjectAccessors)
-                    node.next.target.addAndMark(nodes, visited)
+                    node.next?.target.addAndMark(nodes, visited)
                 }
                 Conditional: {
                     node.processConditional(forkStack, valuedObjectAccessors)
