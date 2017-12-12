@@ -81,7 +81,7 @@ public class SCEstScopeProvider extends EsterelScopeProvider {
     
     
     /**
-     * collect everything of type 'valuedObject'
+     * collect everything of type 'valuedObject' local variables, scl declarations and constants
      * 
      * @param context context
      * 
@@ -126,43 +126,5 @@ public class SCEstScopeProvider extends EsterelScopeProvider {
         scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
         return scopeElems;
     }
-    
-    /**
-     * collect all local variables of the context up to its parent module.
-     * 
-     * @param context
-     *            context
-     * @return list with scope elements
-     */
-    public static def List<IEObjectDescription> getLocalDeclarations(EObject context) {
-        val scopeElems = new ArrayList<IEObjectDescription>();
 
-        var parent = context.eContainer();
-        // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof Module) && parent !== null) {
-            // Get the local variables into the scope
-            if (parent instanceof Scope) {
-                val decl = (parent as Scope).getDeclarations();
-                for (vdecl : decl) {
-                    for (varSingle : vdecl.valuedObjects) {
-                        scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
-                                .getName()), varSingle, emptyMap));
-                    }
-                }
-            }
-            parent = parent.eContainer();
-        }
-
-        return scopeElems;
-    }
-
-    override IScope scope_ValuedObjectReference_valuedObject(ValuedObjectReference context, EReference ref) {
-        val ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
-        // there are several elements which are scoped as valued object
-        scopeElems.addAll(getLocalSignals(context));
-        scopeElems.addAll(getLocalVariables(context));
-        scopeElems.addAll(getLocalTraps(context));
-        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS.merge(COLLECT_SENSORS).merge(COLLECT_SIGNALS)));
-        return new SimpleScope(getScopeForValuedObjectReference(context, ref), scopeElems);
-    }
 }
