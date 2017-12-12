@@ -139,6 +139,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDataflowRegionAccess().getGroup(), "rule__DataflowRegion__Group__0");
 					put(grammarAccess.getDataflowRegionAccess().getGroup_5(), "rule__DataflowRegion__Group_5__0");
 					put(grammarAccess.getDataflowRegionAccess().getGroup_5_4(), "rule__DataflowRegion__Group_5_4__0");
+					put(grammarAccess.getDataflowRegionAccess().getGroup_6(), "rule__DataflowRegion__Group_6__0");
 					put(grammarAccess.getEntryActionAccess().getGroup(), "rule__EntryAction__Group__0");
 					put(grammarAccess.getEntryActionAccess().getGroup_2(), "rule__EntryAction__Group_2__0");
 					put(grammarAccess.getEntryActionAccess().getGroup_2_2(), "rule__EntryAction__Group_2_2__0");
@@ -417,8 +418,9 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDataflowRegionAccess().getCounterVariableAssignment_5_1(), "rule__DataflowRegion__CounterVariableAssignment_5_1");
 					put(grammarAccess.getDataflowRegionAccess().getForStartAssignment_5_3(), "rule__DataflowRegion__ForStartAssignment_5_3");
 					put(grammarAccess.getDataflowRegionAccess().getForEndAssignment_5_4_1(), "rule__DataflowRegion__ForEndAssignment_5_4_1");
-					put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_7(), "rule__DataflowRegion__DeclarationsAssignment_7");
-					put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_8(), "rule__DataflowRegion__EquationsAssignment_8");
+					put(grammarAccess.getDataflowRegionAccess().getScheduleAssignment_6_1(), "rule__DataflowRegion__ScheduleAssignment_6_1");
+					put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_8(), "rule__DataflowRegion__DeclarationsAssignment_8");
+					put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9(), "rule__DataflowRegion__EquationsAssignment_9");
 					put(grammarAccess.getCounterVariableAccess().getNameAssignment(), "rule__CounterVariable__NameAssignment");
 					put(grammarAccess.getEntryActionAccess().getTriggerAssignment_2_1(), "rule__EntryAction__TriggerAssignment_2_1");
 					put(grammarAccess.getEntryActionAccess().getTriggerProbabilityAssignment_2_2_1(), "rule__EntryAction__TriggerProbabilityAssignment_2_2_1");

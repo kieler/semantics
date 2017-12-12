@@ -192,6 +192,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 components.addKeyword("extern")
                 components.addHighlight(declaration.extern.head.code)
             }          
+        } else if (declaration instanceof ScheduleDeclaration) {
+            components.addKeyword("schedule")
+            components.addHighlight(declaration.name)
         }
 
         // Content

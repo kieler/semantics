@@ -187,4 +187,7 @@ class ControlflowRegionStyles {
         return null
     }
     
+    def KRectangle setUserScheduleStyle(KRectangle krendering) {
+        krendering.foreground = USER_SCHEDULE_COLOR.color
+    }
 }

@@ -1983,23 +1983,45 @@ ruleDataflowRegion returns [EObject current=null]
 	    }
 
 )
-))?)?	otherlv_11=':' 
+))?)?(	otherlv_11='schedule' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getDataflowRegionAccess().getColonKeyword_6());
+    	newLeafNode(otherlv_11, grammarAccess.getDataflowRegionAccess().getScheduleKeyword_6_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getScheduleScheduleObjectReferenceParserRuleCall_6_1_0()); 
 	    }
-		lv_declarations_12_0=ruleDeclarationWOSemicolon		{
+		lv_schedule_12_0=ruleScheduleObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
+	        }
+       		add(
+       			$current, 
+       			"schedule",
+        		lv_schedule_12_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)+)?	otherlv_13=':' 
+    {
+    	newLeafNode(otherlv_13, grammarAccess.getDataflowRegionAccess().getColonKeyword_7());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_8_0()); 
+	    }
+		lv_declarations_14_0=ruleDeclarationWOSemicolon		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
        			"declarations",
-        		lv_declarations_12_0, 
+        		lv_declarations_14_0, 
         		"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2008,16 +2030,16 @@ ruleDataflowRegion returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0()); 
 	    }
-		lv_equations_13_0=ruleAssignment		{
+		lv_equations_15_0=ruleAssignment		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
        			"equations",
-        		lv_equations_13_0, 
+        		lv_equations_15_0, 
         		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 	        afterParserOrEnumRuleCall();
 	    }
