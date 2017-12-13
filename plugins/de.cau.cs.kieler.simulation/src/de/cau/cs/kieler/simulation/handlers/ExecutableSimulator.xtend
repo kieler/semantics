@@ -21,6 +21,7 @@ import de.cau.cs.kieler.prom.build.simulation.SimulationCompilerListener
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DataPoolOperation
 import de.cau.cs.kieler.simulation.core.Model
@@ -36,7 +37,6 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
-import de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig
 
 /**
  * Creates a new process by starting an executable or shell command and sends / receives variables of this process using JSON.
@@ -396,7 +396,7 @@ class ExecutableSimulator extends DefaultSimulator {
                 if(restartSimulationAfterCompilation
                     && compiler != null && compiler.result != null && compiler.result.problems.isNullOrEmpty) {
                     restartSimulationAfterCompilation = false
-                    SimulationLaunchConfig.launchLastSelection
+                    SimulationUtil.restartLastSimulation
                 }
             }
             

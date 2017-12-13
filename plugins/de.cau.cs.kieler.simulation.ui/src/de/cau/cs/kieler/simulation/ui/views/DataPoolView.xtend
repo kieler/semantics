@@ -67,6 +67,7 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+import org.eclipse.jface.viewers.ViewerCell
 
 /**
  * Displays the data of a running simulation.
@@ -532,7 +533,12 @@ class DataPoolView extends ViewPart {
         userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
         // Use TAB to go to next row neighbor and activate cell editor
-        val focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer));
+        val multiSelectFocusCellHighlighter = new FocusCellOwnerDrawHighlighter(viewer) {
+            override onlyTextHighlighting(ViewerCell cell) {
+                return true;
+            }
+        }
+        val focusCellManager = new TableViewerFocusCellManager(viewer, multiSelectFocusCellHighlighter);
         val activationSupport = new ColumnViewerEditorActivationStrategy(viewer)
         activationSupport.enableEditorActivationWithKeyboard = true
         TableViewerEditor.create(viewer, focusCellManager, activationSupport, 
@@ -541,7 +547,7 @@ class DataPoolView extends ViewPart {
             ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
             ColumnViewerEditor.KEYBOARD_ACTIVATION))
 
-
+        // Drag and drop elements in the data pool
         val DragSource dndSource = new DragSource(viewer.control, DND.DROP_MOVE + DND.DROP_COPY)
         dndSource.setTransfer(#[TextTransfer.getInstance()])
         dndSource.addDragListener(new DragSourceListener () {

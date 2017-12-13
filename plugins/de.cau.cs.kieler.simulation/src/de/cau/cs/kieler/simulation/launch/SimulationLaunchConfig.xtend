@@ -44,26 +44,9 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
     public static String LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.simulation.simulationLaunchConfig"
     
     /**
-     * Static field to re-start the last configuration
-     */
-    @Accessors(PUBLIC_GETTER)
-    private static var List<IFile> lastFiles = newArrayList()
-    
-    /**
      * The files for this launch config.
      */
     protected List<IFile> files = newArrayList()
-    
-    /**
-     * Launches the last used configuration.
-     */
-    public static def void launchLastSelection() {
-        PromPlugin.execInJob("Starting simulation",
-                             [SubMonitor monitor |
-                                 val childMonitor = monitor.newChild(1)
-                                 SimulationUtil.startSimulation(lastFiles, childMonitor)
-                             ])
-    }
     
     /**
      * {@inheritDoc}
@@ -73,7 +56,6 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
         loadSettings(configuration)
         
         // Create simulation based on the loaded files
-        lastFiles = files
         SimulationUtil.startSimulation(files, monitor)
     }
     
