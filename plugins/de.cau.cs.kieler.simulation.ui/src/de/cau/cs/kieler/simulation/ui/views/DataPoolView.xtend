@@ -17,7 +17,6 @@ import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
-import de.cau.cs.kieler.simulation.SimulationPlugin
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -39,6 +38,8 @@ import java.util.List
 import java.util.Map
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
+import org.eclipse.jface.action.IMenuListener
+import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
@@ -51,6 +52,11 @@ import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.TableViewerEditor
 import org.eclipse.jface.viewers.TableViewerFocusCellManager
 import org.eclipse.swt.SWT
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DragSource
+import org.eclipse.swt.dnd.DragSourceEvent
+import org.eclipse.swt.dnd.DragSourceListener
+import org.eclipse.swt.dnd.TextTransfer
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.graphics.Image
@@ -61,11 +67,6 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
-import org.eclipse.swt.dnd.DragSource
-import org.eclipse.swt.dnd.DND
-import org.eclipse.swt.dnd.DragSourceListener
-import org.eclipse.swt.dnd.DragSourceEvent
-import org.eclipse.swt.dnd.TextTransfer
 
 /**
  * Displays the data of a running simulation.
@@ -122,6 +123,11 @@ class DataPoolView extends ViewPart {
     private var LabelContribution tickInfo
 
     /**
+     * The menu contributions that are created at runtime when the menu is opened.
+     */
+    private val List<IAction> dynamicMenuActions = newArrayList
+
+    /**
      * A filter for the table to control which items are visible, e.g., to search for items
      */    
     private var DataPoolFilter filter
@@ -145,7 +151,7 @@ class DataPoolView extends ViewPart {
      override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-        SimulationManager.addListener(simulationListener)
+        SimulationManager.add(simulationListener)
         
         // Create viewer.
         viewer = createTable(parent);
@@ -237,20 +243,46 @@ class DataPoolView extends ViewPart {
                 AdvancedControlsEnabledPropertyTester.update
             }
         })
-        
-        // Enable / disable simulation participants
-        for(participant : SimulationPlugin.simulationParticipants) {
-            if(!participant.name.isNullOrEmpty) {
-                val action = new Action(participant.name, IAction.AS_CHECK_BOX) {
-                    override run() {
-                        participant.enabled = !participant.enabled
-                        // This option requires a restart
-                        SimulationManager.instance?.stop
+        mgr.add(new Separator())
+        // Enable / disable simulation listeners.
+        // As the listeners may change at runtime, populate this list dynamically
+        val menuListener = new IMenuListener() {
+            override menuAboutToShow(IMenuManager manager) {
+                // Remove old actions
+                for(menuAction : dynamicMenuActions) {
+                    mgr.remove(menuAction.id)
+                }
+                dynamicMenuActions.clear
+                // Create new actions
+                populateDynamicMenuActions()
+                for(menuAction : dynamicMenuActions) {
+                    mgr.add(menuAction)    
+                }
+            }
+        }
+        mgr.addMenuListener(menuListener);
+    }
+    
+    /**
+     * Fills the list of dynamic menu actions.
+     */
+    private def void populateDynamicMenuActions() {
+        var i = 0
+        for(listener : SimulationManager.listeners) {
+            val disabled = SimulationManager.isDisabled(listener)
+            val action = new Action(listener.name, IAction.AS_CHECK_BOX) {
+                override run() {
+                    if(disabled) {
+                        SimulationManager.enable(listener)
+                    } else {
+                        SimulationManager.disable(listener)
                     }
                 }
-                action.checked = participant.enabled
-                mgr.add(action)
             }
+            action.setId("SimulationListener"+i)
+            action.checked = !disabled
+            dynamicMenuActions.add(action)
+            i++;
         }
     }
     
@@ -601,7 +633,7 @@ class DataPoolView extends ViewPart {
      * Creates a simulation listener that updates this view with the simulation.
      */
     private static def SimulationListener createSimulationListener() {
-        val listener = new SimulationAdapter() {
+        val listener = new SimulationAdapter("Data Pool View") {
             var DataPoolView dataPoolView
             
             /**

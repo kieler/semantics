@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
-import de.cau.cs.kieler.simulation.SimulationParticipant
 
 /**
  * @author aas

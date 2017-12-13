@@ -12,31 +12,25 @@
  */
 package de.cau.cs.kieler.simulation.ui.views.dataview
 
-import org.eclipse.ui.part.ViewPart
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.dnd.DropTarget
-import org.eclipse.swt.dnd.DND
-import org.eclipse.swt.dnd.DropTargetListener
-import org.eclipse.swt.dnd.DropTargetEvent
-import org.eclipse.swt.dnd.TextTransfer
-import org.eclipse.swt.widgets.Control
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.ui.views.DataPoolView
-import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.layout.GridData
-import org.eclipse.swt.layout.RowLayout
-import org.eclipse.swt.SWT
-import org.eclipse.swt.layout.RowData
-import de.cau.cs.kieler.simulation.core.VariableType
-import de.cau.cs.kieler.simulation.SimulationParticipant
-import de.cau.cs.kieler.simulation.core.events.SimulationListener
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
-import de.cau.cs.kieler.simulation.core.events.SimulationEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.VariableType
+import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.SimulationOperation
+import de.cau.cs.kieler.simulation.ui.views.DataPoolView
+import org.eclipse.swt.SWT
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DropTarget
+import org.eclipse.swt.dnd.DropTargetEvent
+import org.eclipse.swt.dnd.DropTargetListener
+import org.eclipse.swt.dnd.TextTransfer
+import org.eclipse.swt.layout.RowLayout
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
+import org.eclipse.ui.part.ViewPart
 
 /**
  * Displays the data of a running simulation in graphical canvas panels.
@@ -45,7 +39,7 @@ import de.cau.cs.kieler.prom.ui.PromUIPlugin
  * @kieler.design 2017-12-04 proposed
  * @kieler.rating 2017-12-04 proposed yellow  
  */
-class DataView extends ViewPart implements SimulationParticipant {
+class DataView extends ViewPart {
     
     public static val BORDER_MARGIN = 4
     
@@ -55,7 +49,6 @@ class DataView extends ViewPart implements SimulationParticipant {
     protected val dataObservers = <DataObserver> newLinkedList
     
     protected var SimulationListener simulationListener = createSimulationListener
-    @Accessors private var boolean enabled = true
     
     new() {
         register
@@ -172,33 +165,15 @@ class DataView extends ViewPart implements SimulationParticipant {
     }
     
     protected def void register() {
-        SimulationManager.addListener(simulationListener)
+        SimulationManager.add(simulationListener)
     }
     
     protected def void unregister() {
-        SimulationManager.removeListener(simulationListener)
-    }    
-    
-    override setEnabled(boolean value) {
-        enabled = value
-    }
-    
-    override isEnabled() {
-        enabled
+        SimulationManager.remove(simulationListener)
     }
     
     protected def SimulationListener createSimulationListener() {
-        val listener = new SimulationAdapter() {
-            
-            override update(SimulationEvent e) {
-                if(!enabled) {
-                    return
-                }
-                if(e instanceof SimulationControlEvent) { 
-                    super.update(e)
-                }
-            }
-            
+        val listener = new SimulationAdapter("Data View") {
             override onSimulationControlEvent(SimulationControlEvent e) {
                 switch(e.operation) {
                     case SimulationOperation.INITIALIZED : {

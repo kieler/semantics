@@ -248,7 +248,7 @@ class KiVisView extends ViewPart {
         createStatusLine
         
         // Add simulation listener
-        SimulationManager.addListener(simulationListener)
+        SimulationManager.add(simulationListener)
     }
 
     /**
@@ -256,6 +256,7 @@ class KiVisView extends ViewPart {
      */
     override dispose() {
         super.dispose()
+        SimulationManager.remove(simulationListener)
         instance = null
     }
 
@@ -661,7 +662,7 @@ class KiVisView extends ViewPart {
      * @return The simulation listener
      */
     private static def SimulationListener createSimulationListener() {
-        val listener = new SimulationAdapter() {
+        val listener = new SimulationAdapter("KiVis View") {
             var KiVisView kiVisView 
             override update(SimulationEvent e) {
                 kiVisView = KiVisView.instance
