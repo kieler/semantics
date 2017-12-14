@@ -13,11 +13,11 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
+import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Present
-import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.Case
 import de.cau.cs.kieler.esterel.PresentCase
 import de.cau.cs.kieler.esterel.IfTest
@@ -27,14 +27,6 @@ import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.ExecCase
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.Thread
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.StatementContainer
-import org.eclipse.emf.ecore.EObject
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.ElseScope
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.esterel.Emit
@@ -53,6 +45,20 @@ import de.cau.cs.kieler.esterel.Set
 import de.cau.cs.kieler.esterel.Suspend
 import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.UnEmit
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.Exit
+import de.cau.cs.kieler.scl.ElseScope
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Thread
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.StatementContainer
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.ModuleCall
+import de.cau.cs.kieler.scl.Assignment
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.ScopeStatement
 
 /**
  * @author mrb
@@ -80,7 +86,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     override process() {
         // TODO this should be a statement in the environment which was transformed in the last step
         var EObject obj
-        obj.nextStatement
+        val processorID = obj.nextStatement
         
     }
     
@@ -117,7 +123,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     def nextStatement(EObject object) {
         var obj = object
         var up = true
-        while (true) {
+        var transform = false
+        while (!transform) {
             if (up) {
                 var list = obj.containingList
                 var pos = list.indexOf(obj)
@@ -126,7 +133,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     obj = list.get(pos+1)
                     up = false
                 }
-                else if ((parent instanceof EsterelThread) || (parent instanceof Thread)) {
+                else if (parent instanceof Thread) {
                     val threads = (parent as Thread).containingList
                     pos = threads.indexOf(parent)
                     if (pos+1 < threads.length) {
@@ -135,7 +142,10 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent.eContainer
-                        up = true
+                        switch (obj) {
+                            EsterelParallel : transform = true
+                            Parallel : up = true
+                        }
                     }
                 }
                 else if (parent instanceof Present) {
@@ -153,7 +163,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                     else { // obj is in elseStatements
@@ -165,7 +175,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                 }
@@ -183,7 +193,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = present
-                            up = true
+                            transform = true
                         }
                     }
                 }
@@ -202,7 +212,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                     else { // obj is in elseStatements
@@ -214,7 +224,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                 }
@@ -233,7 +243,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = present
-                            up = true
+                            transform = true
                         }
                     }
                 }
@@ -251,7 +261,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                     
@@ -265,12 +275,10 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent.eContainer
-                        up = true
+                        transform = true
                     }
                 }
                 else if (parent instanceof Abort) {
-                    // statements and doStatements
-                    // after statements => check cases
                     var statements = parent.statements
                     if (statements.contains(obj)) {
                         pos = statements.indexOf(obj)
@@ -288,7 +296,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                     else { // obj must be in doStatements
@@ -299,7 +307,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                     
@@ -313,7 +321,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent.eContainer
-                        up = true
+                        transform = true
                     }
                 }
                 else if (parent instanceof Do) {
@@ -332,7 +340,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             }
                             else {
                                 obj = parent
-                                up = true
+                                transform = true
                             }
                         }
                     }
@@ -345,7 +353,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             obj = parent
-                            up = true
+                            transform = true
                         }
                     }
                 }
@@ -376,13 +384,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent.eContainer
-                        up = true //TODO transform statement
+                        transform = true
                     }
                 }
-                
-                // TODO statement in elseScope is in statementcontainer, next step in loop: obj = elsescope
-                // leads to problem at the moment, find similar cases
-                    
                 else if (parent instanceof Module) {
                     // in Run statement or in EsterelProgram
                 }
@@ -395,17 +399,179 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent
-                        up = true
+                        transform = true
                     }
                 }
-                else {
-                    // TODO call 'transform' on parent
+            }
+            else { // go down, since "up = false"
+                switch (obj) {
+                    Parallel : { // do not transform the Parallel statement since it's already an scl statement
+                        if (!obj.threads.empty) {
+                            obj = obj.threads.head
+                        }
+                        else {
+                            up = true
+                        }
+                    }
+                    ScopeStatement : { // do not transform the ScopeStatement statement since it's already an scl statement
+                        if (!obj.statements.empty) {
+                            obj = obj.statements.head
+                        }
+                        else {
+                            up = true
+                        }
+                    }
+                    Present : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.cases.empty) {
+                           tempObj = obj.cases.head
+                        }
+                        else if (!obj.elseStatements.empty) {
+                            tempObj = obj.elseStatements.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    IfTest : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.elseif.empty) {
+                           tempObj = obj.elseif.head
+                        }
+                        else if (!obj.elseStatements.empty) {
+                            tempObj = obj.elseStatements.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    Abort : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.doStatements.empty) {
+                           tempObj = obj.doStatements.head
+                        }
+                        else if (!obj.cases.empty) {
+                            tempObj = obj.cases.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    Await : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.cases.empty) {
+                           tempObj = obj.cases.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    Trap : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.trapHandler.empty) {
+                           tempObj = obj.trapHandler.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    Exec : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.execCaseList.empty) {
+                           tempObj = obj.execCaseList.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    Do : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (!obj.watchingStatements.empty) {
+                           tempObj = obj.watchingStatements.head
+                        }
+                        else {
+                            transform = true 
+                        }
+                        obj = tempObj
+                    }
+                    Conditional : {
+                        var EObject tempObj = obj
+                        if (!obj.statements.empty) {
+                            tempObj = obj.statements.head
+                        }
+                        else if (obj.^else !== null) {
+                           tempObj = obj.^else
+                        }
+                        else {
+                            up = true 
+                        }
+                        obj = tempObj
+                    }                    
+                    StatementContainer : {
+                        if (!obj.statements.empty) {
+                            obj = obj.statements.head
+                        }
+                        else {
+                            /* set 'obj' to the eContainer of 'obj' if it is not a statement */
+                            switch (obj) {
+                                ElsIf,
+                                Case,
+                                ExecCase,
+                                Thread,
+                                ElseScope : obj = obj.eContainer
+                            }
+                            transform = true
+                        }
+                    }
+                    Pause,
+                    Label,
+                    Goto,
+                    ModuleCall,
+                    Assignment,
+                    Exit: {
+                        up = true
+                    }
+                    /*
+                    Run : {
+                        // TODO what to do with run statement
+                    } */
+                    default : {
+                        /* if 'obj' is a single statement which needs to be transformed:
+                           UnEmit, Set, Nothing, Halt, Emit, Sustain, ProcedureCall */ 
+                        transform = true
+                    }
                 }
             }
-            else { // down, since "up = false"
-                
-            }
         }
+        
+        obj.activateSpecificProcessor
         
     }
     
