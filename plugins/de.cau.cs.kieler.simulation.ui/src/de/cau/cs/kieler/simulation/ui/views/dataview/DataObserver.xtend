@@ -53,7 +53,7 @@ class DataObserver {
         compositeParent.update        
     }
     
-    def addVariable(Variable variable) {
+    def void addVariable(Variable variable) {
         if (variable === null) return;
         variables += variable
         

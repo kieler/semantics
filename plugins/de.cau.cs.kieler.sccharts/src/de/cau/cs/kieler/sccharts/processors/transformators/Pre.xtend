@@ -192,10 +192,11 @@ class Pre extends SCChartsProcessor implements Traceable {
     
     private def ValuedObject createPreVariable(State state, String name, ValuedObject source) {
         val v = state.createValuedObject(name)
+        v.declaration2
         v.copyAttributes(source)
-        v.declaration.copyAttributes(source.declaration)
-        v.declaration.input = false
-        v.declaration.output = false
+        v.declaration2.copyAttributes(source.declaration2)
+        v.declaration2.input = false
+        v.declaration2.output = false
         return v
     }
     
