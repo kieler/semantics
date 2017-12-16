@@ -116,9 +116,12 @@ class SimulationUtil {
      */
     private static def void synchronizedStart(()=>void procedure) {
         if(!startingSimulation) {
-            startingSimulation = true
-            procedure.apply()
-            startingSimulation = false
+            try {
+                startingSimulation = true
+                procedure.apply()    
+            } finally {
+                startingSimulation = false    
+            }
         }
     }
 }
