@@ -267,8 +267,15 @@ class ExecutableSimulator extends DefaultSimulator {
     override stop() {
         removeResourceChangeListener
         if(process != null) {
-            process.destroyForcibly
-            process = null
+            // Kill the process and wait until it has been destroyed,
+            // but with a time limit in case the process cannot be killed or does not respond at all.
+            try {
+                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 1, TimeUnit.SECONDS, true)
+            } catch(UncheckedTimeoutException e) {
+                throw new IOException("Failed attempt to kill process '" + processBuilder.command + "' in '" + processBuilder.directory, e)
+            } finally {
+                process = null
+            }
         }
     }
     
@@ -302,9 +309,8 @@ class ExecutableSimulator extends DefaultSimulator {
             try {
                 line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, true)
             } catch(UncheckedTimeoutException e) {
-                // If the process is null, the simulation was stopped already
                 SimulationManager.instance.stop
-                throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n" 
+                throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n" 
                                     + "is not responding with a line on stdout", e)    
             }
             
@@ -313,13 +319,13 @@ class ExecutableSimulator extends DefaultSimulator {
             val time = System.currentTimeMillis 
             if(time-startTime < 0 || time-startTime > 1000) {
                 SimulationManager.instance.stop
-                throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
+                throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                     + "is not responding with a JSON object.")
             }
             
             // Check that a line was received
             if(line === null) {
-                throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
+                throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                     + "is not responding.")
             }
             

@@ -54,6 +54,7 @@ import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -151,6 +152,23 @@ class PromPlugin implements BundleActivator  {
      */
     public static def boolean isJavaProject(IProject project) {
         return project.hasNature(JavaCore.NATURE_ID)
+    }
+    /**
+     * Loads the build configuration that is defined in the project properties from the given project.
+     * 
+     * @param project The project
+     * @return The build config for the project, or null if none could be loaded
+     */
+    public static def BuildConfiguration getBuildConfig(IProject project) {
+        val configFilePath = project.getPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
+        if (!configFilePath.isNullOrEmpty) {
+            val file = project.getFile(configFilePath)
+            val model = ModelImporter.load(file)
+            if(model instanceof BuildConfiguration) {
+                return model
+            }
+        }
+       return null
     }
     
     /**

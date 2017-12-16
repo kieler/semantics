@@ -21,6 +21,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 
 /**
  * @author aas
@@ -65,6 +67,7 @@ class SimulationUtil {
         synchronizedStart[
             // Start a new simulation
             val context = new SimulationContext
+            context.monitor = monitor
             for(file : files) {
                 if(isSimulationConfiguration(file)) {
                     context.kisimFile = file
@@ -78,7 +81,6 @@ class SimulationUtil {
                     context.compileModelForSimulation(file)
                 }
             }
-            context.monitor = monitor
             context.start    
         ]
     }
@@ -94,8 +96,10 @@ class SimulationUtil {
         synchronizedStart[
             // Start simulation with the model
             val context = new SimulationContext
-            context.compileModelForSimulation(model)
             context.monitor = monitor
+            // Compile the model
+            context.compileModelForSimulation(model)
+            // Start the simulation
             context.start
         ]
     }
