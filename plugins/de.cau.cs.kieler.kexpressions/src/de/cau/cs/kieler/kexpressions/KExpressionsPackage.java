@@ -70,7 +70,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
      * @generated
      */
-    int SCHEDULABLE = 24;
+    int SCHEDULABLE = 25;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -434,7 +434,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
      * @generated
      */
-    int FUNCTION_CALL = 21;
+    int FUNCTION_CALL = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.
@@ -444,7 +444,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 23;
+    int REFERENCEABLE = 24;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -454,7 +454,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 18;
+    int PARAMETER = 17;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.StringValueImpl <em>String Value</em>}' class.
@@ -784,22 +784,22 @@ public interface KExpressionsPackage extends EPackage {
    int REFERENCE_DECLARATION__REFERENCE = DECLARATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Extern</b></em>' attribute.
-     * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-   int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 1;
-
-    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-   int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 2;
+   int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Extern</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+   int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Reference Declaration</em>' class.
@@ -848,22 +848,22 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION__NAME = DECLARATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Priorities</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCHEDULE_DECLARATION__PRIORITIES = DECLARATION_FEATURE_COUNT + 1;
-
-    /**
      * The feature id for the '<em><b>Global</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULE_DECLARATION__GLOBAL = DECLARATION_FEATURE_COUNT + 2;
+    int SCHEDULE_DECLARATION__GLOBAL = DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Priorities</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__PRIORITIES = DECLARATION_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Schedule Declaration</em>' class.
@@ -875,43 +875,6 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl
-     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriority()
-     * @generated
-     */
-    int SCHEDULE_PRIORITY = 16;
-
-    /**
-     * The feature id for the '<em><b>Priority</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCHEDULE_PRIORITY__PRIORITY = 0;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCHEDULE_PRIORITY__TYPE = 1;
-
-    /**
-     * The number of structural features of the '<em>Schedule Priority</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCHEDULE_PRIORITY_FEATURE_COUNT = 2;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl <em>Schedule Object Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -919,7 +882,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleObjectReference()
      * @generated
      */
-    int SCHEDULE_OBJECT_REFERENCE = 17;
+    int SCHEDULE_OBJECT_REFERENCE = 16;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1037,7 +1000,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCall()
      * @generated
      */
-    int CALL = 19;
+    int CALL = 18;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1074,7 +1037,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceCall()
      * @generated
      */
-    int REFERENCE_CALL = 20;
+    int REFERENCE_CALL = 19;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1174,7 +1137,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPrintCall()
      * @generated
      */
-    int PRINT_CALL = 22;
+    int PRINT_CALL = 21;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1204,6 +1167,80 @@ public interface KExpressionsPackage extends EPackage {
     int PRINT_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomCallImpl <em>Random Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.RandomCallImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomCall()
+     * @generated
+     */
+    int RANDOM_CALL = 22;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOM_CALL__SCHEDULE = CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOM_CALL__PARAMETERS = CALL__PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Random Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOM_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl <em>Randomize Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomizeCall()
+     * @generated
+     */
+    int RANDOMIZE_CALL = 23;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL__SCHEDULE = CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL__PARAMETERS = CALL__PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Randomize Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Referenceable</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1213,6 +1250,43 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCEABLE_FEATURE_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ExternStringImpl <em>Extern String</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.ExternStringImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getExternString()
+     * @generated
+     */
+    int EXTERN_STRING = 26;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTERN_STRING__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Code</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTERN_STRING__CODE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Extern String</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTERN_STRING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1220,7 +1294,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 25;
+    int COMBINE_OPERATOR = 27;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1230,7 +1304,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 26;
+    int OPERATOR_TYPE = 28;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1240,19 +1314,18 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 27;
+    int VALUE_TYPE = 29;
 
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.SchedulePriorityType <em>Schedule Priority Type</em>}' enum.
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.PriorityProtocol <em>Priority Protocol</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
-     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
+     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPriorityProtocol()
      * @generated
      */
-    int SCHEDULE_PRIORITY_TYPE = 28;
-
+    int PRIORITY_PROTOCOL = 30;
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
@@ -1628,15 +1701,15 @@ public interface KExpressionsPackage extends EPackage {
     EReference getReferenceDeclaration_Reference();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Extern</em>'.
+     * @return the meta object for the containment reference list '<em>Extern</em>'.
      * @see de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getExtern()
      * @see #getReferenceDeclaration()
      * @generated
      */
-    EAttribute getReferenceDeclaration_Extern();
+    EReference getReferenceDeclaration_Extern();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}'.
@@ -1671,15 +1744,15 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getScheduleDeclaration_Name();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities <em>Priorities</em>}'.
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities <em>Priorities</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Priorities</em>'.
+     * @return the meta object for the attribute list '<em>Priorities</em>'.
      * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities()
      * @see #getScheduleDeclaration()
      * @generated
      */
-    EReference getScheduleDeclaration_Priorities();
+    EAttribute getScheduleDeclaration_Priorities();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}'.
@@ -1691,38 +1764,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EAttribute getScheduleDeclaration_Global();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.SchedulePriority <em>Schedule Priority</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Schedule Priority</em>'.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriority
-     * @generated
-     */
-    EClass getSchedulePriority();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.SchedulePriority#getPriority <em>Priority</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Priority</em>'.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriority#getPriority()
-     * @see #getSchedulePriority()
-     * @generated
-     */
-    EAttribute getSchedulePriority_Priority();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.SchedulePriority#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriority#getType()
-     * @see #getSchedulePriority()
-     * @generated
-     */
-    EAttribute getSchedulePriority_Type();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference <em>Schedule Object Reference</em>}'.
@@ -1777,6 +1818,26 @@ public interface KExpressionsPackage extends EPackage {
     EClass getPrintCall();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.RandomCall <em>Random Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Random Call</em>'.
+     * @see de.cau.cs.kieler.kexpressions.RandomCall
+     * @generated
+     */
+    EClass getRandomCall();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.RandomizeCall <em>Randomize Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Randomize Call</em>'.
+     * @see de.cau.cs.kieler.kexpressions.RandomizeCall
+     * @generated
+     */
+    EClass getRandomizeCall();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1806,6 +1867,27 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getSchedulable_Schedule();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ExternString <em>Extern String</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Extern String</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ExternString
+     * @generated
+     */
+    EClass getExternString();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ExternString#getCode <em>Code</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Code</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ExternString#getCode()
+     * @see #getExternString()
+     * @generated
+     */
+    EAttribute getExternString_Code();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Parameter <em>Parameter</em>}'.
@@ -1986,14 +2068,14 @@ public interface KExpressionsPackage extends EPackage {
     EEnum getValueType();
 
     /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.SchedulePriorityType <em>Schedule Priority Type</em>}'.
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.PriorityProtocol <em>Priority Protocol</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Schedule Priority Type</em>'.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+     * @return the meta object for enum '<em>Priority Protocol</em>'.
+     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
      * @generated
      */
-    EEnum getSchedulePriorityType();
+    EEnum getPriorityProtocol();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -2322,12 +2404,12 @@ public interface KExpressionsPackage extends EPackage {
         EReference REFERENCE_DECLARATION__REFERENCE = eINSTANCE.getReferenceDeclaration_Reference();
 
         /**
-         * The meta object literal for the '<em><b>Extern</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Extern</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute REFERENCE_DECLARATION__EXTERN = eINSTANCE.getReferenceDeclaration_Extern();
+        EReference REFERENCE_DECLARATION__EXTERN = eINSTANCE.getReferenceDeclaration_Extern();
 
         /**
          * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
@@ -2356,12 +2438,12 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute SCHEDULE_DECLARATION__NAME = eINSTANCE.getScheduleDeclaration_Name();
 
         /**
-         * The meta object literal for the '<em><b>Priorities</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Priorities</b></em>' attribute list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCHEDULE_DECLARATION__PRIORITIES = eINSTANCE.getScheduleDeclaration_Priorities();
+        EAttribute SCHEDULE_DECLARATION__PRIORITIES = eINSTANCE.getScheduleDeclaration_Priorities();
 
         /**
          * The meta object literal for the '<em><b>Global</b></em>' attribute feature.
@@ -2370,32 +2452,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute SCHEDULE_DECLARATION__GLOBAL = eINSTANCE.getScheduleDeclaration_Global();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl
-         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriority()
-         * @generated
-         */
-        EClass SCHEDULE_PRIORITY = eINSTANCE.getSchedulePriority();
-
-        /**
-         * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SCHEDULE_PRIORITY__PRIORITY = eINSTANCE.getSchedulePriority_Priority();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SCHEDULE_PRIORITY__TYPE = eINSTANCE.getSchedulePriority_Type();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl <em>Schedule Object Reference</em>}' class.
@@ -2444,6 +2500,26 @@ public interface KExpressionsPackage extends EPackage {
         EClass PRINT_CALL = eINSTANCE.getPrintCall();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomCallImpl <em>Random Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.RandomCallImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomCall()
+         * @generated
+         */
+        EClass RANDOM_CALL = eINSTANCE.getRandomCall();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl <em>Randomize Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.RandomizeCallImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomizeCall()
+         * @generated
+         */
+        EClass RANDOMIZE_CALL = eINSTANCE.getRandomizeCall();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2470,6 +2546,24 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference SCHEDULABLE__SCHEDULE = eINSTANCE.getSchedulable_Schedule();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ExternStringImpl <em>Extern String</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.ExternStringImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getExternString()
+         * @generated
+         */
+        EClass EXTERN_STRING = eINSTANCE.getExternString();
+
+        /**
+         * The meta object literal for the '<em><b>Code</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTERN_STRING__CODE = eINSTANCE.getExternString_Code();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -2626,14 +2720,14 @@ public interface KExpressionsPackage extends EPackage {
         EEnum VALUE_TYPE = eINSTANCE.getValueType();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.SchedulePriorityType <em>Schedule Priority Type</em>}' enum.
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.PriorityProtocol <em>Priority Protocol</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
-         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
+         * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPriorityProtocol()
          * @generated
          */
-        EEnum SCHEDULE_PRIORITY_TYPE = eINSTANCE.getSchedulePriorityType();
+        EEnum PRIORITY_PROTOCOL = eINSTANCE.getPriorityProtocol();
 
     }
 

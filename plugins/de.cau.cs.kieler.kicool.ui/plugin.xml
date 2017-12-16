@@ -3,6 +3,7 @@
 
 <plugin>
    <extension-point id="system" name="System Configuation" schema="schema/de.cau.cs.kieler.kicool.ui.system.exsd"/>
+   <extension-point id="kicoModelViewUIUpdateContributor" name="kicoModelViewUIUpdateContributor" schema="schema/kicoModelViewUIUpdateContributor.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">
@@ -335,16 +336,16 @@
             id="de.cau.cs.kieler.kicool.ui.kitt.syntheses.TracingTreeDiagramSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChainSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChainSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolderSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.internal.model.XtextSerializationSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.XtextSerializationSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.syntheses.XtextSerializationSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.klighd.syntheses.XtextSerializationSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.CodeContainerSynthesis"
@@ -380,12 +381,12 @@
                 id="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy">
           </updateStrategy>
           <action
-                class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction"
+                class="de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction"
                 id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction">
           </action>
           <action
-                class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction"
-                id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
+                class="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction"
+                id="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction">
           </action>
        </extension>
        <extension

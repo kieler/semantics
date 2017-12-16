@@ -126,6 +126,12 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.Dataflow">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.PrTransitions">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.UserSchedule">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

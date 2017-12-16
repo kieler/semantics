@@ -22,8 +22,11 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import java.util.List
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
@@ -33,7 +36,6 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
-import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * Styles for {@link ControlflowRegion}.
@@ -46,20 +48,12 @@ import de.cau.cs.kieler.sccharts.extensions.TextFormat
 @ViewSynthesisShared
 class ControlflowRegionStyles {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension KContainerRenderingExtensions
-
-    @Inject
-    extension StateStyles
-    
-    @Inject
-    extension ColorStore
+    @Inject extension KNodeExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension StateStyles
+    @Inject extension ColorStore
 
     /** This property is set on the expanded rendering and points to the container holding the declaration labels */
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
@@ -71,7 +65,7 @@ class ControlflowRegionStyles {
     def KRectangle addRegionFigure(KNode node) {
         node.addRectangle() => [
             background = REGION_BACKGROUND.color;
-            foreground = REGION_FOREGROND.color;
+            foreground = REGION_FOREGROUND.color;
             lineWidth = 1;
             setSurroundingSpace(2, 0);
         ]
@@ -80,13 +74,48 @@ class ControlflowRegionStyles {
     /**
      * Adds a button with text.
      */
-    def KText addButton(KContainerRendering container, String text) {
-        container.addText(text) => [
-            foreground = REGION_BUTTON.color;
-            fontSize = 10;
-            val size = estimateTextSize;
-            setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_LEFT, V_TOP, 8, 8, size.width, size.height);
+    private def KRendering addButton(KContainerRendering container, String text, String label) {
+        val button =container.addPolygon => [
+            lineWidth = 0
+            background = REGION_BUTTON_BACKGROUND.color
+//            selectionBackground = REGION_BUTTON_FOREGROUND.color
+            addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
+            addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
+            addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
         ]
+        container.addText(text) => [
+            setProperty(KlighdProperties.NOT_SELECTABLE, true)
+            foreground = REGION_BUTTON_FOREGROUND.color
+//            selectionForeground = REGION_BUTTON_BACKGROUND.color
+            fontSize = 8;
+            fontBold = true
+            val size = estimateTextSize;
+            setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
+        ]
+        if (!label.nullOrEmpty) {
+            container.addText(label) => [
+                setProperty(KlighdProperties.NOT_SELECTABLE, true)
+                foreground = REGION_LABEL.color;
+                fontSize = 10;
+                val size = estimateTextSize;
+                setPointPlacementData(LEFT, 12, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
+            ]
+        }
+        return button
+    }
+    
+    /**
+     * Adds an expand region button with label.
+     */
+    def KRendering addExpandButton(KContainerRendering container, String label) {
+        return container.addButton("+", label)
+    }
+    
+    /**
+     * Adds a collapse region button with label.
+     */
+    def KRendering addCollapseButton(KContainerRendering container, String label) {
+        return container.addButton("-", label)
     }
 
     /**
@@ -158,4 +187,7 @@ class ControlflowRegionStyles {
         return null
     }
     
+    def KRectangle setUserScheduleStyle(KRectangle krendering) {
+        krendering.foreground = USER_SCHEDULE_COLOR.color
+    }
 }

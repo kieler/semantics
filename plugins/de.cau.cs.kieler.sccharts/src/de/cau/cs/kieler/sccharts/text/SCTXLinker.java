@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.text;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.eclipse.emf.common.util.EList;
@@ -21,6 +23,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.diagnostics.IDiagnosticProducer;
 import org.eclipse.xtext.linking.impl.Linker;
+
 
 /**
  * A customized Xtext linker linking textual SCCharts models.
@@ -40,11 +43,8 @@ public class SCTXLinker extends Linker {
     }
 
     @Override
-    public void ensureLinked(EObject obj, IDiagnosticProducer producer) {
-        super.ensureLinked(obj, producer);
-        for (EReference ref : obj.eClass().getEReferences()) {
-            checkUncontainedOpposites(obj, ref);
-        }
+    public void beforeEnsureIsLinked(EObject obj, EReference ref, IDiagnosticProducer producer) {
+        checkUncontainedOpposites(obj, ref);
     }
 
     /**
@@ -54,18 +54,22 @@ public class SCTXLinker extends Linker {
      * @param obj
      * @param ref
      */
-    private void checkUncontainedOpposites(EObject obj, EReference ref) {
+    public static void checkUncontainedOpposites(EObject obj, EReference ref) {
         EReference oppRef = ref.getEOpposite();
         if (oppRef != null) {
             if (ref.isMany()) {
+                @SuppressWarnings("unchecked")
                 EList<EObject> refObjs = (EList<EObject>) obj.eGet(ref);
                 if (refObjs != null) {
                     // Remove non-contained opposites
-                    refObjs.removeIf(new Predicate<EObject>() {
+                     refObjs.removeIf(new Predicate<EObject>() {
+                        Set<EObject> exists = new HashSet<EObject>();
 
                         @Override
                         public boolean test(EObject t) {
-                            return t.eContainer() == null;
+                            boolean remove = t.eContainer() == null || t.eGet(oppRef) == null; 
+                            if (!remove) exists.add(t);
+                            return remove;
                         }
                     });
                 }

@@ -13,6 +13,7 @@ import de.cau.cs.kieler.kexpressions.CombineOperator;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.DoubleValue;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
@@ -23,6 +24,9 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
 import de.cau.cs.kieler.kexpressions.PrintCall;
+import de.cau.cs.kieler.kexpressions.PriorityProtocol;
+import de.cau.cs.kieler.kexpressions.RandomCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
@@ -151,13 +155,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass schedulePriorityEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EClass scheduleObjectReferenceEClass = null;
 
     /**
@@ -179,6 +176,20 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass randomCallEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass randomizeCallEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass referenceableEClass = null;
 
     /**
@@ -187,6 +198,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass schedulableEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass externStringEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -256,7 +274,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EEnum schedulePriorityTypeEEnum = null;
+    private EEnum priorityProtocolEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -642,8 +660,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getReferenceDeclaration_Extern() {
-        return (EAttribute)referenceDeclarationEClass.getEStructuralFeatures().get(1);
+    public EReference getReferenceDeclaration_Extern() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -652,7 +670,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     public EReference getReferenceDeclaration_Parameters() {
-        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -678,16 +696,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScheduleDeclaration_Priorities() {
-        return (EReference)scheduleDeclarationEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getScheduleDeclaration_Global() {
+    public EAttribute getScheduleDeclaration_Priorities() {
         return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
@@ -696,26 +705,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSchedulePriority() {
-        return schedulePriorityEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSchedulePriority_Priority() {
-        return (EAttribute)schedulePriorityEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSchedulePriority_Type() {
-        return (EAttribute)schedulePriorityEClass.getEStructuralFeatures().get(1);
+    public EAttribute getScheduleDeclaration_Global() {
+        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -768,6 +759,24 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getRandomCall() {
+        return randomCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getRandomizeCall() {
+        return randomizeCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getReferenceable() {
         return referenceableEClass;
     }
@@ -788,6 +797,24 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     public EReference getSchedulable_Schedule() {
         return (EReference)schedulableEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExternString() {
+        return externStringEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExternString_Code() {
+        return (EAttribute)externStringEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -948,8 +975,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EEnum getSchedulePriorityType() {
-        return schedulePriorityTypeEEnum;
+    public EEnum getPriorityProtocol() {
+        return priorityProtocolEEnum;
     }
 
     /**
@@ -1034,17 +1061,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
-        createEAttribute(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__PARAMETERS);
+        createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
 
         scheduleDeclarationEClass = createEClass(SCHEDULE_DECLARATION);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__NAME);
-        createEReference(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__GLOBAL);
-
-        schedulePriorityEClass = createEClass(SCHEDULE_PRIORITY);
-        createEAttribute(schedulePriorityEClass, SCHEDULE_PRIORITY__PRIORITY);
-        createEAttribute(schedulePriorityEClass, SCHEDULE_PRIORITY__TYPE);
+        createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
 
         scheduleObjectReferenceEClass = createEClass(SCHEDULE_OBJECT_REFERENCE);
         createEAttribute(scheduleObjectReferenceEClass, SCHEDULE_OBJECT_REFERENCE__PRIORITY);
@@ -1066,16 +1089,23 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         printCallEClass = createEClass(PRINT_CALL);
 
+        randomCallEClass = createEClass(RANDOM_CALL);
+
+        randomizeCallEClass = createEClass(RANDOMIZE_CALL);
+
         referenceableEClass = createEClass(REFERENCEABLE);
 
         schedulableEClass = createEClass(SCHEDULABLE);
         createEReference(schedulableEClass, SCHEDULABLE__SCHEDULE);
 
+        externStringEClass = createEClass(EXTERN_STRING);
+        createEAttribute(externStringEClass, EXTERN_STRING__CODE);
+
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
         valueTypeEEnum = createEEnum(VALUE_TYPE);
-        schedulePriorityTypeEEnum = createEEnum(SCHEDULE_PRIORITY_TYPE);
+        priorityProtocolEEnum = createEEnum(PRIORITY_PROTOCOL);
     }
 
     /**
@@ -1133,6 +1163,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         referenceCallEClass.getESuperTypes().add(this.getCall());
         functionCallEClass.getESuperTypes().add(this.getCall());
         printCallEClass.getESuperTypes().add(this.getCall());
+        randomCallEClass.getESuperTypes().add(this.getCall());
+        randomizeCallEClass.getESuperTypes().add(this.getCall());
+        externStringEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1189,17 +1222,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getReferenceDeclaration_Extern(), ecorePackage.getEString(), "extern", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceDeclaration_Extern(), this.getExternString(), null, "extern", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScheduleDeclaration_Priorities(), this.getSchedulePriority(), null, "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getScheduleDeclaration_Global(), this.getSchedulePriorityType(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(schedulePriorityEClass, SchedulePriority.class, "SchedulePriority", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSchedulePriority_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, SchedulePriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSchedulePriority_Type(), this.getSchedulePriorityType(), "type", null, 0, 1, SchedulePriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScheduleDeclaration_Global(), this.getPriorityProtocol(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScheduleDeclaration_Priorities(), this.getPriorityProtocol(), "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleObjectReferenceEClass, ScheduleObjectReference.class, "ScheduleObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleObjectReference_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, ScheduleObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1221,10 +1250,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(printCallEClass, PrintCall.class, "PrintCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(randomCallEClass, RandomCall.class, "RandomCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(randomizeCallEClass, RandomizeCall.class, "RandomizeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
         initEClass(referenceableEClass, Referenceable.class, "Referenceable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(schedulableEClass, Schedulable.class, "Schedulable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedulable_Schedule(), this.getScheduleObjectReference(), null, "schedule", null, 0, -1, Schedulable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(externStringEClass, ExternString.class, "ExternString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getExternString_Code(), ecorePackage.getEString(), "code", null, 0, 1, ExternString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
@@ -1275,10 +1311,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.DOUBLE);
         addEEnumLiteral(valueTypeEEnum, ValueType.STRING);
         addEEnumLiteral(valueTypeEEnum, ValueType.REFERENCE);
+        addEEnumLiteral(valueTypeEEnum, ValueType.SCHEDULE);
 
-        initEEnum(schedulePriorityTypeEEnum, SchedulePriorityType.class, "SchedulePriorityType");
-        addEEnumLiteral(schedulePriorityTypeEEnum, SchedulePriorityType.CONFLICT);
-        addEEnumLiteral(schedulePriorityTypeEEnum, SchedulePriorityType.CONFLUENT);
+        initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
+        addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);
+        addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLUENT);
 
         // Create resource
         createResource(eNS_URI);

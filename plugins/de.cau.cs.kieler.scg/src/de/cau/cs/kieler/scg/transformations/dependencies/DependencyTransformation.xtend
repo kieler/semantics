@@ -137,8 +137,8 @@ class DependencyTransformation extends InplaceProcessor<SCGraphs> {
 		nodeMapping.createNodeCaches(assignments, conditionals, writer, relativeWriter, reader)
 
        		
-		SCGPlugin.log("Assignments: " + assignments.size)
-		SCGPlugin.log("Valued Objects: " + writer.keySet.size)
+//		SCGPlugin.log("Assignments: " + assignments.size)
+//		SCGPlugin.log("Valued Objects: " + writer.keySet.size)
 		
 		for(assignment : assignments) {
 			assignment.createDependencies(writer, relativeWriter, reader, nodeMapping)

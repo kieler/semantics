@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.simulation
 
+import com.google.common.io.Files
+import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
@@ -43,11 +45,8 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.osgi.service.prefs.Preferences
-import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
  * Class to configure and start simulations.
@@ -62,11 +61,6 @@ class SimulationContext {
      * The name of the project in which models are compiled and simulated if none is provided.
      */
     public static val TEMPORARY_PROJECT_NAME = "TEMPORARY_SIM_PROJECT"
-    
-    /**
-     * The name of the attribute that stores the flag to determine if the temporary simulation project should be deleted.
-     */
-    public static val DELETE_TEMPORARY_PROJECT_ATTR = "deleteTemporarySimulationProject"
     
     // Fields for starting the simulation
     /**
@@ -106,19 +100,17 @@ class SimulationContext {
     @Accessors(PUBLIC_GETTER)
     private var FileGenerationResult buildResult
     /**
-     * The model to be compiled and simulated
+     * The next model that is going to be compiled
      */
-    @Accessors(PUBLIC_GETTER)
     private var EObject model
     /**
-     * The file handle of the model to be compiled and simulated
+     * The file handle of model that is compiled.
+     * This file handle is in the temporary simulation project.
      */
-    @Accessors(PUBLIC_GETTER)
     private var IFile modelFile
     /**
-     * A suited model analyzer for the model
+     * A suited model analyzer for the model that is compiled.
      */
-    @Accessors(PUBLIC_GETTER)
     private var ModelAnalyzer modelAnalyzer
     /**
      * A suited simulation backend for the compile chain that is used to compile the model.
@@ -157,6 +149,10 @@ class SimulationContext {
                 }
             }
         }
+        
+        override getName() {
+            return "Delete "+TEMPORARY_PROJECT_NAME
+        }
     }
     
     /**
@@ -165,7 +161,11 @@ class SimulationContext {
      * @param value True if the temporary project should be deleted, false otherwise.
      */
     public static def setDeleteTemporaryProject(boolean value) {
-        preferences.putBoolean(DELETE_TEMPORARY_PROJECT_ATTR, value)
+        if(value) {
+            SimulationManager.enable(listener)
+        } else {
+            SimulationManager.disable(listener)
+        }
     }
     
     /**
@@ -174,7 +174,7 @@ class SimulationContext {
      * @return true if the temporary simulation project should be deleted after the simulation is done
      */
     public static def getDeleteTemporaryProject() {
-        preferences.getBoolean(DELETE_TEMPORARY_PROJECT_ATTR, true)
+        return !SimulationManager.isDisabled(listener)
     }
     
     /**
@@ -191,9 +191,7 @@ class SimulationContext {
      */
     public def void start() {
         // Add simulation listener if not done yet
-        SimulationManager.addListener(listener)
-        // Compile the model if required
-        compileModel
+        SimulationManager.add(listener)
         // In case compilation was canceled, don't start simulation
         if(isCanceled) {
             return
@@ -215,53 +213,6 @@ class SimulationContext {
         // Prepare simulation compilers
         simulationCompilers = buildConfig.createSimulationCompilers
         simulationCompilers.setProgressMonitor
-    }
-    
-    /**
-     * Sets the model by using an EObject.
-     * 
-     * @param value The model
-     */
-    public def void setModel(EObject value) {
-        if(value == null) {
-            model = null
-            modelFile = null
-            return
-        }
-        // Find a suited model analyzer
-        modelAnalyzer = ModelAnalyzer.analyzers.findFirst[it.isSupported(value)]
-        if(modelAnalyzer != null) {
-            model = value
-            // Create a (virtual) file for the source model
-            var modelName = modelAnalyzer.getModelName(model)
-            if (modelName.isNullOrEmpty) {
-                modelName = "model"
-            }
-            val modelFolder = temporaryProject.getFolder("model")
-            modelFile = modelFolder.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
-            PromPlugin.createResource(modelFile)
-            // Find a suited simulation backend for the compile chain of the model analyzer
-            if(simulationBackend == null) {
-                setSimulationBackend(getSimulationBackend(modelAnalyzer.compileChain.trim))    
-            }
-        } else {
-            throw new Exception("Cannot create a simulation. No model analyzer was found for "+model)    
-        }
-    }
-    
-    /**
-     * Sets the model by using a file handle.
-     * 
-     * @param value The model file
-     */
-    public def void setModelFile(IFile value) {
-        if(value == null) {
-            model = null
-            modelFile = null
-            return
-        }
-        val loadedModel = ModelImporter.load(value)
-        setModel(loadedModel)
     }
     
     /**
@@ -322,8 +273,8 @@ class SimulationContext {
                 for(exeFile2 : executableFiles) {
                     if(exeFile != exeFile2) {
                         val redirect = new Redirect
-                        redirect.from.value = exeFile.name
-                        redirect.to.value = exeFile2.name
+                        redirect.from.value = Files.getNameWithoutExtension(exeFile.name)
+                        redirect.to.value = Files.getNameWithoutExtension(exeFile2.name)
                         sim.addAction(redirect)
                     }
                 }
@@ -350,10 +301,26 @@ class SimulationContext {
     }
     
     /**
-     * Compiles the model to an executables that is ready for simulation.
-     * The created executables are added automatically to the simulation to be created.
+     * Compiles the model to an executable that is ready for simulation.
+     * The created executable is added automatically to the simulation to be created.
+     * 
+     * @param f The file handle of the model
      */
-    public def void compileModel() {
+    public def void compileModelForSimulation(IFile f) {
+        val loadedModel = ModelImporter.load(f)
+        compileModelForSimulation(loadedModel)
+    }
+    
+    /**
+     * Compiles the model to an executable that is ready for simulation.
+     * The created executable is added automatically to the simulation to be created.
+     * 
+     * @param m The model
+     */
+    public def void compileModelForSimulation(EObject m) {
+        // Prepare the compilation of this model
+        prepareCompilation(m)
+        // Prepare the results
         buildResult = new FileGenerationResult
         if(model == null) { 
             return
@@ -399,6 +366,33 @@ class SimulationContext {
                     buildResult.createdFiles.addAll(simCompilationResult.createdFiles)
                 }
             }
+        }
+    }
+    
+    /**
+     * Sets the model to be compiled next by using an EObject.
+     * 
+     * @param value The model
+     */
+    private def void prepareCompilation(EObject value) {
+        // Find a suited model analyzer
+        modelAnalyzer = ModelAnalyzer.analyzers.findFirst[it.isSupported(value)]
+        if(modelAnalyzer != null) {
+            model = value
+            // Create a (virtual) file for the source model
+            var modelName = modelAnalyzer.getModelName(model)
+            if (modelName.isNullOrEmpty) {
+                modelName = "model"
+            }
+            val modelFolder = temporaryProject.getFolder("model")
+            modelFile = modelFolder.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
+            PromPlugin.createResource(modelFile)
+            // Find a suited simulation backend for the compile chain of the model analyzer
+            if(simulationBackend == null) {
+                setSimulationBackend(getSimulationBackend(modelAnalyzer.compileChain.trim))    
+            }
+        } else {
+            throw new Exception("Cannot create a simulation. No model analyzer was found for "+model)    
         }
     }
     
@@ -455,16 +449,11 @@ class SimulationContext {
         val project = root.getProject(TEMPORARY_PROJECT_NAME)
         if (!project.exists) {
             project.create(null)
+        }
+        if(!project.open) {
             project.open(null)
         }
         return project
-    }
-    
-    /**
-     * Returns the preferences in which the attributes are stored.
-     */
-    private static def Preferences getPreferences() {
-        return InstanceScope.INSTANCE.getNode(SimulationPlugin.PLUGIN_ID)
     }
     
     /**

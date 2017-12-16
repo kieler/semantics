@@ -42,6 +42,10 @@ public class SCChartsPromPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		
+		// Instantiate the single instance diagram highlighters
+		new SCChartsDiagramHighlighter();
+		new SCChartsDiagramLiveValues();
 	}
 
 	/*

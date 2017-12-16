@@ -68,9 +68,8 @@ Root returns ecore::EObject:
 // Expression Rule
 // An expression is either a boolean expression or a valued expression.
 Expression returns Expression:
-     (BoolExpression | ValuedExpression)
-     ('schedule' schedule+=ScheduleObjectReference+)?;
-
+     (BoolExpression | ValuedExpression);
+     
 // Boolean Expression Rule
 // Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
 // One could skip directly to the next rule.
@@ -255,6 +254,8 @@ AtomicExpression returns Expression:
     | '(' BoolExpression ')'
     | ReferenceCall
     | FunctionCall
+    | RandomCall
+    | RandomizeCall
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -305,22 +306,27 @@ ReferenceCall returns ReferenceCall:
         ) | '()'
     );
     
+// Random Call Rule
+// Calls the random function. 
+RandomCall returns RandomCall:
+    {RandomCall}
+    'random' ('()')?;
+    
+// Random Call Rule
+// Calls the random function. 
+RandomizeCall returns RandomizeCall:
+    {RandomizeCall}
+    'randomize' ('()')?;    
+    
+    
 // Function Call Rule
 // Calls to functions are indicated by angle brackets. They may include a parameter list. 
-// Deprecated?
 FunctionCall returns FunctionCall:
     ('extern' functionName = ID 
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    )
-//    |
-//    ('<' functionName = ID 
-//        (('(' parameters += Parameter 
-//            (',' parameters += Parameter)* ')'
-//        ) | '()')
-//    '>')
-    ;    
+    );        
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.

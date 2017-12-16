@@ -32,6 +32,8 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -44,6 +46,9 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
+    public static final SynthesisOption SHOW_USER_LABELS =
+            SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE);
+
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
@@ -51,6 +56,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension TransitionStyles
     @Inject extension ColorStore
+    
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(SHOW_USER_LABELS)
+    }
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -72,7 +81,31 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (transition.isImplicitlyImmediate) {
             edge.setImmediateStyle
         }
+        if (transition.nondeterministic) {
+            edge.setNondeterministicStyle
+        }
+        else if (transition.triggerProbability > 0) {
+            edge.setProbabilityStyle
+        }
 
+        // User schedules
+        val userSchedule = if (transition.trigger !== null) (transition.trigger.schedule + transition.effects.map[ schedule ].flatten).toSet
+            else (transition.effects.map[ schedule ].flatten).toSet
+        if (userSchedule.size > 0) {
+            val sLabel = new StringBuilder
+            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            for (s : userSchedule) {
+                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
+                if (!exists.contains(existPair)) {
+                    if (s !== userSchedule.head) sLabel.append(", ")
+                    sLabel.append(s.valuedObject.name + " " + s.priority)
+                    exists.add(existPair)
+                }
+            }
+            edge.addTailLabel(sLabel.toString).associateWith(transition)
+            edge.setUserScheduleStyle
+        }
+        
         switch (transition.history) {
             case SHALLOW: edge.addShallowHistoryDecorator
             case DEEP: edge.addDeepHistoryDecorator
@@ -97,16 +130,20 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     COMMENT_BACKGROUND_GRADIENT_2.color)
             ]
         }     
-
+        
         //Configure selection style
         edge.setSelectionStyle
 
         // Add Label
         val label = new StringBuilder();
-        if (transition.label.nullOrEmpty) {
+        if (transition.label.nullOrEmpty || !SHOW_USER_LABELS.booleanValue) {
             label.append(transition.serializeHR);
         } else {
             label.append(transition.label);
+        }
+        if (transition.triggerProbability > 0) {
+            if (label.length > 0) label.append(", ")
+            label.append("Pr=" + transition.triggerProbability)
         }
         if (transition.sourceState.outgoingTransitions.size > 1) {
             label.insert(0, ": ");

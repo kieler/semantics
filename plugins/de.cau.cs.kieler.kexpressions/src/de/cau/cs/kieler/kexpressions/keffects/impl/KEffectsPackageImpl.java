@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -86,6 +87,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass randomizeCallEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum assignOperatorEEnum = null;
 
     /**
@@ -135,6 +143,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
         KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
@@ -274,6 +283,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getRandomizeCallEffect() {
+        return randomizeCallEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getAssignOperator() {
         return assignOperatorEEnum;
     }
@@ -326,6 +344,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         printCallEffectEClass = createEClass(PRINT_CALL_EFFECT);
 
+        randomizeCallEffectEClass = createEClass(RANDOMIZE_CALL_EFFECT);
+
         // Create enums
         assignOperatorEEnum = createEEnum(ASSIGN_OPERATOR);
     }
@@ -374,6 +394,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         functionCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getFunctionCall());
         printCallEffectEClass.getESuperTypes().add(this.getEffect());
         printCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getPrintCall());
+        randomizeCallEffectEClass.getESuperTypes().add(this.getEffect());
+        randomizeCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getRandomizeCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(effectEClass, Effect.class, "Effect", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -395,6 +417,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEClass(functionCallEffectEClass, FunctionCallEffect.class, "FunctionCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(printCallEffectEClass, PrintCallEffect.class, "PrintCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(randomizeCallEffectEClass, RandomizeCallEffect.class, "RandomizeCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(assignOperatorEEnum, AssignOperator.class, "AssignOperator");

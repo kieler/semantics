@@ -54,7 +54,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SignedFloat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sign" eType="#//Sign"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SignedInt">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sign" eType="#//Sign"/>

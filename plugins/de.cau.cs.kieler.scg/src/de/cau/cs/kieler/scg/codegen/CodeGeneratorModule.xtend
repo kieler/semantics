@@ -40,10 +40,16 @@ abstract class CodeGeneratorModule {
         
     }
     
+    /**
+     * Indent adds the indentation to the builder.
+     */
     protected def indent() {
         code.append(indentation)
     }
     
+    /**
+     * Adds the indentation to the builder n times.
+     */
     protected def indent(int n) {
         val m = n + indentationModifier
         if (m == 0) return;

@@ -108,7 +108,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
-        'extern' extern = STRING
+        'extern' extern += ExternString (',' extern += ExternString)*
     ))
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
     annotations+=CommentAnnotatonSL?;
@@ -118,31 +118,33 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
-        'extern' extern = STRING
+        'extern' extern += ExternString (',' extern += ExternString)*
     ))
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?;
     
+ExternString returns kexpressions::ExternString:
+    annotations+=TagAnnotation*
+    code = STRING
+;
+    
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
     'schedule' name = PrimeID
-    (global = SchedulePriorityType)?
-    (priorities += SchedulePriority)*
+    ('global' global = PriorityProtocol)?
+    ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
     annotations+=CommentAnnotatonSL?;
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
     'schedule' name = PrimeID
-    (global = SchedulePriorityType)?
-    (priorities += SchedulePriority)*
+    ('global' global = PriorityProtocol)?
+    ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?;
     
-SchedulePriority returns kexpressions::SchedulePriority:
-    'prio' priority=INT type=SchedulePriorityType;
-    
-enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+enum PriorityProtocol returns kexpressions::PriorityProtocol:
     CONFLICT="conflict" | CONFLUENT="confluent";
     
 //ReferenceDeclaration returns kexpressions::ReferenceDeclaration:

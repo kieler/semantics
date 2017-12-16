@@ -51,10 +51,14 @@ public class ColorStore {
         TRANSITION_ABORT_DECORATOR(Colors.RED),
         TRANSITION_TERMINATION_DECORATOR(Colors.GREEN),
         TRANSITION_SELECTION(Colors.BLUE),
+        TRANSITION_PROBABILITY(Colors.STEEL_BLUE_2),
+        TRANSITION_NONDETERMINISTIC(234, 154, 86),          // darker SANDY_BROWN
         
-        REGION_FOREGROND(Colors.GRAY),
+        REGION_FOREGROUND(Colors.GRAY),
         REGION_BACKGROUND(Colors.WHITE),
-        REGION_BUTTON(Colors.DIM_GRAY),
+        REGION_BUTTON_BACKGROUND(Colors.GRAY),
+        REGION_BUTTON_FOREGROUND(Colors.WHITE),
+        REGION_LABEL(Colors.DIM_GRAY),
         
         INPUTNODE_BACKGROUND_GRADIENT_1(248, 249, 253),
         INPUTNODE_BACKGROUND_GRADIENT_2(205, 220, 243),
@@ -78,6 +82,8 @@ public class ColorStore {
         COMMENT_BACKGROUND_GRADIENT_2(0xff, 0xf9, 0xba),
         COMMENT_TEXT(0, 0, 0),
         COMMENT_EDGE(0xf0, 0xf0, 0x24),
+        
+        USER_SCHEDULE_COLOR(0x28, 0x99, 0x7E),
         
         KEYWORD(115, 0, 65);
 

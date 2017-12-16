@@ -53,6 +53,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 
 /**
  * The activator class controls the plug-in life cycle.

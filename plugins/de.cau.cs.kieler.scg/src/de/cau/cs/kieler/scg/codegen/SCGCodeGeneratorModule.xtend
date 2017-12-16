@@ -50,11 +50,20 @@ abstract class SCGCodeGeneratorModule extends CodeGeneratorModule {
         return this
     }
     
+    /**
+     * This method is invoked when the code generation is invoked.
+     * All init methods of all generator modules are invoked before the mail generate methods are called.
+     */
     abstract def void generateInit()
     
+    /**
+     * The main generate method. Its purpose depends on the job of the generator module. 
+     */
     abstract def void generate()
     
+    /** The done methods are called after all generator modules finish there main generator module. */
     abstract def void generateDone()
+    
     
     def void generateWrite(CodeContainer codeContainer) {
         codeContainer.add(codeFilename, code.toString)

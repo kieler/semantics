@@ -207,12 +207,6 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExpressionsPackage.SCHEDULE_PRIORITY: {
-                SchedulePriority schedulePriority = (SchedulePriority)theEObject;
-                T result = caseSchedulePriority(schedulePriority);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: {
                 ScheduleObjectReference scheduleObjectReference = (ScheduleObjectReference)theEObject;
                 T result = caseScheduleObjectReference(scheduleObjectReference);
@@ -264,6 +258,24 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.RANDOM_CALL: {
+                RandomCall randomCall = (RandomCall)theEObject;
+                T result = caseRandomCall(randomCall);
+                if (result == null) result = caseCall(randomCall);
+                if (result == null) result = caseExpression(randomCall);
+                if (result == null) result = caseSchedulable(randomCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.RANDOMIZE_CALL: {
+                RandomizeCall randomizeCall = (RandomizeCall)theEObject;
+                T result = caseRandomizeCall(randomizeCall);
+                if (result == null) result = caseCall(randomizeCall);
+                if (result == null) result = caseExpression(randomizeCall);
+                if (result == null) result = caseSchedulable(randomizeCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.REFERENCEABLE: {
                 Referenceable referenceable = (Referenceable)theEObject;
                 T result = caseReferenceable(referenceable);
@@ -273,6 +285,13 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.SCHEDULABLE: {
                 Schedulable schedulable = (Schedulable)theEObject;
                 T result = caseSchedulable(schedulable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.EXTERN_STRING: {
+                ExternString externString = (ExternString)theEObject;
+                T result = caseExternString(externString);
+                if (result == null) result = caseAnnotatable(externString);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -476,21 +495,6 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Schedule Priority</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Schedule Priority</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSchedulePriority(SchedulePriority object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Schedule Object Reference</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -536,6 +540,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Random Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Random Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRandomCall(RandomCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Randomize Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Randomize Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRandomizeCall(RandomizeCall object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -562,6 +596,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseSchedulable(Schedulable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Extern String</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Extern String</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExternString(ExternString object) {
         return null;
     }
 

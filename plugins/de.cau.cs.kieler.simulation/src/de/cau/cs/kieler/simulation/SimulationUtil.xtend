@@ -45,7 +45,7 @@ class SimulationUtil {
             } else if(isExecutable(file)) {
                 context.executableFiles.add(file)
             } else if(isModel(file)) {
-                context.modelFile = file
+                context.compileModelForSimulation(file)
             }
         }
         context.start
@@ -63,8 +63,8 @@ class SimulationUtil {
                                null
         // Start simulation with the model
         val context = new SimulationContext
-        context.model = model as EObject
         context.monitor = childMonitor
+        context.compileModelForSimulation(model)
         context.start
     }
 }

@@ -58,8 +58,8 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     new() {
         super()
         // Remove old instance if any
-        if(instance != null) {
-            SimulationManager.removeListener(instance.simulationListener)
+        if(instance !== null) {
+            SimulationManager.remove(instance.simulationListener)
         }
         // Remember single instance
         instance = this

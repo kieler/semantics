@@ -11,12 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.internal.model
+package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.klighd.DisplayedActionData
+import de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -36,12 +36,12 @@ import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import javax.inject.Inject
+import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Diagram synthesis for a ModelChain.
@@ -53,37 +53,20 @@ import org.eclipse.elk.core.math.ElkPadding
  */
 class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension KLabelExtensions
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension KContainerRenderingExtensions
-
-    @Inject
-    extension KPolylineExtensions
-
-    @Inject
-    extension KColorExtensions
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KLabelExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension KColorExtensions
 
     // -------------------------------------------------------------------------
     override public getDisplayedSynthesisOptions() {
         return TracingSynthesisOptions.synthesisOptions;
     }
     
-    override public getDisplayedActions() {
-        return newLinkedList(DisplayedActionData.create(RemovedCollapsedDiagramsAction.ID, "Remove collapsed models in model chain"));
-    }
-
-    public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChainSynthesis";
+    public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis";
     private static val KColor BG_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
     private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
@@ -147,9 +130,17 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
                     it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
+//                it.addText("[Remove]") => [
+//                    it.foreground = "blue".color
+//                    it.fontSize = 9
+//                    // center
+//                    it.setSurroundingSpaceGrid(5, 0);
+//                    it.addSingleClickAction(RemoveChainElementAction::ID);
+//                    it.addDoubleClickAction(RemoveChainElementAction::ID);
+//                ];
                 it.addRectangle => [
                     it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-                    it.setBackground = "white".color;
+                    it.background = "white".color;
                     it.foreground = "gray".color
                     it.lineWidth = 1;
                     it.addChildArea()

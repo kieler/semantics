@@ -15,29 +15,30 @@ package de.cau.cs.kieler.kicool.ui.view
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
+import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.CompileTracingToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.DebugEnvironmentModelsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
+import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling
+import java.util.List
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
+import org.eclipse.jface.action.MenuManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
-import org.eclipse.jface.action.MenuManager
-import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
-import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
-import java.util.List
-import de.cau.cs.kieler.kicool.ui.view.actions.DebugEnvironmentModelsToggle
 
 /**
  * The IMB Compiler View
@@ -64,6 +65,7 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
     @Accessors private var SkinSelectionActions skinSelectionActions = null
     @Accessors private var CompileInplaceToggle compileInplaceToggle = null
+    @Accessors private var CompileTracingToggle compileTracingToggle = null
     @Accessors private var DebugEnvironmentModelsToggle debugEnvironmentModelsToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
@@ -117,6 +119,7 @@ class CompilerView extends DiagramViewPart {
         forwardResultToggle = new ForwardResultToggle(this)
         autoCompileToggle = new AutoCompileToggle(this)
         compileInplaceToggle = new CompileInplaceToggle(this)
+        compileTracingToggle = new CompileTracingToggle(this)
         
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
@@ -129,6 +132,7 @@ class CompilerView extends DiagramViewPart {
         menu.add(forwardResultToggle.action)
         menu.add(autoCompileToggle.action)
         menu.add(compileInplaceToggle.action)
+        menu.add(compileTracingToggle.action)
         menu.add(new Separator)
         menu.add(visualLayoutFeedbackToggle.action)
         
@@ -147,6 +151,7 @@ class CompilerView extends DiagramViewPart {
             memento.loadCheckedValue(visualLayoutFeedbackToggle)
             memento.loadCheckedValue(developerToggle)
             memento.loadCheckedValue(compileInplaceToggle)
+            memento.loadCheckedValue(compileTracingToggle)
             memento.loadCheckedValues(skinSelectionActions.actions)
             memento.loadCheckedValue(debugEnvironmentModelsToggle)
         }
@@ -167,6 +172,7 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
         memento.saveCheckedValue(compileInplaceToggle)
+        memento.saveCheckedValue(compileTracingToggle)
         memento.saveCheckedValues(skinSelectionActions.actions)
         memento.saveCheckedValue(debugEnvironmentModelsToggle)
     }

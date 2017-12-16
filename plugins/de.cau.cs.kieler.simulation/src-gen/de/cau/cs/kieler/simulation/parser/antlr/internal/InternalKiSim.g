@@ -1355,12 +1355,12 @@ ruleExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+(
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0_0()); 
+        newCompositeNode(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
     }
     this_BoolExpression_0=ruleBoolExpression
     { 
@@ -1373,36 +1373,14 @@ ruleExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0_1()); 
+        newCompositeNode(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
     }
     this_ValuedExpression_1=ruleValuedExpression
     { 
         $current = $this_ValuedExpression_1.current; 
         afterParserOrEnumRuleCall();
     }
-)(	otherlv_2='schedule' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getExpressionAccess().getScheduleKeyword_1_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getExpressionAccess().getScheduleScheduleObjectReferenceParserRuleCall_1_1_0()); 
-	    }
-		lv_schedule_3_0=ruleScheduleObjectReference		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getExpressionRule());
-	        }
-       		add(
-       			$current, 
-       			"schedule",
-        		lv_schedule_3_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
-	        afterParserOrEnumRuleCall();
-	    }
-
 )
-)+)?)
 ;
 
 
@@ -3347,11 +3325,37 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_5()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getRandomCallParserRuleCall_5()); 
     }
-    this_TextExpression_7=ruleTextExpression
+    this_RandomCall_7=ruleRandomCall
     { 
-        $current = $this_TextExpression_7.current; 
+        $current = $this_RandomCall_7.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getRandomizeCallParserRuleCall_6()); 
+    }
+    this_RandomizeCall_8=ruleRandomizeCall
+    { 
+        $current = $this_RandomizeCall_8.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_7()); 
+    }
+    this_TextExpression_9=ruleTextExpression
+    { 
+        $current = $this_TextExpression_9.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -3693,61 +3697,6 @@ ruleValuedObjectReference returns [EObject current=null]
 
 
 
-// Entry rule entryRuleScheduleObjectReference
-entryRuleScheduleObjectReference returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getScheduleObjectReferenceRule()); }
-	 iv_ruleScheduleObjectReference=ruleScheduleObjectReference 
-	 { $current=$iv_ruleScheduleObjectReference.current; } 
-	 EOF 
-;
-
-// Rule ScheduleObjectReference
-ruleScheduleObjectReference returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScheduleObjectReferenceRule());
-	        }
-        }
-		{ 
-	        newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
-	    }
-		rulePrimeID		{ 
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-(
-		lv_priority_1_0=RULE_INT
-		{
-			newLeafNode(lv_priority_1_0, grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScheduleObjectReferenceRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"priority",
-        		lv_priority_1_0, 
-        		"de.cau.cs.kieler.annotations.Annotations.INT");
-	    }
-
-)
-))
-;
-
-
-
 
 
 // Entry rule entryRuleReferenceCall
@@ -3836,6 +3785,82 @@ ruleReferenceCall returns [EObject current=null]
     	newLeafNode(otherlv_6, grammarAccess.getReferenceCallAccess().getLeftParenthesisRightParenthesisKeyword_1_1());
     }
 ))
+;
+
+
+
+
+
+// Entry rule entryRuleRandomCall
+entryRuleRandomCall returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getRandomCallRule()); }
+	 iv_ruleRandomCall=ruleRandomCall 
+	 { $current=$iv_ruleRandomCall.current; } 
+	 EOF 
+;
+
+// Rule RandomCall
+ruleRandomCall returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getRandomCallAccess().getRandomCallAction_0(),
+            $current);
+    }
+)	otherlv_1='random' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getRandomCallAccess().getRandomKeyword_1());
+    }
+(	otherlv_2='()' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+    }
+)?)
+;
+
+
+
+
+
+// Entry rule entryRuleRandomizeCall
+entryRuleRandomizeCall returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getRandomizeCallRule()); }
+	 iv_ruleRandomizeCall=ruleRandomizeCall 
+	 { $current=$iv_ruleRandomizeCall.current; } 
+	 EOF 
+;
+
+// Rule RandomizeCall
+ruleRandomizeCall returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getRandomizeCallAccess().getRandomizeCallAction_0(),
+            $current);
+    }
+)	otherlv_1='randomize' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getRandomizeCallAccess().getRandomizeKeyword_1());
+    }
+(	otherlv_2='()' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+    }
+)?)
 ;
 
 
@@ -5482,6 +5507,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     }
 )
     ;
+
+
+
+
 
 
 

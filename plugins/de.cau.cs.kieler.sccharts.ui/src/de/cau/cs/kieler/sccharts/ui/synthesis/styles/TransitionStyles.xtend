@@ -16,8 +16,10 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KSpline
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -26,10 +28,10 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
-import de.cau.cs.kieler.klighd.krendering.KColor
 
 /**
  * Styles for {@link Transition}.
@@ -92,6 +94,25 @@ class TransitionStyles {
             lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
         ]
     }
+    
+    /**
+     * Sets the style of the line to a probabilistic transition.
+     */
+    def setProbabilityStyle(KEdge edge) {
+        edge.line => [
+            foreground = TRANSITION_PROBABILITY.color
+        ]
+    }
+    
+    /**
+     * Sets the style of the line to a nondeterminstic transition.
+     */
+    def setNondeterministicStyle(KEdge edge) {
+        edge.line => [
+            foreground = TRANSITION_NONDETERMINISTIC.color
+        ]
+    }    
+    
 
     /**
      * Sets the selection style of the edge.
@@ -221,11 +242,13 @@ class TransitionStyles {
     def KLabel addLabel(KEdge edge, String text) {
         val label = edge.createLabel;
         label.configureCenterEdgeLabel(text); // Add text
-        label.getKRendering => [ // Configure text
-            fontSize = 11;
-            fontBold = true;
-        ]
+        label.getKRendering.configureTransitionLabelRendering;
         return label;
+    }
+    
+    def configureTransitionLabelRendering(KRendering rendering) {
+        rendering.fontSize = 11;
+        rendering.fontBold = true;
     }
     
     def KLabel addLabel(KEdge edge, String text, KColor backgroundColor) {
@@ -238,6 +261,25 @@ class TransitionStyles {
             background = backgroundColor
         ]
         return label;
+    }
+    
+    def KLabel addTailLabel(KEdge edge, String text) {
+        val label = edge.createLabel
+        label.configureTailEdgeLabel(text)
+        label.getKRendering.configureTransitionTailLabelRendering
+        return label
+    }    
+    
+    def configureTransitionTailLabelRendering(KRendering rendering) {
+        rendering.fontSize = 8
+        rendering.fontBold = false
+        rendering.foreground = USER_SCHEDULE_COLOR.color
+    }   
+    
+    def setUserScheduleStyle(KEdge edge) {
+        edge.line => [
+            foreground = USER_SCHEDULE_COLOR.color
+        ]
     }
     
     

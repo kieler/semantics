@@ -81,7 +81,11 @@ class Dataflow extends SCChartsProcessor {
         val parentState = dataflowRegion.eContainer as State
         
         // Generate root region and main state.
-        val newControlflowRegion = parentState.createControlflowRegion(GENERATED_PREFIX + dataflowRegion.name)
+        val newControlflowRegion = parentState.createControlflowRegion(GENERATED_PREFIX + dataflowRegion.name) => [ r |
+            for (s : dataflowRegion.schedule) {
+                r.schedule += s.copy
+            }
+        ]
         val newMainState = newControlflowRegion.createState(GENERATED_PREFIX + "main") => [
             initial = true
         ]
@@ -138,11 +142,13 @@ class Dataflow extends SCChartsProcessor {
             
             eqTrans.addAssignment(equation.value)
             for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
-                val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
-                val replacement = referenceReplacements.get(refPair)
-                if (replacement != null) {
-                    reference.valuedObject = replacement
-                    reference.subReference = null
+                if (reference.subReference !== null) {
+                    val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
+                    val replacement = referenceReplacements.get(refPair)
+                    if (replacement !== null) {
+                        reference.valuedObject = replacement
+                        reference.subReference = null
+                    }
                 }
             }
         }

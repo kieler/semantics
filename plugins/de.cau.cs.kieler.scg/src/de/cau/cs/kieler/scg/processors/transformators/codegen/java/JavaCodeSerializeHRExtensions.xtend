@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * @author ssm
@@ -27,9 +29,19 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHR
 @Singleton
 class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
+    public static val GLOBAL_OBJECTS = "globalObjects"
+    
+    new() {
+        CODE_ANNOTATION = "Java"
+    }
+    
     override dispatch CharSequence serialize(ValueType valueType) {
         if (valueType == ValueType.BOOL) {
             return "boolean"
+        } else if (valueType == ValueType.FLOAT) {
+            return "double"
+        } else if (valueType == ValueType.STRING) {
+            return "String"            
         } else {
             return valueType.literal
         }
@@ -42,8 +54,29 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     override dispatch CharSequence serialize(PrintCall printCall) {
         var paramStr = printCall.parameters.serializeParameters.toString
+        if (printCall.parameters.size == 1) {
+            return "System.out.println(" + paramStr.substring(1, paramStr.length - 1) + ")" 
+        } 
         
         return "System.out.format(" + paramStr.substring(1, paramStr.length - 1) + ")"
+    }
+    
+    override dispatch CharSequence serialize(RandomCall randomCall) {
+        if (!modifications.containsEntry(GLOBAL_OBJECTS, "Random random = new Random();"))
+            modifications.put(GLOBAL_OBJECTS, "Random random = new Random(0);")
+        if (!modifications.containsEntry(INCLUDES, "java.util.Random;"))
+            modifications.put(INCLUDES, "java.util.Random;")
+            
+        return "random.nextDouble()"
+    }
+    
+    override dispatch CharSequence serialize(RandomizeCall randomizeCall) {
+        if (!modifications.containsEntry(GLOBAL_OBJECTS, "Random random = new Random();"))
+            modifications.put(GLOBAL_OBJECTS, "Random random = new Random(0);")
+        if (!modifications.containsEntry(INCLUDES, "java.util.Random;"))
+            modifications.put(INCLUDES, "java.util.Random;")
+            
+        return "random.setSeet(System.currentTimeMillis())"
     }
     
 }

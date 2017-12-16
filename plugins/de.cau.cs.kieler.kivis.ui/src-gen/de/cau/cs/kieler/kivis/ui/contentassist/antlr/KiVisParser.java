@@ -52,7 +52,7 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionParameterAccess().getAlternatives(), "rule__FunctionParameter__Alternatives");
 					put(grammarAccess.getTemplateProcessorAccess().getAlternatives(), "rule__TemplateProcessor__Alternatives");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
-					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
+					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
@@ -118,8 +118,6 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getArrayIndexAccess().getGroup(), "rule__ArrayIndex__Group__0");
 					put(grammarAccess.getSignedFloatAccess().getGroup(), "rule__SignedFloat__Group__0");
 					put(grammarAccess.getSignedIntAccess().getGroup(), "rule__SignedInt__Group__0");
-					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
-					put(grammarAccess.getExpressionAccess().getGroup_1(), "rule__Expression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -189,6 +187,8 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0(), "rule__ReferenceCall__Group_1_0__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0_2(), "rule__ReferenceCall__Group_1_0_2__0");
+					put(grammarAccess.getRandomCallAccess().getGroup(), "rule__RandomCall__Group__0");
+					put(grammarAccess.getRandomizeCallAccess().getGroup(), "rule__RandomizeCall__Group__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0(), "rule__FunctionCall__Group_2_0__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0_2(), "rule__FunctionCall__Group_2_0_2__0");
@@ -220,6 +220,7 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getVisualizationConfigurationAccess().getImageAssignment_0_2(), "rule__VisualizationConfiguration__ImageAssignment_0_2");
 					put(grammarAccess.getVisualizationConfigurationAccess().getElementsAssignment_1_0(), "rule__VisualizationConfiguration__ElementsAssignment_1_0");
 					put(grammarAccess.getVisualizationConfigurationAccess().getInteractionsAssignment_1_1(), "rule__VisualizationConfiguration__InteractionsAssignment_1_1");
@@ -295,7 +296,6 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignedIntAccess().getSignAssignment_0(), "rule__SignedInt__SignAssignment_0");
 					put(grammarAccess.getSignedIntAccess().getValueAssignment_1(), "rule__SignedInt__ValueAssignment_1");
 					put(grammarAccess.getTextValueAccess().getValueAssignment(), "rule__TextValue__ValueAssignment");
-					put(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1(), "rule__Expression__ScheduleAssignment_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1");

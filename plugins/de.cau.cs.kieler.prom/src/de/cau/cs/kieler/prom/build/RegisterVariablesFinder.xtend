@@ -10,14 +10,13 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui
+package de.cau.cs.kieler.prom.build
 
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.prom.build.PromBuildAdapter
 import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
@@ -25,7 +24,9 @@ import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.scg.SCGraphs
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.SimulationParticipant
+import org.osgi.service.prefs.Preferences
+import org.eclipse.core.runtime.preferences.InstanceScope
+import de.cau.cs.kieler.prom.PromPlugin
 
 /**
  * Adds the variables to the communicated variables in the simulation that save the sate of a model
@@ -37,9 +38,29 @@ import de.cau.cs.kieler.simulation.SimulationParticipant
  * @author aas
  *
  */
-class RegisterVariablesFinder extends PromBuildAdapter implements SimulationParticipant {
+class RegisterVariablesFinder extends PromBuildAdapter {
     
+    private static var RegisterVariablesFinder instance
+    
+    public static val ENABLED_ATTR = "registerVariablesFinder.enabled"
+    
+    @Accessors(PUBLIC_GETTER)
     private boolean enabled = true
+
+    /**
+     * Enables or disables this class by setting the corresponding value in the preferences.
+     */    
+    public static def void setEnabled(boolean value) {
+        preferences.putBoolean(ENABLED_ATTR, value);
+        preferences.flush
+    }
+    
+    /**
+     * Returns the enabled state for this class from the preferences.
+     */    
+    public static def boolean isEnabled() {
+        return preferences.getBoolean(ENABLED_ATTR, true);
+    }
     
     /**
      * Constructor
@@ -48,7 +69,12 @@ class RegisterVariablesFinder extends PromBuildAdapter implements SimulationPart
      */
     new() {
         // Register this listener for model compilation and template processing
-        super()
+        register
+        // Unregister old instance if needed
+        if(instance !== null) {
+            instance.unregister
+        }
+        instance = this
     }
     
     /**
@@ -121,20 +147,6 @@ class RegisterVariablesFinder extends PromBuildAdapter implements SimulationPart
     }
     
     /**
-     * {@inheritDoc}
-     */
-    override setEnabled(boolean value) {
-        enabled = value
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override isEnabled() {
-        return enabled
-    }
-    
-    /**
      * Returns the variables that have been generated to save the current state of the model.
      * 
      * @param scGraphs The SCGraphs
@@ -152,7 +164,7 @@ class RegisterVariablesFinder extends PromBuildAdapter implements SimulationPart
                             for(subExp : opExp.subExpressions) {
                                 if(subExp instanceof ValuedObjectReference) {
                                     val operand = subExp.valuedObject.name
-//                                    println(node.valuedObject.name + " = " + opExp.operator+"("+operand+")")
+//                                    println(node.reference.valuedObject.name + " = " + opExp.operator+"("+operand+")")
                                     val registerVariable = getRegisterVariable(operand)
                                     if(registerVariable != null) {
                                         registerVariables.add(registerVariable)
@@ -177,5 +189,12 @@ class RegisterVariablesFinder extends PromBuildAdapter implements SimulationPart
             return "_pg"+preOperand.substring(2)
         }
         return null
+    }
+    
+    /**
+     * Returns the preferences in which the attributes are stored.
+     */
+    private static def Preferences getPreferences() {
+        return InstanceScope.INSTANCE.getNode(PromPlugin.PLUGIN_ID)
     }
 }

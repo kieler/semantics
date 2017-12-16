@@ -240,6 +240,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
+        KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
         KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
@@ -298,8 +301,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getAction_TriggerProbability() {
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EAttribute getAction_Delay() {
-        return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getAction_Nondeterministic() {
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -308,7 +329,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EAttribute getAction_Label() {
-        return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -750,8 +771,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(actionEClass, ACTION__EFFECTS);
         createEReference(actionEClass, ACTION__TRIGGER);
         createEAttribute(actionEClass, ACTION__TRIGGER_DELAY);
+        createEAttribute(actionEClass, ACTION__TRIGGER_PROBABILITY);
         createEAttribute(actionEClass, ACTION__LABEL);
         createEAttribute(actionEClass, ACTION__DELAY);
+        createEAttribute(actionEClass, ACTION__NONDETERMINISTIC);
 
         localActionEClass = createEClass(LOCAL_ACTION);
 
@@ -842,6 +865,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
+        scopeEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
         scopeCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
         actionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         localActionEClass.getESuperTypes().add(this.getAction());
@@ -873,8 +897,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getAction_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAction_Trigger(), theKExpressionsPackage.getExpression(), null, "trigger", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAction_TriggerDelay(), ecorePackage.getEInt(), "triggerDelay", "1", 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getAction_TriggerProbability(), ecorePackage.getEDouble(), "triggerProbability", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAction_Label(), ecorePackage.getEString(), "label", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
         initEAttribute(getAction_Delay(), this.getDelayType(), "delay", "UNDEFINED", 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getAction_Nondeterministic(), ecorePackage.getEBoolean(), "nondeterministic", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(localActionEClass, LocalAction.class, "LocalAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

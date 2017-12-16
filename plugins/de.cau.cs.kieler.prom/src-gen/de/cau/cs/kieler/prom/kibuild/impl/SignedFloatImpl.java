@@ -57,7 +57,7 @@ public class SignedFloatImpl extends MinimalEObjectImpl.Container implements Sig
    * @generated
    * @ordered
    */
-  protected static final Float VALUE_EDEFAULT = null;
+  protected static final float VALUE_EDEFAULT = 0.0F;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -67,7 +67,7 @@ public class SignedFloatImpl extends MinimalEObjectImpl.Container implements Sig
    * @generated
    * @ordered
    */
-  protected Float value = VALUE_EDEFAULT;
+  protected float value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -118,7 +118,7 @@ public class SignedFloatImpl extends MinimalEObjectImpl.Container implements Sig
    * <!-- end-user-doc -->
    * @generated
    */
-  public Float getValue()
+  public float getValue()
   {
     return value;
   }
@@ -128,9 +128,9 @@ public class SignedFloatImpl extends MinimalEObjectImpl.Container implements Sig
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(Float newValue)
+  public void setValue(float newValue)
   {
-    Float oldValue = value;
+    float oldValue = value;
     value = newValue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.SIGNED_FLOAT__VALUE, oldValue, value));
@@ -207,7 +207,7 @@ public class SignedFloatImpl extends MinimalEObjectImpl.Container implements Sig
       case KibuildPackage.SIGNED_FLOAT__SIGN:
         return sign != SIGN_EDEFAULT;
       case KibuildPackage.SIGNED_FLOAT__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+        return value != VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }

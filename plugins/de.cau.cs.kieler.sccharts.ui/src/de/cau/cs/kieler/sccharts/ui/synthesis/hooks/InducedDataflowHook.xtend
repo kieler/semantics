@@ -97,9 +97,9 @@ class InducedDataflowHook extends SynthesisHook {
     public static final String JOB_NAME = "Calculating Dataflow";
 
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_DATAFLOW = SynthesisOption.createCheckOption("Show Induced Dataflow",
+    public static final SynthesisOption SHOW_DATAFLOW = SynthesisOption.createCheckOption("Induced Dataflow",
         false).setCategory(GeneralSynthesisOptions::DEBUGGING);
-    public static final SynthesisOption SHOW_DATAFLOW_IO = SynthesisOption.createChoiceOption("Show Dataflow I/O",
+    public static final SynthesisOption SHOW_DATAFLOW_IO = SynthesisOption.createChoiceOption("Dataflow I/O",
         newArrayList(IOType.None, IOType.Local, IOType.All), IOType.None).setCategory(
         GeneralSynthesisOptions::DEBUGGING);
 

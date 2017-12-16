@@ -153,13 +153,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__SCHEDULE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -168,7 +177,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference.
@@ -177,7 +186,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -186,7 +195,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -281,13 +290,22 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__TRIGGER_DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__TRIGGER_PROBABILITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -296,7 +314,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__NONDETERMINISTIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The number of structural features of the '<em>Action</em>' class.
@@ -305,7 +332,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
@@ -354,6 +381,15 @@ public interface SCChartsPackage extends EPackage {
     int LOCAL_ACTION__TRIGGER_DELAY = ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__TRIGGER_PROBABILITY = ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -370,6 +406,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int LOCAL_ACTION__DELAY = ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__NONDETERMINISTIC = ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Local Action</em>' class.
@@ -416,6 +461,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int STATE__NAME = SCOPE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__SCHEDULE = SCOPE__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -563,6 +617,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__NAME = SCOPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__SCHEDULE = SCOPE__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -670,6 +733,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__NAME = REGION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__SCHEDULE = REGION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -788,6 +860,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__NAME = REGION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__SCHEDULE = REGION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -917,6 +998,15 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__TRIGGER_DELAY = ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__TRIGGER_PROBABILITY = ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -933,6 +1023,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int TRANSITION__DELAY = ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__NONDETERMINISTIC = ACTION__NONDETERMINISTIC;
 
     /**
      * The feature id for the '<em><b>Preemption</b></em>' attribute.
@@ -1035,6 +1134,15 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1051,6 +1159,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int ENTRY_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Entry Action</em>' class.
@@ -1108,6 +1225,15 @@ public interface SCChartsPackage extends EPackage {
     int DURING_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1124,6 +1250,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DURING_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The feature id for the '<em><b>Reset</b></em>' attribute.
@@ -1190,6 +1325,15 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1206,6 +1350,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int EXIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Exit Action</em>' class.
@@ -1263,6 +1416,15 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1279,6 +1441,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUSPEND_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The feature id for the '<em><b>Weak</b></em>' attribute.
@@ -1345,6 +1516,15 @@ public interface SCChartsPackage extends EPackage {
     int PRECEDING_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1361,6 +1541,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int PRECEDING_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Preceding Action</em>' class.
@@ -1418,6 +1607,15 @@ public interface SCChartsPackage extends EPackage {
     int SUCCEEDING_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1434,6 +1632,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUCCEEDING_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Succeeding Action</em>' class.
@@ -1604,6 +1811,17 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getAction_TriggerDelay();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getTriggerProbability <em>Trigger Probability</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Trigger Probability</em>'.
+     * @see de.cau.cs.kieler.sccharts.Action#getTriggerProbability()
+     * @see #getAction()
+     * @generated
+     */
+    EAttribute getAction_TriggerProbability();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1624,6 +1842,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getAction_Delay();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isNondeterministic <em>Nondeterministic</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Nondeterministic</em>'.
+     * @see de.cau.cs.kieler.sccharts.Action#isNondeterministic()
+     * @see #getAction()
+     * @generated
+     */
+    EAttribute getAction_Nondeterministic();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
@@ -2133,6 +2362,14 @@ public interface SCChartsPackage extends EPackage {
         EAttribute ACTION__TRIGGER_DELAY = eINSTANCE.getAction_TriggerDelay();
 
         /**
+         * The meta object literal for the '<em><b>Trigger Probability</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ACTION__TRIGGER_PROBABILITY = eINSTANCE.getAction_TriggerProbability();
+
+        /**
          * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2147,6 +2384,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute ACTION__DELAY = eINSTANCE.getAction_Delay();
+
+        /**
+         * The meta object literal for the '<em><b>Nondeterministic</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ACTION__NONDETERMINISTIC = eINSTANCE.getAction_Nondeterministic();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.

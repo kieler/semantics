@@ -11,9 +11,10 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.internal.model
+package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction
+import de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction
+import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
@@ -50,7 +51,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // -------------------------------------------------------------------------
     // Constants
     
-    public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolderSynthesis";
+    public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis";
     static val maxPreviewLines = 50;
     static val tabSpaces = "  ";
 
@@ -69,7 +70,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                 val titleText = if (placeholder.name.nullOrEmpty) "CODE" else "CODE - " + placeholder.name
                 it.addText(titleText) => [
                     it.fontSize = 11;
-                    it.setFontBold = true;
+                    it.fontBold = true;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                     it.suppressSelectability;
                 ]
