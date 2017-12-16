@@ -76,6 +76,14 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     extension AttributeExtensions attributeExtensions 
 
     /**
+     * The file handle from which the build config was loaded
+     */
+    private var IFile buildConfigFile
+    /**
+     * The loaded build config
+     */
+    private var BuildConfiguration buildConfig
+    /**
      * The loaded model compilers.
      */
     private var List<ModelCompiler> modelCompilers = newArrayList
@@ -220,8 +228,12 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 }
             }
         } catch(Exception e) {
-            // Show any exception as error marker on the project
-            val problem = BuildProblem.createError(project, e)
+            // Show any exception as error marker on the project or build configuration
+            val res = if(buildConfigFile !== null)
+                          buildConfigFile
+                      else
+                          project
+            val problem = BuildProblem.createError(res, e)
             showBuildProblems(problem)
         }
         
@@ -577,12 +589,12 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                                        + "to define how model files are compiled.")
         } else {
             try {
-                val file = project.getFile(configFilePath)
-                val model = ModelImporter.load(file)
+                buildConfigFile = project.getFile(configFilePath)
+                val model = ModelImporter.load(buildConfigFile)
                 if(model !== null && model instanceof BuildConfiguration) {
                         initializeConfiguration(model as BuildConfiguration)
                 } else {
-                    throw new Exception("Build configuration '" + file.projectRelativePath + "' could not be loaded")
+                    throw new Exception("Build configuration '" + buildConfigFile.projectRelativePath + "' could not be loaded")
                 }
             } catch (Exception e) {
                 createErrorMarker(project, e.message)
@@ -603,6 +615,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def void initializeConfiguration(BuildConfiguration buildConfig) {
         // Update attributes
+        this.buildConfig = buildConfig
         this.updateConfigurableAttributes(buildConfig.attributes)
         
         // Create model compilers
