@@ -61,6 +61,9 @@ class EsterelSytaxHelper {
             val parent = thread.eContainer
             if (!(parent instanceof EsterelParallel)) {
                 if (parent instanceof StatementContainer) {
+                    /* TODO "parent.statements.indexOf(thread)" does not work when for example:
+                     * EsterelThread is in "doStatements" of an Abort statement
+                     * despite abort being the parent of the thread and also being a StatementContainer */
                     parent.statements.addAll(parent.statements.indexOf(thread), thread.statements)
                     parent.statements.remove(thread)
                 }
