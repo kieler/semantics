@@ -30,5 +30,3 @@ esterel.block
 esterel.present
 esterel.function
 esterel.repeat
-scest.labelrenaming
-scest.esterelToScl

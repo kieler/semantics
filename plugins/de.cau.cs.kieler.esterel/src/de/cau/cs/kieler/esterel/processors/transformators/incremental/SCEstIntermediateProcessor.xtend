@@ -90,7 +90,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         
     }
     
-    def activateSpecificProcessor(EObject obj) {
+    def getCorrespondingProcessorID(EObject obj) {
         switch (obj) {
             Abort : return ABORT
             Await : return AWAIT
@@ -405,7 +405,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             }
             else { // go down, since "up = false"
                 switch (obj) {
-                    Parallel : { // do not transform the Parallel statement since it's already an scl statement
+                    Parallel : { 
+                        /* do not transform the Parallel statement since it's already an scl statement */
                         if (!obj.threads.empty) {
                             obj = obj.threads.head
                         }
@@ -413,7 +414,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             up = true
                         }
                     }
-                    ScopeStatement : { // do not transform the ScopeStatement statement since it's already an scl statement
+                    ScopeStatement : { 
+                        /* do not transform the ScopeStatement statement since it's already an scl statement */
                         if (!obj.statements.empty) {
                             obj = obj.statements.head
                         }
@@ -539,7 +541,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             obj = obj.statements.head
                         }
                         else {
-                            /* set 'obj' to the eContainer of 'obj' if it is not a statement */
+                            /* set 'obj' to the eContainer of 'obj' if it is not a statement
+                             * because only statements can be transformed
+                             */
                             switch (obj) {
                                 ElsIf,
                                 Case,
@@ -550,6 +554,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             transform = true
                         }
                     }
+                    /* The following statements do not have to be transformed. 
+                     * Pause, Label, Goto, ModuleCall, Assignment, Exit */
                     Pause,
                     Label,
                     Goto,
@@ -570,8 +576,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 }
             }
         }
-        
-        obj.activateSpecificProcessor
+        // TODO write obj to obj property in environment (which does not exist at the moment)
+        obj.correspondingProcessorID
         
     }
     
