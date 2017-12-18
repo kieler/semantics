@@ -21,6 +21,8 @@ import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.TickReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.scl.StatementContainer
+import java.util.List
+import de.cau.cs.kieler.scl.Statement
 
 /**
  * @author als
@@ -60,9 +62,10 @@ class EsterelSytaxHelper {
         for (thread : threads) {
             val parent = thread.eContainer
             if (!(parent instanceof EsterelParallel)) {
-                if (parent instanceof StatementContainer) {
-                    parent.statements.addAll(parent.statements.indexOf(thread), thread.statements)
-                    parent.statements.remove(thread)
+                if (thread.eContainingFeature.isMany) {
+                    val container = parent.eGet(thread.eContainingFeature) as List<Statement>
+                    container.addAll(container.indexOf(thread), thread.statements)
+                    container.remove(thread)
                 }
             }
         }

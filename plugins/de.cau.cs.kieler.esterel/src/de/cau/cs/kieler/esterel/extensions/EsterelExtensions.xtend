@@ -155,7 +155,7 @@ class EsterelExtensions {
             switch (it) {
                 Module: true
                 SignalDeclaration: true
-                Signal: idType === null && initialValue === null && type === null
+                Signal: idType === null && initialValue === null && (type === null || type === ValueType.PURE)
                 RelationDeclaration: true
                 Relation: true
                 EsterelParallel: true
@@ -174,6 +174,7 @@ class EsterelExtensions {
                 Pause: true
                 OperatorExpression: true
                 Annotation: true
+                ValuedObject: "tick".equals(name)
                 default: false
             }
         ]
