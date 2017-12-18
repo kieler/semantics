@@ -125,10 +125,13 @@ class DataView extends ViewPart {
     }
     
     public def void deleteDataObserver(DataObserver observer) {
-        val parent = observer.canvas.parent
+        val disposed = observer === null || observer.canvas === null || observer.canvas.disposed
+        val parent = if (!disposed) observer.canvas.parent else null
         dataObservers.remove(observer)
-        observer.canvas.dispose 
-        parent.layout(true)
+        if (!disposed) {
+            observer.canvas.dispose 
+            parent.layout(true)
+        }
     }
     
     protected def void createDropTarget(Control dropControl, Composite parent) {
