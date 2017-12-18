@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
@@ -22,6 +23,8 @@ import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -32,13 +35,9 @@ import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepState
 import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
-import java.util.List
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import java.util.Set
-import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.simulation.ui.highlighting.Highlight
+import java.util.List
+import java.util.Set
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -153,8 +152,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     new() {
         super()
         // Remove old instance if any
-        if(instance != null) {
-            SimulationManager.removeListener(instance.simulationListener)
+        if(instance !== null) {
+            SimulationManager.remove(instance.simulationListener)
         }
         // Remember single instance
         instance = this

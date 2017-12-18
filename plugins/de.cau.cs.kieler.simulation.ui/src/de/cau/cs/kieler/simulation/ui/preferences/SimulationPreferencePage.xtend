@@ -13,9 +13,9 @@
 package de.cau.cs.kieler.simulation.ui.preferences
 
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import de.cau.cs.kieler.prom.ui.UIUtil
-import de.cau.cs.kieler.simulation.SimulationContext
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.jface.preference.PreferencePage
 import org.eclipse.jface.viewers.ArrayContentProvider
@@ -32,12 +32,12 @@ import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
-import static de.cau.cs.kieler.simulation.SimulationContext.*
-import org.eclipse.swt.widgets.Label
+import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
 
 /**
  * @author aas
@@ -91,18 +91,18 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
     }
     
     /**
-     * Creates controls to configure rarely used simulation features.
+     * Creates controls to configure simulation features.
      */
     private def void createSimulationControls(Composite parent) {
-        // Create the checkbox to determine if the temporary project should be deleted
-        val delete = SimulationContext.deleteTemporaryProject
-        val deleteTempProject = UIUtil.createCheckButton(parent, "Delete temporary project after simulation", delete)
-        deleteTempProject.addSelectionListener(new SelectionListener() {
+        // Create the checkbox to determine if register variables should be communicated
+        val enabled = RegisterVariablesFinder.isEnabled
+        val checkbox = UIUtil.createCheckButton(parent, "Communicate register variables", enabled)
+        checkbox.addSelectionListener(new SelectionListener() {
             override widgetDefaultSelected(SelectionEvent e) {
             }
             
             override widgetSelected(SelectionEvent e) {
-                SimulationContext.deleteTemporaryProject = deleteTempProject.selection
+                RegisterVariablesFinder.enabled = checkbox.selection
             }
         })
     }
@@ -142,7 +142,9 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         viewer.selection = new StructuredSelection(ModelAnalyzer.analyzers.findFirst[it.isSupported("sctx")])
         compileChainField.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                currentAnalyzer.compileChain = compileChainField.text
+                if(currentAnalyzer !== null) {
+                    currentAnalyzer.compileChain = compileChainField.text    
+                }
             }
         })
     }
@@ -152,6 +154,24 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      */
     private def void setCurrentAnalyzer(ModelAnalyzer analyzer) {
         this.currentAnalyzer = analyzer
-        compileChainField.text = currentAnalyzer.compileChain
+        if(currentAnalyzer !== null) {
+            compileChainField.text = currentAnalyzer.compileChain    
+        } else {
+            compileChainField.text = ""
+        }
+    }
+    
+    /**
+     * Restore the default values. 
+     */
+    override performDefaults() {
+        // Reset compile chain of model analyzers
+        for(analyzer : ModelAnalyzer.analyzers) {
+            analyzer.compileChain = analyzer.defaultCompileChain
+        }
+        // Update UI
+        setCurrentAnalyzer(currentAnalyzer)
+        
+        super.performDefaults
     }
 }

@@ -263,6 +263,25 @@ class TransitionStyles {
         return label;
     }
     
+    def KLabel addTailLabel(KEdge edge, String text) {
+        val label = edge.createLabel
+        label.configureTailEdgeLabel(text)
+        label.getKRendering.configureTransitionTailLabelRendering
+        return label
+    }    
+    
+    def configureTransitionTailLabelRendering(KRendering rendering) {
+        rendering.fontSize = 8
+        rendering.fontBold = false
+        rendering.foreground = USER_SCHEDULE_COLOR.color
+    }   
+    
+    def setUserScheduleStyle(KEdge edge) {
+        edge.line => [
+            foreground = USER_SCHEDULE_COLOR.color
+        ]
+    }
+    
     
     /** 
      * Returns the polyline rending of the edge.

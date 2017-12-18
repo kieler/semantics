@@ -317,12 +317,20 @@ class ExecutableSimulator extends DefaultSimulator {
                                     + "is not responding with a JSON object.")
             }
             
+            // Check that a line was received
+            if(line === null) {
+                throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
+                                    + "is not responding.")
+            }
+            
             // If the program did a print, the message will stand in front of the {
             if (line !== null && !line.startsWith("{") && line.contains("{")) {
                 val pos = line.indexOf("{")
-                val printed = line.substring(0, pos)
-                printFromSimulation(printed)
-                line = line.substring(pos, line.length)
+                if(pos > -1) {
+                    val printed = line.substring(0, pos)
+                    printFromSimulation(printed)
+                    line = line.substring(pos, line.length)    
+                }
             }
             // Delegate non-JSON text to the Prom Console so the user can see it
             isJSON = line.startsWith("{") && line.endsWith("}") 

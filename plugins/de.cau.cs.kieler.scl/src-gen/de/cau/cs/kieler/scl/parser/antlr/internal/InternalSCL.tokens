@@ -54,6 +54,7 @@
 'extern'=50
 'float'=105
 'fork'=29
+'global'=51
 'goto'=21
 'host'=107
 'if'=23
@@ -71,7 +72,6 @@
 'pause'=19
 'pre'=97
 'print'=56
-'prio'=51
 'pure'=101
 'random'=72
 'randomize'=57
@@ -96,9 +96,9 @@ RULE_ANY_OTHER=16
 RULE_BOOLEAN=9
 RULE_COMMENT_ANNOTATION=10
 RULE_FLOAT=8
-RULE_HOSTCODE=7
+RULE_HOSTCODE=6
 RULE_ID=4
-RULE_INT=6
+RULE_INT=7
 RULE_ML_COMMENT=12
 RULE_NUMBER=14
 RULE_SL_COMMENT=13

@@ -865,6 +865,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
+        scopeEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
         scopeCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
         actionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         localActionEClass.getESuperTypes().add(this.getAction());

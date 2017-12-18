@@ -34,8 +34,6 @@ void receiveVariables() {
     if(root != NULL) {
 ${inputs}    
 
-    } else {
-        printf("WARNING: Did not receive JSON input\n");
     }
   
     cJSON_Delete(root);

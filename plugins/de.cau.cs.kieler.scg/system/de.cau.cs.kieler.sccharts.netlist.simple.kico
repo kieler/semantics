@@ -21,6 +21,7 @@ de.cau.cs.kieler.sccharts.processors.transformators.exitAction
 de.cau.cs.kieler.sccharts.processors.transformators.initialization
 de.cau.cs.kieler.sccharts.processors.transformators.entryAction
 de.cau.cs.kieler.sccharts.processors.transformators.connector
+de.cau.cs.kieler.sccharts.processors.transformators.userSchedule
 de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
 de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth    
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG

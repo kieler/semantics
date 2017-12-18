@@ -116,7 +116,7 @@ class SCChartsTransformationExtension {
 
     // Return the declaration of the ValuedObject which is the container of it and may contain 
     // other valued objects.
-    def public VariableDeclaration declaration(ValuedObject valuedObject) {
+    def public VariableDeclaration declaration2(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof VariableDeclaration) {
             return valuedObject.eContainer as VariableDeclaration
         }
@@ -163,53 +163,53 @@ class SCChartsTransformationExtension {
 
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
-        valuedObject.declaration.isInput
+        valuedObject.declaration2.isInput
     }
 
 // TODO: getInput/isInput?
     // Return whether the ValuedObject is an input.
     def public boolean isInput(ValuedObject valuedObject) {
-        valuedObject.declaration.isInput
+        valuedObject.declaration2.isInput
     }
 
     // Return whether the ValuedObject is an output.
     def public boolean getOutput(ValuedObject valuedObject) {
-        valuedObject.declaration.isOutput
+        valuedObject.declaration2.isOutput
     }
 
     // Return whether the ValuedObject is an output.
     def public boolean isOutput(ValuedObject valuedObject) {
-        valuedObject.declaration.isOutput
+        valuedObject.declaration2.isOutput
     }
 
     // Return whether the ValuedObject is static.
     def public boolean getStatic(ValuedObject valuedObject) {
-        valuedObject.declaration.isStatic
+        valuedObject.declaration2.isStatic
     }
 
     // Return whether the ValuedObject is static.
     def public boolean isStatic(ValuedObject valuedObject) {
-        valuedObject.declaration.isStatic
+        valuedObject.declaration2.isStatic
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean getConst(ValuedObject valuedObject) {
-        valuedObject.declaration.isConst
+        valuedObject.declaration2.isConst
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean isConst(ValuedObject valuedObject) {
-        valuedObject.declaration.isConst
+        valuedObject.declaration2.isConst
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean getExtern(ValuedObject valuedObject) {
-        valuedObject.declaration.isExtern
+        valuedObject.declaration2.isExtern
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean isExtern(ValuedObject valuedObject) {
-        valuedObject.declaration.isExtern
+        valuedObject.declaration2.isExtern
     }
 
     // Return whether the ValuedObject is an array.
@@ -219,12 +219,12 @@ class SCChartsTransformationExtension {
 
     // Return whether the ValuedObject is a signal.
     def public boolean getSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.isSignal
+        valuedObject.declaration2.isSignal
     }
 
     // Return whether the ValuedObject is a signal.
     def public boolean isSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.isSignal
+        valuedObject.declaration2.isSignal
     }
 
     // ========= ATTRIBUTE SETTER =========
@@ -501,7 +501,7 @@ class SCChartsTransformationExtension {
     // new one. 
     // Attention: The declaration of the valuedObject MUST NOT BE NULL.
     def public VariableDeclaration getUniqueDeclaration(ValuedObject valuedObject) {
-        val declaration = valuedObject.declaration
+        val declaration = valuedObject.declaration2
         if (declaration == null) {
             // ERROR CASE
         }

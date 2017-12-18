@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.processors.transformators.dependencies
 import com.google.common.collect.HashMultimap
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * ValuedObjectAccessors stores all accesses to a corresponding valued object identifier in a multi map.
@@ -27,8 +28,8 @@ class ValuedObjectAccessors {
 
     protected val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> accesses = HashMultimap.create
     
-    def addAccess(ValuedObjectIdentifier VOI, Node node, EObject schedule, int priority, ForkStack forkStack) {
-        accesses.put(VOI, new ValuedObjectAccess(node, schedule, priority, forkStack))
+    def addAccess(ValuedObjectIdentifier VOI, Node node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack) {
+        accesses.put(VOI, new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack))
     }
     
     def addAccess(ValuedObjectIdentifier VOI, ValuedObjectAccess VOA) {

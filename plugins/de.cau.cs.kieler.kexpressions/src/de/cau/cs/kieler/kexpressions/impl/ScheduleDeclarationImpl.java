@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kexpressions.impl;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.PriorityProtocol;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.SchedulePriority;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -29,8 +31,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getPriorities <em>Priorities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getGlobal <em>Global</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getPriorities <em>Priorities</em>}</li>
  * </ul>
  *
  * @generated
@@ -57,16 +59,6 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getPriorities() <em>Priorities</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getPriorities()
-     * @generated
-     * @ordered
-     */
-    protected EList<SchedulePriority> priorities;
-
-    /**
      * The default value of the '{@link #getGlobal() <em>Global</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -74,7 +66,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * @generated
      * @ordered
      */
-    protected static final SchedulePriorityType GLOBAL_EDEFAULT = SchedulePriorityType.CONFLICT;
+    protected static final PriorityProtocol GLOBAL_EDEFAULT = PriorityProtocol.CONFLICT;
 
     /**
      * The cached value of the '{@link #getGlobal() <em>Global</em>}' attribute.
@@ -84,7 +76,17 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * @generated
      * @ordered
      */
-    protected SchedulePriorityType global = GLOBAL_EDEFAULT;
+    protected PriorityProtocol global = GLOBAL_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getPriorities() <em>Priorities</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPriorities()
+     * @generated
+     * @ordered
+     */
+    protected EList<PriorityProtocol> priorities;
 
     /**
      * <!-- begin-user-doc -->
@@ -131,9 +133,9 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<SchedulePriority> getPriorities() {
+    public EList<PriorityProtocol> getPriorities() {
         if (priorities == null) {
-            priorities = new EObjectContainmentEList<SchedulePriority>(SchedulePriority.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
+            priorities = new EDataTypeUniqueEList<PriorityProtocol>(PriorityProtocol.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
         }
         return priorities;
     }
@@ -143,7 +145,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
-    public SchedulePriorityType getGlobal() {
+    public PriorityProtocol getGlobal() {
         return global;
     }
 
@@ -152,25 +154,11 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setGlobal(SchedulePriorityType newGlobal) {
-        SchedulePriorityType oldGlobal = global;
+    public void setGlobal(PriorityProtocol newGlobal) {
+        PriorityProtocol oldGlobal = global;
         global = newGlobal == null ? GLOBAL_EDEFAULT : newGlobal;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL, oldGlobal, global));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
-                return ((InternalEList<?>)getPriorities()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -183,10 +171,10 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
         switch (featureID) {
             case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
                 return getName();
-            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
-                return getPriorities();
             case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
                 return getGlobal();
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                return getPriorities();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -203,12 +191,12 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
             case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
                 setName((String)newValue);
                 return;
+            case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
+                setGlobal((PriorityProtocol)newValue);
+                return;
             case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
                 getPriorities().clear();
-                getPriorities().addAll((Collection<? extends SchedulePriority>)newValue);
-                return;
-            case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
-                setGlobal((SchedulePriorityType)newValue);
+                getPriorities().addAll((Collection<? extends PriorityProtocol>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -225,11 +213,11 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
             case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
-                getPriorities().clear();
-                return;
             case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
                 setGlobal(GLOBAL_EDEFAULT);
+                return;
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                getPriorities().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -245,10 +233,10 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
         switch (featureID) {
             case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
-                return priorities != null && !priorities.isEmpty();
             case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
                 return global != GLOBAL_EDEFAULT;
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                return priorities != null && !priorities.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -267,6 +255,8 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
         result.append(name);
         result.append(", global: ");
         result.append(global);
+        result.append(", priorities: ");
+        result.append(priorities);
         result.append(')');
         return result.toString();
     }

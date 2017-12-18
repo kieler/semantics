@@ -26,4 +26,11 @@ interface SimulationListener {
      * @param e The event
      */
     public def void update(SimulationEvent e)
+    
+    /**
+     * Returns a user readable name for this listener.
+     * This name may not contain a comma,
+     * since it can be stored with other names in a comma separated string.
+     */
+    public def String getName()
 }

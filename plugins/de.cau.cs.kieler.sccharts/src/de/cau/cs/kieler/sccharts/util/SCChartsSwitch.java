@@ -102,6 +102,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(scope);
                 if (result == null) result = caseDeclarationScope(scope);
                 if (result == null) result = caseNamedObject(scope);
+                if (result == null) result = caseSchedulable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -136,6 +137,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(state);
                 if (result == null) result = caseDeclarationScope(state);
                 if (result == null) result = caseNamedObject(state);
+                if (result == null) result = caseSchedulable(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -146,6 +148,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(region);
                 if (result == null) result = caseDeclarationScope(region);
                 if (result == null) result = caseNamedObject(region);
+                if (result == null) result = caseSchedulable(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -157,6 +160,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(controlflowRegion);
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
                 if (result == null) result = caseNamedObject(controlflowRegion);
+                if (result == null) result = caseSchedulable(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -168,6 +172,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(dataflowRegion);
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
                 if (result == null) result = caseNamedObject(dataflowRegion);
+                if (result == null) result = caseSchedulable(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

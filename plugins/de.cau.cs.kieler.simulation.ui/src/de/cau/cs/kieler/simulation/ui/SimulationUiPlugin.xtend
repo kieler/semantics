@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.simulation.ui
 
 import com.google.inject.Module
+import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.simulation.KiSimRuntimeModule
 import de.cau.cs.kieler.simulation.trace.KTraceRuntimeModule
 import de.cau.cs.kieler.simulation.ui.internal.KiSimActivator
@@ -43,6 +44,9 @@ class SimulationUiPlugin extends KiSimActivator {
         super.start(context)
         ktraceDelegate.start(context)
         plugin = this
+        
+        // Create register variables finder to communicate register variables
+        new RegisterVariablesFinder
     }
 
     /*

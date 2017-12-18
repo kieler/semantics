@@ -25,6 +25,27 @@ import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 class SimulationAdapter implements SimulationListener {
     
     /**
+     * The name of this listener.
+     */
+    private String name
+    
+    /**
+     * Constructor
+     * 
+     * @param name The name
+     */
+    new(String name) {
+        this.name = name
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getName() {
+        return name
+    }
+    
+    /**
      * Calls the corresponding methods for the given event.
      */
     override update(SimulationEvent e) {

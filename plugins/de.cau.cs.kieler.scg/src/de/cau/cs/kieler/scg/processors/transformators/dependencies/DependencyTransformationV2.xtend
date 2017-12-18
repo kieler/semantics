@@ -46,6 +46,10 @@ import static de.cau.cs.kieler.scg.processors.transformators.dependencies.Valued
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.PriorityProtocol
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -114,12 +118,12 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         val nodes = <Node> newLinkedList(entry.next.target)
         val visited = <Node> newHashSet
         
-        while(!nodes.empty && nodes.peek != null) {
+        while(!nodes.empty && nodes.peek !== null) {
             val node = nodes.pop
             switch(node) {
                 Assignment: {
                     node.processAssignment(forkStack, valuedObjectAccessors)
-                    if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next.target.addAndMark(nodes, visited)
+                    if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next?.target.addAndMark(nodes, visited)
                 }
                 Conditional: {
                     node.processConditional(forkStack, valuedObjectAccessors)
@@ -172,7 +176,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
     protected def void processAssignment(Assignment assignment, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
         val readVOIs = assignment.processExpressionReader(assignment.expression, forkStack, valuedObjectAccessors)
 
-        if (assignment.valuedObject == null) return;
+        if (assignment.valuedObject === null) return;
         
         val writeVOI = new ValuedObjectIdentifier(assignment)
         
@@ -183,12 +187,24 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                     assignment, true)
             }
         }
-        
-        var priority = GLOBAL_WRITE
-        if (readVOIs.contains(writeVOI)) priority = GLOBAL_RELATIVE_WRITE
-        if (assignment.operator != AssignOperator.ASSIGN) priority = GLOBAL_RELATIVE_WRITE
-        val writeAccess = new ValuedObjectAccess(assignment, GLOBAL_SCHEDULE, priority, forkStack)
-        valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+
+        for(sched : newLinkedList(GLOBAL_SCHEDULE) + assignment.schedule) {
+            var schedule = GLOBAL_SCHEDULE
+            var ValuedObject scheduleObject = null       
+            var priority = GLOBAL_WRITE
+            
+            if (readVOIs.contains(writeVOI)) priority = GLOBAL_RELATIVE_WRITE
+            if (assignment.operator != AssignOperator.ASSIGN) priority = GLOBAL_RELATIVE_WRITE
+            
+            if (sched instanceof ScheduleObjectReference) {
+                schedule = sched.valuedObject.declaration as ScheduleDeclaration
+                scheduleObject = sched.valuedObject 
+                priority = sched.priority    
+            }
+            
+            val writeAccess = new ValuedObjectAccess(assignment, schedule, scheduleObject, priority, forkStack)
+            valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+        }
     }
     
     protected def void processConditional(Conditional conditional, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
@@ -200,8 +216,20 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             expression.allReferences.forEach [ readVOIs += new ValuedObjectIdentifier(it) ]
         ]
         for(readVOI : readVOIs) {
-            val readAccess = new ValuedObjectAccess(node, GLOBAL_SCHEDULE, GLOBAL_READ, forkStack) 
-            valuedObjectAccessors.addAccess(readVOI, readAccess)
+            for(sched : newLinkedList(GLOBAL_SCHEDULE) + expression.schedule) {
+                var schedule = GLOBAL_SCHEDULE
+                var ValuedObject scheduleObject = null            
+                var priority = GLOBAL_READ
+                
+                if (sched instanceof ScheduleObjectReference) {
+                    schedule = sched.valuedObject.declaration as ScheduleDeclaration
+                    scheduleObject = sched.valuedObject
+                    priority = sched.priority    
+                }
+                
+                val readAccess = new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack)
+                valuedObjectAccessors.addAccess(readVOI, readAccess)
+            } 
         }
         
         return readVOIs
@@ -229,6 +257,21 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
     }
     
     protected def void processDependencies(ValuedObjectIdentifier valuedObjectIdentifier, Set<ValuedObjectAccess> accesses) {
+        val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
+        val schedules = accesses.map[ schedule ].filter[ it !== null ].filter(ScheduleDeclaration).toSet
+        for (schedule : schedules) {
+            for (vo : schedule.valuedObjects) {
+                val scheduledAccesses = accesses.filter[ it.schedule == schedule && it.scheduleObject == vo ].toSet
+                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null)
+            }
+        }
+        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed)
+    }
+    
+    protected def Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> processDependencySet(ValuedObjectIdentifier valuedObjectIdentifier, 
+        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude
+    ) {
+        val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val accessPair = accesses.sortAccessesAccordingToPriority
         for (priority : 0..accessPair.first) {
             val prioAccesses = accessPair.second.get(priority) 
@@ -236,12 +279,19 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                 for (compPriority : priority..accessPair.first) {
                     val compAccesses = accessPair.second.get(compPriority) {
                         for (compAccess : compAccesses) {
-                            valuedObjectIdentifier.processDependency(access, compAccess)
+                            if (exclude === null || 
+                                !exclude.exists[ first.node == access.node && second.node == compAccess.node ] 
+                            ) {
+                                valuedObjectIdentifier.processDependency(access, compAccess)
+                                processed.add(new Pair<ValuedObjectAccess, ValuedObjectAccess>(access, compAccess))
+                                processed.add(new Pair<ValuedObjectAccess, ValuedObjectAccess>(compAccess, access))
+                            }
                         }
                     }
                 }
             }
         }
+        return processed
     }
     
     protected def void processDependency(ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
@@ -275,6 +325,17 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                 if (target.priority == GLOBAL_READ) return IGNORE
             } 
         } else {
+            if (source.schedule instanceof ScheduleDeclaration) {
+                val scheduleDeclaration = source.schedule.asScheduleDeclaration
+                if (source.priority == target.priority) {
+                    if (scheduleDeclaration.priorities.size > source.priority) {
+                        val classification = scheduleDeclaration.priorities.get(source.priority)
+                        if (classification == PriorityProtocol.CONFLUENT) {
+                            return IGNORE
+                        }
+                    }    
+                } 
+            }
             if (source.priority == target.priority) return WRITE_WRITE
             return WRITE_READ 
         }

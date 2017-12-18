@@ -41,7 +41,6 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.PrintCall
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
@@ -138,33 +137,34 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 code.append((assignment.expression as TextExpression).text).append("\n")
             } else if (assignment.expression instanceof PrintCall) {
                 indent(conditionalStack.size + 1)
-                code.append((assignment.expression as PrintCall).serializeHR).append(";\n")
+                code.append((assignment.expression as PrintCall).serialize).append(";\n")
             } else if (assignment.expression instanceof RandomizeCall) {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
             } else {
                 throw new NullPointerException("Assigned valued object is null")
             }
-            return
-        }
-        
-        // Add the assignment.
-        valuedObjectPrefix = struct.getVariableName + struct.separator
-        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
-        if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
-            for (asgn : assignment.splitAssignment) {
-                indent(conditionalStack.size + 1)
-                code.append(asgn.serializeHR).append(";\n")    
-            }
+            
         } else {
-            indent(conditionalStack.size + 1)
-            code.append(assignment.serializeHR).append(";\n")
-        }
-        
-        // Handle pre variable if necessary.
-        if (assignment.expression !== null && assignment.expression instanceof OperatorExpression &&
-            (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
-            (assignment.expression as OperatorExpression).addPreVariable(serializer)                    
+            
+            // Add the assignment.
+            valuedObjectPrefix = struct.getVariableName + struct.separator
+            prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+            if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
+                for (asgn : assignment.splitAssignment) {
+                    indent(conditionalStack.size + 1)
+                    code.append(asgn.serializeHR).append(";\n")    
+                }
+            } else {
+                indent(conditionalStack.size + 1)
+                code.append(assignment.serializeHR).append(";\n")
+            }
+            
+            // Handle pre variable if necessary.
+            if (assignment.expression !== null && assignment.expression instanceof OperatorExpression &&
+                (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
+                (assignment.expression as OperatorExpression).addPreVariable(serializer)                    
+            }
         }
         
         // If a new statement follows, add it to the node list.

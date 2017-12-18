@@ -62,7 +62,7 @@ class SclAnalyzer extends DeclarationAnalyzer {
     /**
      * {@inheritDoc}
      */
-    override protected getDefaultCompileChain() {
+    override getDefaultCompileChain() {
         return "de.cau.cs.kieler.scl.processors.transformators.scl2scg, \n"
              // SCG transformations
              + "de.cau.cs.kieler.scg.processors.transformators.dependency, \n"

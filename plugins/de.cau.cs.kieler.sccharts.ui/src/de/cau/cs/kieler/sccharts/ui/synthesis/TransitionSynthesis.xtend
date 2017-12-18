@@ -14,25 +14,25 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.labels.TransitionLabelSerializer
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
-
-import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
-import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -52,7 +52,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension TransitionLabelSerializer
     @Inject extension TransitionStyles
     @Inject extension ColorStore
     
@@ -87,6 +87,24 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             edge.setProbabilityStyle
         }
 
+        // User schedules
+        val userSchedule = if (transition.trigger !== null) (transition.trigger.schedule + transition.effects.map[ schedule ].flatten).toSet
+            else (transition.effects.map[ schedule ].flatten).toSet
+        if (userSchedule.size > 0) {
+            val sLabel = new StringBuilder
+            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            for (s : userSchedule) {
+                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
+                if (!exists.contains(existPair)) {
+                    if (s !== userSchedule.head) sLabel.append(", ")
+                    sLabel.append(s.valuedObject.name + " " + s.priority)
+                    exists.add(existPair)
+                }
+            }
+            edge.addTailLabel(sLabel.toString).associateWith(transition)
+            edge.setUserScheduleStyle
+        }
+        
         switch (transition.history) {
             case SHALLOW: edge.addShallowHistoryDecorator
             case DEEP: edge.addDeepHistoryDecorator
@@ -111,25 +129,12 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     COMMENT_BACKGROUND_GRADIENT_2.color)
             ]
         }     
-
+        
         //Configure selection style
         edge.setSelectionStyle
 
         // Add Label
-        val label = new StringBuilder();
-        if (transition.label.nullOrEmpty || !SHOW_USER_LABELS.booleanValue) {
-            label.append(transition.serializeHR);
-        } else {
-            label.append(transition.label);
-        }
-        if (transition.triggerProbability > 0) {
-            if (label.length > 0) label.append(", ")
-            label.append("Pr=" + transition.triggerProbability)
-        }
-        if (transition.sourceState.outgoingTransitions.size > 1) {
-            label.insert(0, ": ");
-            label.insert(0, transition.sourceState.outgoingTransitions.indexOf(transition) + 1);
-        }
+        val label = transition.serializeLabel(!SHOW_USER_LABELS.booleanValue)
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }
