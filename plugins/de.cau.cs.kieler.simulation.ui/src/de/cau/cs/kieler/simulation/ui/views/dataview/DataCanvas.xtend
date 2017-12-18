@@ -32,7 +32,8 @@ import de.cau.cs.kieler.simulation.core.VariableType
 
 /**
  * @author ssm
- *
+ * @kieler.design 2017-12-04 proposed
+ * @kieler.rating 2017-12-04 proposed yellow  
  */
 class DataCanvas extends Canvas {
     
@@ -52,7 +53,8 @@ class DataCanvas extends Canvas {
     protected val variableTextMap = <Variable, Label> newLinkedHashMap
     protected val textColorList = #[Display.getCurrent.getSystemColor(SWT.COLOR_RED),
                                     Display.getCurrent.getSystemColor(SWT.COLOR_BLUE),
-                                    Display.getCurrent.getSystemColor(SWT.COLOR_GREEN)
+                                    Display.getCurrent.getSystemColor(SWT.COLOR_GREEN),
+                                    Display.getCurrent.getSystemColor(SWT.COLOR_MAGENTA) 
                                    ]
     
     new(Composite parent, int style, DataView dataView, DataObserver observer) {
@@ -88,7 +90,7 @@ class DataCanvas extends Canvas {
         addPaintListener(new PaintListener() {
             
             override paintControl(PaintEvent e) {
-                drawCoordinateSystem(e.gc)
+                drawCoordinateSystem(e.gc, 0)
                 drawValues(e.gc)
             }
             
@@ -106,7 +108,7 @@ class DataCanvas extends Canvas {
         variableTextMap.put(variable, text)    
     }
   
-    def drawCoordinateSystem(GC gc) {
+    def drawCoordinateSystem(GC gc, double baseline) {
         val maxHeight = getSize.y
         val maxWidth = getSize.x
         val cHeight = maxHeight - COORDINATE_BORDERSPACING * 2
@@ -115,8 +117,8 @@ class DataCanvas extends Canvas {
         gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING, 
             COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + cHeight)
             
-        gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + cHeight, 
-            COORDINATE_LEFTBORDERSPACING + cWidth, COORDINATE_BORDERSPACING + cHeight)
+        gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + cHeight + baseline as int, 
+            COORDINATE_LEFTBORDERSPACING + cWidth, COORDINATE_BORDERSPACING + cHeight + baseline as int)
             
         val font = new Font(display, "Arial", 9, SWT.NONE);
         gc.setFont(font)            
@@ -143,39 +145,50 @@ class DataCanvas extends Canvas {
         val maxWidth = getSize.x
         val cHeight = maxHeight - COORDINATE_BORDERSPACING * 2 - COORDINATE_PADDING
         val cWidth = maxWidth - COORDINATE_LEFTBORDERSPACING - COORDINATE_BORDERSPACING
-        
-        gc.foreground = variableTextMap.get(dataObserver.originMap.get(variable)).foreground
-        
+                
         val history = variable.history
         
         var cellWidth = (cWidth as double) / (history.size + 1)
         if (cellWidth > MAX_TICKWIDTH) cellWidth = MAX_TICKWIDTH
         
+        var baseline = 0d
+        val min = dataObserver.minValue
+        val max = dataObserver.maxValue
+        val med = (-min + max) as float
+        var scale = 1.0f
+        if (min < 0) {
+            scale = min / med
+            baseline = (min / med * cHeight) + (max / med * cHeight)
+            scale = -min / med
+        }
+
+        gc.foreground = variableTextMap.get(dataObserver.originMap.get(variable)).foreground
+        
         val hIter = (history + newLinkedList(variable)).iterator.toIterable
         
         var lastX = 0.0
-        var lastY = hIter.head.morph(cHeight)
+        var lastY = hIter.head.morph(cHeight) * scale  
         gc.drawLine(COORDINATE_LEFTBORDERSPACING, 
-            (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY) as int,
+            (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int,
             (COORDINATE_LEFTBORDERSPACING + cellWidth) as int,
-            (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY) as int
+            (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int
         )
         lastX = lastX + cellWidth
         
         for (e : hIter.drop(1)) {
-            var newY = e.morph(cHeight)
+            var newY = e.morph(cHeight) * scale
             if (e.type == VariableType.BOOL && newY != lastY) {
                 gc.drawLine((COORDINATE_LEFTBORDERSPACING + lastX) as int, 
-                    (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY) as int,
+                    (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int,
                     (COORDINATE_LEFTBORDERSPACING + lastX) as int,
-                    (COORDINATE_BORDERSPACING + COORDINATE_PADDING + newY) as int
+                    (COORDINATE_BORDERSPACING + COORDINATE_PADDING + newY + baseline) as int
                 )
                 lastY = newY
             }
             gc.drawLine((COORDINATE_LEFTBORDERSPACING + lastX) as int, 
-                (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY) as int,
+                (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int,
                 (COORDINATE_LEFTBORDERSPACING + lastX + cellWidth) as int,
-                (COORDINATE_BORDERSPACING + COORDINATE_PADDING + newY) as int
+                (COORDINATE_BORDERSPACING + COORDINATE_PADDING + newY + baseline) as int
             )
             lastX = lastX + cellWidth
             lastY = newY
@@ -184,9 +197,30 @@ class DataCanvas extends Canvas {
     
     private def double morph(Variable variable, int coordHeight) {
         val value = dataObserver.getVariableValue(variable)
+        val max = if (dataObserver.maxValue > -dataObserver.minValue) dataObserver.maxValue else -dataObserver.minValue
         
-        val p = if (value == 0) 0 else value / (dataObserver.maxValue as double)
+        val p = if (value == 0) 0 else value / (max as double)
         
         return coordHeight * (1 - p)
+    }
+    
+    private def float max(float a, float b) {
+        if (a > b) a else b
+    }
+    
+    private def float calculateBaseline() {
+        val maxHeight = getSize.y
+        val cHeight = maxHeight - COORDINATE_BORDERSPACING * 2 - COORDINATE_PADDING
+        var baseline = 0f
+        val min = dataObserver.minValue
+        val max = dataObserver.maxValue
+        val med = (-min + max) as float
+        var scale = 1.0f
+        if (min < 0) {
+            scale = min / med
+            baseline = (min / med * cHeight) + (max / med * cHeight)
+            scale = -min / med
+        }
+        return baseline        
     }
 }
