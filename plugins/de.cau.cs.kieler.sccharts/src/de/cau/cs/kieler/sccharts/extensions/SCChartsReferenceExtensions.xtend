@@ -12,14 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import com.google.inject.Inject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import java.util.List
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -39,22 +34,19 @@ class SCChartsReferenceExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsSerializeHRExtensions
     
     def List<Binding> createBindings(Scope scope) {
         val bindings = <Binding> newArrayList
         val bound = <ValuedObject> newHashSet
         
-        if (scope.reference == null) return bindings
+        if (scope.reference === null) return bindings
         
         val targetState = scope.reference.scope
         val parameters = scope.reference.parameters
         
-        if (targetState == null) return bindings
+        if (targetState === null) return bindings
         
         val targetVOs = <ValuedObject> newArrayList
         for (declaration : targetState.variableDeclarations.filter[ input || output]) {
@@ -68,7 +60,7 @@ class SCChartsReferenceExtensions {
                 sourceExpression = parameter.expression
             ]
             
-            if (parameter.explicitBinding != null) {
+            if (parameter.explicitBinding !== null) {
                 val tmpPtr = targetVOs.indexOf(parameter.explicitBinding)
                 if (tmpPtr == -1) {
                     binding.addErrorMessage("Explicit binding could not be resolved! The valued object is unknown! " + 
