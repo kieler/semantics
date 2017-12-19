@@ -138,10 +138,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createScheduleDeclarationAdapter();
             }
             @Override
-            public Adapter caseSchedulePriority(SchedulePriority object) {
-                return createSchedulePriorityAdapter();
-            }
-            @Override
             public Adapter caseScheduleObjectReference(ScheduleObjectReference object) {
                 return createScheduleObjectReferenceAdapter();
             }
@@ -180,6 +176,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseSchedulable(Schedulable object) {
                 return createSchedulableAdapter();
+            }
+            @Override
+            public Adapter caseExternString(ExternString object) {
+                return createExternStringAdapter();
             }
             @Override
             public Adapter caseNamedObject(NamedObject object) {
@@ -392,20 +392,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.SchedulePriority <em>Schedule Priority</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.SchedulePriority
-     * @generated
-     */
-    public Adapter createSchedulePriorityAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference <em>Schedule Object Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -500,6 +486,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSchedulableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ExternString <em>Extern String</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ExternString
+     * @generated
+     */
+    public Adapter createExternStringAdapter() {
         return null;
     }
 

@@ -115,7 +115,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    REFERENCE(8, "REFERENCE", "reference");
+    REFERENCE(8, "REFERENCE", "reference"), /**
+     * The '<em><b>SCHEDULE</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SCHEDULE_VALUE
+     * @generated
+     * @ordered
+     */
+    SCHEDULE(9, "SCHEDULE", "SCHEDULE");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -255,6 +263,21 @@ public enum ValueType implements Enumerator {
     public static final int REFERENCE_VALUE = 8;
 
     /**
+     * The '<em><b>SCHEDULE</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>SCHEDULE</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #SCHEDULE
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int SCHEDULE_VALUE = 9;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -271,6 +294,7 @@ public enum ValueType implements Enumerator {
             DOUBLE,
             STRING,
             REFERENCE,
+            SCHEDULE,
         };
 
     /**
@@ -336,6 +360,7 @@ public enum ValueType implements Enumerator {
             case DOUBLE_VALUE: return DOUBLE;
             case STRING_VALUE: return STRING;
             case REFERENCE_VALUE: return REFERENCE;
+            case SCHEDULE_VALUE: return SCHEDULE;
         }
         return null;
     }

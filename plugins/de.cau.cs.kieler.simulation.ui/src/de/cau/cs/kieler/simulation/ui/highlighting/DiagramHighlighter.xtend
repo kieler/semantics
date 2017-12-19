@@ -17,7 +17,6 @@ import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
-import de.cau.cs.kieler.simulation.SimulationParticipant
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepState
@@ -29,7 +28,6 @@ import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
@@ -37,7 +35,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-abstract class DiagramHighlighter implements SimulationParticipant {
+abstract class DiagramHighlighter {
     
     /**
      * The elements that have been highlighted scince the last call of unhighlightDiagram.
@@ -64,12 +62,6 @@ abstract class DiagramHighlighter implements SimulationParticipant {
     protected var SimulationListener simulationListener = createSimulationListener
 
     /**
-     * Determines whether this participant is enabled or not.
-     */
-    @Accessors
-    private var boolean enabled = true
-    
-    /**
      * Constructor
      * 
      * Registers the simulation listener for this instance.
@@ -79,29 +71,17 @@ abstract class DiagramHighlighter implements SimulationParticipant {
     }
     
     /**
-     * Enables or disables this highlighter.
-     * 
-     * @param value The new enabled state
-     */
-    override setEnabled(boolean value) {
-        enabled = value
-        if(!enabled) {
-            unhighlightDiagram
-        }
-    }
-    
-    /**
      * Registers the simulation listener for this instance.
      */
     protected def void register() {
-        SimulationManager.addListener(simulationListener)
+        SimulationManager.add(simulationListener)
     }
     
     /**
      * Removes the simulation listener for this instance.
      */
     protected def void unregister() {
-        SimulationManager.removeListener(simulationListener)
+        SimulationManager.remove(simulationListener)
     }
 
     /**
@@ -139,16 +119,18 @@ abstract class DiagramHighlighter implements SimulationParticipant {
     abstract protected def boolean isSupported(Object model)
     
     /**
+     * Returns a user friendly name to describe this diagram highlighter.
+     */
+    protected def getName() {
+        return class.simpleName
+    }
+    
+    /**
      * Creates a simulation listener to update this instance with the simulation.
      */
     protected def SimulationListener createSimulationListener() {
-        val listener = new SimulationAdapter() {
-            
+        val listener = new SimulationAdapter(name) {
             override update(SimulationEvent e) {
-                // Do nothing if not enabled
-                if(!enabled) {
-                    return
-                }
                 // Update the diagram if needed
                 if(e instanceof SimulationControlEvent) { 
                     diagramModel = getDiagramModel

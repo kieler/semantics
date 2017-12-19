@@ -1427,7 +1427,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
-	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKExt.getReferenceDeclarationAccess();
@@ -1439,7 +1440,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
-	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
@@ -1449,11 +1451,21 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
 
+	//ExternString kexpressions::ExternString:
+	//	annotations+=TagAnnotation*
+	//	code=STRING;
+	public KExtGrammarAccess.ExternStringElements getExternStringAccess() {
+		return gaKExt.getExternStringAccess();
+	}
+	
+	public ParserRule getExternStringRule() {
+		return getExternStringAccess().getRule();
+	}
+
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID
-	//	global=SchedulePriorityType?
-	//	priorities+=SchedulePriority*
+	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
@@ -1466,9 +1478,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID
-	//	global=SchedulePriorityType?
-	//	priorities+=SchedulePriority*
+	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
@@ -1479,24 +1490,14 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getScheduleDeclarationWOSemicolonAccess().getRule();
 	}
 
-	//SchedulePriority kexpressions::SchedulePriority:
-	//	'prio' priority=INT type=SchedulePriorityType;
-	public KExtGrammarAccess.SchedulePriorityElements getSchedulePriorityAccess() {
-		return gaKExt.getSchedulePriorityAccess();
-	}
-	
-	public ParserRule getSchedulePriorityRule() {
-		return getSchedulePriorityAccess().getRule();
-	}
-
-	//enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
 	//	CONFLICT="conflict" | CONFLUENT="confluent";
-	public KExtGrammarAccess.SchedulePriorityTypeElements getSchedulePriorityTypeAccess() {
-		return gaKExt.getSchedulePriorityTypeAccess();
+	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
+		return gaKExt.getPriorityProtocolAccess();
 	}
 	
-	public EnumRule getSchedulePriorityTypeRule() {
-		return getSchedulePriorityTypeAccess().getRule();
+	public EnumRule getPriorityProtocolRule() {
+		return getPriorityProtocolAccess().getRule();
 	}
 
 	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
@@ -1748,7 +1749,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}

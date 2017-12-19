@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
@@ -21,11 +20,9 @@ import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -101,7 +98,7 @@ class Const extends SCChartsProcessor implements Traceable {
     }
 
     def void transformConst(Scope scope) {
-        val constObjects = scope.valuedObjects.filter[isConst && initialValue != null].toList
+        val constObjects = scope.valuedObjects.filter[isConst && initialValue !== null].toList
 
         for (const : constObjects) {
             val replacement = const.initialValue

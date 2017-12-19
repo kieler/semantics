@@ -87,8 +87,22 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         }
             
         node.setLayoutOption(KlighdProperties::EXPAND, true)
-
-        val label = if(region.label.nullOrEmpty) "" else " " + region.label
+        
+        // User schedules
+        val sLabel = new StringBuilder
+        val userSchedule = region.schedule
+        if (userSchedule.size > 0) {
+            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            for (s : userSchedule) {
+                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
+                if (!exists.contains(existPair)) {
+                    sLabel.append(", ")
+                    sLabel.append(s.valuedObject.name + " " + s.priority)
+                    exists.add(existPair)
+                }
+            }
+        }    
+        val label = if(region.label.nullOrEmpty) "" else " " + region.label + sLabel.toString
 
         // Expanded
         node.addRegionFigure => [
@@ -107,6 +121,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                     ]
                 }
             }
+            if (sLabel.length > 0) it.setUserScheduleStyle
             // Add Button after area to assure correct overlapping
             if (!CIRCUIT.booleanValue)
                 addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -115,6 +130,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
+            if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
             if (CIRCUIT.booleanValue)
                 addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);

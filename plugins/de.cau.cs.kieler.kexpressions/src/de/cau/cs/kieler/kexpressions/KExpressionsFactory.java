@@ -116,15 +116,6 @@ public interface KExpressionsFactory extends EFactory {
     ScheduleDeclaration createScheduleDeclaration();
 
     /**
-     * Returns a new object of class '<em>Schedule Priority</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Schedule Priority</em>'.
-     * @generated
-     */
-    SchedulePriority createSchedulePriority();
-
-    /**
      * Returns a new object of class '<em>Schedule Object Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -168,6 +159,15 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     RandomizeCall createRandomizeCall();
+
+    /**
+     * Returns a new object of class '<em>Extern String</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Extern String</em>'.
+     * @generated
+     */
+    ExternString createExternString();
 
     /**
      * Returns a new object of class '<em>Parameter</em>'.

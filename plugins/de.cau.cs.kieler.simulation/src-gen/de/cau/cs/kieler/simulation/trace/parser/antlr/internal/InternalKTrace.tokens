@@ -55,6 +55,7 @@
 'expression'=31
 'extern'=39
 'float'=99
+'global'=41
 'host'=101
 'input'=33
 'int'=98
@@ -67,7 +68,6 @@
 'pause'=27
 'pre'=91
 'print'=50
-'prio'=41
 'pure'=95
 'random'=66
 'randomize'=51
@@ -90,9 +90,9 @@ RULE_ANY_OTHER=16
 RULE_BOOLEAN=9
 RULE_COMMENT_ANNOTATION=10
 RULE_FLOAT=8
-RULE_HOSTCODE=7
+RULE_HOSTCODE=6
 RULE_ID=4
-RULE_INT=6
+RULE_INT=7
 RULE_ML_COMMENT=12
 RULE_NUMBER=14
 RULE_SL_COMMENT=13

@@ -72,7 +72,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             feeder.accept(tg.historyHistoryTypeEnumRuleCall_2_0_4_0, transition.history)
         }
         
-        if (transition.trigger != null) {
+        if (transition.trigger !== null) {
             if (transition.triggerDelay > 1) {
                 feeder.accept(tg.triggerDelayINTTerminalRuleCall_2_0_5_1_0, transition.triggerDelay)
             }
@@ -81,7 +81,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
                 feeder.accept(tg.triggerAtomicExpressionParserRuleCall_2_0_5_2_1_0, transition.trigger)
             } else {
-                feeder.accept(tg.triggerBoolExpressionParserRuleCall_2_0_5_2_0_0, transition.trigger)
+                feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_0_5_2_0_0, transition.trigger)
             }
         }
         for (idxEffect : transition.effects.indexed) {

@@ -72,6 +72,7 @@
 'float'=131
 'fork'=102
 'function'=28
+'global'=114
 'goto'=98
 'halt'=46
 'handle'=72
@@ -102,7 +103,6 @@
 'pre'=125
 'present'=52
 'print'=115
-'prio'=114
 'procedure'=32
 'pure'=127
 'randomize'=116
@@ -145,9 +145,9 @@ RULE_ANY_OTHER=16
 RULE_BOOLEAN=9
 RULE_COMMENT_ANNOTATION=10
 RULE_FLOAT=8
-RULE_HOSTCODE=7
+RULE_HOSTCODE=6
 RULE_ID=4
-RULE_INT=6
+RULE_INT=7
 RULE_ML_COMMENT=13
 RULE_NUMBER=14
 RULE_SL_COMMENT=12

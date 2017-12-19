@@ -153,13 +153,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__SCHEDULE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -168,7 +177,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference.
@@ -177,7 +186,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -186,7 +195,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -454,6 +463,15 @@ public interface SCChartsPackage extends EPackage {
     int STATE__NAME = SCOPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__SCHEDULE = SCOPE__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -599,6 +617,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__NAME = SCOPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__SCHEDULE = SCOPE__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -706,6 +733,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__NAME = REGION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__SCHEDULE = REGION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -824,6 +860,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__NAME = REGION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__SCHEDULE = REGION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.

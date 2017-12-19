@@ -54,6 +54,7 @@
 'extern'=96
 'float'=65
 'fork'=82
+'global'=97
 'goto'=74
 'host'=67
 'if'=76
@@ -71,7 +72,6 @@
 'pause'=73
 'pre'=17
 'print'=99
-'prio'=97
 'pure'=61
 'random'=102
 'randomize'=100

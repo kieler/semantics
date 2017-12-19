@@ -96,9 +96,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         try {
             // Build the simulation executable
             try {
-                // Setup model file
-                context.model = scc
-                context.compileModel
+                context.compileModelForSimulation(scc)
             } catch (Exception e) {
                 fail(e.message)
             }
@@ -107,7 +105,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
             // In the following, the compiled executable simulation for the model has been created successfully
 
             // Register for events
-            SimulationManager.addListener(this)
+            SimulationManager.add(this)
             
             // Iterate over trance files and run each
             for (traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]) {
@@ -140,7 +138,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
                 }
             }
         } finally {
-            SimulationManager.removeListener(this)
+            SimulationManager.remove(this)
             try {
                 project?.delete(true, true, null)
             } catch(ResourceException e) {
@@ -157,6 +155,10 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         } else if (e instanceof TraceFinishedEvent) {
             traceFinished = true
         }
+    }
+    
+    override getName() {
+        return class.simpleName
     }
 }
 				

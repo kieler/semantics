@@ -5,6 +5,8 @@
 -->
 <#macro Simulate interface indices...>
     <@input>
+      <#-- setting strings is not supported at the moment -->
+      <#if varType != "string">
         // Receive ${varName}
         variable = cJSON_GetObjectItemCaseSensitive(root, "${varName}");
         if(variable != NULL) {
@@ -27,6 +29,7 @@
             tickData.${varName} = <@value_of_item "value_item" />
             </#if>
         }
+      </#if>
     </@>
     <@output>
         // Send ${varName}
@@ -70,7 +73,11 @@ tickData.${varName}<#assign index = 0><#list indices as s>[i${index}]<#assign in
 </#macro>
 
 <#macro cJSON_value var>
+<#if varType == "string">
+<@cJSON_value_method />((tickData.${var} != NULL) ? tickData.${var} : "")<#t>
+<#else>
 <@cJSON_value_method />(tickData.${var})<#t>
+</#if>
 </#macro>
 
 <#macro value_of_item item>

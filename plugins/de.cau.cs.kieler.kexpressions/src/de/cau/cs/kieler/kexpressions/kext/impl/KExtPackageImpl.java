@@ -110,7 +110,9 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
         KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theKExtPackage.createPackageContents();
