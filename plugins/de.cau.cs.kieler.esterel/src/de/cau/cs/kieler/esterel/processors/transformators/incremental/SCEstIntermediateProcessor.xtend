@@ -59,6 +59,12 @@ import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+
+
 
 /**
  * @author mrb
@@ -79,18 +85,22 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     override getName() {
         return "SCEstIntermediateProcessor"
     }
+
+    public static var IProperty<EObject> NEXT_STATEMENT_TO_TRANSFORM = 
+        new Property<EObject>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextStatementToTransform", null)
     
     @Inject
     extension EsterelTransformationExtensions
     
     override process() {
         // TODO this ('obj') should be a statement in the environment which was transformed in the last step
-        var EObject obj
+        var EObject obj = if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
+                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) else model
         
         // the next object which needs to be transformed and the corresponding processor id
         val nextObj = obj.nextStatement 
         val processorID = nextObj.getCorrespondingProcessorID 
-        
+        environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, nextObj)
     }
     
     def getCorrespondingProcessorID(EObject obj) {
