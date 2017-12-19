@@ -7,17 +7,24 @@ import de.cau.cs.kieler.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelFunctionCall
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.FunctionRenaming
 import de.cau.cs.kieler.esterel.ModuleRenaming
 import de.cau.cs.kieler.esterel.ProcedureRenaming
 import de.cau.cs.kieler.esterel.RelationImplication
 import de.cau.cs.kieler.esterel.RelationIncompatibility
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.TaskRenaming
+import de.cau.cs.kieler.esterel.TrapExpression
 import de.cau.cs.kieler.esterel.TrapReference
 import de.cau.cs.kieler.esterel.TypeRenaming
+import de.cau.cs.kieler.esterel.VariableReference
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scoping.SCLScopeProvider
 import java.util.ArrayList
@@ -28,11 +35,6 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
-import de.cau.cs.kieler.esterel.SignalReference
-import de.cau.cs.kieler.esterel.VariableReference
-import de.cau.cs.kieler.esterel.TrapExpression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * This class contains custom scoping description.
@@ -48,6 +50,9 @@ class EsterelScopeProvider extends SCLScopeProvider {
      */
     override getScope(EObject context, EReference reference) {
         var IScope scope
+        if (context.eContainer instanceof SignalRenaming && context.eContainmentFeature.name.equals("oldName")) {
+            return context.eContainer.getScope(context.eContainmentFeature)
+        }
         switch (context) {
             SignalReference : {
                 if ( (context.eContainer instanceof OperatorExpression) && 
@@ -140,21 +145,26 @@ class EsterelScopeProvider extends SCLScopeProvider {
      * ********* Scopes for renaming
      */
     def IScope scope_SignalRenaming_oldName(SignalRenaming context, EReference ref) {
-        var scopeElems = getAllSignals(context);
-        // sensors are treated as signals
-        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS));
-        return new SimpleScope(scopeElems);
-    }
-
-    def IScope scope_SignalRenaming_newName(SignalRenaming context, EReference ref) {
-        var scopeElems = getAllSignals(context);
-        // sensors are treated as signals
-        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS));
-        return new SimpleScope(scopeElems);
+        val run = context.eContainer?.eContainer
+        if (run instanceof Run) {
+            if (run.module !== null && run.module.module !== null) {
+                var scopeElems = getAllSignals(run.module.module);
+                // sensors are treated as signals
+                scopeElems.addAll(getAllElements(run.module.module, COLLECT_SENSORS))
+                return new SimpleScope(scopeElems)
+            }
+        }
+        return IScope.NULLSCOPE
     }
 
     def IScope scope_ConstantRenaming_oldName(ConstantRenaming context, EReference ref) {
-        return new SimpleScope(getAllElements(context, COLLECT_CONSTANTS));
+        val run = context.eContainer?.eContainer
+        if (run instanceof Run) {
+            if (run.module !== null && run.module.module !== null) {
+                return new SimpleScope(getAllElements(run.module.module, COLLECT_CONSTANTS));
+            }
+        }
+        return IScope.NULLSCOPE
     }
 
     def IScope scope_ConstantRenaming_newName(ConstantRenaming context, EReference ref) {
@@ -162,7 +172,13 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_TypeRenaming_oldName(TypeRenaming context, EReference ref) {
-        return new SimpleScope(getAllElements(context, COLLECT_TYPES));
+        val run = context.eContainer?.eContainer
+        if (run instanceof Run) {
+            if (run.module !== null && run.module.module !== null) {
+                return new SimpleScope(getAllElements(run.module.module, COLLECT_TYPES));
+            }
+        }
+        return IScope.NULLSCOPE
     }
 
     def IScope scope_TypeRenaming_newName(TypeRenaming context, EReference ref) {
@@ -170,7 +186,13 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_FunctionRenaming_oldName(FunctionRenaming context, EReference ref) {
-        return new SimpleScope(getAllElements(context, COLLECT_FUNCTIONS));
+        val run = context.eContainer?.eContainer
+        if (run instanceof Run) {
+            if (run.module !== null && run.module.module !== null) {
+                return new SimpleScope(getAllElements(run.module.module, COLLECT_FUNCTIONS));
+            }
+        }
+        return IScope.NULLSCOPE
     }
 
     def IScope scope_FunctionRenaming_newName(FunctionRenaming context, EReference ref) {
@@ -178,7 +200,13 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_ProcedureRenaming_oldName(ProcedureRenaming context, EReference ref) {
-        return new SimpleScope(getAllElements(context, COLLECT_PROCEDURES));
+        val run = context.eContainer?.eContainer
+        if (run instanceof Run) {
+            if (run.module !== null && run.module.module !== null) {
+                return new SimpleScope(getAllElements(run.module.module, COLLECT_PROCEDURES));
+            }
+        }
+        return IScope.NULLSCOPE
     }
 
     def IScope scope_ProcedureRenaming_newName(ProcedureRenaming context, EReference ref) {
@@ -186,7 +214,13 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_TaskRenaming_oldName(TaskRenaming context, EReference ref) {
-        return new SimpleScope(getAllElements(context, COLLECT_TASKS));
+        val run = context.eContainer?.eContainer
+        if (run instanceof Run) {
+            if (run.module !== null && run.module.module !== null) {
+                return new SimpleScope(getAllElements(run.module.module, COLLECT_TASKS));
+            }
+        }
+        return IScope.NULLSCOPE
     }
 
     def IScope scope_TaskRenaming_newName(TaskRenaming context, EReference ref) {
@@ -194,6 +228,19 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_ModuleRenaming_module(ModuleRenaming context, EReference ref) {
+        val res = context.eResource
+        if (res !== null) {
+            val resSet = res.resourceSet
+            if (resSet !== null && resSet.resources.size > 1) {
+                val modules = <IEObjectDescription>newLinkedList
+                for (r : resSet.resources) {
+                    for (content : r.contents.filter(EsterelProgram)) {
+                        modules.addAll(getAllModules(content))
+                    }
+                }
+                return new SimpleScope(modules);
+            }
+        }
         return new SimpleScope(getAllModules(context));
     }
 
