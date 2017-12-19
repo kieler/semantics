@@ -21,6 +21,7 @@ import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
+import java.util.List
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -40,7 +41,7 @@ import static extension java.lang.Boolean.parseBoolean
 import static extension java.lang.String.format
 
 /**
- * Tests if all sensible intermediate results of the Esterel to SCL compilation fullfill basic sanity properties.
+ * Tests if all can be parsed and serialized.
  * 
  * @author als
  * @kieler.design proposed
@@ -94,30 +95,39 @@ class EsterelParserTest extends AbstractXTextModelRepositoryTest<EsterelProgram>
         val result = est.compile
         
         // Check all intermediate results
-        for (iResult : result.processorInstancesSequence) {
-            val name = "intermediate result of transformation " + iResult.id
+        var List<Resource> movedResources = null
+        val iResult = result.processorInstancesSequence.head
+        
+        assertNotNull("The model is null", iResult.model)
+        assertTrue("The model is not an Esterel program", iResult.model instanceof EsterelProgram)
+
+        try {
+            // Serialize
+            val outputStream = new ByteArrayOutputStream(25000);
+            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
+            val resourceSet = esterelInjector.getInstance(XtextResourceSet)
             
-            assertNotNull("The %s is null".format(name), iResult.model)
-            assertTrue("Intermediate result of transformation " + iResult.id + " is not a SCEst Program", iResult.model instanceof EsterelProgram)
+            // create model resource
+            val resource = resourceSet.createResource(uri) as XtextResource
+            resource.getContents().add(iResult.model as EObject)
+            
+            if (!modelData.resourceSetID.nullOrEmpty) {
+                // copy possibly referenced models
+                movedResources = est.eResource.resourceSet.resources.filter[it !== est.eResource].toList
+                resourceSet.resources.addAll(movedResources)
+            }
 
-            try {
-                // Serialize
-                val outputStream = new ByteArrayOutputStream(25000);
-                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
-                val resourceSet = esterelInjector.getInstance(XtextResourceSet)
-                
-                // create model resource
-                val resource = resourceSet.createResource(uri) as XtextResource
-                resource.getContents().add(iResult.model as EObject)
-
-                // save
-                resource.save(outputStream, saveOptions)
-                
-                assertTrue("Serialized %s is empty".format(name), outputStream.size > 0)
-            } catch (AssertionError ae) {
-                throw ae
-            } catch (Exception e) {
-                throw new Exception("Error while serializing %s caused by: %s".format(name, e.message), e)
+            // save
+            resource.save(outputStream, saveOptions)
+            
+            assertTrue("Serialized result is empty", outputStream.size > 0)
+        } catch (AssertionError ae) {
+            throw ae
+        } catch (Exception e) {
+            throw new Exception("Error while serializing model, caused by: " + e.message, e)
+        } finally {
+            if (movedResources !== null) {
+                est.eResource.resourceSet.resources.addAll(movedResources)
             }
         }
     }
