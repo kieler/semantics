@@ -39,7 +39,9 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.Environment
 import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
+import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
 import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.kicool.KiCoolFactory
 
 /**
  * A compilation context is the central compilation unit. Once you prepared a context, you can
@@ -203,11 +205,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected dispatch def Environment compileEntry(ProcessorGroup processorGroup, Environment environment) {
         var Environment environmentPrime = environment
         var cancel = false
-        for (processor : processorGroup.processors) {
+        var idx = 0
+        while (idx < processorGroup.processors.size) {
+            val processor = processorGroup.processors.get(idx)
              if (!cancel) {
                  environmentPrime = processor.compileEntry(environmentPrime)
                  cancel = environmentPrime.getProperty(CANCEL_COMPILATION)
              }
+             idx++
         }
         environmentPrime
     }
@@ -322,6 +327,27 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     def ProcessorEntry getOriginalProcessorEntry(ProcessorEntry processorEntry) {
         return systemMap.get(processorEntry)
+    }
+    
+    /** 
+     * Adds a single processor entry at the end of the root processor group.
+     * Adding processor systems this was is not supported at the moment.
+     */
+    def void addProcessorEntry(ProcessorEntry processorEntry) {
+        val processorEntryPoint = system.processors
+        if (processorEntryPoint instanceof ProcessorGroup) {
+                processorEntryPoint.processors += processorEntry
+                processorEntry.populate(this)
+        } else {
+            throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
+        }
+    }
+    
+    def void addProcessorEntry(String processorId) {
+        val processorEntry = KiCoolFactory.eINSTANCE.createProcessorReference => [
+            it.id = processorId
+        ]
+        processorEntry.addProcessorEntry 
     }
     
     @Inject TracingIntegration tracingIntegrationInstance

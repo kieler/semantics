@@ -1,0 +1,7 @@
+public system de.cau.cs.kieler.kicool.identity.dynamic
+	version 1 
+	label "Dynamic Identity Transformation System"
+	input Object
+
+de.cau.cs.kieler.kicool.processors.identity	
+de.cau.cs.kieler.kicool.processors.dynamicIdentity
