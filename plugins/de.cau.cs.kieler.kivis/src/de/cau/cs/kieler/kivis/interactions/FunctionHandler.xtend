@@ -12,11 +12,14 @@
  */
 package de.cau.cs.kieler.kivis.interactions
 
+import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import java.util.List
 import java.util.Map
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 
 /**
  * Base class to provide functions that can be used in the visualization config to set variables. 
