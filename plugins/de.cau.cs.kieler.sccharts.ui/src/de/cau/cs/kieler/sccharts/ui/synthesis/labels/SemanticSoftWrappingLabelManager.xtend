@@ -32,7 +32,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
 
-    @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension TransitionLabelSerializer
 
     new() {
         Guice.createInjector().injectMembers(this)
@@ -49,51 +49,10 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
         if (transition instanceof Transition) {
             if (transition.label.isNullOrEmpty) {
                 val dummyLabel = elkLabel.copy
-                val parts = newLinkedList
-                val part = new StringBuilder
-                var effectPrefix = new StringBuffer
-
-                // Prio
-                if (transition.sourceState.outgoingTransitions.size > 1) {
-                    part.append(transition.sourceState.outgoingTransitions.indexOf(transition) + 1).append(": ")
-                }
-                // Trigger
-                if (transition.trigger != null) {
-                    if (transition.triggerDelay > 1) {
-                        part.append(transition.triggerDelay).append(" ");
-                    }
-                    part.append(transition.trigger.serializeHR);
-
-                    // Soft wrap first part
-                    dummyLabel.text = part.toString
-                    parts.add(super.doResizeLabel(dummyLabel, targetWidth).newText?:dummyLabel.text)
-                } else {
-                    effectPrefix.append(part)
-                }
-
-                // Effects
-                if (parts.empty && transition.effects.empty) {
-                    // Only priority
-                    return Result.modified(effectPrefix.toString)
-                } else {
-                    effectPrefix.append("/ ")
-                    for (effect : transition.effects) {
-                        part.length = 0 // clear part
-                        part.append(effectPrefix)
-                        part.append(effect.serializeHR)
-                        part.append(";")
-
-                        // Soft wrap first part
-                        dummyLabel.text = part.toString
-                        parts.add(super.doResizeLabel(dummyLabel, targetWidth).newText?:dummyLabel.text)
-
-                        // Convert prefix to indentation
-                        for (var i = 0; i < effectPrefix.length; i++) {
-                            effectPrefix.setCharAt(i, ' ')
-                        }
-                    }
-                }
-                return Result.modified(parts.join("\n"))
+                return Result.modified(transition.serializeMultilineLabel(false).map[
+                    dummyLabel.text = it
+                    super.doResizeLabel(dummyLabel, targetWidth).newText?:it
+                ].join("\n"))
             }
         }
         return super.doResizeLabel(elkLabel, targetWidth)

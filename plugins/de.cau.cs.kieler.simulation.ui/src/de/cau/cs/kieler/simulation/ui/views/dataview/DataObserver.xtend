@@ -53,7 +53,7 @@ class DataObserver {
         compositeParent.update        
     }
     
-    def addVariable(Variable variable) {
+    def void addVariable(Variable variable) {
         if (variable === null) return;
         variables += variable
         
@@ -85,7 +85,7 @@ class DataObserver {
             checkMinMaxValues(live)
         }
         
-        canvas.redraw
+        if (canvas !== null && !canvas.disposed) canvas.redraw
     }
     
     def double getVariableValue(Variable variable) {

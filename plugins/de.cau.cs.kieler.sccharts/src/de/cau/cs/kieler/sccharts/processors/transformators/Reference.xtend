@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -77,7 +78,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         val model = getModel
         
         for(rootState : model.rootStates.toList) {
-            val statesWithReferences = rootState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+            val statesWithReferences = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
             }
@@ -85,7 +86,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             if (dataflowProcessor !== null) {
                 // Optimize this.
                 dataflowProcessor.processState(rootState)
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
                 for (state : statesWithReferences2.toList) {
                     state.expandReferencedState(new Replacements)
                 }
@@ -97,7 +98,9 @@ class Reference extends SCChartsProcessor implements Traceable {
         
     }   
     
+    /** Expands one referenced state and keeps track of the replacement stack. */
     protected def void expandReferencedState(State stateWithReference, Replacements replacements) {
+        // Create the new state via copy. All internal references are ok. However, you must correct the bindings now.
         val newState = stateWithReference.reference.scope.copy as State => [ 
             name = stateWithReference.name 
             label = stateWithReference.label
@@ -108,12 +111,15 @@ class Reference extends SCChartsProcessor implements Traceable {
             }
         ]
         
+        // Push all declarations of the state with the reference onto the replacement stack and search for
+        // similar valued objects in the copy.  
         for (valuedObject : stateWithReference.declarations.map[ valuedObjects ].flatten) {
             replacements.push(valuedObject, newState.findValuedObjectByName(valuedObject.name).reference)
         }
         
+        // Create the binding structure. The dedicated {@code Binding} class manages the bindings.
+        // CreateBindings also reports binding errors and warnings.
         val bindings = stateWithReference.createBindings
-        
         for (binding : bindings) {
             if (binding.errors > 0) {
                 environment.errors.add("There are binding errors in a referenced state!\n" + 
@@ -125,41 +131,46 @@ class Reference extends SCChartsProcessor implements Traceable {
             }
         }       
         
+        // Correct all valued object references in the new state.
         newState.replaceValuedObjectReferencesInState(replacements)        
-        
+
+        // Add the new state to the parent region, correct all transitions, and finally remove the original 
+        // referenced state.        
         val parent = stateWithReference.eContainer as ControlflowRegion
-        
         parent.states.add(newState)
-        
         for (transition : stateWithReference.outgoingTransitions.immutableCopy) {
             transition.sourceState = newState
         }
         for (transition : stateWithReference.incomingTransitions.immutableCopy) {
             transition.targetState = newState
         }
-        
         stateWithReference.remove
         
+        // Remove the input/output declarations from the new state. They should be bound by now.
         newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
         snapshot
-        
+
+        // Transform any dataflow regions via the dataflow co-processors.        
         if (dataflowProcessor !== null) {
             // Optimize this.
             dataflowProcessor.processState(newState)
-            val statesWithReferences = newState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+            val statesWithReferences = newState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
             }
         }
     } 
     
+    /** Replace valued object reference inside the given scope. */
     protected def void replaceValuedObjectReferences(Scope scope, Replacements replacements) {
+        // Push this scopes variables onto the replacement stack.
         val valuedObjects = scope.declarations.map[ valuedObjects ].flatten.toList
         for (valuedObject : valuedObjects) {
             replacements.push(valuedObject, valuedObject.reference)
         }
         
+        // For each type, call the appropriate method.
         // TODO: Resolve name clash
         switch(scope) {
             ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)
@@ -167,35 +178,47 @@ class Reference extends SCChartsProcessor implements Traceable {
             State: scope.replaceValuedObjectReferencesInState(replacements)
         }
         
+        // Pop this scopes variables from the replacement stack.
         for (valuedObject : valuedObjects) {
             replacements.pop(valuedObject)
         }
     }
     
+    /** Replaces valued object references inside the given state. */
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
+        // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
+        // attribute of the class.
         for (action : state.actions + state.outgoingTransitions) {
             action.trigger?.replaceReferences(replacements)
             for (effect : action.effects) {
                 effect.replaceReferences(replacements)
             }
         }
-        
-        if (state.reference != null) {
+
+        // If the state is also a referenced state, process the parameters and expand this state, too.
+        // Do this with the actual replacement stack.        
+        if (state.reference !== null) {
             for (parameter : state.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
             state.expandReferencedState(replacements)
         }
         
+        // Delegate the region replacement.
         for (region : state.regions) {
             region.replaceValuedObjectReferences(replacements)
         }
     }
     
+    /** Replace valued object references inside a valued object reference. */
     protected dispatch def void replaceReferences(ValuedObjectReference valuedObjectReference, Replacements replacements) {
+        // Check if there is a replacement on the stack. 
         val newRef = replacements.peek(valuedObjectReference.valuedObject)
-        if (newRef != null) {
-            if (newRef instanceof ValuedObjectReference) { 
+        if (newRef !== null) {
+            if (newRef instanceof ValuedObjectReference) {
+                // If there is a replacement and it is a valued object reference, re-set the target of the 
+                // valued object reference.
+                // Also process the indices. It's possible the valued object reference is a reference to an array. 
                 valuedObjectReference.valuedObject = (newRef as ValuedObjectReference).valuedObject
                 for (index : valuedObjectReference.indices) {
                     index.replaceReferences(replacements)
@@ -215,19 +238,23 @@ class Reference extends SCChartsProcessor implements Traceable {
                     }
                 }
             } else if (newRef instanceof Value) {
+                // If the replacement is a literal, delegate.
                 valuedObjectReference.replaceReferenceWithLiteral(newRef)
             } else {
+                // If there is an unknown replacement, report an error.
                 environment.errors.add("A binding for the valued object reference \"" + valuedObjectReference.valuedObject.name + 
                     "\" exists, but " + 
                     "the type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
             }
         } else {
+            // Even if there is no replacement, process the indices. 
             for (index : valuedObjectReference.indices) {
                 index.replaceReferences(replacements)
             }            
         }
     }
     
+    /** Replaces a valued object reference with a literal. */
     protected def void replaceReferenceWithLiteral(ValuedObjectReference valuedObjectReference, Value value) {
         val valuedObject = valuedObjectReference.valuedObject
         if (replacedWithLiterals.contains(valuedObject)) return;
@@ -239,26 +266,32 @@ class Reference extends SCChartsProcessor implements Traceable {
         replacedWithLiterals += valuedObject
     }
     
+    /** Delegates the replacement to the sub expressions of an operator expression */
     protected dispatch def void replaceReferences(OperatorExpression operatorExpression, Replacements replacements) {
         for (subExpression : operatorExpression.subExpressions) {
             subExpression.replaceReferences(replacements)
         }
     }
     
+    /** Literals will not be replaced. */
     protected dispatch def void replaceReferences(Value value, Replacements replacements) {
         // do nothing
     }
     
+    /** Expression types that do not have dedicated dispatch methods will be ignored. */
     protected dispatch def void replaceReferences(Expression expression, Replacements replacements) {
         environment.warnings.add("The expression type \"" + expression.class.name + 
             "\" is unknown to the reference transformation. It is ignored.", expression, true)
     }
 
+    /** Replace valuzed object references in assignments. */
     protected dispatch def void replaceReferences(Assignment assignment, Replacements replacements) {
+        // Delegate the expression replacement.
         assignment.expression?.replaceReferences(replacements)
         
+        // Check if there is a replacement.
         val newRef = replacements.peek(assignment.valuedObject)
-        if (newRef != null) {
+        if (newRef !== null) {
             if (newRef instanceof ValuedObjectReference) { 
                 assignment.valuedObject = newRef.valuedObject
                 if (assignment.indices.empty && !newRef.indices.empty) {
@@ -291,11 +324,14 @@ class Reference extends SCChartsProcessor implements Traceable {
         }
     }
     
+    /** Replace valued object references in emissions. */
     protected dispatch def void replaceReferences(Emission emission, Replacements replacements) {
+        // Delegate value processing.
         emission.newValue?.replaceReferences(replacements)
         
+        // Check if there is a replacement.
         val newRef = replacements.peek(emission.valuedObject)
-        if (newRef != null) {
+        if (newRef !== null) {
             if (newRef instanceof ValuedObjectReference) { 
                 emission.valuedObject = (newRef as ValuedObjectReference).valuedObject
             } else {
@@ -306,6 +342,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         }        
     }
     
+    /** Delegate parameter expression and explicit bindings. */
     protected dispatch def void replaceReferences(Parameter parameter, Replacements replacements) {
         parameter.expression.replaceReferences(replacements)
         for(index : parameter.explicitBindingIndices) {
@@ -313,7 +350,14 @@ class Reference extends SCChartsProcessor implements Traceable {
         }
     }
     
-
+    /** Replace parameters of reference calls if necessary. */
+    protected dispatch def void replaceReferences(ReferenceCall referenceCall, Replacements replacements) {
+        for (parameter : referenceCall.parameters) {
+            parameter.replaceReferences(replacements)
+        }        
+    }
+    
+    /** Validate if all referenced valued object are contained in the resource.*/
     protected def boolean validate(State state) {
         var success = true
         val valuedObjects = <ValuedObject> newHashSet
