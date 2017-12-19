@@ -156,11 +156,13 @@ class ProcessorDataManager {
     }
     
     static def void resetProcessor(AbstractProcessorNotification processorNotification, KNode node) {
+        val compilationContext = processorNotification.compilationContext
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
-        val processorNode = node.findNode(processorReference.uniqueProcessorId)
+        val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        val processorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
         if (processorNode === null) {
-            System.err.println("There was an update notification for an non-existing processor (" + processorReference.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor (" + originalProcessorReference.uniqueProcessorId + 
                 "). This should not happen. I'm very sorry.")
             return
         }
@@ -193,11 +195,13 @@ class ProcessorDataManager {
     } 
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
+        val compilationContext = processorNotification.compilationContext
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
-        val processorNode = node.findNode(processorReference.uniqueProcessorId)
+        val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        val processorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
         if (processorNode === null) {
-            System.err.println("There was an update notification for an non-existing processor system (" + processorReference.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor system (" + originalProcessorReference.uniqueProcessorId + 
                 "). This should not happen. I'm sorry.")
             return
         }

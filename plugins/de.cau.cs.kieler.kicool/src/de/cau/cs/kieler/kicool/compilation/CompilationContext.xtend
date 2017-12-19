@@ -25,7 +25,6 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
-import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import java.util.Observable
@@ -40,7 +39,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.Environment
 import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
-import java.util.LinkedHashMap
+import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
  * A compilation context is the central compilation unit. Once you prepared a context, you can
@@ -56,8 +55,12 @@ import java.util.LinkedHashMap
  */
 class CompilationContext extends Observable implements IKiCoolCloneable {
 
-    /** The compilation system that will be used. */    
+    /** The compilation system that will be used and worked on. */    
     @Accessors de.cau.cs.kieler.kicool.System system
+    /** The original compilation system. Do not change this one! */
+    @Accessors de.cau.cs.kieler.kicool.System originalSystem
+    /** The mapping between original system and working copy. */
+    @Accessors Map<ProcessorEntry, ProcessorEntry> systemMap
     @Accessors(PUBLIC_GETTER) Object originalModel
     /** Maps processor references in the system to processor instances. */
     @Accessors(PUBLIC_GETTER) Map<ProcessorReference, Processor<?,?>> processorMap
@@ -71,9 +74,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors(PUBLIC_GETTER) Environment result
     
     new() {
-        processorMap = new LinkedHashMap<ProcessorReference, Processor<?,?>>()
-        processorInstancesSequence = new ArrayList<Processor<?,?>>()
-        subContexts = new LinkedHashMap<ProcessorSystem, CompilationContext>()
+        systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
+        processorMap = <ProcessorReference, Processor<?,?>> newLinkedHashMap
+        processorInstancesSequence = <Processor<?,?>> newArrayList
+        subContexts = <ProcessorSystem, CompilationContext> newLinkedHashMap
         
         // This is the default start configuration.
         startEnvironment = new Environment
@@ -316,6 +320,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         else return parentContext.getRootContext
     }
     
+    def ProcessorEntry getOriginalProcessorEntry(ProcessorEntry processorEntry) {
+        return systemMap.get(processorEntry)
+    }
+    
     @Inject TracingIntegration tracingIntegrationInstance
     
     protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors() {
@@ -346,5 +354,5 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
     }
     
-        
+       
 }
