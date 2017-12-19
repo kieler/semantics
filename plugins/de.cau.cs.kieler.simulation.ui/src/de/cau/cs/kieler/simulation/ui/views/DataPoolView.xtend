@@ -235,6 +235,26 @@ class DataPoolView extends ViewPart {
                 viewer.refresh
             }
         });
+        mgr.add(new Action("Reset All User Values"){
+            override run(){
+                for(i : viewer.input as ArrayList<Object>) {
+                    if(i instanceof Variable) {
+                        val variable = i as Variable
+                        variable.userValue = null
+                    } 
+                }
+                viewer.refresh
+            }
+        });
+        mgr.add(new Action("Reset Selected User Values"){
+            override run(){
+                val variable = viewer.structuredSelection.firstElement as Variable
+                if(variable !== null) {
+                    variable.userValue = null
+                    viewer.update(variable, null)
+                } 
+            }
+        });
         mgr.add(new Separator())
         mgr.add(new Action("Enable Advanced Controls", IAction.AS_CHECK_BOX) {
             override run() {
@@ -298,36 +318,6 @@ class DataPoolView extends ViewPart {
                                          "Last executed macro tick")
         mgr.add(tickInfo)
         mgr.add(new Separator())
-        mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
-        mgr.add(new Separator())
-        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
-        mgr.add(new Separator())
-        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
-        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
-        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
-        mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
-        mgr.add(new Separator())
-        mgr.add(new Action("Reset All"){
-            override run(){
-                for(i : viewer.input as ArrayList<Object>) {
-                    if(i instanceof Variable) {
-                        val variable = i as Variable
-                        variable.userValue = null
-                    } 
-                }
-                viewer.refresh
-            }
-        });
-        mgr.add(new Action("Reset Selection"){
-            override run(){
-                val variable = viewer.structuredSelection.firstElement as Variable
-                if(variable !== null) {
-                    variable.userValue = null
-                    viewer.update(variable, null)
-                } 
-            }
-        });
-        mgr.add(new Separator())
         mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
             override run() {
                 val title = "Controls for the Data Pool View"
@@ -339,6 +329,16 @@ class DataPoolView extends ViewPart {
                 dialog.open
             }
         })
+        mgr.add(new Separator())
+        mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
+        mgr.add(new Separator())
+        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
+        mgr.add(new Separator())
+        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
+        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
+        mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
+        mgr.add(new Separator())
     }
     
     /**
