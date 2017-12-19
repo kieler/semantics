@@ -160,6 +160,11 @@ class ProcessorDataManager {
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
         val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        if (originalProcessorReference === null) {
+            System.err.println("There was an update notification for an non-existing processor system. " + 
+                "This should not happen. I'm sorry.")
+            return
+        }
         val processorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
         if (processorNode === null) {
             System.err.println("There was an update notification for an non-existing processor (" + originalProcessorReference.uniqueProcessorId + 
@@ -199,6 +204,11 @@ class ProcessorDataManager {
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
         val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        if (originalProcessorReference === null) {
+            System.err.println("There was an update notification for an non-existing processor system. " + 
+                "This should not happen. I'm sorry.")
+            return
+        }
         val processorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
         if (processorNode === null) {
             System.err.println("There was an update notification for an non-existing processor system (" + originalProcessorReference.uniqueProcessorId + 
