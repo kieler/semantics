@@ -39,6 +39,7 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
 
 /**
  * The IMB Compiler View
@@ -67,6 +68,7 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var CompileInplaceToggle compileInplaceToggle = null
     @Accessors private var CompileTracingToggle compileTracingToggle = null
     @Accessors private var DebugEnvironmentModelsToggle debugEnvironmentModelsToggle = null
+    @Accessors private var ShowPrivateSystemsToggle showPrivateSystemsToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
     
@@ -124,6 +126,7 @@ class CompilerView extends DiagramViewPart {
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
         debugEnvironmentModelsToggle = new DebugEnvironmentModelsToggle(this)
+        showPrivateSystemsToggle = new ShowPrivateSystemsToggle(this)
         visualLayoutFeedbackToggle = new VisualLayoutFeedbackToggle(this)
         
         toolBar.add(new Separator)
@@ -144,6 +147,7 @@ class CompilerView extends DiagramViewPart {
         menu.add(skinMenu)
         menu.add(developerToggle.action)
         menu.add(debugEnvironmentModelsToggle.action)
+        menu.add(showPrivateSystemsToggle.action)
         
         if (memento !== null) {
             memento.loadCheckedValue(forwardResultToggle)
@@ -154,6 +158,7 @@ class CompilerView extends DiagramViewPart {
             memento.loadCheckedValue(compileTracingToggle)
             memento.loadCheckedValues(skinSelectionActions.actions)
             memento.loadCheckedValue(debugEnvironmentModelsToggle)
+            memento.loadCheckedValue(showPrivateSystemsToggle)
         }
         
         menu.add(new Separator)
@@ -175,6 +180,7 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(compileTracingToggle)
         memento.saveCheckedValues(skinSelectionActions.actions)
         memento.saveCheckedValue(debugEnvironmentModelsToggle)
+        memento.saveCheckedValue(showPrivateSystemsToggle)
     }
     
     def void updateView() {
