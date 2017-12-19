@@ -96,6 +96,7 @@ class PromPlugin implements BundleActivator  {
     
     /**
      * Storage for preferences.
+     * This reference is set in the PromUIPlugin.
      */
     @Accessors
     private static IPreferenceStore preferenceStore

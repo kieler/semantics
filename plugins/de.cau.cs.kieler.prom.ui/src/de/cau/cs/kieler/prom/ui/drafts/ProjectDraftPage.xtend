@@ -43,6 +43,7 @@ import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
+import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.TabFolder
 import org.eclipse.swt.widgets.TabItem
@@ -108,6 +109,11 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
      * The table of resources that should be created at project setup.
      */
     private var TableViewer initialResources
+
+    private var Button createButton
+    private var Button removeButton
+    private var Button upButton
+    private var Button downButton 
 
     /**
      * {@inheritDoc}
@@ -429,35 +435,37 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
        
         // Create buttons
         val bcomp = UIUtil.createComposite(group, 1, GridData.HORIZONTAL_ALIGN_END)
-        // Create add button
-        val addButton = UIUtil.createButton(bcomp, "Add")
-        addButton.addSelectionListener(new SelectionAdapter(){
+        // Create create button
+        createButton = UIUtil.createButton(bcomp, "Copy")
+        createButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
-                val env = new ProjectDraftData("New Project Draft")
-                
-                // Get first project wizard in combo box
-                val input = associatedProjectWizard.input as ArrayList<IConfigurationElement> 
-                if(!input.isEmpty)
-                    env.associatedProjectWizardClass = input.get(0).getAttribute("class")
+                // Clone currently selected project draft
+                if(currentData === null) {
+                    return
+                }
+                val draft = currentData.clone as ProjectDraftData 
+                draft.name = draft.name+" Copy"
+                draft.isUserCreated = true
                 
                 // Add project draft to list
                 val inputArray = (list.input as ArrayList<ProjectDraftData>)
-                inputArray.add(env)
+                inputArray.add(draft)
                 list.refresh()
-                checkConsistency()
+                list.selection = new StructuredSelection(draft)
+                checkConsistency()    
             }
         })
         // Create remove button
-        val removeButton = UIUtil.createRemoveButton(bcomp, list)
+        removeButton = UIUtil.createRemoveButton(bcomp, list)
         removeButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
                 checkConsistency()
             }
         })
         // Create up button
-        UIUtil.createUpButton(bcomp, list)
+        upButton = UIUtil.createUpButton(bcomp, list)
         // Create down button 
-        UIUtil.createDownButton(bcomp, list)
+        downButton = UIUtil.createDownButton(bcomp, list)
         
         // Add drag and drop support to change order of items
         UIUtil.addDragAndDropSupportToChangeOrder(list)
@@ -540,7 +548,7 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
      * The method is run if the 'Restore Defaults' button is clicked.
      */
     override void performDefaults() {
-        list.input = PromProjectDrafts.getAllDefaults()
+        list.input = PromProjectDrafts.getAll
         checkConsistency()
         super.performDefaults()
     }
@@ -549,10 +557,7 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
      * Loads the relevant data for this page from the preference store. 
      */
     private def void loadSettings(){
-        if(ProjectDraftData.isPreferenceStoreEmpty(store))
-            list.input = PromProjectDrafts.getAllDefaults()
-        else
-            list.input = ProjectDraftData.loadAllFromPreferenceStore(store)
+        list.input = PromProjectDrafts.all
     }
     
     /**
@@ -626,6 +631,10 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
         if (!projectWizardFound) {
             return "The project wizard "+env.associatedProjectWizardClass +" could not be found."
         }
+        
+        if(!currentData.isUserCreated) {
+            return "Only user created project drafts can be modified."
+        }
         return null
     }
     
@@ -634,8 +643,10 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
      * Disables the controls otherwise.
      */
     private def void updateEnabled(){
+        val isEnabled = (currentData !== null && currentData.isUserCreated)
         val controls = tabFolder.tabList
+        removeButton.enabled = isEnabled
         for(control : controls)
-            UIUtil.enableControls(controls, currentData != null)
+            UIUtil.enableControls(controls, isEnabled)
     }
 }

@@ -29,7 +29,7 @@ import org.eclipse.jface.preference.IPreferenceStore
  * @author aas
  *
  */
-class ProjectDraftData extends ConfigurationSerializable {
+class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
     /**
      * Key for the attribute which holds a comma separated string of project draft names.
      */
@@ -55,6 +55,11 @@ class ProjectDraftData extends ConfigurationSerializable {
      * The files and folders that should be created at project setup.
      */
     public List<FileData> initialResources = newArrayList()
+    
+    /**
+     * Flag to identify user created project drafts.
+     */
+    public Boolean isUserCreated = false
     
     /**
      * Creates a new instance of the class.
@@ -131,7 +136,10 @@ class ProjectDraftData extends ConfigurationSerializable {
      * They can be retrieved by using loadAllFromPreferenceStore(...)
      */
     public static def void saveAllToPreferenceStore(IPreferenceStore store, List<ProjectDraftData> drafts){
-        ConfigurationSerializable.saveAllToPreferenceStore(store, ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR, drafts)
+        // Only user created project drafts are saved.
+        // Project drafts that ship with the IDE don't need to be persisted, because they can be re-created.
+        val userCreatedDrafts = drafts.filter[it.isUserCreated]
+        ConfigurationSerializable.saveAllToPreferenceStore(store, ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR, userCreatedDrafts)
     }
     
     /**
@@ -140,8 +148,9 @@ class ProjectDraftData extends ConfigurationSerializable {
      * @return list with the project drafts from the preference store.
      */
     public static def List<ProjectDraftData> loadAllFromPreferenceStore(IPreferenceStore store){
-        return ConfigurationSerializable.loadAllFromPreferenceStore(store, ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR, ProjectDraftData)
+        val datas = ConfigurationSerializable.loadAllFromPreferenceStore(store, ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR, ProjectDraftData)
                 as List<ProjectDraftData>
+        return datas.filter[it.isUserCreated].toList
     }
     
     /**
@@ -211,5 +220,20 @@ class ProjectDraftData extends ConfigurationSerializable {
                                   + "Please make sure that all paths are valid.", e)
             }
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override clone() {
+        val copy = new ProjectDraftData
+        copy.name = name
+        copy.associatedProjectWizardClass = associatedProjectWizardClass
+        copy.modelFile = modelFile
+        copy.initialResources = <FileData>newArrayList
+        for(f : initialResources) {
+            copy.initialResources.add(f.clone as FileData)
+        }
+        return copy
     }
 }

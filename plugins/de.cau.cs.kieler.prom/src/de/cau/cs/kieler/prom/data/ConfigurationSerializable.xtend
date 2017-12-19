@@ -136,7 +136,7 @@ abstract class ConfigurationSerializable {
      * @param datas The list of data objects to be saved
      */
     protected static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, String identifiersKey,
-        List<? extends ConfigurationSerializable> datas) {
+        Iterable<? extends ConfigurationSerializable> datas) {
 
         if (datas != null) {
             // Create a list with the identifiers of the data objects which will be saved.
@@ -164,7 +164,7 @@ abstract class ConfigurationSerializable {
      * @param datas The list of data objects to be saved
      */
     protected static def saveAllToPreferenceStore(IPreferenceStore store, String identifiersKey,
-        List<? extends ConfigurationSerializable> datas) {
+        Iterable<? extends ConfigurationSerializable> datas) {
         
         // Save identifiers of data objects as comma separated values
         var identifierCSV = "" 
@@ -202,7 +202,7 @@ abstract class ConfigurationSerializable {
         for(f : classObject.declaredFields){
             if(!Modifier.isStatic(f.modifiers)) {
                 val storeKey = getStoreKey(f.name, prefix)
-                if (f.type ==  String) {
+                if (f.type ==  String || f.type == Boolean) {
                     val object = f.get(this)
                     if(object != null) {
                         val value = object.toString()
@@ -296,6 +296,10 @@ abstract class ConfigurationSerializable {
                     val value = store.getString(storeKey)
                     val nonNullValue = Strings.nullToEmpty(value)
                     f.set(this, nonNullValue)
+                } if (f.type == Boolean) {
+                    // Load boolean value
+                    val value = store.getBoolean(storeKey)
+                    f.set(this, value)
                 } else if(typeof(ConfigurationSerializable).isAssignableFrom(f.type)) {
                     // Load single reference to other serializable data
                     // Get identifier
