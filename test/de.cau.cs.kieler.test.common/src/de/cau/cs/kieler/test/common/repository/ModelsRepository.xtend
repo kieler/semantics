@@ -41,10 +41,8 @@ import static extension java.lang.Boolean.*
 class ModelsRepository {
     
     /* Environment Variable Keys */
-    private static val BAMBOO_WD_KEY = "bamboo_working_directory"
-    private static val BAMBOO_ADDITIONAL_REPOS_KEY = "bamboo_additional_models_repositories"
-    private static val USER_MODELS_KEY = "models_repository"
-    private static val USER_ADDITIONAL_REPOS_KEY = "additional_models_repositories"
+    private static val BAMBOO_MODELS_REPOSITORY_KEY = "bamboo_models_repository"
+    private static val MODELS_REPOSITORY_KEY = "models_repository"
     
     /** Models retrieved form repository */
     private static val List<TestModelData> models = newLinkedList
@@ -68,35 +66,27 @@ class ModelsRepository {
         ModelsRepository.repositories.clear
         
         // Find models repository
-        val bambooWD = System.getenv(BAMBOO_WD_KEY)
-        val bambooAdditionalRepositories = System.getenv(BAMBOO_ADDITIONAL_REPOS_KEY)
-        val userModelsRepository = System.getenv(USER_MODELS_KEY)
-        val userAdditionalRepositories = System.getenv(USER_ADDITIONAL_REPOS_KEY)
+        var modelsRepositoryEntry = if (System.getenv(MODELS_REPOSITORY_KEY) !== null) {
+            System.getenv(MODELS_REPOSITORY_KEY)
+        } else {
+            System.getenv(BAMBOO_MODELS_REPOSITORY_KEY)
+        }
         
-        // compose path
-        if (userModelsRepository !== null) {
-            repositories.add(Paths.get(userModelsRepository))
-            if (userAdditionalRepositories !== null) {
-                for (dir : bambooAdditionalRepositories.split(",").map[trim]) {
-                    val path = Paths.get(dir)
-                    repositories.add(path)
-                }
+        // compose paths
+        if (modelsRepositoryEntry !== null) {
+            modelsRepositoryEntry = modelsRepositoryEntry.trim
+            val paths = if (modelsRepositoryEntry.startsWith("[") && modelsRepositoryEntry.endsWith("]")) {
+                modelsRepositoryEntry.substring(1, modelsRepositoryEntry.length - 1).split(",").map[trim].toList
+            } else {
+                newArrayList(modelsRepositoryEntry)
             }
-        } else if (bambooWD !== null) {
-            repositories.add(Paths.get(bambooWD, "models"))
-            if (bambooAdditionalRepositories !== null) {
-                for (dir : bambooAdditionalRepositories.split(",").map[trim]) {
-                    val path = Paths.get(bambooWD, dir)
-                    val name = path.fileName.toString
-                    if (name != "models") {
-                        repositories.add(path)
-                    }
-                }
+            for (p : paths) {
+                repositories.add(Paths.get(p))
             }
         } else {
             throw new IllegalArgumentException(
                 "Cannot detect the models repository." +
-                "Please provide the environment variable \""+USER_MODELS_KEY+"\" with the path to the models repository")
+                "Please provide the environment variable \""+MODELS_REPOSITORY_KEY+"\" with the path to the models repository")
         }
     }
     
