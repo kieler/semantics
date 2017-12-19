@@ -110,7 +110,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             Emit : return EMIT
             EsterelParallel : return PARALLEL
             EveryDo : return EVERYDO
-//            Exec : return EXEC
+            Exec : return EXEC
             Function : return FUNCTION
             Halt : return HALT
             IfTest : return IFTEST
