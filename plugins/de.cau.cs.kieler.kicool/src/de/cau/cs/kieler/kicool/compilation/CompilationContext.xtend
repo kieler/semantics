@@ -42,6 +42,8 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingInt
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
 import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.KiCoolFactory
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 
 /**
  * A compilation context is the central compilation unit. Once you prepared a context, you can
@@ -74,12 +76,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors(PUBLIC_GETTER) Environment startEnvironment
     /** A reference to the target environment of the last processor to enable quick access. */
     @Accessors(PUBLIC_GETTER) Environment result
+    /** Recording of the notifications if enabled. */
+    @Accessors(PUBLIC_GETTER) List<AbstractContextNotification> notifications
     
     new() {
         systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
         processorMap = <ProcessorReference, Processor<?,?>> newLinkedHashMap
         processorInstancesSequence = <Processor<?,?>> newArrayList
         subContexts = <ProcessorSystem, CompilationContext> newLinkedHashMap
+        notifications = <AbstractContextNotification> newLinkedList
         
         // This is the default start configuration.
         startEnvironment = new Environment
@@ -308,6 +313,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     public def notify(Object arg) {
         setChanged
         notifyObservers(arg)
+        if (startEnvironment.getProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM)) {
+            notifications += arg as AbstractContextNotification
+        }
     }   
     
     override synchronized void addObserver(Observer o) {
@@ -338,6 +346,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         if (processorEntryPoint instanceof ProcessorGroup) {
                 processorEntryPoint.processors += processorEntry
                 processorEntry.populate(this)
+                notify(new CompilationChanged(this, system))
         } else {
             throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
         }

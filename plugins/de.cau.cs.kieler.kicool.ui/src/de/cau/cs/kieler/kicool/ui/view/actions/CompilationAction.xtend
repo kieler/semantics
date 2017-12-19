@@ -76,6 +76,7 @@ class CompilationAction {
         }
         if (view.debugEnvironmentModelsToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEBUG_ENVIRONMENT_MODELS, true)
+            cc.startEnvironment.setProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM, true)
         }
         
         cc.deactiveDisabledProcessors

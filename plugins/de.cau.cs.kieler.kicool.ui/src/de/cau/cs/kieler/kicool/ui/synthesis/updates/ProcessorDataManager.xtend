@@ -129,7 +129,7 @@ class ProcessorDataManager {
     
     
     static def void resetSystem(AbstractCompilationNotification compilationNotification, KNode node, CompilerView view) {
-        val allProcessors = compilationNotification.compilationContext.processorMap.keySet
+        val allProcessors = compilationNotification.compilationContext.processorMap.keySet.toList
         for(processor : allProcessors) {
             val processorNode = node.findNode(processor.uniqueProcessorId)    
             if (processorNode === null) {
@@ -160,12 +160,13 @@ class ProcessorDataManager {
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
         val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        var KNode processorNodeCandidate = null
         if (originalProcessorReference === null) {
-            System.err.println("There was an update notification for an non-existing processor system. " + 
-                "This should not happen. I'm sorry.")
-            return
+            processorNodeCandidate = node.findNode(processorReference.uniqueProcessorId)
+        } else {
+            processorNodeCandidate = node.findNode(originalProcessorReference.uniqueProcessorId) 
         }
-        val processorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
+        val processorNode = processorNodeCandidate
         if (processorNode === null) {
             System.err.println("There was an update notification for an non-existing processor (" + originalProcessorReference.uniqueProcessorId + 
                 "). This should not happen. I'm very sorry.")
@@ -204,12 +205,13 @@ class ProcessorDataManager {
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
         val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        var KNode processorNodeCandidate = null
         if (originalProcessorReference === null) {
-            System.err.println("There was an update notification for an non-existing processor system. " + 
-                "This should not happen. I'm sorry.")
-            return
+            processorNodeCandidate = node.findNode(processorReference.uniqueProcessorId)
+        } else {
+            processorNodeCandidate = node.findNode(originalProcessorReference.uniqueProcessorId) 
         }
-        val processorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
+        val processorNode = processorNodeCandidate
         if (processorNode === null) {
             System.err.println("There was an update notification for an non-existing processor system (" + originalProcessorReference.uniqueProcessorId + 
                 "). This should not happen. I'm sorry.")

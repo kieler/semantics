@@ -217,6 +217,19 @@ class CompilerView extends DiagramViewPart {
             DiagramViewManager.updateView(viewContext, model)
         }
     }    
+    
+    def void reinitializeDiagram(Object model) {
+        val properties = new KlighdSynthesisProperties
+        properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+            "de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis")
+        properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
+                ZoomConfigButtonsHandling.HIDE)
+                                
+//        updateDiagram(model, properties)
+        // Run in the actual thread.
+        DiagramViewManager.initializeView(this, model, null, properties);
+    }    
+    
 
     private def void loadCheckedValue(IMemento memento, AbstractAction action) {
         val setting = memento.getString(action.action.id)
