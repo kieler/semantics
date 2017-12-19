@@ -5,6 +5,10 @@ package de.cau.cs.kieler.kexpressions.validation
 
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 
 //import org.eclipse.xtext.validation.Check
 
@@ -15,16 +19,30 @@ import org.eclipse.xtext.validation.Check
  */
 class KExpressionsValidator extends AbstractKExpressionsValidator {
 
+    @Inject extension KExpressionsTypeExtensions
+
     public static val CONST_DECLARATION_EXPECTS_INITIALIZATION = "A const declaration must have an initialization part!";    
     
     @Check
     public def void checkConstInitialization(VariableDeclaration declaration) {
         if (declaration.isConst) {
             for(vo : declaration.valuedObjects) {
-                if (vo.initialValue == null) {
+                if (vo.initialValue === null) {
                     error(CONST_DECLARATION_EXPECTS_INITIALIZATION, vo, null, -1)
                 }
             }
         }
     }  
+    
+    @Check
+    def void checkFloatModulo(OperatorExpression operatorExpression) {
+        if (operatorExpression.operator !== OperatorType.MOD) return;
+        
+        if (operatorExpression.isFloat) {
+            warning("You are using modulo with floats. Most implemented code backend (such as C) will not support this. " 
+                + "Use dedicated hostcode functions (such as fmod) to implement the behavior.", operatorExpression, null, -1)
+        }
+    }
+    
+    
 }
