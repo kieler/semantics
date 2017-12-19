@@ -12,36 +12,42 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
+import de.cau.cs.kieler.esterel.Exec
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
  *
  */
-class ExecTransformation extends EsterelProcessor {
+class ExecTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+
+    public static val ID = "de.cau.cs.kieler.esterel.processors.exec"
+    
     override getId() {
-        return SCEstTransformation::EXEC_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::EXEC_NAME
+        return "Exec"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::EXEC_ID
-//    }
-//        
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
-
-    override EsterelProgram transform(EsterelProgram prog) {
-        return prog
+    
+    @Inject
+    extension EsterelTransformationExtensions
+    
+    override process() {
+        model.eAllContents.filter(Exec).toList.forEach[transform]
+    }
+    
+    def transform(Exec exec) {
+        // TODO
     }
     
 }
