@@ -233,7 +233,8 @@ class EsterelScopeProvider extends SCLScopeProvider {
             val resSet = res.resourceSet
             if (resSet !== null && resSet.resources.size > 1) {
                 val modules = <IEObjectDescription>newLinkedList
-                for (r : resSet.resources) {
+                modules.addAll(getAllModules(context))
+                for (r : resSet.resources.filter[it !== res]) {
                     for (content : r.contents.filter(EsterelProgram)) {
                         modules.addAll(getAllModules(content))
                     }
