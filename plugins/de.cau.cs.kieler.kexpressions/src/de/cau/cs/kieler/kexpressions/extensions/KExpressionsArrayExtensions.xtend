@@ -38,6 +38,23 @@ class KExpressionsArrayExtensions {
     }
     
     /**
+     * Returns the one dimensional size of an array given its cardinalities.
+     */
+    def Integer oneDimensionalSize(EList<Expression> cardinalities) {
+        if(cardinalities.isNullOrEmpty) {
+            return 0
+        }
+        return oneDimensionalSize(cardinalities.convert)
+    }
+    
+    /**
+     * Returns the one dimensional size of an array given its cardinalities.
+     */
+    def Integer oneDimensionalSize(List<Integer> cardinalities) {
+        cardinalities.fold(1, [a,b | a*b])
+    }
+    
+    /**
      * Converts the given list of integers to a list of expressions,
      * such that they can be set for example as indices of an assignment.
      */
@@ -50,37 +67,46 @@ class KExpressionsArrayExtensions {
     }
     
     /**
+     * Converts an expression to an integer if possible. Throws an exception otherwise.
+     */
+    def Integer convert(Expression e) {
+        if(e instanceof IntValue) {
+            return e.value
+        }
+        throw new IllegalArgumentException("The ArrayIndexIterator can only handle int values as cardinalities")
+    }
+    
+    /**
+     * Converts list of expressions to a list of integers if possible. Throws an exception otherwise.
+     */
+    def List<Integer> convert(EList<Expression> expressions) {
+        if(expressions === null) {
+            return null
+        } if(expressions.isEmpty) {
+            return #[]
+        }
+        val result = <Integer>newArrayList
+        for(e : expressions) {
+            result.add(e.convert)
+        }
+        return result
+    }
+    
+    /**
      * Calculates the array indices that can be accessed in an array of the given cardinalities.
      */
     static class ArrayIndexIterable implements Iterable<List<Integer>> {
         private val List<Integer> cardinalities
         
+        extension KExpressionsArrayExtensions kExpressionsArrayExtensions
+        
         new (EList<Expression> cardinalities) {
+            kExpressionsArrayExtensions = new KExpressionsArrayExtensions
             this.cardinalities = cardinalities.convert
         }
         
         override iterator() {
             return new ArrayIndexIterator(cardinalities)
-        }
-        
-        private def List<Integer> convert(EList<Expression> expressions) {
-            if(expressions === null) {
-                return null
-            } if(expressions.isEmpty) {
-                return #[]
-            }
-            val result = <Integer>newArrayList
-            for(e : expressions) {
-                result.add(e.convert)
-            }
-            return result
-        }
-        
-        private def Integer convert(Expression e) {
-            if(e instanceof IntValue) {
-                return e.value
-            }
-            throw new IllegalArgumentException("The ArrayIndexIterator can only handle int values as cardinalities")
         }
     }
     
@@ -93,10 +119,14 @@ class KExpressionsArrayExtensions {
         private var int oneDimSize
         private var int oneDimIndex
         
+        extension KExpressionsArrayExtensions kExpressionsArrayExtensions
+        
         new (List<Integer> cardinalities) {
+            kExpressionsArrayExtensions = new KExpressionsArrayExtensions
+            
             this.cardinalities = cardinalities
             if(!this.cardinalities.isNullOrEmpty) {
-                oneDimSize = this.cardinalities.fold(1, [a,b | a*b])
+                oneDimSize = this.cardinalities.oneDimensionalSize
                 currentIndex = newArrayList
                 for(c : this.cardinalities) {
                     currentIndex.add(0)
