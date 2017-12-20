@@ -151,7 +151,8 @@ class EsterelExtensions {
     // ---------------------------------------------------------------------
     
     def isKernel(EsterelProgram prog) {
-        return prog.eAllContents.forall[
+        return prog.modules.size == 1 &&
+        prog.eAllContents.forall[
             switch (it) {
                 Module: true
                 SignalDeclaration: true
