@@ -135,7 +135,9 @@ class Variable implements Cloneable {
         // In case of array, use type of first element.        
         var Object v = value
         if(v instanceof NDimensionalArray) {
-            v = v.elements.get(0)
+            if(!v.isEmpty) {
+                v = v.elements.get(0)    
+            }
         }
         if(v instanceof String) {
             type = VariableType.STRING
