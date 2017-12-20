@@ -190,7 +190,7 @@ class KiCoModelCompiler extends ModelCompiler {
         for(l : listeners)
             l.beforeCompilation(this)
         // Prepare systems from attribute
-        var Iterable<String> systemPathsOrIds = getCompileChain(compileChain.value)
+        var Iterable<String> systemPathsOrIds = simpleCompileChain
         // Compile the model using all given compilation systems.
         resultModel = model
         for(systemPathOrId : systemPathsOrIds) {
@@ -212,6 +212,10 @@ class KiCoModelCompiler extends ModelCompiler {
         // Notify listeners
         for(l : listeners)
             l.afterCompilation(this)
+    }
+    
+    public def List<String> getSimpleCompileChain() {
+        return getCompileChain(compileChain.value)
     }
     
     private def List<String> getCompileChain(Object value) {

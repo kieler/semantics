@@ -109,12 +109,17 @@ class ModelImporter {
      * @return the file that is represented by the resource or null if none.
      */
     public static def IFile toPlatformResource(Resource eResource) {
-        if(eResource == null) {
+        if(eResource === null) {
             return null
         }
         val eUri = eResource.URI;
-        val path = new Path(eUri.toFileString());
-        val file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
+        var IFile file
+        if(eUri.isPlatform) {
+            file = ResourcesPlugin.workspace.root.getFile(new Path(eUri.toPlatformString(true)))
+        } else if(eUri.isFile) { 
+            val path = new Path(eUri.toFileString());
+            file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
+        }
         return file
     }
 }

@@ -15,18 +15,17 @@ package de.cau.cs.kieler.prom.drafts
 
 import de.cau.cs.kieler.prom.PromPlugin
 import java.util.ArrayList
+import java.util.List
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
-import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
-import org.eclipse.jface.preference.IPreferenceStore
 
 /**
  * This class handles initialization of default project drafts.
  * 
  * @author aas
  */
-class PromProjectDrafts extends AbstractPreferenceInitializer implements IProjectDraftInitializer{
+class PromProjectDrafts implements IProjectDraftInitializer{
 
     /**
      * The extension point id of the initializers. 
@@ -34,28 +33,31 @@ class PromProjectDrafts extends AbstractPreferenceInitializer implements IProjec
     private static val INITIALIZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.projectDraftInitializer"
 
     /**
-     * Fills the preference store with default project drafts if there are none.
-     * The method is called by eclipse
-     * when the preferences page is opened for the first time this run.
+     * Fetches all default project drafts and user created project drafts.
      */
-    override void initializeDefaultPreferences() {
-        initializeDefaults()
+    public static def List<ProjectDraftData> getAll(){
+        val list = newArrayList
+        list.addAll(getDefaults)
+        list.addAll(getUserCreated)
+        return list  
     }
-
+    
     /**
-     * Fills the preference store with default project drafts.
-     * Any other drafts in the store will be lost. 
+     * Fetches all user created project drafts.
      */
-    public static def void initializeDefaults(){
-        if(ProjectDraftData.isPreferenceStoreEmpty(store)){
-            ProjectDraftData.saveAllToPreferenceStore(store, getAllDefaults())
+    private static def List<ProjectDraftData> getUserCreated() {
+        val store = PromPlugin.preferenceStore
+        if(ProjectDraftData.isPreferenceStoreEmpty(store)) {
+            return #[]
+        } else {
+            return ProjectDraftData.loadAllFromPreferenceStore(store)
         }
     }
-
+    
     /**
      * Fetches all default project drafts from all registered initializers.
      */
-    public static def getAllDefaults(){
+    private static def List<ProjectDraftData> getDefaults(){
         val datas = new ArrayList<ProjectDraftData>()
         
         // Get instances defined from extensions.
@@ -202,12 +204,4 @@ class PromProjectDrafts extends AbstractPreferenceInitializer implements IProjec
         env.associatedProjectWizardClass = "org.eclipse.cdt.arduino.ui.internal.project.NewArduinoProjectWizard"
         return env
     }
-    
-    /**
-     * Returns the preference store of the Prom plugin
-     */
-    private static def IPreferenceStore getStore(){
-        return PromPlugin.preferenceStore
-    }
-    
 }

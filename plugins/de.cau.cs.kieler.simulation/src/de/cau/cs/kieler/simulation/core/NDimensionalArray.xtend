@@ -194,6 +194,13 @@ class NDimensionalArray implements Cloneable{
     }
     
     /**
+     * Checks whether this array is empty.
+     */
+    public def boolean isEmpty() {
+        return elements.isNullOrEmpty
+    }
+    
+    /**
      * {@inheritDoc}
      */
     override toString() {

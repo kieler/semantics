@@ -34,10 +34,7 @@ Export-Package: de.cau.cs.kieler.kivis.ui.animations,
  de.cau.cs.kieler.kivis.ui.contentassist.antlr,
  de.cau.cs.kieler.kivis.ui.contentassist.antlr.internal,
  de.cau.cs.kieler.kivis.ui.quickfix,
- de.cau.cs.kieler.kivis.ui.contentassist,
- de.cau.cs.kieler.kivis.ui.quickfix,
- de.cau.cs.kieler.kivis.ui.contentassist.antlr,
- de.cau.cs.kieler.kivis.ui.contentassist.antlr.internal
+ de.cau.cs.kieler.kivis.ui.svg
 Import-Package: org.apache.log4j
 Bundle-Activator: de.cau.cs.kieler.kivis.ui.internal.KiVisActivator
 Bundle-ClassPath: .,lib/org.apache.batik.swing_1.6.0.v201011041432.jar
