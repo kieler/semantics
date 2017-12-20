@@ -266,7 +266,7 @@ abstract class DiagramHighlighter {
     
     private def void updateHistory() {
         val simMan = SimulationManager.instance
-        val maxHistoryLength = simMan.maxHistoryLength.intValue
+        val maxHistoryLength = SimulationManager.maxHistoryLength
         if(maxHistoryLength != 0) {
             val lastState = simMan.history.last
             if(lastState != null) {

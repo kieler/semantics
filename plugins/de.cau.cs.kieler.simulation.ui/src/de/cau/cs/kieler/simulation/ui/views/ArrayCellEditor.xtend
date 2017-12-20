@@ -264,21 +264,9 @@ class ArrayCellEditor extends CellEditor {
                 return ""
             }
             
-            override Image getToolTipImage(Object element) {
-                if(img != null) {
-                    img.dispose()
-                    img = null
-                }
-                if(element instanceof NDimensionalArrayElement) {
-                    val history = element.getArrayElementHistory
-                    img = createHistoryGraph(history)
-                }
-                return img
-            }
-            
             private def List<Object> getArrayElementHistory(NDimensionalArrayElement element) {
                 if(variable != null) {
-                    val history = variable.history
+                    val history = variable.getHistory(HistoryColumnLabelProvider.MAX_HISTORY_LENGTH+1, false)
                     if(!history.isNullOrEmpty) {
                         val index = element.index
                         val historyOfThisElement = history.map[(it.value as NDimensionalArray).get(index)]

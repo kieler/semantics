@@ -93,14 +93,7 @@ class SimulationManager extends Configurable {
     private static val Set<SimulationListener> disabledListeners = newHashSet
     
     private static val DISABLED_LISTENERS_ATTR = "disabledSimulationListeners"
-    
-    /**
-     * The length of the saved data pool history.
-     * If set to 0, no history will be recorded.
-     * If set to a value less than 0, the history is unbound.
-     * 
-     */
-    public val maxHistoryLength = new ConfigurableAttribute("historyLength", -1, #[Integer])
+    private static val MAX_HISTORY_LENGTH_ATTR = "maxHistoryLength"
     
     /**
      * The name of an input variable in the data pool,
@@ -777,7 +770,25 @@ class SimulationManager extends Configurable {
         }
         return result
     }
-     
+    
+    /**
+     * Returns the maximum history length.
+     * 
+     * @return the maximum history length.
+     */
+    public static def int getMaxHistoryLength() {
+        preferences.getInt(MAX_HISTORY_LENGTH_ATTR, 100)
+    }
+    
+    /**
+     * Sets the maximum history length.
+     * 
+     * @param value The new value
+     */
+    public static def void setMaxHistoryLength(int value) {
+        preferences.putInt(MAX_HISTORY_LENGTH_ATTR, value)
+    }
+    
     /**
      * Returns the preferences in which the attributes are stored.
      */

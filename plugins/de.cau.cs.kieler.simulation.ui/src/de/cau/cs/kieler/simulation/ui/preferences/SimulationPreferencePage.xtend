@@ -38,6 +38,9 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
 import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
+import org.eclipse.swt.widgets.Spinner
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import org.eclipse.swt.events.SelectionAdapter
 
 /**
  * @author aas
@@ -95,14 +98,30 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      */
     private def void createSimulationControls(Composite parent) {
         // Create the checkbox to determine if register variables should be communicated
+        var group = UIUtil.createGroup(parent, "JSON communication", 1)
         val enabled = RegisterVariablesFinder.isEnabled
-        val checkbox = UIUtil.createCheckButton(parent, "Communicate register variables", enabled)
+        val checkbox = UIUtil.createCheckButton(group, "Communicate register variables", enabled)
         checkbox.addSelectionListener(new SelectionListener() {
             override widgetDefaultSelected(SelectionEvent e) {
             }
             
             override widgetSelected(SelectionEvent e) {
                 RegisterVariablesFinder.enabled = checkbox.selection
+            }
+        })
+        
+        // Create the control to define the maximum simulation history length
+        group = UIUtil.createGroup(parent, "Simulation history", 2)
+        UIUtil.createLabel(group, "Maximum size\n(use -1 for infinite)")
+        val spinner = new Spinner(group, SWT.BORDER)
+        spinner.minimum = -1
+        spinner.increment = 1
+        spinner.pageIncrement = 1
+        spinner.selection = SimulationManager.maxHistoryLength
+        spinner.addSelectionListener(new SelectionAdapter() {
+            override widgetSelected(SelectionEvent e) {
+                val value = spinner.selection
+                SimulationManager.maxHistoryLength = value
             }
         })
     }
