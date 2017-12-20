@@ -41,6 +41,7 @@ import static extension java.lang.Boolean.*
 class ModelsRepository {
     
     /* Environment Variable Keys */
+    private static val BAMBOO_WD_KEY = "bamboo_working_directory"
     private static val BAMBOO_MODELS_REPOSITORY_KEY = "bamboo_models_repository"
     private static val MODELS_REPOSITORY_KEY = "models_repository"
     
@@ -72,6 +73,9 @@ class ModelsRepository {
             System.getenv(BAMBOO_MODELS_REPOSITORY_KEY)
         }
         
+        // bamboo wd
+        val bambooDir = System.getenv(MODELS_REPOSITORY_KEY)
+        
         // compose paths
         if (modelsRepositoryEntry !== null) {
             modelsRepositoryEntry = modelsRepositoryEntry.trim
@@ -81,7 +85,11 @@ class ModelsRepository {
                 newArrayList(modelsRepositoryEntry)
             }
             for (p : paths) {
-                repositories.add(Paths.get(p))
+                if (!bambooDir.nullOrEmpty) {
+                    repositories.add(Paths.get(bambooDir, p))
+                } else {
+                    repositories.add(Paths.get(p))
+                }
             }
         } else {
             throw new IllegalArgumentException(
