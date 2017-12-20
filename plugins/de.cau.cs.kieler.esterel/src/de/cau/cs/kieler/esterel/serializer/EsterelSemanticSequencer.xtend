@@ -12,6 +12,7 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
 import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
 
@@ -104,39 +105,102 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
         feeder.finish
     }
     
-//    /**
-//     * Contexts:
-//     *     DelayExpr returns DelayExpr
-//     *
-//     * Constraint:
-//     *     ((delay=IntValue | immediate?='immediate')? (expression=SignalReferenceExpr | expression=SignalExpression))
-//     */
-//    protected override sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
-//        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-//        
-//        val g = grammarAccess.delayExpressionAccess
-//        
-//        if (semanticObject.delay !== null) {
-//            feeder.accept(g.getDelayExpressionParserRuleCall_0_0_0, semanticObject.delay)
-//        }
-//        
-//        if (semanticObject.delay === null && semanticObject.immediate) {
-//            feeder.accept(g.immediateImmediateKeyword_0_1_0)
-//        }
-//        
-//        if (semanticObject.expression !== null) {
-//            if (semanticObject.expression instanceof TickReference) {
-//                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
-//            } else if (semanticObject.expression instanceof SignalReference) {
-//                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
-//            } else if (semanticObject.expression instanceof OperatorExpression) {
-//                feeder.accept(g.expressionSignalPreExpressionParserRuleCall_1_1_0, semanticObject.expression)
-//            } else {
-//                feeder.accept(g.expressionSignalExpressionParserRuleCall_1_2_1_0, semanticObject.expression)
-//            }
-//            
-//        }
-//        
-//        feeder.finish
-//    }
+    /**
+     * Contexts:
+     *     DelayExpression returns DelayExpression
+     *
+     * Constraint:
+     *     (
+     *         (delay=Expression (expression=SignalOrTickReferenceExpression | expression=SignalPreExpression | expression=SignalExpression)) | 
+     *         (immediate?='immediate'? (expression=SignalOrTickReferenceExpression | expression=SignalPreExpression | expression=SignalExpression))
+     *     )
+     */
+    protected override sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+        
+        val g = grammarAccess.delayExpressionAccess
+        
+        if (semanticObject.delay !== null) {
+            feeder.accept(g.getDelayExpressionParserRuleCall_0_0_0, semanticObject.delay)
+            
+            if (semanticObject.expression !== null) {
+                if (semanticObject.expression instanceof TickReference || semanticObject.expression instanceof SignalReference) {
+                    feeder.accept(g.expressionSignalOrTickReferenceExpressionParserRuleCall_0_1_0_0, semanticObject.expression)
+                } else if (semanticObject.expression instanceof OperatorExpression && (semanticObject.expression as OperatorExpression).operator == OperatorType.PRE) {
+                    feeder.accept(g.expressionSignalPreExpressionParserRuleCall_0_1_1_0, semanticObject.expression)
+                } else {
+                    feeder.accept(g.expressionSignalExpressionParserRuleCall_0_1_2_1_0, semanticObject.expression)
+                }
+            }
+        } else {
+            if (semanticObject.immediate) {
+                feeder.accept(g.immediateImmediateKeyword_1_0_0)
+            }
+            
+            if (semanticObject.expression !== null) {
+                if (semanticObject.expression instanceof TickReference || semanticObject.expression instanceof SignalReference) {
+                    feeder.accept(g.expressionSignalOrTickReferenceExpressionParserRuleCall_1_1_0_0, semanticObject.expression)
+                } else if (semanticObject.expression instanceof OperatorExpression && (semanticObject.expression as OperatorExpression).operator == OperatorType.PRE) {
+                    feeder.accept(g.expressionSignalPreExpressionParserRuleCall_1_1_1_0, semanticObject.expression)
+                } else {
+                    feeder.accept(g.expressionSignalExpressionParserRuleCall_1_1_2_1_0, semanticObject.expression)
+                }
+            }
+        }
+        
+        feeder.finish
+    }
+    
+    /**
+     * Contexts:
+     *     SignalExpression returns OperatorExpression
+     *     SignalExpression.OperatorExpression_1_0 returns OperatorExpression
+     *     SignalAndExpression returns OperatorExpression
+     *     SignalAndExpression.OperatorExpression_1_0 returns OperatorExpression
+     *     SignalNotExpression returns OperatorExpression
+     *     SignalAtomicExpression returns OperatorExpression
+     *
+     * Constraint:
+     *     (
+     *         (subExpressions+=SignalExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=SignalAndExpression)+) | 
+     *         (subExpressions+=SignalAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=SignalNotExpression)+) | 
+     *         (operator=EsterelNotOperator subExpressions+=SignalNotExpression) | 
+     *         (operator=EsterelPreOperator subExpressions+=SignalOrTickReferenceExpression)
+     *     )
+     */
+    protected override sequence_SignalAndExpression_SignalExpression_SignalNotExpression_SignalPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject));
+
+        switch (semanticObject.operator) {
+            // Multiple operands
+            case LOGICAL_AND: {
+                feeder.accept(grammarAccess.signalAndExpressionAccess.operatorExpressionSubExpressionsAction_1_0, semanticObject.subExpressions.head, 0)
+                for (exp : semanticObject.subExpressions.drop(1).indexed) {
+                    feeder.accept(grammarAccess.signalAndExpressionAccess.operatorEsterelAndOperatorEnumRuleCall_1_1_0_0, semanticObject.operator)
+                    feeder.accept(grammarAccess.signalAndExpressionAccess.subExpressionsSignalNotExpressionParserRuleCall_1_1_1_0, exp.value, exp.key + 1)
+                }
+            }
+            case LOGICAL_OR: {
+                feeder.accept(grammarAccess.signalExpressionAccess.operatorExpressionSubExpressionsAction_1_0, semanticObject.subExpressions.head, 0)
+                for (exp : semanticObject.subExpressions.drop(1).indexed) {
+                    feeder.accept(grammarAccess.signalExpressionAccess.operatorEsterelOrOperatorEnumRuleCall_1_1_0_0, semanticObject.operator)
+                    feeder.accept(grammarAccess.signalExpressionAccess.subExpressionsSignalAndExpressionParserRuleCall_1_1_1_0, exp.value, exp.key + 1)
+                }
+            }
+            // Unary OPs
+            case NOT: {
+                feeder.accept(grammarAccess.signalNotExpressionAccess.operatorEsterelNotOperatorEnumRuleCall_0_1_0,
+                    semanticObject.operator)
+                feeder.accept(grammarAccess.signalNotExpressionAccess.subExpressionsSignalNotExpressionParserRuleCall_0_2_0,
+                    semanticObject.subExpressions.head, 0)
+            }
+            case PRE: {
+                feeder.accept(grammarAccess.signalPreExpressionAccess.operatorEsterelPreOperatorEnumRuleCall_1_0,
+                    semanticObject.operator)
+                feeder.accept(grammarAccess.signalPreExpressionAccess.
+                    subExpressionsSignalOrTickReferenceExpressionParserRuleCall_3_0, semanticObject.subExpressions.head, 0)
+            }
+        }
+        feeder.finish();
+    }
 }
