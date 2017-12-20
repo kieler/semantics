@@ -25,7 +25,6 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
-import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import java.util.Observable
@@ -40,7 +39,11 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.Environment
 import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
-import java.util.LinkedHashMap
+import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
+import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.kicool.KiCoolFactory
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 
 /**
  * A compilation context is the central compilation unit. Once you prepared a context, you can
@@ -56,8 +59,12 @@ import java.util.LinkedHashMap
  */
 class CompilationContext extends Observable implements IKiCoolCloneable {
 
-    /** The compilation system that will be used. */    
+    /** The compilation system that will be used and worked on. */    
     @Accessors de.cau.cs.kieler.kicool.System system
+    /** The original compilation system. Do not change this one! */
+    @Accessors de.cau.cs.kieler.kicool.System originalSystem
+    /** The mapping between original system and working copy. */
+    @Accessors Map<ProcessorEntry, ProcessorEntry> systemMap
     @Accessors(PUBLIC_GETTER) Object originalModel
     /** Maps processor references in the system to processor instances. */
     @Accessors(PUBLIC_GETTER) Map<ProcessorReference, Processor<?,?>> processorMap
@@ -69,11 +76,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors(PUBLIC_GETTER) Environment startEnvironment
     /** A reference to the target environment of the last processor to enable quick access. */
     @Accessors(PUBLIC_GETTER) Environment result
+    /** Recording of the notifications if enabled. */
+    @Accessors(PUBLIC_GETTER) List<AbstractContextNotification> notifications
     
     new() {
-        processorMap = new LinkedHashMap<ProcessorReference, Processor<?,?>>()
-        processorInstancesSequence = new ArrayList<Processor<?,?>>()
-        subContexts = new LinkedHashMap<ProcessorSystem, CompilationContext>()
+        systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
+        processorMap = <ProcessorReference, Processor<?,?>> newLinkedHashMap
+        processorInstancesSequence = <Processor<?,?>> newArrayList
+        subContexts = <ProcessorSystem, CompilationContext> newLinkedHashMap
+        notifications = <AbstractContextNotification> newLinkedList
         
         // This is the default start configuration.
         startEnvironment = new Environment
@@ -199,11 +210,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected dispatch def Environment compileEntry(ProcessorGroup processorGroup, Environment environment) {
         var Environment environmentPrime = environment
         var cancel = false
-        for (processor : processorGroup.processors) {
+        var idx = 0
+        while (idx < processorGroup.processors.size) {
+            val processor = processorGroup.processors.get(idx)
              if (!cancel) {
                  environmentPrime = processor.compileEntry(environmentPrime)
                  cancel = environmentPrime.getProperty(CANCEL_COMPILATION)
              }
+             idx++
         }
         environmentPrime
     }
@@ -299,6 +313,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     public def notify(Object arg) {
         setChanged
         notifyObservers(arg)
+        if (startEnvironment.getProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM)) {
+            notifications += arg as AbstractContextNotification
+        }
     }   
     
     override synchronized void addObserver(Observer o) {
@@ -314,6 +331,32 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     def CompilationContext getRootContext() {
         if (parentContext === null) return this
         else return parentContext.getRootContext
+    }
+    
+    def ProcessorEntry getOriginalProcessorEntry(ProcessorEntry processorEntry) {
+        return systemMap.get(processorEntry)
+    }
+    
+    /** 
+     * Adds a single processor entry at the end of the root processor group.
+     * Adding processor systems this was is not supported at the moment.
+     */
+    def void addProcessorEntry(ProcessorEntry processorEntry) {
+        val processorEntryPoint = system.processors
+        if (processorEntryPoint instanceof ProcessorGroup) {
+                processorEntryPoint.processors += processorEntry
+                processorEntry.populate(this)
+                notify(new CompilationChanged(this, system))
+        } else {
+            throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
+        }
+    }
+    
+    def void addProcessorEntry(String processorId) {
+        val processorEntry = KiCoolFactory.eINSTANCE.createProcessorReference => [
+            it.id = processorId
+        ]
+        processorEntry.addProcessorEntry 
     }
     
     @Inject TracingIntegration tracingIntegrationInstance
@@ -346,5 +389,5 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
     }
     
-        
+       
 }

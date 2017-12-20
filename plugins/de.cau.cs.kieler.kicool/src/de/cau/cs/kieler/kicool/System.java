@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kicool.System#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getStartsets <em>Startsets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#isPublic <em>Public</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem()
@@ -189,5 +190,31 @@ public interface System extends EObject {
      * @generated
      */
     EList<KVPair> getStartsets();
+
+    /**
+     * Returns the value of the '<em><b>Public</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Public</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Public</em>' attribute.
+     * @see #setPublic(boolean)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Public()
+     * @model
+     * @generated
+     */
+    boolean isPublic();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#isPublic <em>Public</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Public</em>' attribute.
+     * @see #isPublic()
+     * @generated
+     */
+    void setPublic(boolean value);
 
 } // System

@@ -91,7 +91,9 @@ class SystemSelectionManager implements SelectionListener {
         systems.addAll(temporarySystem.values)
         systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
         
-        for(system : systems.filter[!filter || hasInput(modelClassFilter)]) {
+        for(system : systems.filter[!filter || hasInput(modelClassFilter)].
+            filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ]
+        ) {
             var name = system.label
             if (name.nullOrEmpty) name = system.id
             if (temporarySystem.containsValue(system)) name = TEMPORARY_SYSTEM_PREFIX + name

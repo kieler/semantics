@@ -31,6 +31,8 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDa
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
 
 /**
  * @author ssm
@@ -49,7 +51,7 @@ class CompilationUpdate extends KiCoolUIObserver {
         true
     }
     
-    override update(AbstractContextNotification notification) {
+    override void update(AbstractContextNotification notification) {
         
         switch notification {
             ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel, view)
@@ -78,9 +80,27 @@ class CompilationUpdate extends KiCoolUIObserver {
                     if (view.visualLayoutFeedbackToggle.checked) {
                         notification.postUpdateProcessors(view.viewContext.viewModel, view)    
                     }
-                } 
+                    
+                    notification.applyNotifications
+                }
+            CompilationChanged: {
+                notification.reinitializeSynthesis
+            } 
         }
         
     }
     
+    private def void reinitializeSynthesis(CompilationChanged compilationChanged) {
+        view.reinitializeDiagram(compilationChanged.system)
+    }
+    
+    private def void applyNotifications(CompilationFinished compilationFinished) {
+        if (!compilationFinished.compilationContext.startEnvironment.getProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM)) return;
+        for (notification : compilationFinished.compilationContext.notifications) {
+            if (notification instanceof AbstractProcessorNotification) {
+                notification.update
+            }
+        }
+        
+    }
 }

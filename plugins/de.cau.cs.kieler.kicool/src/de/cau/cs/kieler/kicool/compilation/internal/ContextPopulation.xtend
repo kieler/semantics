@@ -38,7 +38,7 @@ class ContextPopulation {
     
     static dispatch def void populate(ProcessorReference processorReference, CompilationContext cc) {
         val processorInstance = KiCoolRegistration.getProcessorInstance(processorReference.id)
-        if (processorInstance == null) {
+        if (processorInstance === null) {
             System.err.println("The context cannot find a compilation unit for the processor " + processorReference)
             return
         }
@@ -54,7 +54,7 @@ class ContextPopulation {
 
     static dispatch def void populate(IntermediateReference intermediateReference, CompilationContext cc) {
         val processorInstance = KiCoolRegistration.getProcessorInstance(intermediateReference.id)
-        if (processorInstance == null) {
+        if (processorInstance === null) {
             System.err.println("The context cannot find a compilation unit for the metric " + intermediateReference)
             return
         }
