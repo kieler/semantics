@@ -66,15 +66,15 @@ class ModelsRepository {
     private static def findRepositories() {
         ModelsRepository.repositories.clear
         
+        // bamboo wd
+        val bambooDir = System.getenv(BAMBOO_WD_KEY)
+        
         // Find models repository
         var modelsRepositoryEntry = if (System.getenv(MODELS_REPOSITORY_KEY) !== null) {
             System.getenv(MODELS_REPOSITORY_KEY)
         } else {
             System.getenv(BAMBOO_MODELS_REPOSITORY_KEY)
         }
-        
-        // bamboo wd
-        val bambooDir = System.getenv(MODELS_REPOSITORY_KEY)
         
         // compose paths
         if (modelsRepositoryEntry !== null) {
@@ -85,10 +85,10 @@ class ModelsRepository {
                 newArrayList(modelsRepositoryEntry)
             }
             for (p : paths) {
-                if (!bambooDir.nullOrEmpty) {
-                    repositories.add(Paths.get(bambooDir, p))
-                } else {
+                if (bambooDir.nullOrEmpty) {
                     repositories.add(Paths.get(p))
+                } else {
+                    repositories.add(Paths.get(bambooDir, p))
                 }
             }
         } else {
