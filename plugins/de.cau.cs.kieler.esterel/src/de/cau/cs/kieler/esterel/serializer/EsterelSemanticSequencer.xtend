@@ -740,4 +740,46 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
         }
         feeder.finish();
     }
+    
+    
+    /**
+     * Contexts:
+     *     TrapExpr returns OperatorExpression
+     *
+     * Constraint:
+     *     (
+     *         (subExpressions+=TrapExpr_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=TrapAndExpression)+) | 
+     *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=TrapNotExpression)+) | 
+     *         (operator=EsterelNotOperator subExpressions+=TrapNotExpression)
+     *     )
+     */
+    protected override sequence_TrapAndExpression_TrapExpr_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject));
+
+        switch (semanticObject.operator) {
+            // Multiple operands
+            case LOGICAL_OR: {
+                feeder.accept(grammarAccess.trapExprAccess.operatorExpressionSubExpressionsAction_1_0, semanticObject.subExpressions.head, 0)
+                for (exp : semanticObject.subExpressions.drop(1).indexed) {
+                    feeder.accept(grammarAccess.trapExprAccess.operatorEsterelOrOperatorEnumRuleCall_1_1_0_0, semanticObject.operator)
+                    feeder.accept(grammarAccess.trapExprAccess.subExpressionsTrapAndExpressionParserRuleCall_1_1_1_0, exp.value, exp.key + 1)
+                }
+            }
+            case LOGICAL_AND: {
+                feeder.accept(grammarAccess.trapAndExpressionAccess.operatorExpressionSubExpressionsAction_1_0, semanticObject.subExpressions.head, 0)
+                for (exp : semanticObject.subExpressions.drop(1).indexed) {
+                    feeder.accept(grammarAccess.trapAndExpressionAccess.operatorEsterelAndOperatorEnumRuleCall_1_1_0_0, semanticObject.operator)
+                    feeder.accept(grammarAccess.trapAndExpressionAccess.subExpressionsTrapNotExpressionParserRuleCall_1_1_1_0, exp.value, exp.key + 1)
+                }
+            }
+            // Unary OPs
+            case NOT: {
+                feeder.accept(grammarAccess.trapNotExpressionAccess.operatorEsterelNotOperatorEnumRuleCall_0_1_0,
+                    semanticObject.operator)
+                feeder.accept(grammarAccess.trapNotExpressionAccess.subExpressionsTrapNotExpressionParserRuleCall_0_2_0,
+                    semanticObject.subExpressions.head, 0)
+            }
+        }
+        feeder.finish();
+    }
 }
