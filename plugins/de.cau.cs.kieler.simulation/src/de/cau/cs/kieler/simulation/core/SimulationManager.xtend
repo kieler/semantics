@@ -64,6 +64,11 @@ class SimulationManager extends Configurable {
     public static val DEFAULT_PAUSE = 500;
     
     /**
+     * Default maxmimum history length
+     */
+    public static val DEFAULT_MAX_HISTORY_LENGTH = 100;
+    
+    /**
      * Minimum pause in milliseconds when playing the simulation
      */
     public static val MIN_PAUSE = 10;
@@ -777,7 +782,7 @@ class SimulationManager extends Configurable {
      * @return the maximum history length.
      */
     public static def int getMaxHistoryLength() {
-        preferences.getInt(MAX_HISTORY_LENGTH_ATTR, 100)
+        preferences.getInt(MAX_HISTORY_LENGTH_ATTR, DEFAULT_MAX_HISTORY_LENGTH)
     }
     
     /**

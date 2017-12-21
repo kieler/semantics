@@ -68,6 +68,11 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
     private var Text compileChainField
     
     /**
+     * The control to set the maximum history length
+     */
+    private var Spinner historyLengthControl
+    
+    /**
      * Implementation of IWorkbenchPreferencePage.
      * Saves the reference to the workbench and the used preference store.
      * 
@@ -113,14 +118,14 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         // Create the control to define the maximum simulation history length
         group = UIUtil.createGroup(parent, "Simulation history", 2)
         UIUtil.createLabel(group, "Maximum size\n(use -1 for infinite)")
-        val spinner = new Spinner(group, SWT.BORDER)
-        spinner.minimum = -1
-        spinner.increment = 1
-        spinner.pageIncrement = 1
-        spinner.selection = SimulationManager.maxHistoryLength
-        spinner.addSelectionListener(new SelectionAdapter() {
+        historyLengthControl = new Spinner(group, SWT.BORDER)
+        historyLengthControl.minimum = -1
+        historyLengthControl.increment = 1
+        historyLengthControl.pageIncrement = 1
+        historyLengthControl.selection = SimulationManager.maxHistoryLength
+        historyLengthControl.addSelectionListener(new SelectionAdapter() {
             override widgetSelected(SelectionEvent e) {
-                val value = spinner.selection
+                val value = historyLengthControl.selection
                 SimulationManager.maxHistoryLength = value
             }
         })
@@ -184,6 +189,10 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      * Restore the default values. 
      */
     override performDefaults() {
+        // Reset history length
+        SimulationManager.maxHistoryLength = SimulationManager.DEFAULT_MAX_HISTORY_LENGTH
+        historyLengthControl.selection = SimulationManager.DEFAULT_MAX_HISTORY_LENGTH
+        
         // Reset compile chain of model analyzers
         for(analyzer : ModelAnalyzer.analyzers) {
             analyzer.compileChain = analyzer.defaultCompileChain
