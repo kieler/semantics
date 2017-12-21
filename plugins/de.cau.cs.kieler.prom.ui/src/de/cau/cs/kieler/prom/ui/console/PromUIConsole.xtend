@@ -64,9 +64,11 @@ class PromUIConsole implements IConsole {
         // Write exception to console of running Eclipse
         var text = ""
         text += Strings.nullToEmpty(e.toString())
-        if(text.length > 0 )
-            text += ":"
-        text += Strings.nullToEmpty(e.message)
+        if(e.cause !== null) {
+            if(text.length > 0 )
+                text += ":"
+            text += Strings.nullToEmpty(e.cause.localizedMessage)    
+        }
         print(text)
         
         // Bring to front because an exception might require user action
