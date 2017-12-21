@@ -617,12 +617,14 @@ class DataPoolView extends ViewPart {
      * 
      * @param value The new status line text
      */
-    private def void setStatusLineText(String value) {
-        val bars = getViewSite().getActionBars();
-        if(bars !== null) {
-            val statusLineManager = bars.getStatusLineManager()
-            statusLineManager.setMessage(value);
-        }
+    public def void setStatusLineText(String value) {
+        PromUIPlugin.asyncExecInUI[
+            val bars = getViewSite().getActionBars();
+            if(bars !== null) {
+                val statusLineManager = bars.getStatusLineManager()
+                statusLineManager.setMessage(value);
+            }
+        ]
     }
     
     /**
@@ -659,9 +661,7 @@ class DataPoolView extends ViewPart {
              * @param e The event
              */
             override onErrorEvent(ErrorEvent e) {
-                PromUIPlugin.asyncExecInUI[
-                    dataPoolView.setStatusLineText(e.message)    
-                ]
+                dataPoolView.setStatusLineText(e.message)
             }
             
             /**
