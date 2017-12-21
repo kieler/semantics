@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.klighd.piccolo.viewer.PiccoloViewer
 import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.prom.PromPlugin
 
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
@@ -183,9 +184,7 @@ abstract class DiagramHighlighter {
                             }
                         }
                     } catch(Exception ex) {
-                        val newEx = new Exception("Errors occured while updating '"+name+"'", ex)
-                        newEx.printStackTrace
-                        PromConsole.print(newEx)
+                        PromUIPlugin.log("Errors occured while updating '"+name+"'", ex)
                     } finally {
                         applyDiagramBatchUpdate
                     }
