@@ -32,6 +32,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.ZoomStyle
 
 /**
  * 
@@ -147,6 +148,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         update(pool)
         
         layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
+        layoutConfig.zoomStyle(ZoomStyle.NONE)
         layoutConfig.performLayout
     }    
     
