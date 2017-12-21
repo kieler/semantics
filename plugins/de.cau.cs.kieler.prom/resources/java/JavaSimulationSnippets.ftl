@@ -55,7 +55,7 @@
 getInt<#t>
 <#elseif varType ==  "float">
 getFloat<#t>
-<#elseif varType == "bool">
+<#elseif varType == "bool" || varType == "pure">
 getBoolean<#t>
 <#elseif varType == "string">
 getString<#t>
