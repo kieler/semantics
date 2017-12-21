@@ -4,11 +4,10 @@
 package de.cau.cs.kieler.esterel;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.resource.XtextResource;
 
-import de.cau.cs.kieler.esterel.formatting.EsterelValueConverter;
 import de.cau.cs.kieler.esterel.serializer.EsterelSerializer;
+import de.cau.cs.kieler.esterel.serializer.EsterelValueConverter;
 
 /**
  * Use this class to register components to be used within the IDE.

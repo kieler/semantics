@@ -13,17 +13,13 @@
 package de.cau.cs.kieler.esterel.scest
 
 import com.google.common.base.Predicate
-import de.cau.cs.kieler.esterel.EsterelDeclaration
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Set
-import de.cau.cs.kieler.esterel.UnEmit
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.esterel.SCEstStatement
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author als
@@ -34,15 +30,15 @@ class SCEstPredicate implements Predicate<Object> {
     
     override apply(Object input) {
         if (input instanceof EsterelProgram) {
-            return input.eAllContents.filter(Statement).exists[
+            return input.eAllContents.exists[
                 switch (it) {
-                    SCEstStatement: true
+                    SCEstStatement,
+                    VariableDeclaration,
                     Label,
                     Goto,
                     Conditional,
-                    Parallel: true
-                    Module: declarations.exists[!(it instanceof EsterelDeclaration)]
-                    default: false
+                    Parallel : true
+                    default : false
                 }
             ]
         }

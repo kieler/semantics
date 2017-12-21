@@ -193,6 +193,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         scg.removeUnusedSSAVersions
         // Merges ssa version which are always used together (in OR expressions)
         scg.mergeIneffectiveSSAVersions
+        scg.removeIneffectiveSSAAssignments
         scg.snapshot
         // Removes version index is only one version exits
         scg.removeSingleSSAVersions
@@ -376,6 +377,16 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 }
             }
         }
+    }
+    
+    private def void removeIneffectiveSSAAssignments(SCGraph scg) {
+        scg.nodes
+            .filter(Assignment)
+            .filter[isSSA]
+            .filter[expression instanceof ValuedObjectReference]
+            .filter[valuedObject === (expression as ValuedObjectReference).valuedObject]
+            .toList
+            .forEach[remove]
     }
     
     private def void removePhiWritesWithoutRead(SCGraph scg) {

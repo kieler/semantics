@@ -26,45 +26,46 @@ import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Suspend
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.esterel.EsterelThread
 
 /**
  * @author mrb
  *
  */
-class InitializationTransformation extends EsterelProcessor {
+class InitializationTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.initialization"
+    
     override getId() {
-        return SCEstTransformation::INITIALIZATION_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::INITIALIZATION_NAME
+        return "Initialization"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::INITIALIZATION_ID
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
+    
+    override process() {
+        model.transform
+    }
     
     var EsterelProgram scestProgram
     
-    override EsterelProgram transform(EsterelProgram prog) {
+    def EsterelProgram transform(EsterelProgram prog) {
         scestProgram = prog
         resetLabelSuffix
         resetConstantSuffix
@@ -86,7 +87,7 @@ class InitializationTransformation extends EsterelProcessor {
     }
     
     def void transformStatements(EList<Statement> statements, int depth) {
-        if (statements != null) {
+        if (statements !== null) {
             for (var i=0; i<statements.length; i++) {
                 statements.get(i).transformStatement(depth)
             }
@@ -96,8 +97,8 @@ class InitializationTransformation extends EsterelProcessor {
     def Statement transformStatement(Statement statement, int depth) {
         if (statement instanceof EsterelParallel) {
             var parallel = statement as EsterelParallel
-            parallel.threads.forEach [ t |
-                transformStatements(t.statements, depth+1)
+            parallel.statements.forEach [ t |
+                transformStatements((t as EsterelThread).statements, depth+1)
             ]
             
         }
@@ -108,14 +109,14 @@ class InitializationTransformation extends EsterelProcessor {
         }
         else if (statement instanceof Present) {
             transformStatements((statement as Present).statements, depth+1)
-            if ((statement as Present).cases != null) {
+            if ((statement as Present).cases !== null) {
                 (statement as Present).cases.forEach[ c | transformStatements(c.statements, depth+1)]
             }
             transformStatements((statement as Present).elseStatements, depth+1)
         }
         else if (statement instanceof IfTest) {
             transformStatements((statement as IfTest).statements, depth+1)
-            if ((statement as IfTest).elseif != null) {
+            if ((statement as IfTest).elseif !== null) {
                 (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements, depth+1)]
             }
             transformStatements((statement as IfTest).elseStatements, depth+1)
@@ -139,19 +140,19 @@ class InitializationTransformation extends EsterelProcessor {
             }
             else if (statement instanceof Trap) {
                 (statement as Trap).annotations.add(createAnnotation(depth))
-                if ((statement as Trap).trapHandler != null) {
+                if ((statement as Trap).trapHandler !== null) {
                     (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, depth+1)]
                 }
             }
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements, depth+1)
-                if ((statement as Abort).cases != null) {
+                if ((statement as Abort).cases !== null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements, depth+1)]
                 }
                 (statement as Abort).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Exec) {
-                if ((statement as Exec).execCaseList != null) {
+                if ((statement as Exec).execCaseList !== null) {
                     (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements, depth+1)]
                 }
             }
@@ -160,7 +161,7 @@ class InitializationTransformation extends EsterelProcessor {
                 (statement as Do).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Conditional) {
-                if ((statement as Conditional).getElse() != null) {
+                if ((statement as Conditional).getElse() !== null) {
                     transformStatements((statement as Conditional).getElse().statements, depth+1)
                 }
             }

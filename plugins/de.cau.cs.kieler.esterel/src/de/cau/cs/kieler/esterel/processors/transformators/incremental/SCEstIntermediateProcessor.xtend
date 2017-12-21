@@ -59,6 +59,10 @@ import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+
+
 
 /**
  * @author mrb
@@ -79,18 +83,25 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     override getName() {
         return "SCEstIntermediateProcessor"
     }
+
+    public static var IProperty<EObject> NEXT_STATEMENT_TO_TRANSFORM = 
+        new Property<EObject>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
     
     @Inject
     extension EsterelTransformationExtensions
     
     override process() {
-        // TODO this should be a statement in the environment which was transformed in the last step
-        var EObject obj
-        val processorID = obj.nextStatement
+        var EObject obj = if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
+                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) else model
         
+        // the next object which needs to be transformed and the corresponding processor id
+        val nextObj = obj.nextStatement 
+        val processorID = nextObj.getCorrespondingProcessorID 
+        // TODO add processorID to processorList (see identityDynamic)
+        environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, nextObj)
     }
     
-    def activateSpecificProcessor(EObject obj) {
+    def getCorrespondingProcessorID(EObject obj) {
         switch (obj) {
             Abort : return ABORT
             Await : return AWAIT
@@ -99,7 +110,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             Emit : return EMIT
             EsterelParallel : return PARALLEL
             EveryDo : return EVERYDO
-//            Exec : return EXEC
+            Exec : return EXEC
             Function : return FUNCTION
             Halt : return HALT
             IfTest : return IFTEST
@@ -123,8 +134,18 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     def nextStatement(EObject object) {
         var obj = object
         var up = true
+        if (obj instanceof EsterelProgram) {
+            up = false
+        }
         var transform = false
         while (!transform) {
+            
+            /* 
+             * #########################################################################
+             * ###                         GO UP IN TREE                             ###
+             * #########################################################################
+             * 
+             */
             if (up) {
                 var list = obj.containingList
                 var pos = list.indexOf(obj)
@@ -384,11 +405,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent.eContainer
-                        transform = true
+                        up = true
                     }
-                }
-                else if (parent instanceof Module) {
-                    // in Run statement or in EsterelProgram
                 }
                 else if (parent instanceof StatementContainer) {
                     val statements = parent.statements
@@ -399,13 +417,29 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent
-                        transform = true
+                        if (parent instanceof ScopeStatement) {
+                            up = true // no need to transform an SCL StatementContainer
+                        }
+                        else {
+                            transform = true
+                        }
                     }
                 }
+                else if (parent instanceof EsterelProgram) {
+                    transform = true
+                }
             }
-            else { // go down, since "up = false"
+            
+            /* 
+             * #########################################################################
+             * ###                       GO DOWN IN TREE                             ###
+             * #########################################################################
+             * 
+             */
+            else { // "up = false"
                 switch (obj) {
-                    Parallel : { // do not transform the Parallel statement since it's already an scl statement
+                    Parallel : { 
+                        /* do not transform the Parallel statement since it's already an scl statement */
                         if (!obj.threads.empty) {
                             obj = obj.threads.head
                         }
@@ -413,7 +447,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             up = true
                         }
                     }
-                    ScopeStatement : { // do not transform the ScopeStatement statement since it's already an scl statement
+                    ScopeStatement : { 
+                        /* do not transform the ScopeStatement statement since it's already an scl statement */
                         if (!obj.statements.empty) {
                             obj = obj.statements.head
                         }
@@ -539,8 +574,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             obj = obj.statements.head
                         }
                         else {
-                            /* set 'obj' to the eContainer of 'obj' if it is not a statement */
                             switch (obj) {
+                                /* set 'obj' to the eContainer of 'obj' if it is not a statement
+                                 * because only statements can be transformed */
                                 ElsIf,
                                 Case,
                                 ExecCase,
@@ -550,6 +586,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             transform = true
                         }
                     }
+                    /* The following statements do not have to be transformed. 
+                     * Pause, Label, Goto, ModuleCall, Assignment, Exit */
                     Pause,
                     Label,
                     Goto,
@@ -558,10 +596,20 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     Exit: {
                         up = true
                     }
-                    /*
+                    
                     Run : {
-                        // TODO what to do with run statement
-                    } */
+                        if (obj.module?.module instanceof Module) {
+                            obj = obj.module.module
+                        }
+                    }
+                    EsterelProgram : {
+                        if (!obj.modules.empty) {
+                            obj = obj.modules.head
+                        }
+                        else {
+                            transform = true
+                        }
+                    }
                     default : {
                         /* if 'obj' is a single statement which needs to be transformed:
                            UnEmit, Set, Nothing, Halt, Emit, Sustain, ProcedureCall */ 
@@ -571,12 +619,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             }
         }
         
-        obj.activateSpecificProcessor
-        
-    }
-    
-    def boolean isLastModule(Module module) {
-        module.containingList.indexOf(module) === module.containingList.length-1
+        return obj
     }
     
     public static val ABORT = de.cau.cs.kieler.esterel.processors.transformators.incremental.AbortTransformation.ID
@@ -587,7 +630,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     public static val EMIT = de.cau.cs.kieler.esterel.processors.transformators.incremental.EmitTransformation.ID
     public static val PARALLEL = de.cau.cs.kieler.esterel.processors.transformators.incremental.EsterelParallelTransformation.ID
     public static val EVERYDO = de.cau.cs.kieler.esterel.processors.transformators.incremental.EveryDoTransformation.ID
-//    public static val EXEC = de.cau.cs.kieler.esterel.processors.transformators.incremental.ExecTransformation.ID
+    public static val EXEC = de.cau.cs.kieler.esterel.processors.transformators.incremental.ExecTransformation.ID
     public static val FUNCTION = de.cau.cs.kieler.esterel.processors.transformators.incremental.FunctionTransformation.ID
     public static val HALT = de.cau.cs.kieler.esterel.processors.transformators.incremental.HaltTransformation.ID
     public static val IFTEST = de.cau.cs.kieler.esterel.processors.transformators.incremental.IfTestTransformation.ID
@@ -606,6 +649,5 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     public static val SUSTAIN = de.cau.cs.kieler.esterel.processors.transformators.incremental.SustainTransformation.ID
     public static val TRAP = de.cau.cs.kieler.esterel.processors.transformators.incremental.TrapTransformation.ID
     public static val UNEMIT  = de.cau.cs.kieler.esterel.processors.transformators.incremental.UnEmitTransformation.ID
-    
     
 }

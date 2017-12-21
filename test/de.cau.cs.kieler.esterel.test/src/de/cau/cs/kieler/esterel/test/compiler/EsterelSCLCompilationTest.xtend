@@ -41,6 +41,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import static org.junit.Assume.*
 
 import static extension java.lang.Boolean.parseBoolean
 import static extension java.lang.String.format
@@ -85,18 +86,8 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     @Test
     @StopOnFailure
     def void testValidation(EsterelProgram est, TestModelData modelData) {
+        assumeFalse(true); // Do nothing !!
         
-        // Validate input model
-        val validator = esterelInjector.getInstance(IResourceValidator)
-        var validatorResults = validator.validate(est.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
-        if (modelData.modelProperties.contains("must-fail-validation")) {
-            assertTrue("Input model does not contain the expected validation error markers", !validatorResults.empty)
-            return
-        } else {
-            assertTrue("Input model contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)
-        }
-
-        if (true) return;
         // Check all intermediate results
         val context = est.compile
         for (iResult : context.processorInstancesSequence) {
@@ -125,17 +116,18 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
             resource.getContents().add(iResult.model as EsterelProgram)
             
             // Check if validator marks no errors
-            validatorResults = validator.validate(est.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
+            val validator = esterelInjector.getInstance(IResourceValidator)
+            val validatorResults = validator.validate(est.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
             assertTrue("Intermediate result of transformation " + iResult.id + " contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)            
         }        
     }
     
     @Test(timeout=60000)
     def void testSerializability(EsterelProgram est, TestModelData modelData) {
-        if (true) return;
-        val result = est.compile
+        assumeFalse(true); // Do nothing !!
         
         // Check all intermediate results
+        val result = est.compile
         for (iResult : result.processorInstancesSequence) {
             val name = "intermediate result of transformation " + iResult.id
             

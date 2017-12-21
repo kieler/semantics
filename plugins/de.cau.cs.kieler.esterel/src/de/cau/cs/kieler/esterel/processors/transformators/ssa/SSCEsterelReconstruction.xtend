@@ -19,11 +19,13 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.esterel.Loop
@@ -42,12 +44,14 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.processors.transformators.ssa.WeakUnemitSSATransformation
@@ -58,6 +62,7 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
 import java.util.HashSet
 import java.util.List
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
@@ -66,10 +71,6 @@ import static de.cau.cs.kieler.kexpressions.OperatorType.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.esterel.EsterelThread
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.esterel.Await
 
 /**
  * @author als
@@ -192,7 +193,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                     statements.addAll(module.statements.map[translate])
                 ]
             } else {
-                module.statements.immutableCopy.forEach[it.replace(it.translate)]
+                module.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
             }
             
             // insert phi assignments
@@ -286,7 +287,13 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def void addSSAAssignment(Statement stm, Assignment asm, StatementContainer container, EStructuralFeature containment, boolean before) {
         val list = container.eGet(containment) as List
-        list.add(list.indexOf(stm)+if(before) 0 else 1, asm.translateSSAAssignment)
+        val idx = list.indexOf(stm)
+        if (stm instanceof EsterelParallel) {
+            val block = createBlock
+            stm.replace(block)
+            block.statements += stm
+        }
+        list.add(idx + if(before) 0 else 1, asm.translateSSAAssignment)
     }   
     
     private def dispatch Statement translate(Nothing nop) {
@@ -298,17 +305,17 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     }
        
     private def dispatch Statement translate(Block b) {
-        b.statements.immutableCopy.forEach[it.replace(it.translate)]
+        b.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
         return b
     }
     
     private def dispatch Statement translate(EsterelParallel par) {
-        par.threads.forEach[statements.immutableCopy.forEach[it.replace(it.translate)]]
+        par.threads.forEach[statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]]
         return par
     } 
     
     private def dispatch Statement translate(Loop loop) {
-        loop.statements.immutableCopy.forEach[it.replace(it.translate)]
+        loop.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
         // Loop Each
         if (loop.delay !== null) {
             val conds = mapping.get(loop).filter(Conditional)
@@ -334,17 +341,21 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                 signalVOmap.put(localSignal, mapping.get(localSignal).filter(ValuedObject).head)
             }
         }
-        lsig.statements.immutableCopy.forEach[it.replace(it.translate)]
+        lsig.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
         return lsig
     }
          
     private def dispatch Statement translate(Emit emit) {
-        return emit => [
-            signal = signalVOmap.inverse.get(mapping.get(emit).filter(Assignment).head.valuedObject)
-            if (signal == null) {
-                throw new IllegalArgumentException("Missing signal tracing")
-            }
-        ]
+        val asm = mapping.get(emit).filter(Assignment).head
+        if (asm !== null) {
+            return emit => [
+                signal = signalVOmap.inverse.get(asm.valuedObject)
+                if (signal == null) {
+                    throw new IllegalArgumentException("Missing signal tracing")
+                }
+            ]
+        }
+        return emit
     }
     
     private def dispatch Statement translate(UnEmit unemit) {
@@ -354,33 +365,35 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def dispatch Statement translate(Present present) {
         val cond = mapping.get(present).filter(Conditional).head
-        val b = cond.condition
-        if (b instanceof BoolValue) {
-            present.expression = null
-            if (b.value) {
-                present.statements.immutableCopy.forEach[it.replace(it.translate)]
-                present.elseStatements.clear
+        if (cond !== null) {
+            val b = cond.condition
+            if (b instanceof BoolValue) {
+                present.expression = null
+                if (b.value) {
+                    present.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
+                    present.elseStatements.clear
+                } else {
+                    present.statements.clear
+                    present.elseStatements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
+                }
             } else {
-                present.statements.clear
-                present.elseStatements.immutableCopy.forEach[it.replace(it.translate)]
+                present.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
+                present.expression = cond.condition.translateExpr
+                present.elseStatements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
             }
-        } else {
-            present.statements.immutableCopy.forEach[it.replace(it.translate)]
-            present.expression = cond.condition.translateExpr
-            present.elseStatements.immutableCopy.forEach[it.replace(it.translate)]
         }
         return present
     }
     
     private def dispatch Statement translate(Suspend suspend) {
         val asm = mapping.get(suspend).filter(Assignment).head
-        suspend.statements.immutableCopy.forEach[it.replace(it.translate)]
+        suspend.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
         suspend.delay.expression = asm.expression.translateExpr
         return suspend
     }
     
     private def dispatch Statement translate(Trap trap) {
-        trap.statements.immutableCopy.forEach[it.replace(it.translate)]
+        trap.statements.immutableCopy.forEach[it.replaceOrRemove(it.translate)]
         return trap
     }
     
@@ -452,5 +465,13 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def dispatch Expression translateExpr(Expression expression) {
         throw new UnsupportedOperationException("Unsupported expression: " + expression)
+    }
+    
+    private def void replaceOrRemove(EObject eObject, EObject replacementEObject) {
+        if (replacementEObject !== null) {
+            eObject.replace(replacementEObject)
+        } else {
+            eObject.remove
+        }
     }
 }

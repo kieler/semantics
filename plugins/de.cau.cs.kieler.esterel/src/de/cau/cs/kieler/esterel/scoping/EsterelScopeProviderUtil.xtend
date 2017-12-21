@@ -134,7 +134,11 @@ class EsterelScopeProviderUtil {
      */
     public static def List<IEObjectDescription> getElements(EObject context, ScopeFunction<Module> function) {
         val scopeElems = new ArrayList<IEObjectDescription>();
-        var parent = context.eContainer();
+        var parent = if (context instanceof Module) {
+            context
+        } else {
+            context.eContainer()
+        }
         // get this scope's module interface
         while (!(parent instanceof Module) && parent !== null) {
             parent = parent.eContainer();
@@ -156,7 +160,11 @@ class EsterelScopeProviderUtil {
     public static def List<IEObjectDescription> getAllElements(EObject context, ScopeFunction<Module> function) {
 
         val scopeElems = new ArrayList<IEObjectDescription>();
-        var parent = context.eContainer();
+        var parent = if (context instanceof Module) {
+            context
+        } else {
+            context.eContainer()
+        }
         // get this scope's module interface
         while (!(parent instanceof Module) && parent !== null) {
             parent = parent.eContainer();
@@ -250,7 +258,11 @@ class EsterelScopeProviderUtil {
     public static def List<IEObjectDescription> getLocalSignals(EObject context) {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
-        var parent = context.eContainer();
+        var parent = if (context instanceof Module) {
+            context
+        } else {
+            context.eContainer()
+        }
         // Go up in the Structure until Module/MainModule
         while (!(parent instanceof Module) && parent !== null) {
             // Get the local signals into the scope
@@ -276,7 +288,11 @@ class EsterelScopeProviderUtil {
     public static def List<IEObjectDescription> getLocalVariables(EObject context) {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
-        var parent = context.eContainer();
+        var parent = if (context instanceof Module) {
+            context
+        } else {
+            context.eContainer()
+        }
         // Go up in the Structure until Module/MainModule
         while (!(parent instanceof Module) && parent !== null) {
             // Get the local variables into the scope
@@ -305,7 +321,11 @@ class EsterelScopeProviderUtil {
     public static def List<IEObjectDescription> getLocalTraps(EObject context) {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
-        var parent = context.eContainer();
+        var parent = if (context instanceof Module) {
+            context
+        } else {
+            context.eContainer()
+        }
         // find all Traps
         while (!(parent instanceof Module) && parent !== null) {
             if (parent instanceof Trap) {
@@ -332,7 +352,11 @@ class EsterelScopeProviderUtil {
     public static def List<IEObjectDescription> getAllModules(EObject context) {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
-        var parent = context.eContainer();
+        var parent = if (context instanceof EsterelProgram) {
+            context
+        } else {
+            context.eContainer()
+        }
         // find all Modules
         while (parent !== null) {
             if (parent instanceof EsterelProgram) {
