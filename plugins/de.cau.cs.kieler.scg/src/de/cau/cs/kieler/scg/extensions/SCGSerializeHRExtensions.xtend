@@ -26,9 +26,9 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     extension KEffectsExtensions
 
     dispatch def CharSequence serialize(Assignment assignment) {
-        if (assignment.valuedObject != null) {
+        if (assignment.valuedObject !== null) {
             var CharSequence assignmentText = ""
-            if (assignment.expression != null && !assignment.operator.isPostfixOperator) {
+            if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
                 assignmentText = serialize(assignment.expression)
             }
             var valuedObjectName = assignment.valuedObject.name
@@ -54,9 +54,9 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
     
     dispatch def CharSequence serializeHR(Assignment assignment) {
-        if (assignment.valuedObject != null) {
+        if (assignment.valuedObject !== null) {
             var CharSequence assignmentText = ""
-            if (assignment.expression != null && !assignment.operator.isPostfixOperator) {
+            if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
                 assignmentText = assignment.expression.serializeHR
             }
             var valuedObjectName = assignment.valuedObject.name

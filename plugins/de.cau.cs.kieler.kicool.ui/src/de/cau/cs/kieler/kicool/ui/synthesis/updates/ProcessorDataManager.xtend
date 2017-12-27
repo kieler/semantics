@@ -143,6 +143,7 @@ class ProcessorDataManager {
             // Set source model
             val sourceNode = node.findNode(NODE_SOURCE)
             val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
+            sourceNode.container.removeAllActions
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, 
@@ -561,12 +562,15 @@ class ProcessorDataManager {
     }
     
     static private def <T extends KRendering> T addAction(T rendering, Trigger trigger, String actionId) {
-
         rendering.actions += KRenderingFactory.eINSTANCE.createKAction() => [
             it.trigger = trigger;
             it.actionId = actionId;
         ];
         return rendering;
+    }
+    
+    static private def <T extends KRendering> void removeAllActions(T rendering) {
+            rendering.actions.clear
     }    
     
 }
