@@ -15,9 +15,7 @@ package de.cau.cs.kieler.prom.ui.wizards
 
 import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import de.cau.cs.kieler.prom.drafts.PromProjectDrafts
-import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
-import java.util.List
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.WizardPage
@@ -34,11 +32,6 @@ import org.eclipse.swt.widgets.Composite
  * @author aas
  */
 class PromProjectWizardMainPage extends WizardPage {
-
-    /**
-     * The project drafts loaded from this plugins preference store.
-     */
-    private List<ProjectDraftData> drafts
 
     /**
      * The combobox with the project drafts.
@@ -77,27 +70,10 @@ class PromProjectWizardMainPage extends WizardPage {
         comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
         comp.setLayout(new GridLayout())
 
-        loadProjectDrafts()
-
         createProjectDraftComponent(comp)
         createProjectInitializationComponent(comp)
         
         pageComplete = true
-    }
-
-    /**
-     * Loads the project drafts from this plugin's preference store. 
-     */
-    private def void loadProjectDrafts() {
-        val store = PromUIPlugin.^default.preferenceStore
-
-        // It might be that on a new installation there are no project drafts initialized.
-        // So we do it here manually.
-        if (ProjectDraftData.isPreferenceStoreEmpty(store))
-            PromProjectDrafts.initializeDefaults()
-
-        // Load project drafts from store
-        drafts = ProjectDraftData.loadAllFromPreferenceStore(store)
     }
 
     /**
@@ -108,6 +84,7 @@ class PromProjectWizardMainPage extends WizardPage {
     private def void createProjectDraftComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project Draft", 1)
 
+        val drafts = PromProjectDrafts.all
         draftsCombo = UIUtil.createProjectDraftCombo(group, drafts)
 
         // Information label
@@ -152,7 +129,7 @@ class PromProjectWizardMainPage extends WizardPage {
      */
     public def String getWizardClassName() {
         val env = getSelectedProjectDraft()
-        if (env != null) {
+        if (env !== null) {
             return env.associatedProjectWizardClass
         } else {
             return ""

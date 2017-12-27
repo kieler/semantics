@@ -191,6 +191,79 @@
             </command>
          </toolbar>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.cau.cs.kieler.simulation.ui.dataPoolView">
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.stepSubTick"
+               disabledIcon="icons/stepIconDisabled.png"
+               icon="icons/stepIcon.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.stepSubTick"
+               label="Step Sub Tick"
+               style="push"
+               tooltip="Step Sub Tick">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <test
+                        property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
+                  </test>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.stepMacroTick"
+               disabledIcon="icons/macroStepIconDisabled.png"
+               icon="icons/macroStepIcon.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.stepMacroTick"
+               label="Step Macro Tick"
+               style="push"
+               tooltip="Step Macro Tick">
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.stop"
+               disabledIcon="icons/stopIconDisabled.png"
+               icon="icons/stopIcon.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.stop"
+               label="Stop Simulation"
+               style="push"
+               tooltip="Stop Simulation">
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.play"
+               disabledIcon="icons/runIconDisabled.png"
+               icon="icons/runIcon.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.play"
+               label="Play Simulation"
+               style="push"
+               tooltip="Play Simulation">
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.pause"
+               disabledIcon="icons/pauseIconDisabled.png"
+               icon="icons/pauseIcon.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.pause"
+               label="Pause Simulation"
+               style="push"
+               tooltip="Pause Simulation">
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.back"
+               icon="icons/stepHistoryBack.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.back"
+               label="Step History Back"
+               style="push"
+               tooltip="Step History Back">
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.simulation.ui.forward"
+               icon="icons/stepHistoryForward.png"
+               id="de.cau.cs.kieler.simulation.ui.menus.forward"
+               label="Step History Forward"
+               style="push"
+               tooltip="Step History Forward">
+         </command>
+      </menuContribution>
       </extension>
    <extension
          point="org.eclipse.ui.views">

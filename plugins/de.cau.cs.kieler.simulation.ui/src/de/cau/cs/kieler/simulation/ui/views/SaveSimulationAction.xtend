@@ -14,8 +14,8 @@ package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig
 import de.cau.cs.kieler.simulation.trace.printer.TracePrinter
 import org.eclipse.core.runtime.IPath
 import org.eclipse.ui.dialogs.SaveAsDialog
@@ -51,7 +51,7 @@ class SaveSimulationAction extends DataPoolViewToolbarAction {
     protected def IPath openSaveAsDialog() {
         val dialog = new SaveAsDialog(DataPoolView.instance.viewer.control.shell)
         dialog.blockOnOpen = true
-        val lastFiles = SimulationLaunchConfig.lastFiles
+        val lastFiles = SimulationUtil.lastFiles
         if(!lastFiles.isNullOrEmpty) {
             val lastFile = lastFiles.get(0)
             val newFileName = Files.getNameWithoutExtension(lastFile.name.replace("Sim_", ""))+"."+tracePrinter.fileExtension

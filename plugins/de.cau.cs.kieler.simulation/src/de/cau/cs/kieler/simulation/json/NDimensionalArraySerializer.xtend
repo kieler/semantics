@@ -63,33 +63,36 @@ class NDimensionalArraySerializer implements JsonSerializer<NDimensionalArray>,
      * {@inheritDoc}
      */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        val object = json.asJsonObject
-        
-        val jsonIndices = object.get("indices").asJsonArray
-        val jsonValues = object.get("values").asJsonArray
-
-        val indices = newArrayList()
-        for(jsonIndex : jsonIndices) {
-            val i = context.deserialize(jsonIndex, typeof(Integer))
-            indices.add(i)
-        }
-        
-        val List<Object> values = newArrayList()        
-        for(jsonValue : jsonValues) {
-            val value = JsonManager.jsonAsObject(jsonValue)
-            if(value instanceof Double) {
-                val intValue = value.intValue 
-                if(value == intValue) {
-                    values.add(intValue)
-                } else {
-                    values.add(value)
-                }
-            } else {
-                values.add(value)    
+        try {
+            val object = json.asJsonObject
+            
+            val jsonIndices = object.get("indices").asJsonArray
+            val jsonValues = object.get("values").asJsonArray
+    
+            val indices = newArrayList()
+            for(jsonIndex : jsonIndices) {
+                val i = context.deserialize(jsonIndex, typeof(Integer))
+                indices.add(i)
             }
+            
+            val List<Object> values = newArrayList()        
+            for(jsonValue : jsonValues) {
+                val value = JsonManager.jsonAsObject(jsonValue)
+                if(value instanceof Double) {
+                    val intValue = value.intValue 
+                    if(value == intValue) {
+                        values.add(intValue)
+                    } else {
+                        values.add(value)
+                    }
+                } else {
+                    values.add(value)    
+                }
+            }
+            val array = new NDimensionalArray(values, indices)
+            return array
+        } catch (Exception e) {
+            throw new Exception("Cannot deserialize NDimensionalArray", e)
         }
-        
-        val array = new NDimensionalArray(values, indices)
-        return array
     }
 }

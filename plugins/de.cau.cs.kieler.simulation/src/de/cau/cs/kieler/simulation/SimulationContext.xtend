@@ -145,7 +145,7 @@ class SimulationContext {
                 if(e.operation == SimulationOperation.STOP) {
                     val root = ResourcesPlugin.getWorkspace.getRoot
                     val project = root.getProject(SimulationContext.TEMPORARY_PROJECT_NAME)
-                    project.delete(false, null)
+                    project.delete(true, null)
                 }
             }
         }

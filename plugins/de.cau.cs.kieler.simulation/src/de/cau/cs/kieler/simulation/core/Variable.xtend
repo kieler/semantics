@@ -135,7 +135,9 @@ class Variable implements Cloneable {
         // In case of array, use type of first element.        
         var Object v = value
         if(v instanceof NDimensionalArray) {
-            v = v.elements.get(0)
+            if(!v.isEmpty) {
+                v = v.elements.get(0)    
+            }
         }
         if(v instanceof String) {
             type = VariableType.STRING
@@ -151,11 +153,22 @@ class Variable implements Cloneable {
     /**
      * Returns a list with previous states of this variable from old to new.
      * 
-     * @param the previous versions of this variable
+     * @return the previous versions of this variable
      */
     public def List<Variable> getHistory() {
+        return getHistory(-1, true)
+    }
+    
+    /**
+     * Returns a list with previous states of this variable from old to new.
+     * 
+     * @param maxSize The maximum amount of history entries to show
+     * @param includeInitialization Determines whether the initial data pool should be included
+     * @return the previous versions of this variable
+     */
+    public def List<Variable> getHistory(int maxSize, boolean includeInitialization) {
         val List<Variable> history = newArrayList()
-        val models = model.history
+        val models = model.getHistory(maxSize, includeInitialization)
         for(m : models) {
             for(v : m.variables) {
                 if(name != null && name.equals(v.name)) {

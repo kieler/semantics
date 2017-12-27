@@ -5,7 +5,13 @@
     <extension
           point="de.cau.cs.kieler.kivis.functionHandler">
        <functionHandler
+             class="de.cau.cs.kieler.kivis.ui.interactions.PositionFunctionHandler">
+       </functionHandler>
+       <functionHandler
              class="de.cau.cs.kieler.kivis.ui.interactions.ColorFunctionHandler">
+       </functionHandler>
+       <functionHandler
+             class="de.cau.cs.kieler.kivis.ui.interactions.DimensionFunctionHandler">
        </functionHandler>
     </extension>
     <extension
