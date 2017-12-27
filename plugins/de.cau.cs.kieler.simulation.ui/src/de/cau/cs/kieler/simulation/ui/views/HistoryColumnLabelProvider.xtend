@@ -14,11 +14,7 @@ package de.cau.cs.kieler.simulation.ui.views
 
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
-import org.eclipse.swt.SWT
-import org.eclipse.swt.graphics.GC
 import org.eclipse.swt.graphics.Image
-import org.eclipse.swt.graphics.Point
-import org.eclipse.swt.widgets.Display
 
 /**
  * Displays the history of variables in the simulation.
@@ -28,33 +24,33 @@ import org.eclipse.swt.widgets.Display
  *
  */
 class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
+    
     /**
-     * The image that is created to draw the graph for the history values.
+     * The max number of history entries to be displayed. 
      */
-    protected var Image img
+    public static val MAX_HISTORY_LENGTH = 6
     
     /**
      * {@inheritDoc}
      */
     override String getText(Object element) {
-        if(element instanceof Variable) {
-            return createHistoryText(element.history.map[it.value])
-        }
-        return ""
+        return getHistoryText(element)
     }
     
     /**
-     * Returns an image with a small graph of the values.
+     * Returns the history text for the given variable.
+     * If the element is not a variable, the empty string is returned.
+     * 
+     * @param element The element
+     * @return The history text
      */
-    override Image getToolTipImage(Object element) {
-        if(img != null) {
-            img.dispose()
-            img = null
-        }
+    public static def String getHistoryText(Object element) {
         if(element instanceof Variable) {
-            img = createHistoryGraph(element.history.map[it.value])
+            // use +1 here to indicate when the history is actually longer than displayed
+            val history = element.getHistory(MAX_HISTORY_LENGTH+1, false)
+            return createHistoryText(history.map[it.value])
         }
-        return img
+        return ""
     }
     
     /**
@@ -64,125 +60,17 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
      * @param history The list of values
      * @return the (possibly shortened) text for this history
      */
-    protected def String createHistoryText(List<Object> history) {
+    protected static def String createHistoryText(List<Object> history) {
         var txt = ""
-        val max = 6
         var size = history.size()
-        val from = size - Math.min(size, max)
+        val from = size - Math.min(size, MAX_HISTORY_LENGTH)
         val to = size
         val lastElements = history.subList(from, to)
-        if(size > max) {
+        if(size > MAX_HISTORY_LENGTH) {
             txt += "..."
         }
         val historyText = lastElements.join(", ")
         txt += historyText
         return txt
-    }
-    
-    /**
-     * Creates a small graph to display the values in the given list.
-     * 
-     * @param history The list of values
-     * @return a small image with a graph of the values
-     */
-    protected static def Image createHistoryGraph(List<Object> history) {
-        if(!history.isNullOrEmpty) {
-            val firstValue = history.get(0)
-            if(firstValue instanceof Integer) {
-                val List<Double> numbers = history.map[(it as Integer).doubleValue]
-                return createNumberGraph(numbers)
-            } else if(firstValue instanceof Double) {
-                val List<Double> numbers = history.map[it as Double]
-                return createNumberGraph(numbers)
-            } else if(firstValue instanceof Boolean) {
-                val List<Boolean> booleans = history.map[it as Boolean]
-                return createBooleanGraph(booleans)
-            }
-        }
-        
-        return null
-    }
-    
-    /**
-     * Creates a graph for a list of numbers.
-     * 
-     * @param numbers The numbers
-     * @return the graph
-     */
-    private static def Image createNumberGraph(List<Double> numbers) {
-        // Min / max value from history        
-        val min = numbers.min
-        val max = numbers.max
-        
-        // Create image
-        val w = 92
-        val h = 48
-        val display = Display.getCurrent()
-        val img = new Image(display, w, h);
-        
-        val gc = new GC(img)
-        // Draw scale
-        gc.drawText(max.toString, 0, 0)
-        gc.drawText(min.toString, 0, h-16)
-        // Draw graph
-        gc.foreground = display.getSystemColor(SWT.COLOR_RED)
-        val int step = w/numbers.size
-        var int x
-        var int y
-        var Point lastPos = null
-        for(n : numbers) {
-            val fraction = ((n-min) / (max-min))
-            y = (h * fraction).intValue
-            val pos = new Point(x, h-y-1)
-            x += step
-            
-            if(lastPos != null) {
-                gc.drawLine(lastPos.x, lastPos.y, pos.x, pos.y)
-            }
-            
-            lastPos = pos
-        }
-        
-        gc.dispose()
-        
-        return img
-    }
-    
-    /**
-     * Creates a graph for a list of booleans.
-     * 
-     * @param booleans The booleans
-     * @return the graph
-     */
-    private static def Image createBooleanGraph(List<Boolean> booleans) {
-        // Create image
-        val w = 92
-        val h = 48
-        val display = Display.getCurrent()
-        val img = new Image(display, w, h);
-        
-        val gc = new GC(img)
-        // Draw graph
-        gc.foreground = display.getSystemColor(SWT.COLOR_RED)
-        val int spacing = 8
-        val int step = w/booleans.size
-        var int x
-        var int y
-        var Point lastPos = null
-        for(b : booleans) {
-            y = if(b) (h - spacing) else spacing
-            val pos = new Point(x, h-y-1)
-            x += step
-            
-            if(lastPos != null) {
-                gc.drawLine(lastPos.x, lastPos.y, pos.x, pos.y)
-            }
-            
-            lastPos = pos
-        }
-        
-        gc.dispose()
-        
-        return img
     }
 }

@@ -32,6 +32,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.ZoomStyle
 
 /**
  * 
@@ -54,6 +55,15 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     protected val wireTextMap = <Expression, KText> newLinkedHashMap
     
     private var LightDiagramLayoutConfig layoutConfig = null
+    
+    /**
+     * Normally only the current simulation data pool is updated.
+     * However, if the simulation is playing too fast, no update will be shown at all.
+     * This is a threshold in ms to perform an update anyway, even if the data pool to display is not the most current.
+     */
+    private static val MAX_UPDATE_PAUSE = 1000
+    
+    private var long lastUpdateTime
     
     new() {
         super()
@@ -134,9 +144,11 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             
         }
         
+        lastUpdateTime = System.currentTimeMillis
         update(pool)
         
         layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
+        layoutConfig.zoomStyle(ZoomStyle.NONE)
         layoutConfig.performLayout
     }    
     
@@ -154,10 +166,15 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     override update(DataPool pool) {
         super.update(pool)
         
-        pool.insertLiveTransitionValues
-        pool.insertLiveDeclarationValues
-        pool.insertLiveActionValues
-        pool.insertLiveWireValues
+        // Only show the values of the current data pool in the simulation.
+        // From time to time perform an update anyway.
+        if(pool === SimulationManager.instance.currentPool || System.currentTimeMillis > (lastUpdateTime+MAX_UPDATE_PAUSE)) {
+            pool.insertLiveTransitionValues
+            pool.insertLiveDeclarationValues
+            pool.insertLiveActionValues
+            pool.insertLiveWireValues
+            lastUpdateTime = System.currentTimeMillis
+        }
     }
     
     protected def insertLiveTransitionValues(DataPool pool) {

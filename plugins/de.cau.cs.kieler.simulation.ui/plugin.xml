@@ -205,12 +205,6 @@
             <visibleWhen
                   checkEnabled="false">
                <and>
-                  <with
-                        variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
-                  </with>
                   <test
                         property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
                   </test>
@@ -225,15 +219,6 @@
                label="Step Macro Tick"
                style="push"
                tooltip="Step Macro Tick">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="de.cau.cs.kieler.simulation.ui.stop"
@@ -243,15 +228,6 @@
                label="Stop Simulation"
                style="push"
                tooltip="Stop Simulation">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="de.cau.cs.kieler.simulation.ui.play"
@@ -261,15 +237,6 @@
                label="Play Simulation"
                style="push"
                tooltip="Play Simulation">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="de.cau.cs.kieler.simulation.ui.pause"
@@ -279,15 +246,6 @@
                label="Pause Simulation"
                style="push"
                tooltip="Pause Simulation">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="de.cau.cs.kieler.simulation.ui.back"
@@ -296,15 +254,6 @@
                label="Step History Back"
                style="push"
                tooltip="Step History Back">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="de.cau.cs.kieler.simulation.ui.forward"
@@ -313,15 +262,6 @@
                label="Step History Forward"
                style="push"
                tooltip="Step History Forward">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
       </menuContribution>
       </extension>

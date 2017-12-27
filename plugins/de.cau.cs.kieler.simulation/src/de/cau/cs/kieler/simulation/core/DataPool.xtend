@@ -365,11 +365,29 @@ class DataPool implements Cloneable {
      * @return the list of previous data pools
      */
     public def List<DataPool> getHistory() {
+        return getHistory(-1, true)
+    }
+    
+    /**
+     * Returns a list of previous pools from old to new.
+     * 
+     * @param maxSize The maximum amount of history entries to show
+     * @param includeInitialization Determines whether the initial data pool should be included
+     * @return the list of previous data pools
+     */
+    public def List<DataPool> getHistory(int maxSize, boolean includeInitialization) {
         val List<DataPool> history = newArrayList()
+        var int size = 0
         var next = this.previousPool
-        while(next != null) {
-            history.add(next)
-            next = next.previousPool
+        while(next !== null && (maxSize < 0 || size < maxSize)) {
+            // The inital pool has no predecessor
+            if(next.previousPool !== null || includeInitialization) {
+                history.add(next)
+                next = next.previousPool    
+                size++
+            } else {
+                next = null
+            }
         }
         return history.reverse
     }

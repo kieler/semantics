@@ -55,9 +55,6 @@ class SimulationDelayContribution extends ControlContribution {
         spinner.selection = SimulationManager.getDesiredTickPause
         
         spinner.addSelectionListener(new SelectionAdapter() {
-            /**
-             * Sets the desired pause for the simulation play mode. 
-             */
             override widgetSelected(SelectionEvent e) {
                 val value = spinner.selection
                 if(value >= SimulationManager.MIN_PAUSE && value <= SimulationManager.MAX_PAUSE) {

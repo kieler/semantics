@@ -44,5 +44,7 @@ Export-Package: de.cau.cs.kieler.simulation.ui,
  de.cau.cs.kieler.simulation.ui.trace.contentassist,
  de.cau.cs.kieler.simulation.ui.trace.contentassist.antlr,
  de.cau.cs.kieler.simulation.ui.trace.contentassist.antlr.internal,
- de.cau.cs.kieler.simulation.ui.trace.quickfix
+ de.cau.cs.kieler.simulation.ui.trace.quickfix,
+ de.cau.cs.kieler.simulation.ui.views,
+ de.cau.cs.kieler.simulation.ui.views.dataview
 Import-Package: org.apache.log4j
