@@ -112,7 +112,6 @@ class TraceDataProvider {
                 if (e.newValue !== null) {
                     v.setValue(e.newValue.convert)
                 } else {
-                    // TODO set other inputs/outpu signals to false?
                     v.setValue(true)
                 }
                 return v
@@ -147,11 +146,9 @@ class TraceDataProvider {
     }
     
     private def void setArrayValueDynamically(Variable v, List<Integer> index, Object value) {
-        // Compute the minimum one dimensional array size
-        // e.g. 6 for the assignment 'Y[2][1]=2'
-        val oneDimArraySize = index.fold(1, [a,b | (a+1) * (b+1)])
+        val cardinalities = index.map[it+1]
         if(v.value === null || !(v.value instanceof NDimensionalArray)) {
-            val arr = new NDimensionalArray(newArrayOfSize(oneDimArraySize).toList, index)
+            val arr = NDimensionalArray.create(cardinalities)
             arr.set(index, value)
             v.value = arr
         } else {

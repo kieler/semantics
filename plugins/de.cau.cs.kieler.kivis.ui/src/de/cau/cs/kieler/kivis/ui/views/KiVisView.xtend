@@ -31,7 +31,9 @@ import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
 import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
+import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.awt.geom.AffineTransform
@@ -79,6 +81,8 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
+import java.awt.KeyboardFocusManager
+import de.cau.cs.kieler.prom.console.PromConsole
 
 /**
  * The KiVis View.
@@ -92,7 +96,7 @@ class KiVisView extends ViewPart {
     /**
      * The id of the view, that is set in the plugin.xml
      */
-    public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
+    public static val VIEW_ID = "de.cau.cs.kieler.kivis.ui.kivisView"
 
     /**
      * The file extension of configuration files for simulation visualization. 
@@ -176,6 +180,7 @@ class KiVisView extends ViewPart {
     /**
      * Determines if the visualization is updated when the simulation changes  
      */
+    @Accessors(PUBLIC_GETTER)
     private var boolean linkWithSimulation = true
     
     /**
@@ -264,6 +269,9 @@ class KiVisView extends ViewPart {
      * {@inheritDoc}
      */
     override setFocus() {
+        println(KeyboardFocusManager.currentKeyboardFocusManager)
+        canvas.setFocus
+        println(KeyboardFocusManager.currentKeyboardFocusManager)
     }
 
     public def void updateInteractions(boolean beforeTick) {
@@ -286,7 +294,7 @@ class KiVisView extends ViewPart {
      * This method has to be called in the UI thread.
      */
     public def void update(DataPool pool, boolean force) {
-        if(!linkWithSimulation || kivisFile == null || svgFile == null) {
+        if(kivisFile == null || svgFile == null) {
             return
         }
         
@@ -666,7 +674,7 @@ class KiVisView extends ViewPart {
             var KiVisView kiVisView 
             override update(SimulationEvent e) {
                 kiVisView = KiVisView.instance
-                if(kiVisView == null) {
+                if(kiVisView == null || !kiVisView.linkWithSimulation) {
                     return
                 }
                 super.update(e)
@@ -689,7 +697,16 @@ class KiVisView extends ViewPart {
                         kiVisView.updateInteractions(true)
                     }
                     default : {
-                        kiVisView.update(simMan.currentPool, false)    
+                        kiVisView.update(simMan.currentPool, false)
+                        if(e.operation == SimulationOperation.STOP) {
+                            // Move focus away as workaround for KISEMA-1266
+                            if(kiVisView.canvas.svgCanvas.hasFocus && DataPoolView.instance !== null) {
+                                PromUIPlugin.asyncExecInUI[
+                                    PromConsole.print("Setting focus to Data Pool View")
+                                    DataPoolView.instance.setFocus    
+                                ]
+                            }
+                        }    
                     }
                 }
             }
