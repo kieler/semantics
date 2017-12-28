@@ -75,10 +75,12 @@ class SimulationUtil {
                     context.traceFile = file
                 } else if(isSimulationInput(file)) {
                     context.simInFile = file
-                } else if(isExecutable(file)) {
-                    context.executableFiles.add(file)
                 } else if(isModel(file)) {
                     context.compileModelForSimulation(file)
+                } else if(isExecutable(file)) {
+                    // The check for executables has to be the last check, because Windows
+                    // seems to recognize other files than an exe as executable.
+                    context.executableFiles.add(file)
                 }
             }
             context.start    
