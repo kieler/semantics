@@ -78,12 +78,14 @@ class TakenTransitionSignaling extends SCChartsProcessor {
             // Get or create transition array
             val transitionArrayDecl = createIntDeclaration
             var transitionArray = rootState.getValuedObjectByName(transitionArrayName)
-            if(transitionArray == null) {
+            if(transitionArray === null) {
                 transitionArray = rootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
             }
             
-            rootState.createEmitForTakenTransitions(transitionArray)
-            rootState.createResetRegion(transitionArray)
+            val transitionCount = rootState.createEmitForTakenTransitions(transitionArray)
+            if(transitionCount > 0) {
+                rootState.createResetRegion(transitionArray)    
+            }
         }
     }
     
@@ -96,7 +98,7 @@ class TakenTransitionSignaling extends SCChartsProcessor {
         return transitions
     }
     
-    private def void createEmitForTakenTransitions(State rootState, ValuedObject transitionArray) {
+    private def int createEmitForTakenTransitions(State rootState, ValuedObject transitionArray) {
         val transitions = rootState.getTransitions
         // Index transitions and add effect, which sets the transition array at that index to true
         // if this transition is taken.
@@ -112,6 +114,8 @@ class TakenTransitionSignaling extends SCChartsProcessor {
         transitionArray.setIndex(index)
         // Remember this property
         environment.setProperty(ARRAY_SIZE, index)
+        // Return the array size (the number of transitions)
+        return index
     }
     
     private def void setIndex(ValuedObject valuedObject, int cardinality) {
