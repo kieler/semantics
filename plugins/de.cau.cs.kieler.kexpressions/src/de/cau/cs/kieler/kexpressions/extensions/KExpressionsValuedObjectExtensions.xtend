@@ -100,6 +100,7 @@ class KExpressionsValuedObjectExtensions {
     def ValueType getType(ValuedObject valuedObject) {
         if (valuedObject.isModelReference) return ValueType::REFERENCE;
         if (valuedObject.isScheduleReference) return ValueType::SCHEDULE;
+        if (!valuedObject.isVariableReference) return null;
         valuedObject.getVariableDeclaration.type
     }
     

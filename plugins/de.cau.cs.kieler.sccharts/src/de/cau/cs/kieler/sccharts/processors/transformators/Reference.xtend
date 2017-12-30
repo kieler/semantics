@@ -39,6 +39,7 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.Replacements
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -121,7 +122,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // Create the binding structure. The dedicated {@code Binding} class manages the bindings.
         // CreateBindings also reports binding errors and warnings.
-        val bindings = stateWithReference.createBindings
+        val bindings = stateWithReference.createBindings(replacements)
         for (binding : bindings) {
             if (binding.errors > 0) {
                 environment.errors.add("There are binding errors in a referenced state!\n" + 

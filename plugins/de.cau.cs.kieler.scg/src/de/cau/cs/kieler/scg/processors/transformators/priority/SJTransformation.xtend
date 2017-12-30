@@ -35,7 +35,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
@@ -50,7 +49,7 @@ import java.util.Stack
 class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     
      @Inject extension AnnotationsExtensions
-     @Inject extension SCG2CSerializeHRExtensions
+     @Inject extension SCG2JavaSerializeHRExtensions
      @Inject extension SCGThreadExtensions
      @Inject extension KExpressionsDeclarationExtensions
      
@@ -692,7 +691,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     private def void transformNode(StringBuilder sb, Exit exit) {
         // Only do something if the exit is the final node of the program. Otherwise
         // the fork/join does this
-        if(exit.next != null) {
+        if(exit.next !== null) {
             threadPriorities.get(exit.entry).add((exit.getAnnotation("optPrioIDs") as IntAnnotation).value)
             threadPriorities.get(exit.next.target.threadEntry).addAll(threadPriorities.get(exit.threadEntry))
         }
@@ -702,7 +701,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             sb.appendInd("break;\n\n")            
         } else {
             // Go to join
-            if(exit.next != null) {
+            if(exit.next !== null) {
                 val join = exit.next.target
                 var newLabel = ""
                 if(labeledNodes.containsKey(join)) {

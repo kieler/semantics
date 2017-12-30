@@ -114,7 +114,7 @@ public class SCTXResource extends LazyLinkingResource {
          * remain in contents though the parseResult is empty! After the next successful parser run the
          * new EObject will be added to contents regardless the non-emptiness of contents.
          */
-        if (parseResult.getRootASTElement() != null && getContents().size() != 0 &&
+        if (parseResult.getRootASTElement() !== null && getContents().size() != 0 &&
             !getContents().get(0).equals(parseResult.getRootASTElement())) {
             unload(getContents().get(0));
             getContents().remove(0);
