@@ -330,7 +330,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         // Calculate current states
         val isInitialTickDone = SimulationManager.instance.currentMacroTickNumber == 1 && SimulationManager.instance.currentSubTickNumber == 0
         if(isInitialTickDone) {
-            currentStates = getInitialStates(rootState)    
+            currentStates = newArrayList()
+            val directInitialStates = getInitialStates(rootState)
+            for(state : directInitialStates) {
+                currentStates.enterState(state)
+            } 
         }
         currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
         currentActiveDataflowRegions = calculateNewActiveEquations(currentStates, rootState)
