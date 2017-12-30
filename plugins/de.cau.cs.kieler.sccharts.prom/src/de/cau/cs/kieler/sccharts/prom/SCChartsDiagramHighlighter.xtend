@@ -66,7 +66,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     protected var List<Transition> traversedTransitions = <Transition> newArrayList
     /**
      * The traversed states.
-     * These are the states that have been left by traversed transitions.
+     * These are the states that have been left and / or entered by traversed transitions.
      * It is possible that a traversed state is reentered in the same tick (e.g. using a self loop),
      * thus traversed states can be current states as well.
      */
@@ -318,6 +318,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         for(traversedTransition : traversedTransitions) {
             val source = traversedTransition.sourceState
             traversedStates.add(source)
+            val target = traversedTransition.targetState
+            traversedStates.add(target)
             // Mark all final states as traversed if this was a termination transition
             val isTerminationTransition = traversedTransition.preemption == PreemptionType.TERMINATION
             if(isTerminationTransition) {
