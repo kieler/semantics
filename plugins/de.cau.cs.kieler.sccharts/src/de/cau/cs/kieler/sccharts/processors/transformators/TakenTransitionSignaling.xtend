@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
@@ -63,6 +63,15 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     
     public static val ARRAY_SIZE = new Property<Integer>("takenTransitionSignaling.arraySize", 0)
     
+    public static def List<Transition> getTransitions(State rootState) {
+        // Get all transitions in the model
+        val transitions = <Transition> newArrayList
+        for(state : StateIterator.sccAllContainedStates(rootState).toIterable) {
+            transitions.addAll(state.outgoingTransitions)
+        }
+        return transitions
+    }
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling"
     }
@@ -74,32 +83,42 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     override process() {
         val model = getModel
                 
-        for (rootState : model.rootStates) {
-            // Get or create transition array
-            val transitionArrayDecl = createIntDeclaration
-            var transitionArray = rootState.getValuedObjectByName(transitionArrayName)
-            if(transitionArray === null) {
-                transitionArray = rootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
-            }
-            
-            val transitionCount = rootState.createEmitForTakenTransitions(transitionArray)
-            if(transitionCount > 0) {
-                rootState.createResetRegion(transitionArray)    
+        for (rootState : model.rootStates.clone) {
+            val transitions = rootState.getTransitions
+            if(transitions.size > 0) {
+                environment.setProperty(ARRAY_SIZE, transitions.size)
+                // Create new root state to encapsule the behavior of the original model
+                val newRootState = rootState.encapsuleInSuperstate
+                model.rootStates.add(newRootState)
+                
+                // Create transition array
+                val transitionArrayDecl = createIntDeclaration
+                val transitionArray = newRootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
+                // Create assignments to taken transition array
+                rootState.createEmitForTakenTransitions(transitions, transitionArray)
+                // Create reset region
+                newRootState.createResetRegion(transitionArray)
             }
         }
     }
     
-    public static def List<Transition> getTransitions(State rootState) {
-        // Get all transitions in the model
-        val transitions = <Transition> newArrayList
-        for(state : StateIterator.sccAllContainedStates(rootState).toIterable) {
-            transitions.addAll(state.outgoingTransitions)
+    private def State encapsuleInSuperstate(State state) {
+        val newState = createState
+        val newRegion = newState.createControlflowRegion(state.name+"_encapsuled")
+        newRegion.states.add(state)
+        state.setInitial
+        // Move input / output declarations to new state
+        for(decl : state.declarations.clone) {
+            if(decl instanceof VariableDeclaration) {
+                if(decl.input || decl.output) {
+                    newState.declarations.add(decl)
+                }
+            }
         }
-        return transitions
+        return newState
     }
     
-    private def int createEmitForTakenTransitions(State rootState, ValuedObject transitionArray) {
-        val transitions = rootState.getTransitions
+    private def void createEmitForTakenTransitions(State rootState, List<Transition> transitions, ValuedObject transitionArray) {
         // Index transitions and add effect, which sets the transition array at that index to true
         // if this transition is taken.
         var index = 0
@@ -112,10 +131,6 @@ class TakenTransitionSignaling extends SCChartsProcessor {
         // Add the end of the loop, the index is equal to the number of transitions.
         // Set size of transition array.
         transitionArray.setIndex(index)
-        // Remember this property
-        environment.setProperty(ARRAY_SIZE, index)
-        // Return the array size (the number of transitions)
-        return index
     }
     
     private def void setIndex(ValuedObject valuedObject, int cardinality) {
