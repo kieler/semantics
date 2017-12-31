@@ -84,7 +84,7 @@ class SimulationManager extends Configurable {
      * thus the actually waited time might be smaller, if the tick took longer to execute.
      */
     @Accessors(PUBLIC_GETTER)
-    private static var int desiredTickPause = DEFAULT_PAUSE
+    private static var int desiredTickPause = loadDesiredTickPause
     
     /**
      * List of event listeners
@@ -99,6 +99,7 @@ class SimulationManager extends Configurable {
     
     private static val DISABLED_LISTENERS_ATTR = "disabledSimulationListeners"
     private static val MAX_HISTORY_LENGTH_ATTR = "maxHistoryLength"
+    private static val DESIRED_PAUSE_ATTR = "desiredTickPause"
     
     /**
      * The name of an input variable in the data pool,
@@ -274,6 +275,7 @@ class SimulationManager extends Configurable {
     public static def void setDesiredTickPause(int value) {
         if(value >= MIN_PAUSE && value <= MAX_PAUSE) {
             desiredTickPause = value
+            saveDesiredTickPause
         } else {
             throw new IllegalArgumentException("Desired pause for simulation must be between "+MIN_PAUSE+" to "+MAX_PAUSE)
         }
@@ -799,5 +801,20 @@ class SimulationManager extends Configurable {
      */
     private static def Preferences getPreferences() {
         return InstanceScope.INSTANCE.getNode(SimulationPlugin.PLUGIN_ID)
+    }
+    
+    /**
+     * Loads the desired tick pause from the preferences.
+     */
+    private static def int loadDesiredTickPause() {
+        return preferences.getInt(DESIRED_PAUSE_ATTR, DEFAULT_PAUSE)
+    }
+    
+    /**
+     * Saves the desired tick pause to the preferences.
+     */
+    private static def void saveDesiredTickPause() {
+        preferences.putInt(DESIRED_PAUSE_ATTR, desiredTickPause)
+        preferences.flush
     }
 }

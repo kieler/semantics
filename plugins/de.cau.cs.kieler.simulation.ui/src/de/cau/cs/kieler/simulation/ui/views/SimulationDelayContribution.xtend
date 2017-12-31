@@ -52,7 +52,7 @@ class SimulationDelayContribution extends ControlContribution {
         spinner.maximum = SimulationManager.MAX_PAUSE
         spinner.increment = 50
         spinner.pageIncrement = 50
-        spinner.selection = SimulationManager.getDesiredTickPause
+        spinner.selection = SimulationManager.desiredTickPause
         
         spinner.addSelectionListener(new SelectionAdapter() {
             override widgetSelected(SelectionEvent e) {
