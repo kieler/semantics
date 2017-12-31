@@ -97,7 +97,7 @@ class KTraceFilePrinter extends TracePrinter {
             val lastValue = lastValues.get(varName)
             if(lastValue != v.value) {
                 lastValues.put(varName, v.value)
-                return varName + "=" + v.value
+                return getAssignment(varName, v.value)
             }
         }
     }
@@ -108,7 +108,16 @@ class KTraceFilePrinter extends TracePrinter {
         val lastValue = lastValues.get(fullName)
         if(lastValue != e.value) {
             lastValues.put(fullName, e.value)
-            return fullName + "=" + e.value
+            return getAssignment(fullName, e.value)
         }
+    }
+    
+    private def String getAssignment(String leftSideText, Object rightSide) {
+        var rightSideText = rightSide.toString
+        // Quote strings
+        if(rightSide !== null && rightSide instanceof String) {
+            rightSideText = '"' +rightSideText + '"'
+        }
+        return leftSideText + "=" + rightSideText
     }
 }
