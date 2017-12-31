@@ -269,9 +269,7 @@ class KiVisView extends ViewPart {
      * {@inheritDoc}
      */
     override setFocus() {
-        println(KeyboardFocusManager.currentKeyboardFocusManager)
         canvas.setFocus
-        println(KeyboardFocusManager.currentKeyboardFocusManager)
     }
 
     public def void updateInteractions(boolean beforeTick) {

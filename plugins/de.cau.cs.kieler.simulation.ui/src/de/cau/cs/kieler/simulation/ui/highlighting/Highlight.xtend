@@ -69,7 +69,9 @@ class Highlight {
         if (!element.labels.isNullOrEmpty) {
             val label = element.labels.get(0)
             val ren2 = label.getData(typeof(KText))
-            ren2.styles.add(EcoreUtil.copy(foreground))
+            if(ren2 !== null) {
+                ren2.styles.add(EcoreUtil.copy(foreground))    
+            }
         }
     }
     
@@ -84,7 +86,9 @@ class Highlight {
         if (!element.labels.isNullOrEmpty) {
             val label = element.labels.get(0)
             val ren2 = label.getData(typeof(KText));
-            removeHighlighting(ren2.styles)
+            if(ren2 !== null) {
+                removeHighlighting(ren2.styles)    
+            }
         }
     }
     
