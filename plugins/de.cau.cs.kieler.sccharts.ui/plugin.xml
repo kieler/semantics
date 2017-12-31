@@ -172,9 +172,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.sccharts.ui.text.SCTXExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.SCTX"
-            name="SCTX">
+              category="de.cau.cs.kieler.core.product.preferencePage"
+              class="de.cau.cs.kieler.sccharts.ui.text.SCTXExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.sccharts.text.SCTX"
+              name="SCTX">
             <keywordReference id="de.cau.cs.kieler.sccharts.ui.text.keyword_SCTX"/>
         </page>
         <page
