@@ -103,9 +103,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
+              category="de.cau.cs.kieler.core.product.preferencePage"
               class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.esterel.Esterel"
-              name="KIELER Esterel">
+              name="Esterel">
             <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
         </page>
         <page
@@ -123,9 +124,10 @@
             <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
         </page>
         <page
+              category="de.cau.cs.kieler.core.product.preferencePage"
               class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.esterel.scest.SCEst"
-              name="KIELER SCEst">
+              name="SCEst">
            <keywordReference
                  id="de.cau.cs.kieler.esterel.scest.ui.keyword_SCEst">
            </keywordReference>

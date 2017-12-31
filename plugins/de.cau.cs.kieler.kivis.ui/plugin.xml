@@ -149,9 +149,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.kivis.ui.KiVisExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.kivis.KiVis"
-            name="KiVis">
+              category="de.cau.cs.kieler.core.product.preferencePage"
+              class="de.cau.cs.kieler.kivis.ui.KiVisExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.kivis.KiVis"
+              name="KiVis">
             <keywordReference id="de.cau.cs.kieler.kivis.ui.keyword_KiVis"/>
         </page>
         <page
