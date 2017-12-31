@@ -66,11 +66,6 @@ class KiCoModelCompiler extends ModelCompiler {
     public val compileChain = new ConfigurableAttribute("compileChain", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List, Map])
     
     /**
-     * Determines whether register variables should be communicated to the simulation.
-     */
-    public val communicateRegisterVariables = new ConfigurableAttribute("communicateRegisterVariables", true, #[Boolean])
-    
-    /**
      * The file in which the compilation result will be saved
      */
     @Accessors
