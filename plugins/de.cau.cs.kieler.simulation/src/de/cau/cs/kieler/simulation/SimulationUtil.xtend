@@ -54,6 +54,15 @@ class SimulationUtil {
     }
     
     /**
+     * @see startSimulation(List<IFile> files, IProgressMonitor monitor)
+     */
+    public static def void startSimulation(List<IFile> files) {
+        PromPlugin.execInJob("Starting simulation", [monitor |
+            startSimulation(files, monitor)
+        ])
+    }
+    
+    /**
      * Starts a simulation from the given files.
      * The files can contain a kisim file, simin file, trace file or executables.
      */
@@ -85,6 +94,15 @@ class SimulationUtil {
             }
             context.start    
         ]
+    }
+    
+    /**
+     * @see startSimulation(EObject model, SubMonitor monitor)
+     */
+    public static def void startSimulation(EObject model) {
+        PromPlugin.execInJob("Starting simulation", [monitor |
+            startSimulation(model, monitor)
+        ])
     }
     
     /**

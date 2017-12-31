@@ -13,10 +13,12 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Strings
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
+import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -36,6 +38,8 @@ import de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTes
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IResource
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuListener
@@ -51,23 +55,29 @@ import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.TableViewerEditor
 import org.eclipse.jface.viewers.TableViewerFocusCellManager
+import org.eclipse.jface.viewers.ViewerCell
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
 import org.eclipse.swt.dnd.DragSource
 import org.eclipse.swt.dnd.DragSourceEvent
 import org.eclipse.swt.dnd.DragSourceListener
+import org.eclipse.swt.dnd.DropTarget
+import org.eclipse.swt.dnd.DropTargetAdapter
+import org.eclipse.swt.dnd.DropTargetEvent
+import org.eclipse.swt.dnd.FileTransfer
 import org.eclipse.swt.dnd.TextTransfer
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
+import org.eclipse.ui.part.ResourceTransfer
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
-import org.eclipse.jface.viewers.ViewerCell
 
 /**
  * Displays the data of a running simulation.
@@ -163,6 +173,9 @@ class DataPoolView extends ViewPart {
         
         // Add key listeners for fast controls
         addKeyListeners()
+        
+        // Add drag and drop support to start simulations
+        addDragAndDropSupport(viewer.control)
     }
     
     /**
@@ -207,6 +220,61 @@ class DataPoolView extends ViewPart {
             // Set input of viewer
             viewer.input = inputs
         }
+    }
+    
+    /**
+     * Adds drag and drop support to the control to start simulations.
+     * 
+     * @param control The control that should receive drag and drop support.
+     */
+    private def void addDragAndDropSupport(Control control) {
+        // Allow data to be copied to the drop target
+        val operations = PromPlugin.createBitmask(DND.DROP_COPY, DND.DROP_DEFAULT)
+        val target = new DropTarget(control, operations);
+   
+        // Receive data in Resource or File format
+        val resTransfer = ResourceTransfer.getInstance()
+        val fileTransfer = FileTransfer.getInstance()
+        val types = #[fileTransfer, resTransfer]
+        target.setTransfer(types);
+        
+        target.addDropListener(new DropTargetAdapter() {
+            override void dragEnter(DropTargetEvent event){
+                // Change drop event to copy.
+                if(event.detail == DND.DROP_DEFAULT) {
+                    event.detail = DND.DROP_COPY
+                }
+            }
+            
+            override void drop(DropTargetEvent event) {
+                var List<IFile> files = newArrayList
+                // Open file from Resource
+                if (resTransfer.isSupportedType(event.currentDataType)) {
+                    val resources = event.data as IResource[]
+                    if(!resources.isNullOrEmpty) {
+                        for(res : resources)
+                        if(res.type == IResource.FILE) {
+                            files.add(res as IFile)
+                        }
+                    }
+                }
+                // Open file from File transfer
+                if (fileTransfer.isSupportedType(event.currentDataType)){
+                    val filePaths = event.data as String[]
+                    if(!filePaths.isNullOrEmpty) {
+                        for(filePath : filePaths) {
+                            val file = PromPlugin.findFile(filePath)
+                            if(file !== null) {
+                                files.add(file)
+                            }    
+                        }
+                    }
+                }
+                if(!files.isNullOrEmpty) {
+                    SimulationUtil.startSimulation(files)
+                }
+            }
+        })
     }
     
     /**
