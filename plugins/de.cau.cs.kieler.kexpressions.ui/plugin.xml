@@ -87,9 +87,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.kexpressions.kext.KExt"
-            name="KExt">
+              category="de.cau.cs.kieler.core.product.preferencePage"
+              class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.kexpressions.kext.KExt"
+              name="KExt">
             <keywordReference id="de.cau.cs.kieler.kexpressions.kext.ui.keyword_KExt"/>
         </page>
         <page
