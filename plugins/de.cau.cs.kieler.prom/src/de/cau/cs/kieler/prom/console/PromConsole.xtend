@@ -12,9 +12,12 @@
  */
 package de.cau.cs.kieler.prom.console
 
+import com.google.common.base.Charsets
+import com.google.common.base.Strings
+import com.google.common.io.CharStreams
 import java.io.InputStream
+import java.io.InputStreamReader
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.console.IConsole
 
 /**
  * Delegates printing to either a registered console, or to stdout if there is no registered.
@@ -26,55 +29,57 @@ import de.cau.cs.kieler.prom.console.IConsole
 class PromConsole {
     /**
      * The currently used console.
-     * Other plugins may register their console here.
+     * Other plugins may replace this console with a UI console.
      */
     @Accessors
-    private static var IConsole currentConsole
+    private static var IConsole currentConsole = new SystemConsole
     
     /**
      * Writes to the console.
+     * 
      * @param message The message to print to the console
      */
     public static def void print(String msg){
-        if(currentConsole == null) {
-            println(msg)
-        } else {
-            currentConsole.print(msg)       
-        }
+        print(msg, ConsoleStyle.INFO)
     }
     
     /**
-     * Write the exception to the console.
+     * Write the exception and its cause to the console.
      * 
-     * @param Exception e the exception
+     * @param e The exception to be printed
      */
     public static def void print(Exception e){
-        if(currentConsole == null) {
-            e.printStackTrace
-        } else {
-            currentConsole.print(e)
+        var text = ""
+        text += Strings.nullToEmpty(e.toString())
+        if(e.cause !== null) {
+            if(text.length > 0 )
+                text += ":"
+            text += Strings.nullToEmpty(e.cause.localizedMessage)    
         }
+        print(text, ConsoleStyle.ERROR)
+    }
+    
+    /**
+     * Writes to the console.
+     * 
+     * @param message The message to print to the console
+     * @param style The style for the message
+     */
+    public static def void print(String msg, ConsoleStyle style){
+        currentConsole.print(msg, style)
     }
     
     /**
      * Brings the console to the front.
      */
     public static def void bringToFront() {
-        currentConsole?.bringToFront
+        currentConsole.bringToFront
     }
 
     /**
      * Remove all text from the console.
      */
     public static def void clear() {
-        currentConsole?.clear
-    }
-    
-    /**
-     * Copies all bytes from the input stream to the console.
-     * Does not close the stream.
-     */
-    public static def void copy(InputStream from) {
-        currentConsole?.copy(from)
+        currentConsole.clear
     }
 }

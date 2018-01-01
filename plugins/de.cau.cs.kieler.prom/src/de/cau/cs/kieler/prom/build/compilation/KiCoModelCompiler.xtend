@@ -329,7 +329,7 @@ class KiCoModelCompiler extends ModelCompiler {
      * @param targetPath File path where the result should be saved
      */
     private def void saveCompilationResult(Object result) {
-        if(result == null) {
+        if(result === null) {
             return;
         } else if(result instanceof CodeContainer) {
             for (fileName : result.files.keySet) {
