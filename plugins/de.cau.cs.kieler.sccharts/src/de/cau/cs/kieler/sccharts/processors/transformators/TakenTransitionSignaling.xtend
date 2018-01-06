@@ -103,7 +103,7 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     }
     
     private def State encapsuleInSuperstate(State state) {
-        val newState = createState
+        val newState = createState(state.name)
         val newRegion = newState.createControlflowRegion(state.name+"_encapsuled")
         newRegion.states.add(state)
         state.setInitial
