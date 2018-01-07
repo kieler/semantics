@@ -103,16 +103,19 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     }
     
     private def State encapsuleInSuperstate(State state) {
-        val newState = createState
+        val newState = createState(state.name)
+        state.name = state.name+"_Original"
         val newRegion = newState.createControlflowRegion(state.name+"_encapsuled")
         newRegion.states.add(state)
         state.setInitial
-        // Move input / output declarations to new state
+        // Move all declarations to new state
+        // FIXME: It would be sufficient to only move input / output declarations,
+        // but then local variables of the original model cannot be easily communicated in the simulation as their name changes.
+        // Maybe it would be better to augment the final compilation environment with metadata about introduced variables and their purpose (see KISEMA-1297)
+        // Then the simulation can be created from that info. This would also make analyzing the original model obsolete.
         for(decl : state.declarations.clone) {
             if(decl instanceof VariableDeclaration) {
-                if(decl.input || decl.output) {
-                    newState.declarations.add(decl)
-                }
+                newState.declarations.add(decl)
             }
         }
         return newState
