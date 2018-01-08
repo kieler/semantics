@@ -19,6 +19,7 @@ import java.util.List
 
 import static com.google.common.base.Preconditions.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
+import static extension de.cau.cs.kieler.kicool.compilation.internal.SystemTransformation.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
@@ -42,7 +43,8 @@ class Compile {
         checkNotNull(sourceModel, "Source model is null")
         val context = KiCoolRegistration.getInjector.getInstance(CompilationContext)
         context => [
-            it.system = system
+            it.originalSystem = system
+            it.transformSystem
             it.originalModel = sourceModel
             it.populateContext
             // configure start environment
@@ -75,6 +77,8 @@ class Compile {
         ]
         createCompilationContext(system, sourceModel)
     }
+    
+    
     
     /**
      * Start a compilation in an asynchronous job.

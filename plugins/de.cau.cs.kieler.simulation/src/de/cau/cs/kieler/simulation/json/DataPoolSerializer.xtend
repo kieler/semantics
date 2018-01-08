@@ -45,23 +45,26 @@ class DataPoolSerializer implements JsonSerializer<DataPool>, JsonDeserializer<D
     }
     
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        val object = json.asJsonObject
-        
-        val pool = new DataPool
-        for(entry : object.entrySet) {
-            switch(entry.key) {
-                // Fetch action index
-                case "actionIndex" : {
-                    pool.actionIndex = entry.value.asInt
-                }
-                default : {
-                    // Create model
-                    val model = context.deserialize(entry.value, typeof(Model)) as Model
-                    model.name = entry.key
-                    pool.addModel(model)
+        try {
+            val pool = new DataPool
+            val object = json.asJsonObject            
+            for(entry : object.entrySet) {
+                switch(entry.key) {
+                    // Fetch action index
+                    case "actionIndex" : {
+                        pool.actionIndex = entry.value.asInt
+                    }
+                    default : {
+                        // Create model
+                        val model = context.deserialize(entry.value, typeof(Model)) as Model
+                        model.name = entry.key
+                        pool.addModel(model)
+                    }
                 }
             }
+            return pool
+        } catch (Exception e) {
+            throw new Exception("Cannot deserialize Data Pool", e)
         }
-        return pool
     }
 }

@@ -197,7 +197,7 @@ class TraceHandler extends DefaultDataHandler {
                     val isVSValue = variable.name.endsWith("_val") 
                                     && model.variables.exists[name.equals(variable.name.substring(0, variable.name.length - 4))]
                     
-                    if (!isVSValue && correspondingVariable === null) {
+                    if (!isVSValue) {
                         if(correspondingVariable === null) {
                             // Variable is absent in the trace
                             shouldBePresent = false

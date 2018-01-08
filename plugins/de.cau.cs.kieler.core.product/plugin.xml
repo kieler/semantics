@@ -66,5 +66,13 @@
      <initializer class="de.cau.cs.kieler.core.product.KLighDPreferenceInitializer">
      </initializer>
   </extension>
+  <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           class="de.cau.cs.kieler.core.product.KielerSemanticsPreferencePage"
+           id="de.cau.cs.kieler.core.product.preferencePage"
+           name="KIELER Modeling">
+     </page>
+  </extension>
   
 </plugin>

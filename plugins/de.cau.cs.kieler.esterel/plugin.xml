@@ -75,6 +75,9 @@
            class="de.cau.cs.kieler.esterel.processors.transformators.incremental.RunTransformation">
      </Processor>
      <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SCLTransformation">
+     </Processor>
+     <Processor
            class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SensorTransformation">
      </Processor>
      <Processor

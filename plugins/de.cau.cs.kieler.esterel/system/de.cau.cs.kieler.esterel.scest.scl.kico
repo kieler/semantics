@@ -29,3 +29,4 @@ de.cau.cs.kieler.esterel.processors.sensor
 de.cau.cs.kieler.esterel.processors.constant
 de.cau.cs.kieler.esterel.processors.signal
 de.cau.cs.kieler.esterel.processors.localsignal
+de.cau.cs.kieler.esterel.processors.scesttoscl

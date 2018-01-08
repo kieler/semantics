@@ -78,9 +78,10 @@
 	<extension
 			point="org.eclipse.ui.preferencePages">
 		<page
-			class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="de.cau.cs.kieler.lustre.Lustre"
-			name="Lustre">
+        category="de.cau.cs.kieler.core.product.preferencePage"
+        class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+        id="de.cau.cs.kieler.lustre.Lustre"
+        name="Lustre">
 			<keywordReference id="de.cau.cs.kieler.lustre.ui.keyword_Lustre"/>
 		</page>
 		<page

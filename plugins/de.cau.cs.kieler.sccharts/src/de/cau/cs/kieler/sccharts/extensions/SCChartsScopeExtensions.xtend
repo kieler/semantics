@@ -114,7 +114,7 @@ class SCChartsScopeExtensions {
         for(vo : scope.valuedObjects) {
             if (vo.name.equals(name)) return vo
         }
-        if (scope.eContainer != null && scope.eContainer instanceof Scope) 
+        if (scope.eContainer !== null && scope.eContainer instanceof Scope) 
             return (scope.eContainer as Scope).getValuedObjectByName(name)
         return null
     }
@@ -127,7 +127,7 @@ class SCChartsScopeExtensions {
         for(vo : scope.valuedObjects) {
             if (!map.containsKey(vo.name)) map.put(vo.name, vo)
         }
-        if (scope.eContainer != null && scope.eContainer instanceof Scope) 
+        if (scope.eContainer !== null && scope.eContainer instanceof Scope) 
             return (scope.eContainer as Scope).getValuedObjectNameMap(map)
         map
     }

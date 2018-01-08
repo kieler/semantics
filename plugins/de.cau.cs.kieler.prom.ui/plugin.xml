@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="de.cau.cs.kieler.sccharts"
+            category="de.cau.cs.kieler.core.product.preferencePage"
             class="de.cau.cs.kieler.prom.ui.drafts.ProjectDraftPage"
             id="de.cau.cs.kieler.prom.projectDraftPreferencePage"
             name="Project Drafts">
@@ -162,9 +162,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.prom.ui.KiBuildExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.prom.KiBuild"
-            name="KiBuild">
+              category="de.cau.cs.kieler.core.product.preferencePage"
+              class="de.cau.cs.kieler.prom.ui.KiBuildExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.prom.KiBuild"
+              name="KiBuild">
             <keywordReference id="de.cau.cs.kieler.prom.ui.keyword_KiBuild"/>
         </page>
         <page

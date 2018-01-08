@@ -16,6 +16,9 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 @SuppressWarnings("all")
 public class AbstractKiCoolProposalProvider extends de.cau.cs.kieler.annotations.ui.contentassist.AnnotationsProposalProvider {
 		
+	public void completeSystem_Public(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+	}
 	public void completeSystem_Id(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}

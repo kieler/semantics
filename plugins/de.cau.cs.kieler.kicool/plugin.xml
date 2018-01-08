@@ -22,6 +22,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.kicool.identity.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.kicool.identity.dynamic.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">
@@ -36,6 +39,9 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.kicool.processors.metrics.PTime">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.DynamicIdentity">
       </Processor>
    </extension>
    

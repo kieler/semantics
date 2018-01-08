@@ -99,6 +99,7 @@ public class KiVisCanvas extends Composite {
             svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
             svgCanvas.setDoubleBufferedRendering(true);
             svgCanvas.setProgressivePaint(true);
+            svgCanvas.setFocusCycleRoot(false);
 
             // Create a AWT panel
             Panel panel = new Panel(new BorderLayout()) {

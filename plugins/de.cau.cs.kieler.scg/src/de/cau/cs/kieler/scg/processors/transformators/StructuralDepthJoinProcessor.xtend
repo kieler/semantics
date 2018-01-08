@@ -100,7 +100,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
             if (loopData.criticalNodes.contains(fork) && loopData.criticalNodes.contains(fork.join)) {
                 val entries = threadData.forkMap.get(fork)
                 if (entries.exists[ threadData.data.get(it) === ThreadPathType.POTENTIALLY_INSTANTANEOUS ]
-                    && fork.hasConcurrentDelay(threadData)) {
+                    && fork.hasConcurrentDelay(threadData, <Node> newHashSet)) {
                     cureableForks += fork
                 }
             }
@@ -227,19 +227,19 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         join.allPrevious.map[eContainer].filter(Exit).map[entry]
     }
     
-    protected def boolean hasConcurrentDelay(Node node, ThreadData threadData) {
+    protected def boolean hasConcurrentDelay(Node node, ThreadData threadData, Set<Node> visited) {
         if (node instanceof Fork) {
             val entries = threadData.forkMap.get(node)
             if (entries.exists[ threadData.data.get(it) === ThreadPathType.DELAYED ]) return true            
         }
         
-        val visited = <Node> newHashSet => [ add(node) ]
+        visited.add(node)
         val searchStack = <Node> newLinkedList => [ addAll(node.allPrevious.map[ eContainer ].filter(Node) ) ]
         while (!searchStack.empty) {
             val head = searchStack.pop
             
             if (head instanceof Fork) {
-                return head.hasConcurrentDelay(threadData)
+                return head.hasConcurrentDelay(threadData, visited)
             }
             
             val nextNodes = head.allPrevious.map[ eContainer ].filter(Node).filter[ !visited.contains(it) ]

@@ -83,37 +83,52 @@ ruleSystem returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='system' 
+((
+(
+		lv_public_0_0=	'public' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getSystemAccess().getSystemKeyword_0());
+        newLeafNode(lv_public_0_0, grammarAccess.getSystemAccess().getPublicPublicKeyword_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSystemRule());
+	        }
+       		setWithLastConsumed($current, "public", true, "public");
+	    }
+
+)
+)?	otherlv_1='system' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getSystemAccess().getSystemKeyword_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getIdQualifiedIDParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getIdQualifiedIDParserRuleCall_2_0()); 
 	    }
-		lv_id_1_0=ruleQualifiedID		{
+		lv_id_2_0=ruleQualifiedID		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		set(
        			$current, 
        			"id",
-        		lv_id_1_0, 
+        		lv_id_2_0, 
         		"de.cau.cs.kieler.annotations.Annotations.QualifiedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_2='version' 
+)	otherlv_3='version' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getSystemAccess().getVersionKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getSystemAccess().getVersionKeyword_3());
     }
 (
 (
-		lv_version_3_0=RULE_INT
+		lv_version_4_0=RULE_INT
 		{
-			newLeafNode(lv_version_3_0, grammarAccess.getSystemAccess().getVersionINTTerminalRuleCall_3_0()); 
+			newLeafNode(lv_version_4_0, grammarAccess.getSystemAccess().getVersionINTTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -122,42 +137,42 @@ ruleSystem returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"version",
-        		lv_version_3_0, 
+        		lv_version_4_0, 
         		"de.cau.cs.kieler.annotations.Annotations.INT");
 	    }
 
 )
-)	otherlv_4='label' 
+)	otherlv_5='label' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getSystemAccess().getLabelKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getSystemAccess().getLabelKeyword_5());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getLabelEStringParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getLabelEStringParserRuleCall_6_0()); 
 	    }
-		lv_label_5_0=ruleEString		{
+		lv_label_6_0=ruleEString		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		set(
        			$current, 
        			"label",
-        		lv_label_5_0, 
+        		lv_label_6_0, 
         		"de.cau.cs.kieler.annotations.Annotations.EString");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_6='input' 
+)(	otherlv_7='input' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getSystemAccess().getInputKeyword_6_0());
+    	newLeafNode(otherlv_7, grammarAccess.getSystemAccess().getInputKeyword_7_0());
     }
 (
 (
-		lv_inputClass_7_0=RULE_ID
+		lv_inputClass_8_0=RULE_ID
 		{
-			newLeafNode(lv_inputClass_7_0, grammarAccess.getSystemAccess().getInputClassIDTerminalRuleCall_6_1_0()); 
+			newLeafNode(lv_inputClass_8_0, grammarAccess.getSystemAccess().getInputClassIDTerminalRuleCall_7_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -166,28 +181,28 @@ ruleSystem returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"inputClass",
-        		lv_inputClass_7_0, 
+        		lv_inputClass_8_0, 
         		"de.cau.cs.kieler.annotations.Annotations.ID");
 	    }
 
 )
-))?(	otherlv_8='set' 
+))?(	otherlv_9='set' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getSystemAccess().getSetKeyword_7_0());
+    	newLeafNode(otherlv_9, grammarAccess.getSystemAccess().getSetKeyword_8_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getStartsetsKVPairParserRuleCall_7_1_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getStartsetsKVPairParserRuleCall_8_1_0()); 
 	    }
-		lv_startsets_9_0=ruleKVPair		{
+		lv_startsets_10_0=ruleKVPair		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		add(
        			$current, 
        			"startsets",
-        		lv_startsets_9_0, 
+        		lv_startsets_10_0, 
         		"de.cau.cs.kieler.kicool.KiCool.KVPair");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -196,16 +211,16 @@ ruleSystem returns [EObject current=null]
 ))*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_9_0()); 
 	    }
-		lv_intermediates_10_0=ruleIntermediateReference		{
+		lv_intermediates_11_0=ruleIntermediateReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		add(
        			$current, 
        			"intermediates",
-        		lv_intermediates_10_0, 
+        		lv_intermediates_11_0, 
         		"de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -214,16 +229,16 @@ ruleSystem returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_9_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_10_0()); 
 	    }
-		lv_processors_11_0=ruleProcessorGroup		{
+		lv_processors_12_0=ruleProcessorGroup		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		set(
        			$current, 
        			"processors",
-        		lv_processors_11_0, 
+        		lv_processors_12_0, 
         		"de.cau.cs.kieler.kicool.KiCool.ProcessorGroup");
 	        afterParserOrEnumRuleCall();
 	    }

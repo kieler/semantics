@@ -38,6 +38,9 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
 import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
+import org.eclipse.swt.widgets.Spinner
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import org.eclipse.swt.events.SelectionAdapter
 
 /**
  * @author aas
@@ -63,6 +66,11 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      * The text field to set the compile chain of the current model analyzer.
      */
     private var Text compileChainField
+    
+    /**
+     * The control to set the maximum history length
+     */
+    private var Spinner historyLengthControl
     
     /**
      * Implementation of IWorkbenchPreferencePage.
@@ -95,14 +103,30 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      */
     private def void createSimulationControls(Composite parent) {
         // Create the checkbox to determine if register variables should be communicated
+        var group = UIUtil.createGroup(parent, "JSON communication", 1)
         val enabled = RegisterVariablesFinder.isEnabled
-        val checkbox = UIUtil.createCheckButton(parent, "Communicate register variables", enabled)
+        val checkbox = UIUtil.createCheckButton(group, "Communicate register variables", enabled)
         checkbox.addSelectionListener(new SelectionListener() {
             override widgetDefaultSelected(SelectionEvent e) {
             }
             
             override widgetSelected(SelectionEvent e) {
                 RegisterVariablesFinder.enabled = checkbox.selection
+            }
+        })
+        
+        // Create the control to define the maximum simulation history length
+        group = UIUtil.createGroup(parent, "Simulation history", 2)
+        UIUtil.createLabel(group, "Maximum size\n(use -1 for infinite)")
+        historyLengthControl = new Spinner(group, SWT.BORDER)
+        historyLengthControl.minimum = -1
+        historyLengthControl.increment = 1
+        historyLengthControl.pageIncrement = 1
+        historyLengthControl.selection = SimulationManager.maxHistoryLength
+        historyLengthControl.addSelectionListener(new SelectionAdapter() {
+            override widgetSelected(SelectionEvent e) {
+                val value = historyLengthControl.selection
+                SimulationManager.maxHistoryLength = value
             }
         })
     }
@@ -165,6 +189,10 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      * Restore the default values. 
      */
     override performDefaults() {
+        // Reset history length
+        SimulationManager.maxHistoryLength = SimulationManager.DEFAULT_MAX_HISTORY_LENGTH
+        historyLengthControl.selection = SimulationManager.DEFAULT_MAX_HISTORY_LENGTH
+        
         // Reset compile chain of model analyzers
         for(analyzer : ModelAnalyzer.analyzers) {
             analyzer.compileChain = analyzer.defaultCompileChain

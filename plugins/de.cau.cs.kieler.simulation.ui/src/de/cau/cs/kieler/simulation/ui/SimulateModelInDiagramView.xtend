@@ -33,7 +33,7 @@ class SimulateModelInDiagramView implements KiCoModelViewUIContributor {
     private var KiCoModelUpdateController muc
     
     new() {
-        simulateAction = new DataPoolViewToolbarAction("Simulate model", "runIcon.png") {
+        simulateAction = new DataPoolViewToolbarAction("Simulate model", "launch.png") {
             override run() {
                 PromPlugin.execInJob("Starting simulation",
                                      [SubMonitor monitor |

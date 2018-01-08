@@ -88,7 +88,13 @@ class SimulationContext {
      */
     public var List<IFile> executableFiles = newArrayList
     
-    // Fields for model compilation to executables, which are used to start the simulation afterwards
+    // Fields for model compilation to executables
+    /**
+     * Determines if the compile chain for the specific model should be used (true),
+     * or the compile chain from the given simulation backend build config (false).
+     */
+    public var boolean overwriteCompileChain = true
+    
     /**
      * The progress monitor.
      */
@@ -145,7 +151,7 @@ class SimulationContext {
                 if(e.operation == SimulationOperation.STOP) {
                     val root = ResourcesPlugin.getWorkspace.getRoot
                     val project = root.getProject(SimulationContext.TEMPORARY_PROJECT_NAME)
-                    project.delete(false, null)
+                    project.delete(true, null)
                 }
             }
         }
@@ -341,8 +347,10 @@ class SimulationContext {
         // Compile model
         for (modelCompiler : modelCompilers) {
             // Set compile chain to the compile chain for the model, which is set in the model analyzer
-            if(modelCompiler instanceof KiCoModelCompiler) {
-                modelCompiler.setCompileChain(modelAnalyzer.compileChain)
+            if(overwriteCompileChain) {
+                if(modelCompiler instanceof KiCoModelCompiler) {
+                    modelCompiler.setCompileChain(modelAnalyzer.compileChain)
+                }
             }
             // Compile the model
             val modelCompilationResult = modelCompiler.compile(modelFile, model)
@@ -488,12 +496,16 @@ class SimulationContext {
             }
         }
         // Find a suited simulation backend for the processor id
-        for(backend : SimulationBackend.backends) {
-            if(backend.isSupported(lastProcessorId)) {
-                return backend
+        if(lastProcessorId.isNullOrEmpty) {
+            throw new Exception("Cannot resolve compile chain '"+compileChain+"'")
+        } else {
+            for(backend : SimulationBackend.backends) {
+                if(backend.isSupported(lastProcessorId)) {
+                    return backend
+                }
             }
+            throw new Exception("No simulation backend was found for the result of the last processor '"+lastProcessorId+"'")    
         }
-        throw new Exception("No simulation backend was found for the result of the last processor '"+lastProcessorId+"'")    
     }
     
     /**

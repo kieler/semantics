@@ -46,15 +46,19 @@ class SCChartsControlflowRegionExtensions {
         return true
     }
     
-    def ControlflowRegion createControlflowRegion(String id) {
+    def ControlflowRegion createControlflowRegion(String id, String label) {
         SCChartsFactory::eINSTANCE.createControlflowRegion => [
             setName(id)
-            setLabel("")
+            setLabel(label)
         ]
     }
+    
+    def ControlflowRegion createControlflowRegion(String id) {
+        createControlflowRegion(id, "")
+    }
 
-    def createControlflowRegion(State state, String id) {
-        val region = createControlflowRegion(id)
+    def createControlflowRegion(State state, String id, String label) {
+        val region = createControlflowRegion(id, label)
         // ATTENTION: if this is the first region and there already is an IMPLICIT region,
         // e.g., because of inner actions, then return THIS region only!
         if (state.regions.size == 1 &&
@@ -68,6 +72,10 @@ class SCChartsControlflowRegionExtensions {
         region
     }
 
+    def createControlflowRegion(State state, String id) {
+        createControlflowRegion(state, id, "")
+    }
+    
     // was empty
     def boolean containsStates(ControlflowRegion region) {
         !region.states.empty

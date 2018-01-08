@@ -53,9 +53,11 @@
 <#macro value_getter>
 <#if varType == "int">
 getInt<#t>
+<#elseif varType ==  "unsigned">
+getLong<#t>
 <#elseif varType ==  "float">
 getFloat<#t>
-<#elseif varType == "bool">
+<#elseif varType == "bool" || varType == "pure">
 getBoolean<#t>
 <#elseif varType == "string">
 getString<#t>
