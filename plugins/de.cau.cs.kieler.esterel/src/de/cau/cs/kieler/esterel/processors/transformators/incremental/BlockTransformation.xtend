@@ -47,13 +47,19 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(Block).toList.forEach[transform]
+        if (true) {
+            val Block block = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Block
+            transform(block)
+        }
+        else {
+            model.eAllContents.filter(Block).toList.forEach[transform]
+        }
     }
     
     def transform(Block block) {
         val ScopeStatement scope = block.statements.createScopeStatement
-        block.replace(scope)
         environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, scope)
+        block.replace(scope)
     }
     
 }

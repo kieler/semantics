@@ -81,7 +81,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     }
 
     override getName() {
-        return "SCEstIntermediateProcessor"
+        return "Intermediate"
     }
 
     public static var IProperty<EObject> NEXT_STATEMENT_TO_TRANSFORM = 
