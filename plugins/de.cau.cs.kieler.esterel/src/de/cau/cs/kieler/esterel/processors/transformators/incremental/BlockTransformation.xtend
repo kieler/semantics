@@ -19,6 +19,9 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.scl.ScopeStatement
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -50,6 +53,7 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     def transform(Block block) {
         val ScopeStatement scope = block.statements.createScopeStatement
         block.replace(scope)
+        environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, scope)
     }
     
 }

@@ -98,11 +98,18 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         val nextObj = obj.nextStatement 
         val processorID = nextObj.getCorrespondingProcessorID 
         environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, nextObj)
-        // TODO add processorID to processorList (see identityDynamic)
-        // and additionally add processorID of this intermediate processor to processorList
-        // but only if it is not an EsterelProgram; if that is the case, only one transformation is left
-        // and for a module add multiple processors to the processor list (signal, sensor transformation ...)
-        // before the next module is going to be transformed
+        if (nextObj instanceof Module) {
+            compilationContext.addProcessorEntry(SENSOR)
+            compilationContext.addProcessorEntry(CONSTANT)
+            compilationContext.addProcessorEntry(SIGNAL)
+        }
+        else {
+            compilationContext.addProcessorEntry(processorID)
+        }
+        // as long as there are Esterel statements, add intermediate processor to the end of the compilation chain
+        if (!(nextObj instanceof EsterelProgram)) {
+            compilationContext.addProcessorEntry(ID)
+        }
     }
     
     def getCorrespondingProcessorID(EObject obj) {
@@ -113,6 +120,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             Do : return DO
             Emit : return EMIT
             EsterelParallel : return PARALLEL
+            EsterelProgram : return SCL
             EveryDo : return EVERYDO
             Exec : return EXEC
             Function : return FUNCTION
