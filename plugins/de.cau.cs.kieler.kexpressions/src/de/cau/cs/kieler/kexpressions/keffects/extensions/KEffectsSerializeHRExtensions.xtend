@@ -45,7 +45,11 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
         val valuedObjectContainer = emission.reference.valuedObject.eContainer
         if (valuedObjectContainer instanceof VariableDeclaration) {
             if (valuedObjectContainer.type != ValueType::PURE) {
-                return (emission.reference.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
+                if (emission.newValue !== null) {
+                    return (emission.reference.valuedObject.name + "(" + emission.newValue.serializeHR + ")")
+                 } else {
+                    return emission.reference.valuedObject.name
+                 }             
             } else {
                 return emission.reference.valuedObject.name
             }
