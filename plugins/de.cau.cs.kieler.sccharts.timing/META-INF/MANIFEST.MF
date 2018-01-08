@@ -21,7 +21,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.sccharts.scg;bundle-version="0.1.1",
  de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.sccharts.preferences,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.sccharts.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

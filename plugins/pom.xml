@@ -45,7 +45,6 @@
     <module>de.cau.cs.kieler.sccharts.examples</module>
     <module>de.cau.cs.kieler.sccharts.legacy.ui</module>
     <module>de.cau.cs.kieler.sccharts.legacy</module>
-    <module>de.cau.cs.kieler.sccharts.preferences</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.timing</module>

@@ -28,6 +28,10 @@ import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.klighd.piccolo.viewer.PiccoloViewer
+import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.prom.PromPlugin
 
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
@@ -148,37 +152,43 @@ abstract class DiagramHighlighter {
             }
             
             override onSimulationControlEvent(SimulationControlEvent e) {
-                switch(e.operation) {
-                    case SimulationOperation.INITIALIZED : {
-                        PromUIPlugin.asyncExecInUI [
-                            initialize(e.pool)
-                        ]
-                    }
-                    case SimulationOperation.STOP : {
-                        PromUIPlugin.asyncExecInUI [
-                            stop
-                        ]
-                    }
-                    case SimulationOperation.STEP_HISTORY_BACK,
-                    case SimulationOperation.STEP_HISTORY_FORWARD : {
-                        val simMan = SimulationManager.instance
-                        val historyPos = simMan.positionInHistory
-                        // Save current state to come back to this if not currently viewing some former highlighting already
-                        if(lastPositionInHistory == 0) {
-                            highlightingHistory.put(SimulationManager.instance.currentState.actionIndex, lastHighlighting.clone)    
+                PromUIPlugin.asyncExecInUI [
+                    try {
+                        startDiagramBatchUpdate
+                        
+                        switch(e.operation) {
+                            case SimulationOperation.INITIALIZED : {
+                                initialize(e.pool)
+                            }
+                            case SimulationOperation.STOP : {
+                                stop
+                            }
+                            case SimulationOperation.STEP_HISTORY_BACK,
+                            case SimulationOperation.STEP_HISTORY_FORWARD : {
+                                val simMan = SimulationManager.instance
+                                val historyPos = simMan.positionInHistory
+                                // Save current state to come back to this if not currently viewing some former highlighting already
+                                if(lastPositionInHistory == 0) {
+                                    highlightingHistory.put(SimulationManager.instance.currentState.actionIndex, lastHighlighting.clone)    
+                                }
+                                lastPositionInHistory = historyPos
+                                // Load old state
+                                if(historyPos > 0) {
+                                    loadFormerState(simMan.historyState)
+                                } else {
+                                    loadFormerState(simMan.currentState)
+                                }
+                            }
+                            default : {
+                                update(e.pool)
+                            }
                         }
-                        lastPositionInHistory = historyPos
-                        // Load old state
-                        if(historyPos > 0) {
-                            loadFormerState(simMan.historyState)
-                        } else {
-                            loadFormerState(simMan.currentState)
-                        }
+                    } catch(Exception ex) {
+                        PromUIPlugin.log("Errors occured while updating '"+name+"'", ex)
+                    } finally {
+                        applyDiagramBatchUpdate
                     }
-                    default : {
-                        update(e.pool)
-                    }
-                }
+                ]
             }
         }
         return listener
@@ -248,6 +258,26 @@ abstract class DiagramHighlighter {
     }
     
     /**
+     * Records all following changes to the diagram to apply them all at once using applyDiagramBatchUpdate.
+     */
+    protected def void startDiagramBatchUpdate() {
+        val viewer = diagramViewContext.viewer
+        if(viewer instanceof PiccoloViewer) {
+            viewer.startRecording
+        }
+    }
+    
+    /**
+     * Applies all changes to the diagram that have been recorded since the last call of startDiagramBatchUpdate.
+     */
+    protected def void applyDiagramBatchUpdate() {
+        val viewer = diagramViewContext.viewer
+        if(viewer instanceof PiccoloViewer) {
+            viewer.stopRecording(ZoomStyle.NONE, null, 0)
+        }
+    }
+    
+    /**
      * Returns the highlighting of the given EObjects with the given style.
      * 
      * @param eObjects The objects
@@ -266,7 +296,7 @@ abstract class DiagramHighlighter {
     
     private def void updateHistory() {
         val simMan = SimulationManager.instance
-        val maxHistoryLength = simMan.maxHistoryLength.intValue
+        val maxHistoryLength = SimulationManager.maxHistoryLength
         if(maxHistoryLength != 0) {
             val lastState = simMan.history.last
             if(lastState != null) {

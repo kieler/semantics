@@ -67,6 +67,7 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+import org.eclipse.jface.viewers.ViewerCell
 
 /**
  * Displays the data of a running simulation.
@@ -234,6 +235,26 @@ class DataPoolView extends ViewPart {
                 viewer.refresh
             }
         });
+        mgr.add(new Action("Reset All User Values"){
+            override run(){
+                for(i : viewer.input as ArrayList<Object>) {
+                    if(i instanceof Variable) {
+                        val variable = i as Variable
+                        variable.userValue = null
+                    } 
+                }
+                viewer.refresh
+            }
+        });
+        mgr.add(new Action("Reset Selected User Values"){
+            override run(){
+                val variable = viewer.structuredSelection.firstElement as Variable
+                if(variable !== null) {
+                    variable.userValue = null
+                    viewer.update(variable, null)
+                } 
+            }
+        });
         mgr.add(new Separator())
         mgr.add(new Action("Enable Advanced Controls", IAction.AS_CHECK_BOX) {
             override run() {
@@ -297,36 +318,6 @@ class DataPoolView extends ViewPart {
                                          "Last executed macro tick")
         mgr.add(tickInfo)
         mgr.add(new Separator())
-        mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
-        mgr.add(new Separator())
-        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
-        mgr.add(new Separator())
-        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
-        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
-        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
-        mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
-        mgr.add(new Separator())
-        mgr.add(new Action("Reset All"){
-            override run(){
-                for(i : viewer.input as ArrayList<Object>) {
-                    if(i instanceof Variable) {
-                        val variable = i as Variable
-                        variable.userValue = null
-                    } 
-                }
-                viewer.refresh
-            }
-        });
-        mgr.add(new Action("Reset Selection"){
-            override run(){
-                val variable = viewer.structuredSelection.firstElement as Variable
-                if(variable !== null) {
-                    variable.userValue = null
-                    viewer.update(variable, null)
-                } 
-            }
-        });
-        mgr.add(new Separator())
         mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
             override run() {
                 val title = "Controls for the Data Pool View"
@@ -338,6 +329,16 @@ class DataPoolView extends ViewPart {
                 dialog.open
             }
         })
+        mgr.add(new Separator())
+        mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
+        mgr.add(new Separator())
+        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
+        mgr.add(new Separator())
+        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
+        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
+        mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
+        mgr.add(new Separator())
     }
     
     /**
@@ -532,7 +533,12 @@ class DataPoolView extends ViewPart {
         userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
         // Use TAB to go to next row neighbor and activate cell editor
-        val focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer));
+        val multiSelectFocusCellHighlighter = new FocusCellOwnerDrawHighlighter(viewer) {
+            override onlyTextHighlighting(ViewerCell cell) {
+                return true;
+            }
+        }
+        val focusCellManager = new TableViewerFocusCellManager(viewer, multiSelectFocusCellHighlighter);
         val activationSupport = new ColumnViewerEditorActivationStrategy(viewer)
         activationSupport.enableEditorActivationWithKeyboard = true
         TableViewerEditor.create(viewer, focusCellManager, activationSupport, 
@@ -541,7 +547,7 @@ class DataPoolView extends ViewPart {
             ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
             ColumnViewerEditor.KEYBOARD_ACTIVATION))
 
-
+        // Drag and drop elements in the data pool
         val DragSource dndSource = new DragSource(viewer.control, DND.DROP_MOVE + DND.DROP_COPY)
         dndSource.setTransfer(#[TextTransfer.getInstance()])
         dndSource.addDragListener(new DragSourceListener () {
@@ -611,12 +617,14 @@ class DataPoolView extends ViewPart {
      * 
      * @param value The new status line text
      */
-    private def void setStatusLineText(String value) {
-        val bars = getViewSite().getActionBars();
-        if(bars !== null) {
-            val statusLineManager = bars.getStatusLineManager()
-            statusLineManager.setMessage(value);
-        }
+    public def void setStatusLineText(String value) {
+        PromUIPlugin.asyncExecInUI[
+            val bars = getViewSite().getActionBars();
+            if(bars !== null) {
+                val statusLineManager = bars.getStatusLineManager()
+                statusLineManager.setMessage(value);
+            }
+        ]
     }
     
     /**
@@ -653,9 +661,7 @@ class DataPoolView extends ViewPart {
              * @param e The event
              */
             override onErrorEvent(ErrorEvent e) {
-                PromUIPlugin.asyncExecInUI[
-                    dataPoolView.setStatusLineText(e.message)    
-                ]
+                dataPoolView.setStatusLineText(e.message)
             }
             
             /**

@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
 
-class FileData extends ConfigurationSerializable {
+class FileData extends ConfigurationSerializable implements Cloneable {
     
     /**
      * The project relative path of this file.
@@ -107,5 +107,15 @@ class FileData extends ConfigurationSerializable {
             return data.projectRelativePath == projectRelativePath
         }
         return false
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override clone() {
+        val copy = new FileData
+        copy.origin = origin
+        copy.projectRelativePath = projectRelativePath
+        return copy
     }
 }

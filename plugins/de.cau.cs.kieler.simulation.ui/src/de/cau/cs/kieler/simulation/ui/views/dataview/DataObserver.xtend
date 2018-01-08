@@ -85,7 +85,7 @@ class DataObserver {
             checkMinMaxValues(live)
         }
         
-        canvas.redraw
+        if (canvas !== null && !canvas.disposed) canvas.redraw
     }
     
     def double getVariableValue(Variable variable) {

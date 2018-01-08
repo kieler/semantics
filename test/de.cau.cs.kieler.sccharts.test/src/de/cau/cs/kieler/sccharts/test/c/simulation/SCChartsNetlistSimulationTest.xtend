@@ -91,6 +91,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         val context = new SimulationContext
         SimulationContext.setDeleteTemporaryProject(false)
         context.simulationBackend = simBackend
+        context.overwriteCompileChain = false
         // Setup simulation project
         val project = context.temporaryProject
         try {

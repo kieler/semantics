@@ -34,7 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
         
     def dispatch CharSequence serializeHR(Assignment assignment) {
-        if (assignment.expression == null) {
+        if (assignment.expression === null) {
             assignment.serializeAssignment("")
         } else {
             assignment.serializeAssignment(assignment.expression.serializeHR)

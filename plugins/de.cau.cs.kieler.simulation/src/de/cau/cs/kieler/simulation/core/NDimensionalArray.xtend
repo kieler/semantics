@@ -42,6 +42,19 @@ class NDimensionalArray implements Cloneable{
     private var NDimensionalArrayElement[] elements
     
     /**
+     * Create an array for the given cardinalities (e.g. [1,2,3] to create an array simlilar to 'Object arr[1][2][3]').
+     * Note that the cardinality of each dimension is one more that the highest index that can be used on the array.
+     * 
+     * @param cardinalities The cardinalities
+     * @return new empty array with these cardinalities
+     */
+    def static NDimensionalArray create(Integer... cardinalities) {
+        val oneDimArraySize = cardinalities.fold(1, [a,b | a * b])
+        val arr = new NDimensionalArray(newArrayOfSize(oneDimArraySize), cardinalities)
+        return arr
+    }
+    
+    /**
      * Constructor.
      * The number of values and size of the array must match.
      * The values are stored linearly in a one dimensional array.
@@ -191,6 +204,13 @@ class NDimensionalArray implements Cloneable{
             newElem.userValue = NDimensionalArrayElement.getCloneOfValue(oldElem.userValue)
         }
         return arr 
+    }
+    
+    /**
+     * Checks whether this array is empty.
+     */
+    public def boolean isEmpty() {
+        return elements.isNullOrEmpty
     }
     
     /**

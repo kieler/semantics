@@ -80,22 +80,23 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.core.annotations.text.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.core.annotations.text.Annotations"
-            name="Annotations">
+              category="de.cau.cs.kieler.core.product.preferencePage"
+              class="de.cau.cs.kieler.annotations.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.annotations.Annotations"
+              name="Annotations">
             <keywordReference id="de.cau.cs.kieler.core.annotations.text.ui.keyword_Annotations"/>
         </page>
         <page
-            category="de.cau.cs.kieler.core.annotations.text.Annotations"
-            class="de.cau.cs.kieler.core.annotations.text.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.core.annotations.text.Annotations.coloring"
+            category="de.cau.cs.kieler.annotations.Annotations"
+            class="de.cau.cs.kieler.annotations.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.annotations.Annotations.coloring"
             name="Syntax Coloring">
             <keywordReference id="de.cau.cs.kieler.core.annotations.text.ui.keyword_Annotations"/>
         </page>
         <page
-            category="de.cau.cs.kieler.core.annotations.text.Annotations"
-            class="de.cau.cs.kieler.core.annotations.text.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.core.annotations.text.Annotations.templates"
+            category="de.cau.cs.kieler.annotations.Annotations"
+            class="de.cau.cs.kieler.annotations.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.annotations.Annotations.templates"
             name="Templates">
             <keywordReference id="de.cau.cs.kieler.core.annotations.text.ui.keyword_Annotations"/>
         </page>

@@ -66,7 +66,7 @@ class LabelPlacementSideHook extends SynthesisHook {
             STRATEGY_DIRECTIONAL,
             STRATEGY_ON_EDGE,
             STRATEGY_ON_EDGE_DIRECTIONAL),
-        STRATEGY_ON_EDGE_DIRECTIONAL).setCategory(LABEL_SIDE_CATEGORY);
+        STRATEGY_CONSISTENT).setCategory(LABEL_SIDE_CATEGORY);
     
     @Inject
     extension TransitionStyles;

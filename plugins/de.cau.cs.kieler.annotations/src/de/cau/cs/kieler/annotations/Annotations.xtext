@@ -179,12 +179,14 @@ terminal COMMENT_ANNOTATION returns ecore::EString:
 // Multiline Comment Terminal
 // Modified version of Terminals.ML_COMMENT as
 // COMMENT_ANNOTATION is not recognized correctly with original one.
+@Override
 terminal ML_COMMENT returns ecore::EString:
     '/*'!'*' -> '*/';
 
 terminal SL_COMMENT_ANNOTATION returns ecore::EString: 
     '//*' !('\n'|'\r')* ('\r'? '\n')?;
 
+@Override
 terminal SL_COMMENT: 
     '//' !'*' !('\n'|'\r')* ('\r'? '\n')?;
 
@@ -194,7 +196,8 @@ terminal fragment NUMBER :
 
 
 // Integer Terminal
-// An INT is a list of numbers.   
+// An INT is a list of numbers.  
+@Override 
 terminal INT returns ecore::EInt:
     NUMBER+;
 
@@ -214,9 +217,11 @@ terminal BOOLEAN returns ecore::EBooleanObject :
 
 // String Terminal
 // Custom terminal rule for strings, only use double quotes.
+@Override
 terminal STRING returns ecore::EString:
     '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 
+@Override
 terminal ID: 
     '^'?(('_'?'a'..'z'|'_'?'A'..'Z')|'_''0'..'9'|'__') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
     

@@ -129,7 +129,7 @@ class ProcessorDataManager {
     
     
     static def void resetSystem(AbstractCompilationNotification compilationNotification, KNode node, CompilerView view) {
-        val allProcessors = compilationNotification.compilationContext.processorMap.keySet
+        val allProcessors = compilationNotification.compilationContext.processorMap.keySet.toList
         for(processor : allProcessors) {
             val processorNode = node.findNode(processor.uniqueProcessorId)    
             if (processorNode === null) {
@@ -143,6 +143,7 @@ class ProcessorDataManager {
             // Set source model
             val sourceNode = node.findNode(NODE_SOURCE)
             val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
+            sourceNode.container.removeAllActions
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, 
@@ -156,11 +157,19 @@ class ProcessorDataManager {
     }
     
     static def void resetProcessor(AbstractProcessorNotification processorNotification, KNode node) {
+        val compilationContext = processorNotification.compilationContext
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
-        val processorNode = node.findNode(processorReference.uniqueProcessorId)
+        val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        var KNode processorNodeCandidate = null
+        if (originalProcessorReference === null) {
+            processorNodeCandidate = node.findNode(processorReference.uniqueProcessorId)
+        } else {
+            processorNodeCandidate = node.findNode(originalProcessorReference.uniqueProcessorId) 
+        }
+        val processorNode = processorNodeCandidate
         if (processorNode === null) {
-            System.err.println("There was an update notification for an non-existing processor (" + processorReference.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor (" + originalProcessorReference.uniqueProcessorId + 
                 "). This should not happen. I'm very sorry.")
             return
         }
@@ -193,11 +202,19 @@ class ProcessorDataManager {
     } 
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
+        val compilationContext = processorNotification.compilationContext
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
-        val processorNode = node.findNode(processorReference.uniqueProcessorId)
+        val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+        var KNode processorNodeCandidate = null
+        if (originalProcessorReference === null) {
+            processorNodeCandidate = node.findNode(processorReference.uniqueProcessorId)
+        } else {
+            processorNodeCandidate = node.findNode(originalProcessorReference.uniqueProcessorId) 
+        }
+        val processorNode = processorNodeCandidate
         if (processorNode === null) {
-            System.err.println("There was an update notification for an non-existing processor system (" + processorReference.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor system (" + originalProcessorReference.uniqueProcessorId + 
                 "). This should not happen. I'm sorry.")
             return
         }
@@ -545,12 +562,15 @@ class ProcessorDataManager {
     }
     
     static private def <T extends KRendering> T addAction(T rendering, Trigger trigger, String actionId) {
-
         rendering.actions += KRenderingFactory.eINSTANCE.createKAction() => [
             it.trigger = trigger;
             it.actionId = actionId;
         ];
         return rendering;
+    }
+    
+    static private def <T extends KRendering> void removeAllActions(T rendering) {
+            rendering.actions.clear
     }    
     
 }

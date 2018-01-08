@@ -48,19 +48,22 @@ class ModelSerializer implements JsonSerializer<Model>, JsonDeserializer<Model> 
      * {@inheritDoc}
      */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        val object = json.asJsonObject
-        
-        val model = new Model()
-        for(entry : object.entrySet) {
-            switch(entry.key) {
-               // Additional fields can be deserialized here in using cases. 
-               default : {
-                   val variable = context.deserialize(entry.value, typeof(Variable)) as Variable
-                   variable.name = entry.key
-                   model.addVariable(variable)
-               } 
-            }
-        } 
-        return model
+        try {
+            val object = json.asJsonObject
+            val model = new Model()
+            for(entry : object.entrySet) {
+                switch(entry.key) {
+                   // Additional fields can be deserialized here in using cases.
+                   default : {
+                       val variable = context.deserialize(entry.value, typeof(Variable)) as Variable
+                       variable.name = entry.key
+                       model.addVariable(variable)
+                   } 
+                }
+            } 
+            return model    
+        } catch (Exception e) {
+            throw new Exception("Cannot deserialize Model", e)
+        }
     }
 }

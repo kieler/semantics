@@ -47,12 +47,15 @@ class Environment extends EnvironmentPropertyHolder {
     
     public static val IProperty<CompilationContext> COMPILATION_CONTEXT = 
         new Property<CompilationContext>("de.cau.cs.kieler.kicool.compilationContext")
-    
+
     public static val IProperty<ProcessorReference> PROCESSOR_REFERENCE = 
         new Property<ProcessorReference>("de.cau.cs.kieler.kicool.processorReference")
 
     public static val IProperty<Processor<?,?>> PROCESSOR_INSTANCE = 
         new Property<Processor<?,?>>("de.cau.cs.kieler.kicool.processorInstance")
+
+    public static val IProperty<Boolean> DYNAMIC_PROCESSOR_SYSTEM = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.dynamicProcessorSystem", false)
         
     public static val IProperty<Boolean> ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.enabled", true)

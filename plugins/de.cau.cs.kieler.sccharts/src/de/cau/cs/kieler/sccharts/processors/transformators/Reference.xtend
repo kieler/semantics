@@ -38,6 +38,8 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.Replacements
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -55,6 +57,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsScopeExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
+    @Inject extension SCChartsActionExtensions
     
     protected var Dataflow dataflowProcessor = null
     
@@ -119,7 +122,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // Create the binding structure. The dedicated {@code Binding} class manages the bindings.
         // CreateBindings also reports binding errors and warnings.
-        val bindings = stateWithReference.createBindings
+        val bindings = stateWithReference.createBindings(replacements)
         for (binding : bindings) {
             if (binding.errors > 0) {
                 environment.errors.add("There are binding errors in a referenced state!\n" + 
@@ -130,6 +133,13 @@ class Reference extends SCChartsProcessor implements Traceable {
                 replacements.push(binding.targetValuedObject, binding.sourceExpression)
             }
         }       
+        
+        // If the output declarations have initialization parts, add them as entry actions because
+        // the declaration will be removed at the end of the transformation.
+        for (initialization : newState.declarations.filter(VariableDeclaration).filter[ output ].map[ valuedObjects ].
+            flatten.filter[ initialValue !== null ]) {
+            newState.createEntryAction.effects += initialization.createAssignment(initialization.initialValue)                            
+        }
         
         // Correct all valued object references in the new state.
         newState.replaceValuedObjectReferencesInState(replacements)        

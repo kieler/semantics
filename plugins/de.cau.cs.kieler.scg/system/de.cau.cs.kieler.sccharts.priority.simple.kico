@@ -1,9 +1,10 @@
-system de.cau.cs.kieler.sccharts.priority.simple
+public system de.cau.cs.kieler.sccharts.priority.simple
     version 1 
     label "Priority-based Compilation (simple)"
 
 de.cau.cs.kieler.sccharts.processors.transformators.reference
 de.cau.cs.kieler.sccharts.processors.transformators.for 
+de.cau.cs.kieler.sccharts.processors.transformators.prTransitions
 de.cau.cs.kieler.sccharts.processors.transformators.const
 de.cau.cs.kieler.sccharts.processors.transformators.history
 de.cau.cs.kieler.sccharts.processors.transformators.signal
@@ -20,6 +21,7 @@ de.cau.cs.kieler.sccharts.processors.transformators.exitAction
 de.cau.cs.kieler.sccharts.processors.transformators.initialization
 de.cau.cs.kieler.sccharts.processors.transformators.entryAction
 de.cau.cs.kieler.sccharts.processors.transformators.connector
+de.cau.cs.kieler.sccharts.processors.transformators.userSchedule
 de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
 de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth    
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG

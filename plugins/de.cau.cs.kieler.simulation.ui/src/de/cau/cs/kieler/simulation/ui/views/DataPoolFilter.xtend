@@ -17,6 +17,8 @@ import org.eclipse.jface.viewers.Viewer
 import org.eclipse.jface.viewers.ViewerFilter
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.prom.templates.VariableInterfaceType
+import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
 
 /**
  * Class that impelments the filter for the data pool view.
@@ -68,7 +70,13 @@ class DataPoolFilter extends ViewerFilter {
             }
             // Filter with (regex) search term
             if(!searchString.isNullOrEmpty) {
-                visible = visible && element.name.matches(".*("+searchString+").*")
+                var matches = true
+                try {
+                    matches = element.name.matches(".*("+searchString+").*")
+                } catch (PatternSyntaxException e) {
+                    DataPoolView.instance?.setStatusLineText("Error in RegEx search: " + e.message)
+                }
+                visible = visible && matches
             }
             return visible
         }

@@ -23,6 +23,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author ssm
@@ -37,23 +38,35 @@ class SCChartsReferenceExtensions {
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsSerializeHRExtensions
     
+    /** Creates all bindings for a referenced scope. */
     def List<Binding> createBindings(Scope scope) {
+        scope.createBindings(new Replacements)    
+    }
+    
+    /** Creates all bindings for a referenced scope. 
+     *  Consider the replacement stack for the implicit binding calculation.
+     */
+    def List<Binding> createBindings(Scope scope, Replacements replacements) {
         val bindings = <Binding> newArrayList
         val bound = <ValuedObject> newHashSet
         
+        // Return an empty binding list if there is no reference.
         if (scope.reference === null) return bindings
         
         val targetState = scope.reference.scope
         val parameters = scope.reference.parameters
         
+        // Return an empty binding list if there is no target in the reference.
+        // At the moment, only states are supported.
         if (targetState === null) return bindings
+        if (!(targetState instanceof State)) return bindings
         
         val targetVOs = <ValuedObject> newArrayList
         for (declaration : targetState.variableDeclarations.filter[ input || output]) {
             targetVOs += declaration.valuedObjects
         }
 
-        // explicit bindings
+        // Process explicit bindings.
         var targetVOPtr = 0
         for (parameter : parameters) {
             val binding = new Binding => [
@@ -94,10 +107,29 @@ class SCChartsReferenceExtensions {
         }
 
         
-        // implicit bindings
+        // Calculate implicit bindings.
         if (bound.size < targetVOs.size) {
             
             val voNameMap = scope.valuedObjectNameMap
+            
+            // Consider the replacement stack for the name matching.
+            // However, this is kind of dangerous because all previous bindings are on the stack. Hence, it is possible to 
+            // bind a variable that is not included in the calling scope. 
+            // However, this usually should result in a validation error in the model because the binding cannot be found
+            // in the calling scope.
+            for (voName : voNameMap.keySet.immutableCopy) {
+                if (replacements.containsKey(voName)) {
+                    val newRef = replacements.peek(voName)
+                    if (newRef instanceof ValuedObjectReference) {
+                        voNameMap.put(voName, newRef.valuedObject)
+                    } else {
+                        throw new IllegalStateException("There is a matching valued object on the replacement stack for an implicitly bound variable ( " + 
+                            voName + ")." + 
+                            "However, the binding is not a valued object reference, so the type does not match."
+                        )
+                    }
+                }
+            } 
             
             for (vo : targetVOs) {
                 if (!bound.contains(vo)) {
