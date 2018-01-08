@@ -490,9 +490,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
         if (compilationContext !== null) {
             val scgs = model.eContainer
-            val pilr = compilationContext.getResultForModel(scgs).getProperty(LoopAnalyzerV2.LOOP_DATA)
-            if (pilr !== null) pilNodes += pilr.criticalNodes
-
+            if (scgs !== null) {
+                val pilr = compilationContext.getResultForModel(scgs).getProperty(LoopAnalyzerV2.LOOP_DATA)
+                if (pilr !== null) pilNodes += pilr.criticalNodes
+            }
             val prioAuxData = compilationContext.result.getProperty(PriorityProcessor.PRIORITY_AUXILIARY_DATA)
             if(prioAuxData !== null) {
                 scc = prioAuxData.stronglyConnectedComponents

@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.esterel.serializer
 
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
@@ -20,9 +22,9 @@ import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.TickReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
 import java.util.List
-import de.cau.cs.kieler.scl.Statement
 
 /**
  * @author als
@@ -91,6 +93,20 @@ class EsterelSytaxHelper {
                         val t = createEsterelThread
                         t.statements.addAll(container.elseStatements)
                         container.elseStatements += t
+                    }
+                }
+                if (container instanceof Abort) {
+                    if (container.doStatements.size > 1) {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.doStatements)
+                        container.doStatements += t
+                    }
+                }
+                if (container instanceof Do) {
+                    if (container.watchingStatements.size > 1) {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.watchingStatements)
+                        container.watchingStatements += t
                     }
                 }
             }
