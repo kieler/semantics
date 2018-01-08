@@ -97,8 +97,12 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         // the next object which needs to be transformed and the corresponding processor id
         val nextObj = obj.nextStatement 
         val processorID = nextObj.getCorrespondingProcessorID 
-        // TODO add processorID to processorList (see identityDynamic)
         environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, nextObj)
+        // TODO add processorID to processorList (see identityDynamic)
+        // and additionally add processorID of this intermediate processor to processorList
+        // but only if it is not an EsterelProgram; if that is the case, only one transformation is left
+        // and for a module add multiple processors to the processor list (signal, sensor transformation ...)
+        // before the next module is going to be transformed
     }
     
     def getCorrespondingProcessorID(EObject obj) {
@@ -408,24 +412,21 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         up = true
                     }
                 }
+                else if (parent instanceof Module) {
+                    obj = parent
+                    transform = true
+                }
                 else if (parent instanceof StatementContainer) {
-                    val statements = parent.statements
-                    pos = statements.indexOf(obj)
-                    if (pos+1 < statements.length) {
-                        obj = statements.get(pos+1)
-                        up = false
+                    obj = parent
+                    if (parent instanceof ScopeStatement) {
+                        up = true // no need to transform an SCL StatementContainer
                     }
                     else {
-                        obj = parent
-                        if (parent instanceof ScopeStatement) {
-                            up = true // no need to transform an SCL StatementContainer
-                        }
-                        else {
-                            transform = true
-                        }
+                        transform = true
                     }
                 }
                 else if (parent instanceof EsterelProgram) {
+                    obj = parent
                     transform = true
                 }
             }
@@ -642,6 +643,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     public static val PROCCALL = de.cau.cs.kieler.esterel.processors.transformators.incremental.ProcCallTransformation.ID
     public static val REPEAT = de.cau.cs.kieler.esterel.processors.transformators.incremental.RepeatTransformation.ID
     public static val RUN = de.cau.cs.kieler.esterel.processors.transformators.incremental.RunTransformation.ID
+    public static val SCL = de.cau.cs.kieler.esterel.processors.transformators.incremental.SCLTransformation.ID    
     public static val SENSOR = de.cau.cs.kieler.esterel.processors.transformators.incremental.SensorTransformation.ID
     public static val SET = de.cau.cs.kieler.esterel.processors.transformators.incremental.SetTransformation.ID
     public static val SIGNAL = de.cau.cs.kieler.esterel.processors.transformators.incremental.SignalTransformation.ID
