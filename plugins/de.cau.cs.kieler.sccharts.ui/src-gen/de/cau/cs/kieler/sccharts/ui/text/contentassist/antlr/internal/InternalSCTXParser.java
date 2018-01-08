@@ -44305,24 +44305,28 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NamespaceID__Group__0__Impl"
-    // InternalSCTX.g:14693:1: rule__NamespaceID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalSCTX.g:14693:1: rule__NamespaceID__Group__0__Impl : ( ruleExtendedID ) ;
     public final void rule__NamespaceID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:14697:1: ( ( RULE_ID ) )
-            // InternalSCTX.g:14698:1: ( RULE_ID )
+            // InternalSCTX.g:14697:1: ( ( ruleExtendedID ) )
+            // InternalSCTX.g:14698:1: ( ruleExtendedID )
             {
-            // InternalSCTX.g:14698:1: ( RULE_ID )
-            // InternalSCTX.g:14699:1: RULE_ID
+            // InternalSCTX.g:14698:1: ( ruleExtendedID )
+            // InternalSCTX.g:14699:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_0()); 
+               before(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_0()); 
+               after(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0()); 
             }
 
             }
@@ -96406,105 +96410,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     protected DFA221 dfa221 = new DFA221(this);
     protected DFA242 dfa242 = new DFA242(this);
     static final String dfa_1s = "\101\uffff";
-    static final String dfa_2s = "\2\12\1\7\2\uffff\1\4\1\7\1\4\1\10\5\12\1\7\3\4\2\7\1\10\1\30\1\4\3\12\1\4\4\12\2\7\1\10\1\4\2\7\1\10\1\30\1\137\3\12\1\4\4\12\1\4\2\7\1\10\3\12\1\4\4\12\2\7\1\10\2\12";
-    static final String dfa_3s = "\2\u0081\1\7\2\uffff\1\u0081\1\7\2\10\5\u0081\1\7\2\u0081\1\30\2\7\1\10\1\175\1\10\3\u0081\1\10\4\u0081\2\7\1\10\1\30\2\7\1\10\1\175\1\137\3\u0081\1\10\4\u0081\1\30\2\7\1\10\3\u0081\1\10\4\u0081\2\7\1\10\2\u0081";
+    static final String dfa_2s = "\2\12\1\7\2\uffff\1\4\1\7\1\4\1\10\1\7\5\12\2\4\1\30\1\4\2\7\1\10\1\4\2\7\1\10\1\4\3\12\1\4\4\12\1\30\1\137\3\12\1\4\2\12\2\7\1\10\1\4\2\7\1\10\5\12\1\4\4\12\2\7\1\10\2\12";
+    static final String dfa_3s = "\2\u0081\1\7\2\uffff\1\u0081\1\7\2\10\1\7\7\u0081\1\175\1\30\2\7\2\10\2\7\1\10\1\30\3\u0081\1\10\4\u0081\1\175\1\137\3\u0081\1\10\2\u0081\2\7\1\10\1\30\2\7\1\10\5\u0081\1\10\4\u0081\2\7\1\10\2\u0081";
     static final String dfa_4s = "\3\uffff\1\1\1\2\74\uffff";
     static final String dfa_5s = "\101\uffff}>";
     static final String[] dfa_6s = {
-            "\1\1\113\uffff\1\4\1\3\15\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\114\uffff\1\3\15\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\5",
-            "",
-            "",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\3\6\uffff\1\16\6\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\10\4\3",
-            "\1\17",
-            "\1\15\2\uffff\1\17\1\14",
-            "\1\20",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\24\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\25",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\3\6\uffff\1\16\6\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\10\4\3",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\26\76\uffff\1\3\6\uffff\1\16\6\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\34\1\27\1\31\1\30\1\33\17\uffff\1\32",
-            "\1\35",
-            "\1\35",
-            "\1\36",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
-            "\1\15\3\uffff\1\14",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\45\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\34\3\uffff\1\33",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\24\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\46",
-            "\1\46",
-            "\1\47",
-            "\1\55\1\50\1\52\1\51\1\54\17\uffff\1\53",
-            "\1\56",
-            "\1\56",
-            "\1\57",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
-            "\1\42",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\63\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\55\3\uffff\1\54",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\45\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\71\1\64\1\66\1\65\1\70\17\uffff\1\67",
-            "\1\72",
-            "\1\72",
-            "\1\73",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\76\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\71\3\uffff\1\70",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\63\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
-            "\1\77",
-            "\1\77",
-            "\1\100",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\76\4\3",
-            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3"
-    };
-
-    static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
-    static final char[] dfa_2 = DFA.unpackEncodedStringToUnsignedChars(dfa_2s);
-    static final char[] dfa_3 = DFA.unpackEncodedStringToUnsignedChars(dfa_3s);
-    static final short[] dfa_4 = DFA.unpackEncodedString(dfa_4s);
-    static final short[] dfa_5 = DFA.unpackEncodedString(dfa_5s);
-    static final short[][] dfa_6 = unpackEncodedStringArray(dfa_6s);
-
-    class DFA2 extends DFA {
-
-        public DFA2(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 2;
-            this.eot = dfa_1;
-            this.eof = dfa_1;
-            this.min = dfa_2;
-            this.max = dfa_3;
-            this.accept = dfa_4;
-            this.special = dfa_5;
-            this.transition = dfa_6;
-        }
-        public String getDescription() {
-            return "3631:1: rule__RootState__Alternatives_7 : ( ( ( rule__RootState__RegionsAssignment_7_0 ) ) | ( ( rule__RootState__RegionsAssignment_7_1 )* ) );";
-        }
-    }
-    static final String dfa_7s = "\2\12\1\7\2\uffff\1\4\1\7\1\4\1\10\1\7\5\12\2\4\1\30\1\4\2\7\1\10\1\4\2\7\1\10\1\4\3\12\1\4\4\12\1\30\1\137\3\12\1\4\2\12\2\7\1\10\1\4\2\7\1\10\5\12\1\4\4\12\2\7\1\10\2\12";
-    static final String dfa_8s = "\2\u0081\1\7\2\uffff\1\u0081\1\7\2\10\1\7\7\u0081\1\175\1\30\2\7\2\10\2\7\1\10\1\30\3\u0081\1\10\4\u0081\1\175\1\137\3\u0081\1\10\2\u0081\2\7\1\10\1\30\2\7\1\10\5\u0081\1\10\4\u0081\2\7\1\10\2\u0081";
-    static final String[] dfa_9s = {
             "\1\1\113\uffff\1\4\1\3\15\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
             "\1\1\114\uffff\1\3\15\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
             "\1\5",
@@ -96570,6 +96480,100 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\100",
             "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\3\4\uffff\1\56\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\76\4\3",
             "\1\1\114\uffff\1\3\4\uffff\1\56\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3"
+    };
+
+    static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
+    static final char[] dfa_2 = DFA.unpackEncodedStringToUnsignedChars(dfa_2s);
+    static final char[] dfa_3 = DFA.unpackEncodedStringToUnsignedChars(dfa_3s);
+    static final short[] dfa_4 = DFA.unpackEncodedString(dfa_4s);
+    static final short[] dfa_5 = DFA.unpackEncodedString(dfa_5s);
+    static final short[][] dfa_6 = unpackEncodedStringArray(dfa_6s);
+
+    class DFA2 extends DFA {
+
+        public DFA2(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 2;
+            this.eot = dfa_1;
+            this.eof = dfa_1;
+            this.min = dfa_2;
+            this.max = dfa_3;
+            this.accept = dfa_4;
+            this.special = dfa_5;
+            this.transition = dfa_6;
+        }
+        public String getDescription() {
+            return "3631:1: rule__RootState__Alternatives_7 : ( ( ( rule__RootState__RegionsAssignment_7_0 ) ) | ( ( rule__RootState__RegionsAssignment_7_1 )* ) );";
+        }
+    }
+    static final String dfa_7s = "\2\12\1\7\2\uffff\1\4\1\7\1\4\1\10\5\12\1\7\3\4\2\7\1\10\1\30\1\4\3\12\1\4\4\12\2\7\1\10\1\4\2\7\1\10\1\30\1\137\3\12\1\4\4\12\1\4\2\7\1\10\3\12\1\4\4\12\2\7\1\10\2\12";
+    static final String dfa_8s = "\2\u0081\1\7\2\uffff\1\u0081\1\7\2\10\5\u0081\1\7\2\u0081\1\30\2\7\1\10\1\175\1\10\3\u0081\1\10\4\u0081\2\7\1\10\1\30\2\7\1\10\1\175\1\137\3\u0081\1\10\4\u0081\1\30\2\7\1\10\3\u0081\1\10\4\u0081\2\7\1\10\2\u0081";
+    static final String[] dfa_9s = {
+            "\1\1\113\uffff\1\4\1\3\15\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\114\uffff\1\3\15\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\5",
+            "",
+            "",
+            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\3\6\uffff\1\16\6\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\10\4\3",
+            "\1\17",
+            "\1\15\2\uffff\1\17\1\14",
+            "\1\20",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\23\13\uffff\1\22\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\24\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\25",
+            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\3\6\uffff\1\16\6\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\10\4\3",
+            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\26\76\uffff\1\3\6\uffff\1\16\6\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\34\1\27\1\31\1\30\1\33\17\uffff\1\32",
+            "\1\35",
+            "\1\35",
+            "\1\36",
+            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
+            "\1\15\3\uffff\1\14",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\44\13\uffff\1\43\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\45\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\34\3\uffff\1\33",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\23\13\uffff\1\22\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\24\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\46",
+            "\1\46",
+            "\1\47",
+            "\1\55\1\50\1\52\1\51\1\54\17\uffff\1\53",
+            "\1\56",
+            "\1\56",
+            "\1\57",
+            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
+            "\1\42",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\62\13\uffff\1\61\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\63\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\55\3\uffff\1\54",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\44\13\uffff\1\43\62\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\45\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\21\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\71\1\64\1\66\1\65\1\70\17\uffff\1\67",
+            "\1\72",
+            "\1\72",
+            "\1\73",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\76\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\71\3\uffff\1\70",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\1\15\uffff\1\62\13\uffff\1\61\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\63\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3",
+            "\1\77",
+            "\1\77",
+            "\1\100",
+            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\76\4\3",
+            "\1\1\114\uffff\1\3\4\uffff\1\60\10\uffff\1\4\3\uffff\1\4\22\uffff\1\2\1\uffff\4\3"
     };
     static final char[] dfa_7 = DFA.unpackEncodedStringToUnsignedChars(dfa_7s);
     static final char[] dfa_8 = DFA.unpackEncodedStringToUnsignedChars(dfa_8s);
@@ -97020,73 +97024,73 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_22s = "\2\174\1\7\2\uffff\1\175\1\7\2\10\1\174\1\175\3\174\1\7\1\175\1\174\1\30\2\7\1\10\1\175\1\10\1\174\1\175\1\174\1\10\2\174\1\175\1\174\2\7\1\10\1\30\2\7\1\10\1\175\1\137\1\174\1\175\1\174\1\10\2\174\1\175\1\174\1\30\2\7\1\10\1\174\1\175\1\174\1\10\2\174\1\175\1\174\2\7\1\10\1\175\1\174";
+    static final String dfa_22s = "\2\174\1\7\2\uffff\1\175\1\7\2\10\1\7\1\174\1\175\3\174\1\175\1\174\1\175\1\30\2\7\2\10\2\7\1\10\1\30\1\174\1\175\1\174\1\10\2\174\1\175\1\174\1\175\1\137\1\174\1\175\1\174\1\10\2\174\2\7\1\10\1\30\2\7\1\10\1\175\2\174\1\175\1\174\1\10\2\174\1\175\1\174\2\7\1\10\1\175\1\174";
     static final String[] dfa_23s = {
             "\1\1\132\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
             "\1\1\132\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
             "\1\5",
             "",
             "",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\71\uffff\1\16\6\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\10",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\71\uffff\1\11\6\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\10",
             "\1\17",
-            "\1\15\2\uffff\1\17\1\14",
+            "\1\16\2\uffff\1\17\1\15",
             "\1\20",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\67\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\24",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\25",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\71\uffff\1\16\6\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\10",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\26\105\uffff\1\16\6\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\34\1\27\1\31\1\30\1\33\17\uffff\1\32",
-            "\1\35",
-            "\1\35",
-            "\1\36",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
-            "\1\15\3\uffff\1\14",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\67\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\45",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\34\3\uffff\1\33",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\67\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\24",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\46",
-            "\1\46",
-            "\1\47",
-            "\1\55\1\50\1\52\1\51\1\54\17\uffff\1\53",
-            "\1\56",
-            "\1\56",
-            "\1\57",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
+            "\1\21",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\67\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\25",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\71\uffff\1\11\6\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\10",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\26\105\uffff\1\11\6\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
+            "\1\40\1\33\1\35\1\34\1\37\17\uffff\1\36",
+            "\1\41",
+            "\1\41",
             "\1\42",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\67\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\63",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\55\3\uffff\1\54",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\67\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\45",
-            "\1\1\121\uffff\1\21\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\16\3\uffff\1\15",
+            "\1\43",
+            "\1\43",
+            "\1\44",
+            "\1\52\1\45\1\47\1\46\1\51\17\uffff\1\50",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\54\13\uffff\1\53\67\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\55",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\40\3\uffff\1\37",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\67\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\25",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
+            "\1\32",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\60\13\uffff\1\57\67\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\61",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\52\3\uffff\1\51",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\62",
+            "\1\62",
+            "\1\63",
             "\1\71\1\64\1\66\1\65\1\70\17\uffff\1\67",
             "\1\72",
             "\1\72",
             "\1\73",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\67\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\76",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\54\13\uffff\1\53\67\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\55",
+            "\1\1\121\uffff\1\22\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\75\13\uffff\1\74\67\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\76",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
             "\1\71\3\uffff\1\70",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\67\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\63",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
+            "\1\1\15\uffff\1\60\13\uffff\1\57\67\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\61",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2",
             "\1\77",
             "\1\77",
             "\1\100",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\67\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\76",
-            "\1\1\121\uffff\1\60\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2"
+            "\1\1\15\uffff\1\75\13\uffff\1\74\67\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2\1\76",
+            "\1\1\121\uffff\1\56\10\uffff\1\3\3\uffff\1\4\22\uffff\1\2"
     };
     static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
     static final short[][] dfa_23 = unpackEncodedStringArray(dfa_23s);
@@ -97114,66 +97118,66 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\5",
             "",
             "",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\4\6\uffff\1\16\6\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\10\4\4",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\4\6\uffff\1\11\6\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\10\4\4",
             "\1\17",
-            "\1\15\2\uffff\1\17\1\14",
+            "\1\16\2\uffff\1\17\1\15",
             "\1\20",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\62\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\24\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\25",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\4\6\uffff\1\16\6\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\10\4\4",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\26\76\uffff\1\4\6\uffff\1\16\6\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\34\1\27\1\31\1\30\1\33\17\uffff\1\32",
-            "\1\35",
-            "\1\35",
-            "\1\36",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
-            "\1\15\3\uffff\1\14",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\62\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\45\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\34\3\uffff\1\33",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\62\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\24\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\46",
-            "\1\46",
-            "\1\47",
-            "\1\55\1\50\1\52\1\51\1\54\17\uffff\1\53",
-            "\1\56",
-            "\1\56",
-            "\1\57",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
+            "\1\21",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\62\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\25\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\62\uffff\1\4\6\uffff\1\11\6\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\10\4\4",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\26\76\uffff\1\4\6\uffff\1\11\6\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
+            "\1\40\1\33\1\35\1\34\1\37\17\uffff\1\36",
+            "\1\41",
+            "\1\41",
             "\1\42",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\62\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\63\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\55\3\uffff\1\54",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\62\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\45\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\21\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\16\3\uffff\1\15",
+            "\1\43",
+            "\1\43",
+            "\1\44",
+            "\1\52\1\45\1\47\1\46\1\51\17\uffff\1\50",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\54\13\uffff\1\53\62\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\55\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\40\3\uffff\1\37",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\62\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\25\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
+            "\1\32",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\60\13\uffff\1\57\62\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\61\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\52\3\uffff\1\51",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\62",
+            "\1\62",
+            "\1\63",
             "\1\71\1\64\1\66\1\65\1\70\17\uffff\1\67",
             "\1\72",
             "\1\72",
             "\1\73",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\76\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\54\13\uffff\1\53\62\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\55\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\22\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\76\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
             "\1\71\3\uffff\1\70",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\62\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\63\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
+            "\1\1\15\uffff\1\60\13\uffff\1\57\62\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\61\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4",
             "\1\77",
             "\1\77",
             "\1\100",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\76\4\4",
-            "\1\1\114\uffff\1\4\4\uffff\1\60\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4"
+            "\1\1\15\uffff\1\75\13\uffff\1\74\62\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\76\4\4",
+            "\1\1\114\uffff\1\4\4\uffff\1\56\10\uffff\1\3\3\uffff\1\3\22\uffff\1\2\1\uffff\4\4"
     };
     static final short[][] dfa_24 = unpackEncodedStringArray(dfa_24s);
 
@@ -97238,8 +97242,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_31s = "\137\uffff";
-    static final String dfa_32s = "\3\7\2\uffff\1\4\1\7\1\4\1\10\1\7\1\0\4\7\4\4\2\7\1\30\1\4\3\7\1\4\3\7\1\4\2\7\1\10\1\4\2\7\1\10\1\7\1\4\1\10\3\7\1\30\1\137\3\7\1\4\4\7\2\4\2\7\1\10\1\30\1\4\2\7\1\10\1\4\5\7\1\10\1\4\3\7\1\4\7\7\1\30\1\137\3\7\1\10\5\7\1\0";
-    static final String dfa_33s = "\2\174\1\7\2\uffff\1\175\1\7\2\10\1\174\1\0\3\174\1\7\1\175\1\174\2\30\1\174\1\7\1\175\1\10\1\174\1\175\1\174\1\10\3\174\1\175\2\7\1\10\1\30\2\7\1\10\1\7\2\10\1\174\1\175\1\7\1\175\1\137\1\174\1\175\1\174\1\10\2\174\1\175\1\174\1\175\1\174\2\7\1\10\1\175\1\30\2\7\1\10\1\30\2\175\1\174\2\7\1\10\1\30\1\174\1\175\1\174\1\10\2\174\1\175\2\174\2\7\1\175\1\137\1\174\2\7\1\10\2\175\1\174\1\7\1\175\1\0";
+    static final String dfa_32s = "\3\7\2\uffff\1\4\1\7\1\4\1\10\1\7\1\0\4\7\4\4\2\7\1\30\1\4\3\7\1\4\3\7\1\4\2\7\1\10\1\4\2\7\1\10\1\7\1\4\1\10\3\7\1\30\1\137\3\7\1\4\4\7\2\4\1\30\2\7\1\10\1\4\2\7\1\10\1\4\2\7\1\10\1\4\6\7\1\4\5\7\1\30\1\137\5\7\1\10\5\7\1\0";
+    static final String dfa_33s = "\2\174\1\7\2\uffff\1\175\1\7\2\10\1\174\1\0\3\174\1\7\1\175\1\174\2\30\1\174\1\7\1\175\1\10\1\174\1\175\1\174\1\10\3\174\1\175\2\7\1\10\1\30\2\7\1\10\1\7\2\10\1\7\1\174\2\175\1\137\1\174\1\175\1\174\1\10\2\174\1\175\1\174\1\175\1\174\1\175\2\7\1\10\1\30\2\7\1\10\1\30\2\7\1\10\1\30\2\175\2\174\1\175\1\174\1\10\2\174\1\175\2\174\1\175\1\137\1\174\4\7\1\10\2\175\1\174\1\7\1\175\1\0";
     static final String dfa_34s = "\3\uffff\1\1\1\2\132\uffff";
     static final String dfa_35s = "\12\uffff\1\1\123\uffff\1\0}>";
     static final String[] dfa_36s = {
@@ -97273,7 +97277,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
-            "\1\15\1\51\1\13\1\52\1\14\1\4\1\23\15\uffff\1\47\13\uffff\1\46\71\uffff\1\53\23\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\50",
+            "\1\15\1\52\1\13\1\53\1\14\1\4\1\23\15\uffff\1\47\13\uffff\1\46\71\uffff\1\51\23\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\50",
             "\1\54",
             "\1\54",
             "\1\55",
@@ -97284,9 +97288,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\66",
             "\1\15\2\uffff\1\66\1\14",
             "\1\67",
+            "\1\70",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
-            "\1\4\1\uffff\1\4\1\23\15\uffff\1\71\12\uffff\1\4\1\70\17\uffff\20\4\26\uffff\1\4\1\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\72",
-            "\1\73",
+            "\1\4\1\uffff\1\4\1\23\15\uffff\1\72\12\uffff\1\4\1\71\17\uffff\20\4\26\uffff\1\4\1\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\73",
             "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
             "\1\42",
             "\1\4\1\uffff\1\4\1\1\121\uffff\1\74\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\2",
@@ -97297,24 +97301,24 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
             "\1\4\1\uffff\1\4\1\23\15\uffff\1\44\13\uffff\1\43\67\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\45",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
-            "\1\15\1\51\1\13\1\52\1\14\1\4\1\23\15\uffff\1\47\13\uffff\1\46\71\uffff\1\53\23\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\50",
-            "\1\15\1\51\1\13\1\52\1\14\1\4\1\23\15\uffff\1\26\105\uffff\1\53\23\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
-            "\1\101",
-            "\1\102",
-            "\1\103",
-            "\1\105\13\uffff\1\104\72\uffff\1\107\35\uffff\1\106",
+            "\1\15\1\52\1\13\1\53\1\14\1\4\1\23\15\uffff\1\47\13\uffff\1\46\71\uffff\1\51\23\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\50",
+            "\1\15\1\52\1\13\1\53\1\14\1\4\1\23\15\uffff\1\26\105\uffff\1\51\23\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
+            "\1\102\13\uffff\1\101\72\uffff\1\104\35\uffff\1\103",
+            "\1\105",
+            "\1\106",
+            "\1\107",
             "\1\115\1\110\1\112\1\111\1\114\17\uffff\1\113",
             "\1\116",
             "\1\116",
             "\1\117",
             "\1\115\1\120\1\112\1\111\1\114\17\uffff\1\113",
-            "\1\4\1\uffff\1\4\1\23\15\uffff\1\71\13\uffff\1\121\17\uffff\20\4\30\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\72",
-            "\1\4\1\uffff\1\4\1\23\15\uffff\1\71\13\uffff\1\122\67\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\72",
+            "\1\121",
+            "\1\121",
+            "\1\122",
+            "\1\63\1\123\1\60\1\57\1\62\17\uffff\1\61",
+            "\1\4\1\uffff\1\4\1\23\15\uffff\1\72\13\uffff\1\124\17\uffff\20\4\30\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\73",
+            "\1\4\1\uffff\1\4\1\23\15\uffff\1\72\13\uffff\1\125\67\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\73",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\22\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
-            "\1\123",
-            "\1\123",
-            "\1\124",
-            "\1\63\1\125\1\60\1\57\1\62\17\uffff\1\61",
             "\1\4\1\uffff\1\4\1\1\121\uffff\1\74\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\2",
             "\1\4\1\uffff\1\4\1\23\15\uffff\1\127\13\uffff\1\126\67\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\130",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
@@ -97324,19 +97328,19 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\4\1\uffff\1\4\1\23\15\uffff\1\76\13\uffff\1\75\67\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\77",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
-            "\1\131",
-            "\1\102",
-            "\1\105\13\uffff\1\104\72\uffff\1\107\35\uffff\1\106",
-            "\1\107",
+            "\1\102\13\uffff\1\101\72\uffff\1\104\35\uffff\1\103",
+            "\1\104",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
+            "\1\131",
+            "\1\106",
             "\1\132",
             "\1\132",
             "\1\133",
-            "\1\4\1\uffff\1\4\1\23\15\uffff\1\71\13\uffff\1\134\17\uffff\20\4\30\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\72",
+            "\1\4\1\uffff\1\4\1\23\15\uffff\1\72\13\uffff\1\134\17\uffff\20\4\30\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\73",
             "\1\4\1\uffff\1\4\1\23\15\uffff\1\127\13\uffff\1\126\67\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24\1\130",
             "\1\4\1\uffff\1\4\1\23\121\uffff\1\100\25\uffff\1\3\1\uffff\1\4\2\uffff\2\4\3\uffff\1\24",
             "\1\135",
-            "\1\4\1\uffff\1\4\1\23\15\uffff\1\71\13\uffff\1\136\17\uffff\20\4\30\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\72",
+            "\1\4\1\uffff\1\4\1\23\15\uffff\1\72\13\uffff\1\136\17\uffff\20\4\30\uffff\1\22\1\uffff\1\4\23\uffff\1\3\1\uffff\1\4\2\uffff\3\4\2\uffff\1\24\1\73",
             "\1\uffff"
     };
 
@@ -97503,6 +97507,79 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             return "3993:1: rule__Declaration__Alternatives : ( ( ruleVariableDeclaration ) | ( ruleReferenceDeclaration ) | ( ruleScheduleDeclaration ) );";
         }
     }
+    static final String dfa_43s = "\2\12\1\7\3\uffff\1\4\1\7\1\4\1\10\5\12\1\7\3\4\2\7\1\10\1\30\1\4\3\12\1\4\4\12\2\7\1\10\1\4\2\7\1\10\1\30\1\137\3\12\1\4\4\12\1\4\2\7\1\10\3\12\1\4\4\12\2\7\1\10\2\12";
+    static final String dfa_44s = "\2\u0089\1\7\3\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\175\1\10\3\u0089\1\10\4\u0089\2\7\1\10\1\30\2\7\1\10\1\175\1\137\3\u0089\1\10\4\u0089\1\30\2\7\1\10\3\u0089\1\10\4\u0089\2\7\1\10\2\u0089";
+    static final String[] dfa_45s = {
+            "\1\1\77\uffff\7\3\10\uffff\1\5\31\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\31\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\6",
+            "",
+            "",
+            "",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\10\13\uffff\1\7\45\uffff\7\3\10\uffff\1\5\4\uffff\1\17\24\uffff\2\4\7\uffff\1\2\1\11\7\uffff\5\3",
+            "\1\20",
+            "\1\16\2\uffff\1\20\1\15",
+            "\1\21",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\45\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\1\25\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\26",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\10\13\uffff\1\7\45\uffff\7\3\10\uffff\1\5\4\uffff\1\17\24\uffff\2\4\7\uffff\1\2\1\11\7\uffff\5\3",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\27\61\uffff\7\3\10\uffff\1\5\4\uffff\1\17\24\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\35\1\30\1\32\1\31\1\34\17\uffff\1\33",
+            "\1\36",
+            "\1\36",
+            "\1\37",
+            "\1\41\13\uffff\1\40\72\uffff\1\43\35\uffff\1\42",
+            "\1\16\3\uffff\1\15",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\45\13\uffff\1\44\45\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\1\46\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\35\3\uffff\1\34",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\45\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\1\25\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\47",
+            "\1\47",
+            "\1\50",
+            "\1\56\1\51\1\53\1\52\1\55\17\uffff\1\54",
+            "\1\57",
+            "\1\57",
+            "\1\60",
+            "\1\41\13\uffff\1\40\72\uffff\1\43\35\uffff\1\42",
+            "\1\43",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\63\13\uffff\1\62\45\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\1\64\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\56\3\uffff\1\55",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\45\13\uffff\1\44\45\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\1\46\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\22\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\72\1\65\1\67\1\66\1\71\17\uffff\1\70",
+            "\1\73",
+            "\1\73",
+            "\1\74",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\76\13\uffff\1\75\45\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\1\77\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\72\3\uffff\1\71",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\1\15\uffff\1\63\13\uffff\1\62\45\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\1\64\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3",
+            "\1\100",
+            "\1\100",
+            "\1\101",
+            "\1\1\15\uffff\1\76\13\uffff\1\75\45\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\1\77\7\uffff\5\3",
+            "\1\1\77\uffff\7\3\10\uffff\1\5\2\uffff\1\61\26\uffff\2\4\7\uffff\1\2\10\uffff\5\3"
+    };
+    static final char[] dfa_43 = DFA.unpackEncodedStringToUnsignedChars(dfa_43s);
+    static final char[] dfa_44 = DFA.unpackEncodedStringToUnsignedChars(dfa_44s);
+    static final short[][] dfa_45 = unpackEncodedStringArray(dfa_45s);
 
     class DFA20 extends DFA {
 
@@ -97511,22 +97588,22 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 20;
             this.eot = dfa_37;
             this.eof = dfa_37;
-            this.min = dfa_38;
-            this.max = dfa_39;
+            this.min = dfa_43;
+            this.max = dfa_44;
             this.accept = dfa_40;
             this.special = dfa_41;
-            this.transition = dfa_42;
+            this.transition = dfa_45;
         }
         public String getDescription() {
             return "4021:1: rule__DeclarationWOSemicolon__Alternatives : ( ( ruleVariableDeclarationWOSemicolon ) | ( ruleReferenceDeclarationWOSemicolon ) | ( ruleScheduleDeclarationWOSemicolon ) );";
         }
     }
-    static final String dfa_43s = "\15\uffff";
-    static final String dfa_44s = "\1\7\3\0\11\uffff";
-    static final String dfa_45s = "\1\174\3\0\11\uffff";
-    static final String dfa_46s = "\4\uffff\1\4\1\6\1\uffff\1\7\1\10\1\1\1\2\1\3\1\5";
-    static final String dfa_47s = "\1\uffff\1\0\1\1\1\2\11\uffff}>";
-    static final String[] dfa_48s = {
+    static final String dfa_46s = "\15\uffff";
+    static final String dfa_47s = "\1\7\3\0\11\uffff";
+    static final String dfa_48s = "\1\174\3\0\11\uffff";
+    static final String dfa_49s = "\4\uffff\1\4\1\6\1\uffff\1\7\1\10\1\1\1\2\1\3\1\5";
+    static final String dfa_50s = "\1\uffff\1\0\1\1\1\2\11\uffff}>";
+    static final String[] dfa_51s = {
             "\1\3\1\uffff\1\4\1\1\72\uffff\1\5\56\uffff\1\5\2\uffff\1\7\1\10\3\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
@@ -97542,25 +97619,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_43 = DFA.unpackEncodedString(dfa_43s);
-    static final char[] dfa_44 = DFA.unpackEncodedStringToUnsignedChars(dfa_44s);
-    static final char[] dfa_45 = DFA.unpackEncodedStringToUnsignedChars(dfa_45s);
     static final short[] dfa_46 = DFA.unpackEncodedString(dfa_46s);
-    static final short[] dfa_47 = DFA.unpackEncodedString(dfa_47s);
-    static final short[][] dfa_48 = unpackEncodedStringArray(dfa_48s);
+    static final char[] dfa_47 = DFA.unpackEncodedStringToUnsignedChars(dfa_47s);
+    static final char[] dfa_48 = DFA.unpackEncodedStringToUnsignedChars(dfa_48s);
+    static final short[] dfa_49 = DFA.unpackEncodedString(dfa_49s);
+    static final short[] dfa_50 = DFA.unpackEncodedString(dfa_50s);
+    static final short[][] dfa_51 = unpackEncodedStringArray(dfa_51s);
 
     class DFA25 extends DFA {
 
         public DFA25(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 25;
-            this.eot = dfa_43;
-            this.eof = dfa_43;
-            this.min = dfa_44;
-            this.max = dfa_45;
-            this.accept = dfa_46;
-            this.special = dfa_47;
-            this.transition = dfa_48;
+            this.eot = dfa_46;
+            this.eof = dfa_46;
+            this.min = dfa_47;
+            this.max = dfa_48;
+            this.accept = dfa_49;
+            this.special = dfa_50;
+            this.transition = dfa_51;
         }
         public String getDescription() {
             return "4137:1: rule__Effect__Alternatives : ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) );";
@@ -97650,11 +97727,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_49s = "\1\4\16\0\3\uffff";
-    static final String dfa_50s = "\1\172\16\0\3\uffff";
-    static final String dfa_51s = "\17\uffff\1\1\1\uffff\1\2";
-    static final String dfa_52s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\3\uffff}>";
-    static final String[] dfa_53s = {
+    static final String dfa_52s = "\1\4\16\0\3\uffff";
+    static final String dfa_53s = "\1\172\16\0\3\uffff";
+    static final String dfa_54s = "\17\uffff\1\1\1\uffff\1\2";
+    static final String dfa_55s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\3\uffff}>";
+    static final String[] dfa_56s = {
             "\1\3\1\4\1\7\1\12\1\2\1\16\7\uffff\1\10\1\17\3\uffff\1\17\1\uffff\1\1\3\uffff\1\11\70\uffff\1\5\4\uffff\1\6\31\uffff\1\13\3\uffff\1\15\1\uffff\1\14",
             "\1\uffff",
             "\1\uffff",
@@ -97674,11 +97751,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "",
             ""
     };
-    static final char[] dfa_49 = DFA.unpackEncodedStringToUnsignedChars(dfa_49s);
-    static final char[] dfa_50 = DFA.unpackEncodedStringToUnsignedChars(dfa_50s);
-    static final short[] dfa_51 = DFA.unpackEncodedString(dfa_51s);
-    static final short[] dfa_52 = DFA.unpackEncodedString(dfa_52s);
-    static final short[][] dfa_53 = unpackEncodedStringArray(dfa_53s);
+    static final char[] dfa_52 = DFA.unpackEncodedStringToUnsignedChars(dfa_52s);
+    static final char[] dfa_53 = DFA.unpackEncodedStringToUnsignedChars(dfa_53s);
+    static final short[] dfa_54 = DFA.unpackEncodedString(dfa_54s);
+    static final short[] dfa_55 = DFA.unpackEncodedString(dfa_55s);
+    static final short[][] dfa_56 = unpackEncodedStringArray(dfa_56s);
 
     class DFA31 extends DFA {
 
@@ -97687,11 +97764,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 31;
             this.eot = dfa_16;
             this.eof = dfa_16;
-            this.min = dfa_49;
-            this.max = dfa_50;
-            this.accept = dfa_51;
-            this.special = dfa_52;
-            this.transition = dfa_53;
+            this.min = dfa_52;
+            this.max = dfa_53;
+            this.accept = dfa_54;
+            this.special = dfa_55;
+            this.transition = dfa_56;
         }
         public String getDescription() {
             return "4313:1: rule__Expression__Alternatives : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );";
@@ -97918,12 +97995,12 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_54s = "\21\uffff";
-    static final String dfa_55s = "\1\4\5\uffff\11\0\2\uffff";
-    static final String dfa_56s = "\1\172\5\uffff\11\0\2\uffff";
-    static final String dfa_57s = "\1\uffff\1\1\15\uffff\1\2\1\uffff";
-    static final String dfa_58s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
-    static final String[] dfa_59s = {
+    static final String dfa_57s = "\21\uffff";
+    static final String dfa_58s = "\1\4\5\uffff\11\0\2\uffff";
+    static final String dfa_59s = "\1\172\5\uffff\11\0\2\uffff";
+    static final String dfa_60s = "\1\uffff\1\1\15\uffff\1\2\1\uffff";
+    static final String dfa_61s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
+    static final String[] dfa_62s = {
             "\2\1\1\7\1\12\1\1\1\16\7\uffff\1\10\1\17\3\uffff\1\17\1\uffff\1\1\3\uffff\1\11\70\uffff\1\1\4\uffff\1\6\31\uffff\1\13\3\uffff\1\15\1\uffff\1\14",
             "",
             "",
@@ -97943,25 +98020,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_54 = DFA.unpackEncodedString(dfa_54s);
-    static final char[] dfa_55 = DFA.unpackEncodedStringToUnsignedChars(dfa_55s);
-    static final char[] dfa_56 = DFA.unpackEncodedStringToUnsignedChars(dfa_56s);
     static final short[] dfa_57 = DFA.unpackEncodedString(dfa_57s);
-    static final short[] dfa_58 = DFA.unpackEncodedString(dfa_58s);
-    static final short[][] dfa_59 = unpackEncodedStringArray(dfa_59s);
+    static final char[] dfa_58 = DFA.unpackEncodedStringToUnsignedChars(dfa_58s);
+    static final char[] dfa_59 = DFA.unpackEncodedStringToUnsignedChars(dfa_59s);
+    static final short[] dfa_60 = DFA.unpackEncodedString(dfa_60s);
+    static final short[] dfa_61 = DFA.unpackEncodedString(dfa_61s);
+    static final short[][] dfa_62 = unpackEncodedStringArray(dfa_62s);
 
     class DFA32 extends DFA {
 
         public DFA32(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 32;
-            this.eot = dfa_54;
-            this.eof = dfa_54;
-            this.min = dfa_55;
-            this.max = dfa_56;
-            this.accept = dfa_57;
-            this.special = dfa_58;
-            this.transition = dfa_59;
+            this.eot = dfa_57;
+            this.eof = dfa_57;
+            this.min = dfa_58;
+            this.max = dfa_59;
+            this.accept = dfa_60;
+            this.special = dfa_61;
+            this.transition = dfa_62;
         }
         public String getDescription() {
             return "4335:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
@@ -98113,12 +98190,12 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_60s = "\20\uffff";
-    static final String dfa_61s = "\1\4\15\0\2\uffff";
-    static final String dfa_62s = "\1\172\15\0\2\uffff";
-    static final String dfa_63s = "\16\uffff\1\1\1\2";
-    static final String dfa_64s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
-    static final String[] dfa_65s = {
+    static final String dfa_63s = "\20\uffff";
+    static final String dfa_64s = "\1\4\15\0\2\uffff";
+    static final String dfa_65s = "\1\172\15\0\2\uffff";
+    static final String dfa_66s = "\16\uffff\1\1\1\2";
+    static final String dfa_67s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
+    static final String[] dfa_68s = {
             "\1\2\1\3\1\6\1\11\1\1\1\15\7\uffff\1\7\12\uffff\1\10\70\uffff\1\4\4\uffff\1\5\31\uffff\1\12\3\uffff\1\14\1\uffff\1\13",
             "\1\uffff",
             "\1\uffff",
@@ -98137,25 +98214,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_60 = DFA.unpackEncodedString(dfa_60s);
-    static final char[] dfa_61 = DFA.unpackEncodedStringToUnsignedChars(dfa_61s);
-    static final char[] dfa_62 = DFA.unpackEncodedStringToUnsignedChars(dfa_62s);
     static final short[] dfa_63 = DFA.unpackEncodedString(dfa_63s);
-    static final short[] dfa_64 = DFA.unpackEncodedString(dfa_64s);
-    static final short[][] dfa_65 = unpackEncodedStringArray(dfa_65s);
+    static final char[] dfa_64 = DFA.unpackEncodedStringToUnsignedChars(dfa_64s);
+    static final char[] dfa_65 = DFA.unpackEncodedStringToUnsignedChars(dfa_65s);
+    static final short[] dfa_66 = DFA.unpackEncodedString(dfa_66s);
+    static final short[] dfa_67 = DFA.unpackEncodedString(dfa_67s);
+    static final short[][] dfa_68 = unpackEncodedStringArray(dfa_68s);
 
     class DFA36 extends DFA {
 
         public DFA36(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 36;
-            this.eot = dfa_60;
-            this.eof = dfa_60;
-            this.min = dfa_61;
-            this.max = dfa_62;
-            this.accept = dfa_63;
-            this.special = dfa_64;
-            this.transition = dfa_65;
+            this.eot = dfa_63;
+            this.eof = dfa_63;
+            this.min = dfa_64;
+            this.max = dfa_65;
+            this.accept = dfa_66;
+            this.special = dfa_67;
+            this.transition = dfa_68;
         }
         public String getDescription() {
             return "4423:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );";
@@ -98367,11 +98444,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_66s = "\3\uffff\1\2\5\uffff\1\2\1\uffff";
-    static final String dfa_67s = "\1\6\2\uffff\1\7\5\uffff\1\7\1\uffff";
-    static final String dfa_68s = "\1\172\2\uffff\1\u0089\5\uffff\1\u0089\1\uffff";
-    static final String dfa_69s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\7\1\10\1\uffff\1\4";
-    static final String[] dfa_70s = {
+    static final String dfa_69s = "\3\uffff\1\2\5\uffff\1\2\1\uffff";
+    static final String dfa_70s = "\1\6\2\uffff\1\7\5\uffff\1\7\1\uffff";
+    static final String dfa_71s = "\1\172\2\uffff\1\u0089\5\uffff\1\u0089\1\uffff";
+    static final String dfa_72s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\7\1\10\1\uffff\1\4";
+    static final String[] dfa_73s = {
             "\1\1\1\3\1\uffff\1\10\7\uffff\1\2\12\uffff\1\2\75\uffff\1\4\31\uffff\1\5\3\uffff\1\7\1\uffff\1\6",
             "",
             "",
@@ -98384,11 +98461,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\2\1\uffff\3\2\7\uffff\3\2\1\uffff\5\2\1\uffff\6\2\1\12\13\2\25\uffff\15\2\5\uffff\2\2\1\uffff\1\2\1\12\13\2\1\uffff\1\2\1\uffff\14\2\1\uffff\3\2\1\11\2\uffff\1\2\1\uffff\4\2\1\uffff\7\2",
             ""
     };
-    static final short[] dfa_66 = DFA.unpackEncodedString(dfa_66s);
-    static final char[] dfa_67 = DFA.unpackEncodedStringToUnsignedChars(dfa_67s);
-    static final char[] dfa_68 = DFA.unpackEncodedStringToUnsignedChars(dfa_68s);
     static final short[] dfa_69 = DFA.unpackEncodedString(dfa_69s);
-    static final short[][] dfa_70 = unpackEncodedStringArray(dfa_70s);
+    static final char[] dfa_70 = DFA.unpackEncodedStringToUnsignedChars(dfa_70s);
+    static final char[] dfa_71 = DFA.unpackEncodedStringToUnsignedChars(dfa_71s);
+    static final short[] dfa_72 = DFA.unpackEncodedString(dfa_72s);
+    static final short[][] dfa_73 = unpackEncodedStringArray(dfa_73s);
 
     class DFA37 extends DFA {
 
@@ -98396,23 +98473,23 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.recognizer = recognizer;
             this.decisionNumber = 37;
             this.eot = dfa_25;
-            this.eof = dfa_66;
-            this.min = dfa_67;
-            this.max = dfa_68;
-            this.accept = dfa_69;
+            this.eof = dfa_69;
+            this.min = dfa_70;
+            this.max = dfa_71;
+            this.accept = dfa_72;
             this.special = dfa_29;
-            this.transition = dfa_70;
+            this.transition = dfa_73;
         }
         public String getDescription() {
             return "4445:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleRandomCall ) | ( ruleRandomizeCall ) | ( ruleTextExpression ) );";
         }
     }
-    static final String dfa_71s = "\17\uffff";
-    static final String dfa_72s = "\1\4\4\uffff\1\0\11\uffff";
-    static final String dfa_73s = "\1\172\4\uffff\1\0\11\uffff";
-    static final String dfa_74s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\7\uffff\1\5";
-    static final String dfa_75s = "\5\uffff\1\0\11\uffff}>";
-    static final String[] dfa_76s = {
+    static final String dfa_74s = "\17\uffff";
+    static final String dfa_75s = "\1\4\4\uffff\1\0\11\uffff";
+    static final String dfa_76s = "\1\172\4\uffff\1\0\11\uffff";
+    static final String dfa_77s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\7\uffff\1\5";
+    static final String dfa_78s = "\5\uffff\1\0\11\uffff}>";
+    static final String[] dfa_79s = {
             "\1\2\1\3\2\6\1\1\1\6\7\uffff\1\6\12\uffff\1\6\70\uffff\1\4\4\uffff\1\5\31\uffff\1\6\3\uffff\1\6\1\uffff\1\6",
             "",
             "",
@@ -98430,25 +98507,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_71 = DFA.unpackEncodedString(dfa_71s);
-    static final char[] dfa_72 = DFA.unpackEncodedStringToUnsignedChars(dfa_72s);
-    static final char[] dfa_73 = DFA.unpackEncodedStringToUnsignedChars(dfa_73s);
     static final short[] dfa_74 = DFA.unpackEncodedString(dfa_74s);
-    static final short[] dfa_75 = DFA.unpackEncodedString(dfa_75s);
-    static final short[][] dfa_76 = unpackEncodedStringArray(dfa_76s);
+    static final char[] dfa_75 = DFA.unpackEncodedStringToUnsignedChars(dfa_75s);
+    static final char[] dfa_76 = DFA.unpackEncodedStringToUnsignedChars(dfa_76s);
+    static final short[] dfa_77 = DFA.unpackEncodedString(dfa_77s);
+    static final short[] dfa_78 = DFA.unpackEncodedString(dfa_78s);
+    static final short[][] dfa_79 = unpackEncodedStringArray(dfa_79s);
 
     class DFA38 extends DFA {
 
         public DFA38(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 38;
-            this.eot = dfa_71;
-            this.eof = dfa_71;
-            this.min = dfa_72;
-            this.max = dfa_73;
-            this.accept = dfa_74;
-            this.special = dfa_75;
-            this.transition = dfa_76;
+            this.eot = dfa_74;
+            this.eof = dfa_74;
+            this.min = dfa_75;
+            this.max = dfa_76;
+            this.accept = dfa_77;
+            this.special = dfa_78;
+            this.transition = dfa_79;
         }
         public String getDescription() {
             return "4503:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );";
@@ -98480,12 +98557,12 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_77s = "\23\uffff";
-    static final String dfa_78s = "\1\4\16\0\4\uffff";
-    static final String dfa_79s = "\1\173\16\0\4\uffff";
-    static final String dfa_80s = "\17\uffff\1\1\1\uffff\1\3\1\2";
-    static final String dfa_81s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\4\uffff}>";
-    static final String[] dfa_82s = {
+    static final String dfa_80s = "\23\uffff";
+    static final String dfa_81s = "\1\4\16\0\4\uffff";
+    static final String dfa_82s = "\1\173\16\0\4\uffff";
+    static final String dfa_83s = "\17\uffff\1\1\1\uffff\1\3\1\2";
+    static final String dfa_84s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\4\uffff}>";
+    static final String[] dfa_85s = {
             "\1\3\1\4\1\7\1\12\1\2\1\16\7\uffff\1\10\1\17\3\uffff\1\17\1\uffff\1\1\3\uffff\1\11\70\uffff\1\5\4\uffff\1\6\31\uffff\1\13\3\uffff\1\15\1\uffff\1\14\1\21",
             "\1\uffff",
             "\1\uffff",
@@ -98507,25 +98584,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_77 = DFA.unpackEncodedString(dfa_77s);
-    static final char[] dfa_78 = DFA.unpackEncodedStringToUnsignedChars(dfa_78s);
-    static final char[] dfa_79 = DFA.unpackEncodedStringToUnsignedChars(dfa_79s);
     static final short[] dfa_80 = DFA.unpackEncodedString(dfa_80s);
-    static final short[] dfa_81 = DFA.unpackEncodedString(dfa_81s);
-    static final short[][] dfa_82 = unpackEncodedStringArray(dfa_82s);
+    static final char[] dfa_81 = DFA.unpackEncodedStringToUnsignedChars(dfa_81s);
+    static final char[] dfa_82 = DFA.unpackEncodedStringToUnsignedChars(dfa_82s);
+    static final short[] dfa_83 = DFA.unpackEncodedString(dfa_83s);
+    static final short[] dfa_84 = DFA.unpackEncodedString(dfa_84s);
+    static final short[][] dfa_85 = unpackEncodedStringArray(dfa_85s);
 
     class DFA43 extends DFA {
 
         public DFA43(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 43;
-            this.eot = dfa_77;
-            this.eof = dfa_77;
-            this.min = dfa_78;
-            this.max = dfa_79;
-            this.accept = dfa_80;
-            this.special = dfa_81;
-            this.transition = dfa_82;
+            this.eot = dfa_80;
+            this.eof = dfa_80;
+            this.min = dfa_81;
+            this.max = dfa_82;
+            this.accept = dfa_83;
+            this.special = dfa_84;
+            this.transition = dfa_85;
         }
         public String getDescription() {
             return "4641:1: rule__VectorValueMember__Alternatives : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) | ( ruleIgnoreValue ) );";
@@ -98752,55 +98829,55 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_83s = "\24\uffff";
-    static final String dfa_84s = "\3\uffff\1\7\4\uffff\1\12\2\uffff\2\7\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff";
-    static final String dfa_85s = "\1\12\1\uffff\1\7\1\4\1\7\1\4\1\10\1\uffff\1\7\2\uffff\2\4\6\7\1\0";
-    static final String dfa_86s = "\1\174\1\uffff\1\7\1\u0089\1\7\2\10\1\uffff\1\u0089\2\uffff\2\u0089\1\7\1\u0089\1\7\1\u0089\1\7\1\u0089\1\0";
-    static final String dfa_87s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\3\1\2\11\uffff";
-    static final String dfa_88s = "\23\uffff\1\0}>";
-    static final String[] dfa_89s = {
+    static final String dfa_86s = "\24\uffff";
+    static final String dfa_87s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_88s = "\1\12\1\uffff\1\7\1\4\1\7\1\4\1\10\1\uffff\1\7\2\uffff\2\4\6\7\1\0";
+    static final String dfa_89s = "\1\174\1\uffff\1\7\1\u0089\1\7\2\10\1\uffff\1\u0089\2\uffff\2\u0089\1\7\1\u0089\1\7\1\u0089\1\7\1\u0089\1\0";
+    static final String dfa_90s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\11\uffff";
+    static final String dfa_91s = "\23\uffff\1\0}>";
+    static final String[] dfa_92s = {
             "\1\1\161\uffff\1\2",
             "",
             "\1\3",
-            "\3\12\1\10\1\12\2\7\15\uffff\1\5\13\uffff\1\4\45\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\4\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\3\uffff\1\7\1\6\4\7\3\uffff\5\7",
+            "\3\7\1\10\1\7\2\11\15\uffff\1\5\13\uffff\1\4\45\uffff\7\11\3\uffff\1\11\2\uffff\1\11\1\uffff\1\11\4\uffff\1\12\6\uffff\1\11\3\uffff\1\11\10\uffff\3\11\2\uffff\2\11\3\uffff\1\11\1\6\4\11\3\uffff\5\11",
             "\1\13",
-            "\1\12\2\uffff\1\13\1\12",
+            "\1\7\2\uffff\1\13\1\7",
             "\1\14",
             "",
-            "\1\12\1\uffff\2\12\15\uffff\1\12\12\uffff\1\7\1\15\17\uffff\20\7\6\uffff\7\12\3\uffff\1\12\2\uffff\1\12\1\uffff\1\12\1\7\1\uffff\1\12\1\uffff\1\7\6\uffff\1\12\3\uffff\1\12\10\uffff\3\12\2\uffff\2\12\1\7\2\uffff\6\12\3\uffff\5\12",
+            "\1\7\1\uffff\2\7\15\uffff\1\7\12\uffff\1\11\1\15\17\uffff\20\11\6\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\1\11\1\uffff\1\7\1\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\1\11\2\uffff\6\7\3\uffff\5\7",
             "",
             "",
-            "\3\12\1\10\1\12\2\7\15\uffff\1\5\13\uffff\1\4\45\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\4\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\3\uffff\1\7\1\6\4\7\3\uffff\5\7",
-            "\3\12\1\10\1\12\2\7\15\uffff\1\12\61\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\4\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\3\uffff\1\7\1\uffff\4\7\3\uffff\5\7",
+            "\3\7\1\10\1\7\2\11\15\uffff\1\5\13\uffff\1\4\45\uffff\7\11\3\uffff\1\11\2\uffff\1\11\1\uffff\1\11\4\uffff\1\12\6\uffff\1\11\3\uffff\1\11\10\uffff\3\11\2\uffff\2\11\3\uffff\1\11\1\6\4\11\3\uffff\5\11",
+            "\3\7\1\10\1\7\2\11\15\uffff\1\7\61\uffff\7\11\3\uffff\1\11\2\uffff\1\11\1\uffff\1\11\4\uffff\1\12\6\uffff\1\11\3\uffff\1\11\10\uffff\3\11\2\uffff\2\11\3\uffff\1\11\1\uffff\4\11\3\uffff\5\11",
             "\1\16",
-            "\1\12\1\uffff\2\12\15\uffff\1\12\13\uffff\1\17\17\uffff\20\7\6\uffff\7\12\3\uffff\1\12\2\uffff\1\12\1\uffff\1\12\2\uffff\1\12\1\uffff\1\7\6\uffff\1\12\3\uffff\1\12\10\uffff\3\12\2\uffff\2\12\1\7\2\uffff\6\12\3\uffff\5\12",
+            "\1\7\1\uffff\2\7\15\uffff\1\7\13\uffff\1\17\17\uffff\20\11\6\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\2\uffff\1\7\1\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\1\11\2\uffff\6\7\3\uffff\5\7",
             "\1\20",
-            "\1\12\1\uffff\2\12\15\uffff\1\12\13\uffff\1\21\17\uffff\20\7\6\uffff\7\12\3\uffff\1\12\2\uffff\1\12\1\uffff\1\12\2\uffff\1\12\1\uffff\1\7\6\uffff\1\12\3\uffff\1\12\10\uffff\3\12\2\uffff\2\12\1\7\2\uffff\6\12\3\uffff\5\12",
+            "\1\7\1\uffff\2\7\15\uffff\1\7\13\uffff\1\21\17\uffff\20\11\6\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\2\uffff\1\7\1\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\1\11\2\uffff\6\7\3\uffff\5\7",
             "\1\22",
-            "\1\12\1\uffff\2\12\15\uffff\1\12\13\uffff\1\23\17\uffff\20\7\6\uffff\7\12\3\uffff\1\12\2\uffff\1\12\1\uffff\1\12\2\uffff\1\12\1\uffff\1\7\6\uffff\1\12\3\uffff\1\12\10\uffff\3\12\2\uffff\2\12\1\7\2\uffff\6\12\3\uffff\5\12",
+            "\1\7\1\uffff\2\7\15\uffff\1\7\13\uffff\1\23\17\uffff\20\11\6\uffff\7\7\3\uffff\1\7\2\uffff\1\7\1\uffff\1\7\2\uffff\1\7\1\uffff\1\11\6\uffff\1\7\3\uffff\1\7\10\uffff\3\7\2\uffff\2\7\1\11\2\uffff\6\7\3\uffff\5\7",
             "\1\uffff"
     };
 
-    static final short[] dfa_83 = DFA.unpackEncodedString(dfa_83s);
-    static final short[] dfa_84 = DFA.unpackEncodedString(dfa_84s);
-    static final char[] dfa_85 = DFA.unpackEncodedStringToUnsignedChars(dfa_85s);
-    static final char[] dfa_86 = DFA.unpackEncodedStringToUnsignedChars(dfa_86s);
+    static final short[] dfa_86 = DFA.unpackEncodedString(dfa_86s);
     static final short[] dfa_87 = DFA.unpackEncodedString(dfa_87s);
-    static final short[] dfa_88 = DFA.unpackEncodedString(dfa_88s);
-    static final short[][] dfa_89 = unpackEncodedStringArray(dfa_89s);
+    static final char[] dfa_88 = DFA.unpackEncodedStringToUnsignedChars(dfa_88s);
+    static final char[] dfa_89 = DFA.unpackEncodedStringToUnsignedChars(dfa_89s);
+    static final short[] dfa_90 = DFA.unpackEncodedString(dfa_90s);
+    static final short[] dfa_91 = DFA.unpackEncodedString(dfa_91s);
+    static final short[][] dfa_92 = unpackEncodedStringArray(dfa_92s);
 
     class DFA44 extends DFA {
 
         public DFA44(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 44;
-            this.eot = dfa_83;
-            this.eof = dfa_84;
-            this.min = dfa_85;
-            this.max = dfa_86;
-            this.accept = dfa_87;
-            this.special = dfa_88;
-            this.transition = dfa_89;
+            this.eot = dfa_86;
+            this.eof = dfa_87;
+            this.min = dfa_88;
+            this.max = dfa_89;
+            this.accept = dfa_90;
+            this.special = dfa_91;
+            this.transition = dfa_92;
         }
         public String getDescription() {
             return "4671:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
@@ -98816,9 +98893,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index44_19 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred68_InternalSCTX()) ) {s = 10;}
+                        if ( (synpred68_InternalSCTX()) ) {s = 7;}
 
-                        else if ( (true) ) {s = 7;}
+                        else if ( (true) ) {s = 9;}
 
                          
                         input.seek(index44_19);
@@ -98832,29 +98909,29 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_90s = "\2\uffff\1\7\5\uffff\2\7";
-    static final String dfa_91s = "\1\175\1\7\1\4\1\7\1\4\1\7\2\uffff\2\4";
-    static final String dfa_92s = "\1\175\1\7\1\175\1\7\2\10\2\uffff\2\175";
-    static final String dfa_93s = "\6\uffff\1\1\1\2\2\uffff";
-    static final String dfa_94s = "\12\uffff}>";
-    static final String[] dfa_95s = {
+    static final String dfa_93s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_94s = "\1\175\1\7\1\4\1\7\1\4\1\7\2\uffff\2\4";
+    static final String dfa_95s = "\1\175\1\7\1\175\1\7\2\10\2\uffff\2\175";
+    static final String dfa_96s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_97s = "\12\uffff}>";
+    static final String[] dfa_98s = {
             "\1\1",
             "\1\2",
-            "\5\6\1\uffff\1\7\15\uffff\1\4\13\uffff\1\3\57\uffff\1\7\47\uffff\1\7\1\5",
+            "\5\7\1\uffff\1\6\15\uffff\1\4\13\uffff\1\3\57\uffff\1\6\47\uffff\1\6\1\5",
             "\1\10",
-            "\1\6\2\uffff\1\10\1\6",
-            "\1\7\1\11",
+            "\1\7\2\uffff\1\10\1\7",
+            "\1\6\1\11",
             "",
             "",
-            "\5\6\1\uffff\1\7\15\uffff\1\4\13\uffff\1\3\57\uffff\1\7\47\uffff\1\7\1\5",
-            "\5\6\1\uffff\1\7\15\uffff\1\6\73\uffff\1\7\47\uffff\2\7"
+            "\5\7\1\uffff\1\6\15\uffff\1\4\13\uffff\1\3\57\uffff\1\6\47\uffff\1\6\1\5",
+            "\5\7\1\uffff\1\6\15\uffff\1\7\73\uffff\1\6\47\uffff\2\6"
     };
-    static final short[] dfa_90 = DFA.unpackEncodedString(dfa_90s);
-    static final char[] dfa_91 = DFA.unpackEncodedStringToUnsignedChars(dfa_91s);
-    static final char[] dfa_92 = DFA.unpackEncodedStringToUnsignedChars(dfa_92s);
     static final short[] dfa_93 = DFA.unpackEncodedString(dfa_93s);
-    static final short[] dfa_94 = DFA.unpackEncodedString(dfa_94s);
-    static final short[][] dfa_95 = unpackEncodedStringArray(dfa_95s);
+    static final char[] dfa_94 = DFA.unpackEncodedStringToUnsignedChars(dfa_94s);
+    static final char[] dfa_95 = DFA.unpackEncodedStringToUnsignedChars(dfa_95s);
+    static final short[] dfa_96 = DFA.unpackEncodedString(dfa_96s);
+    static final short[] dfa_97 = DFA.unpackEncodedString(dfa_97s);
+    static final short[][] dfa_98 = unpackEncodedStringArray(dfa_98s);
 
     class DFA45 extends DFA {
 
@@ -98862,24 +98939,24 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.recognizer = recognizer;
             this.decisionNumber = 45;
             this.eot = dfa_10;
-            this.eof = dfa_90;
-            this.min = dfa_91;
-            this.max = dfa_92;
-            this.accept = dfa_93;
-            this.special = dfa_94;
-            this.transition = dfa_95;
+            this.eof = dfa_93;
+            this.min = dfa_94;
+            this.max = dfa_95;
+            this.accept = dfa_96;
+            this.special = dfa_97;
+            this.transition = dfa_98;
         }
         public String getDescription() {
             return "4705:1: rule__Pragma__Alternatives : ( ( ruleStringPragma ) | ( rulePragmaTag ) );";
         }
     }
-    static final String dfa_96s = "\14\uffff";
-    static final String dfa_97s = "\3\uffff\1\10\6\uffff\2\10";
-    static final String dfa_98s = "\1\12\1\uffff\1\7\1\5\2\7\1\10\3\uffff\2\5";
-    static final String dfa_99s = "\1\174\1\uffff\1\7\1\175\2\7\1\10\3\uffff\1\175\1\174";
-    static final String dfa_100s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
-    static final String dfa_101s = "\14\uffff}>";
-    static final String[] dfa_102s = {
+    static final String dfa_99s = "\14\uffff";
+    static final String dfa_100s = "\3\uffff\1\10\6\uffff\2\10";
+    static final String dfa_101s = "\1\12\1\uffff\1\7\1\5\2\7\1\10\3\uffff\2\5";
+    static final String dfa_102s = "\1\174\1\uffff\1\7\1\175\2\7\1\10\3\uffff\1\175\1\174";
+    static final String dfa_103s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
+    static final String dfa_104s = "\14\uffff}>";
+    static final String[] dfa_105s = {
             "\1\1\161\uffff\1\2",
             "",
             "\1\3",
@@ -98894,72 +98971,72 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\3\7\2\uffff\1\10\32\uffff\12\10\57\uffff\1\11\1\uffff\1\10\1\uffff\1\10\31\uffff\1\10"
     };
 
-    static final short[] dfa_96 = DFA.unpackEncodedString(dfa_96s);
-    static final short[] dfa_97 = DFA.unpackEncodedString(dfa_97s);
-    static final char[] dfa_98 = DFA.unpackEncodedStringToUnsignedChars(dfa_98s);
-    static final char[] dfa_99 = DFA.unpackEncodedStringToUnsignedChars(dfa_99s);
+    static final short[] dfa_99 = DFA.unpackEncodedString(dfa_99s);
     static final short[] dfa_100 = DFA.unpackEncodedString(dfa_100s);
-    static final short[] dfa_101 = DFA.unpackEncodedString(dfa_101s);
-    static final short[][] dfa_102 = unpackEncodedStringArray(dfa_102s);
+    static final char[] dfa_101 = DFA.unpackEncodedStringToUnsignedChars(dfa_101s);
+    static final char[] dfa_102 = DFA.unpackEncodedStringToUnsignedChars(dfa_102s);
+    static final short[] dfa_103 = DFA.unpackEncodedString(dfa_103s);
+    static final short[] dfa_104 = DFA.unpackEncodedString(dfa_104s);
+    static final short[][] dfa_105 = unpackEncodedStringArray(dfa_105s);
 
     class DFA46 extends DFA {
 
         public DFA46(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 46;
-            this.eot = dfa_96;
-            this.eof = dfa_97;
-            this.min = dfa_98;
-            this.max = dfa_99;
-            this.accept = dfa_100;
-            this.special = dfa_101;
-            this.transition = dfa_102;
+            this.eot = dfa_99;
+            this.eof = dfa_100;
+            this.min = dfa_101;
+            this.max = dfa_102;
+            this.accept = dfa_103;
+            this.special = dfa_104;
+            this.transition = dfa_105;
         }
         public String getDescription() {
             return "4728:1: rule__RestrictedTypeAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleRestrictedKeyStringValueAnnotation ) | ( ruleRestrictedTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_103s = "\3\uffff\1\11\6\uffff\2\11";
-    static final String dfa_104s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\4\2\uffff";
-    static final String[] dfa_105s = {
+    static final String dfa_106s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_107s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String[] dfa_108s = {
             "\1\1\161\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\uffff\1\11\2\uffff\1\11\15\uffff\1\5\13\uffff\1\4\71\uffff\1\7\35\uffff\1\11\1\6",
+            "\1\11\1\uffff\1\7\2\uffff\1\7\15\uffff\1\5\13\uffff\1\4\71\uffff\1\10\35\uffff\1\7\1\6",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\10\1\uffff\1\11\2\uffff\1\11\15\uffff\1\5\13\uffff\1\4\71\uffff\1\7\35\uffff\1\11\1\6",
-            "\1\10\1\uffff\1\11\2\uffff\1\11\123\uffff\1\7\35\uffff\1\11"
+            "\1\11\1\uffff\1\7\2\uffff\1\7\15\uffff\1\5\13\uffff\1\4\71\uffff\1\10\35\uffff\1\7\1\6",
+            "\1\11\1\uffff\1\7\2\uffff\1\7\123\uffff\1\10\35\uffff\1\7"
     };
-    static final short[] dfa_103 = DFA.unpackEncodedString(dfa_103s);
-    static final short[] dfa_104 = DFA.unpackEncodedString(dfa_104s);
-    static final short[][] dfa_105 = unpackEncodedStringArray(dfa_105s);
+    static final short[] dfa_106 = DFA.unpackEncodedString(dfa_106s);
+    static final short[] dfa_107 = DFA.unpackEncodedString(dfa_107s);
+    static final short[][] dfa_108 = unpackEncodedStringArray(dfa_108s);
 
     class DFA47 extends DFA {
 
         public DFA47(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 47;
-            this.eot = dfa_96;
-            this.eof = dfa_103;
-            this.min = dfa_98;
-            this.max = dfa_99;
-            this.accept = dfa_104;
-            this.special = dfa_101;
-            this.transition = dfa_105;
+            this.eot = dfa_99;
+            this.eof = dfa_106;
+            this.min = dfa_101;
+            this.max = dfa_102;
+            this.accept = dfa_107;
+            this.special = dfa_104;
+            this.transition = dfa_108;
         }
         public String getDescription() {
             return "4762:1: rule__QuotedStringAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleQuotedKeyStringValueAnnotation ) | ( ruleQuotedTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_106s = "\1\12\1\uffff\1\12\1\7\1\uffff\1\4\1\7\1\4\1\10\5\12\1\7\3\4\2\7\1\10\1\30\1\4\3\12\1\4\4\12\2\7\1\10\1\4\2\7\1\10\1\30\1\137\3\12\1\4\4\12\1\4\2\7\1\10\3\12\1\4\4\12\2\7\1\10\2\12";
-    static final String dfa_107s = "\1\u0089\1\uffff\1\u0089\1\7\1\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\175\1\10\3\u0089\1\10\4\u0089\2\7\1\10\1\30\2\7\1\10\1\175\1\137\3\u0089\1\10\4\u0089\1\30\2\7\1\10\3\u0089\1\10\4\u0089\2\7\1\10\2\u0089";
-    static final String dfa_108s = "\1\uffff\1\2\2\uffff\1\1\74\uffff";
-    static final String[] dfa_109s = {
+    static final String dfa_109s = "\1\12\1\uffff\1\12\1\7\1\uffff\1\4\1\7\1\4\1\10\5\12\1\7\3\4\2\7\1\10\1\30\1\4\3\12\1\4\4\12\2\7\1\10\1\4\2\7\1\10\1\30\1\137\3\12\1\4\4\12\1\4\2\7\1\10\3\12\1\4\4\12\2\7\1\10\2\12";
+    static final String dfa_110s = "\1\u0089\1\uffff\1\u0089\1\7\1\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\175\1\10\3\u0089\1\10\4\u0089\2\7\1\10\1\30\2\7\1\10\1\175\1\137\3\u0089\1\10\4\u0089\1\30\2\7\1\10\3\u0089\1\10\4\u0089\2\7\1\10\2\u0089";
+    static final String dfa_111s = "\1\uffff\1\2\2\uffff\1\1\74\uffff";
+    static final String[] dfa_112s = {
             "\1\2\40\uffff\4\1\33\uffff\7\4\5\uffff\2\1\1\uffff\1\4\13\uffff\1\1\3\uffff\2\1\1\uffff\5\1\2\uffff\2\4\7\uffff\1\3\1\uffff\4\1\2\uffff\1\1\5\4",
             "",
             "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\13\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
@@ -99026,10 +99103,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\2\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\60\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\76\4\1\3\uffff\5\4",
             "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\60\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4"
     };
-    static final char[] dfa_106 = DFA.unpackEncodedStringToUnsignedChars(dfa_106s);
-    static final char[] dfa_107 = DFA.unpackEncodedStringToUnsignedChars(dfa_107s);
-    static final short[] dfa_108 = DFA.unpackEncodedString(dfa_108s);
-    static final short[][] dfa_109 = unpackEncodedStringArray(dfa_109s);
+    static final char[] dfa_109 = DFA.unpackEncodedStringToUnsignedChars(dfa_109s);
+    static final char[] dfa_110 = DFA.unpackEncodedStringToUnsignedChars(dfa_110s);
+    static final short[] dfa_111 = DFA.unpackEncodedString(dfa_111s);
+    static final short[][] dfa_112 = unpackEncodedStringArray(dfa_112s);
 
     class DFA65 extends DFA {
 
@@ -99038,23 +99115,23 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 65;
             this.eot = dfa_1;
             this.eof = dfa_1;
-            this.min = dfa_106;
-            this.max = dfa_107;
-            this.accept = dfa_108;
+            this.min = dfa_109;
+            this.max = dfa_110;
+            this.accept = dfa_111;
             this.special = dfa_5;
-            this.transition = dfa_109;
+            this.transition = dfa_112;
         }
         public String getDescription() {
             return "()* loopback of 5586:1: ( rule__RootState__DeclarationsAssignment_5 )*";
         }
     }
-    static final String dfa_110s = "\65\uffff";
-    static final String dfa_111s = "\1\1\64\uffff";
-    static final String dfa_112s = "\1\12\1\uffff\1\12\1\7\1\uffff\1\4\1\7\1\4\1\10\1\7\3\12\2\4\1\30\1\4\2\7\1\10\2\7\1\10\1\4\5\12\1\30\1\137\3\12\2\7\1\10\1\4\2\7\1\10\7\12\2\7\1\10\2\12";
-    static final String dfa_113s = "\1\u0081\1\uffff\1\u0081\1\7\1\uffff\1\u0081\1\7\2\10\1\7\5\u0081\1\175\1\30\2\7\1\10\2\7\1\10\1\30\5\u0081\1\175\1\137\3\u0081\2\7\1\10\1\30\2\7\1\10\7\u0081\2\7\1\10\2\u0081";
-    static final String dfa_114s = "\1\uffff\1\2\2\uffff\1\1\60\uffff";
-    static final String dfa_115s = "\65\uffff}>";
-    static final String[] dfa_116s = {
+    static final String dfa_113s = "\65\uffff";
+    static final String dfa_114s = "\1\1\64\uffff";
+    static final String dfa_115s = "\1\12\1\uffff\1\12\1\7\1\uffff\1\4\1\7\1\4\1\10\1\7\3\12\2\4\1\30\1\4\2\7\1\10\2\7\1\10\1\4\5\12\1\30\1\137\3\12\2\7\1\10\1\4\2\7\1\10\7\12\2\7\1\10\2\12";
+    static final String dfa_116s = "\1\u0081\1\uffff\1\u0081\1\7\1\uffff\1\u0081\1\7\2\10\1\7\5\u0081\1\175\1\30\2\7\1\10\2\7\1\10\1\30\5\u0081\1\175\1\137\3\u0081\2\7\1\10\1\30\2\7\1\10\7\u0081\2\7\1\10\2\u0081";
+    static final String dfa_117s = "\1\uffff\1\2\2\uffff\1\1\60\uffff";
+    static final String dfa_118s = "\65\uffff}>";
+    static final String[] dfa_119s = {
             "\1\2\32\uffff\12\4\47\uffff\2\1\10\uffff\1\4\1\uffff\1\4\2\uffff\1\1\3\uffff\1\1\22\uffff\1\3\1\uffff\4\1",
             "",
             "\1\2\32\uffff\12\4\50\uffff\1\1\10\uffff\1\4\1\uffff\1\4\2\uffff\1\1\3\uffff\1\1\22\uffff\1\3\1\uffff\4\1",
@@ -99110,103 +99187,31 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\2\32\uffff\12\4\50\uffff\1\1\4\uffff\1\45\3\uffff\1\4\1\uffff\1\4\2\uffff\1\1\3\uffff\1\1\22\uffff\1\3\1\uffff\4\1"
     };
 
-    static final short[] dfa_110 = DFA.unpackEncodedString(dfa_110s);
-    static final short[] dfa_111 = DFA.unpackEncodedString(dfa_111s);
-    static final char[] dfa_112 = DFA.unpackEncodedStringToUnsignedChars(dfa_112s);
-    static final char[] dfa_113 = DFA.unpackEncodedStringToUnsignedChars(dfa_113s);
+    static final short[] dfa_113 = DFA.unpackEncodedString(dfa_113s);
     static final short[] dfa_114 = DFA.unpackEncodedString(dfa_114s);
-    static final short[] dfa_115 = DFA.unpackEncodedString(dfa_115s);
-    static final short[][] dfa_116 = unpackEncodedStringArray(dfa_116s);
+    static final char[] dfa_115 = DFA.unpackEncodedStringToUnsignedChars(dfa_115s);
+    static final char[] dfa_116 = DFA.unpackEncodedStringToUnsignedChars(dfa_116s);
+    static final short[] dfa_117 = DFA.unpackEncodedString(dfa_117s);
+    static final short[] dfa_118 = DFA.unpackEncodedString(dfa_118s);
+    static final short[][] dfa_119 = unpackEncodedStringArray(dfa_119s);
 
     class DFA74 extends DFA {
 
         public DFA74(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 74;
-            this.eot = dfa_110;
-            this.eof = dfa_111;
-            this.min = dfa_112;
-            this.max = dfa_113;
-            this.accept = dfa_114;
-            this.special = dfa_115;
-            this.transition = dfa_116;
+            this.eot = dfa_113;
+            this.eof = dfa_114;
+            this.min = dfa_115;
+            this.max = dfa_116;
+            this.accept = dfa_117;
+            this.special = dfa_118;
+            this.transition = dfa_119;
         }
         public String getDescription() {
             return "()* loopback of 5983:1: ( rule__State__OutgoingTransitionsAssignment_9 )*";
         }
     }
-    static final String dfa_117s = "\1\12\1\uffff\1\12\1\7\1\uffff\1\4\1\7\1\4\1\10\1\7\5\12\2\4\1\30\1\4\2\7\1\10\1\4\2\7\1\10\1\4\3\12\1\4\4\12\1\30\1\137\3\12\1\4\2\12\2\7\1\10\1\4\2\7\1\10\5\12\1\4\4\12\2\7\1\10\2\12";
-    static final String dfa_118s = "\1\u0089\1\uffff\1\u0089\1\7\1\uffff\1\u0089\1\7\2\10\1\7\7\u0089\1\175\1\30\2\7\2\10\2\7\1\10\1\30\3\u0089\1\10\4\u0089\1\175\1\137\3\u0089\1\10\2\u0089\2\7\1\10\1\30\2\7\1\10\5\u0089\1\10\4\u0089\2\7\1\10\2\u0089";
-    static final String[] dfa_119s = {
-            "\1\2\40\uffff\4\1\33\uffff\7\4\5\uffff\2\1\1\uffff\1\4\13\uffff\1\1\3\uffff\2\1\1\uffff\5\1\2\uffff\2\4\7\uffff\1\3\1\uffff\4\1\2\uffff\1\1\5\4",
-            "",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\13\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\5",
-            "",
-            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\2\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\4\uffff\1\11\6\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\10\4\1\3\uffff\5\4",
-            "\1\17",
-            "\1\16\2\uffff\1\17\1\15",
-            "\1\20",
-            "\1\21",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\15\uffff\1\24\13\uffff\1\23\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\25\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\2\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\4\uffff\1\11\6\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\10\4\1\3\uffff\5\4",
-            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\2\15\uffff\1\26\61\uffff\7\4\6\uffff\1\1\1\uffff\1\4\4\uffff\1\11\6\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
-            "\1\40\1\33\1\35\1\34\1\37\17\uffff\1\36",
-            "\1\41",
-            "\1\41",
-            "\1\42",
-            "\1\16\3\uffff\1\15",
-            "\1\43",
-            "\1\43",
-            "\1\44",
-            "\1\52\1\45\1\47\1\46\1\51\17\uffff\1\50",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\15\uffff\1\54\13\uffff\1\53\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\55\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\40\3\uffff\1\37",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\15\uffff\1\24\13\uffff\1\23\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\25\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
-            "\1\32",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\15\uffff\1\60\13\uffff\1\57\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\61\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\52\3\uffff\1\51",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\62",
-            "\1\62",
-            "\1\63",
-            "\1\71\1\64\1\66\1\65\1\70\17\uffff\1\67",
-            "\1\72",
-            "\1\72",
-            "\1\73",
-            "\1\2\15\uffff\1\54\13\uffff\1\53\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\55\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\22\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\76\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\71\3\uffff\1\70",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\2\15\uffff\1\60\13\uffff\1\57\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\61\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4",
-            "\1\77",
-            "\1\77",
-            "\1\100",
-            "\1\2\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\76\4\1\3\uffff\5\4",
-            "\1\2\77\uffff\7\4\6\uffff\1\1\1\uffff\1\4\2\uffff\1\56\10\uffff\1\1\3\uffff\1\1\11\uffff\2\4\7\uffff\1\3\1\uffff\4\1\3\uffff\5\4"
-    };
-    static final char[] dfa_117 = DFA.unpackEncodedStringToUnsignedChars(dfa_117s);
-    static final char[] dfa_118 = DFA.unpackEncodedStringToUnsignedChars(dfa_118s);
-    static final short[][] dfa_119 = unpackEncodedStringArray(dfa_119s);
 
     class DFA78 extends DFA {
 
@@ -99215,11 +99220,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 78;
             this.eot = dfa_1;
             this.eof = dfa_1;
-            this.min = dfa_117;
-            this.max = dfa_118;
-            this.accept = dfa_108;
+            this.min = dfa_109;
+            this.max = dfa_110;
+            this.accept = dfa_111;
             this.special = dfa_5;
-            this.transition = dfa_119;
+            this.transition = dfa_112;
         }
         public String getDescription() {
             return "()* loopback of 6256:1: ( rule__State__DeclarationsAssignment_8_1_2 )*";
@@ -99583,7 +99588,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 117;
             this.eot = dfa_1;
             this.eof = dfa_133;
-            this.min = dfa_7;
+            this.min = dfa_2;
             this.max = dfa_134;
             this.accept = dfa_135;
             this.special = dfa_5;
@@ -99594,8 +99599,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_137s = "\1\1\100\uffff";
-    static final String dfa_138s = "\1\u0081\1\uffff\1\u0081\1\7\1\uffff\1\u0081\1\7\2\10\1\7\7\u0081\1\175\1\30\2\7\2\10\2\7\1\10\1\30\3\u0081\1\10\4\u0081\1\175\1\137\3\u0081\1\10\2\u0081\2\7\1\10\1\30\2\7\1\10\5\u0081\1\10\4\u0081\2\7\1\10\2\u0081";
-    static final String[] dfa_139s = {
+    static final String dfa_138s = "\1\12\1\uffff\1\12\1\7\1\uffff\1\4\1\7\1\4\1\10\1\7\5\12\2\4\1\30\1\4\2\7\1\10\1\4\2\7\1\10\1\4\3\12\1\4\4\12\1\30\1\137\3\12\1\4\2\12\2\7\1\10\1\4\2\7\1\10\5\12\1\4\4\12\2\7\1\10\2\12";
+    static final String dfa_139s = "\1\u0081\1\uffff\1\u0081\1\7\1\uffff\1\u0081\1\7\2\10\1\7\7\u0081\1\175\1\30\2\7\2\10\2\7\1\10\1\30\3\u0081\1\10\4\u0081\1\175\1\137\3\u0081\1\10\2\u0081\2\7\1\10\1\30\2\7\1\10\5\u0081\1\10\4\u0081\2\7\1\10\2\u0081";
+    static final String[] dfa_140s = {
             "\1\2\113\uffff\1\1\1\4\15\uffff\1\1\3\uffff\1\1\22\uffff\1\3\1\uffff\4\4",
             "",
             "\1\2\114\uffff\1\4\15\uffff\1\1\3\uffff\1\1\22\uffff\1\3\1\uffff\4\4",
@@ -99664,7 +99670,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     };
     static final short[] dfa_137 = DFA.unpackEncodedString(dfa_137s);
     static final char[] dfa_138 = DFA.unpackEncodedStringToUnsignedChars(dfa_138s);
-    static final short[][] dfa_139 = unpackEncodedStringArray(dfa_139s);
+    static final char[] dfa_139 = DFA.unpackEncodedStringToUnsignedChars(dfa_139s);
+    static final short[][] dfa_140 = unpackEncodedStringArray(dfa_140s);
 
     class DFA118 extends DFA {
 
@@ -99673,85 +99680,83 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 118;
             this.eot = dfa_1;
             this.eof = dfa_137;
-            this.min = dfa_117;
-            this.max = dfa_138;
-            this.accept = dfa_108;
+            this.min = dfa_138;
+            this.max = dfa_139;
+            this.accept = dfa_111;
             this.special = dfa_5;
-            this.transition = dfa_139;
+            this.transition = dfa_140;
         }
         public String getDescription() {
             return "()* loopback of 9351:1: ( rule__ControlflowRegion__StatesAssignment_7_0_2 )*";
         }
     }
-    static final String dfa_140s = "\2\u0089\1\7\2\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\175\1\10\3\u0089\1\10\4\u0089\2\7\1\10\1\30\2\7\1\10\1\175\1\137\3\u0089\1\10\4\u0089\1\30\2\7\1\10\3\u0089\1\10\4\u0089\2\7\1\10\2\u0089";
     static final String[] dfa_141s = {
             "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\13\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
             "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\13\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
             "\1\5",
             "",
             "",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\4\uffff\1\16\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\4\3\3\uffff\5\4",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\4\uffff\1\11\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\4\3\3\uffff\5\4",
             "\1\17",
-            "\1\15\2\uffff\1\17\1\14",
+            "\1\16\2\uffff\1\17\1\15",
             "\1\20",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\24\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\25",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\4\uffff\1\16\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\4\3\3\uffff\5\4",
-            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\26\61\uffff\7\4\6\uffff\1\3\1\uffff\1\4\4\uffff\1\16\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\34\1\27\1\31\1\30\1\33\17\uffff\1\32",
-            "\1\35",
-            "\1\35",
-            "\1\36",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
-            "\1\15\3\uffff\1\14",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\45\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\34\3\uffff\1\33",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\23\13\uffff\1\22\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\24\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\46",
-            "\1\46",
-            "\1\47",
-            "\1\55\1\50\1\52\1\51\1\54\17\uffff\1\53",
-            "\1\56",
-            "\1\56",
-            "\1\57",
-            "\1\40\13\uffff\1\37\72\uffff\1\42\35\uffff\1\41",
+            "\1\21",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\25\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\4\uffff\1\11\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\4\3\3\uffff\5\4",
+            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\26\61\uffff\7\4\6\uffff\1\3\1\uffff\1\4\4\uffff\1\11\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
+            "\1\40\1\33\1\35\1\34\1\37\17\uffff\1\36",
+            "\1\41",
+            "\1\41",
             "\1\42",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\63\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\55\3\uffff\1\54",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\44\13\uffff\1\43\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\45\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\16\3\uffff\1\15",
+            "\1\43",
+            "\1\43",
+            "\1\44",
+            "\1\52\1\45\1\47\1\46\1\51\17\uffff\1\50",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\54\13\uffff\1\53\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\55\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\40\3\uffff\1\37",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\24\13\uffff\1\23\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\25\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
+            "\1\32",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\60\13\uffff\1\57\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\61\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\52\3\uffff\1\51",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\62",
+            "\1\62",
+            "\1\63",
             "\1\71\1\64\1\66\1\65\1\70\17\uffff\1\67",
             "\1\72",
             "\1\72",
             "\1\73",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\76\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\54\13\uffff\1\53\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\55\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\76\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
             "\1\71\3\uffff\1\70",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
-            "\1\1\15\uffff\1\62\13\uffff\1\61\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\63\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
+            "\1\1\15\uffff\1\60\13\uffff\1\57\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\61\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4",
             "\1\77",
             "\1\77",
             "\1\100",
-            "\1\1\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\76\4\3\3\uffff\5\4",
-            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\60\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4"
+            "\1\1\15\uffff\1\75\13\uffff\1\74\45\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\76\4\3\3\uffff\5\4",
+            "\1\1\77\uffff\7\4\6\uffff\1\3\1\uffff\1\4\2\uffff\1\56\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\uffff\4\3\3\uffff\5\4"
     };
-    static final char[] dfa_140 = DFA.unpackEncodedStringToUnsignedChars(dfa_140s);
     static final short[][] dfa_141 = unpackEncodedStringArray(dfa_141s);
 
     class DFA119 extends DFA {
@@ -99762,7 +99767,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.eot = dfa_1;
             this.eof = dfa_1;
             this.min = dfa_2;
-            this.max = dfa_140;
+            this.max = dfa_134;
             this.accept = dfa_135;
             this.special = dfa_5;
             this.transition = dfa_141;
@@ -99773,83 +99778,83 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     }
     static final String dfa_142s = "\110\uffff";
     static final String dfa_143s = "\1\3\107\uffff";
-    static final String dfa_144s = "\3\7\2\uffff\1\4\1\7\1\4\1\10\6\7\2\4\1\30\1\4\2\7\1\10\1\4\2\7\1\10\1\4\3\7\1\4\5\7\1\30\1\137\3\7\1\4\4\7\1\10\2\7\1\4\2\7\1\10\6\7\1\4\7\7\1\10\3\7\1\0";
-    static final String dfa_145s = "\2\u0089\1\7\2\uffff\1\u0089\1\7\2\10\1\7\7\u0089\1\175\1\30\2\7\2\10\2\7\1\10\1\30\3\u0089\1\10\5\u0089\1\175\1\137\3\u0089\1\10\2\u0089\2\7\1\10\2\7\1\30\2\7\1\10\6\u0089\1\10\4\u0089\3\7\1\10\3\u0089\1\0";
+    static final String dfa_144s = "\3\7\2\uffff\1\4\1\7\1\4\1\10\6\7\3\4\2\7\1\10\1\30\1\4\3\7\1\4\7\7\1\10\1\4\2\7\1\10\2\7\1\30\1\137\3\7\1\4\5\7\1\4\2\7\1\10\4\7\1\4\7\7\1\10\1\0\2\7";
+    static final String dfa_145s = "\2\u0089\1\7\2\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\175\1\10\3\u0089\1\10\5\u0089\2\7\1\10\1\30\2\7\1\10\2\7\1\175\1\137\3\u0089\1\10\5\u0089\1\30\2\7\1\10\1\7\3\u0089\1\10\5\u0089\2\7\1\10\1\0\2\u0089";
     static final String dfa_146s = "\3\uffff\1\2\1\1\103\uffff";
-    static final String dfa_147s = "\107\uffff\1\0}>";
+    static final String dfa_147s = "\105\uffff\1\0\2\uffff}>";
     static final String[] dfa_148s = {
             "\1\3\2\uffff\1\1\77\uffff\7\4\5\uffff\1\3\2\uffff\1\4\13\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
             "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\13\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
             "\1\5",
             "",
             "",
-            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\10\uffff\1\4\4\uffff\1\11\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\7\uffff\5\4",
+            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\10\uffff\1\4\4\uffff\1\16\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\7\uffff\5\4",
             "\1\17",
-            "\1\16\2\uffff\1\17\1\15",
+            "\1\15\2\uffff\1\17\1\14",
             "\1\20",
-            "\1\21",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\24\13\uffff\1\23\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\22\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\25\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\10\uffff\1\4\4\uffff\1\11\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\7\uffff\5\4",
-            "\1\16\1\12\1\14\1\13\1\15\1\uffff\1\1\15\uffff\1\26\61\uffff\7\4\10\uffff\1\4\4\uffff\1\11\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
-            "\1\40\1\33\1\35\1\34\1\37\17\uffff\1\36",
-            "\1\41",
-            "\1\42",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\23\13\uffff\1\22\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\21\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\24\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\25",
+            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\7\13\uffff\1\6\45\uffff\7\4\10\uffff\1\4\4\uffff\1\16\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\10\7\uffff\5\4",
+            "\1\15\1\11\1\13\1\12\1\14\1\uffff\1\1\15\uffff\1\26\61\uffff\7\4\10\uffff\1\4\4\uffff\1\16\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\34\1\27\1\31\1\30\1\33\17\uffff\1\32",
+            "\1\35",
+            "\1\36",
+            "\1\37",
+            "\1\41\13\uffff\1\40\72\uffff\1\43\35\uffff\1\42",
+            "\1\15\3\uffff\1\14",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\45\13\uffff\1\44\45\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\46\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\34\3\uffff\1\33",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\23\13\uffff\1\47\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\21\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\24\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\23\13\uffff\1\50\45\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\24\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\51",
+            "\1\51",
+            "\1\52",
+            "\1\60\1\53\1\55\1\54\1\57\17\uffff\1\56",
+            "\1\61",
+            "\1\61",
+            "\1\62",
+            "\1\63",
+            "\1\36",
+            "\1\41\13\uffff\1\40\72\uffff\1\43\35\uffff\1\42",
             "\1\43",
-            "\1\16\3\uffff\1\15",
-            "\1\44",
-            "\1\44",
-            "\1\45",
-            "\1\53\1\46\1\50\1\47\1\52\17\uffff\1\51",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\55\13\uffff\1\54\45\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\56\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\40\3\uffff\1\37",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\24\13\uffff\1\57\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\22\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\25\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\24\13\uffff\1\60\45\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\25\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\30\13\uffff\1\27\72\uffff\1\32\35\uffff\1\31",
-            "\1\32",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\63\13\uffff\1\62\45\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\64\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\53\3\uffff\1\52",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\65",
-            "\1\65",
-            "\1\66",
-            "\1\67",
-            "\1\42",
-            "\1\75\1\70\1\72\1\71\1\74\17\uffff\1\73",
-            "\1\76",
-            "\1\76",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\66\13\uffff\1\65\45\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\67\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\60\3\uffff\1\57",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\45\13\uffff\1\44\45\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\46\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\21\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\23\13\uffff\1\70\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\21\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\24\7\uffff\5\4",
+            "\1\76\1\71\1\73\1\72\1\75\17\uffff\1\74",
             "\1\77",
-            "\1\3\2\uffff\1\1\15\uffff\1\55\13\uffff\1\54\45\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\56\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\22\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\24\13\uffff\1\100\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\22\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\25\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\102\13\uffff\1\101\45\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\103\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\75\3\uffff\1\74",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\63\13\uffff\1\62\45\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\64\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\104",
-            "\1\105",
-            "\1\105",
+            "\1\77",
+            "\1\100",
+            "\1\101",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\103\13\uffff\1\102\45\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\104\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\76\3\uffff\1\75",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\66\13\uffff\1\65\45\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\67\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
+            "\1\3\2\uffff\1\1\15\uffff\1\23\13\uffff\1\105\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\21\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\24\7\uffff\5\4",
             "\1\106",
-            "\1\3\2\uffff\1\1\15\uffff\1\24\13\uffff\1\107\17\uffff\16\3\10\uffff\7\4\10\uffff\1\4\2\uffff\1\22\1\uffff\1\3\6\uffff\1\3\3\uffff\1\3\11\uffff\2\4\4\uffff\1\3\2\uffff\1\2\1\25\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\15\uffff\1\102\13\uffff\1\101\45\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\103\7\uffff\5\4",
-            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\61\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4",
-            "\1\uffff"
+            "\1\106",
+            "\1\107",
+            "\1\uffff",
+            "\1\3\2\uffff\1\1\15\uffff\1\103\13\uffff\1\102\45\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\1\104\7\uffff\5\4",
+            "\1\3\2\uffff\1\1\77\uffff\7\4\10\uffff\1\4\2\uffff\1\64\10\uffff\1\3\3\uffff\1\3\11\uffff\2\4\7\uffff\1\2\10\uffff\5\4"
     };
 
     static final short[] dfa_142 = DFA.unpackEncodedString(dfa_142s);
@@ -99881,10 +99886,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA125_71 = input.LA(1);
+                        int LA125_69 = input.LA(1);
 
                          
-                        int index125_71 = input.index();
+                        int index125_69 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred190_InternalSCTX()) ) {s = 4;}
@@ -99892,7 +99897,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 3;}
 
                          
-                        input.seek(index125_71);
+                        input.seek(index125_69);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -99907,7 +99912,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     static final String dfa_150s = "\1\7\1\uffff\2\7\1\uffff\1\4\1\7\1\4\1\10\6\7\2\4\1\30\1\4\2\7\1\10\1\4\2\7\1\10\1\4\3\7\1\4\5\7\1\30\1\137\3\7\1\4\4\7\1\10\2\7\1\4\2\7\1\10\6\7\1\4\7\7\1\10\3\7\1\0";
     static final String dfa_151s = "\1\174\1\uffff\1\174\1\7\1\uffff\1\175\1\7\2\10\1\7\1\174\1\175\3\174\1\175\1\174\1\175\1\30\2\7\2\10\2\7\1\10\1\30\1\174\1\175\1\174\1\10\2\174\2\175\1\174\1\175\1\137\1\174\1\175\1\174\1\10\2\174\2\7\1\10\2\7\1\30\2\7\1\10\1\175\1\174\1\175\1\174\1\175\1\174\1\10\2\174\1\175\1\174\3\7\1\10\2\175\1\174\1\0";
     static final String dfa_152s = "\1\uffff\1\2\2\uffff\1\1\103\uffff";
-    static final String[] dfa_153s = {
+    static final String dfa_153s = "\107\uffff\1\0}>";
+    static final String[] dfa_154s = {
             "\1\4\2\uffff\1\2\113\uffff\1\1\16\uffff\1\1\3\uffff\1\1\22\uffff\1\3",
             "",
             "\1\4\2\uffff\1\2\132\uffff\1\1\3\uffff\1\1\22\uffff\1\3",
@@ -99985,7 +99991,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     static final char[] dfa_150 = DFA.unpackEncodedStringToUnsignedChars(dfa_150s);
     static final char[] dfa_151 = DFA.unpackEncodedStringToUnsignedChars(dfa_151s);
     static final short[] dfa_152 = DFA.unpackEncodedString(dfa_152s);
-    static final short[][] dfa_153 = unpackEncodedStringArray(dfa_153s);
+    static final short[] dfa_153 = DFA.unpackEncodedString(dfa_153s);
+    static final short[][] dfa_154 = unpackEncodedStringArray(dfa_154s);
 
     class DFA126 extends DFA {
 
@@ -99997,8 +100004,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.min = dfa_150;
             this.max = dfa_151;
             this.accept = dfa_152;
-            this.special = dfa_147;
-            this.transition = dfa_153;
+            this.special = dfa_153;
+            this.transition = dfa_154;
         }
         public String getDescription() {
             return "()* loopback of 9779:1: ( rule__DataflowRegion__EquationsAssignment_9 )*";
@@ -100118,13 +100125,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_154s = "\152\uffff";
-    static final String dfa_155s = "\1\3\12\uffff\1\3\26\uffff\1\3\37\uffff\1\3\30\uffff\1\3\16\uffff";
-    static final String dfa_156s = "\3\7\1\uffff\1\5\1\uffff\1\4\1\7\1\4\1\10\6\7\3\4\2\7\1\10\1\4\3\7\1\30\1\4\3\7\1\4\7\7\1\4\2\7\1\10\1\4\2\7\1\10\4\7\1\4\1\10\3\7\1\30\1\137\3\7\1\4\5\7\2\4\1\7\1\30\1\4\2\7\1\10\1\4\4\7\1\10\1\4\3\7\1\4\7\7\1\30\1\137\3\7\1\10\1\0\5\7\1\0";
-    static final String dfa_157s = "\2\u0089\1\7\1\uffff\1\174\1\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\30\1\7\1\u0089\1\7\1\175\1\10\3\u0089\1\10\6\u0089\1\174\1\u0089\2\7\1\10\1\30\2\7\1\10\2\7\1\174\1\7\2\10\2\u0089\1\7\1\175\1\137\3\u0089\1\10\7\u0089\1\7\1\175\1\30\2\7\1\10\1\30\1\7\1\u0089\2\7\1\10\1\30\3\u0089\1\10\6\u0089\1\7\1\175\1\137\1\u0089\2\7\1\10\1\0\3\u0089\1\7\1\u0089\1\0";
-    static final String dfa_158s = "\3\uffff\1\2\1\uffff\1\1\144\uffff";
-    static final String dfa_159s = "\143\uffff\1\0\5\uffff\1\1}>";
-    static final String[] dfa_160s = {
+    static final String dfa_155s = "\152\uffff";
+    static final String dfa_156s = "\1\3\12\uffff\1\3\26\uffff\1\3\37\uffff\1\3\30\uffff\1\3\16\uffff";
+    static final String dfa_157s = "\3\7\1\uffff\1\5\1\uffff\1\4\1\7\1\4\1\10\6\7\3\4\2\7\1\10\1\4\3\7\1\30\1\4\3\7\1\4\7\7\1\4\2\7\1\10\1\4\2\7\1\10\4\7\1\4\1\10\3\7\1\30\1\137\3\7\1\4\5\7\2\4\1\7\1\30\1\4\2\7\1\10\1\4\4\7\1\10\1\4\3\7\1\4\7\7\1\30\1\137\3\7\1\10\1\0\5\7\1\0";
+    static final String dfa_158s = "\2\u0089\1\7\1\uffff\1\174\1\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\2\7\1\10\1\30\1\7\1\u0089\1\7\1\175\1\10\3\u0089\1\10\6\u0089\1\174\1\u0089\2\7\1\10\1\30\2\7\1\10\2\7\1\174\1\7\2\10\2\u0089\1\7\1\175\1\137\3\u0089\1\10\7\u0089\1\7\1\175\1\30\2\7\1\10\1\30\1\7\1\u0089\2\7\1\10\1\30\3\u0089\1\10\6\u0089\1\7\1\175\1\137\1\u0089\2\7\1\10\1\0\3\u0089\1\7\1\u0089\1\0";
+    static final String dfa_159s = "\3\uffff\1\2\1\uffff\1\1\144\uffff";
+    static final String dfa_160s = "\143\uffff\1\0\5\uffff\1\1}>";
+    static final String[] dfa_161s = {
             "\1\3\1\uffff\1\3\1\1\72\uffff\1\3\4\uffff\7\5\10\uffff\1\5\27\uffff\2\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
             "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\30\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
             "\1\6",
@@ -100233,26 +100240,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\uffff"
     };
 
-    static final short[] dfa_154 = DFA.unpackEncodedString(dfa_154s);
     static final short[] dfa_155 = DFA.unpackEncodedString(dfa_155s);
-    static final char[] dfa_156 = DFA.unpackEncodedStringToUnsignedChars(dfa_156s);
+    static final short[] dfa_156 = DFA.unpackEncodedString(dfa_156s);
     static final char[] dfa_157 = DFA.unpackEncodedStringToUnsignedChars(dfa_157s);
-    static final short[] dfa_158 = DFA.unpackEncodedString(dfa_158s);
+    static final char[] dfa_158 = DFA.unpackEncodedStringToUnsignedChars(dfa_158s);
     static final short[] dfa_159 = DFA.unpackEncodedString(dfa_159s);
-    static final short[][] dfa_160 = unpackEncodedStringArray(dfa_160s);
+    static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
+    static final short[][] dfa_161 = unpackEncodedStringArray(dfa_161s);
 
     class DFA162 extends DFA {
 
         public DFA162(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 162;
-            this.eot = dfa_154;
-            this.eof = dfa_155;
-            this.min = dfa_156;
-            this.max = dfa_157;
-            this.accept = dfa_158;
-            this.special = dfa_159;
-            this.transition = dfa_160;
+            this.eot = dfa_155;
+            this.eof = dfa_156;
+            this.min = dfa_157;
+            this.max = dfa_158;
+            this.accept = dfa_159;
+            this.special = dfa_160;
+            this.transition = dfa_161;
         }
         public String getDescription() {
             return "()* loopback of 13327:1: ( rule__RootScope__DeclarationsAssignment_1 )*";
@@ -100299,9 +100306,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_161s = "\3\7\1\uffff\1\5\1\uffff\1\4\1\7\1\4\1\10\6\7\2\4\1\30\1\4\2\7\1\10\1\4\3\7\1\4\2\7\1\10\1\4\3\7\1\4\7\7\1\4\1\30\1\137\3\7\1\4\4\7\1\10\4\7\1\4\1\10\3\7\1\4\2\7\1\10\1\4\3\7\2\4\1\30\4\7\1\4\10\7\1\10\1\4\3\7\1\10\1\7\1\30\1\137\4\7\1\0\3\7\1\0";
-    static final String dfa_162s = "\2\u0089\1\7\1\uffff\1\174\1\uffff\1\u0089\1\7\2\10\1\7\7\u0089\1\175\1\30\2\7\1\10\1\30\1\7\1\u0089\1\7\1\10\2\7\1\10\1\30\3\u0089\1\10\6\u0089\1\174\1\u0089\1\175\1\137\3\u0089\1\10\2\u0089\2\7\1\10\2\7\1\174\1\7\2\10\1\7\2\u0089\1\30\2\7\1\10\1\30\5\u0089\1\175\1\7\3\u0089\1\10\5\u0089\3\7\1\10\1\30\1\u0089\2\7\1\10\1\u0089\1\175\1\137\1\u0089\1\7\2\u0089\1\0\1\u0089\1\7\1\u0089\1\0";
-    static final String dfa_163s = "\145\uffff\1\0\3\uffff\1\1}>";
+    static final String dfa_162s = "\3\7\1\uffff\1\5\1\uffff\1\4\1\7\1\4\1\10\6\7\3\4\3\7\1\10\1\4\2\7\1\30\1\4\3\7\1\4\7\7\1\4\2\7\1\10\1\4\2\7\1\10\4\7\1\4\1\10\3\7\1\30\1\137\3\7\1\4\5\7\2\4\1\7\1\30\1\4\2\7\1\10\1\4\4\7\1\10\1\4\3\7\1\4\7\7\1\30\1\137\3\7\1\10\1\0\5\7\1\0";
+    static final String dfa_163s = "\2\u0089\1\7\1\uffff\1\174\1\uffff\1\u0089\1\7\2\10\5\u0089\1\7\2\u0089\1\30\3\7\1\10\1\30\1\u0089\1\7\1\175\1\10\3\u0089\1\10\3\u0089\1\174\4\u0089\2\7\1\10\1\30\2\7\1\10\1\7\1\174\2\7\2\10\2\u0089\1\7\1\175\1\137\3\u0089\1\10\7\u0089\1\7\1\175\1\30\2\7\1\10\1\30\1\7\1\u0089\2\7\1\10\1\30\3\u0089\1\10\6\u0089\1\7\1\175\1\137\1\u0089\2\7\1\10\1\0\3\u0089\1\7\1\u0089\1\0";
     static final String[] dfa_164s = {
             "\1\3\1\uffff\1\3\1\1\72\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\5\27\uffff\2\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
             "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\30\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
@@ -100309,110 +100315,109 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "",
             "\1\5\1\uffff\1\3\164\uffff\1\5",
             "",
-            "\1\17\1\13\1\15\1\14\1\16\1\3\1\1\15\uffff\1\10\13\uffff\1\7\45\uffff\7\5\10\uffff\1\5\4\uffff\1\12\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\1\11\7\uffff\5\5",
+            "\1\16\1\12\1\14\1\13\1\15\1\3\1\1\15\uffff\1\10\13\uffff\1\7\45\uffff\7\5\10\uffff\1\5\4\uffff\1\17\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\1\11\7\uffff\5\5",
             "\1\20",
-            "\1\17\2\uffff\1\20\1\16",
+            "\1\16\2\uffff\1\20\1\15",
             "\1\21",
-            "\1\22",
-            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\23\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\12\uffff\1\3\1\24\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\30\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\17\1\13\1\15\1\14\1\16\1\3\1\1\15\uffff\1\10\13\uffff\1\7\45\uffff\7\5\10\uffff\1\5\4\uffff\1\12\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\1\11\7\uffff\5\5",
-            "\1\17\1\13\1\15\1\14\1\16\1\3\1\1\15\uffff\1\33\61\uffff\7\5\10\uffff\1\5\4\uffff\1\12\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
-            "\1\35\13\uffff\1\34\72\uffff\1\37\35\uffff\1\36",
-            "\1\45\1\40\1\42\1\41\1\44\17\uffff\1\43",
-            "\1\46",
+            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\22\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\12\uffff\1\3\1\23\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\24\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\32",
+            "\1\16\1\12\1\14\1\13\1\15\1\3\1\1\15\uffff\1\10\13\uffff\1\7\45\uffff\7\5\10\uffff\1\5\4\uffff\1\17\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\1\11\7\uffff\5\5",
+            "\1\16\1\12\1\14\1\13\1\15\1\3\1\1\15\uffff\1\33\61\uffff\7\5\10\uffff\1\5\4\uffff\1\17\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
+            "\1\41\1\34\1\36\1\35\1\40\17\uffff\1\37",
+            "\1\42",
+            "\1\43",
+            "\1\44",
+            "\1\45",
+            "\1\41\1\46\1\36\1\35\1\40\17\uffff\1\37",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\30\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
             "\1\47",
-            "\1\50",
-            "\1\45\1\51\1\42\1\41\1\44\17\uffff\1\43",
-            "\1\52",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\30\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\53",
-            "\1\17\3\uffff\1\16",
-            "\1\54",
-            "\1\54",
-            "\1\55",
-            "\1\63\1\56\1\60\1\57\1\62\17\uffff\1\61",
-            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\23\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\65\13\uffff\1\64\45\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\66\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\45\3\uffff\1\44",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\13\uffff\1\67\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\30\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\25\13\uffff\1\70\45\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\26\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\5\1\3\1\uffff\1\5\112\uffff\1\5\37\uffff\1\5\3\uffff\1\71\2\uffff\1\5",
-            "\1\17\1\76\1\15\1\77\1\16\1\3\1\31\15\uffff\1\73\13\uffff\1\72\45\uffff\7\5\10\uffff\1\5\4\uffff\1\75\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\74\7\uffff\5\5",
-            "\1\35\13\uffff\1\34\72\uffff\1\37\35\uffff\1\36",
-            "\1\37",
-            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\100\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\102\13\uffff\1\101\45\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\103\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\63\3\uffff\1\62",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\105",
-            "\1\105",
+            "\1\51\13\uffff\1\50\72\uffff\1\53\35\uffff\1\52",
+            "\1\16\3\uffff\1\15",
+            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\22\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\55\13\uffff\1\54\45\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\56\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\41\3\uffff\1\40",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\13\uffff\1\57\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\24\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
+            "\1\5\1\3\1\uffff\1\5\112\uffff\1\5\37\uffff\1\5\3\uffff\1\60\2\uffff\1\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\25\13\uffff\1\61\45\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\26\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\16\1\65\1\14\1\66\1\15\1\3\1\30\15\uffff\1\63\13\uffff\1\62\45\uffff\7\5\10\uffff\1\5\4\uffff\1\67\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\64\7\uffff\5\5",
+            "\1\70",
+            "\1\70",
+            "\1\71",
+            "\1\77\1\72\1\74\1\73\1\76\17\uffff\1\75",
+            "\1\100",
+            "\1\100",
+            "\1\101",
+            "\1\102",
+            "\1\5\1\3\1\uffff\1\5\112\uffff\1\5\37\uffff\1\5\3\uffff\1\60\2\uffff\1\5",
+            "\1\44",
+            "\1\103",
+            "\1\16\2\uffff\1\103\1\15",
+            "\1\104",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\25\12\uffff\1\3\1\105\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\1\3\1\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\31\1\26\7\uffff\5\5",
             "\1\106",
-            "\1\107",
-            "\1\47",
-            "\1\5\1\3\1\uffff\1\5\112\uffff\1\5\37\uffff\1\5\3\uffff\1\71\2\uffff\1\5",
-            "\1\110",
-            "\1\17\2\uffff\1\110\1\16",
-            "\1\111",
-            "\1\112",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\25\12\uffff\1\3\1\113\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\1\3\1\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\32\1\26\7\uffff\5\5",
-            "\1\121\1\114\1\116\1\115\1\120\17\uffff\1\117",
-            "\1\122",
-            "\1\122",
-            "\1\123",
-            "\1\121\1\124\1\116\1\115\1\120\17\uffff\1\117",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\65\13\uffff\1\64\45\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\66\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\13\uffff\1\125\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\30\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
-            "\1\17\1\76\1\15\1\77\1\16\1\3\1\31\15\uffff\1\73\13\uffff\1\72\45\uffff\7\5\10\uffff\1\5\4\uffff\1\75\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\74\7\uffff\5\5",
-            "\1\17\1\76\1\15\1\77\1\16\1\3\1\31\15\uffff\1\33\61\uffff\7\5\10\uffff\1\5\4\uffff\1\75\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\127\13\uffff\1\126\72\uffff\1\131\35\uffff\1\130",
-            "\1\132",
-            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\100\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\134\13\uffff\1\133\45\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\135\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\121\3\uffff\1\120",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\102\13\uffff\1\101\45\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\103\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
-            "\1\136",
-            "\1\137",
-            "\1\137",
-            "\1\140",
-            "\1\63\1\141\1\60\1\57\1\62\17\uffff\1\61",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\25\13\uffff\1\142\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\2\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\32\1\26\7\uffff\5\5",
-            "\1\143",
-            "\1\143",
-            "\1\144",
-            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\13\uffff\1\145\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\30\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
-            "\1\127\13\uffff\1\126\72\uffff\1\131\35\uffff\1\130",
+            "\1\51\13\uffff\1\50\72\uffff\1\53\35\uffff\1\52",
+            "\1\53",
+            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\107\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\111\13\uffff\1\110\45\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\112\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\77\3\uffff\1\76",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\55\13\uffff\1\54\45\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\56\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\27\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\13\uffff\1\114\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\24\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
+            "\1\16\1\65\1\14\1\66\1\15\1\3\1\30\15\uffff\1\63\13\uffff\1\62\45\uffff\7\5\10\uffff\1\5\4\uffff\1\67\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\64\7\uffff\5\5",
+            "\1\16\1\65\1\14\1\66\1\15\1\3\1\30\15\uffff\1\33\61\uffff\7\5\10\uffff\1\5\4\uffff\1\67\23\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\115",
+            "\1\117\13\uffff\1\116\72\uffff\1\121\35\uffff\1\120",
+            "\1\127\1\122\1\124\1\123\1\126\17\uffff\1\125",
+            "\1\130",
+            "\1\130",
             "\1\131",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
+            "\1\127\1\132\1\124\1\123\1\126\17\uffff\1\125",
+            "\1\133",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\25\13\uffff\1\134\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\2\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\31\1\26\7\uffff\5\5",
+            "\1\135",
+            "\1\135",
+            "\1\136",
+            "\1\77\1\137\1\74\1\73\1\76\17\uffff\1\75",
+            "\1\3\1\uffff\1\3\1\1\77\uffff\7\5\10\uffff\1\5\2\uffff\1\107\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\2\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\141\13\uffff\1\140\45\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\142\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\127\3\uffff\1\126",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\111\13\uffff\1\110\45\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\112\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\1\15\uffff\1\25\13\uffff\1\143\17\uffff\20\3\1\uffff\1\3\4\uffff\7\5\5\uffff\1\3\2\uffff\1\24\1\3\1\uffff\1\27\1\uffff\1\3\22\uffff\2\3\1\5\1\4\2\uffff\3\3\2\uffff\1\2\1\26\7\uffff\5\5",
+            "\1\144",
+            "\1\117\13\uffff\1\116\72\uffff\1\121\35\uffff\1\120",
+            "\1\121",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
+            "\1\145",
+            "\1\145",
             "\1\146",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\134\13\uffff\1\133\45\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\1\135\7\uffff\5\5",
-            "\1\3\1\uffff\1\3\1\31\77\uffff\7\5\10\uffff\1\5\2\uffff\1\104\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\32\10\uffff\5\5",
             "\1\uffff",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\25\13\uffff\1\147\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\2\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\32\1\26\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\25\13\uffff\1\147\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\2\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\31\1\26\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\141\13\uffff\1\140\45\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\1\142\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\77\uffff\7\5\10\uffff\1\5\2\uffff\1\113\25\uffff\1\3\1\5\1\4\2\uffff\2\3\3\uffff\1\31\10\uffff\5\5",
             "\1\150",
-            "\1\3\1\uffff\1\3\1\31\15\uffff\1\25\13\uffff\1\151\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\2\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\32\1\26\7\uffff\5\5",
+            "\1\3\1\uffff\1\3\1\30\15\uffff\1\25\13\uffff\1\151\17\uffff\20\3\6\uffff\7\5\10\uffff\1\5\2\uffff\1\27\1\uffff\1\3\23\uffff\1\3\1\5\1\4\2\uffff\3\3\2\uffff\1\31\1\26\7\uffff\5\5",
             "\1\uffff"
     };
-    static final char[] dfa_161 = DFA.unpackEncodedStringToUnsignedChars(dfa_161s);
     static final char[] dfa_162 = DFA.unpackEncodedStringToUnsignedChars(dfa_162s);
-    static final short[] dfa_163 = DFA.unpackEncodedString(dfa_163s);
+    static final char[] dfa_163 = DFA.unpackEncodedStringToUnsignedChars(dfa_163s);
     static final short[][] dfa_164 = unpackEncodedStringArray(dfa_164s);
 
     class DFA166 extends DFA {
@@ -100420,12 +100425,12 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public DFA166(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 166;
-            this.eot = dfa_154;
-            this.eof = dfa_154;
-            this.min = dfa_161;
-            this.max = dfa_162;
-            this.accept = dfa_158;
-            this.special = dfa_163;
+            this.eot = dfa_155;
+            this.eof = dfa_155;
+            this.min = dfa_162;
+            this.max = dfa_163;
+            this.accept = dfa_159;
+            this.special = dfa_160;
             this.transition = dfa_164;
         }
         public String getDescription() {
@@ -100436,10 +100441,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA166_101 = input.LA(1);
+                        int LA166_99 = input.LA(1);
 
                          
-                        int index166_101 = input.index();
+                        int index166_99 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred231_InternalSCTX()) ) {s = 5;}
@@ -100447,7 +100452,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 3;}
 
                          
-                        input.seek(index166_101);
+                        input.seek(index166_99);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 

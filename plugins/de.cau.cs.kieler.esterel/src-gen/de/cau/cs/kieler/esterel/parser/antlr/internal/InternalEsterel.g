@@ -12459,12 +12459,16 @@ ruleNamespaceID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTok
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(    this_ID_0=RULE_ID    {
-		$current.merge(this_ID_0);
+(
+    { 
+        newCompositeNode(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0()); 
+    }
+    this_ExtendedID_0=ruleExtendedID    {
+		$current.merge(this_ExtendedID_0);
     }
 
     { 
-    newLeafNode(this_ID_0, grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_0()); 
+        afterParserOrEnumRuleCall();
     }
 (
 	kw=':' 

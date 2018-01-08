@@ -542,20 +542,20 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	public class NamespaceIDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.NamespaceID");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cExtendedIDParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final RuleCall cPrimeIDParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
 		//NamespaceID:
-		//	ID (':' PrimeID)*;
+		//	ExtendedID (':' PrimeID)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ID (':' PrimeID)*
+		//ExtendedID (':' PrimeID)*
 		public Group getGroup() { return cGroup; }
 
-		//ID
-		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		//ExtendedID
+		public RuleCall getExtendedIDParserRuleCall_0() { return cExtendedIDParserRuleCall_0; }
 
 		//(':' PrimeID)*
 		public Group getGroup_1() { return cGroup_1; }
@@ -1442,7 +1442,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//NamespaceID:
-	//	ID (':' PrimeID)*;
+	//	ExtendedID (':' PrimeID)*;
 	public NamespaceIDElements getNamespaceIDAccess() {
 		return pNamespaceID;
 	}
@@ -2823,7 +2823,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID (('.' | '-') ID)* ("#" INT)?;
+	//	ID (('.' | '-') ID)* ('#' INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -2892,7 +2892,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
-	//terminal ML_COMMENT:
+	//@ Override terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
@@ -2904,7 +2904,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	} 
 
-	//terminal SL_COMMENT:
+	//@ Override terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
@@ -2916,7 +2916,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getNUMBERRule();
 	} 
 
-	//terminal INT returns ecore::EInt:
+	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
@@ -2934,13 +2934,13 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getBOOLEANRule();
 	} 
 
-	//terminal STRING:
+	//@ Override terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
 	} 
 
-	//terminal ID:
+	//@ Override terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();
