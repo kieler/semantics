@@ -43,7 +43,22 @@ class LoopTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(Loop).toList.forEach[transform]
+        if (true) {
+            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof Loop) {
+                val Loop loop = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Loop
+                transform(loop)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                )
+            }
+        }
+        else {
+            model.eAllContents.filter(Loop).toList.forEach[transform]
+        }
     }
     
     def transform(Loop loop) {

@@ -42,7 +42,22 @@ class SetTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(Set).toList.forEach[transform]
+        if (true) {
+            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof Set) {
+                val Set set = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Set
+                transform(set)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                )
+            }
+        }
+        else {
+            model.eAllContents.filter(Set).toList.forEach[transform]
+        }
     }
     
     def transform(Set set) {

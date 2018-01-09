@@ -19,9 +19,6 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.scl.ScopeStatement
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
-import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -48,8 +45,17 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     
     override process() {
         if (true) {
-            val Block block = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Block
-            transform(block)
+            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof Block) {
+                val Block block = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Block
+                transform(block)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                )
+            }
         }
         else {
             model.eAllContents.filter(Block).toList.forEach[transform]
@@ -58,8 +64,8 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     
     def transform(Block block) {
         val ScopeStatement scope = block.statements.createScopeStatement
-        environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, scope)
         block.replace(scope)
+        environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, scope)
     }
     
 }

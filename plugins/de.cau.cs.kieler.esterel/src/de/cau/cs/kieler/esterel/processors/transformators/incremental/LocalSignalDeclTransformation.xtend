@@ -48,7 +48,22 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(LocalSignalDeclaration).toList.forEach[transform]
+        if (true) {
+            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof LocalSignalDeclaration) {
+                val LocalSignalDeclaration localS = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as LocalSignalDeclaration
+                transform(localS)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                )
+            }
+        }
+        else {
+            model.eAllContents.filter(LocalSignalDeclaration).toList.forEach[transform]
+        }
     }    
     
     def transform(LocalSignalDeclaration localSignals) {

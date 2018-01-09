@@ -42,7 +42,22 @@ class UnEmitTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(UnEmit).toList.forEach[transform]
+        if (true) {
+            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof UnEmit) {
+                val UnEmit unEmit = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as UnEmit
+                transform(unEmit)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                )
+            }
+        }
+        else {
+            model.eAllContents.filter(UnEmit).toList.forEach[transform]
+        }
     }
     
     def transform(UnEmit unemit) {

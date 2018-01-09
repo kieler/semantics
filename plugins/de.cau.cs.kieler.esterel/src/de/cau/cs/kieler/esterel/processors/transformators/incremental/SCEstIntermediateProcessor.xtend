@@ -84,15 +84,18 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         return "Intermediate"
     }
 
-    public static var IProperty<EObject> NEXT_STATEMENT_TO_TRANSFORM = 
-        new Property<EObject>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
+    public static var IProperty<Object> NEXT_STATEMENT_TO_TRANSFORM = 
+        new Property<Object>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
+        
+    public static var IProperty<Boolean> DYNAMIC_COMPILATION = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.dynamiccompilation", true)
     
     @Inject
     extension EsterelTransformationExtensions
     
     override process() {
-        var EObject obj = if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
-                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) else model
+        var EObject obj = (if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
+                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) else model) as EObject
         
         // the next object which needs to be transformed and the corresponding processor id
         val nextObj = obj.nextStatement 
