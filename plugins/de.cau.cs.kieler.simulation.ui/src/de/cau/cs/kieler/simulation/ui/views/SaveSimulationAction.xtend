@@ -17,8 +17,10 @@ import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.trace.printer.TracePrinter
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.ui.dialogs.SaveAsDialog
+import de.cau.cs.kieler.prom.ModelImporter
 
 /**
  * Base class for toolbar action to save the complete simulation run to a file format. 
@@ -51,9 +53,17 @@ class SaveSimulationAction extends DataPoolViewToolbarAction {
     protected def IPath openSaveAsDialog() {
         val dialog = new SaveAsDialog(DataPoolView.instance.viewer.control.shell)
         dialog.blockOnOpen = true
+        // Find file of current simulation
+        var IFile lastFile = null
         val lastFiles = SimulationUtil.lastFiles
         if(!lastFiles.isNullOrEmpty) {
-            val lastFile = lastFiles.get(0)
+            lastFile = lastFiles.get(0)
+        } else if(SimulationUtil.lastEObject !== null) {
+            val eObject = SimulationUtil.lastEObject
+            lastFile = ModelImporter.toPlatformResource(eObject.eResource)
+        }
+        // Open dialog in folder of simulated file
+        if(lastFile !== null) {
             val newFileName = Files.getNameWithoutExtension(lastFile.name.replace("Sim_", ""))+"."+tracePrinter.fileExtension
             val newFile = lastFile.project.getFile(newFileName)
             dialog.originalFile = newFile
