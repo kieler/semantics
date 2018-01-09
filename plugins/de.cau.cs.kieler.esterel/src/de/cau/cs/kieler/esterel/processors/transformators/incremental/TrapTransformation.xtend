@@ -38,9 +38,7 @@ import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
-
-
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -65,6 +63,8 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -80,6 +80,7 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
             model.eAllContents.filter(Trap).toList.forEach[transform]
@@ -152,7 +153,8 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
             transformReferences(parallel, exitVariables)
         }
         transformTrapExpressions(scope, exitVariables)
-        trap.replace(scope)        
+        trap.replace(scope)      
+        lastStatement = scope  
     }
     
     def transformPausesAndJoinsAndExits(Statement statement, Conditional conditional, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {

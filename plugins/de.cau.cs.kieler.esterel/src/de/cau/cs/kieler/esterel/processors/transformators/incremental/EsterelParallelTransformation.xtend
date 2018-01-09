@@ -18,6 +18,8 @@ import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.scl.Parallel
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -42,6 +44,8 @@ class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -57,6 +61,7 @@ class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
             model.eAllContents.filter(Parallel).toList.forEach[transform]
@@ -69,6 +74,7 @@ class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
             newParallel.threads.add(createThread => [ statements.add(t.statements) ])
         }
         parallel.replace(newParallel)
+        lastStatement = newParallel
     }
     
 }

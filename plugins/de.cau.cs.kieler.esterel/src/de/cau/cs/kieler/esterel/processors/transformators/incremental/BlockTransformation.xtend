@@ -20,6 +20,7 @@ import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.scl.ScopeStatement
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -44,6 +45,8 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -59,6 +62,7 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
             model.eAllContents.filter(Block).toList.forEach[transform]
@@ -68,7 +72,7 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     def transform(Block block) {
         val ScopeStatement scope = block.statements.createScopeStatement
         block.replace(scope)
-        environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(scope))
+        lastStatement = scope
     }
     
 }

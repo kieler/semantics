@@ -22,6 +22,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Pause
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -46,6 +48,8 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -61,6 +65,7 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
             model.eAllContents.filter(Suspend).toList.forEach[transform]
@@ -101,16 +106,30 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
             thread2.statements.add(createLabel)
             scope.statements.add(parallel)
             suspend.replace(scope)
+            lastStatement = scope
         }
         else {
             transformPauses(suspend, null)
             if (suspend.delay.isImmediate) {
                 val label = createLabel
                 statements.set(pos, label)
-                statements.add(pos+1, newIfThenGoto(suspend.delay.expression, label, true))
-                statements.addAll(pos+2, suspend.statements)
+                val cond = newIfThenGoto(suspend.delay.expression, label, true)
+                statements.add(pos+1, cond)
+                if (suspend.statements.empty) {
+                    lastStatement = cond
+                }
+                else {
+                    lastStatement = suspend.statements.last
+                    statements.addAll(pos+2, suspend.statements)
+                }
             }
             else {
+                if (!suspend.statements.empty) {
+                    lastStatement = suspend.statements.last
+                }
+                else {
+                    throw new Exception("Difficult to decide the next statement to transform at the moment.")
+                }
                 statements.addAll(pos, suspend.statements)
                 statements.remove(suspend)
             }

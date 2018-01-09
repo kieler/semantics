@@ -65,7 +65,7 @@ class DoTransformation extends InplaceProcessor<EsterelProgram> {
     
     def transform(Do doo) {
         val abort = createAbort
-        abort.statements.add(doo.statements)
+        abort.statements.addAll(doo.statements)
         // do upto
         if (doo.delay !== null) {
             abort.delay = doo.delay
@@ -74,7 +74,7 @@ class DoTransformation extends InplaceProcessor<EsterelProgram> {
         // do watching
         else {
             abort.delay = doo.watching
-            abort.doStatements.add(doo.watchingStatements)
+            abort.doStatements.addAll(doo.watchingStatements)
         }
         doo.replace(abort)
     }

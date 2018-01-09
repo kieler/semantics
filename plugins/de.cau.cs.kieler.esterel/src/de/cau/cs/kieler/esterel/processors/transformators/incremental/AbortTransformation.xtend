@@ -28,6 +28,8 @@ import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.Parallel
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -52,6 +54,8 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -67,6 +71,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
             model.eAllContents.filter(Abort).toList.forEach[transform]
@@ -121,7 +126,6 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     conditional3.statements.addAll(abort.doStatements)
                     scope.statements.add(conditional3)
                 }
-                abort.replace(scope)
             }
             else { // abort without a count delay
                 abort.statements.add(label)
@@ -154,8 +158,6 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     scope.statements.add(conditional4)
                 }
                 scope.statements.addAll(abort.statements)
-                abort.replace(scope)
-                
             }
         }
         // ABORT CASES
@@ -222,9 +224,9 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 scope.statements.add(conditional2)
             }
             scope.statements.add(label2)
-            abort.replace(scope)
-            
         }
+        abort.replace(scope)
+        lastStatement = scope
         abort.getContainingList.checkGotos
     }
     
