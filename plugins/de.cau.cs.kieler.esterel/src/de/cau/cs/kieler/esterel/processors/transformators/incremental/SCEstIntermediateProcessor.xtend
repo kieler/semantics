@@ -61,8 +61,7 @@ import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-
-
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -84,8 +83,8 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         return "Intermediate"
     }
 
-    public static var IProperty<Object> NEXT_STATEMENT_TO_TRANSFORM = 
-        new Property<Object>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
+    public static var IProperty<EObjectReferencePropertyData> NEXT_STATEMENT_TO_TRANSFORM = 
+        new Property<EObjectReferencePropertyData>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
         
     public static var IProperty<Boolean> DYNAMIC_COMPILATION = 
         new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.dynamiccompilation", true)
@@ -95,12 +94,12 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     
     override process() {
         var EObject obj = (if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
-                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) else model) as EObject
+                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM).getObject else model) as EObject
         
         // the next object which needs to be transformed and the corresponding processor id
         val nextObj = obj.nextStatement 
         val processorID = nextObj.getCorrespondingProcessorID 
-        environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, nextObj)
+        environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
         if (nextObj instanceof Module) {
             compilationContext.addProcessorEntry(SENSOR)
             compilationContext.addProcessorEntry(CONSTANT)
