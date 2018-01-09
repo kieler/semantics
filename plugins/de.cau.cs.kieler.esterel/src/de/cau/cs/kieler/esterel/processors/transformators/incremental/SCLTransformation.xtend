@@ -17,14 +17,14 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.SCLProgram
-
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /**
  * @author mrb
  *
  */
-class SCLTransformation extends InplaceProcessor<EsterelProgram> {
+class SCLTransformation extends Processor<EsterelProgram, SCLProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -41,20 +41,26 @@ class SCLTransformation extends InplaceProcessor<EsterelProgram> {
         return "ToSCL"
     }
     
+    override getType() {
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
+    }
+    
     @Inject
     extension EsterelTransformationExtensions
     
     override process() {
-        if (true) {
-            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof EsterelProgram) {
-                val EsterelProgram prog = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as EsterelProgram
-                transform(prog)
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof EsterelProgram) {
+                transform(nextStatement)
             }
             else {
                 throw new UnsupportedOperationException(
                     "The next statement to transform and this processor do not match.\n" +
                     "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                    "The statement to transform: " + nextStatement
                 )
             }
         }
@@ -63,7 +69,7 @@ class SCLTransformation extends InplaceProcessor<EsterelProgram> {
         }
     }
     
-    def SCLProgram transform(EsterelProgram prog) {
+    def transform(EsterelProgram prog) {
         val sclProg = createSCLProg
         for (m : prog.modules.filter(Module)) {
             val module = createSCLModule
@@ -72,6 +78,7 @@ class SCLTransformation extends InplaceProcessor<EsterelProgram> {
             module.statements += m.statements
             module.declarations += m.declarations
         }
-        return sclProg
+        setModel(sclProg)
     }
+    
 }

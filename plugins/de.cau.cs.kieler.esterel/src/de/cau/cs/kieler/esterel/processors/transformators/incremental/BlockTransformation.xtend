@@ -19,6 +19,7 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.scl.ScopeStatement
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -44,16 +45,18 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        if (true) {
-            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof Block) {
-                val Block block = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Block
-                transform(block)
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Block) {
+                transform(nextStatement)
             }
             else {
                 throw new UnsupportedOperationException(
                     "The next statement to transform and this processor do not match.\n" +
                     "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                    "The statement to transform: " + nextStatement
                 )
             }
         }
@@ -65,7 +68,7 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     def transform(Block block) {
         val ScopeStatement scope = block.statements.createScopeStatement
         block.replace(scope)
-        environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, scope)
+        environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(scope))
     }
     
 }

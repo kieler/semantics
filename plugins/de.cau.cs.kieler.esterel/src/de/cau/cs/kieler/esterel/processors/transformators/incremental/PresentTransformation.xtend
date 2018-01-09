@@ -44,16 +44,18 @@ class PresentTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        if (true) {
-            if (environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) instanceof Present) {
-                val Present present = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM) as Present
-                transform(present)
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Present) {
+                transform(nextStatement)
             }
             else {
                 throw new UnsupportedOperationException(
                     "The next statement to transform and this processor do not match.\n" +
                     "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)
+                    "The statement to transform: " + nextStatement
                 )
             }
         }
