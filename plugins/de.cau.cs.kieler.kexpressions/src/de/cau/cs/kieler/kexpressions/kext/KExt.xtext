@@ -101,7 +101,7 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=CommentAnnotatonSL?;  
     
 NamespaceID returns ecore::EString:
-  ID (':' PrimeID)*;    
+  ExtendedID (':' PrimeID)*;    
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*

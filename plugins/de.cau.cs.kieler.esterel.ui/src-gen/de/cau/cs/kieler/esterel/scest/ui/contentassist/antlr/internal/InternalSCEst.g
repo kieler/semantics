@@ -35554,9 +35554,9 @@ rule__NamespaceID__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_0()); }
-	RULE_ID
-{ after(grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_0()); }
+{ before(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0()); }
+	ruleExtendedID
+{ after(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0()); }
 )
 
 ;
