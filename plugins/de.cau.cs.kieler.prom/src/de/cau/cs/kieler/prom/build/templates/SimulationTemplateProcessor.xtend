@@ -30,6 +30,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Assert
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -299,9 +300,14 @@ class SimulationTemplateProcessor extends TemplateProcessor {
      * @param allowedInterfaceType The allowed interface type
      * @return true if the interface type of the data contains the allowed interface type.
      */
-    private def boolean matches(MacroCallData data, String allowedInterfaceType) {
+    private def boolean matches(MacroCallData data, String allowedInterfaceTypeName) {
+        val allowedInterfaceType = VariableInterfaceType.getInterfaceType(allowedInterfaceTypeName)
+        if(allowedInterfaceType === null) {
+            throw new Exception("Undefined interface type '"+allowedInterfaceTypeName+"' in simulation template processor.\n"
+                              + "Possible types are: "+VariableInterfaceType.ALL_INTERFACE_TYPES.map[it.name].join(","))
+        }
         for(interfaceType : data.interfaceTypes) {
-            if(interfaceType.name == allowedInterfaceType) {
+            if(interfaceType == allowedInterfaceType) {
                 return true
             }
         }
