@@ -45,10 +45,10 @@ class ConsoleStyle {
      * {@inheritDoc}
      */
     override equals(Object other){
-        if (other == null) return false
-        if (other == this) return true
+        if (other === null) return false
+        if (other === this) return true
         if (!(other instanceof ConsoleStyle)) return false
-        val otherMyClass =  other as ConsoleStyle
+        val otherMyClass = other as ConsoleStyle
         return otherMyClass.r == r
             && otherMyClass.g == g
             && otherMyClass.b == b
