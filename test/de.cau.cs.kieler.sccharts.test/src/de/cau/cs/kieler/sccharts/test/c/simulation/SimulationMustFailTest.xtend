@@ -56,7 +56,7 @@ class SimulationMustFailTest extends SCChartsNetlistSimulationTest {
             // The test did not fail, but must fail.
             // Thus we throw a new error
             fail("A test that must fail did succeed. Other test results may be invalid!\n"
-               + modelData.tracePaths)
+               + modelData.modelPath)
         }
     }
 }

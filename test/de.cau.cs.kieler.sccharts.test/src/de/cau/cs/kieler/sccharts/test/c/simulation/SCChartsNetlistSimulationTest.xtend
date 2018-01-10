@@ -12,10 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
+import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.backends.CSimulationBackend
+import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
@@ -31,6 +33,7 @@ import org.eclipse.core.runtime.Platform
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
 import static org.junit.Assert.*
 
 /**
@@ -44,11 +47,15 @@ import static org.junit.Assert.*
 class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCCharts> implements SimulationListener {
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    protected static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    
+    /** The simulation backend for this test */
+    protected var SimulationBackend simBackend
+    
     /** Error in simulation */
-    var TraceMismatchEvent traceError = null
+    protected var TraceMismatchEvent traceError = null
     /** stop flag for simulation */
-    var boolean traceFinished = false
+    protected var boolean traceFinished = false
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -57,6 +64,27 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
      */
     new() {
         super(resourceSetInjector)
+        initialize()
+    }
+    
+    /**
+     * Initialize this test-class with information that is the same for all test cases.
+     */
+    protected def initialize() {
+        initializeSimulationBackend
+        // Don't communicate register variables because there is no need to go back in the history
+        RegisterVariablesFinder.enabled = false
+    }
+    
+    /**
+     * Create a suited simulation backend for the test cases.
+     */
+    protected def initializeSimulationBackend() {
+        simBackend = new CSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
+            }
+        }
     }
     
     /**
@@ -80,18 +108,12 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
         assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation", Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
         
-        // Custom backend that compiles from sctx to c without additional frontend and transition signaling
-        // and without communication of register variables.
-        val simBackend = new CSimulationBackend() {
-            override getBuildConfigOrigin() {
-                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-test.kibuild"
-            }
-        }
-        
+        // Prepare simulation
         val context = new SimulationContext
         SimulationContext.setDeleteTemporaryProject(false)
         context.simulationBackend = simBackend
         context.overwriteCompileChain = false
+        
         // Setup simulation project
         val project = context.temporaryProject
         try {
@@ -150,6 +172,10 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         }
     }
     
+    /**
+     * Implementation of SimulationListener.
+     * Looks for trace mismatches.
+     */
     override update(SimulationEvent e) {
         if (e instanceof TraceMismatchEvent) {
             traceError = e
@@ -158,6 +184,10 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         }
     }
     
+    /**
+     * Implementation of SimulationListener.
+     * Looks for trace mismatches.
+     */
     override getName() {
         return class.simpleName
     }
