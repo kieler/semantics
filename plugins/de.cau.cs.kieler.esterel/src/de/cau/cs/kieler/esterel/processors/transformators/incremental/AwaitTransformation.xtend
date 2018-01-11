@@ -84,11 +84,11 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
             val label = createLabel
             val variable = createNewUniqueVariable(createIntValue(0))
             val decl = createDeclaration(ValueType.INT, variable)
-            if (await.delay.expression !== null) {
+            if (await.delay.delay !== null) {
                 val scope = createScopeStatement(decl)
                 await.replace(scope)
-                val lt = createLT(createValuedObjectReference(variable), await.delay.expression)
-                val conditional = createConditional(await.delay.expression)
+                val lt = createLT(createValuedObjectReference(variable), await.delay.delay.copy)
+                val conditional = createConditional(await.delay.expression.copy)
                 conditional.statements.add(incrementInt(variable))
                 conditional.annotations.add(createAnnotation(0))
                 val conditional2 = newIfThenGoto(lt, label, false)
@@ -96,7 +96,7 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
                 scope.statements.add(createPause)
                 scope.statements.add(conditional)
                 scope.statements.add(conditional2)
-                if (await.statements !== null) {
+                if (!await.statements?.empty) {
                     lastStatement = await.statements.last
                     statements.addAll(pos+1, await.statements)
                 }
@@ -107,8 +107,8 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
             else {
                 if (await.delay.immediate) {
                     statements.set(pos, label)
-                    statements.add(pos+1, newIfThenGoto(createNot(await.delay.expression), label, true))
-                    if (await.statements !== null) {
+                    statements.add(pos+1, newIfThenGoto(createNot(await.delay.expression.copy), label, true))
+                    if (!await.statements?.empty) {
                         lastStatement = await.statements.last
                         statements.addAll(pos+2, await.statements)
                     }
@@ -119,8 +119,8 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
                 else {
                     statements.set(pos, label)
                     statements.add(pos+1, createPause)
-                    statements.add(pos+2, newIfThenGoto(createNot(await.delay.expression), label, false))
-                    if (await.statements !== null) {
+                    statements.add(pos+2, newIfThenGoto(createNot(await.delay.expression.copy), label, false))
+                    if (!await.statements?.empty) {
                         lastStatement = await.statements.last
                         statements.addAll(pos+3, await.statements)
                     }
@@ -144,13 +144,13 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
         for (var i=0; i<cases.length; i++) {
             val c = cases.get(i)
             if (c.delay !== null) {
-                if (c.delay.expression !== null) {
+                if (c.delay.delay !== null) {
                     val variable = createNewUniqueVariable(createIntValue(0))
                     val decl = createDeclaration(ValueType.INT, variable)
                     scope.declarations.add(decl)
                     val conditional = createConditional(c.delay.expression)
                     conditional.statements.add(incrementInt(variable))
-                    val lt = createLT(createValuedObjectReference(variable), c.delay.expression)
+                    val lt = createLT(createValuedObjectReference(variable), c.delay.delay)
                     val conditional2 = newIfThenGoto(lt, nextLabel, false)
                     scope.statements.add(1, conditional)
                     scope.statements.add(conditional2)

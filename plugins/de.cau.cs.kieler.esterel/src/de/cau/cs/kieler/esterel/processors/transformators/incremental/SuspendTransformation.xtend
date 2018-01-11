@@ -75,7 +75,7 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
     def transform(Suspend suspend) {
         val statements = getContainingList(suspend)
         val pos = statements.indexOf(suspend)
-        if (suspend.delay.expression !== null) {
+        if (suspend.delay.delay !== null) {
             // create a scope because a declaration (variable for counting) is needed
             val variable = createNewUniqueVariable(createIntValue(0))
             val scope = createScopeStatement(createDeclaration(ValueType.INT, variable))
@@ -143,8 +143,8 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
             val pos = statements.indexOf(pause)
             val label = createLabel
             var Conditional conditional
-            if (suspend.delay.expression !== null && variable !== null) {
-                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), copy(suspend.delay.expression)), label, false)
+            if (suspend.delay.delay !== null && variable !== null) {
+                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), copy(suspend.delay.delay)), label, false)
             }
             else {
                 conditional = newIfThenGoto(copy(suspend.delay.expression), label, false)
