@@ -13,13 +13,14 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
+import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelThread
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
-import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -51,7 +52,7 @@ class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
         
         if (isDynamicCompilation) {
-            if (nextStatement instanceof Parallel) {
+            if (nextStatement instanceof EsterelParallel) {
                 transform(nextStatement)
             }
             else {
@@ -64,14 +65,14 @@ class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
             environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
-            model.eAllContents.filter(Parallel).toList.forEach[transform]
+            model.eAllContents.filter(EsterelParallel).toList.forEach[transform]
         }
     }
     
-    def transform(Parallel parallel) {
+    def transform(EsterelParallel parallel) {
         val newParallel = createParallel
-        for (t : parallel.threads) {
-            newParallel.threads.add(createThread => [ statements.add(t.statements) ])
+        for (t : parallel.statements) {
+            newParallel.threads.add(createThread => [ statements.add((t as EsterelThread).statements) ])
         }
         parallel.replace(newParallel)
         lastStatement = newParallel
