@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.esterel.VariableReference
 
 /**
  * @author mrb
@@ -120,7 +121,12 @@ class LocalVariableTransformation extends InplaceProcessor<EsterelProgram> {
             if (ref.valuedObject instanceof Variable) {
                 val vObject = ref.valuedObject as Variable
                 if (newVariables.containsKey(vObject)) {
-                    ref.valuedObject = newVariables.get(vObject)
+                    if (ref instanceof VariableReference) {
+                        ref.replace(newVariables.get(vObject).createValuedObjectReference)
+                    }
+                    else {
+                        ref.valuedObject = newVariables.get(vObject)
+                    }
                 }
             }
         }
