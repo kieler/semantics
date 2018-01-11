@@ -68,7 +68,7 @@ class UnEmitTransformation extends InplaceProcessor<EsterelProgram> {
     }
     
     def transform(UnEmit unemit) {
-        val assign = createAssignment(unemit.signal, createFalse)
+        val assign = createSignalAssignment(unemit.signal, createFalse)
         unemit.replace(assign)
         lastStatement = assign
     }
