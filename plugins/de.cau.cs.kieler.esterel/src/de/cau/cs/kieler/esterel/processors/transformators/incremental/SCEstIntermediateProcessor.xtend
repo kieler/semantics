@@ -93,8 +93,18 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        var EObject obj = (if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
-                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM).getObject else model) as EObject
+        var EObject obj
+        if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) === null) {
+            obj = model
+            compilationContext.addProcessorEntry(INIT)
+            compilationContext.addProcessorEntry(RUN)
+            compilationContext.addProcessorEntry(ID)
+            environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(model))
+            return
+        }
+        else {
+            obj = environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM).getObject as EObject
+        }
         
         // the next object which needs to be transformed and the corresponding processor id
         val nextObj = obj.nextStatement 
@@ -645,6 +655,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     public static val FUNCTION = de.cau.cs.kieler.esterel.processors.transformators.incremental.FunctionTransformation.ID
     public static val HALT = de.cau.cs.kieler.esterel.processors.transformators.incremental.HaltTransformation.ID
     public static val IFTEST = de.cau.cs.kieler.esterel.processors.transformators.incremental.IfTestTransformation.ID
+    public static val INIT = de.cau.cs.kieler.esterel.processors.transformators.incremental.InitializationTransformation.ID
     public static val LOCALSIGNAL = de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalSignalDeclTransformation.ID
     public static val LOCALVARIABLE = de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalVariableTransformation.ID
     public static val LOOP = de.cau.cs.kieler.esterel.processors.transformators.incremental.LoopTransformation.ID
