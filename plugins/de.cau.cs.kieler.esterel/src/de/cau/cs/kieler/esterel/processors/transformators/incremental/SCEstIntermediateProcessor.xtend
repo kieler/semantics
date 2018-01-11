@@ -86,8 +86,12 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     public static var IProperty<EObjectReferencePropertyData> NEXT_STATEMENT_TO_TRANSFORM = 
         new Property<EObjectReferencePropertyData>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
         
+    public static var IProperty<Boolean> TRANSFORM_THIS_STATEMENT = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.transformthisstatement", false)
+
     public static var IProperty<Boolean> DYNAMIC_COMPILATION = 
         new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.dynamiccompilation", true)
+        
     
     @Inject
     extension EsterelTransformationExtensions
@@ -158,10 +162,17 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     def nextStatement(EObject object) {
         var obj = object
         var up = true
+        var transform = false
+        // Do, EveryDo and Loop transformation create Esterel statements which need to be transformed.
+        // This can be done directly (there is no need to find the next statement to transform).
+        if (environment.getProperty(TRANSFORM_THIS_STATEMENT)) {
+            environment.setProperty(TRANSFORM_THIS_STATEMENT, false)
+            return obj
+        }
+        // at the beginning start with going down in the tree
         if (obj instanceof EsterelProgram) {
             up = false
         }
-        var transform = false
         while (!transform) {
             
             /* 
