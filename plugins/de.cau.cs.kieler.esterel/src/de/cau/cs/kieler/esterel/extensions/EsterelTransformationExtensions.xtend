@@ -1113,12 +1113,15 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Creates a new Esterel Halt
+     * Adds the functionality of a halt statement at the end of a list.
      * 
-     * @return The newly created Esterel Halt
+     * @param statements The list of statements which needs the halt functionality at the end 
      */
-    def createHalt() {
-        EsterelFactory::eINSTANCE.createHalt
+    def addHaltFunctionality(EList<Statement> statements) {
+        val label = createLabel
+        statements.add(label)
+        statements.add(createPause)
+        statements.add(label.createGotoStatement)
     }
     
     /**
