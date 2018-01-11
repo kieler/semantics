@@ -80,7 +80,8 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         val model = getModel
         
-        for(rootState : model.rootStates.toList) {
+        // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
+        for(rootState : newArrayList(model.rootStates.head)) {
             val statesWithReferences = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
@@ -99,6 +100,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                 throw new IllegalStateException("References objects are not contained in the resource!")
         }
         
+        for (var i = 1; i < model.rootStates.size; i++) {
+            model.rootStates.remove(1)
+        }
     }   
     
     /** Expands one referenced state and keeps track of the replacement stack. */
