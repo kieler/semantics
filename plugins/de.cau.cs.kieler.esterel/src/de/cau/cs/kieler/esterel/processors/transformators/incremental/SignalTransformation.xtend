@@ -77,7 +77,10 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
         
         for (declaration : declarations) {
             for (signal : declaration.valuedObjects.filter(Signal)) {
-                val s = createSignalVariable(createFalse, null, signal.name)
+                val s = createSignalVariable(null, null, signal.name)
+                if (declaration instanceof OutputDeclaration) {
+                    s.initialValue = createFalse
+                }
                 signal.name = signal.name.createNewUniqueSignalName
                 val decl = createDeclaration(ValueType.BOOL, s)
                 var decl2 = createDeclaration(null, null)
