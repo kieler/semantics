@@ -18,6 +18,8 @@ import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EveryDo
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -42,6 +44,8 @@ class EveryDoTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -57,6 +61,8 @@ class EveryDoTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+            environment.setProperty(SCEstIntermediateProcessor.TRANSFORM_THIS_STATEMENT, true)
         }
         else {
             model.eAllContents.filter(EveryDo).toList.forEach[transform]
@@ -79,6 +85,7 @@ class EveryDoTransformation extends InplaceProcessor<EsterelProgram> {
         }
         statements.set(pos, await)
         statements.add(pos+1, loop)
+        lastStatement = await
     }
     
 }

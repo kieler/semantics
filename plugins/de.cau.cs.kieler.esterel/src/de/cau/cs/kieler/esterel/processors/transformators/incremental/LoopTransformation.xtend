@@ -18,6 +18,8 @@ import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Loop
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -42,6 +44,8 @@ class LoopTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
         val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
@@ -57,6 +61,7 @@ class LoopTransformation extends InplaceProcessor<EsterelProgram> {
                     "The statement to transform: " + nextStatement
                 )
             }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
         }
         else {
             model.eAllContents.filter(Loop).toList.forEach[transform]
@@ -69,13 +74,15 @@ class LoopTransformation extends InplaceProcessor<EsterelProgram> {
         val label = createLabel
         statements.set(pos, label)
         if (loop.delay === null) {
-            loop.statements.add(createGotoStatement(label))
-            statements.add(pos+1, loop.statements)
+            val goto = label.createGotoStatement
+            loop.statements.add(goto)
+            statements.addAll(pos+1, loop.statements)
+            lastStatement = goto
         }
         else {
             val abort = createAbort
-            abort.statements.add(loop.statements)
-            abort.statements.add(createHalt)
+            abort.statements.addAll(loop.statements)
+            abort.statements.addHaltFunctionality
             abort.delay = loop.delay
             for (a : loop.annotations) {
                 if (isGenerated(a)) {
@@ -83,7 +90,9 @@ class LoopTransformation extends InplaceProcessor<EsterelProgram> {
                 }
             }
             statements.add(pos+1, abort)
-            statements.add(pos+2, createGotoStatement(label))
+            statements.add(pos+2, label.createGotoStatement)
+            lastStatement = abort
+            environment.setProperty(SCEstIntermediateProcessor.TRANSFORM_THIS_STATEMENT, true)
         }    
     }
  
