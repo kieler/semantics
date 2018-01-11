@@ -906,6 +906,20 @@ class EsterelTransformationExtensions {
             it.expression = EcoreUtil.copy(expression)
         ]
     }
+    
+    /**
+     * Creates an assignment with a SignalReference instead of a ValuedObjectReference.
+     * 
+     * @param objectToAssign The valued object to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createSignalAssignment(ValuedObject objectToAssign, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.reference = objectToAssign.createSignalReference
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
 
     /**
      * Creates an assignment
