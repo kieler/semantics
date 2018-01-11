@@ -419,7 +419,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         name=PrimeID 
+	 *         name=STRING? 
 	 *         global=PriorityProtocol? 
 	 *         (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
 	 *         valuedObjects+=ValuedObject 
@@ -440,7 +440,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         name=PrimeID 
+	 *         name=STRING? 
 	 *         global=PriorityProtocol? 
 	 *         (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
 	 *         valuedObjects+=ValuedObject 

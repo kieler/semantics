@@ -2598,7 +2598,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -2612,7 +2612,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;

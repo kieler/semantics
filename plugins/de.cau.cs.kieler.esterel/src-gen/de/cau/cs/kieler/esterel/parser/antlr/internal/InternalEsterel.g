@@ -12921,23 +12921,23 @@ ruleScheduleDeclaration returns [EObject current=null]
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getScheduleDeclarationAccess().getNamePrimeIDParserRuleCall_2_0()); 
-	    }
-		lv_name_2_0=rulePrimeID		{
+		lv_name_2_0=RULE_STRING
+		{
+			newLeafNode(lv_name_2_0, grammarAccess.getScheduleDeclarationAccess().getNameSTRINGTerminalRuleCall_2_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScheduleDeclarationRule());
+	            $current = createModelElement(grammarAccess.getScheduleDeclarationRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
        			"name",
         		lv_name_2_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
-	        afterParserOrEnumRuleCall();
+        		"de.cau.cs.kieler.esterel.Esterel.STRING");
 	    }
 
 )
-)(	otherlv_3='global' 
+)?(	otherlv_3='global' 
     {
     	newLeafNode(otherlv_3, grammarAccess.getScheduleDeclarationAccess().getGlobalKeyword_3_0());
     }
@@ -13114,23 +13114,23 @@ ruleScheduleDeclarationWOSemicolon returns [EObject current=null]
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNamePrimeIDParserRuleCall_2_0()); 
-	    }
-		lv_name_2_0=rulePrimeID		{
+		lv_name_2_0=RULE_STRING
+		{
+			newLeafNode(lv_name_2_0, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameSTRINGTerminalRuleCall_2_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScheduleDeclarationWOSemicolonRule());
+	            $current = createModelElement(grammarAccess.getScheduleDeclarationWOSemicolonRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
        			"name",
         		lv_name_2_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
-	        afterParserOrEnumRuleCall();
+        		"de.cau.cs.kieler.esterel.Esterel.STRING");
 	    }
 
 )
-)(	otherlv_3='global' 
+)?(	otherlv_3='global' 
     {
     	newLeafNode(otherlv_3, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getGlobalKeyword_3_0());
     }

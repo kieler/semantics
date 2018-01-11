@@ -6587,7 +6587,7 @@ rule__ScheduleDeclaration__Group__2__Impl
 :
 (
 { before(grammarAccess.getScheduleDeclarationAccess().getNameAssignment_2()); }
-(rule__ScheduleDeclaration__NameAssignment_2)
+(rule__ScheduleDeclaration__NameAssignment_2)?
 { after(grammarAccess.getScheduleDeclarationAccess().getNameAssignment_2()); }
 )
 
@@ -7185,7 +7185,7 @@ rule__ScheduleDeclarationWOSemicolon__Group__2__Impl
 :
 (
 { before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameAssignment_2()); }
-(rule__ScheduleDeclarationWOSemicolon__NameAssignment_2)
+(rule__ScheduleDeclarationWOSemicolon__NameAssignment_2)?
 { after(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameAssignment_2()); }
 )
 
@@ -19117,8 +19117,8 @@ rule__ScheduleDeclaration__NameAssignment_2
     }
 :
 (
-{ before(grammarAccess.getScheduleDeclarationAccess().getNamePrimeIDParserRuleCall_2_0()); }
-	rulePrimeID{ after(grammarAccess.getScheduleDeclarationAccess().getNamePrimeIDParserRuleCall_2_0()); }
+{ before(grammarAccess.getScheduleDeclarationAccess().getNameSTRINGTerminalRuleCall_2_0()); }
+	RULE_STRING{ after(grammarAccess.getScheduleDeclarationAccess().getNameSTRINGTerminalRuleCall_2_0()); }
 )
 
 ;
@@ -19237,8 +19237,8 @@ rule__ScheduleDeclarationWOSemicolon__NameAssignment_2
     }
 :
 (
-{ before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNamePrimeIDParserRuleCall_2_0()); }
-	rulePrimeID{ after(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNamePrimeIDParserRuleCall_2_0()); }
+{ before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameSTRINGTerminalRuleCall_2_0()); }
+	RULE_STRING{ after(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameSTRINGTerminalRuleCall_2_0()); }
 )
 
 ;
