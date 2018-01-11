@@ -57,6 +57,14 @@ class KEffectsExtensions {
         ]
     }
     
+    def Assignment createAssignment(ValuedObject valuedObject, ValuedObject subValuedObject, Expression expression) {
+        KEffectsFactory.eINSTANCE.createAssignment => [
+            it.reference = valuedObject.reference
+            it.reference.subReference = subValuedObject.reference
+            it.expression = expression
+        ]
+    }
+    
     def Assignment createAssignment(ValuedObject valuedObject, Expression expression, AssignOperator operator) {
         KEffectsFactory.eINSTANCE.createAssignment => [
             it.reference = valuedObject.reference

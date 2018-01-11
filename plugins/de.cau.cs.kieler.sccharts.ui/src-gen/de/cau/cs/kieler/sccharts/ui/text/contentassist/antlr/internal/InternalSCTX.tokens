@@ -1,6 +1,6 @@
 '!'=22
 '!='=73
-'#'=125
+'#'=126
 '%'=26
 '%='=57
 '&&'=30
@@ -39,25 +39,26 @@
 '>>>'=33
 '>>>='=63
 '?'=34
-'@'=124
+'@'=125
 'Pr'=107
 'Pr='=97
 '['=94
-'\''=121
+'\''=122
 ']'=95
 '^'=19
 '^='=60
-'_'=123
+'_'=124
 'abort to'=38
 'auto'=46
 'bool'=75
+'call'=119
 'combine'=118
 'conflict'=50
 'confluent'=51
-'connector'=129
-'const'=133
+'connector'=130
+'const'=134
 'dataflow'=105
-'deferred'=130
+'deferred'=131
 'delayed'=44
 'do'=98
 'during'=108
@@ -65,7 +66,7 @@
 'exit'=109
 'expression'=114
 'extern'=116
-'final'=127
+'final'=128
 'float'=78
 'for'=102
 'global'=117
@@ -74,8 +75,8 @@
 'host'=80
 'if'=96
 'immediate'=45
-'initial'=126
-'input'=134
+'initial'=127
+'input'=135
 'int'=77
 'is'=88
 'join to'=39
@@ -84,16 +85,16 @@
 'max='=65
 'min'=83
 'min='=64
-'nondeterministic'=131
+'nondeterministic'=132
 'none'=81
 'o->'=41
-'output'=135
+'output'=136
 'pre'=17
 'preceding'=111
-'print'=119
+'print'=120
 'pure'=74
-'random'=122
-'randomize'=120
+'random'=123
+'randomize'=121
 'ref'=115
 'region'=101
 'reset'=47
@@ -101,9 +102,9 @@
 'schedule'=89
 'scope'=113
 'shallow history'=48
-'signal'=137
+'signal'=138
 'state'=87
-'static'=136
+'static'=137
 'string'=79
 'succeeding'=112
 'suspend'=110
@@ -111,8 +112,8 @@
 'undefined'=43
 'unsigned'=76
 'val'=28
-'violation'=128
-'weak'=132
+'violation'=129
+'weak'=133
 '{'=85
 '|'=20
 '|='=59
@@ -170,6 +171,7 @@ T__134=134
 T__135=135
 T__136=136
 T__137=137
+T__138=138
 T__17=17
 T__18=18
 T__19=19
