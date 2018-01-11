@@ -225,9 +225,9 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
             }
             scope.statements.add(label2)
         }
+        abort.getContainingList.checkGotos
         abort.replace(scope)
         lastStatement = scope
-        abort.getContainingList.checkGotos
     }
     
     def transformPauses(Abort abort, Label label, ValuedObject abortFlag, ValuedObject depthFlag, LinkedList<ValuedObject> countingVariables) {
@@ -261,7 +261,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                         }
                         // e.g. "weak abort when 3 A"
                         else {
-                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.expression))
+                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.delay))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                             insertConditionalAbove(pause, conditional)
@@ -284,7 +284,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                         }
                         // e.g. "abort when 3 A"
                         else {
-                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.expression))
+                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.delay))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                             statements.add(pos+1, conditional)
