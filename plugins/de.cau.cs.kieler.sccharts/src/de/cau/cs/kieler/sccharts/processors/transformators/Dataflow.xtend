@@ -34,6 +34,9 @@ import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
  * @author ssm
@@ -133,21 +136,52 @@ class Dataflow extends SCChartsProcessor {
         }
         
         // Replace the equations and correct external references.
-        for (equation : dataflowRegion.equations.immutableCopy.indexed) {
-            val newEqCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key)
-            val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ initial = true ]
-            val newEqDelayState = newEqCfRegion.createState(GENERATED_PREFIX + "d" + equation.key)
-            val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ delay = DelayType.IMMEDIATE]
-            newEqDelayState.createTransitionTo(newEqState)
+        for (eq : dataflowRegion.equations.immutableCopy.indexed) {
+            val processedEquations = <Pair<Integer, Assignment>> newLinkedList
+            // Process tuples.
+            if (eq.value.expression instanceof VectorValue) {
+                val vectorValues = eq.value.expression.asVectorValue.values
+                val rdInstance = eq.value.reference.valuedObject
+                
+                var idx = 0
+                for (declaration : rdInstance.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input ]) {
+                    for (valuedObject : declaration.valuedObjects) {
+                        if (vectorValues.size > 0) {
+                            // Remember: The expression will be removed from it's containment.
+                            // Remove it afterwards.
+                            val value = vectorValues.head
+                            if (!(value instanceof IgnoreValue)) {
+                                val newAssignment = createAssignment(rdInstance, valuedObject, value)
+                                val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
+                                processedEquations += newEq
+                            }
+                        }
+                        idx++
+                    }
+                }
+                
+                removeList += vectorValues
+                removeList += eq.value
+            } else {
+                processedEquations += eq
+            }
             
-            eqTrans.addAssignment(equation.value)
-            for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
-                if (reference.subReference !== null) {
-                    val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
-                    val replacement = referenceReplacements.get(refPair)
-                    if (replacement !== null) {
-                        reference.valuedObject = replacement
-                        reference.subReference = null
+            for (equation : processedEquations) {
+                val newEqCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key)
+                val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ initial = true ]
+                val newEqDelayState = newEqCfRegion.createState(GENERATED_PREFIX + "d" + equation.key)
+                val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ delay = DelayType.IMMEDIATE]
+                newEqDelayState.createTransitionTo(newEqState)
+                
+                eqTrans.addAssignment(equation.value)
+                for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
+                    if (reference.subReference !== null) {
+                        val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
+                        val replacement = referenceReplacements.get(refPair)
+                        if (replacement !== null) {
+                            reference.valuedObject = replacement
+                            reference.subReference = null
+                        }
                     }
                 }
             }

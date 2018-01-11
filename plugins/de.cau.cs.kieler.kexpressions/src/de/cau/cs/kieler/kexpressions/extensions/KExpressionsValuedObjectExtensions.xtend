@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * @author ssm
@@ -255,6 +256,10 @@ class KExpressionsValuedObjectExtensions {
     
     def asValue(Expression expression) {
         expression as Value
+    }
+
+    def asVectorValue(Expression expression) {
+        expression as VectorValue
     }
 
     def asValuedObjectReference(Expression expression) {

@@ -40,6 +40,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.Replacements
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -286,6 +287,12 @@ class Reference extends SCChartsProcessor implements Traceable {
             subExpression.replaceReferences(replacements)
         }
     }
+    
+    protected dispatch def void replaceReferences(VectorValue vectorValue, Replacements replacements) {
+        for(value : vectorValue.values) {
+            value.replaceReferences(replacements)
+        }
+    }    
     
     /** Literals will not be replaced. */
     protected dispatch def void replaceReferences(Value value, Replacements replacements) {
