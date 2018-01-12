@@ -44,6 +44,7 @@ class DataCanvas extends Canvas {
     protected static val COORDINATE_LEFTBORDERSPACING = 24 
     protected static val COORDINATE_BORDERSPACING = 12
     protected static val COORDINATE_PADDING = 5
+    protected static val COORDINATE_TICKMARK_LENGTH = 2
     
     protected static val MAX_TICKWIDTH = 10
 
@@ -98,8 +99,9 @@ class DataCanvas extends Canvas {
         addPaintListener(new PaintListener() {
             
             override paintControl(PaintEvent e) {
-                calculateMeasures(e.gc, if (dataObserver.liveVariables.empty) null else dataObserver.liveVariables.head)
-                drawCoordinateSystem(e.gc, baseline)
+                val v = if (dataObserver.liveVariables.empty) null else dataObserver.liveVariables.head
+                calculateMeasures(e.gc, v)
+                drawCoordinateSystem(e.gc, baseline, v)
                 drawValues(e.gc)
             }
             
@@ -146,7 +148,7 @@ class DataCanvas extends Canvas {
         }        
     }
   
-    def drawCoordinateSystem(GC gc, double baseline) {
+    def drawCoordinateSystem(GC gc, double baseline, Variable anyVariable) {
         gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING, 
             COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + cHeight)
             
@@ -165,6 +167,17 @@ class DataCanvas extends Canvas {
         val minTextExtent = gc.textExtent(minText)
         gc.drawString(minText, 
             COORDINATE_LEFTBORDERSPACING - 2 - minTextExtent.x, COORDINATE_BORDERSPACING + cHeight - minTextExtent.y)
+            
+        if (anyVariable !== null) {
+            val history = anyVariable.history
+            for (i : 0..history.size) {
+                val ctl = if (i % 5 == 0) COORDINATE_TICKMARK_LENGTH * 2 else COORDINATE_TICKMARK_LENGTH
+                val top = if (baseline != cHeight) COORDINATE_BORDERSPACING + baseline as int - ctl 
+                else COORDINATE_BORDERSPACING + baseline as int
+                val left = COORDINATE_LEFTBORDERSPACING + (i * cellWidth) as int 
+                gc.drawLine(left, top, left, COORDINATE_BORDERSPACING + baseline as int + ctl)
+            }
+        }
     }
     
     def drawValues(GC gc) {
