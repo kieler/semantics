@@ -105,6 +105,12 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.CopyPropagationV2">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.SmartRegisterAllocation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.CleanupValuedObjects">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

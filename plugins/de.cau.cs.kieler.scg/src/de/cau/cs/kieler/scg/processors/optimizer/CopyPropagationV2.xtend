@@ -41,6 +41,8 @@ import de.cau.cs.kieler.kexpressions.OperatorType
  * no nodes on the else branch. 
  * 
  * @author ssm
+ * @kieler.design 2018-01-12 proposed 
+ * @kieler.rating 2018-01-12 proposed yellow
  *
  */
 class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
