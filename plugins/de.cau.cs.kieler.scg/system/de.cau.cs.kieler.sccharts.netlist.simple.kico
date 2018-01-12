@@ -26,7 +26,7 @@ de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
 de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth    
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
-pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop true
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
 de.cau.cs.kieler.scg.processors.transformators.dependency
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
@@ -35,4 +35,5 @@ de.cau.cs.kieler.scg.processors.transformators.expressions
 de.cau.cs.kieler.scg.processors.transformators.guards
 de.cau.cs.kieler.scg.processors.transformators.scheduler
 de.cau.cs.kieler.scg.processors.transformators.sequentializer
+post process de.cau.cs.kieler.scg.processors.copyPropagation 
 de.cau.cs.kieler.scg.processors.codegen.c

@@ -102,6 +102,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.SurfaceDepthSeparatorProcessor">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.CopyPropagationV2">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

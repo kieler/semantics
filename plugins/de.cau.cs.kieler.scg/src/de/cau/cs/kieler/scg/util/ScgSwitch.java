@@ -19,8 +19,8 @@ import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.scg.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -95,6 +95,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 T result = caseSCGraph(scGraph);
                 if (result == null) result = caseAnnotatable(scGraph);
                 if (result == null) result = caseNamedObject(scGraph);
+                if (result == null) result = caseDeclarationScope(scGraph);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -670,6 +671,21 @@ public class ScgSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseNamedObject(NamedObject object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Declaration Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Declaration Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeclarationScope(DeclarationScope object) {
         return null;
     }
 
