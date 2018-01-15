@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 
 import static org.junit.Assert.*
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 
 /**
  * Tests if the new dependency analysis is as good as the old one.
@@ -79,8 +80,11 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             val v2Dependencies = v2SCG.nodes.fold(0)[ a, b | a + b.dependencies.filter(DataDependency).filter[ concurrent && !confluent ].size ]
             
             if (v2Dependencies < v1Dependencies) {
-                fail("The V2 dependency analysis found fewer concurrent, non-confluent dependencies than the V1 dependency analysis." + 
-                    " [ " + v2Dependencies + " < " + v1Dependencies + " ]")                
+                val userDefinedSchedules = (v2Model as SCGraphs).scgs.map[ declarations ].flatten.filter(ScheduleDeclaration).toList.size
+                if (userDefinedSchedules == 0) { 
+                    fail("The V2 dependency analysis found fewer concurrent, non-confluent dependencies than the V1 dependency analysis." + 
+                        " [ " + v2Dependencies + " < " + v1Dependencies + " ]")
+                }                
             }
         }
     }
