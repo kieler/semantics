@@ -77,7 +77,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             
             if (node instanceof Assignment) {
                 if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX)) {
-                    registerAllocation.registerRange.put(node.reference.valuedObject.name, node)
+                    registerAllocation.registerRange.push(node.reference.valuedObject.name, node)
                 }
                 node.expression.setRegisterRanges(node, registerAllocation)
                 
@@ -99,15 +99,23 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             }
         }
 
+
+        registerAllocation.createReverseRangeMap
+        for (r : registerAllocation.registerRange.keySet.immutableCopy) {
+            val range = registerAllocation.registerRange.get(r)
+            if (range !== null && range.size < 2) {
+                r.removeIneffectiveAssignment(registerAllocation)        
+            }
+        }
+
         for (node : preNodes) {        
             val preObject = node.expression.asOperatorExpression.subExpressions.head
             if (preObject instanceof ValuedObjectReference) {
                 registerAllocation.registerRange.remove(preObject.valuedObject.name)        
             }          
         }          
-        
-        
-        registerAllocation.createReverseRangeMap
+        registerAllocation.createReverseRangeMap     
+             
         val replacements = new Replacements
         nextNodes.add(scg.nodes.head)
         
@@ -155,7 +163,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         for (ref : expression.allReferences) {
             val register = ref.valuedObject.name
             if (registerAllocation.registerRange.keySet.contains(register)) {
-                registerAllocation.registerRange.put(register, node)
+                registerAllocation.registerRange.push(register, node)
             }
         }
     }
@@ -184,6 +192,36 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         } else {
             // Literal? Do nothing.
         }
+    }
+    
+    private def void removeIneffectiveAssignment(String registerName, RegisterAllocation registerAllocation) {
+        val node = registerAllocation.registerRange.pop(registerName)
+        
+        val next = node.allNext.map[target].head
+        node.allPrevious.toList.immutableCopy.forEach[ target = next ]
+        
+        if (node instanceof Assignment) {
+            if ((!(node.expression instanceof OperatorExpression)) || (node.expression.asOperatorExpression.operator != OperatorType.PRE)) {
+                val refList = node.expression.allReferences.immutableCopy
+                for (ref : refList) {
+                    val range = registerAllocation.registerRange.get(ref.valuedObject.name)
+                    if (range !== null) {
+                        if (registerAllocation.registerRange.get(ref.valuedObject.name).contains(node)) {
+                            registerAllocation.registerRange.del(ref.valuedObject.name, node)
+                        }
+                    }
+                }
+                for (ref : refList) {
+                    val range = registerAllocation.registerRange.get(ref.valuedObject.name)
+                    if (range !== null && range.size < 2) {
+                        ref.valuedObject.name.removeIneffectiveAssignment(registerAllocation)
+                    }
+                }
+            }
+        }
+        
+        node.remove
+        registerAllocation.registerRange.remove(registerName)
     }
     
 }

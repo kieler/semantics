@@ -24,14 +24,15 @@ import com.google.common.collect.Multimap
  *
  */
 class RegisterAllocation {
-    @Accessors val registerRange = <String, Node> newHashMap
+    @Accessors val registerRange = new HashMapStack<Node>
     @Accessors val freedRegister = <String> newLinkedList
     
-    @Accessors val Multimap<Node, String> reverseRegisterRange = HashMultimap.create
+    @Accessors var Multimap<Node, String> reverseRegisterRange 
     
     def createReverseRangeMap() {
+        reverseRegisterRange = HashMultimap.create
         for (r : registerRange.keySet) {
-            reverseRegisterRange.put(registerRange.get(r), r)
+            reverseRegisterRange.put(registerRange.peek(r), r)
         }
     } 
 }
