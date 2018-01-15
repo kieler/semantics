@@ -159,6 +159,14 @@ class SimulationUtil {
         if(sim !== null && !sim.isStopped) {
             var TraceHandler traceHandler
             if(traceFile !== null && traceFile.exists) {
+                // Remove old trace handlers from simulation
+                for(action : sim.actions.clone) {
+                    if(action.handler instanceof TraceHandler) {
+                        sim.actions.remove(action)
+                    }
+                }
+                
+                // Add new trace handler
                 traceHandler = new TraceHandler()
                 traceHandler.tracePath.value = traceFile.fullPath.toOSString
                 traceHandler.initialize

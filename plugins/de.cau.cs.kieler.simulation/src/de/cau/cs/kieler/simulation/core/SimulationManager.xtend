@@ -154,10 +154,12 @@ class SimulationManager extends Configurable {
     /**
      * Instances of the data handlers in the step actions without duplicates.
      */
+    @Accessors(PUBLIC_GETTER)
     private val Set<DataHandler> dataHandlers = newHashSet()
     /**
      * The list of step actions that make up a macro tick simulation.
      */
+    @Accessors(PUBLIC_GETTER)
     private val List<StepAction> actions = newArrayList()
 
     /**
