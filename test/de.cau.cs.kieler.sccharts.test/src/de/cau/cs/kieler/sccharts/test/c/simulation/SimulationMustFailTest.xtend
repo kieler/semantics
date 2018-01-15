@@ -19,6 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import de.cau.cs.kieler.simulation.backends.CSimulationBackend
 
 /**
  * Runs the test cases that must fail and throws an error in case they don't.
@@ -28,7 +29,7 @@ import static org.junit.Assert.*
  * @kieler.rating proposed yellow
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SimulationMustFailTest extends SCChartsNetlistSimulationTest {
+class SimulationMustFailTest extends SimulationTestBase {
     
     /**
      * {@inheritDoc}
@@ -42,10 +43,17 @@ class SimulationMustFailTest extends SCChartsNetlistSimulationTest {
     }
     
     @Test
-    override testSimulation(SCCharts scc, TestModelData modelData) {
+    def void testSimulation(SCCharts scc, TestModelData modelData) {
+        val context = createSimulationContext
+        context.simulationBackend = new CSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
+            }        
+        }
+        
         var failed = false
         try {
-            super.testSimulation(scc, modelData)    
+            compileModelAndStartSimulationTest(context, scc, modelData)
         } catch (AssertionError e) {
             // The test failed and it must-fail.
             // This means everything is peachy.

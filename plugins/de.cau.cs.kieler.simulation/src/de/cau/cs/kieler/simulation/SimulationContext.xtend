@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
@@ -28,6 +27,7 @@ import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
 import de.cau.cs.kieler.prom.drafts.ProjectDraftData
+import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager

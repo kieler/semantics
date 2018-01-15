@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2017 by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,11 +13,10 @@
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
+import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.backends.CSimulationBackend
-import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
@@ -30,28 +29,25 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.eclipse.core.internal.resources.ResourceException
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Platform
-import org.junit.Test
+import org.eclipse.emf.ecore.EObject
 import org.junit.runner.RunWith
 
 import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
 import static org.junit.Assert.*
 
 /**
- * Tests all SCCharts compiled to C executables with their eso files.
- * 
- * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
+ * @author aas
+ *
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCCharts> implements SimulationListener {
+abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCharts> implements SimulationListener {
+    
+    /** Extensions */
+    protected extension static val KiBuildExtensions kiBuildExtensions = new KiBuildExtensions
     
     /** Sct Parser Injector */
     protected static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
-    
-    /** The simulation backend for this test */
-    protected var SimulationBackend simBackend
-    
+
     /** Error in simulation */
     protected var TraceMismatchEvent traceError = null
     /** stop flag for simulation */
@@ -68,65 +64,51 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
     }
     
     /**
-     * Initialize this test-class with information that is the same for all test cases.
+     * Returns a simulation context that is optimized for semantic simulation tests.
+     */
+    protected def SimulationContext createSimulationContext() {
+        val context = new SimulationContext
+        context.overwriteCompileChain = false
+        return context
+    }
+    
+    /**
+     * Configure general simulation properties.
      */
     protected def initialize() {
-        initializeSimulationBackend
+        // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
+        assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation",
+                   Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
         // Don't communicate register variables because there is no need to go back in the history
         RegisterVariablesFinder.enabled = false
-    }
-    
-    /**
-     * Create a suited simulation backend for the test cases.
-     */
-    protected def initializeSimulationBackend() {
-        simBackend = new CSimulationBackend() {
-            override getBuildConfigOrigin() {
-                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
-            }
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override filter(TestModelData modelData) {
-        return !modelData.tracePaths.empty
-        && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
-        && modelData.modelProperties.contains("sccharts")
-        && !modelData.modelProperties.contains("must-fail")
-        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
-        && !modelData.modelProperties.contains("not-asc")
-        && !modelData.modelProperties.contains("not-sasc")
-        && !modelData.modelProperties.contains("simulation-fails")
-        && !modelData.additionalProperties.containsKey("c-simulation") // case: c-simulation = false
-    }
-    
-    @Test
-    def void testSimulation(SCCharts scc, TestModelData modelData) {
-        traceError = null
-        // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
-        assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation", Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
-        
-        // Prepare simulation
-        val context = new SimulationContext
+        // Don't delete the temporary simulation project, because this would require its re-initialization
         SimulationContext.setDeleteTemporaryProject(false)
-        context.simulationBackend = simBackend
-        context.overwriteCompileChain = false
-        
-        // Setup simulation project
+    }
+    
+    /**
+     * Compiles the given model for compilation and starts the simulation test with the traces in the test data.
+     * If the compilation fails or does not generate a new executable then the test fails.
+     */
+    protected def void compileModelAndStartSimulationTest(SimulationContext context, EObject model, TestModelData modelData) {
+        // Build the simulation executable
+        try {
+            context.compileModelForSimulation(model)
+        } catch (Exception e) {
+            fail(e.message)
+        }
+        assertFalse("Build failed to create executable", context.executableFiles.isNullOrEmpty)
+        // In the following, the compiled executable simulation for the model has been created successfully
+        startSimulationTest(context, modelData)
+    }
+    
+    /**
+     * Starts the simulation test with the traces in the test data.
+     * If a trace mismatch occurs then the test fails.
+     */
+    protected def void startSimulationTest(SimulationContext context, TestModelData modelData) {
+        traceError = null
         val project = context.temporaryProject
         try {
-            // Build the simulation executable
-            try {
-                context.compileModelForSimulation(scc)
-            } catch (Exception e) {
-                fail(e.message)
-            }
-            assertTrue("Build failed to create executable", !context.executableFiles.isNullOrEmpty)
-            
-            // In the following, the compiled executable simulation for the model has been created successfully
-
             // Register for events
             SimulationManager.add(this)
             
@@ -170,7 +152,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
                 project?.delete(true, true, null)
             }
         }
-    }
+    } 
     
     /**
      * Implementation of SimulationListener.
@@ -186,10 +168,9 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
     
     /**
      * Implementation of SimulationListener.
-     * Looks for trace mismatches.
+     * Returns the name of this listener.
      */
     override getName() {
         return class.simpleName
     }
 }
-				
