@@ -24,6 +24,8 @@ package de.cau.cs.kieler.kivis.ui.svg;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Panel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.MalformedURLException;
@@ -31,6 +33,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import javax.swing.FocusManager;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 
@@ -48,6 +51,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.kivis.ui.internal.KiVisActivator;
+import de.cau.cs.kieler.prom.PromPlugin;
+import de.cau.cs.kieler.prom.console.PromConsole;
 
 /**
  * SWT control to hold display SVG image from file. 
@@ -110,11 +115,14 @@ public class KiVisCanvas extends Composite {
                     paint(g);
                 }
             };
+            panel.setFocusable(false);
             JRootPane root = new JRootPane();
+            root.setFocusable(false);
             panel.add(root);
             java.awt.Container contentPane = root.getContentPane();
             contentPane.setLayout(new BorderLayout());
-
+            contentPane.setFocusable(false);
+            
             if (showScrollbars) {
                 contentPane.add(BorderLayout.CENTER, new JScrollPane(svgCanvas));
             } else {
@@ -126,6 +134,17 @@ public class KiVisCanvas extends Composite {
             frame.setLayout(new BorderLayout());
             frame.add(BorderLayout.CENTER, panel);
             frame.setEnabled(true);
+            frame.setFocusable(false);
+            
+            frame.addFocusListener(new FocusAdapter() {
+                public void focusGained(FocusEvent e) {
+                    PromConsole.print("awt frame received focus");
+                }
+
+                public void focusLost(FocusEvent e) {
+                    PromConsole.print("awt frame lost focus");
+                }
+            });
         } catch (Throwable t) {
             Status s = new Status(IStatus.ERROR, KiVisActivator.DE_CAU_CS_KIELER_KIVIS_KIVIS, t.getMessage(), t);
             StatusManager.getManager().handle(s, StatusManager.SHOW);

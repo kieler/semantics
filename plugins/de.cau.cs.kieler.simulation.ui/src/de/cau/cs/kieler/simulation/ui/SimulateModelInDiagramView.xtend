@@ -35,13 +35,10 @@ class SimulateModelInDiagramView implements KiCoModelViewUIContributor {
     new() {
         simulateAction = new DataPoolViewToolbarAction("Simulate model", "launch.png") {
             override run() {
-                PromPlugin.execInJob("Starting simulation",
-                                     [SubMonitor monitor |
-                                         val model = muc.model
-                                         if(model !== null && model instanceof EObject) {
-                                             SimulationUtil.startSimulation(model as EObject, monitor)
-                                         }
-                                     ])
+                val model = muc.model
+                 if(model !== null && model instanceof EObject) {
+                     SimulationUtil.startSimulation(model as EObject)
+                 }
             }
         }
     }

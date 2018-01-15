@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.prom.build.simulation
 
-import com.google.common.base.Charsets
-import com.google.common.io.CharStreams
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
@@ -23,9 +21,10 @@ import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.configurable.Substitution
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.prom.data.FileData
 import java.io.File
-import java.io.InputStreamReader
 import java.util.List
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
@@ -34,7 +33,6 @@ import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.data.FileData
 
 /**
  * Compiles generated code to an executable for use in the simulation.
@@ -343,28 +341,28 @@ abstract class SimulationCompiler extends Configurable {
                               + "Please check the KIELER Console output.")
         }
         // Print output of process to eclipse console
+        var processOutput = ""
         if(p.inputStream.available > 0) {
-            PromConsole.print("Simulation compilation output for '" + file.name + "'")
-            PromConsole.print("(command:"+arguments.toList+", in directory:'"+directory.path+"')")
-            
-            PromConsole.copy(p.inputStream)
-            PromConsole.print("\n\n")
+            processOutput = PromPlugin.toString(p.inputStream)
         }
         // Check that there was no error
         if(exception == null && p.exitValue != 0) {
-            exception = new Exception("Simulation compilation had issues: " + p.exitValue + "\n"
-                              + "(command: " + pBuilder.command + ",\n"
-                              + "in directory '" + pBuilder.directory + "')\n",
-                              new Exception(CharStreams.toString(new InputStreamReader(p.inputStream, Charsets.UTF_8))))
+            exception = new Exception("Simulation compilation had issues. See the Console View for details.\n"
+                              + "(command: " + pBuilder.command + ", \n"
+                              + "in directory '" + pBuilder.directory + "')\n\n"
+                              + processOutput)
         }
         if(exception != null) {
             // Create build problem for the exception
-            val problem = BuildProblem.createError(file, exception)
-            result.addProblem(problem)
+            result.addProblem(BuildProblem.createError(file, exception))
+            // Print the process output as error to the console
+            PromConsole.print(processOutput, ConsoleStyle.ERROR)
         } else {
             // Add the created file to the result
             result.addCreatedFile(executableFile)
             executableFile.refreshLocal(1, null)
+            // Print the process output as info to the console
+            PromConsole.print(processOutput, ConsoleStyle.INFO)
         }
         return result
     }

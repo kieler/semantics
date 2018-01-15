@@ -44,9 +44,6 @@ class RegisterVariablesFinder extends PromBuildAdapter {
     
     public static val ENABLED_ATTR = "registerVariablesFinder.enabled"
     
-    @Accessors(PUBLIC_GETTER)
-    private boolean enabled = true
-
     /**
      * Enables or disables this class by setting the corresponding value in the preferences.
      */    
@@ -125,12 +122,10 @@ class RegisterVariablesFinder extends PromBuildAdapter {
         // Get guard registers if any in the intermediate results of this processor
         var SCGraphs lastSCGraphs
         if(compiler instanceof KiCoModelCompiler) {
-            if(compiler.communicateRegisterVariables.boolValue) {
-                for (iResult : compiler.context.processorInstancesSequence) {
-                    val intermediateResultModel = iResult.environment.getProperty(Environment.MODEL)
-                    if(intermediateResultModel instanceof SCGraphs) {
-                        lastSCGraphs = intermediateResultModel
-                    }
+            for (iResult : compiler.context.processorInstancesSequence) {
+                val intermediateResultModel = iResult.environment.getProperty(Environment.MODEL)
+                if(intermediateResultModel instanceof SCGraphs) {
+                    lastSCGraphs = intermediateResultModel
                 }
             }
         }
