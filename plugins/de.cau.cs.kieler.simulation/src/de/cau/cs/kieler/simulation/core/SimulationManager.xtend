@@ -326,9 +326,32 @@ class SimulationManager extends Configurable {
     }
     
     /**
+     * Adds a step action before all others.
+     * 
+     * @param method The method to be performed. Can be null if the handler has only a single method.
+     * @param handler The handler that should perform the method
+     */
+    public def void prependAction(String method, DataHandler handler) {
+        if(method == null) {
+            prependAction(handler)
+        } else {
+            addHandler(handler)
+            actions.add(0, new StepAction(method, handler))    
+        }
+    }
+    
+    /**
+     * Adds a step action for a handler, which has only a single operation it can perform.
+     * 
+     * @param handler The handler that should perform its method
+     */
+    public def void prependAction(DataHandler handler) {
+        addHandler(handler)
+        actions.add(0, new StepAction(handler))
+    }
+    
+    /**
      * Adds a step action.
-     * A step action to read a data handler should not be added, if that handler is updated after every step anyway. 
-     * In this case it is sufficient to add this handler to the list of data handlers. 
      * 
      * @param method The method to be performed. Can be null if the handler has only a single method.
      * @param handler The handler that should perform the method

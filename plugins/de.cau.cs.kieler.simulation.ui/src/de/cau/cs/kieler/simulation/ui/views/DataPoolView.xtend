@@ -78,6 +78,9 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+import de.cau.cs.kieler.prom.FileExtensions
+import de.cau.cs.kieler.simulation.handlers.TraceEvent
+import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
 
 /**
  * Displays the data of a running simulation.
@@ -271,7 +274,12 @@ class DataPoolView extends ViewPart {
                     }
                 }
                 if(!files.isNullOrEmpty) {
-                    SimulationUtil.startSimulation(files)
+                    if(files.size == 1 && FileExtensions.isTrace(files.get(0))) {
+                        // Add the trace to a running simulation
+                        SimulationUtil.appendToSimulation(files)
+                    } else {
+                        SimulationUtil.startSimulation(files)    
+                    }
                 }
             }
         })
@@ -751,6 +759,17 @@ class DataPoolView extends ViewPart {
             override onTraceMismatch(TraceMismatchEvent e) {
                 dataPoolView.registerTraceMismatch(e.variable, e)
                 dataPoolView.viewer.update(e.variable, null)
+            }
+            
+            /**
+             * Indicates the end of a trace.
+             * 
+             * @param e The event
+             */
+            override onTraceEvent(TraceEvent e) {
+                if(e instanceof TraceFinishedEvent) {
+                    dataPoolView.statusLineText = "Trace finished"    
+                }
             }
             
             /**
