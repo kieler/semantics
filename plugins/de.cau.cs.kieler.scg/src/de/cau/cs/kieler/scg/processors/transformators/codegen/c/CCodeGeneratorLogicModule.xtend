@@ -172,6 +172,11 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
         
     protected def dispatch void generate(Conditional conditional, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
+        if (!conditionalStack.empty) {
+            // Apparently, we are in a nested conditional. Handle it if necessary. 
+            conditional.handleConditionalNesting
+        }
+
         valuedObjectPrefix = struct.getVariableName + struct.separator
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
 
@@ -186,13 +191,13 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         if (conditional.^then !== null) nodes.push(conditional.^then.target)
     }
     
-    protected def void handleConditionalNesting(Assignment assignment) {
+    protected def void handleConditionalNesting(Node node) {
         // There are two cases. The else branch is distinct from the actual control flow or 
         // the actual branch joins with the else branch of the conditional directly. 
         // (In the latter case we can omit the "else" in C.)
         val conditional = conditionalStack.peek
-        val incomingControlFlows = assignment.incoming.filter(ControlFlow).toList
-        if (conditional.^else !== null && conditional.^else.target == assignment) {
+        val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+        if (conditional.^else !== null && conditional.^else.target == node) {
             if (incomingControlFlows.size == 1) {
                 // Apparently, it is the first assignment of a dedicated else branch. Handle it. 
                 indent(conditionalStack.size)

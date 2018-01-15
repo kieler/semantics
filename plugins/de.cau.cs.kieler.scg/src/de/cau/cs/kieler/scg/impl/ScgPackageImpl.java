@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.impl;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.BranchType;
@@ -279,7 +280,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
         KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
+        KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theScgPackage.createPackageContents();
@@ -337,7 +341,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCGraph_Declarations() {
+	public EReference getSCGraph_BasicBlocks() {
         return (EReference)scGraphEClass.getEStructuralFeatures().get(1);
     }
 
@@ -346,7 +350,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCGraph_BasicBlocks() {
+	public EReference getSCGraph_Guards() {
         return (EReference)scGraphEClass.getEStructuralFeatures().get(2);
     }
 
@@ -355,17 +359,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCGraph_Guards() {
-        return (EReference)scGraphEClass.getEStructuralFeatures().get(3);
-    }
-
-	/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
 	public EAttribute getSCGraph_Label() {
-        return (EAttribute)scGraphEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)scGraphEClass.getEStructuralFeatures().get(3);
     }
 
 	/**
@@ -959,7 +954,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         scGraphEClass = createEClass(SC_GRAPH);
         createEReference(scGraphEClass, SC_GRAPH__NODES);
-        createEReference(scGraphEClass, SC_GRAPH__DECLARATIONS);
         createEReference(scGraphEClass, SC_GRAPH__BASIC_BLOCKS);
         createEReference(scGraphEClass, SC_GRAPH__GUARDS);
         createEAttribute(scGraphEClass, SC_GRAPH__LABEL);
@@ -1075,6 +1069,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         // Obtain other dependent packages
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
+        KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
 
@@ -1086,6 +1081,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         scGraphsEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
         scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
+        scGraphEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         conditionalEClass.getESuperTypes().add(this.getNode());
@@ -1114,7 +1110,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSCGraph_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSCGraph_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSCGraph_BasicBlocks(), this.getBasicBlock(), null, "basicBlocks", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSCGraph_Guards(), this.getGuard(), null, "guards", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSCGraph_Label(), ecorePackage.getEString(), "label", null, 0, 1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -297,10 +297,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     FunctionCallEffect returns FunctionCallEffect
 	 *
 	 * Constraint:
-	 *     (
-	 *         (annotations+=Annotation* functionName=ID (parameters+=Parameter parameters+=Parameter*)?) | 
-	 *         (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
-	 *     )
+	 *     (annotations+=Annotation* functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_FunctionCallEffect(ISerializationContext context, FunctionCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

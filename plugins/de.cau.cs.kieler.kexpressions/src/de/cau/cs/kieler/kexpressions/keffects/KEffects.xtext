@@ -97,8 +97,8 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // preceded by a list of annotations.
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
-     valuedObject=[kexpressions::ValuedObject|PrimeID]
-      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
+    'call' valuedObject=[kexpressions::ValuedObject|PrimeID]
+        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
     
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
@@ -109,13 +109,7 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    )
-    |
-    ('<' functionName = ID 
-        (('(' parameters += Parameter 
-            (',' parameters += Parameter)* ')'
-        ) | '()')
-    '>');    
+    );    
 
 // Print Call Effect Rule
 // A print functions that enables target-independent prints in the model.    

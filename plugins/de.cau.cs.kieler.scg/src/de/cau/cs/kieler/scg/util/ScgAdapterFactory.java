@@ -19,8 +19,8 @@ import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.scg.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -187,6 +187,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseNamedObject(NamedObject object) {
                 return createNamedObjectAdapter();
+            }
+            @Override
+            public Adapter caseDeclarationScope(DeclarationScope object) {
+                return createDeclarationScopeAdapter();
             }
             @Override
             public Adapter caseSchedulable(Schedulable object) {
@@ -581,6 +585,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createNamedObjectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.DeclarationScope <em>Declaration Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+     * @generated
+     */
+    public Adapter createDeclarationScopeAdapter() {
         return null;
     }
 

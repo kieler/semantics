@@ -2598,7 +2598,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -2612,7 +2612,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	'schedule' name=PrimeID ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -2755,7 +2755,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=super::Parameter (','
+	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=super::Parameter (','
 	//	parameters+=super::Parameter)* ')' | '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
@@ -2771,9 +2771,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//FunctionCallEffect keffects::FunctionCallEffect:
 	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=super::Parameter (','
 	//	parameters+=super::Parameter)* ')'
-	//	| '()')) | '<' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
-	//	| '()')
-	//	'>';
+	//	| '()'));
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
 	}

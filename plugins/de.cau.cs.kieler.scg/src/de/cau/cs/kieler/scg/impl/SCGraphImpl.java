@@ -17,13 +17,14 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgPackage;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -46,8 +47,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getBasicBlocks <em>Basic Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getLabel <em>Label</em>}</li>
@@ -77,16 +78,6 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see #getNodes()
-     * @generated
-     * @ordered
-     */
-	protected EList<Node> nodes;
-
-	/**
      * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,6 +86,16 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
      * @ordered
      */
 	protected EList<Declaration> declarations;
+
+    /**
+     * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getNodes()
+     * @generated
+     * @ordered
+     */
+	protected EList<Node> nodes;
 
 	/**
      * The cached value of the '{@link #getBasicBlocks() <em>Basic Blocks</em>}' containment reference list.
@@ -253,10 +254,10 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgPackage.SC_GRAPH__NODES:
-                return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
             case ScgPackage.SC_GRAPH__DECLARATIONS:
                 return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+            case ScgPackage.SC_GRAPH__NODES:
+                return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
             case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
                 return ((InternalEList<?>)getBasicBlocks()).basicRemove(otherEnd, msgs);
             case ScgPackage.SC_GRAPH__GUARDS:
@@ -275,10 +276,10 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NAME:
                 return getName();
-            case ScgPackage.SC_GRAPH__NODES:
-                return getNodes();
             case ScgPackage.SC_GRAPH__DECLARATIONS:
                 return getDeclarations();
+            case ScgPackage.SC_GRAPH__NODES:
+                return getNodes();
             case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
                 return getBasicBlocks();
             case ScgPackage.SC_GRAPH__GUARDS:
@@ -301,13 +302,13 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
             case ScgPackage.SC_GRAPH__NAME:
                 setName((String)newValue);
                 return;
-            case ScgPackage.SC_GRAPH__NODES:
-                getNodes().clear();
-                getNodes().addAll((Collection<? extends Node>)newValue);
-                return;
             case ScgPackage.SC_GRAPH__DECLARATIONS:
                 getDeclarations().clear();
                 getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+                return;
+            case ScgPackage.SC_GRAPH__NODES:
+                getNodes().clear();
+                getNodes().addAll((Collection<? extends Node>)newValue);
                 return;
             case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
                 getBasicBlocks().clear();
@@ -335,11 +336,11 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
             case ScgPackage.SC_GRAPH__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case ScgPackage.SC_GRAPH__NODES:
-                getNodes().clear();
-                return;
             case ScgPackage.SC_GRAPH__DECLARATIONS:
                 getDeclarations().clear();
+                return;
+            case ScgPackage.SC_GRAPH__NODES:
+                getNodes().clear();
                 return;
             case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
                 getBasicBlocks().clear();
@@ -364,10 +365,10 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case ScgPackage.SC_GRAPH__NODES:
-                return nodes != null && !nodes.isEmpty();
             case ScgPackage.SC_GRAPH__DECLARATIONS:
                 return declarations != null && !declarations.isEmpty();
+            case ScgPackage.SC_GRAPH__NODES:
+                return nodes != null && !nodes.isEmpty();
             case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
                 return basicBlocks != null && !basicBlocks.isEmpty();
             case ScgPackage.SC_GRAPH__GUARDS:
@@ -391,6 +392,12 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 default: return -1;
             }
         }
+        if (baseClass == DeclarationScope.class) {
+            switch (derivedFeatureID) {
+                case ScgPackage.SC_GRAPH__DECLARATIONS: return KExtPackage.DECLARATION_SCOPE__DECLARATIONS;
+                default: return -1;
+            }
+        }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
@@ -404,6 +411,12 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return ScgPackage.SC_GRAPH__NAME;
+                default: return -1;
+            }
+        }
+        if (baseClass == DeclarationScope.class) {
+            switch (baseFeatureID) {
+                case KExtPackage.DECLARATION_SCOPE__DECLARATIONS: return ScgPackage.SC_GRAPH__DECLARATIONS;
                 default: return -1;
             }
         }

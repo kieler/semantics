@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.common.util.EList
 
-import static extension org.eclipse.xtext.EcoreUtil2.*
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Expression
@@ -80,14 +79,14 @@ class KExtDeclarationExtensions {
     
     def ValuedObject findValuedObjectByName(DeclarationScope scope, String name) {
         var EObject container = scope
-        while (container != null) {
+        while (container !== null) {
             var EList<Declaration> declarations = null
             if (container instanceof DeclarationScope)
                 declarations = (container as DeclarationScope).declarations
             if (!declarations.nullOrEmpty)
                 for (declaration : declarations) {
                     val valuedObject = declaration.findValuedObjectByName(name)
-                    if(valuedObject != null) return valuedObject
+                    if(valuedObject !== null) return valuedObject
                 }
             container = container.eContainer
         }
@@ -119,7 +118,7 @@ class KExtDeclarationExtensions {
     
     def isReferenceDeclarationReference(Expression expression) {
         if (expression instanceof ValuedObjectReference) {
-            if (expression.valuedObject != null && expression.valuedObject.eContainer != null && 
+            if (expression.valuedObject !== null && expression.valuedObject.eContainer !== null && 
                 expression.valuedObject.eContainer instanceof ReferenceDeclaration
             ) return true
         }

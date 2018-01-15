@@ -24,6 +24,7 @@ de.cau.cs.kieler.sccharts.processors.transformators.const
 	de.cau.cs.kieler.sccharts.processors.transformators.entryAction
 	de.cau.cs.kieler.sccharts.processors.transformators.connector
 ] 
+de.cau.cs.kieler.sccharts.processors.transformators.userSchedule
 [ label "Core"
 de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
 de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
@@ -31,7 +32,7 @@ de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 [ label "SCG"
-    pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop true
+    pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
 	de.cau.cs.kieler.scg.processors.transformators.dependency
 	post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 	de.cau.cs.kieler.scg.processors.transformators.basicBlocks
@@ -39,5 +40,8 @@ post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 	de.cau.cs.kieler.scg.processors.transformators.guards
 	de.cau.cs.kieler.scg.processors.transformators.scheduler
 	de.cau.cs.kieler.scg.processors.transformators.sequentializer
+    post process de.cau.cs.kieler.scg.processors.copyPropagation
+    post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+    post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent  
 	de.cau.cs.kieler.scg.processors.codegen.java
 ]

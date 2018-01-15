@@ -44,6 +44,7 @@ class DataCanvas extends Canvas {
     protected static val COORDINATE_LEFTBORDERSPACING = 24 
     protected static val COORDINATE_BORDERSPACING = 12
     protected static val COORDINATE_PADDING = 5
+    protected static val COORDINATE_TICKMARK_LENGTH = 2
     
     protected static val MAX_TICKWIDTH = 10
 
@@ -56,6 +57,15 @@ class DataCanvas extends Canvas {
                                     Display.getCurrent.getSystemColor(SWT.COLOR_GREEN),
                                     Display.getCurrent.getSystemColor(SWT.COLOR_MAGENTA) 
                                    ]
+
+     protected var maxHeight = 0
+     protected var maxWidth = 0
+     protected var cHeight = 0
+     protected var cWidth = 0
+     protected var cellWidth = 0d
+     protected var baseline = 0d
+     protected var observerMinValue = 0d
+     protected var observerMaxValue = 0d
     
     new(Composite parent, int style, DataView dataView, DataObserver observer) {
         super(parent, style)
@@ -72,7 +82,6 @@ class DataCanvas extends Canvas {
         
         new Button(this, SWT.PUSH) => [
             it.bounds = new Rectangle(parent.bounds.width - DataView.BORDER_MARGIN * 2 - BUTTON_SIZE, 0, BUTTON_SIZE, BUTTON_SIZE)
-            println(bounds)
             text = "X"
             addSelectionListener(new SelectionListener() {
                 override widgetDefaultSelected(SelectionEvent e) {
@@ -90,7 +99,9 @@ class DataCanvas extends Canvas {
         addPaintListener(new PaintListener() {
             
             override paintControl(PaintEvent e) {
-                drawCoordinateSystem(e.gc, 0)
+                val v = if (dataObserver.liveVariables.empty) null else dataObserver.liveVariables.head
+                calculateMeasures(e.gc, v)
+                drawCoordinateSystem(e.gc, baseline, v)
                 drawValues(e.gc)
             }
             
@@ -107,18 +118,42 @@ class DataCanvas extends Canvas {
         
         variableTextMap.put(variable, text)    
     }
-  
-    def drawCoordinateSystem(GC gc, double baseline) {
-        val maxHeight = getSize.y
-        val maxWidth = getSize.x
-        val cHeight = maxHeight - COORDINATE_BORDERSPACING * 2
-        val cWidth = maxWidth - COORDINATE_LEFTBORDERSPACING - COORDINATE_BORDERSPACING
+    
+    def calculateMeasures(GC gc, Variable anyVariable) {
+        maxHeight = getSize.y
+        maxWidth = getSize.x
+        cHeight = maxHeight - COORDINATE_BORDERSPACING * 2 
+        cWidth = maxWidth - COORDINATE_LEFTBORDERSPACING - COORDINATE_BORDERSPACING
+
+        if (anyVariable !== null) {                
+            val history = anyVariable.history
+            cellWidth = (cWidth as double) / (history.size + 1)
+        } else {
+            cellWidth = MAX_TICKWIDTH
+        }
+        if (cellWidth > MAX_TICKWIDTH) cellWidth = MAX_TICKWIDTH
         
+        baseline = cHeight
+        observerMinValue = dataObserver.minValue
+        observerMaxValue = dataObserver.maxValue
+        if (observerMinValue < 0) {
+            val mMin = -observerMinValue
+            var oMax = observerMaxValue + mMin
+            if (mMin == observerMaxValue) {
+                baseline = cHeight / 2
+            } else {
+                val p = mMin / oMax
+                baseline = cHeight * (1 - p)
+            }
+        }        
+    }
+  
+    def drawCoordinateSystem(GC gc, double baseline, Variable anyVariable) {
         gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING, 
             COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + cHeight)
             
-        gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + cHeight + baseline as int, 
-            COORDINATE_LEFTBORDERSPACING + cWidth, COORDINATE_BORDERSPACING + cHeight + baseline as int)
+        gc.drawLine(COORDINATE_LEFTBORDERSPACING, COORDINATE_BORDERSPACING + baseline as int, 
+            COORDINATE_LEFTBORDERSPACING + cWidth, COORDINATE_BORDERSPACING + baseline as int)
             
         val font = new Font(display, "Arial", 9, SWT.NONE);
         gc.setFont(font)            
@@ -132,6 +167,17 @@ class DataCanvas extends Canvas {
         val minTextExtent = gc.textExtent(minText)
         gc.drawString(minText, 
             COORDINATE_LEFTBORDERSPACING - 2 - minTextExtent.x, COORDINATE_BORDERSPACING + cHeight - minTextExtent.y)
+            
+        if (anyVariable !== null) {
+            val history = anyVariable.history
+            for (i : 0..history.size) {
+                val ctl = if (i % 5 == 0) COORDINATE_TICKMARK_LENGTH * 2 else COORDINATE_TICKMARK_LENGTH
+                val top = if (baseline != cHeight) COORDINATE_BORDERSPACING + baseline as int - ctl 
+                else COORDINATE_BORDERSPACING + baseline as int
+                val left = COORDINATE_LEFTBORDERSPACING + (i * cellWidth) as int 
+                gc.drawLine(left, top, left, COORDINATE_BORDERSPACING + baseline as int + ctl)
+            }
+        }
     }
     
     def drawValues(GC gc) {
@@ -141,86 +187,46 @@ class DataCanvas extends Canvas {
     }
     
     def drawValue(GC gc, Variable variable) {
-        val maxHeight = getSize.y
-        val maxWidth = getSize.x
-        val cHeight = maxHeight - COORDINATE_BORDERSPACING * 2 - COORDINATE_PADDING
-        val cWidth = maxWidth - COORDINATE_LEFTBORDERSPACING - COORDINATE_BORDERSPACING
-                
         val history = variable.history
-        
-        var cellWidth = (cWidth as double) / (history.size + 1)
-        if (cellWidth > MAX_TICKWIDTH) cellWidth = MAX_TICKWIDTH
-        
-        var baseline = 0d
-        val min = dataObserver.minValue
-        val max = dataObserver.maxValue
-        val med = (-min + max) as float
-        var scale = 1.0f
-        if (min < 0) {
-            scale = min / med
-            baseline = (min / med * cHeight) + (max / med * cHeight)
-            scale = -min / med
-        }
-
         gc.foreground = variableTextMap.get(dataObserver.originMap.get(variable)).foreground
         
         val hIter = (history + newLinkedList(variable)).iterator.toIterable
         
         var lastX = 0.0
-        var lastY = hIter.head.morph(cHeight) * scale  
+        var lastY = hIter.head.normalizedMorph(cHeight)   
         gc.drawLine(COORDINATE_LEFTBORDERSPACING, 
-            (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int,
+            (COORDINATE_BORDERSPACING + lastY) as int,
             (COORDINATE_LEFTBORDERSPACING + cellWidth) as int,
-            (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int
+            (COORDINATE_BORDERSPACING + lastY) as int
         )
         lastX = lastX + cellWidth
         
         for (e : hIter.drop(1)) {
-            var newY = e.morph(cHeight) * scale
+            var newY = e.normalizedMorph(cHeight) 
             if (e.type == VariableType.BOOL && newY != lastY) {
                 gc.drawLine((COORDINATE_LEFTBORDERSPACING + lastX) as int, 
-                    (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int,
+                    (COORDINATE_BORDERSPACING + lastY) as int,
                     (COORDINATE_LEFTBORDERSPACING + lastX) as int,
-                    (COORDINATE_BORDERSPACING + COORDINATE_PADDING + newY + baseline) as int
+                    (COORDINATE_BORDERSPACING + newY) as int
                 )
                 lastY = newY
             }
             gc.drawLine((COORDINATE_LEFTBORDERSPACING + lastX) as int, 
-                (COORDINATE_BORDERSPACING + COORDINATE_PADDING + lastY + baseline) as int,
+                (COORDINATE_BORDERSPACING + lastY) as int,
                 (COORDINATE_LEFTBORDERSPACING + lastX + cellWidth) as int,
-                (COORDINATE_BORDERSPACING + COORDINATE_PADDING + newY + baseline) as int
+                (COORDINATE_BORDERSPACING + newY) as int
             )
             lastX = lastX + cellWidth
             lastY = newY
         }
     }
     
-    private def double morph(Variable variable, int coordHeight) {
-        val value = dataObserver.getVariableValue(variable)
-        val max = if (dataObserver.maxValue > -dataObserver.minValue) dataObserver.maxValue else -dataObserver.minValue
-        
+    private def double normalizedMorph(Variable variable, int coordHeight) {
+        val shift = -observerMinValue 
+        val value = dataObserver.getVariableValue(variable) + shift 
+        val max = observerMaxValue + shift
         val p = if (value == 0) 0 else value / (max as double)
-        
-        return coordHeight * (1 - p)
+        return coordHeight * (1 - p) 
     }
     
-    private def float max(float a, float b) {
-        if (a > b) a else b
-    }
-    
-    private def float calculateBaseline() {
-        val maxHeight = getSize.y
-        val cHeight = maxHeight - COORDINATE_BORDERSPACING * 2 - COORDINATE_PADDING
-        var baseline = 0f
-        val min = dataObserver.minValue
-        val max = dataObserver.maxValue
-        val med = (-min + max) as float
-        var scale = 1.0f
-        if (min < 0) {
-            scale = min / med
-            baseline = (min / med * cHeight) + (max / med * cHeight)
-            scale = -min / med
-        }
-        return baseline        
-    }
 }
