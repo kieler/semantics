@@ -87,6 +87,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.esterel.PresentCase
+import de.cau.cs.kieler.esterel.TickReference
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -1626,34 +1627,39 @@ class EsterelTransformationExtensions {
             references += obj
         }
         for (ref : references) {
-            val signal = ref.valuedObject as Signal
-            // if the SignalReference references a transformed signal
-            if (newSignals.containsKey(signal)) {
-                val parent = ref.eContainer
-                if ( (parent instanceof OperatorExpression) && 
-                     ((parent as OperatorExpression).operator == OperatorType.VAL)
-                ) {
-                    if (newSignals.get(signal).s_val === null) {
-                        throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+            if (ref instanceof TickReference) {
+                ref.replace(createTrue)
+            }
+            else {
+                val signal = ref.valuedObject as Signal
+                // if the SignalReference references a transformed signal
+                if (newSignals.containsKey(signal)) {
+                    val parent = ref.eContainer
+                    if ( (parent instanceof OperatorExpression) && 
+                         ((parent as OperatorExpression).operator == OperatorType.VAL)
+                    ) {
+                        if (newSignals.get(signal).s_val === null) {
+                            throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+                        }
+                        parent.replace(createValuedObjectReference(newSignals.get(signal).s_val))
                     }
-                    parent.replace(createValuedObjectReference(newSignals.get(signal).s_val))
-                }
-                else if (parent instanceof Assignment) {
-                    if (parent.isCurAssignment) {
-                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                    else if (parent instanceof Assignment) {
+                        if (parent.isCurAssignment) {
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                        }
+                        else if (parent.isSetAssignment) {
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
+                        }
+    //                    else if (parent.isValAssignment) {
+    //                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
+    //                    }
+                        else {
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s))
+                        }
                     }
-                    else if (parent.isSetAssignment) {
-                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
-                    }
-//                    else if (parent.isValAssignment) {
-//                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
-//                    }
                     else {
                         ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                     }
-                }
-                else {
-                    ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                 }
             }
         }
