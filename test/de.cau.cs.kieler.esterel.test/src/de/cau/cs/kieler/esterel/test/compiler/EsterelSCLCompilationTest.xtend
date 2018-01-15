@@ -86,7 +86,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     @Test(timeout=10000)
     @StopOnFailure
     def void testValidation(EsterelProgram est, TestModelData modelData) {
-//        assumeFalse(true); // Do nothing !!
+        assumeFalse(true); // Do nothing !!
         
         // Check all intermediate results
         val context = est.compile
@@ -124,7 +124,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     
     @Test(timeout=10000)
     def void testSerializability(EsterelProgram est, TestModelData modelData) {
-//        assumeFalse(true); // Do nothing !!
+        assumeFalse(true); // Do nothing !!
         
         // Check all intermediate results
         val result = est.compile
