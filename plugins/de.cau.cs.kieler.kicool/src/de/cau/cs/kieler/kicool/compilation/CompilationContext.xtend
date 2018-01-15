@@ -346,7 +346,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         if (processorEntryPoint instanceof ProcessorGroup) {
                 processorEntryPoint.processors += processorEntry
                 processorEntry.populate(this)
-                notify(new CompilationChanged(this, system))
+                notify(new CompilationChanged(this, system, processorEntry))
         } else {
             throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
         }

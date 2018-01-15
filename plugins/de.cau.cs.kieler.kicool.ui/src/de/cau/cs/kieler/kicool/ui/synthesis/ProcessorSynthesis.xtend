@@ -73,7 +73,7 @@ class ProcessorSynthesis {
     dispatch def List<KNode> transform(ProcessorReference processorReference) {
         val processorNode = processorNode
         val nodeId = processorReference.uniqueProcessorId
-        println(nodeId)
+//        println(nodeId)
         processorNode.setId(nodeId)
         processorReference.populateProcessorData(processorNode)        
         
