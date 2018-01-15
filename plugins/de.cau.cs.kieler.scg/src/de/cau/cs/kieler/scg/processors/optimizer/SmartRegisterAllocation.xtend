@@ -32,6 +32,8 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import java.util.Set
+import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
 
 /**
  * Smart Register Allocation
@@ -70,13 +72,15 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     def performSmartRegisterAllocation(SCGraph scg) {
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
         val registerAllocation = new RegisterAllocation
-        val preNodes = <Assignment> newLinkedList        
+        val preNodes = <Assignment> newLinkedHashSet        
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
             
             if (node instanceof Assignment) {
-                if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX)) {
+                if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                    !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                ) {
                     registerAllocation.registerRange.push(node.reference.valuedObject.name, node)
                 }
                 node.expression.setRegisterRanges(node, registerAllocation)
@@ -104,7 +108,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         for (r : registerAllocation.registerRange.keySet.immutableCopy) {
             val range = registerAllocation.registerRange.get(r)
             if (range !== null && range.size < 2) {
-                r.removeIneffectiveAssignment(registerAllocation)        
+                r.removeIneffectiveAssignment(registerAllocation, preNodes)        
             }
         }
 
@@ -128,7 +132,9 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                 }
             }                
             if (node instanceof Assignment) {
-                if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX)) {
+                if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                    !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                ) {
                     if (!registerAllocation.freedRegister.empty) {
                         val recycledRegister = registerAllocation.freedRegister.pop
                         val vo = scg.findValuedObjectByName(recycledRegister) 
@@ -194,8 +200,19 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         }
     }
     
-    private def void removeIneffectiveAssignment(String registerName, RegisterAllocation registerAllocation) {
+    private def void removeIneffectiveAssignment(String registerName, RegisterAllocation registerAllocation, Set<Assignment> preNodes) {
         val node = registerAllocation.registerRange.pop(registerName)
+        
+        if (node === null) return;
+        
+        for (p : preNodes) {
+            if (p.expression instanceof OperatorExpression && p.expression.asOperatorExpression.operator == OperatorType.PRE) {
+                if (p.expression.asOperatorExpression.subExpressions.head.asValuedObjectReference.valuedObject.name == registerName) {
+                    return
+                }
+            }
+        }
+        
         
         val next = node.allNext.map[target].head
         node.allPrevious.toList.immutableCopy.forEach[ target = next ]
@@ -214,7 +231,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                 for (ref : refList) {
                     val range = registerAllocation.registerRange.get(ref.valuedObject.name)
                     if (range !== null && range.size < 2) {
-                        ref.valuedObject.name.removeIneffectiveAssignment(registerAllocation)
+                        ref.valuedObject.name.removeIneffectiveAssignment(registerAllocation, preNodes)
                     }
                 }
             }

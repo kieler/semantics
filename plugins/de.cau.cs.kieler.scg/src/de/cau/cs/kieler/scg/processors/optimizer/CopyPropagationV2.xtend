@@ -33,6 +33,9 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /**
  * Copy Propagation
@@ -49,10 +52,14 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGSerializeHRExtensions
     
     public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_ALL_EXPRESSIONS = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceAllExpressions", false)       
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceAllExpressions", false)
+    public static val IProperty<Boolean> COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.propagateEqualExpressions", true)       
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.copyPropagation"
@@ -79,6 +86,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         val visited = <Node> newHashSet
         val removeList = <EObject> newLinkedList
         val preNodes = <Assignment> newLinkedList
+        val registerExpressions = <String, Node> newHashMap
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -86,7 +94,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
             
             if (node instanceof Assignment) {
                 if (node.expression instanceof ValuedObjectReference) {
-                    if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX)) {
+                    if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                        !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                    ) {
                         node.expression.replaceExpression(replacements, node)
                         node.expression.replaceExpression(replacements, node)
                         replacements.push(node.reference.valuedObject.name, node.expression)
@@ -99,11 +109,29 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 } else {
                     if (node.expression instanceof OperatorExpression && 
                         node.expression.asOperatorExpression.operator == OperatorType.PRE) {
-                        preNodes += node                            
+                        preNodes += node  
+                        node.expression.replaceExpression(replacements, node)                          
                     } else {
                         node.expression.replaceExpression(replacements, node)
-                    }                    
-                }   
+                    }                
+                        
+                    if (environment.getProperty(COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS)) {
+                        val serializedExpression = node.expression.serializeHR.toString
+                        if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                            (registerExpressions.keySet.contains(serializedExpression))) {
+                            val originalNode = registerExpressions.get(serializedExpression)
+                            replacements.push(node.reference.valuedObject.name, originalNode.asAssignment.reference)
+                            for (incoming :node.allPrevious.toList) {
+                                incoming.target = node.next.target
+                            }
+                            removeList += node.next
+                            removeList += node                        
+                        } else {
+                            registerExpressions.put(serializedExpression, node)
+                        }
+                    }
+                }  
+                
             } else if (node instanceof Conditional) {
                 node.condition.replaceExpression(replacements, node)
             }

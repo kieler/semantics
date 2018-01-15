@@ -69,7 +69,11 @@ class HashMapStack<V> extends HashMap<String, Stack<V>> {
         if (stack === null) {
             return null
         } else {
-            return stack.pop
+            val item = stack.pop
+            if (stack.size == 0) {
+                remove(valuedObjectName)
+            }
+            return item
         }
     }
     
