@@ -184,6 +184,9 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
     def transformExit(Exit exit, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {
         val statements =  exit.getContainingList
         val pos = statements.indexOf(exit)
+        if (!exitVariables.containsKey(exit.trap)) {
+            return
+        }
         val pair = exitVariables.get(exit.trap)
         val assignment = createAssignment(pair.key, createTrue)
         statements.set(pos, createGotoStatement(findClosestLabel(label, exit)))

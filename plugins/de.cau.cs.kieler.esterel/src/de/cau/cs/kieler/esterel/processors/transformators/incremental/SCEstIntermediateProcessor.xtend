@@ -304,13 +304,6 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                 }
                 else if (parent instanceof Trap) {
-                    val statements = parent.statements
-                    pos = list.indexOf(obj)
-                    if (pos+1 < statements.length) {
-                        obj = statements.get(pos+1)
-                        up = false
-                    }
-                    else  { // check TrapHandler
                         if (!parent.trapHandler.empty) {
                             obj = parent.trapHandler.head
                             up = false
@@ -319,8 +312,6 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             obj = parent
                             transform = true
                         }
-                    }
-                    
                 }
                 else if (parent instanceof TrapHandler) {
                     val handler = parent.containingList
