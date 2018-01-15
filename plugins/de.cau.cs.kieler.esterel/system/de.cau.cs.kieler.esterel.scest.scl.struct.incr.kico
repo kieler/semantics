@@ -1,7 +1,33 @@
-public system de.cau.cs.kieler.esterel.scest.scl
+public system de.cau.cs.kieler.esterel.scest.scl.struct.incr
     version 1 
-    label "Esterel/SCEst Structural Incremental"
+    label "Esterel/SCEst to SCL - SLIC"
     input Object
     
-// de.cau.cs.kieler.kicool.processors.identity 
-de.cau.cs.kieler.esterel.processors.scestintermediateprocessor
+de.cau.cs.kieler.esterel.processors.initialization
+de.cau.cs.kieler.esterel.processors.run
+de.cau.cs.kieler.esterel.processors.do
+de.cau.cs.kieler.esterel.processors.everydo
+de.cau.cs.kieler.esterel.processors.await
+de.cau.cs.kieler.esterel.processors.unemit
+de.cau.cs.kieler.esterel.processors.loop
+de.cau.cs.kieler.esterel.processors.halt
+de.cau.cs.kieler.esterel.processors.sustain
+de.cau.cs.kieler.esterel.processors.proccall
+de.cau.cs.kieler.esterel.processors.variable
+de.cau.cs.kieler.esterel.processors.suspend
+de.cau.cs.kieler.esterel.processors.parallel
+de.cau.cs.kieler.esterel.processors.if
+de.cau.cs.kieler.esterel.processors.abort
+de.cau.cs.kieler.esterel.processors.trap
+de.cau.cs.kieler.esterel.processors.^set
+de.cau.cs.kieler.esterel.processors.emit
+de.cau.cs.kieler.esterel.processors.nothing
+de.cau.cs.kieler.esterel.processors.block
+de.cau.cs.kieler.esterel.processors.present
+de.cau.cs.kieler.esterel.processors.function
+de.cau.cs.kieler.esterel.processors.repeat
+de.cau.cs.kieler.esterel.processors.sensor
+de.cau.cs.kieler.esterel.processors.constant
+de.cau.cs.kieler.esterel.processors.signal
+de.cau.cs.kieler.esterel.processors.localsignal
+de.cau.cs.kieler.esterel.processors.scesttoscl
