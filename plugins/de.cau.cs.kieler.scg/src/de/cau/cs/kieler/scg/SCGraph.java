@@ -15,8 +15,7 @@ package de.cau.cs.kieler.scg;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
-import de.cau.cs.kieler.kexpressions.Declaration;
-
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -29,7 +28,6 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getBasicBlocks <em>Basic Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getLabel <em>Label</em>}</li>
@@ -39,7 +37,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SCGraph extends Annotatable, NamedObject {
+public interface SCGraph extends Annotatable, NamedObject, DeclarationScope {
     /**
      * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
@@ -55,22 +53,6 @@ public interface SCGraph extends Annotatable, NamedObject {
      * @generated
      */
     EList<Node> getNodes();
-
-    /**
-     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Declarations()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Declaration> getDeclarations();
 
     /**
      * Returns the value of the '<em><b>Basic Blocks</b></em>' containment reference list.

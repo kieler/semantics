@@ -130,7 +130,7 @@ ExternString returns kexpressions::ExternString:
     
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
-    'schedule' name = PrimeID
+    'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -138,7 +138,7 @@ ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
-    'schedule' name = PrimeID
+    'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*

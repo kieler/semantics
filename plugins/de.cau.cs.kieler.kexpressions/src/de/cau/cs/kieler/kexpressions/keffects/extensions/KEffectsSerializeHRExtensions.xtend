@@ -79,7 +79,7 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
     def dispatch CharSequence serializeHR(ReferenceCallEffect referenceCallEffect) {
         var paramStr = referenceCallEffect.parameters.serializeHRParameters.toString
         
-        return "extern " + paramStr.substring(1, paramStr.length - 1)
+        return referenceCallEffect.valuedObject.name + paramStr
     }
     
     def dispatch CharSequence serializeHR(RandomizeCallEffect randomizeCallEffect) {

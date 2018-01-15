@@ -135,22 +135,22 @@ public interface ScgPackage extends EPackage {
     int SC_GRAPH__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
-	/**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+	int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Basic Blocks</b></em>' containment reference list.
@@ -1732,17 +1732,6 @@ public interface ScgPackage extends EPackage {
 	EReference getSCGraph_Nodes();
 
 	/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getDeclarations <em>Declarations</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Declarations</em>'.
-     * @see de.cau.cs.kieler.scg.SCGraph#getDeclarations()
-     * @see #getSCGraph()
-     * @generated
-     */
-	EReference getSCGraph_Declarations();
-
-	/**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getBasicBlocks <em>Basic Blocks</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2491,14 +2480,6 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
 		EReference SC_GRAPH__NODES = eINSTANCE.getSCGraph_Nodes();
-
-		/**
-         * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference SC_GRAPH__DECLARATIONS = eINSTANCE.getSCGraph_Declarations();
 
 		/**
          * The meta object literal for the '<em><b>Basic Blocks</b></em>' containment reference list feature.
