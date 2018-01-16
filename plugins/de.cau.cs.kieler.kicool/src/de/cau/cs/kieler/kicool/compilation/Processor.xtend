@@ -137,11 +137,16 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         p
     }
     
-    protected def boolean executeCoProcessor(Processor<?,?> processorInstance, boolean doSnapshot) {
+    protected def boolean executeCoProcessor(Processor<?,?> processorInstance, boolean doSnapshot, boolean isPostProcessor) {
         if (processorInstance === null) return false
+        if (doSnapshot && isPostProcessor) snapshot
         processorInstance.process
-        if (doSnapshot) snapshot
+        if (doSnapshot && !isPostProcessor) snapshot
         return true
+    }
+    
+    protected def boolean executeCoProcessor(Processor<?,?> processorInstance, boolean doSnapshot) {
+        executeCoProcessor(processorInstance, doSnapshot, false)
     } 
     
     /**

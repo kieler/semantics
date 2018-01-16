@@ -31,7 +31,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  *
  */
  
-class CopyPropagation extends AbstractOptimizer {
+class CopyPropagationV1 extends AbstractOptimizer {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions

@@ -18,6 +18,7 @@ import java.util.EnumSet
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.widgets.Composite
@@ -62,7 +63,13 @@ class KielerModelingProjectProperties extends PropertyPage {
      * @return the element as IResource
      */
     def IResource getResource() {
-        return element as IResource
+        if(element instanceof IResource) {
+            return element as IResource
+        } else if(element instanceof IJavaProject) {
+            return (element as IJavaProject).getProject as IResource
+        } else {
+            throw new Exception("Cannot find resource for "+class.simpleName)
+        }
     }
     
     /**

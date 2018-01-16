@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
  * 
@@ -26,10 +27,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class CompilationChanged extends AbstractCompilationNotification {
     
     @Accessors val de.cau.cs.kieler.kicool.System system
+    @Accessors val ProcessorEntry processorEntry
     
-    new(CompilationContext compilationContext, de.cau.cs.kieler.kicool.System system) {
+    new(CompilationContext compilationContext, de.cau.cs.kieler.kicool.System system, ProcessorEntry processorEntry) {
         super(compilationContext)
         this.system = system
+        this.processorEntry = processorEntry
     }
     
 }

@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.prom.console
 
-import java.io.InputStream
-
 /**
  * Interface to present information to users in a console. 
  * 
@@ -25,15 +23,9 @@ interface IConsole {
      * Writes to the console.
      * 
      * @param message The message to print to the console
+     * @param style The style to show the message
      */
-    def void print(String msg)
-    
-    /**
-     * Write the exception to the console 
-     * 
-     * @param Exception e the exception
-     */
-    def void print(Exception e)
+    def void print(String msg, ConsoleStyle style)
     
     /**
      * Show the console to the user
@@ -44,10 +36,4 @@ interface IConsole {
      * Remove all text from the console
      */
     def void clear()
-    
-    /**
-     * Copies all bytes from the input stream to the console. 
-     * Does not close either stream.
-     */
-    def void copy(InputStream from)
 }

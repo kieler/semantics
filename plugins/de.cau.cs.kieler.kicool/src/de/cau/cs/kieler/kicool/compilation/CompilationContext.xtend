@@ -170,7 +170,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val startTimestamp = System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         
-        processorInstance.executeCoProcessors(processorReference.preprocesses)
+        processorInstance.executeCoProcessors(processorReference.preprocesses, false)
         
         try {
             if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
@@ -183,7 +183,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             e.printStackTrace
         }
 
-        processorInstance.executeCoProcessors(processorReference.postprocesses)
+        processorInstance.executeCoProcessors(processorReference.postprocesses, true)
         
         val stopTimestamp = System.nanoTime
         environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
@@ -346,7 +346,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         if (processorEntryPoint instanceof ProcessorGroup) {
                 processorEntryPoint.processors += processorEntry
                 processorEntry.populate(this)
-                notify(new CompilationChanged(this, system))
+                notify(new CompilationChanged(this, system, processorEntry))
         } else {
             throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
         }
@@ -383,9 +383,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         return getIntermediateProcessors        
     }
     
-    protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences) {
+    protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences, boolean isPostProcessor) {
         for (processorReference : processorReferences) {
-            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent)
+            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
         }
     }
     

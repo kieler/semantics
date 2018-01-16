@@ -114,6 +114,8 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
                 RegisterVariablesFinder.enabled = checkbox.selection
             }
         })
+        checkbox.toolTipText = "This option is required to properly step back in the simulation history."
+                             + "\nCan be disabled to improve performance when compiling large models."
         
         // Create the control to define the maximum simulation history length
         group = UIUtil.createGroup(parent, "Simulation history", 2)
