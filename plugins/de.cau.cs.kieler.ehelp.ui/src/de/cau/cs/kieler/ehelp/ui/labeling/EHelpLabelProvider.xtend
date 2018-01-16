@@ -12,6 +12,9 @@ import de.cau.cs.kieler.ehelp.services.EHelpGrammarAccess.EnumElements
 import de.cau.cs.kieler.ehelp.services.EHelpGrammarAccess.ListElements
 import de.cau.cs.kieler.ehelp.eHelp.ListItem
 import de.cau.cs.kieler.ehelp.eHelp.Table
+import de.cau.cs.kieler.ehelp.eHelp.TableRow
+import de.cau.cs.kieler.ehelp.eHelp.Images
+import de.cau.cs.kieler.ehelp.generator.HelpFileGenerator
 
 /**
  * Provides labels for EObjects.
@@ -20,13 +23,16 @@ import de.cau.cs.kieler.ehelp.eHelp.Table
  */
 class EHelpLabelProvider extends DefaultEObjectLabelProvider {
 
+ 	@Inject
+ 	extension HelpFileGenerator
+
 	@Inject
 	new(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
 
 	def text(Chapter ele) {
-		'Chapter ' + ele.title
+		'Chapter (' + ele.chaperIndex+ ') ' + ele.title
 	}
 
 	def text(List ele) {
@@ -42,8 +48,31 @@ class EHelpLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	def text(ListItem ele) {
-		'- ' + ele.eContents.get(0).getText
+		if (ele.eContents.size > 0) {
+			return	'- ' + ele.eContents.get(0).getText
+		}
+		return '- <empty>'
 	}
+
+	def text(TableRow ele) {
+		if (ele.eContents.size > 0 && ele.eContents.get(0).eContents.size > 0) {
+			return	'- ' + ele.eContents.get(0).eContents.get(0).getText
+		}
+		return '- <empty>'
+	}
+	
+	def text(Images ele) {
+		var returnText = "";
+		for (image : ele.images) {
+			if (returnText.length > 0) {
+				returnText = returnText + ''', '''
+			}
+			returnText = returnText + image
+		}
+		return "Image: " + returnText
+	}
+	
+	
 
 
 
