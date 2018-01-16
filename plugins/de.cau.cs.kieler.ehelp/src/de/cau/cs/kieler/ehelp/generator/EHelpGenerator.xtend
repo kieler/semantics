@@ -59,7 +59,7 @@ class EHelpGenerator extends AbstractGenerator implements IOutputConfigurationPr
 		clearHTMLFiles
 
 		// Otherwise get the model
-		val model = resource.contents.get(0)
+		val model = resource.contents.get(0) as EHelpModel
 
 		// If it is an EHelpModel
 		if (model instanceof EHelpModel) {
