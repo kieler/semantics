@@ -126,20 +126,20 @@ class InitializationTransformation extends InplaceProcessor<EsterelProgram> {
             transformStatements((statement as StatementContainer).statements, depth+1)
             
             if (statement instanceof Loop) {
-                (statement as Loop).annotations.add(createAnnotation(depth))
+//                (statement as Loop).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Await) {
-                (statement as Await).annotations.add(createAnnotation(depth))
+//                (statement as Await).annotations.add(createAnnotation(depth))
                 (statement as Await).cases?.forEach[ c | transformStatements(c.statements, depth+1)]
             }
             else if (statement instanceof EveryDo) {
-                (statement as EveryDo).annotations.add(createAnnotation(depth))
+//                (statement as EveryDo).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Suspend) {
-                (statement as Suspend).annotations.add(createAnnotation(depth))
+//                (statement as Suspend).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Trap) {
-                (statement as Trap).annotations.add(createAnnotation(depth))
+//                (statement as Trap).annotations.add(createAnnotation(depth))
                 if ((statement as Trap).trapHandler !== null) {
                     (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, depth+1)]
                 }
@@ -149,7 +149,7 @@ class InitializationTransformation extends InplaceProcessor<EsterelProgram> {
                 if ((statement as Abort).cases !== null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements, depth+1)]
                 }
-                (statement as Abort).annotations.add(createAnnotation(depth))
+//                (statement as Abort).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList !== null) {
@@ -158,7 +158,7 @@ class InitializationTransformation extends InplaceProcessor<EsterelProgram> {
             }
             else if (statement instanceof Do) {
                 transformStatements((statement as Do).watchingStatements, depth+1)
-                (statement as Do).annotations.add(createAnnotation(depth))
+//                (statement as Do).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Conditional) {
                 if ((statement as Conditional).getElse() !== null) {
