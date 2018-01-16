@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse Help System Authoring Laguange & Generator
+Bundle-Vendor: Kiel University, License EPL
+Bundle-Version: 0.1.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.ehelp; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common,
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common,
+ org.eclipse.ui,
+ org.eclipse.xtext.ui,
+ org.eclipse.ui.browser
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.ehelp,
+ de.cau.cs.kieler.ehelp.eHelp,
+ de.cau.cs.kieler.ehelp.eHelp.impl,
+ de.cau.cs.kieler.ehelp.eHelp.util,
+ de.cau.cs.kieler.ehelp.formatting2,
+ de.cau.cs.kieler.ehelp.generator,
+ de.cau.cs.kieler.ehelp.parser.antlr,
+ de.cau.cs.kieler.ehelp.parser.antlr.internal,
+ de.cau.cs.kieler.ehelp.scoping,
+ de.cau.cs.kieler.ehelp.serializer,
+ de.cau.cs.kieler.ehelp.services,
+ de.cau.cs.kieler.ehelp.util,
+ de.cau.cs.kieler.ehelp.validation
+Import-Package: org.apache.log4j

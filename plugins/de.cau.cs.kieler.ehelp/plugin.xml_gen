@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package 
+			uri = "http://www.cau.de/cs/kieler/ehelp/EHelp"
+			class = "de.cau.cs.kieler.ehelp.eHelp.EHelpPackage"
+			genModel = "model/generated/EHelp.genmodel" />
+	</extension>
+</plugin>

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse Help System Authoring Image Pasting
+Bundle-SymbolicName: de.cau.cs.kieler.ehelp.imagepaste;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.core.expressions,
+ org.eclipse.ui,
+ de.cau.cs.kieler.ehelp.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ de.cau.cs.kieler.ehelp,
+ org.eclipse.xtext.ui
+Bundle-Vendor: Kiel University, License EPL

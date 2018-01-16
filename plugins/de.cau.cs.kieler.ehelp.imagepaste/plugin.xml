@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.cau.cs.kieler.ehelp.commands.category"
+            name="Paste Image Category">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.ehelp.commands.category"
+            id="de.cau.cs.kieler.ehelp.commands.sampleCommand"
+            name="Past Image Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.ehelp.imagepaste.ImagePaste"
+            commandId="de.cau.cs.kieler.ehelp.commands.sampleCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.ehelp.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+V">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="de.cau.cs.kieler.ehelp.menus.sampleMenu"
+               label="Image PasteMenu"
+               mnemonic="M">
+            <command
+                  commandId="de.cau.cs.kieler.ehelp.commands.sampleCommand"
+                  id="de.cau.cs.kieler.ehelp.menus.sampleCommand"
+                  mnemonic="S">
+               <visibleWhen>
+      		<with variable="activePartId">
+         		<equals value="de.cau.cs.kieler.ehelp.CCCToolHelp"/>
+      		</with>
+ 			 </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.ehelp.toolbars.sampleToolbar">
+            <command
+                  commandId="de.cau.cs.kieler.ehelp.commands.sampleCommand"
+                  icon="icons/paste_img.gif"
+                  id="de.cau.cs.kieler.ehelp.toolbars.sampleCommand"
+                  tooltip="Paste Image">
+               <visibleWhen>
+      		<with variable="activePartId">
+         		<equals value="de.cau.cs.kieler.ehelp.EHelp"/>
+      		</with>
+ 			 </visibleWhen>
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+ 
+</plugin>

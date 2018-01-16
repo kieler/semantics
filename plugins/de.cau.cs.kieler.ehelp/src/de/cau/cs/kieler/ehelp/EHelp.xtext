@@ -1,0 +1,47 @@
+grammar de.cau.cs.kieler.ehelp.EHelp with org.eclipse.xtext.common.Terminals
+
+generate eHelp "http://www.cau.de/cs/kieler/ehelp/EHelp"
+
+EHelpModel:
+	chapters+=Chapter*;
+
+Chapter:
+	'chapter' (name=ID)? title=STRING '{' (content+=Content*)? (subchapters+=Chapter*) '}';
+
+List:
+	'list' '{' items+=(ListItem)* '}';
+
+Enum:
+	'enum' '{' items+=(ListItem)* '}';
+
+ListItem:
+	'-' content+=Content*;
+
+Content:
+	(Keyword | Context | Text | Images | Link | List | Enum | Table);
+	
+Table:
+	'table' (width=INT)? ('spacing' '=' spacing=INT)?  (stretch?='stretch')? '{'  rows+=TableRow* '}';
+
+TableRow:
+	'-' cells+=TableCell ('|' cells+=TableCell)*;
+
+TableCell:
+	(center?='center')? (left?='left')? (right?='right')? (top?='top')? (middle?='middle')? (bottom?='bottom')? content+=Content*;
+
+
+Text:
+	text=STRING;
+
+Keyword:
+	'?' text=STRING '?';
+
+Context:
+	'!' id=ID label=STRING '!';
+
+Images:
+	'[' images+=STRING+ ']';
+
+Link:
+	'[' link=[Chapter] (caption=STRING)? ']';
+	
