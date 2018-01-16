@@ -33,6 +33,10 @@
     <module>de.cau.cs.kieler.cview.c</module>
     <module>de.cau.cs.kieler.cview.model</module>
     <module>de.cau.cs.kieler.cview.model.ui</module>
+    <module>de.cau.cs.kieler.ehelp</module>
+    <module>de.cau.cs.kieler.ehelp.ide</module>
+    <module>de.cau.cs.kieler.ehelp.imagepaste</module>
+    <module>de.cau.cs.kieler.ehelp.ui</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>
