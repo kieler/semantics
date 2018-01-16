@@ -13,8 +13,8 @@ import org.eclipse.xtext.util.Modules2
  */
 class EHelpIdeSetup extends EHelpStandaloneSetup {
 
-	override createInjector() {
-		Guice.createInjector(Modules2.mixin(new EHelpRuntimeModule, new EHelpIdeModule))
-	}
+//	override createInjector() {
+//		Guice.createInjector(Modules2.mixin(new EHelpRuntimeModule, new EHelpIdeModule))
+//	}
 	
 }
