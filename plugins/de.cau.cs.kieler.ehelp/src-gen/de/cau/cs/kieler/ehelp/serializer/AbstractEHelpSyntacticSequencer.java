@@ -50,7 +50,7 @@ public abstract class AbstractEHelpSyntacticSequencer extends AbstractSyntacticS
 
 	/**
 	 * Ambiguous syntax:
-	 *     ('enum' '{' '}') | ('list' '{' '}') | ('table' '{' '}')
+	 *     ('list' '{' '}') | ('table' '{' '}') | ('enum' '{' '}')
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
