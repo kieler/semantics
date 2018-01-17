@@ -237,6 +237,10 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             }
         }
         
+        for (c : node.allNext.toList) {
+            c.target = null
+            c.remove
+        }
         node.remove
         registerAllocation.registerRange.remove(registerName)
     }
