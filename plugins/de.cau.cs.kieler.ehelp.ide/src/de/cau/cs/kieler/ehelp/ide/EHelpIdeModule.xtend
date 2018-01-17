@@ -4,8 +4,8 @@
 package de.cau.cs.kieler.ehelp.ide
 
 
-/**
- * Use this class to register ide components.
- */
-class EHelpIdeModule extends AbstractEHelpIdeModule {
-}
+///**
+// * Use this class to register ide components.
+// */
+//class EHelpIdeModule extends AbstractEHelpIdeModule {
+//}
