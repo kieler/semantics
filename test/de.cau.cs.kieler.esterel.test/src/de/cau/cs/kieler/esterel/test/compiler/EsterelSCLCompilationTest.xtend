@@ -45,6 +45,10 @@ import static org.junit.Assume.*
 
 import static extension java.lang.Boolean.parseBoolean
 import static extension java.lang.String.format
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.TypeIdentifier
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * Tests if all sensible intermediate results of the Esterel to SCL compilation fullfill basic sanity properties.
@@ -83,10 +87,12 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=30000)
     @StopOnFailure
     def void testValidation(EsterelProgram est, TestModelData modelData) {
-        assumeFalse(true); // Do nothing !!
+//        assumeFalse(true); // Do nothing !!
+
+        assumeTrue(est.hasNoEsterelType) // skip if program includes esterel type
         
         // Check all intermediate results
         val context = est.compile
@@ -113,7 +119,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
             val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + if (SCEstTransformation.SCL_ID.equals(iResult.id)) ".scl" else ".scest")
             val resourceSet = (if (SCEstTransformation.SCL_ID.equals(iResult.id)) sclInjector else scestInjector).getInstance(XtextResourceSet)
             val resource = resourceSet.createResource(uri) as XtextResource
-            resource.getContents().add(iResult.model as EsterelProgram)
+            resource.getContents().add(iResult.model as EObject)
             
             // Check if validator marks no errors
             val validator = esterelInjector.getInstance(IResourceValidator)
@@ -125,6 +131,8 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     @Test(timeout=10000)
     def void testSerializability(EsterelProgram est, TestModelData modelData) {
         assumeFalse(true); // Do nothing !!
+        
+        assumeTrue(est.hasNoEsterelType) // skip if program includes esterel type
         
         // Check all intermediate results
         val result = est.compile
@@ -176,6 +184,25 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8")
         saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER)
         return saveOptions
+    }
+    
+    /**
+     * An EsterelProgram with a signal/sensor/variable with an Esterel type can not be transformed
+     */
+    private def boolean hasNoEsterelType(EsterelProgram est) {
+        val signals = est.eAllContents.filter(Signal).toList
+        for (s : signals) {
+            if ( s.idType !== null || (s.type != ValueType.PURE && (s.combineOperator === null || s.combineOperator == CombineOperator.NONE))) {
+                return false
+            }
+        }
+        val types = est.eAllContents.filter(TypeIdentifier).toList
+        for (t : types) {
+            if ( t.idType !== null || t.esterelType !== null) {
+                return false
+            }
+        }
+        return true
     }
       
 }
