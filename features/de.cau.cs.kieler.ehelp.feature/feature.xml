@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.ehelp.feature" label="KIELER EHelp" version="0.1.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.ehelp">
+<feature
+      id="de.cau.cs.kieler.ehelp.feature"
+      label="KIELER EHelp"
+      version="0.1.0.qualifier"
+      provider-name="Kiel University"
+      plugin="de.cau.cs.kieler.ehelp">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER EHelp feature contains the KIELER Eclipse Help Authoring System which can be highly and easily customized. It comes with the Xtext editor (*.ehlp) and and automatic screenshot import plugin.
@@ -210,7 +215,7 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/"/>
+      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
    </url>
 
    <requires>
@@ -218,14 +223,34 @@ litigation.
       <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
-   </requires> 
- 
-   <plugin id="de.cau.cs.kieler.ehelp" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   </requires>
 
-   <plugin id="de.cau.cs.kieler.ehelp.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin
+         id="de.cau.cs.kieler.ehelp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <plugin id="de.cau.cs.kieler.ehelp.imagepaste" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin
+         id="de.cau.cs.kieler.ehelp.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <plugin id="de.cau.cs.kieler.ehelp.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin
+         id="de.cau.cs.kieler.ehelp.imagepaste"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.ehelp.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
