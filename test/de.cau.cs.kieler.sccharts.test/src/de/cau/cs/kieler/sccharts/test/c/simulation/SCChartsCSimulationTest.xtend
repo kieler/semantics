@@ -16,7 +16,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.simulation.backends.CSimulationBackend
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import java.util.List
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -30,9 +29,11 @@ import org.junit.runner.RunWith
 @RunWith(ModelsRepositoryTestRunner)
 class SCChartsCSimulationTest extends SimulationTestBase {
     
-    protected val cSimulationBackend = new CSimulationBackend() {
-        override getBuildConfigOrigin() {
-            return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
+    override createSimulationBackend() {
+        return new CSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
+            }
         }
     }
     
@@ -55,6 +56,9 @@ class SCChartsCSimulationTest extends SimulationTestBase {
     
     @Test
     def void testSimulationNetlistCWithTTS(SCCharts scc, TestModelData modelData) {
+        if(modelData.isKnownToFail("simulation-fails-netlist-c-with-tts")) {
+            return
+        }
         startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
                               "de.cau.cs.kieler.sccharts.netlist.simple"], scc, modelData)
     }
@@ -64,12 +68,5 @@ class SCChartsCSimulationTest extends SimulationTestBase {
 //    def void testSimulationPrioC(SCCharts scc, TestModelData modelData) {
 //        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.simple"], scc, modelData)
 //    }
-    
-    def void startSimulationTest(List<String> compileChain, SCCharts scc, TestModelData modelData) {
-        cSimulationBackend.buildConfig.setModelCompilerAttributeToStringList("compileChain", compileChain)
-        val context = createSimulationContext
-        context.simulationBackend = cSimulationBackend
-        compileModelAndStartSimulationTest(context, scc, modelData)
-    }
 }
 				

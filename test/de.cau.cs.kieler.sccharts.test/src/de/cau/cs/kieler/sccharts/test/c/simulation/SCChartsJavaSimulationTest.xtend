@@ -30,9 +30,11 @@ import org.junit.runner.RunWith
 @RunWith(ModelsRepositoryTestRunner)
 class SCChartsJavaSimulationTest extends SimulationTestBase {
     
-    protected val javaSimulationBackend = new JavaSimulationBackend() {
-        override getBuildConfigOrigin() {
-            return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-java.kibuild"
+    override protected createSimulationBackend() {
+        return new JavaSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-java.kibuild"
+            }    
         }
     }
     
@@ -50,30 +52,29 @@ class SCChartsJavaSimulationTest extends SimulationTestBase {
     
     @Test
     def void testSimulationNetlistJava(SCCharts scc, TestModelData modelData) {
+        if(modelData.isKnownToFail("simulation-fails-netlist-java")) {
+            return
+        }
         startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
     }
     
-    @Test
-    def void testSimulationNetlistJavaWithTTS(SCCharts scc, TestModelData modelData) {
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
-                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
-    }
+//    @Test
+//    def void testSimulationNetlistJavaWithTTS(SCCharts scc, TestModelData modelData) {
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
+//                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
+//    }
     
     @Test
     def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
+        if(modelData.isKnownToFail("simulation-fails-prio-java")) {
+            return
+        }
         startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
     }
     
-    @Test
-    def void testSimulationPrioJavaWithTTS(SCCharts scc, TestModelData modelData) {
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
-                              "de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
-    }
-    
-    def void startSimulationTest(List<String> compileChain, SCCharts scc, TestModelData modelData) {
-        javaSimulationBackend.buildConfig.setModelCompilerAttributeToStringList("compileChain", compileChain)
-        val context = createSimulationContext
-        context.simulationBackend = javaSimulationBackend
-        compileModelAndStartSimulationTest(context, scc, modelData)
-    }
+//    @Test
+//    def void testSimulationPrioJavaWithTTS(SCCharts scc, TestModelData modelData) {
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
+//                              "de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
+//    }
 }

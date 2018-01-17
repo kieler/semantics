@@ -31,9 +31,14 @@ import de.cau.cs.kieler.simulation.backends.CSimulationBackend
 @RunWith(ModelsRepositoryTestRunner)
 class SimulationMustFailTest extends SimulationTestBase {
     
-    /**
-     * {@inheritDoc}
-     */
+    override protected createSimulationBackend() {
+        return new CSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
+            }        
+        }
+    }
+    
     override filter(TestModelData modelData) {
         return !modelData.tracePaths.empty
         && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
@@ -45,12 +50,6 @@ class SimulationMustFailTest extends SimulationTestBase {
     @Test
     def void testSimulation(SCCharts scc, TestModelData modelData) {
         val context = createSimulationContext
-        context.simulationBackend = new CSimulationBackend() {
-            override getBuildConfigOrigin() {
-                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
-            }        
-        }
-        
         var failed = false
         try {
             compileModelAndStartSimulationTest(context, scc, modelData)

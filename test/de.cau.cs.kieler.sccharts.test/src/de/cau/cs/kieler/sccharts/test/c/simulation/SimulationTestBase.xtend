@@ -17,6 +17,7 @@ import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
@@ -26,6 +27,7 @@ import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import java.util.List
 import org.eclipse.core.internal.resources.ResourceException
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Platform
@@ -53,6 +55,9 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
     /** stop flag for simulation */
     protected var boolean traceFinished = false
     
+    /** The simulation backend to be used */
+    protected var SimulationBackend simulationBackend = createSimulationBackend
+    
     //-----------------------------------------------------------------------------------------------------------------
     
     /**
@@ -60,8 +65,13 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      */
     new() {
         super(resourceSetInjector)
-        initialize()
+        initialize
     }
+    
+    /**
+     * Create the simulation backend (e.g. C or Java) to be used.
+     */
+    abstract protected def SimulationBackend createSimulationBackend()
     
     /**
      * Returns a simulation context that is optimized for semantic simulation tests.
@@ -69,6 +79,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
     protected def SimulationContext createSimulationContext() {
         val context = new SimulationContext
         context.overwriteCompileChain = false
+        context.simulationBackend = simulationBackend
         return context
     }
     
@@ -83,6 +94,30 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
         RegisterVariablesFinder.enabled = false
         // Don't delete the temporary simulation project, because this would require its re-initialization
         SimulationContext.setDeleteTemporaryProject(false)
+    }
+    
+    /**
+     * Starts a simulation test of the model and the model data.
+     * If the compile chain is not null, the compile chain of the build config will be overwritten to use this instead.
+     */
+    protected def void startSimulationTest(List<String> compileChain, SCCharts scc, TestModelData modelData) {
+        if(compileChain !== null) {
+            simulationBackend.buildConfig.setModelCompilerAttributeToStringList("compileChain", compileChain)    
+        }
+        val context = createSimulationContext
+        compileModelAndStartSimulationTest(context, scc, modelData)
+    }
+    
+    /**
+     * Checks if the model data has the given attribute
+     * and, if so, prints a message that the test is known to fail.
+     */
+    protected def boolean isKnownToFail(TestModelData modelData, String knownToFailProperty) {
+        if(modelData.modelProperties.contains(knownToFailProperty)) {
+            System.err.println("Warning: Known-to-fail test " + modelData.modelPath + " (property '" + knownToFailProperty + "'):")
+            return true
+        }
+        return false
     }
     
     /**
@@ -152,7 +187,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
                 project?.delete(true, true, null)
             }
         }
-    } 
+    }
     
     /**
      * Implementation of SimulationListener.
