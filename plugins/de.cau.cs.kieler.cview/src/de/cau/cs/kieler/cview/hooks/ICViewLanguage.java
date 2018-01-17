@@ -107,7 +107,8 @@ public interface ICViewLanguage {
      * @return
      */
     boolean diagramIsVisible(Component component);
-
+    
+    
     /**
      * Used to create any file subcomponents, e.g., functions, declarations, types, ... If
      * parseContent is false, then the content shall not be parsed to increase speed.

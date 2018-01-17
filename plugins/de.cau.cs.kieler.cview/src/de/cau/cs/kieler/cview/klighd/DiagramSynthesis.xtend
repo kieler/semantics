@@ -86,7 +86,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final int MAX_EXPANDED_VALUE = 7;
     public static final int MIN_EXPANDED_VALUE = 1;
 
-    public static final int COMBINED_LINE_WIDTH_MAX = 20
+    public static final int COMBINED_LINE_WIDTH_MAX = 10
     public static final int COMBINED_LINE_WIDTH_GAIN = 1
     public static final int COMBINED_LINE_WIDTH_MIN = 1
 
@@ -634,6 +634,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (connection != null && connection.type != null) {
             connectionTypeHash = connection.type.hashCode
         }
+//        dstNode.hashCode + "." + connectionTypeHash
         srcNode.hashCode + "." + dstNode.hashCode + "." + connectionTypeHash
     }
 
