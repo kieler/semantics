@@ -180,16 +180,30 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param problems The build problems
      */
     public static def void showBuildProblems(BuildProblem... problems) {
+        val maxLine = <IResource, Integer>newHashMap
         for(problem : problems) {
-            if(problem.res != null) {
+            val res = problem.res
+            if(res !== null) {
                 var IMarker marker
                 if(problem.isWarning) {
-                    marker = createWarningMarker(problem.res, problem.message)
+                    marker = createWarningMarker(res, problem.message)
                 } else {
-                    marker = createErrorMarker(problem.res, problem.message)
+                    marker = createErrorMarker(res, problem.message)
                 }
-                if(marker != null && problem.line > 0) {
-                    marker.setAttribute(IMarker.LINE_NUMBER, problem.line)
+                if(marker !== null) {
+                    var Integer line
+                    if(problem.line > 0) {
+                        line = problem.line
+                    } else {
+                        line = maxLine.get(res)
+                        if(line === null) {
+                            line = 1
+                        } else {
+                            line = line + 1 
+                        }
+                        maxLine.put(res, line)
+                    }
+                    marker.setAttribute(IMarker.LINE_NUMBER, line)
                 }
             }
         }
@@ -229,6 +243,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             }
         } catch(Exception e) {
             // Show any exception as error marker on the project or build configuration
+            e.printStackTrace
             val res = if(buildConfigFile !== null)
                           buildConfigFile
                       else

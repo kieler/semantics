@@ -12,10 +12,12 @@
  */
 package de.cau.cs.kieler.prom.ui.console
 
-import com.google.common.base.Strings
-import com.google.common.io.ByteStreams
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.IConsole
-import java.io.InputStream
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import java.util.Map
+import org.eclipse.swt.graphics.Color
+import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
@@ -40,49 +42,29 @@ class PromUIConsole implements IConsole {
     /**
      * The stream of the console to write to
      */
-    private static MessageConsoleStream consoleStream;
+    private static Map<ConsoleStyle, MessageConsoleStream> consoleStreams = newHashMap;
     
-    /**
-     * {@inheritDoc}
-     */
-    override print(String message){
-        // If there is nothing to write, we are done immediately.
-        if(message.isNullOrEmpty())
-            return;
-        
-        // Ensure the console exists.
-        initialize()
-        
-        // Print message
-        consoleStream.println(message)
+    new() {
+        super()
+        console = findOrCreateConsole(CONSOLE_NAME)
     }
     
     /**
      * {@inheritDoc}
      */
-    override print(Exception e) {
-        // Write exception to console of running Eclipse
-        var text = ""
-        text += Strings.nullToEmpty(e.toString())
-        if(e.cause !== null) {
-            if(text.length > 0 )
-                text += ":"
-            text += Strings.nullToEmpty(e.cause.localizedMessage)    
-        }
-        print(text)
+    override print(String message, ConsoleStyle style){
+        if(message.isNullOrEmpty())
+            return;
         
-        // Bring to front because an exception might require user action
-        bringToFront()
-        
-        // Print stack trace
-        e.printStackTrace()
+        // Print message using a stream that fits the style
+        val stream = getOrCreateConsoleStream(style)
+        stream.println(message)
     }
     
     /**
      * {@inheritDoc}
      */
     override bringToFront() {
-        initialize()
         val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
         consoleManager.showConsoleView(console)
     }
@@ -91,27 +73,7 @@ class PromUIConsole implements IConsole {
      * {@inheritDoc}
      */
     override clear() {
-        initialize()
         console.clearConsole()
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override copy(InputStream from) {
-        initialize()
-        ByteStreams.copy(from, consoleStream)
-        consoleStream.flush
-    }
-    
-    /**
-     * Creates the console if not yet done
-     */
-    private def void initialize() {
-        if (console == null || consoleStream == null) {
-            console = findOrCreateConsole(CONSOLE_NAME)
-            consoleStream = console.newMessageStream()
-        }
     }
 
     /**
@@ -132,5 +94,22 @@ class PromUIConsole implements IConsole {
         val myConsole = new MessageConsole(name, null);
         consoleManager.addConsoles(#[myConsole]);
         return myConsole;
+    }
+    
+    /**
+     * Returns a stream in this console for the given style.
+     */
+    private def MessageConsoleStream getOrCreateConsoleStream(ConsoleStyle style) {
+        val oldStream = consoleStreams.get(style)
+        if(oldStream !== null) {
+            return oldStream
+        } else {
+            val newStream = console.newMessageStream()
+            consoleStreams.put(style, newStream)    
+            PromUIPlugin.asyncExecInUI[
+                newStream.color = new Color(Display.current, style.r, style.g, style.b)
+            ]
+            return newStream
+        }
     }
 }

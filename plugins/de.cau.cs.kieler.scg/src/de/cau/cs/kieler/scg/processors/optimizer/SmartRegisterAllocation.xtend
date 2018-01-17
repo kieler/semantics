@@ -180,8 +180,8 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         if (expression instanceof ValuedObjectReference) {
             if (replacements.keySet.contains(expression.valuedObject.name)) { 
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
+                environment.infos.add("SRA: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
                 expression.valuedObject = VOR.valuedObject
-                environment.infos.add("SRA", node, true)
             } else {
                 // Should only happen at GO guard. Do nothing.
             }

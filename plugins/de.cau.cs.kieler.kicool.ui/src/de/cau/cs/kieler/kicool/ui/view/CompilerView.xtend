@@ -40,6 +40,8 @@ import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
 
 /**
  * The IMB Compiler View
@@ -229,6 +231,12 @@ class CompilerView extends DiagramViewPart {
         // Run in the actual thread.
         DiagramViewManager.initializeView(this, model, null, properties);
     }    
+    
+    def void doLayout(boolean zoomToFit) {
+        val layoutConfig = new LightDiagramLayoutConfig(viewContext)
+        layoutConfig.zoomStyle(if (zoomToFit) ZoomStyle.ZOOM_TO_FIT else ZoomStyle.NONE)
+        layoutConfig.performLayout           
+    }
     
 
     private def void loadCheckedValue(IMemento memento, AbstractAction action) {

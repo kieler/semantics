@@ -13,6 +13,9 @@
 package de.cau.cs.kieler.simulation
 
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IProgressMonitor
@@ -21,8 +24,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
-import de.cau.cs.kieler.prom.ModelImporter
-import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 
 /**
  * @author aas
@@ -51,6 +52,15 @@ class SimulationUtil {
                 }
             ])    
         }
+    }
+    
+    /**
+     * @see startSimulation(List<IFile> files, IProgressMonitor monitor)
+     */
+    public static def void startSimulation(List<IFile> files) {
+        PromPlugin.execInJob("Starting simulation", [monitor |
+            startSimulation(files, monitor)
+        ])
     }
     
     /**
@@ -88,6 +98,15 @@ class SimulationUtil {
     }
     
     /**
+     * @see startSimulation(EObject model, SubMonitor monitor)
+     */
+    public static def void startSimulation(EObject model) {
+        PromPlugin.execInJob("Starting simulation", [monitor |
+            startSimulation(model, monitor)
+        ])
+    }
+    
+    /**
      * Starts a simulation by compiling an EObject using a suited compile chain
      * and afterwards starting the executable result.
      */
@@ -104,6 +123,60 @@ class SimulationUtil {
             // Start the simulation
             context.start
         ]
+    }
+    
+    /**
+     * Add files to change a running simulation.
+     * Can be used to add a trace to a running simulation.
+     * 
+     * @param files The files to be added to the simulation
+     */
+    public static def void appendToSimulation(List<IFile> files) {
+        if(files.isNullOrEmpty) {
+            return
+        }
+        if(files.size > 1) {
+            throw new Exception("Only a single trace can be added to a running simulation.")
+        }
+        val file = files.get(0)
+        
+        if(isTrace(file)) {
+            appendTraceToSimulation(file)
+        } else {
+            throw new Exception("Only a trace can be added to a running simulation.")    
+        }
+    }
+    
+    /**
+     * Adds a trace file to a running simulation.
+     * Reading the trace is done first, then comes the original simulation,
+     * and afterwards its results are checked against the trace.
+     * 
+     * @param traceFile The trace file
+     */
+    private static def void appendTraceToSimulation(IFile traceFile) {
+        val sim = SimulationManager.instance
+        if(sim !== null && !sim.isStopped) {
+            var TraceHandler traceHandler
+            if(traceFile !== null && traceFile.exists) {
+                // Remove old trace handlers from simulation
+                for(action : sim.actions.clone) {
+                    if(action.handler instanceof TraceHandler) {
+                        sim.actions.remove(action)
+                    }
+                }
+                
+                // Add new trace handler
+                traceHandler = new TraceHandler()
+                traceHandler.tracePath.value = traceFile.fullPath.toOSString
+                traceHandler.initialize
+                sim.prependAction("write", traceHandler)
+                sim.addAction("check", traceHandler)
+                sim.addAction("loadNextTick", traceHandler)
+                
+                PromConsole.print("Added trace to running simulation")
+            }
+        }
     }
     
     /**
