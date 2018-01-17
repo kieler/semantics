@@ -36,6 +36,8 @@ import org.junit.runner.RunWith
 
 import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
 import static org.junit.Assert.*
+import java.nio.file.Files
+import java.nio.file.FileSystems
 
 /**
  * @author aas
@@ -113,11 +115,27 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      * and, if so, prints a message that the test is known to fail.
      */
     protected def boolean isKnownToFail(TestModelData modelData, String knownToFailProperty) {
-        if(modelData.modelProperties.contains(knownToFailProperty)) {
-            System.err.println("Warning: Known-to-fail test " + modelData.modelPath + " (property '" + knownToFailProperty + "'):")
-            return true
+        // Check if all models in this directory are known to fail
+        var knownToFail = modelData.modelProperties.contains(knownToFailProperty)
+        if(!knownToFail) {
+            // Check if there are some specific models that are known to fail
+            val failingModelsCSV = modelData.additionalProperties.get(knownToFailProperty)
+            if(!failingModelsCSV.isNullOrEmpty) {
+                val failingModels = failingModelsCSV.split(",")
+                if(!failingModels.isNullOrEmpty) {
+                    val fileBasename = com.google.common.io.Files.getNameWithoutExtension(modelData.modelPath.fileName.toString)
+                    for(m : failingModels) {
+                        if(m == fileBasename) {
+                            knownToFail = true
+                        }
+                    }
+                }
+            }
         }
-        return false
+        if(knownToFail) {
+            System.err.println("Warning: Known-to-fail test '" + modelData.modelPath + "' (property '" + knownToFailProperty + "'):")
+        }
+        return knownToFail
     }
     
     /**

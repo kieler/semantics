@@ -63,14 +63,14 @@ class SCChartsJavaSimulationTest extends SimulationTestBase {
 //        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
 //                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
 //    }
-    
-    @Test
-    def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
-        if(modelData.isKnownToFail("simulation-fails-prio-java")) {
-            return
-        }
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
-    }
+
+//    @Test
+//    def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
+//        if(modelData.isKnownToFail("simulation-fails-prio-java")) {
+//            return
+//        }
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
+//    }
     
 //    @Test
 //    def void testSimulationPrioJavaWithTTS(SCCharts scc, TestModelData modelData) {
