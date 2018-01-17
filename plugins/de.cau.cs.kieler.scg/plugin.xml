@@ -111,6 +111,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.CleanupValuedObjects">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.ConditionalMerger">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
