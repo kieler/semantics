@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.sccharts.feature" label="KIELER SCCharts" version="0.12.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.sccharts">
+<feature id="de.cau.cs.kieler.ehelp.feature" label="KIELER EHelp" version="0.12.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.ehelp">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
-      KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is provided.
+      KIELER EHelp feature contains the KIELER Eclipse Help Authoring System which can be highly and easily customized. It comes with the Xtext editor (*.ehlp) and and automatic screenshot import plugin.
    </description>
 
    <copyright>
-      Copyright 2013 by Real-Time and Embedded Systems Group, Department
+      Copyright 2017 by Real-Time and Embedded Systems Group, Department
 of Computer Science, Kiel University
    </copyright>
 
@@ -218,8 +218,8 @@ litigation.
       <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
-   </requires>
-
+   </requires> 
+ 
    <plugin id="de.cau.cs.kieler.ehelp" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.ehelp.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
