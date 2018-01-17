@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.ehelp.feature" label="KIELER EHelp" version="0.12.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.ehelp">
+<feature id="de.cau.cs.kieler.ehelp.feature" label="KIELER EHelp" version="0.1.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.ehelp">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER EHelp feature contains the KIELER Eclipse Help Authoring System which can be highly and easily customized. It comes with the Xtext editor (*.ehlp) and and automatic screenshot import plugin.
