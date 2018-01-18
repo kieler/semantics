@@ -68,6 +68,18 @@ import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.kicool.environments.EnvironmentPair
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
+import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorStyles
+import com.google.inject.Guice
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.LineCap
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
+import de.cau.cs.kieler.klighd.krendering.KStyle
+import de.cau.cs.kieler.klighd.krendering.LineJoin
 
 /**
  * The data manager handles all synthesis updates.
@@ -78,7 +90,11 @@ import de.cau.cs.kieler.kicool.environments.EnvironmentPair
  */
 class ProcessorDataManager {
     
+    private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
     private static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions
+    private static KEdgeExtensions kEdgeExtensions = new KEdgeExtensions
+    private static ProcessorSynthesis processorSynthesis = new ProcessorSynthesis
+    private static ProcessorStyles processorStyles = new ProcessorStyles
     
     static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
@@ -200,6 +216,40 @@ class ProcessorDataManager {
             NODE_PROGRESS.get(i).getContainer(nodeIdMap)?.setFBAColor(PROGRESSBAR, 0)
         }
     } 
+    
+    static def void addNewProcessor(CompilationChanged notification, KNode node, CompilerView view) {
+        val compilationContext = notification.compilationContext
+        val newNode = processorSynthesis.transform(notification.processorEntry)
+        
+        node.children += newNode
+        
+        val parent = notification.processorEntry.eContainer
+        if (parent instanceof ProcessorGroup) {
+            val pos = parent.processors.indexOf(notification.processorEntry)
+            val predecessorIndex = if (pos > 0) pos - 1 else pos
+            if (predecessorIndex < pos) {
+                val predecessorEntry = parent.processors.get(predecessorIndex)
+                var predecessorNode = node.findNode(predecessorEntry.uniqueProcessorId)
+                if (predecessorNode === null) {
+                    val originalProcessorReference = compilationContext.getOriginalProcessorEntry(predecessorEntry)
+                    if (originalProcessorReference !== null) {
+                        predecessorNode = node.findNode(originalProcessorReference.uniqueProcessorId)
+                    }
+                }
+                val edge = kEdgeExtensions.createEdge 
+                edge.source = predecessorNode
+                edge.target = node.findNode(notification.processorEntry.uniqueProcessorId)
+                
+                renderingFactory.createKPolyline() => [
+                    edge.data += it
+                    kRenderingExtensions.setLineWidth(it, 0.5f)
+                    kRenderingExtensions.setForeground(it, ACTIVE_ENVIRONMENT.color)
+                    internalAddArrowDecorator(it, true)
+                ]
+            }
+        }
+        
+    }
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
         val compilationContext = processorNotification.compilationContext
@@ -573,4 +623,47 @@ class ProcessorDataManager {
             rendering.actions.clear
     }    
     
+    
+    static private def KRendering internalAddArrowDecorator(KPolyline pl, boolean head) {
+        kRenderingExtensions.setLineCap(pl, LineCap::CAP_FLAT)
+        return pl.drawArrow => [
+            it.placementData = renderingFactory.createKDecoratorPlacementData => [
+                it.rotateWithLine = true;
+                it.relative = if (head) 1f else 0f;
+                it.absolute = if (head) -2f else 2f;
+                it.width = 6;
+                it.height = 4;
+                it.setXOffset(if (head) -4f else 6f); // chsch: used the regular way here and below, as the alias 
+                it.setYOffset(if (head) -2f else 3f); //  name translation convention changed from Xtext 2.3 to 2.4.
+            ];
+            if (!head) kRenderingExtensions.setRotation(it, 180f)
+        ];
+    }   
+    
+    static private def <T extends KRendering> T addChild(KContainerRendering parent, T child) {
+        return child => [
+            parent.children.add(it);
+        ];
+    }      
+    
+    static private def KPolygon drawArrow(KContainerRendering cr) {
+        return renderingFactory.createKPolygon => [
+            kRenderingExtensions.setLineJoin(
+                kRenderingExtensions.setBackground(cr.addChild(it).withCopyOf(kRenderingExtensions.getLineWidth(cr)).withCopyOf(kRenderingExtensions.getForeground(cr)), 
+                    kRenderingExtensions.getForeground(cr)
+                ),
+                LineJoin.JOIN_ROUND
+            )
+            it.points += kRenderingExtensions.createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::TOP, 0, 0);
+            it.points += kRenderingExtensions.createKPosition(PositionReferenceX::LEFT, 0, 0.66f, PositionReferenceY::TOP, 0, 0.5f);
+            it.points += kRenderingExtensions.createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::BOTTOM, 0, 0);
+            it.points += kRenderingExtensions.createKPosition(PositionReferenceX::RIGHT, 0, 0, PositionReferenceY::BOTTOM, 0, 0.5f);    
+       ]
+    }
+    
+    static private def <T extends KRendering> T withCopyOf(T rendering, KStyle style) {
+        rendering.styles += style.copy;
+        return rendering;
+    }
+
 }

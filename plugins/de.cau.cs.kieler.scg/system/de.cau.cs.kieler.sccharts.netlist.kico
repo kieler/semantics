@@ -8,9 +8,9 @@ de.cau.cs.kieler.sccharts.processors.transformators.prTransitions
 de.cau.cs.kieler.sccharts.processors.transformators.const
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.transformators.signal
-	de.cau.cs.kieler.sccharts.processors.transformators.^pre
 	de.cau.cs.kieler.sccharts.processors.transformators.suspend
 	de.cau.cs.kieler.sccharts.processors.transformators.countDelay
+	de.cau.cs.kieler.sccharts.processors.transformators.^pre
 ] [ label "Scade / Quartz / Esterel V7"
 	de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
 	de.cau.cs.kieler.sccharts.processors.transformators.history
@@ -27,8 +27,8 @@ de.cau.cs.kieler.sccharts.processors.transformators.const
 ]
 de.cau.cs.kieler.sccharts.processors.transformators.userSchedule 
 [ label "Core"
-de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
-de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
+    de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
+    de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
 ]
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
@@ -36,13 +36,14 @@ post process de.cau.cs.kieler.scg.processors.threadAnalyzer
     pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
 	de.cau.cs.kieler.scg.processors.transformators.dependency
 	post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+	pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
 	de.cau.cs.kieler.scg.processors.transformators.basicBlocks
 	post process de.cau.cs.kieler.scg.processors.transformators.expressions
 	de.cau.cs.kieler.scg.processors.transformators.guards
 	de.cau.cs.kieler.scg.processors.transformators.scheduler
 	de.cau.cs.kieler.scg.processors.transformators.sequentializer
 	post process de.cau.cs.kieler.scg.processors.copyPropagation
-    post process de.cau.cs.kieler.scg.processors.copyPropagation
+    post process de.cau.cs.kieler.scg.processors.conditionalMerger
     post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
     post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent  	
 	de.cau.cs.kieler.scg.processors.codegen.c

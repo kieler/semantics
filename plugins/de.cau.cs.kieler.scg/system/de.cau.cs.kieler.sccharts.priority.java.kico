@@ -8,9 +8,9 @@ de.cau.cs.kieler.sccharts.processors.transformators.prTransitions
 de.cau.cs.kieler.sccharts.processors.transformators.const
 [ label "SyncCharts"    
     de.cau.cs.kieler.sccharts.processors.transformators.signal
-    de.cau.cs.kieler.sccharts.processors.transformators.^pre
     de.cau.cs.kieler.sccharts.processors.transformators.suspend
     de.cau.cs.kieler.sccharts.processors.transformators.countDelay
+    de.cau.cs.kieler.sccharts.processors.transformators.^pre
 ] [ label "Scade / Quartz / Esterel V7"
     de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
     de.cau.cs.kieler.sccharts.processors.transformators.history
