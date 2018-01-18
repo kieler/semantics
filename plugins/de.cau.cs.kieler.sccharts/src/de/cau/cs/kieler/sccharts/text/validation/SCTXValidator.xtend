@@ -10,14 +10,22 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
@@ -35,17 +43,12 @@ import de.cau.cs.kieler.sccharts.processors.transformators.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 import org.eclipse.xtext.validation.CheckType
-import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 //import org.eclipse.xtext.validation.Check
 
@@ -69,7 +72,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension KEffectsExtensions
     
     static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
-        
+
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
@@ -108,6 +111,8 @@ class SCTXValidator extends AbstractSCTXValidator {
 
     static val String COUNT_DELAY_OF_0 = "A count delay of 0 is not allowed on a trigger"
 
+    static val String ALPHANUM_SCCHART_NAME = "SCChart names should only contain letters, numbers and underscores to be compatible for example with Java class names."
+
     @Check
     def void checkImportPragma(StringPragma pragma) {
         if (SCTXResource.PRAGMA_IMPORT.equals(pragma.name) && pragma.eResource !== null) {
@@ -126,12 +131,30 @@ class SCTXValidator extends AbstractSCTXValidator {
     }    
 
     /**
+     * Check that the SCChart name only contains alphanumeric and underscore characters.
+     * Otherwise it might not be a valid name for, e.g., a Java class.
+     * 
+     * @param region The region 
+     */
+    @Check
+    public def void checkSCChartName(SCCharts scc) {
+        val pattern = Pattern.compile("[^\\w]+");
+        for(rootState : scc.rootStates) {
+            if(!rootState.name.isNullOrEmpty) {
+                val m = pattern.matcher(rootState.name);
+                if(m.find()) {
+                    warning(ALPHANUM_SCCHART_NAME, rootState, AnnotationsPackage.eINSTANCE.namedObject_Name)
+                }    
+            }
+        }
+    }
+    
+    /**
      * Check that there are no immediate loops between states in a region.
      * 
      * @param region The region 
      */
-    // Normal validation occurs when the xtext build is triggered. 
-    @Check(NORMAL)
+    @Check
     public def void checkNoImmediateLoops(ControlflowRegion region) {
         // Perform depth first search on states,
         // where edges are the immediate transitions to find potentially immediate loops.
@@ -183,7 +206,9 @@ class SCTXValidator extends AbstractSCTXValidator {
         visited.put(state, 1)
         // Find loops in outgoing immediate transitions.
         for(t : state.outgoingTransitions) {
-            if(t.isImplicitlyImmediate) {
+            // Ignore termination transitions because they could have non-immediate inner behaviour.
+            val isTerminationTransition = (t.preemption == PreemptionType.TERMINATION)
+            if(!isTerminationTransition && t.isImplicitlyImmediate) {
                 val target = t.targetState
                 // It is not checked whether or not a superstate has a delay.
                 // A appropriate check should be implemented in the future. 
