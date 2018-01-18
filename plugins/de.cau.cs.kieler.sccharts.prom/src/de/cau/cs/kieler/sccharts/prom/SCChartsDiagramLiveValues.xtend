@@ -103,7 +103,10 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
                 for (valuedObject : declaration.valuedObjects) {
                     val rectangle = diagramViewContext.getTargetElements(declaration).filter(KRectangle).head
                     if (rectangle !== null) {
-                        val text = rectangle.children.filter(KText).filter[ text.contains(valuedObject.name) ].head
+                        val text = rectangle.children.filter(KText).filter[
+                            text.equals(valuedObject.name) 
+                            || text.startsWith(valuedObject.name + " ")  
+                        ].head
                         valuedObjectTextMap.put(valuedObject, text)
                     }
                 }
