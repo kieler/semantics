@@ -31,7 +31,7 @@ de.cau.cs.kieler.scg.processors.transformators.dependency
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
 de.cau.cs.kieler.scg.processors.transformators.basicBlocks
-de.cau.cs.kieler.scg.processors.transformators.expressions
+post process de.cau.cs.kieler.scg.processors.transformators.expressions
 de.cau.cs.kieler.scg.processors.transformators.guards
 de.cau.cs.kieler.scg.processors.transformators.scheduler
 de.cau.cs.kieler.scg.processors.transformators.sequentializer

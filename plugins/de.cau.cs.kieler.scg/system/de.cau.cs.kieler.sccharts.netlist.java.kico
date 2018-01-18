@@ -7,9 +7,9 @@ de.cau.cs.kieler.sccharts.processors.transformators.for
 de.cau.cs.kieler.sccharts.processors.transformators.const
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.transformators.signal
-	de.cau.cs.kieler.sccharts.processors.transformators.^pre
 	de.cau.cs.kieler.sccharts.processors.transformators.suspend
 	de.cau.cs.kieler.sccharts.processors.transformators.countDelay
+	de.cau.cs.kieler.sccharts.processors.transformators.^pre
 ] [ label "Scade / Quartz / Esterel V7"
 	de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
 	de.cau.cs.kieler.sccharts.processors.transformators.history
@@ -35,6 +35,7 @@ post process de.cau.cs.kieler.scg.processors.threadAnalyzer
     pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
 	de.cau.cs.kieler.scg.processors.transformators.dependency
 	post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+	pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
 	de.cau.cs.kieler.scg.processors.transformators.basicBlocks
 	post process de.cau.cs.kieler.scg.processors.transformators.expressions
 	de.cau.cs.kieler.scg.processors.transformators.guards
