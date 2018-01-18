@@ -123,7 +123,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
             if(!failingModelsCSV.isNullOrEmpty) {
                 val failingModels = failingModelsCSV.split(",")
                 if(!failingModels.isNullOrEmpty) {
-                    val fileBasename = com.google.common.io.Files.getNameWithoutExtension(modelData.modelPath.fileName.toString)
+                    val fileBasename = com.google.common.io.Files.getNameWithoutExtension(modelData.modelFileBasename)
                     for(m : failingModels) {
                         if(m == fileBasename) {
                             knownToFail = true
@@ -133,7 +133,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
             }
         }
         if(knownToFail) {
-            System.err.println("Warning: Known-to-fail test '" + modelData.modelPath + "' (property '" + knownToFailProperty + "'):")
+            System.err.println("Warning: Skipping known-to-fail test '" + modelData.modelPath + "' (property '" + knownToFailProperty + "'):")
         }
         return knownToFail
     }

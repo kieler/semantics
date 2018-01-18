@@ -16,7 +16,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.simulation.backends.JavaSimulationBackend
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import java.util.List
 import org.junit.Test
 import org.junit.runner.RunWith
 
