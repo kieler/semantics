@@ -57,25 +57,32 @@ class SCChartsJavaSimulationTest extends SimulationTestBase {
         startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
     }
     
+//    This test seems to be very redundant with netlist-c-tts. The Java compilation is highly unlikely to add anything.
+//    @Test
+//    def void testSimulationNetlistJavaWithTTS(SCCharts scc, TestModelData modelData) {
+//        if(modelData.isKnownToFail("simulation-fails-netlist-java")) {
+//            return
+//        }
+//        if(modelData.isKnownToFail("simulation-fails-netlist-java-with-tts")) {
+//            return
+//        }
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
+//                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
+//    }
+
     @Test
-    def void testSimulationNetlistJavaWithTTS(SCCharts scc, TestModelData modelData) {
+    def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
         if(modelData.isKnownToFail("simulation-fails-netlist-java")) {
             return
         }
-        if(modelData.isKnownToFail("simulation-fails-netlist-java-with-tts")) {
+        if(modelData.isKnownToFail("simulation-fails-prio-java")) {
             return
         }
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
-                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
+        if(modelData.isKnownToFail("simulation-fails-prio-java-unreachable-code")) {
+            return
+        }
+        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
     }
-
-//    @Test
-//    def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
-//        if(modelData.isKnownToFail("simulation-fails-prio-java")) {
-//            return
-//        }
-//        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
-//    }
     
 //    @Test
 //    def void testSimulationPrioJavaWithTTS(SCCharts scc, TestModelData modelData) {

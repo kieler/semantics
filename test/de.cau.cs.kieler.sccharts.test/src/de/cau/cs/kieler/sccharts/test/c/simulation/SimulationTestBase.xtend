@@ -121,7 +121,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
             // Check if there are some specific models that are known to fail
             val failingModelsCSV = modelData.additionalProperties.get(knownToFailProperty)
             if(!failingModelsCSV.isNullOrEmpty) {
-                val failingModels = failingModelsCSV.split(",")
+                val failingModels = failingModelsCSV.replaceAll("\\s*", "").split(",")
                 if(!failingModels.isNullOrEmpty) {
                     val fileBasename = com.google.common.io.Files.getNameWithoutExtension(modelData.modelFileBasename)
                     for(m : failingModels) {
