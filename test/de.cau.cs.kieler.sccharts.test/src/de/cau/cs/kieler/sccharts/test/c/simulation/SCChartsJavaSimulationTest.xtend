@@ -57,11 +57,17 @@ class SCChartsJavaSimulationTest extends SimulationTestBase {
         startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
     }
     
-//    @Test
-//    def void testSimulationNetlistJavaWithTTS(SCCharts scc, TestModelData modelData) {
-//        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
-//                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
-//    }
+    @Test
+    def void testSimulationNetlistJavaWithTTS(SCCharts scc, TestModelData modelData) {
+        if(modelData.isKnownToFail("simulation-fails-netlist-java")) {
+            return
+        }
+        if(modelData.isKnownToFail("simulation-fails-netlist-java-with-tts")) {
+            return
+        }
+        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
+                              "de.cau.cs.kieler.sccharts.netlist.java"], scc, modelData)
+    }
 
 //    @Test
 //    def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
