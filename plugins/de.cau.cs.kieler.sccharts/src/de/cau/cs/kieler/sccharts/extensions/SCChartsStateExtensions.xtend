@@ -56,7 +56,7 @@ class SCChartsStateExtensions {
     }
     
     def boolean isRootState(State state) {
-        state.parentRegion == null && state.eContainer != null && state.eContainer instanceof SCCharts
+        state.parentRegion === null && state.eContainer !== null && state.eContainer instanceof SCCharts
     }    
     
     def boolean isHierarchical(State state) {
@@ -65,6 +65,10 @@ class SCChartsStateExtensions {
     
     def boolean isSimple(State state) {
         !state.isHierarchical && state.actions.size == 0
+    }
+    
+    def boolean isSuperstate(State state) {
+        state.isHierarchical || state.actions.size > 0
     }
     
     def State setInitial(State state) {
@@ -119,7 +123,7 @@ class SCChartsStateExtensions {
     // was retrieveFinalState
     def State getOrCreateSimpleFinalState(ControlflowRegion region, String id) {
         val finalState = region.getSimpleFinalState
-        if (finalState != null) { return finalState }
+        if (finalState !== null) { return finalState }
         region.createState(id).setFinal
     }
 
@@ -132,7 +136,7 @@ class SCChartsStateExtensions {
     }
 
     def boolean isReferencedState(State state) {
-        state.reference != null
+        state.reference !== null
     }  
     
     def State copyState(State state) {
@@ -141,7 +145,7 @@ class SCChartsStateExtensions {
         // Fix valued object references
         state.valuedObjects.toList.forEach [
             val newValuedObject = newState.findValuedObjectByName(it.name)
-            if (newValuedObject != null) {
+            if (newValuedObject !== null) {
                 newState.replaceAllOccurrences(it, newValuedObject)
             }
         ]

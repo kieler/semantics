@@ -185,6 +185,8 @@ class SCTXValidator extends AbstractSCTXValidator {
         for(t : state.outgoingTransitions) {
             if(t.isImplicitlyImmediate) {
                 val target = t.targetState
+                // It is not checked whether or not a superstate has a delay.
+                // A appropriate check should be implemented in the future. 
                 if(findImmediateLoop(target, visited)) {
                     return true
                 }
