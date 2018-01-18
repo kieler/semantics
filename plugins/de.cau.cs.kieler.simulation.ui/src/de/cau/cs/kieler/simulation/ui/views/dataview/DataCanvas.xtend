@@ -170,7 +170,6 @@ class DataCanvas extends Canvas {
             
         if (anyVariable !== null) {
             val history = anyVariable.getHistory(-1, false, true)
-            println(history.map[it.value])
             for (i : 0..history.size) {
                 val ctl = if (i % 5 == 0) COORDINATE_TICKMARK_LENGTH * 2 else COORDINATE_TICKMARK_LENGTH
                 val top = if (baseline != cHeight) COORDINATE_BORDERSPACING + baseline as int - ctl 
