@@ -111,8 +111,6 @@ class SCTXValidator extends AbstractSCTXValidator {
 
     static val String COUNT_DELAY_OF_0 = "A count delay of 0 is not allowed on a trigger"
 
-    static val String ALPHANUM_SCCHART_NAME = "SCChart names should only contain letters, numbers and underscores to be compatible for example with Java class names."
-
     @Check
     def void checkImportPragma(StringPragma pragma) {
         if (SCTXResource.PRAGMA_IMPORT.equals(pragma.name) && pragma.eResource !== null) {
@@ -128,25 +126,6 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             }
         }
-    }    
-
-    /**
-     * Check that the SCChart name only contains alphanumeric and underscore characters.
-     * Otherwise it might not be a valid name for, e.g., a Java class.
-     * 
-     * @param region The region 
-     */
-    @Check
-    public def void checkSCChartName(SCCharts scc) {
-        val pattern = Pattern.compile("[^\\w]+");
-        for(rootState : scc.rootStates) {
-            if(!rootState.name.isNullOrEmpty) {
-                val m = pattern.matcher(rootState.name);
-                if(m.find()) {
-                    warning(ALPHANUM_SCCHART_NAME, rootState, AnnotationsPackage.eINSTANCE.namedObject_Name)
-                }    
-            }
-        }
     }
     
     /**
@@ -154,7 +133,8 @@ class SCTXValidator extends AbstractSCTXValidator {
      * 
      * @param region The region 
      */
-    @Check
+    // NORMAL Check is executed on save/build and request only
+    @Check(NORMAL)
     public def void checkNoImmediateLoops(ControlflowRegion region) {
         // Perform depth first search on states,
         // where edges are the immediate transitions to find potentially immediate loops.
