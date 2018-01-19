@@ -73,7 +73,7 @@ public interface IEHelpCustomization {
 	/**
 	 * Defines whether to generate an toc.xml file containing the fundamental help dictionary. Typically, this is mandatory.
 	 */
-	boolean generatedContentFile();
+	boolean generateContentFile();
 	
 	/**
 	 * Define the name of content file name, typically toc.xml.
@@ -85,7 +85,7 @@ public interface IEHelpCustomization {
 	/**
 	 * Defines whether to generate an context.xml file containing the context sensitive help dictionary. This is optional.
 	 */
-	boolean generatedContextFile();
+	boolean generateContextFile();
 	
 	/**
 	 * Define the name of context file name, typically context.xml.

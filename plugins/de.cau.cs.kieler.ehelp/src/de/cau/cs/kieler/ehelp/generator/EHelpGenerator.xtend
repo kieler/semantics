@@ -65,7 +65,7 @@ class EHelpGenerator extends AbstractGenerator implements IOutputConfigurationPr
 		if (model instanceof EHelpModel) {
 
 			// Generate the toc file
-			if (EHelpConsts.generatedContentFile) {
+			if (EHelpConsts.generateContentFile) {
 				val tocFileName = EHelpConsts.genFolderName + "/" + EHelpConsts.contentFileName
 				fsa.generateFile(tocFileName, model.generateTOC)
 			} else {
@@ -85,7 +85,7 @@ class EHelpGenerator extends AbstractGenerator implements IOutputConfigurationPr
 			}
 			
 			// Optional context creation
-			if (EHelpConsts.generatedContextFile) {
+			if (EHelpConsts.generateContextFile) {
 				val keywordFileName = EHelpConsts.genFolderName + "/" + EHelpConsts.contextFileName
 				fsa.generateFile(keywordFileName, model.generateContextXml)
 			}

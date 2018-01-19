@@ -410,7 +410,8 @@ class HelpFileGenerator {
 			}
 
 			def replaceHTMLSpecialChars(String text) {
-				return text.replace("&", "&amp;").replace("'", "&apos;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
+				return text.replace("&", "&amp;").replace("'", "&apos;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").
+				            replace("\\&amp;", "&").replace("\\&apos;", "'").replace("\\&lt;", "<").replace("\\&gt;", ">").replace("\\&quot;", "\"")
 			}
 
 			def removeSpecialChars(String text) {
