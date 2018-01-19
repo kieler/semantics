@@ -84,7 +84,7 @@ class SCCExtensions {
         }
         
         if(n instanceof Assignment) {
-            neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.target)
         }
         
         if(n instanceof Conditional) {
@@ -99,11 +99,11 @@ class SCCExtensions {
         }
         
         if(n instanceof Join) {
-            neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.target)
         }
         
         if(n instanceof Depth) {
-            neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.target)
         }
         
         if(n instanceof Surface) {
