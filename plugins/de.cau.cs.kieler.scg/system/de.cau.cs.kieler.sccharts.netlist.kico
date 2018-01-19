@@ -24,8 +24,8 @@ de.cau.cs.kieler.sccharts.processors.transformators.const
 	de.cau.cs.kieler.sccharts.processors.transformators.initialization
 	de.cau.cs.kieler.sccharts.processors.transformators.entryAction
 	de.cau.cs.kieler.sccharts.processors.transformators.connector
+    de.cau.cs.kieler.sccharts.processors.transformators.userSchedule 
 ]
-de.cau.cs.kieler.sccharts.processors.transformators.userSchedule 
 [ label "Core"
     de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
     de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
