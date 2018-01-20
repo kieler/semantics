@@ -1,0 +1,14 @@
+module de.cau.cs.kieler.prom.GenerateKiBuild.related
+
+
+Workflow {
+	
+	component =  @de.cau.cs.kieler.prom.GenerateKiBuild auto-inject {}
+	
+	component =  @de.cau.cs.kieler.kivis.GenerateKiVis auto-inject {}
+	
+	component =  @de.cau.cs.kieler.simulation.GenerateKiSim auto-inject {}
+	
+	// Note: KTrace is not really KiBuild related. The grammar extends KExt
+	component =  @de.cau.cs.kieler.simulation.trace.GenerateKTrace auto-inject {}
+}
