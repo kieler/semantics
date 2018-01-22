@@ -295,13 +295,13 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         up = false
                     }
                     else {
-                        val present = parent.eContainer as Present
-                        if (!present.elseStatements.empty) {
-                            obj = present.elseStatements.head
+                        val ifTest = parent.eContainer as IfTest
+                        if (!ifTest.elseStatements.empty) {
+                            obj = ifTest.elseStatements.head
                             up = false
                         }
                         else {
-                            obj = present
+                            obj = ifTest
                             transform = true
                         }
                     }
