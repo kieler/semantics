@@ -62,6 +62,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.Sustain
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
@@ -120,6 +122,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     var valuedObjectReferences = new LinkedList<ValuedObjectReference>
     var constantExpressions = new LinkedList<ConstantExpression>
     var emits = new LinkedList<Emit>
+    var sustains = new LinkedList<Sustain>
     var unemits = new LinkedList<UnEmit>
     var sets = new LinkedList<Set>
     var execs = new LinkedList<Exec>
@@ -363,6 +366,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         parentSensors.clear
         valuedObjectReferences.clear
         emits.clear
+        sustains.clear
         unemits.clear
         sets.clear
         execs.clear
@@ -471,6 +475,9 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                 Emit: {
                     emits.add(o)
                 }
+                Sustain: {
+                    sustains.add(o)
+                }
                 UnEmit: {
                     unemits.add(o)
                 }
@@ -515,45 +522,55 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                 else {
                     relatedSignal = checkIfSignalExistsByNameAndType(signal.name, signal.type, signal.idType)
                 }
-                // transform all references
                 if (relatedSignal instanceof Signal) {
-                    for (voRef : valuedObjectReferences) {
-                        if (voRef.valuedObject == signal) {
-                            voRef.valuedObject = relatedSignal
-                        }
+                    if (relatedSignal.name.equals("tick")) {
+                        tickTransformation(signal, relatedSignal)
                     }
-                    for (emit : emits) {
-                        if (emit.signal == signal) {
-                            emit.signal = relatedSignal
+                    else {
+                        // transform all references
+                        for (voRef : valuedObjectReferences) {
+                            if (voRef.valuedObject == signal) {
+                                voRef.valuedObject = relatedSignal
+                            }
                         }
-                    }
-                    for (unemit : unemits) {
-                        if (unemit.signal == signal) {
-                            unemit.signal = relatedSignal
+                        for (emit : emits) {
+                            if (emit.signal == signal) {
+                                emit.signal = relatedSignal
+                            }
                         }
-                    }
-                    for (set : sets) {
-                        if (set.signal == signal) {
-                            set.signal = relatedSignal
+                        for (sustain : sustains) {
+                            if (sustain.signal == signal) {
+                                sustain.signal = relatedSignal
+                            }
                         }
-                    }
-                    for (exec : execs) {
-                        if (exec.returnSignal == signal) {
-                            exec.returnSignal = relatedSignal
+                        for (unemit : unemits) {
+                            if (unemit.signal == signal) {
+                                unemit.signal = relatedSignal
+                            }
                         }
-                    }
-                    for (ri : relationImplications) {
-                        if (ri.first == signal) {
-                            ri.first = relatedSignal
+                        for (set : sets) {
+                            if (set.signal == signal) {
+                                set.signal = relatedSignal
+                            }
                         }
-                        if (ri.second == signal) {
-                            ri.second = relatedSignal
+                        for (exec : execs) {
+                            if (exec.returnSignal == signal) {
+                                exec.returnSignal = relatedSignal
+                            }
                         }
-                    }
-                    for (ri : relationIncompatibilities) {
-                        for (var i=0; i<ri.incomp.length; i++) {
-                            if (ri.incomp.get(i) == signal) {
-                                ri.incomp.set(i, relatedSignal)
+                        for (ri : relationImplications) {
+                            if (ri.first == signal) {
+                                ri.first = relatedSignal
+                            }
+                            if (ri.second == signal) {
+                                ri.second = relatedSignal
+                            }
+                        }
+                        for (ri : relationIncompatibilities) {
+                            for (var i=0; i<ri.incomp.length; i++) {
+                                if (ri.incomp.get(i) == signal) {
+                                    ri.incomp.set(i, relatedSignal)
+                                }
                             }
                         }
                     }
@@ -564,6 +581,63 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
             }
         }
         return moduleRenaming
+    }
+    
+    /**
+     * Special case: old signal will be renamed to "tick"
+     */
+    def tickTransformation(Signal signal, Signal relatedSignal) {
+        val tickRef = relatedSignal.createTickReference
+        if (relatedSignal instanceof Signal) {
+            for (voRef : valuedObjectReferences) {
+                if (voRef.valuedObject == signal) {
+                    voRef.replace(tickRef)
+                }
+            }
+            for (emit : emits) {
+                if (emit.signal == signal) {
+                    emit.remove
+                }
+            }
+            for (sustain : sustains) {
+                if (sustain.signal == signal) {
+                    sustain.signal = relatedSignal // TODO 
+                }
+            }
+            for (unemit : unemits) {
+                if (unemit.signal == signal) {
+                    unemit.remove
+                }
+            }
+            for (set : sets) {
+                if (set.signal == signal) {
+                    set.remove
+                }
+            }
+            for (exec : execs) {
+                if (exec.returnSignal == signal) {
+                    exec.returnSignal = relatedSignal
+                }
+            }
+            for (ri : relationImplications) {
+                if (ri.first == signal) {
+                    ri.first = relatedSignal
+                }
+                if (ri.second == signal) {
+                    ri.second = relatedSignal
+                }
+            }
+            for (ri : relationIncompatibilities) {
+                for (var i=0; i<ri.incomp.length; i++) {
+                    if (ri.incomp.get(i) == signal) {
+                        ri.incomp.set(i, relatedSignal)
+                    }
+                }
+            }
+        }
+        else {
+            throw new UnsupportedOperationException("There is no corresponding signal in the parent Module for " + signal.name + "!")
+        }
     }
     
     /**

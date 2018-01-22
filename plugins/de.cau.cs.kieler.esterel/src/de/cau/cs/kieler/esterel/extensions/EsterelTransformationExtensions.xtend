@@ -1982,5 +1982,16 @@ class EsterelTransformationExtensions {
             it.valuedObject = signal
         ]
     }
+    
+    /**
+     * Create a TickReference
+     * 
+     * @param signal The tick signal
+     */
+    def createTickReference(Signal signal) {
+        EsterelFactory::eINSTANCE.createTickReference => [
+            it.valuedObject = signal
+        ]
+    }
  
 }

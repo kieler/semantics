@@ -82,8 +82,11 @@ class InitializationTransformation extends InplaceProcessor<EsterelProgram> {
             if (!m.annotations.isGeneratedModule) {
                 transformStatements(m.statements, 1)
             }
+            else {
+                return scestProgram
+            }
         } 
-        return prog
+        return scestProgram
     }
     
     def void transformStatements(EList<Statement> statements, int depth) {
