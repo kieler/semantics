@@ -54,6 +54,9 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.emf.ecore.EObject
+import java.util.EnumSet
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.alg.layered.options.NodeFlexibility
 
 /**
  * @author ssm
@@ -213,6 +216,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 //        node.setLayoutOption(CoreOptions::EXPAND_NODES, false);   
         node.addLayoutParam(KlighdProperties::EXPAND, false)      
+        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS))
+//        node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_NETWORK_SIMPLEX_NODE_FLEXIBILITY, NodeFlexibility.NODE_SIZE)
   
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {

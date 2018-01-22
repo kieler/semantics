@@ -74,6 +74,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100)
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
+        node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
