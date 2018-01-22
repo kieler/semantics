@@ -61,6 +61,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 
 /**
  * @author mrb
@@ -185,6 +186,24 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     }
     
     /**
+     * Put surrounding local signals into parentSignals map
+     * 
+     * @param obj An EObject
+     * @param parentModule The surroundingModule
+     */
+    def void getLocalSignals(EObject obj, Module parentModule) {
+        var parent = obj.eContainer
+        while ((parent !== null) && !(parent instanceof Module)) {
+            if (parent instanceof LocalSignalDeclaration) {
+                parent.valuedObjects.filter(Signal).forEach[s |
+                    parentSignals.put(s.name, s)
+                ]
+            }
+            parent = parent.eContainer
+        }
+    }
+    
+    /**
      * Get the interface sensors of the surrounding module
      * 
      * @param parentModule The surrounding module
@@ -288,6 +307,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      * @param parentModule The surrounding Module
      */
     def transformRunStatement(Run run, Module parentModule) {
+        getLocalSignals(run, parentModule)
         parentModule.getSignals
         parentModule.getConstants
         parentModule.getSensors

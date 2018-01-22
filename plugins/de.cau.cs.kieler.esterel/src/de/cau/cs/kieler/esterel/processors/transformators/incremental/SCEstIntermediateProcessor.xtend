@@ -112,6 +112,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
         
         // the next object which needs to be transformed and the corresponding processor id
         val nextObj = obj.nextStatement 
+        if (nextObj === null) {
+            throw new Exception("The next statement to transform can not be null!")
+        }
         val processorID = nextObj.getCorrespondingProcessorID 
         environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
         if (nextObj instanceof Module) {

@@ -831,6 +831,13 @@ class EsterelTransformationExtensions {
      * @return The Module list which includes the given Module
      */
     def getContainingList(Module module) {
+        if (module === null || module.eContainer === null || module.eContainingFeature === null) {
+            throw new Exception("The module " + module.name + " does not have a containing list.\n"
+                + "module: " + module
+                + "\neContainer: " + module.eContainer
+                + "\nContainingFeature:" + module.eContainingFeature
+            )
+        }
         module.eContainer.eGet(module.eContainingFeature) as EList<Module>
     }
     
