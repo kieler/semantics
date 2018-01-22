@@ -28,6 +28,7 @@ class EHelpConsts {
     public static final val String  DEFAULT_CONTEXT_FILE_NAME = "context.xml";
     public static final val String  DEFAULT_CONTEXT_ID_EXT = ".help";
 
+    public static final val int     DEFAULT_GENERATE_IMPLICIT_OUTLINE = 0;
     
 	
 	public static final val String WARNING_IMAGES_NOT_EXISTS = "Image does not exist in project"
@@ -123,5 +124,9 @@ class EHelpConsts {
 	def static getContextIdPostfix() {
 		return getCustomizationValue("getContextIdPostfix", DEFAULT_CONTEXT_ID_EXT) as String
 	}
+
+    def static generateImplicitOutline() {
+        return getCustomizationValue("generateImplicitOutline", DEFAULT_GENERATE_IMPLICIT_OUTLINE) as Integer
+    }
 
 }

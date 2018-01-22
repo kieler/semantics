@@ -100,4 +100,13 @@ public interface IEHelpCustomization {
 	 * @return the id postfix for help context ids
 	 */
 	String getContextIdPostfix();
+	
+	
+	/**
+	 * Define if an implicit outline shall be generated at the beginning of each
+	 * chapter which contains sub chapters. 0 = never, 1 = only if no other content present, 2 = always on top, 3 = always on bottom
+	 * 
+	 * @return 0, 1, 2, or 3
+	 */
+	int generateImplicitOutline();
 }
