@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import de.cau.cs.kieler.scl.Assignment
 
 /**
  * @author mrb
@@ -83,10 +84,19 @@ class EmitTransformation extends InplaceProcessor<EsterelProgram> {
         emit.replace(assign)
         if (emit.expression !== null) {
             if (signal.type != ValueType.PURE) {
-                val assign2 = createCurAssignment(signal.createSignalReference, 
-                    createOperatorExpression(signal.createSignalReference, 
-                        emit.expression, signal.combineOperator.getOperator
-                    ))
+                var Assignment assign2
+                // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
+                if (signal.combineOperator === null) {
+                    assign2 = createValAssignment(signal.createSignalReference, emit.expression)
+                }
+                // otherwise, if combineOperator exists, handle valued signal like he did in the paper:
+                // memocode 15 -> SCEst: Sequentially Constructive Esterel
+                else {
+                    assign2 = createCurAssignment(signal.createSignalReference, 
+                        createOperatorExpression(signal.createSignalReference, 
+                            emit.expression, signal.combineOperator.getOperator
+                        ))
+                }
                 statements.add(pos+1, assign2)
                 lastStatement = assign2
             }

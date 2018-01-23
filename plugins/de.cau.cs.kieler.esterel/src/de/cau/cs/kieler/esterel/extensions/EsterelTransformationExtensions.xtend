@@ -1635,6 +1635,8 @@ class EsterelTransformationExtensions {
         }
         for (ref : references) {
             if (ref instanceof TickReference) {
+                // TODO after run transformation: e.g. "module _2 [signal tick/A]" and an "emit A" in the submodule _2 
+                // would later lead to an assignment "true = true || true"
                 ref.replace(createTrue)
             }
             else {
@@ -1657,9 +1659,9 @@ class EsterelTransformationExtensions {
                         else if (parent.isSetAssignment) {
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
                         }
-    //                    else if (parent.isValAssignment) {
-    //                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
-    //                    }
+                        else if (parent.isValAssignment) {
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
+                        }
                         else {
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                         }

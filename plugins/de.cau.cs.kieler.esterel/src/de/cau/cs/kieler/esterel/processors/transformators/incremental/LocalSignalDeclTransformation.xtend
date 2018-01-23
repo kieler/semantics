@@ -130,7 +130,8 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
         for (signal : signals) {
             val keyValue = signalsMap.get(signal)
             val s = keyValue.s
-            if (signal.type != ValueType.PURE) {
+            // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
+            if (signal.type != ValueType.PURE && signal.combineOperator !== null) {
                 val s_set = keyValue.s_set
                 val s_cur = keyValue.s_cur
                 val s_val = keyValue.s_val
