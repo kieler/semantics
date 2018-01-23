@@ -78,9 +78,6 @@ class SCChartsJavaSimulationTest extends SimulationTestBase {
         if(modelData.isKnownToFail("simulation-fails-prio-java")) {
             return
         }
-        if(modelData.isKnownToFail("simulation-fails-prio-java-unreachable-code")) {
-            return
-        }
         startSimulationTest(#["de.cau.cs.kieler.sccharts.priority.java"], scc, modelData)
     }
     
