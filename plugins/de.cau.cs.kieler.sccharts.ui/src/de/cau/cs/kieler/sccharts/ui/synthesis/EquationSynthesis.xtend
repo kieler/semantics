@@ -170,7 +170,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 }
             }
             if (wire.semanticSourceReferenceDeclaration != null) {
-                sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)
+                if (wire.source.asValuedObjectReference.subReference !== null) 
+                    sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)
             }
             if (targetPort === null) {
                 targetPort = targetNode.getPort(wire) => [
@@ -224,7 +225,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration)
             if (newNode !== null) return newNode
         }
-        if (referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
+        if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable)
             if (newNode !== null) return newNode
         }
@@ -241,8 +242,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         val vor = wire.sink
         
-        node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
-        node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+        if (wire.referenceDeclaration.reference !== null) {
+            node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
+            node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+        }
 
         referenceNodes += node
         return node
