@@ -23,6 +23,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 import de.cau.cs.kieler.scl.Assignment
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author mrb
@@ -86,7 +87,7 @@ class EmitTransformation extends InplaceProcessor<EsterelProgram> {
             if (signal.type != ValueType.PURE) {
                 var Assignment assign2
                 // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
-                if (signal.combineOperator === null) {
+                if (signal.combineOperator === null || signal.combineOperator == CombineOperator.NONE) {
                     assign2 = createValAssignment(signal.createSignalReference, emit.expression)
                 }
                 // otherwise, if combineOperator exists, handle valued signal like he did in the paper:

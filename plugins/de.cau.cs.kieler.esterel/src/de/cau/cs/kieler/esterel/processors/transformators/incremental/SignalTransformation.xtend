@@ -26,6 +26,7 @@ import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author mrb
@@ -157,7 +158,7 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
                 val keyValue = signalsMap.get(signal)
                 val s = keyValue.s
                 // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
-                if (signal.type != ValueType.PURE && signal.combineOperator !== null) {
+                if (signal.type != ValueType.PURE && signal.combineOperator !== null && signal.combineOperator != CombineOperator.NONE) {
                     val s_set = keyValue.s_set
                     val s_cur = keyValue.s_cur
                     val s_val = keyValue.s_val

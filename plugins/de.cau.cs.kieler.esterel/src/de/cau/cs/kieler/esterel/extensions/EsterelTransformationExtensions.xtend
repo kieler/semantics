@@ -1655,6 +1655,14 @@ class EsterelTransformationExtensions {
                     else if (parent instanceof Assignment) {
                         if (parent.isCurAssignment) {
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                            val localRefs = parent.expression.eAllContents.filter(SignalReference).toList
+                            if (!localRefs.empty) {
+                                for (localRef : localRefs) {
+                                    if (localRef.valuedObject == signal) {
+                                        localRef.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                                    }
+                                }
+                            }
                         }
                         else if (parent.isSetAssignment) {
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
