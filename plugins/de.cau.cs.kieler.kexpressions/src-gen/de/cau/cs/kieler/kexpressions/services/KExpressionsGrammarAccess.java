@@ -2408,16 +2408,14 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFLOATFloatKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cSTRINGStringKeyword_5_0 = (Keyword)cSTRINGEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cHOSTHostKeyword_6_0 = (Keyword)cHOSTEnumLiteralDeclaration_6.eContents().get(0);
 		
 		//enum ValueType:
 		//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 		//	INT="int" | FLOAT="float" |
-		//	STRING="string" | HOST="host";
+		//	STRING="string";
 		public EnumRule getRule() { return rule; }
 
-		//PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host"
+		//PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//PURE="pure"
@@ -2455,12 +2453,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"string"
 		public Keyword getSTRINGStringKeyword_5_0() { return cSTRINGStringKeyword_5_0; }
-
-		//HOST="host"
-		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_6() { return cHOSTEnumLiteralDeclaration_6; }
-
-		//"host"
-		public Keyword getHOSTHostKeyword_6_0() { return cHOSTHostKeyword_6_0; }
 	}
 
 	public class HostTypeElements extends AbstractEnumRuleElementFinder {
@@ -3556,7 +3548,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
-	//	STRING="string" | HOST="host";
+	//	STRING="string";
 	public ValueTypeElements getValueTypeAccess() {
 		return eValueType;
 	}

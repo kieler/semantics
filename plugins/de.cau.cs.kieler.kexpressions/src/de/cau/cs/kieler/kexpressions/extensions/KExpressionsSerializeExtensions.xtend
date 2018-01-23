@@ -47,7 +47,7 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
  */
 class KExpressionsSerializeExtensions {
 
-   def dispatch CharSequence serialize(ValueType valueType) {
+    def dispatch CharSequence serialize(ValueType valueType) {
         return valueType.literal;
     }
 
@@ -276,7 +276,7 @@ class KExpressionsSerializeExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
-        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+        if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serialize
         }        
         vo
