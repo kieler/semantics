@@ -61,7 +61,10 @@ class ExpandCollapseHook extends SynthesisHook {
         .setCategory(GeneralSynthesisOptions::NAVIGATION)
     public static val SynthesisOption SMART_COLLAPSE = SynthesisOption.createCheckOption("Editor Context Collapse (Experimental)", false)
         .setCategory(GeneralSynthesisOptions::NAVIGATION)
-    
+        
+    /** Annotation keywords */
+    public static val COLLAPSE_ANNOTATION = "collapse"
+    public static val EXPAND_ANNOTATION = "expand"
     
     // ----------------------------------------------------------------------------------------------------------------
     
@@ -155,12 +158,16 @@ class ExpandCollapseHook extends SynthesisHook {
     override processRegion(Region region, KNode node) {
         if (INITIALLY_COLLAPSE_ALL.booleanValue) {
             node.initiallyCollapse
-        } else if (MEMORIZE_EXPANSION_STATES.booleanValue) {
-            if (region.expansionState?: true) {
+        } else if (MEMORIZE_EXPANSION_STATES.booleanValue && region.expansionState !== null) {
+            if (region.expansionState) {
                 node.initiallyExpand
             } else {
                 node.initiallyCollapse
             }
+        } else if (region.annotations.exists[name.equalsIgnoreCase(COLLAPSE_ANNOTATION)]) {
+            node.initiallyCollapse
+        } else if (region.annotations.exists[name.equalsIgnoreCase(EXPAND_ANNOTATION)]) {
+            node.initiallyExpand
         } else {
             node.initiallyExpand
         }
