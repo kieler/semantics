@@ -87,7 +87,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=6000)
     @StopOnFailure
     def void testValidation(EsterelProgram est, TestModelData modelData) {
 //        assumeFalse(true); // Do nothing !!
@@ -192,8 +192,8 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     private def boolean hasNoEsterelType(EsterelProgram est) {
         val signals = est.eAllContents.filter(Signal).toList
         for (s : signals) {
-//            if ( s.idType !== null || (s.type != ValueType.PURE && (s.combineOperator === null || s.combineOperator == CombineOperator.NONE))) {
-            if ( s.idType !== null ) {    
+            if ( s.idType !== null || (s.type != ValueType.PURE && (s.combineOperator === null || s.combineOperator == CombineOperator.NONE))) {
+//            if ( s.idType !== null ) {    
                 return false
             }
         }
