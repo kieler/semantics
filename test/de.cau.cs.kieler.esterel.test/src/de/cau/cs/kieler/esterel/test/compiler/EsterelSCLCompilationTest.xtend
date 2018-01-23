@@ -192,7 +192,8 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     private def boolean hasNoEsterelType(EsterelProgram est) {
         val signals = est.eAllContents.filter(Signal).toList
         for (s : signals) {
-            if ( s.idType !== null || (s.type != ValueType.PURE && (s.combineOperator === null || s.combineOperator == CombineOperator.NONE))) {
+//            if ( s.idType !== null || (s.type != ValueType.PURE && (s.combineOperator === null || s.combineOperator == CombineOperator.NONE))) {
+            if ( s.idType !== null ) {    
                 return false
             }
         }
