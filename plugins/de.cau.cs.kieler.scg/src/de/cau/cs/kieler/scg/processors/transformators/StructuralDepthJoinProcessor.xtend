@@ -234,9 +234,10 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         }
         
         visited.add(node)
-        val searchStack = <Node> newLinkedList => [ addAll(node.allPrevious.map[ eContainer ].filter(Node) ) ]
+        val searchStack = <Node> newLinkedList => [ addAll(node.allPrevious.map[ eContainer ].filter(Node).filter[ !visited.contains(it) ]) ]
         while (!searchStack.empty) {
             val head = searchStack.pop
+            visited.add(head)
             
             if (head instanceof Fork) {
                 return head.hasConcurrentDelay(threadData, visited)

@@ -126,7 +126,7 @@ class DataCanvas extends Canvas {
         cWidth = maxWidth - COORDINATE_LEFTBORDERSPACING - COORDINATE_BORDERSPACING
 
         if (anyVariable !== null) {                
-            val history = anyVariable.history
+            val history = anyVariable.getHistory(-1, false, true)
             cellWidth = (cWidth as double) / (history.size + 1)
         } else {
             cellWidth = MAX_TICKWIDTH
@@ -169,7 +169,7 @@ class DataCanvas extends Canvas {
             COORDINATE_LEFTBORDERSPACING - 2 - minTextExtent.x, COORDINATE_BORDERSPACING + cHeight - minTextExtent.y)
             
         if (anyVariable !== null) {
-            val history = anyVariable.history
+            val history = anyVariable.getHistory(-1, false, true)
             for (i : 0..history.size) {
                 val ctl = if (i % 5 == 0) COORDINATE_TICKMARK_LENGTH * 2 else COORDINATE_TICKMARK_LENGTH
                 val top = if (baseline != cHeight) COORDINATE_BORDERSPACING + baseline as int - ctl 
@@ -187,7 +187,7 @@ class DataCanvas extends Canvas {
     }
     
     def drawValue(GC gc, Variable variable) {
-        val history = variable.history
+        val history = variable.getHistory(-1, false, true)
         gc.foreground = variableTextMap.get(dataObserver.originMap.get(variable)).foreground
         
         val hIter = (history + newLinkedList(variable)).iterator.toIterable

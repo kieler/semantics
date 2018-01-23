@@ -186,7 +186,11 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         context.additionalMappings = additionalMappings
         context.macroCallDatas = macroCallDatas
         // Process
-        generatedCode = TemplateManager.process(context)
+        val problem = super.processContext()
+        if(problem !== null) {
+            result.addProblem(problem)
+            return result
+        }
         // Notify listeners
         for(l : listeners)
             l.afterProcessing(this)
