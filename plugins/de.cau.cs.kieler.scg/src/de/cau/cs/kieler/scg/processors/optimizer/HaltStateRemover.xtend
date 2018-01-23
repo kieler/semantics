@@ -65,6 +65,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
     def performHaltStateRemove(SCGraph scg) {
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
         val removeList = <EObject> newLinkedList
+        
         // A halt state in the netlist is represented by two assignments. 
         // The first one is of the form _gX = pre(_gY).   (1)
         // the second one is similar to _gY = _gZ || _gX. (2)
@@ -72,6 +73,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
         // One may notice that Z is arbitrary.
         val haltStates = <Assignment, Assignment> newHashMap // Halt State representation as (1) (2)
         val valuedObjectMap = <ValuedObject, Assignment> newHashMap 
+        val preBlacklist = <ValuedObject, Integer> newHashMap
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -90,7 +92,16 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
                     val OE = node.expression.asOperatorExpression
                     if (OE.operator == OperatorType.PRE) {
                         haltStates.put(node, null)
-                        valuedObjectMap.put(node.reference.valuedObject, node)                        
+                        valuedObjectMap.put(node.reference.valuedObject, node)
+                        
+                        // Remember pre-d value
+                        val v = OE.subExpressions.head as ValuedObjectReference
+                        val count = preBlacklist.get(v.valuedObject)
+                        if (count === null) {
+                            preBlacklist.put(v.valuedObject, 1)
+                        } else {
+                            preBlacklist.put(v.valuedObject, preBlacklist.get(v.valuedObject) + 1)
+                        }                        
                     } else if (OE.operator == OperatorType.LOGICAL_OR &&
                         OE.subExpressions.size == 2
                     ) {
@@ -119,16 +130,29 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
                         }
                     }
                 }
+            } 
+            
+            else if (node instanceof Conditional) {
+                for (ref : node.condition.allReferences.toList) {
+                    if (valuedObjectMap.containsKey(ref.valuedObject)) {
+                        haltStates.remove(valuedObjectMap.get(ref.valuedObject))
+                        valuedObjectMap.remove(ref.valuedObject)
+                    }
+                }                
             }
         }
         
         for (hs : haltStates.keySet) {
             val s = haltStates.get(hs)
             if (s !== null) {
-                removeList += hs
-                removeList += hs.next
-                removeList += s
-                removeList += s.next
+                val hsbl = preBlacklist.get(hs.reference.valuedObject)
+                val sbl = preBlacklist.get(s.reference.valuedObject)
+                if ((hsbl === null) && sbl < 2) {                 
+                    removeList += hs
+                    removeList += hs.next
+                    removeList += s
+                    removeList += s.next
+                }
             }
         }
         
