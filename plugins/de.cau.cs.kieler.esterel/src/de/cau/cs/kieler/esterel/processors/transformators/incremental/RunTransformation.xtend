@@ -343,10 +343,9 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         // FUNCTIONS
         moduleRenaming = transformFunctions(moduleRenaming, parentModule)
         
-        scope.statements.add(moduleRenaming.module.statements)
+        scope.statements.addAll(moduleRenaming.module.statements)
         statementList.set(pos, scope)        
-        var moduleContainingList = moduleRenaming.module.getContainingList
-        moduleContainingList.remove(moduleRenaming.module)
+        moduleRenaming.module.remove
         
         // TODO PROCEDURES and TASKS will not be transformed at the moment
     }
