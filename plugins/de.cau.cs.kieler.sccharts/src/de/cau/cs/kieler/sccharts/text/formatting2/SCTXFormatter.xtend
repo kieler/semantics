@@ -178,7 +178,11 @@ class SCTXFormatter extends KExtFormatter {
 			format(annotations, document);
 		}
 	
-		controlflowregion.regionFor.keyword(controlflowRegionAccess.colonKeyword_7_0_0).prepend[ noSpace ].append[ newLine ]
+		controlflowregion.regionFor.keyword(controlflowRegionAccess.colonKeyword_7_0_0)?.prepend[ noSpace ]?.append[ newLine ]
+        controlflowregion.regionFor.keyword("{")?.prepend[ oneSpace ]?.append[ newLine ]
+        controlflowregion.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
+        controlflowregion.regionFor.keyword("}")?.prepend[ newLine ]
+		
 		 
         var EObject lastObject = null
         for (idxDeclaration : controlflowregion.declarations.indexed) {
@@ -194,9 +198,18 @@ class SCTXFormatter extends KExtFormatter {
             lastObject = idxAction.value
         }
         
-		for (State states : controlflowregion.getStates()) {
-		    states.prepend[ setNewLines(2) highPriority ]
-			format(states, document);
+		for (state : controlflowregion.getStates.indexed) {
+
+            if (state.key == 0 &&
+                controlflowregion.regionFor.keyword("{") !== null &&
+                controlflowregion.declarations.empty &&
+                controlflowregion.actions.empty
+            ) {
+                state.value.prepend[ setNewLines(1) ]
+            } else {
+                state.value.prepend[ setNewLines(2) highPriority ]                
+            }
+			format(state.value, document);
 		}
 	}
 
