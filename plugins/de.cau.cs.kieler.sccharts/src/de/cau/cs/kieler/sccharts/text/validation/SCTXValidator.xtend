@@ -285,7 +285,10 @@ class SCTXValidator extends AbstractSCTXValidator {
                     warning(NON_REACHABLE_TRANSITION, trans, null)
                 }
                 if(!immediateTransitionWithoutTrigger && trans.trigger === null) {
-                    immediateTransitionWithoutTrigger = true
+                    // A termination transition does not count, because the inner behavior defines a trigger
+                    if(!trans.isTermination) {
+                        immediateTransitionWithoutTrigger = true    
+                    }
                 }
             } else {
                 // An delayed transition after a delayed transition without trigger is not reachable.
@@ -424,12 +427,14 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     public def void checkFinalStates(de.cau.cs.kieler.sccharts.State state) {
         // Check if state has termination transition
-        val foundTermination = !state.outgoingTransitions.filter[ isTermination ].empty
+        val terminationTransitions = state.outgoingTransitions.filter[ isTermination ]
+        val foundTermination = !terminationTransitions.empty
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
             if(regions.isEmpty && state.reference === null) {
-                error(NO_REGION, state, null, -1);
+                val trans = terminationTransitions.get(0)
+                error(NO_REGION, trans, null, -1);
             }
 
             // Now test for every region
