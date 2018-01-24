@@ -106,6 +106,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      */
     protected def boolean filterForPriorityCompilationTests(TestModelData modelData) {
         return filterForSimulationTests(modelData)
+        && !modelData.modelProperties.contains("not-iasc")
     }
     
     /**

@@ -46,19 +46,20 @@ class KnownToFailStatisticsTest extends SCChartsCSimulationTestBase {
         && isKnownToFail
     }
     
-//      No need to run this on the server
-//    @Test
-//    def void testKnownToFailStatistics(SCCharts scc, TestModelData modelData) {
-//        for(p : knownToFailProperties) {
-//            if(modelData.modelProperties.contains(p)) {
-//                addKnownToFailTest(p, modelData)
-//            }
-//        }
-//        
-//        // TODO: This should only be called once after ALL tests are done,
-//        // but there is no hook in the TestRunner to do so
-//        printStatistics
-//    }
+    @Test
+    def void testKnownToFailStatistics(SCCharts scc, TestModelData modelData) {
+        /* No need to run this on the build server
+        for(p : knownToFailProperties) {
+            if(modelData.modelProperties.contains(p)) {
+                addKnownToFailTest(p, modelData)
+            }
+        }
+        
+        // TODO: This should only be called once after ALL tests are done,
+        // but there is no hook in the TestRunner to do so
+        printStatistics
+        // */
+    }
     
     def static void printStatistics() {
         // TODO: Call this after ALL tests are done
