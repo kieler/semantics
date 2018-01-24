@@ -44,7 +44,7 @@ import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.ZoomStyle
 
 /**
- * The IMB Compiler View
+ * The Kieler Compiler View, formerly knownas IMB Compiler View
  * 
  * @author ssm
  * @kieler.design 2016-11-04 proposed
