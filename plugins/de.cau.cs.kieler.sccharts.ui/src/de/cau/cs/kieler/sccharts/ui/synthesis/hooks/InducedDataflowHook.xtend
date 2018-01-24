@@ -354,7 +354,8 @@ class InducedDataflowHook extends SynthesisHook {
     /** Configure the layout on the state node for proper dataflow layout */
     private def void configureParentLayout(KNode node) {
         DiagramSyntheses.setLayoutOption(node, CoreOptions::PADDING, new ElkPadding(10));
-        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        // FIXME Hotfix for rvh presentation due to exception cause by free node size constraints
+//        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
         node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
@@ -364,7 +365,8 @@ class InducedDataflowHook extends SynthesisHook {
 
     /** Configure the layout on the attached node */
     private def void configurePortLayout(KNode node) {
-        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        // FIXME Hotfix for rvh presentation due to exception cause by free node size constraints
+//        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
     }
 
     /** Create a port for the dataflow layout */
