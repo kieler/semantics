@@ -443,7 +443,7 @@ class UIUtil {
      */
     public static def ComboViewer createProjectDraftCombo(Composite parent, List<ProjectDraftData> drafts) {
         // Create combo
-        val combo = new ComboViewer(parent, SWT.DEFAULT)
+        val combo = new ComboViewer(parent, SWT.NONE)
         combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
         // Create content provider
@@ -464,6 +464,18 @@ class UIUtil {
             }
         })
 
+        return combo
+    }
+    
+    public static def ComboViewer createCombo(Composite parent, List<?> input) {
+        val combo = new ComboViewer(parent, SWT.NONE)
+        combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+        // Set content
+        combo.setContentProvider(ArrayContentProvider.instance)
+        if (!input.isNullOrEmpty) {
+            combo.input = input
+            combo.selection = new StructuredSelection(input.get(0))
+        }
         return combo
     }
     
