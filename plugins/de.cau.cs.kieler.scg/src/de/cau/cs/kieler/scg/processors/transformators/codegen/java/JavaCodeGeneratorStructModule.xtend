@@ -79,7 +79,10 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             for (valuedObject : declaration.valuedObjects) {
                 indent
                 code.append("public ")
-                code.append(declaration.type.serializeHR)
+                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    declaration.type.serializeHR
+                    else declaration.hostType
+                code.append(declarationType)
                 if (valuedObject.isArray) {
                     for (cardinality : valuedObject.cardinalities) {
                         code.append("[]")

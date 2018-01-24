@@ -102,9 +102,11 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAnnotatedExpressionAccess().getGroup(), "rule__AnnotatedExpression__Group__0");
 					put(grammarAccess.getVariableDeclarationAccess().getGroup(), "rule__VariableDeclaration__Group__0");
 					put(grammarAccess.getVariableDeclarationAccess().getGroup_5_0(), "rule__VariableDeclaration__Group_5_0__0");
+					put(grammarAccess.getVariableDeclarationAccess().getGroup_5_2(), "rule__VariableDeclaration__Group_5_2__0");
 					put(grammarAccess.getVariableDeclarationAccess().getGroup_7(), "rule__VariableDeclaration__Group_7__0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup(), "rule__VariableDeclarationWOSemicolon__Group__0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_5_0(), "rule__VariableDeclarationWOSemicolon__Group_5_0__0");
+					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_5_2(), "rule__VariableDeclarationWOSemicolon__Group_5_2__0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_7(), "rule__VariableDeclarationWOSemicolon__Group_7__0");
 					put(grammarAccess.getNamespaceIDAccess().getGroup(), "rule__NamespaceID__Group__0");
 					put(grammarAccess.getNamespaceIDAccess().getGroup_1(), "rule__NamespaceID__Group_1__0");
@@ -292,6 +294,8 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDeclarationAccess().getSignalAssignment_5_0_0(), "rule__VariableDeclaration__SignalAssignment_5_0_0");
 					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_5_0_1(), "rule__VariableDeclaration__TypeAssignment_5_0_1");
 					put(grammarAccess.getVariableDeclarationAccess().getSignalAssignment_5_1(), "rule__VariableDeclaration__SignalAssignment_5_1");
+					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_5_2_0(), "rule__VariableDeclaration__TypeAssignment_5_2_0");
+					put(grammarAccess.getVariableDeclarationAccess().getHostTypeAssignment_5_2_1(), "rule__VariableDeclaration__HostTypeAssignment_5_2_1");
 					put(grammarAccess.getVariableDeclarationAccess().getValuedObjectsAssignment_6(), "rule__VariableDeclaration__ValuedObjectsAssignment_6");
 					put(grammarAccess.getVariableDeclarationAccess().getValuedObjectsAssignment_7_1(), "rule__VariableDeclaration__ValuedObjectsAssignment_7_1");
 					put(grammarAccess.getVariableDeclarationAccess().getAnnotationsAssignment_9(), "rule__VariableDeclaration__AnnotationsAssignment_9");
@@ -303,6 +307,8 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getSignalAssignment_5_0_0(), "rule__VariableDeclarationWOSemicolon__SignalAssignment_5_0_0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getTypeAssignment_5_0_1(), "rule__VariableDeclarationWOSemicolon__TypeAssignment_5_0_1");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getSignalAssignment_5_1(), "rule__VariableDeclarationWOSemicolon__SignalAssignment_5_1");
+					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getTypeAssignment_5_2_0(), "rule__VariableDeclarationWOSemicolon__TypeAssignment_5_2_0");
+					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getHostTypeAssignment_5_2_1(), "rule__VariableDeclarationWOSemicolon__HostTypeAssignment_5_2_1");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getValuedObjectsAssignment_6(), "rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_6");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getValuedObjectsAssignment_7_1(), "rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_7_1");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAnnotationsAssignment_8(), "rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_8");

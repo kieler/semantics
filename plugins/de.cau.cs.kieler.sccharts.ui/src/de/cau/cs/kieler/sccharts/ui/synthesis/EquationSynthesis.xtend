@@ -54,6 +54,9 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.emf.ecore.EObject
+import java.util.EnumSet
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.alg.layered.options.NodeFlexibility
 
 /**
  * @author ssm
@@ -167,7 +170,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 }
             }
             if (wire.semanticSourceReferenceDeclaration != null) {
-                sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)
+                if (wire.source.asValuedObjectReference.subReference !== null) 
+                    sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)
             }
             if (targetPort === null) {
                 targetPort = targetNode.getPort(wire) => [
@@ -213,13 +217,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 //        node.setLayoutOption(CoreOptions::EXPAND_NODES, false);   
         node.addLayoutParam(KlighdProperties::EXPAND, false)      
+        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS))
+//        node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_NETWORK_SIMPLEX_NODE_FLEXIBILITY, NodeFlexibility.NODE_SIZE)
   
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration)
             if (newNode !== null) return newNode
         }
-        if (referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
+        if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable)
             if (newNode !== null) return newNode
         }
@@ -236,8 +242,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         val vor = wire.sink
         
-        node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
-        node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+        if (wire.referenceDeclaration.reference !== null) {
+            node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
+            node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+        }
 
         referenceNodes += node
         return node
