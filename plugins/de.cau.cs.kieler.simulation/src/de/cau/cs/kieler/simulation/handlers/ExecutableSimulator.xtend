@@ -270,7 +270,7 @@ class ExecutableSimulator extends DefaultSimulator {
             // Kill the process and wait until it has been destroyed,
             // but with a time limit in case the process cannot be killed or does not respond at all.
             try {
-                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 1, TimeUnit.SECONDS, true)
+                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 2, TimeUnit.SECONDS, true)
             } catch(UncheckedTimeoutException e) {
                 throw new IOException("Failed attempt to kill process '" + processBuilder.command + "' in '" + processBuilder.directory, e)
             } finally {

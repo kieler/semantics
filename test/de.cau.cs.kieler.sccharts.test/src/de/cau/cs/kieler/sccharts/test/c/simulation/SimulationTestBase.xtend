@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
+import com.google.common.io.Files
 import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -36,8 +37,6 @@ import org.junit.runner.RunWith
 
 import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
 import static org.junit.Assert.*
-import java.nio.file.Files
-import java.nio.file.FileSystems
 
 /**
  * @author aas
@@ -74,6 +73,40 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      * Create the simulation backend (e.g. C or Java) to be used.
      */
     abstract protected def SimulationBackend createSimulationBackend()
+    
+    /**
+     * Only return models for semantic SCCharts tests.
+     */
+    override filter(TestModelData modelData) {
+        return filterForSimulationTests(modelData)
+    }
+    
+    /**
+     * Only return models for semantic SCCharts tests.
+     */
+    protected def boolean filterForSimulationTests(TestModelData modelData) {
+        return !modelData.tracePaths.empty
+        && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
+        && modelData.modelProperties.contains("sccharts")
+        && !modelData.modelProperties.contains("must-fail")
+        && !modelData.modelProperties.contains("known-to-fail")
+    }
+    
+    /**
+     * Only return models for semantic SCCharts tests for netlist-based compilation.
+     */
+    protected def boolean filterForNetlistCompilationTests(TestModelData modelData) {
+        return filterForSimulationTests(modelData)
+        && !modelData.modelProperties.contains("not-asc")
+        && !modelData.modelProperties.contains("not-sasc")
+    }
+    
+    /**
+     * Only return models for semantic SCCharts tests for priority-based compilation.
+     */
+    protected def boolean filterForPriorityCompilationTests(TestModelData modelData) {
+        return filterForSimulationTests(modelData)
+    }
     
     /**
      * Returns a simulation context that is optimized for semantic simulation tests.
@@ -123,7 +156,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
             if(!failingModelsCSV.isNullOrEmpty) {
                 val failingModels = failingModelsCSV.replaceAll("\\s*", "").split(",")
                 if(!failingModels.isNullOrEmpty) {
-                    val fileBasename = com.google.common.io.Files.getNameWithoutExtension(modelData.modelFileBasename)
+                    val fileBasename = Files.getNameWithoutExtension(modelData.modelFileBasename)
                     for(m : failingModels) {
                         if(m == fileBasename) {
                             knownToFail = true
