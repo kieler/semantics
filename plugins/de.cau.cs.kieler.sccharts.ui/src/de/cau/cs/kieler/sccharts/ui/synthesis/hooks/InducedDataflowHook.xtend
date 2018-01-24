@@ -67,6 +67,7 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import org.eclipse.elk.core.options.PortSide
 
 /**
  * Visualizes the dataflow between SCChart regions.
@@ -252,19 +253,19 @@ class InducedDataflowHook extends SynthesisHook {
                 val KNode regionNode = tracking.getTargetElements(region).filter(KNode).head
                 // Create port for read access
                 if (context.readAnywhere.contains(vo)) {
-                    readPorts.add(createDataflowPort(regionNode, false, null))
+                    readPorts.add(createDataflowPort(regionNode, false, null, true))
                 }
                 // Create port for read access of previous value 
                 if (context.preReadAnywhere.contains(vo)) {
-                    preReadPorts.add(createDataflowPort(regionNode, false, null))
+                    preReadPorts.add(createDataflowPort(regionNode, false, null, true))
                 }
                 // Create ports for write access
                 if (context.absoluteWriteAnywhere.contains(vo)) {
                     // Add port for absolute write
-                    writePorts.add(createDataflowPort(regionNode, true, vo.name))
+                    writePorts.add(createDataflowPort(regionNode, true, vo.name, false))
                 } else if (context.relativeWriteAnywhere.contains(vo)) {
                     // Only create port for relative writes if not also absolute write
-                    writePorts.add(createDataflowPort(regionNode, false, vo.name))
+                    writePorts.add(createDataflowPort(regionNode, false, vo.name, false))
                 }
             ]
 
@@ -275,8 +276,8 @@ class InducedDataflowHook extends SynthesisHook {
                     preReadPorts.head.node.parent.children.add(node)
                     node
                 }
-            val KPort preNodeReadPort = if(preNode !== null) createDataflowPort(preNode, false, null)
-            var KPort preNodeWritePort = if(preNode !== null) createDataflowPort(preNode, true, "pre(" + vo.name + ")")
+            val KPort preNodeReadPort = if(preNode !== null) createDataflowPort(preNode, false, null, true)
+            var KPort preNodeWritePort = if(preNode !== null) createDataflowPort(preNode, true, "pre(" + vo.name + ")", false)
 
             // Create an input node if needed
             val boolean needInput = ioType == IOType.All || (ioType == IOType.Local && allLocalReads.contains(vo))
@@ -354,8 +355,7 @@ class InducedDataflowHook extends SynthesisHook {
     /** Configure the layout on the state node for proper dataflow layout */
     private def void configureParentLayout(KNode node) {
         DiagramSyntheses.setLayoutOption(node, CoreOptions::PADDING, new ElkPadding(10));
-        // FIXME Hotfix for rvh presentation due to exception cause by free node size constraints
-//        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
         node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
@@ -365,12 +365,11 @@ class InducedDataflowHook extends SynthesisHook {
 
     /** Configure the layout on the attached node */
     private def void configurePortLayout(KNode node) {
-        // FIXME Hotfix for rvh presentation due to exception cause by free node size constraints
-//        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
     }
 
     /** Create a port for the dataflow layout */
-    private def KPort createDataflowPort(KNode kNode, boolean absoluteWrite, String name) {
+    private def KPort createDataflowPort(KNode kNode, boolean absoluteWrite, String name, boolean input) {
         // Create basic port
         val KPort port = createPort => [
             node = kNode
@@ -379,6 +378,7 @@ class InducedDataflowHook extends SynthesisHook {
         // Set property to mark relative access on write ports
         // Is also set on read ports but is ignored there
         port.setProperty(PORT_ABSOLUTE_WRITE, absoluteWrite)
+        port.setProperty(LayeredOptions::PORT_SIDE, if (input) PortSide.WEST else PortSide.EAST)
 
         // Create label if necessary
         if (!name.isNullOrEmpty) {
@@ -575,7 +575,7 @@ class InducedDataflowHook extends SynthesisHook {
         if (expression !== null) {
             // Combine the expression and all sub elements, then filter for all valued objects
             Iterators.concat(Iterators.singletonIterator(expression), expression.eAllContents).filter(
-                ValuedObjectReference).forEach [
+                ValuedObjectReference).filter[valuedObject.eContainer instanceof VariableDeclaration].forEach [
                 if (it.eContainer instanceof OperatorExpression &&
                     (it.eContainer as OperatorExpression).operator == OperatorType.PRE) {
                         preReads.add(it.valuedObject)    
