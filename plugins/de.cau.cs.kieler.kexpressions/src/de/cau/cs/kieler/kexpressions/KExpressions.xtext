@@ -442,7 +442,7 @@ enum ConditionalOperator returns OperatorType:
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
 	INT="int" | FLOAT="float" |
-	STRING="string" | HOST="host";
+	STRING="string";
 	
 enum HostType returns ValueType:
     HOST="host";

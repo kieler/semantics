@@ -36,6 +36,7 @@ openFile
 -Xmx1024m 
 -XX:PermSize=128m
 -XX:MaxPermSize=256m
+--add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
