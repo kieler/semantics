@@ -447,7 +447,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     def Sensor checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
         var correspondingSensor = parentSensors.get(name)
         if (correspondingSensor instanceof Sensor) {
-            var swt = correspondingSensor.eContainer as Sensor
+            var swt = correspondingSensor as Sensor
             if (typeIdent.type !== null && swt.type?.type == typeIdent.type) {
                 return correspondingSensor
             }
