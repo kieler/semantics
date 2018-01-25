@@ -107,6 +107,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         
     // sorted renamings    
     var signalRenamings = new HashMap<Signal, Signal>
+    var sensorRenamings = new HashMap<Sensor, Sensor>
     var constantRenamings = new HashMap<Constant, ConstantRenaming>
     var functionRenamings = new HashMap<Function, Function>
     var procedureRenamings = new HashMap<Procedure, Procedure>
@@ -355,6 +356,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      */
     def clearMapsLists() {
         signalRenamings.clear
+        sensorRenamings.clear
         constantRenamings.clear
         functionRenamings.clear
         procedureRenamings.clear
@@ -387,7 +389,12 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                 for (renaming : oneTypeRenaming.renamings) {
                     switch renaming {
                         SignalRenaming: {
-                            signalRenamings.put(renaming.oldName.valuedObject as Signal, renaming.newName.valuedObject as Signal)
+                            if (renaming.oldName.valuedObject instanceof Signal) {
+                                signalRenamings.put(renaming.oldName.valuedObject as Signal, renaming.newName.valuedObject as Signal)
+                            }
+                            else if (renaming.oldName.valuedObject instanceof Sensor) {
+                                sensorRenamings.put(renaming.oldName.valuedObject as Sensor, renaming.newName.valuedObject as Sensor)
+                            }
                         }
                         ConstantRenaming: {
                             constantRenamings.put(renaming.oldName, renaming)
@@ -437,9 +444,9 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      * @param name The name of the sensor
      * @param type The type of the sensor
      */
-    def Signal checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
+    def Sensor checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
         var correspondingSensor = parentSensors.get(name)
-        if (correspondingSensor instanceof Signal) {
+        if (correspondingSensor instanceof Sensor) {
             var swt = correspondingSensor.eContainer as Sensor
             if (typeIdent.type !== null && swt.type?.type == typeIdent.type) {
                 return correspondingSensor
@@ -647,7 +654,8 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      */
     def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.constantDeclarations) {
-                for (constant : decl.constants) {
+                for (var i=0; i<decl.constants.length; i++) {
+                    val constant = decl.constants.get(i)
                     var updateReferences = true
                     var ConstantRenaming relatedConstantRenaming
                     if (constantRenamings.containsKey(constant)) {
@@ -673,6 +681,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                     else {
                         constant.name = createNewUniqueConstantName(constant.name)
                         parentModule.declarations.add(createConstantDecl(constant, constant.type))
+                        i-- // because the old constant of "decl.sensors"
                     }
                     
                 }
@@ -689,12 +698,19 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     def transformSensors(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.sensorDeclarations) {
             for (var i=0; i<decl.valuedObjects.size; i++) {
-                var sensorWType = decl.valuedObjects.get(i) as Sensor
-                var sensor = checkIfSensorExistsByNameAndType(sensorWType.name, sensorWType.type)
-                if (sensor instanceof Sensor) {
+                val sensorWType = decl.valuedObjects.get(i) as Sensor
+                var Sensor relatedSensor
+                // if the sensor is in the renaming list, rename sensor
+                if (sensorRenamings.containsKey(sensorWType)) {
+                    relatedSensor = sensorRenamings.get(sensorWType)
+                }
+                else {
+                    relatedSensor = checkIfSensorExistsByNameAndType(sensorWType.name, sensorWType.type)
+                }
+                if (relatedSensor instanceof Sensor) {
                     for (voRef : valuedObjectReferences) {
                         if (voRef.valuedObject == sensorWType) {
-                            voRef.valuedObject = sensor
+                            voRef.valuedObject = relatedSensor
                         }
                     }
                 }
