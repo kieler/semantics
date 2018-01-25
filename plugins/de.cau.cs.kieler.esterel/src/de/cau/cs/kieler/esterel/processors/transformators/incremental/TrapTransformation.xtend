@@ -208,7 +208,9 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
                 newOperator = OperatorType.LOGICAL_AND
             }
             else {
-                throw new UnsupportedOperationException("The following combine operator is not supported! " + operator.toString)
+                statements.add(pos+1, createAssignment(pair.value, exit.expression))
+                return
+//                throw new UnsupportedOperationException("The following combine operator is not supported! " + operator.toString)
             }
             var expr = createOperatorExpression(createValuedObjectReference(pair.value), exit.expression, newOperator)
             statements.add(pos+1, createAssignment(pair.value, expr))
