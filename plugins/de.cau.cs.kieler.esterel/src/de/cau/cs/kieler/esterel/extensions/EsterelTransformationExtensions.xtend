@@ -1639,7 +1639,7 @@ class EsterelTransformationExtensions {
                 // would later lead to an assignment "true = true || true"
                 ref.replace(createTrue)
             }
-            else {
+            else if (ref.valuedObject instanceof Signal){
                 val signal = ref.valuedObject as Signal
                 // if the SignalReference references a transformed signal
                 if (newSignals.containsKey(signal)) {
@@ -1654,6 +1654,7 @@ class EsterelTransformationExtensions {
                     }
                     else if (parent instanceof Assignment) {
                         if (parent.isCurAssignment) {
+                            parent.annotations.clear
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
                             val localRefs = parent.expression.eAllContents.filter(SignalReference).toList
                             if (!localRefs.empty) {
@@ -1665,9 +1666,11 @@ class EsterelTransformationExtensions {
                             }
                         }
                         else if (parent.isSetAssignment) {
+                            parent.annotations.clear
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
                         }
                         else if (parent.isValAssignment) {
+                            parent.annotations.clear
                             ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
                         }
                         else {
