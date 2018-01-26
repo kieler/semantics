@@ -247,7 +247,15 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    CONDITIONAL(24, "CONDITIONAL", "? :");
+    CONDITIONAL(24, "CONDITIONAL", "? :"), /**
+     * The '<em><b>FBY</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #FBY_VALUE
+     * @generated
+     * @ordered
+     */
+    FBY(25, "FBY", "FBY");
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -625,6 +633,21 @@ public enum OperatorType implements Enumerator {
     public static final int CONDITIONAL_VALUE = 24;
 
     /**
+     * The '<em><b>FBY</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>FBY</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #FBY
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int FBY_VALUE = 25;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -658,6 +681,7 @@ public enum OperatorType implements Enumerator {
             BITWISE_XOR,
             BITWISE_NOT,
             CONDITIONAL,
+            FBY,
         };
 
     /**
