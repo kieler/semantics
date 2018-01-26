@@ -52,6 +52,7 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -100,6 +101,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // -------------------------------------------------------------------------
     
     @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
@@ -452,10 +454,29 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // --- CREATE GUARDS: DEPTH BLOCK 
     protected def void createDepthBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         guard.setDefaultTrace
-        guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+        val firstExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             setOperator(OperatorType::PRE)
             subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
-        ]
+        ] 
+        if (schedulingBlock.basicBlock.finalBlock) {
+            val joinNode = schedulingBlock.basicBlock.threadEntry.allPrevious.map[eContainer].head.asNode.asFork.join
+            val joinNodeGuard = schedulingBlockCache.get(joinNode).guards.head
+            val secondExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                setOperator(OperatorType::PRE)
+                subExpressions.add(joinNodeGuard.reference.valuedObject.reference)
+            ]
+            guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                setOperator(OperatorType::LOGICAL_AND)
+                subExpressions.add(firstExpression)
+                subExpressions.add(secondExpression.negate)
+            ]
+        } else {
+            guard.expression = firstExpression 
+        }        
+//        guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+//            setOperator(OperatorType::PRE)
+//            subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
+//        ]
     }
 
     // --- CREATE GUARDS: SYNCHRONIZER BLOCK 

@@ -349,7 +349,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     // -------------------------------------------------------------------------   
     def boolean isPause(State state) {
         ((state.outgoingTransitions.filter [e|
-            !e.isImplicitlyImmediate && e.trigger == null && e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
+            !e.isImplicitlyImmediate && e.trigger === null && e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -364,7 +364,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     def boolean isAssignment(State state) {
         ((state.outgoingTransitions.filter [e|
-            e.isImplicitlyImmediate && e.trigger == null && !e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
+            e.isImplicitlyImmediate && e.trigger === null && !e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -441,7 +441,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     // If two exit nodes follow each other, remove the first one.
     def SCGraph trimExitNodes(SCGraph sCGraph) {
         val exitNodes = sCGraph.nodes.filter(typeof(Exit)).toList
-        val superfluousExitNodes = exitNodes.filter(e|e.next != null && e.next.target instanceof Exit).toList
+        val superfluousExitNodes = exitNodes.filter(e|e.next !== null && e.next.target instanceof Exit).toList
         for (exitNode : superfluousExitNodes.immutableCopy) {
             val links = <ControlFlow>newArrayList
             links.addAll(exitNode.incoming.filter(typeof(ControlFlow)))
@@ -470,7 +470,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val conditionalNodes = sCGraph.nodes.filter(typeof(Conditional)).toList
         val superfluousConditionalNodes = conditionalNodes.filter(
             e |
-                e.getElse != null && e.getElse.target instanceof Conditional &&
+                e.getElse !== null && e.getElse.target instanceof Conditional &&
                     (e.getElse.target as Conditional).condition.equals(e.condition) &&
                     (e.getElse.target as Conditional).then.target == e.then.target
         ).toList
@@ -484,7 +484,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 link.setTarget(conditionalNode.getElse.target)
             }
 
-            if (conditionalNode.getElse != null) {
+            if (conditionalNode.getElse !== null) {
                 val linkThen = conditionalNode.getThen
                 val linkElse = conditionalNode.getElse
 
@@ -552,7 +552,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
                 val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
-                if (sCChartAssignment.valuedObject != null) {
+                if (sCChartAssignment.valuedObject !== null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
                 }
 
@@ -616,7 +616,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         // Connect all entry nodes with the initial state's nodes.
         // Also check the parent container in case the "initial" state is the root state.
-        val initialState = region.states.filter(e|e.isInitial || e.eContainer == null).head
+        val initialState = region.states.filter(e|e.isInitial || e.eContainer === null).head
         val initialNode = initialState.mappedNode
         val controlFlowInitial = initialNode.createControlFlow.trace(initialNode)
         entry.setNext(controlFlowInitial)
@@ -638,7 +638,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             val otherNode = targetState.mappedNode
-            if (otherNode != null) {
+            if (otherNode !== null) {
                 val controlFlow = otherNode.createControlFlow.trace(transition)
                 depth.setNext(controlFlow)
             }
@@ -651,7 +651,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             val otherNode = targetState.mappedNode
-            if (otherNode != null) {
+            if (otherNode !== null) {
                 val controlFlow = otherNode.createControlFlow.trace(transition)
                 assignment.setNext(controlFlow)
             }
@@ -664,15 +664,15 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // transition without a trigger outgoing from the current state.
             val conditional = state.mappedConditional
 
-            val transitionThen = state.outgoingTransitions.filter(e|e.trigger != null).head
-            val transitionElse = state.outgoingTransitions.filter(e|e.trigger == null).head
+            val transitionThen = state.outgoingTransitions.filter(e|e.trigger !== null).head
+            val transitionElse = state.outgoingTransitions.filter(e|e.trigger === null).head
             val otherNodeThen = transitionThen.targetState.mappedNode
             val otherNodeElse = transitionElse.targetState.mappedNode
-            if (otherNodeThen != null) {
+            if (otherNodeThen !== null) {
                 val controlFlowThen = otherNodeThen.createControlFlow.trace(transitionThen)
                 conditional.setThen(controlFlowThen)
             }
-            if (otherNodeElse != null) {
+            if (otherNodeElse !== null) {
                 val controlFlowElse = otherNodeElse.createControlFlow.trace(transitionElse)
                 conditional.setElse(controlFlowElse)
             }
@@ -687,12 +687,13 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // Do recursion for all regions
             for (region : state.regions.filter(ControlflowRegion)) {
                 val otherNodeEntry = region.mappedEntry
-                if (otherNodeEntry != null) {
+                if (otherNodeEntry !== null) {
                     val controlFlowEntry = otherNodeEntry.createControlFlow.trace(state, region)
                     fork.next.add(controlFlowEntry)
                 }
                 val otherNodeExit = region.mappedEntry.exit
-                if (otherNodeExit != null) {
+                if (otherNodeExit !== null) {
+                    otherNodeExit.final = region.final 
                     val controlFlowFinal = join.createControlFlow.trace(state, region)
                     otherNodeExit.setNext(controlFlowFinal)
                 }
@@ -702,7 +703,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 val termination = state.outgoingTransitions.get(0)
                 val terminationTargetState = termination.targetState
                 val otherNodeTermination = terminationTargetState.mappedNode
-                if (otherNodeTermination != null) {
+                if (otherNodeTermination !== null) {
 
                     val controlFlowTermination = otherNodeTermination.createControlFlow.trace(termination)
 

@@ -143,7 +143,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 bb.deadBlock = false
             } else {
                 if (bb.synchronizerBlock) {
-                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock].size > 0
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock&&!finalBlock].size > 0
                 } else if (bb.depthBlock) {
                     bb.deadBlock = basicBlockGuardCache.get(bb.preGuard).deadBlock
                 } else {
@@ -205,7 +205,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
      */
      protected def int createBasicBlocks(SCGraph scg, Node rootNode, int guardIndex, List<BasicBlock> basicBlockCache) {
         val predecessorBlocks = <BasicBlock> newLinkedList
-        createBasicBlocks(scg, rootNode, guardIndex, basicBlockCache, predecessorBlocks)        
+        createBasicBlocks(scg, rootNode, guardIndex, basicBlockCache, predecessorBlocks, null)        
     }   
         
     /**
@@ -237,7 +237,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
      * @return Returns the index of the next guard after processing.
      */       
     protected def int createBasicBlocks(SCGraph scg, Node rootNode, int guardIndex, List<BasicBlock> basicBlockCache,  
-    	List<BasicBlock> predecessorBlocks
+    	List<BasicBlock> predecessorBlocks, Entry threadEntry
     ) {
     	// The index must not be final. Copy it to newIndex. 
         var newIndex = guardIndex
@@ -250,7 +250,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         if (processedNodes.contains(rootNode)) {
         	// If the node has already been processed, add the predecessorList passed by the caller to the basic block
         	// of the node in question. Return afterwards with unmodified index since no new block was created.
-        	if (predecessorBlocks != null && predecessorBlocks.size > 0) {
+        	if (predecessorBlocks !== null && predecessorBlocks.size > 0) {
                 val rootBasicBlock = basicBlockNodeMapping.get(rootNode)
                 rootBasicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(rootBasicBlock))
             }
@@ -275,7 +275,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         val nodeList = <Node> newArrayList
         
         // Repeat the node gathering until the node is empty.
-        while(node != null) {
+        while(node !== null) {
         	// This first node is always part of the new block. Add it.
             nodeList += node
             
@@ -288,11 +288,11 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             	 * createBasicBlock function for each control flow.<br>
             	 * Afterwards, set the node to null which will ensure the exiting of this function instance.
             	 */
-                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
-                if (node.asConditional.then != null)
-                    newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block))
-                if (node.asConditional.^else != null)                    
-                    newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block))
+                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
+                if (node.asConditional.then !== null)
+                    newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
+                if (node.asConditional.^else !== null)                    
+                    newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
                 node = null
             } else 
             if (node instanceof Surface) {
@@ -301,8 +301,8 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             	 * The next block will start at the corresponding depth node.<br>
             	 * Create the block and proceed recursively with the depth. Then ensure the exiting of this instance.
             	 */
-                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
-                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, basicBlockCache, newLinkedList(block))
+                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
+                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
                 node = null
             }  else
             if (node instanceof Fork) {
@@ -314,13 +314,14 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             	 * so proceed with the corresponding join node of the fork and leave this instance.<br>
             	 */
             	// Insert the actual block. 
-                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
+                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
                 // Call the createBasicBlock method for each control flow.
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
-                    newIndex = scg.createBasicBlocks(flow.target, newIndex, basicBlockCache, newLinkedList(block))
+                    val entry = flow.target as Entry
+                    newIndex = scg.createBasicBlocks(flow.target, newIndex, basicBlockCache, newLinkedList(block), entry)
                     
                     // Make sure the exit node was processed.
-                    newIndex = scg.createBasicBlocks((flow.target as Entry).exit, newIndex, basicBlockCache, <BasicBlock> newLinkedList)
+                    newIndex = scg.createBasicBlocks((flow.target as Entry).exit, newIndex, basicBlockCache, <BasicBlock> newLinkedList, entry)
                 }
 				// Subsequently, retrieve all exit nodes that link to the join node and proceed
 				// with the basic block analysis at the corresponding join node.
@@ -328,7 +329,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 node.getAllNext.forEach[ 
                 	joinPredecessors += basicBlockNodeMapping.get((it.target as Entry).exit) 
                 ]
-                newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, basicBlockCache, joinPredecessors)
+                newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, basicBlockCache, joinPredecessors, threadEntry)
                 node = null                
             } else {
             	/**
@@ -345,22 +346,22 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 if (processedNodes.contains(next) && next.incoming.filter(typeof(ControlFlow)).size < 2) {
                     next = null
                 }
-                if (next instanceof Join || next == null) {
+                if (next instanceof Join || next === null) {
                 	/**
                 	 * If the next node would be a join node, we would exit the thread border. 
                 	 * Insert the actual block and do not proceed. The calling fork tree will handle 
                 	 * the other threads and the subsequent join analysis.
                 	 */
-                    scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
+                    scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
                     node = null
                 } else
-                if (next != null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
+                if (next !== null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
                 	/**
                 	 * If the next block has more than one incoming control flow, it starts a new block.
                 	 * Hence, add the actual block and proceed with the next one but exit this instance. 
                 	 */
-                    val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
-                    newIndex = scg.createBasicBlocks(next, newIndex, basicBlockCache, newLinkedList(block)) 
+                    val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
+                    newIndex = scg.createBasicBlocks(next, newIndex, basicBlockCache, newLinkedList(block), threadEntry) 
                     node = null;
                 } else {
                 	/** None of the basic block criteria fits. Simply proceed with the next node. */
@@ -393,17 +394,21 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
      * @return Returns the actual newly generated basic block.
      */     
     protected def BasicBlock insertBasicBlock(SCGraph scg, ValuedObject guard, List<Node> nodeList,
-        List<BasicBlock> basicBlockCache, List<BasicBlock> predecessorBlocks
+        List<BasicBlock> basicBlockCache, List<BasicBlock> predecessorBlocks, Entry threadEntry
     ) {
     	// Create a new basic block with the Scgbb factory.
         val basicBlock = ScgFactory::eINSTANCE.createBasicBlock
         
         /** Assume that the basic block depends on the GO-Signal of a circuit if it has no predecessors. */ 
-        if (predecessorBlocks != null && predecessorBlocks.size == 0 && nodeList.head instanceof Entry) {
+        if (predecessorBlocks !== null && predecessorBlocks.size == 0 && nodeList.head instanceof Entry) {
         	basicBlock.goBlock = true
         }
         /** Initially, mark all blocks as dead. */
         basicBlock.deadBlock = true
+        
+        
+        basicBlock.finalBlock = false
+        basicBlock.threadEntry = threadEntry
         
         /**  
          *If the basic block starts with a depth node, there should only be one predecessor.
@@ -415,6 +420,9 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         	basicBlock.depthBlock = true
         	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guards.head.valuedObject
         	predecessorBlocks.clear
+            if (basicBlock.threadEntry !== null) {
+                if (basicBlock.threadEntry.exit.final) basicBlock.finalBlock = true    
+            }
         }
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (nodeList.head instanceof Join) { 
@@ -425,7 +433,8 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         }
         if (nodeList.last instanceof Exit) {
             val finalNode = nodeList.last as Exit
-            if (finalNode.next == null) basicBlock.termBlock = true
+            if (finalNode.next === null) basicBlock.termBlock = true
+            basicBlock.finalBlock = finalNode.final
         }
  
  		// Add the guard object.
@@ -470,12 +479,12 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         // Examine each node of the original scheduling block.
         for (node : nodeList) {
         	// In the first iteration or if we have to split the block...
-            if (block == null || 
+            if (block === null || 
                 node.schedulingBlockSplitter(lastNode)
             ) {
             	// ... add the block if it is not the first.
-                if (block != null) schedulingBlocks.add(block)
-                if (sbGuard == null) {
+                if (block !== null) schedulingBlocks.add(block)
+                if (sbGuard === null) {
                 	// If it is the first block, re-use the guard of the basic block.
                 	sbGuard = guard
                 } else {
@@ -506,7 +515,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             lastNode = node
         }
         // Finally, add the block to the list, if it is not empty and return the list of blocks.
-        if (block != null) schedulingBlocks.add(block)
+        if (block !== null) schedulingBlocks.add(block)
         
         schedulingBlocks
     }
@@ -533,12 +542,12 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     	// Process each predecessor basic block.
     	for(bb : basicBlocks) {
     		// Create a new predecessor object and set its basic block.
-    		if (bb != null) {
+    		if (bb !== null) {
     		    val predecessor = ScgFactory::eINSTANCE.createPredecessor => [ basicBlock = bb ]
     		
         		// Additionally, check the last node of the predecessor block.
         		val lastNode = bb.schedulingBlocks.last.nodes.last
-                if (lastNode != null)
+                if (lastNode !== null)
                 if (lastNode instanceof Conditional) {
        		   	   /**
                	    * If it is a conditional, we want to mark this block appropriately and store a reference
@@ -547,7 +556,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
        			    * Therefore, check whether first node of the target block is the target of the then or else 
        			    * branch of the conditional and add this information to the predecessor object. 
        			    */
-       			    if (lastNode.then != null && 
+       			    if (lastNode.then !== null && 
        			      target.schedulingBlocks.head.nodes.head == lastNode.then.target) {
 						predecessor.branchType = BranchType::TRUEBRANCH
        			    } else {

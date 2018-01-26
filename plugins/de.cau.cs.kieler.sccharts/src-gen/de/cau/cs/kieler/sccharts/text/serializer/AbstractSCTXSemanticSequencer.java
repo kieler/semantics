@@ -1178,6 +1178,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         final?='final'? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 

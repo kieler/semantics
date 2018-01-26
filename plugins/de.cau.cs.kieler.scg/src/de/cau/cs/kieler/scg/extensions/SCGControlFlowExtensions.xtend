@@ -278,4 +278,25 @@ class SCGControlFlowExtensions {
         pathList 
     }      
 
+    def <T extends Node> T reverseSearchNode(Node source, Class<T> targetClass) {
+        val nodeList = <Node> newLinkedList(source)
+        val visited = <Node> newHashSet
+        var node = null as Node
+        
+        while ((node = nodeList.pop) !== null) {
+            visited += node
+            
+            if (targetClass.isInstance(node)) {
+                return node as T
+            }
+            
+            if (node instanceof Depth) {
+                nodeList += node.surface.allPrevious.map[target].filter[ !visited.contains(it) ]
+            } else {
+                nodeList += node.allPrevious.map[target].filter[ !visited.contains(it) ]
+            }
+        }
+        
+        return null
+    }
 }
