@@ -242,7 +242,11 @@ NegExpression returns Expression:
 TernaryOperation returns Expression:
     {OperatorExpression} 
     subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression ':' subExpressions += AtomicValuedExpression
-    | AtomicValuedExpression;
+    | FBYExpression;
+    
+FBYExpression returns Expression:
+    {OperatorExpression} subExpressions += AtomicValuedExpression operator=FBYOperator subExpressions += AtomicValuedExpression
+    | AtomicValuedExpression;    
     
 // Atomic Expression Rule
 // An atomic expression is either a simple boolean value, a test expression, another boolean expression
@@ -438,6 +442,9 @@ enum PostfixSub returns OperatorType:
     
 enum ConditionalOperator returns OperatorType:
     CONDITIONAL = "?";        
+    
+enum FBYOperator returns OperatorType:
+    FBY = "->";
 
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 

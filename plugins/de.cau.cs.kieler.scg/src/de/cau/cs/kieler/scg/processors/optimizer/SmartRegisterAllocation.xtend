@@ -86,7 +86,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                 node.expression.setRegisterRanges(node, registerAllocation)
                 
                 if (node.expression instanceof OperatorExpression && 
-                    node.expression.asOperatorExpression.operator == OperatorType.PRE) {
+                    node.expression.asOperatorExpression.getPreOperatorExpressions.size > 0) {
                     preNodes += node
                 } 
             } else if (node instanceof Conditional) {
@@ -206,9 +206,11 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         if (node === null) return;
         
         for (p : preNodes) {
-            if (p.expression instanceof OperatorExpression && p.expression.asOperatorExpression.operator == OperatorType.PRE) {
-                if (p.expression.asOperatorExpression.subExpressions.head.asValuedObjectReference.valuedObject.name == registerName) {
-                    return
+            if (p.expression instanceof OperatorExpression) {
+                for (preOE : p.expression.asOperatorExpression.getPreOperatorExpressions) {
+                    if (preOE.subExpressions.head.asValuedObjectReference.valuedObject.name == registerName) {
+                        return
+                    }
                 }
             }
         }

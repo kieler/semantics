@@ -106,7 +106,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val label = if(region.label.nullOrEmpty) "" else " " + region.label + sLabel.toString
 
         // Expanded
-        node.addRegionFigure => [
+        node.addRegionFigure(false) => [
             setAsExpandedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
@@ -129,7 +129,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         ]
 
         // Collapsed
-        node.addRegionFigure => [
+        node.addRegionFigure(false) => [
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
@@ -168,7 +168,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 
         if (!CIRCUIT.booleanValue) {
             // Expanded
-            node.addRegionFigure => [
+            node.addRegionFigure(false) => [
                 setAsExpandedView;
                 addStatesArea(true);
                 addDoubleClickAction(ReferenceExpandAction::ID)
@@ -178,7 +178,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             ]
     
             // Collapsed
-            node.addRegionFigure => [
+            node.addRegionFigure(false) => [
                 setAsCollapsedView;
                 addDoubleClickAction(ReferenceExpandAction::ID)
                 addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);

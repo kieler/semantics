@@ -121,6 +121,7 @@ ImplicitControlflowRegion returns sccharts::ControlflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
+    final?='final'?
     'region' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
     ('schedule' schedule+=ScheduleObjectReference+)?

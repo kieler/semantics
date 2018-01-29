@@ -19,6 +19,10 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.StringValue
 
 /**
  * @author ssm
@@ -30,6 +34,14 @@ class KExpressionsTypeExtensions {
     
     @Inject extension KExpressionsValuedObjectExtensions
     
+    def ValueType inferType(Expression expression) {
+        if (expression.isBool) return ValueType.BOOL;
+        if (expression.isInt) return ValueType.INT;
+        if (expression.isFloat) return ValueType.FLOAT;
+        if (expression.isString) return ValueType.STRING;
+        return ValueType.UNKNOWN;
+    }
+    
     def dispatch boolean isFloat(ValuedObject valuedObject) {
         valuedObject.type == ValueType.FLOAT
     }
@@ -40,12 +52,70 @@ class KExpressionsTypeExtensions {
     
     def dispatch boolean isFloat(OperatorExpression operatorExpression) {
         for (subExpression : operatorExpression.subExpressions) {
-            if (subExpression.isFloat) return true;
+            if (!subExpression.isFloat) return false;
         }
-        return false;
+        return true;
     }
     
     def dispatch boolean isFloat(Value value) {
         value instanceof FloatValue
     }
+
+    def dispatch boolean isInt(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.INT
+    }
+    
+    def dispatch boolean isInt(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.INT
+    }
+    
+    def dispatch boolean isInt(OperatorExpression operatorExpression) {
+        for (subExpression : operatorExpression.subExpressions) {
+            if (!subExpression.isInt) return false;
+        }
+        return true;
+    }
+    
+    def dispatch boolean isInt(Value value) {
+        value instanceof IntValue
+    }
+    
+    def dispatch boolean isBool(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.BOOL
+    }
+    
+    def dispatch boolean isBool(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.BOOL
+    }
+    
+    def dispatch boolean isBool(OperatorExpression operatorExpression) {
+        for (subExpression : operatorExpression.subExpressions) {
+            if (!subExpression.isBool) return false;
+        }
+        return true
+    }
+    
+    def dispatch boolean isBool(Value value) {
+        value instanceof BoolValue
+    }
+    
+    def dispatch boolean isString(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.STRING
+    }
+    
+    def dispatch boolean isString(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.STRING
+    }
+    
+    def dispatch boolean isString(OperatorExpression operatorExpression) {
+        for (subExpression : operatorExpression.subExpressions) {
+            if (subExpression.isString) return true;
+        }
+        return false;
+    }
+    
+    def dispatch boolean isString(Value value) {
+        value instanceof StringValue
+    }
+        
 }

@@ -24,7 +24,7 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 class SplitTED extends SCChartsProcessor {
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformations.splitTED"
+        "de.cau.cs.kieler.sccharts.processors.splitTED"
     }
     
     override getName() {

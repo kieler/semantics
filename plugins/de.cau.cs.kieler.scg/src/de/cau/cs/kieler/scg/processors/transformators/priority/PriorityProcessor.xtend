@@ -39,14 +39,14 @@ class PriorityProcessor extends InplaceProcessor<SCGraphs> implements Traceable 
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     
     public static val IProperty<PriorityAuxiliaryData> PRIORITY_AUXILIARY_DATA = 
-        new Property<PriorityAuxiliaryData>("de.cau.cs.kieler.scg.processors.transformators.priority.data", null)    
+        new Property<PriorityAuxiliaryData>("de.cau.cs.kieler.scg.processors.priority.data", null)    
     
     override getName() {
         "Priorities"
     }
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.priorities"
+        "de.cau.cs.kieler.scg.processors.priorities"
     }
     /**
      * transform executes the transformation of an SCG with dependency information to an

@@ -65,7 +65,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.reference"
+        "de.cau.cs.kieler.sccharts.processors.reference"
     }
     
     override getName() {
@@ -74,7 +74,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     override process() {
         replacedWithLiterals.clear
-        dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.transformators.dataflow") as Dataflow
+        dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.dataflow") as Dataflow
         if (dataflowProcessor !== null) {
             dataflowProcessor.setEnvironment(sourceEnvironment, environment)
         }

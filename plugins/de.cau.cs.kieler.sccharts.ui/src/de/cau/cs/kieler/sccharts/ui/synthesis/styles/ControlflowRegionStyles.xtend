@@ -36,6 +36,7 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 
 /**
  * Styles for {@link ControlflowRegion}.
@@ -62,15 +63,23 @@ class ControlflowRegionStyles {
     /**
      * Adds a region figure.
      */
-    def KRectangle addRegionFigure(KNode node) {
+    def KRectangle addRegionFigure(KNode node, boolean isFinal) {
         node.addRectangle() => [
             background = REGION_BACKGROUND.color;
             foreground = REGION_FOREGROUND.color;
             lineWidth = 1;
             setSurroundingSpace(2, 0);
+            if (isFinal) {
+                children += it.addRectangle => [
+                    background = REGION_BACKGROUND.color;
+                    foreground = REGION_FOREGROUND.color;
+                    lineWidth = 1;
+                    setSurroundingSpace(2, 0);
+                ]
+            }
         ]
     }
-
+    
     /**
      * Adds a button with text.
      */

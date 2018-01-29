@@ -2983,13 +2983,25 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=super::AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=super::AtomicValuedExpression ':' subExpressions+=super::AtomicValuedExpression
-	//	| super::AtomicValuedExpression;
+	//	| FBYExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
 	
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
+	}
+
+	//FBYExpression Expression:
+	//	{OperatorExpression} subExpressions+=super::AtomicValuedExpression operator=FBYOperator
+	//	subExpressions+=super::AtomicValuedExpression
+	//	| super::AtomicValuedExpression;
+	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
+		return gaKExpressions.getFBYExpressionAccess();
+	}
+	
+	public ParserRule getFBYExpressionRule() {
+		return getFBYExpressionAccess().getRule();
 	}
 
 	//// ID with primes
@@ -3392,6 +3404,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getConditionalOperatorRule() {
 		return getConditionalOperatorAccess().getRule();
+	}
+
+	//enum FBYOperator returns OperatorType:
+	//	FBY="->";
+	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
+		return gaKExpressions.getFBYOperatorAccess();
+	}
+	
+	public EnumRule getFBYOperatorRule() {
+		return getFBYOperatorAccess().getRule();
 	}
 
 	//enum ValueType:

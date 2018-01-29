@@ -95,6 +95,10 @@ class KExpressionsSerializeExtensions {
     protected def CharSequence serializeOperatorExpressionPRE(OperatorExpression expression) {
     	"pre(" + expression.subExpressions.head.serialize + ")"
     }   
+
+    protected def CharSequence serializeOperatorExpressionFBY(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " -> ")
+    }
     
     protected def CharSequence serializeOperatorExpressionNot(OperatorExpression expression) {
     	"!" + expression.subExpressions.head.serialize
@@ -196,6 +200,8 @@ class KExpressionsSerializeExtensions {
             return expression.serializeOperatorExpressionVAL
         } else if (expression.operator == OperatorType::PRE) {
             return expression.serializeOperatorExpressionPRE
+        } else if (expression.operator == OperatorType::FBY) {
+            return expression.serializeOperatorExpressionFBY
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeOperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {

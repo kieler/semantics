@@ -39,7 +39,7 @@ class For extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsScopeExtensions
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.for"
+        "de.cau.cs.kieler.sccharts.processors.for"
     }
     
     override getName() {

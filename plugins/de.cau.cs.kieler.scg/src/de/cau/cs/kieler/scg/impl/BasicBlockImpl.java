@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scg.BasicBlock;
+import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.SchedulingBlock;
@@ -39,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getPredecessors <em>Predecessors</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getThreadEntry <em>Thread Entry</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDepthBlock <em>Depth Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
@@ -46,6 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isTermBlock <em>Term Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getPreGuard <em>Pre Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isFinalBlock <em>Final Block</em>}</li>
  * </ul>
  *
  * @generated
@@ -70,6 +73,16 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * @ordered
      */
     protected EList<Predecessor> predecessors;
+
+    /**
+     * The cached value of the '{@link #getThreadEntry() <em>Thread Entry</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getThreadEntry()
+     * @generated
+     * @ordered
+     */
+    protected Entry threadEntry;
 
     /**
      * The default value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
@@ -202,6 +215,26 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected ValuedObject preGuard;
 
     /**
+     * The default value of the '{@link #isFinalBlock() <em>Final Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFinalBlock()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean FINAL_BLOCK_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isFinalBlock() <em>Final Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFinalBlock()
+     * @generated
+     * @ordered
+     */
+    protected boolean finalBlock = FINAL_BLOCK_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -242,6 +275,44 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             predecessors = new EObjectContainmentEList<Predecessor>(Predecessor.class, this, ScgPackage.BASIC_BLOCK__PREDECESSORS);
         }
         return predecessors;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Entry getThreadEntry() {
+        if (threadEntry != null && threadEntry.eIsProxy()) {
+            InternalEObject oldThreadEntry = (InternalEObject)threadEntry;
+            threadEntry = (Entry)eResolveProxy(oldThreadEntry);
+            if (threadEntry != oldThreadEntry) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.BASIC_BLOCK__THREAD_ENTRY, oldThreadEntry, threadEntry));
+            }
+        }
+        return threadEntry;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Entry basicGetThreadEntry() {
+        return threadEntry;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setThreadEntry(Entry newThreadEntry) {
+        Entry oldThreadEntry = threadEntry;
+        threadEntry = newThreadEntry;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__THREAD_ENTRY, oldThreadEntry, threadEntry));
     }
 
     /**
@@ -413,6 +484,27 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isFinalBlock() {
+        return finalBlock;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFinalBlock(boolean newFinalBlock) {
+        boolean oldFinalBlock = finalBlock;
+        finalBlock = newFinalBlock;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__FINAL_BLOCK, oldFinalBlock, finalBlock));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -436,6 +528,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return getSchedulingBlocks();
             case ScgPackage.BASIC_BLOCK__PREDECESSORS:
                 return getPredecessors();
+            case ScgPackage.BASIC_BLOCK__THREAD_ENTRY:
+                if (resolve) return getThreadEntry();
+                return basicGetThreadEntry();
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 return isGoBlock();
             case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
@@ -451,6 +546,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 if (resolve) return getPreGuard();
                 return basicGetPreGuard();
+            case ScgPackage.BASIC_BLOCK__FINAL_BLOCK:
+                return isFinalBlock();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -471,6 +568,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__PREDECESSORS:
                 getPredecessors().clear();
                 getPredecessors().addAll((Collection<? extends Predecessor>)newValue);
+                return;
+            case ScgPackage.BASIC_BLOCK__THREAD_ENTRY:
+                setThreadEntry((Entry)newValue);
                 return;
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 setGoBlock((Boolean)newValue);
@@ -493,6 +593,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 setPreGuard((ValuedObject)newValue);
                 return;
+            case ScgPackage.BASIC_BLOCK__FINAL_BLOCK:
+                setFinalBlock((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -510,6 +613,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return;
             case ScgPackage.BASIC_BLOCK__PREDECESSORS:
                 getPredecessors().clear();
+                return;
+            case ScgPackage.BASIC_BLOCK__THREAD_ENTRY:
+                setThreadEntry((Entry)null);
                 return;
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 setGoBlock(GO_BLOCK_EDEFAULT);
@@ -532,6 +638,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 setPreGuard((ValuedObject)null);
                 return;
+            case ScgPackage.BASIC_BLOCK__FINAL_BLOCK:
+                setFinalBlock(FINAL_BLOCK_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -548,6 +657,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return schedulingBlocks != null && !schedulingBlocks.isEmpty();
             case ScgPackage.BASIC_BLOCK__PREDECESSORS:
                 return predecessors != null && !predecessors.isEmpty();
+            case ScgPackage.BASIC_BLOCK__THREAD_ENTRY:
+                return threadEntry != null;
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 return goBlock != GO_BLOCK_EDEFAULT;
             case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
@@ -562,6 +673,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return termBlock != TERM_BLOCK_EDEFAULT;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 return preGuard != null;
+            case ScgPackage.BASIC_BLOCK__FINAL_BLOCK:
+                return finalBlock != FINAL_BLOCK_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -588,6 +701,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
         result.append(deadBlock);
         result.append(", termBlock: ");
         result.append(termBlock);
+        result.append(", finalBlock: ");
+        result.append(finalBlock);
         result.append(')');
         return result.toString();
     }

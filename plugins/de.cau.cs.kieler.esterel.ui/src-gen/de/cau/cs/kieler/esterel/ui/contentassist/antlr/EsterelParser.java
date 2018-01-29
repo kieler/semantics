@@ -119,6 +119,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
 					put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 					put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
+					put(grammarAccess.getFBYExpressionAccess().getAlternatives(), "rule__FBYExpression__Alternatives");
 					put(grammarAccess.getReferenceCallAccess().getAlternatives_1(), "rule__ReferenceCall__Alternatives_1");
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 					put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
@@ -492,6 +493,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getShiftRightUnsignedExpressionAccess().getGroup_1_1(), "rule__ShiftRightUnsignedExpression__Group_1_1__0");
 					put(grammarAccess.getShiftRightUnsignedExpressionAccess().getGroup_1_2(), "rule__ShiftRightUnsignedExpression__Group_1_2__0");
 					put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
+					put(grammarAccess.getFBYExpressionAccess().getGroup_0(), "rule__FBYExpression__Group_0__0");
 					put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
@@ -1022,6 +1024,9 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_2(), "rule__TernaryOperation__OperatorAssignment_0_2");
 					put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_3(), "rule__TernaryOperation__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_5(), "rule__TernaryOperation__SubExpressionsAssignment_0_5");
+					put(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__FBYExpression__SubExpressionsAssignment_0_1");
+					put(grammarAccess.getFBYExpressionAccess().getOperatorAssignment_0_2(), "rule__FBYExpression__OperatorAssignment_0_2");
+					put(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__FBYExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");
