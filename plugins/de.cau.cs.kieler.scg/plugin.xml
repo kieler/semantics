@@ -117,6 +117,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.HaltStateRemover">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
