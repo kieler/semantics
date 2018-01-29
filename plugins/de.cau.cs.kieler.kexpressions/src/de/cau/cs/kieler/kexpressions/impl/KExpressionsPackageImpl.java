@@ -1313,6 +1313,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.STRING);
         addEEnumLiteral(valueTypeEEnum, ValueType.REFERENCE);
         addEEnumLiteral(valueTypeEEnum, ValueType.SCHEDULE);
+        addEEnumLiteral(valueTypeEEnum, ValueType.UNKNOWN);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);

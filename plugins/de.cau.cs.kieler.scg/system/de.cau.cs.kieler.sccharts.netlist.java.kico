@@ -5,6 +5,7 @@ public system de.cau.cs.kieler.sccharts.netlist.java
 de.cau.cs.kieler.sccharts.processors.reference
 de.cau.cs.kieler.sccharts.processors.for	
 de.cau.cs.kieler.sccharts.processors.const
+de.cau.cs.kieler.sccharts.processors.fby
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.signal
 	de.cau.cs.kieler.sccharts.processors.suspend

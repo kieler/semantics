@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import java.util.List
+import com.google.inject.Inject
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -47,7 +48,9 @@ import java.util.List
  * @kieler.design 2013-08-20 proposed 
  * @kieler.rating 2013-08-20 proposed yellow
  */
-class SCGControlFlowExtensions { 
+class SCGControlFlowExtensions {
+    
+    @Inject extension SCGCoreExtensions 
     
     private int MAX_CONTROLFLOW_ACCUMULATION = 100;
 
@@ -73,8 +76,8 @@ class SCGControlFlowExtensions {
 
 	dispatch def ControlFlow createControlFlow(Conditional conditional) {
 		ScgFactory::eINSTANCE.createControlFlow => [ 
-			if (conditional.then == null) conditional.then = it
-			else if (conditional.^else == null) conditional.^else = it
+			if (conditional.then === null) conditional.then = it
+			else if (conditional.^else === null) conditional.^else = it
 		]
 	}
 
@@ -283,7 +286,8 @@ class SCGControlFlowExtensions {
         val visited = <Node> newHashSet
         var node = null as Node
         
-        while ((node = nodeList.pop) !== null) {
+        while (!nodeList.empty) {
+            node = nodeList.pop
             visited += node
             
             if (targetClass.isInstance(node)) {
@@ -291,12 +295,35 @@ class SCGControlFlowExtensions {
             }
             
             if (node instanceof Depth) {
-                nodeList += node.surface.allPrevious.map[target].filter[ !visited.contains(it) ]
+                nodeList += node.surface.allPrevious.map[eContainer].filter(Node).filter[ !visited.contains(it) ]
             } else {
-                nodeList += node.allPrevious.map[target].filter[ !visited.contains(it) ]
+                nodeList += node.allPrevious.map[eContainer].filter(Node).filter[ !visited.contains(it) ]
             }
         }
         
         return null
     }
+    
+    def boolean nodeExistsPath(Node source, Node target, boolean includePause) {
+        val nodeList = <Node> newLinkedList(source)
+        val visited = <Node> newHashSet
+        var node = null as Node
+        
+        while (!nodeList.empty) {
+            node = nodeList.pop
+            visited += node
+            
+            if (node == target) {
+                return true
+            }
+            
+            if (node instanceof Surface && includePause) {
+                nodeList += node.asSurface.depth.allNext.map[target].filter[ !visited.contains(it) ]
+            } else {
+                nodeList += node.allNext.map[it.target].filter[ !visited.contains(it) ]
+            }
+        }
+        
+        return false
+    }    
 }
