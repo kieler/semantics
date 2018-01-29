@@ -105,7 +105,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
 
     override getId() {
-        "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG"
+        "de.cau.cs.kieler.sccharts.scg.processors.SCG"
     }
     
     override getName() {

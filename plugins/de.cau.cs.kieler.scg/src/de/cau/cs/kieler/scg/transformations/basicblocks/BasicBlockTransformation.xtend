@@ -87,7 +87,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     protected val guardCache = <Guard> newArrayList
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
+        "de.cau.cs.kieler.scg.processors.basicBlocks"
     }
     
     override getName() {

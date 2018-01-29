@@ -73,7 +73,7 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     }
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling"
+        "de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling"
     }
     
     override getName() {

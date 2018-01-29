@@ -80,7 +80,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     //-------------------------------------------------------------------------
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.expressions"
+        "de.cau.cs.kieler.scg.processors.expressions"
     }
     
     override getName() {

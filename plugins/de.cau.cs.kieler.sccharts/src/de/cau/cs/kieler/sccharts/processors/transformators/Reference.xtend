@@ -65,7 +65,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.reference"
+        "de.cau.cs.kieler.sccharts.processors.reference"
     }
     
     override getName() {
