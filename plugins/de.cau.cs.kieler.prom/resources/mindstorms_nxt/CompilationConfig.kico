@@ -5,5 +5,5 @@ system de.cau.cs.kieler.sccharts.netlist.simple.java.transitions
 
 // Enable taken transition signaling for diagram highlighting in the simulation.
 // Note be aware that this increases the program size and can impact performance on the mindstorms.  
-//de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling
+//de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
 system de.cau.cs.kieler.sccharts.netlist.java

@@ -35,7 +35,7 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
 //            sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, semanticObject)
 //    }
     
-    override sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
 //        genericSequencer.createSequence(context, semanticObject)
 
@@ -194,6 +194,14 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                 feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_5_0,
                     semanticObject.subExpressions.get(2), 2)
             }
+            case FBY: {
+                feeder.accept(grammarAccess.FBYExpressionAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_1_0,
+                    semanticObject.subExpressions.head, 0)
+                feeder.accept(grammarAccess.FBYExpressionAccess.operatorFBYOperatorEnumRuleCall_0_2_0,
+                    semanticObject.operator)
+                feeder.accept(grammarAccess.FBYExpressionAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_3_0,
+                    semanticObject.subExpressions.get(1), 1)
+            }    
             case SHIFT_LEFT: {
                 feeder.multiOP(
                     semanticObject,

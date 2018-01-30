@@ -48,7 +48,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     @Inject extension SCGCoreExtensions
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.scheduler"
+        "de.cau.cs.kieler.scg.processors.scheduler"
     }
     
     override getName() {

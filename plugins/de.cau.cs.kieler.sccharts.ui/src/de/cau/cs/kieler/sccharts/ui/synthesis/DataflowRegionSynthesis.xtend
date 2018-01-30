@@ -74,6 +74,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100)
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
+        node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
@@ -105,7 +106,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val label = if(region.label.nullOrEmpty) "" else " " + region.label + sLabel.toString
 
         // Expanded
-        node.addRegionFigure => [
+        node.addRegionFigure(false) => [
             setAsExpandedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
@@ -128,7 +129,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         ]
 
         // Collapsed
-        node.addRegionFigure => [
+        node.addRegionFigure(false) => [
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
@@ -167,7 +168,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 
         if (!CIRCUIT.booleanValue) {
             // Expanded
-            node.addRegionFigure => [
+            node.addRegionFigure(false) => [
                 setAsExpandedView;
                 addStatesArea(true);
                 addDoubleClickAction(ReferenceExpandAction::ID)
@@ -177,7 +178,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             ]
     
             // Collapsed
-            node.addRegionFigure => [
+            node.addRegionFigure(false) => [
                 setAsCollapsedView;
                 addDoubleClickAction(ReferenceExpandAction::ID)
                 addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);

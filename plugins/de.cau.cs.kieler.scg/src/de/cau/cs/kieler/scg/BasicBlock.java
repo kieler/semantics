@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getThreadEntry <em>Thread Entry</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDepthBlock <em>Depth Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
@@ -36,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isTermBlock <em>Term Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isFinalBlock <em>Final Block</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock()
@@ -74,6 +76,32 @@ public interface BasicBlock extends EObject {
      * @generated
      */
     EList<Predecessor> getPredecessors();
+
+    /**
+     * Returns the value of the '<em><b>Thread Entry</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Thread Entry</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Thread Entry</em>' reference.
+     * @see #setThreadEntry(Entry)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_ThreadEntry()
+     * @model
+     * @generated
+     */
+    Entry getThreadEntry();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#getThreadEntry <em>Thread Entry</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Thread Entry</em>' reference.
+     * @see #getThreadEntry()
+     * @generated
+     */
+    void setThreadEntry(Entry value);
 
     /**
      * Returns the value of the '<em><b>Go Block</b></em>' attribute.
@@ -256,5 +284,31 @@ public interface BasicBlock extends EObject {
      * @generated
      */
     void setPreGuard(ValuedObject value);
+
+    /**
+     * Returns the value of the '<em><b>Final Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Final Block</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Final Block</em>' attribute.
+     * @see #setFinalBlock(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_FinalBlock()
+     * @model
+     * @generated
+     */
+    boolean isFinalBlock();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#isFinalBlock <em>Final Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Final Block</em>' attribute.
+     * @see #isFinalBlock()
+     * @generated
+     */
+    void setFinalBlock(boolean value);
 
 } // BasicBlock

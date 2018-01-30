@@ -635,6 +635,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExit_Final() {
+        return (EAttribute)exitEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -725,19 +734,19 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_GoBlock() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(2);
+    public EReference getBasicBlock_ThreadEntry() {
+        return (EReference)basicBlockEClass.getEStructuralFeatures().get(2);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_DepthBlock() {
+	public EAttribute getBasicBlock_GoBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
     }
 
@@ -746,7 +755,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_SynchronizerBlock() {
+	public EAttribute getBasicBlock_DepthBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
     }
 
@@ -755,7 +764,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_EntryBlock() {
+	public EAttribute getBasicBlock_SynchronizerBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
     }
 
@@ -764,8 +773,17 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_DeadBlock() {
+	public EAttribute getBasicBlock_EntryBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(6);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EAttribute getBasicBlock_DeadBlock() {
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(7);
     }
 
 	/**
@@ -774,7 +792,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     public EAttribute getBasicBlock_TermBlock() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(7);
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -783,10 +801,19 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
 	public EReference getBasicBlock_PreGuard() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(8);
+        return (EReference)basicBlockEClass.getEStructuralFeatures().get(9);
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBasicBlock_FinalBlock() {
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -994,10 +1021,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         exitEClass = createEClass(EXIT);
         createEReference(exitEClass, EXIT__ENTRY);
         createEReference(exitEClass, EXIT__NEXT);
+        createEAttribute(exitEClass, EXIT__FINAL);
 
         basicBlockEClass = createEClass(BASIC_BLOCK);
         createEReference(basicBlockEClass, BASIC_BLOCK__SCHEDULING_BLOCKS);
         createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
+        createEReference(basicBlockEClass, BASIC_BLOCK__THREAD_ENTRY);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__DEPTH_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__SYNCHRONIZER_BLOCK);
@@ -1005,6 +1034,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__TERM_BLOCK);
         createEReference(basicBlockEClass, BASIC_BLOCK__PRE_GUARD);
+        createEAttribute(basicBlockEClass, BASIC_BLOCK__FINAL_BLOCK);
 
         schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
@@ -1150,10 +1180,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(exitEClass, Exit.class, "Exit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getExit_Entry(), this.getEntry(), this.getEntry_Exit(), "entry", null, 1, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getExit_Next(), this.getControlFlow(), null, "next", null, 0, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getExit_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(basicBlockEClass, BasicBlock.class, "BasicBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBasicBlock_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_Predecessors(), this.getPredecessor(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBasicBlock_ThreadEntry(), this.getEntry(), null, "threadEntry", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_DepthBlock(), ecorePackage.getEBoolean(), "depthBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_SynchronizerBlock(), ecorePackage.getEBoolean(), "synchronizerBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1161,6 +1193,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_TermBlock(), ecorePackage.getEBoolean(), "termBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_PreGuard(), theKExpressionsPackage.getValuedObject(), null, "preGuard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBasicBlock_FinalBlock(), ecorePackage.getEBoolean(), "finalBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedulingBlock_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

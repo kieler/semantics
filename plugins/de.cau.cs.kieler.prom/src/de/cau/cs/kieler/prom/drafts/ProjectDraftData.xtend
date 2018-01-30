@@ -215,9 +215,9 @@ class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
                     }
                 }    
             } catch (Exception e) {
-                throw new Exception("Could not initialize '" + resolvedProjectRelativePath +"'\n" 
-                                  + "with '" + data.origin + "'.\n"
-                                  + "Please make sure that all paths are valid.", e)
+//                throw new Exception("Could not initialize '" + resolvedProjectRelativePath +"'\n" 
+//                                  + "with '" + data.origin + "'.\n"
+//                                  + "Please make sure that all paths are valid.", e)
             }
         }
     }

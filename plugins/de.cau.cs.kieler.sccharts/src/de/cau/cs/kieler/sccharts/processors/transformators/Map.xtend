@@ -36,7 +36,7 @@ class Map extends SCChartsProcessor {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.map"
+        "de.cau.cs.kieler.sccharts.processors.map"
     }
     
     override getName() {

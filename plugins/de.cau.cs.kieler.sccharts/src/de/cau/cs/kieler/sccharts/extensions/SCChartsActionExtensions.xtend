@@ -31,6 +31,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -194,5 +195,13 @@ class SCChartsActionExtensions {
     
     def void replace(Action action, Expression searchExpression, Expression replaceExpression) {
         action.setTrigger(action.trigger.replace(searchExpression, replaceExpression))
-    }    
+    }
+    
+    def Action getEnclosingAction(EObject eObject) {
+        var enclosing = eObject.eContainer
+        while (!(enclosing instanceof Action) && enclosing !== null) {
+            enclosing = enclosing.eContainer
+        }    
+        return if (enclosing !== null) enclosing as Action else null 
+    }
 }

@@ -17,14 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import java.util.Deque
-import de.cau.cs.kieler.scg.Assignment
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /** 
@@ -35,6 +30,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
+	@Inject extension TarjanSCC
 	
 	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 
 	   new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.enabled", true)
@@ -71,20 +67,10 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 
         if (!environment.getProperty(LOOP_ANALYZER_ENABLED)) return;
 
-        val nodesToCheck = <Node> newLinkedList
-        val checkedNodes = <Node> newHashSet
         for (scg : model.scgs) {
-            nodesToCheck += scg.nodes.head as Entry
+            scg.findSCCs(loopData)
         }
-        
-        while (nodesToCheck.peek !== null) {
-            val nextNode = nodesToCheck.pop
-            if (!checkedNodes.contains(nextNode)) {
-                nextNode.checkInstantaneousLoop(loopData, nodesToCheck)
-                checkedNodes += nextNode
-            }
-        }
-        
+       
         if (!loopData.criticalNodes.empty) {
             if (environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
                 environment.errors.add("Instantaneous loop detected!")
@@ -106,55 +92,6 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             }
         }
     }	
-	
-	private def void checkInstantaneousLoop(Node node, LoopData loopData, Deque<Node> nodesToCheck) {
-	    val visited = <Node> newHashSet
-	    val path = <Node> newLinkedList => [ add(node) ]
-	    
-	    do {
-	        val actualNode = path.peek
-	        visited += actualNode
-	        
-            val nextNodes =
-                (actualNode.allNext.map[ target ] + 
-                if (actualNode instanceof Assignment) 
-                    actualNode.dependencies.filter(DataDependency).filter[ concurrent && !confluent ].map[ target ]
-                else #[]).toList
-                
-               
-            var Node nextNode = null
-            
-            for (nn : nextNodes) {
-                if (path.contains(nn)) {
-                    // loop
-                    val iter = path.iterator
-                    var Node pn = null
-                    while ((pn = iter.next) !== nn) {
-                        loopData.criticalNodes.add(pn)
-                    } 
-                    loopData.criticalNodes.add(pn)
-                    
-                    if (environment.getProperty(LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP)) {
-                        return
-                    }
-                }    
-                if (!visited.contains(nn)) {
-                    if (nn instanceof Surface) {
-                        nodesToCheck += nn.depth                        
-                    } else {
-                        nextNode = nn
-                    }
-                }
-            }
-             
-            if (nextNode === null) {
-                path.pop
-            } else {
-                path.push(nextNode)
-            }
-	    } while(!path.empty)
-	}
-	
 	
     protected def extractLoopModel(LoopData loopData) {
         val modelCopy = getModel.copyEObjectAndReturnCopier

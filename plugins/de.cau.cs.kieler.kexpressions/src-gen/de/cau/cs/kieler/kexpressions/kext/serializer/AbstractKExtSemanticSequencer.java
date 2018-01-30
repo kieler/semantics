@@ -221,10 +221,11 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getFBYExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -501,7 +502,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
-	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal' | (type=HostType hostType=STRING)) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
@@ -524,7 +525,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
-	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal' | (type=HostType hostType=STRING)) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?

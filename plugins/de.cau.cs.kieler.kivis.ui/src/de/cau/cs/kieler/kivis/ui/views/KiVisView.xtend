@@ -1101,7 +1101,7 @@ class KiVisView extends ViewPart {
      */
     private def boolean getShowSimulationStoppedDialog() {
         // TODO: Remove if not needed anymore
-        return preferences.getBoolean(SHOW_SIMULATION_STOPPED_DIALOG_ATTR, true)
+        return preferences.getBoolean(SHOW_SIMULATION_STOPPED_DIALOG_ATTR, false)
     }
     
     /**

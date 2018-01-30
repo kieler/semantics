@@ -200,6 +200,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     protected def CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
     	"pre(" + expression.subExpressions.head.serializeHR + ")"
     }   
+
+    protected def CharSequence serializeHROperatorExpressionFBY(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " -> ")
+    }
     
     protected def CharSequence serializeHROperatorExpressionNot(OperatorExpression expression) {
     	"!" + expression.subExpressions.head.serializeHR
@@ -300,6 +304,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return expression.serializeHROperatorExpressionVAL
         } else if (expression.operator == OperatorType::PRE) {
             return expression.serializeHROperatorExpressionPRE
+        } else if (expression.operator == OperatorType::FBY) {
+            return expression.serializeHROperatorExpressionFBY
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeHROperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {
@@ -356,6 +362,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return "val"
         } else if (operator == OperatorType::PRE) {
             return "pre"
+        } else if (operator == OperatorType::FBY) {
+            return "->"
         } else if (operator == OperatorType::NE) {
             result = "~"
         } else if (operator == OperatorType::LOGICAL_AND) {

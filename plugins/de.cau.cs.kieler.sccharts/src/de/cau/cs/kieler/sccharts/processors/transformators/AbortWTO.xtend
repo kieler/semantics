@@ -55,7 +55,7 @@ class AbortWTO extends SCChartsProcessor {
     //-------------------------------------------------------------------------
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.abort.wto"
+        "de.cau.cs.kieler.sccharts.processors.abort.wto"
     }
     
     override getName() {

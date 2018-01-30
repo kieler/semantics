@@ -433,7 +433,6 @@ class SimulationContext {
     /**
      * Checks if there are any problems and if so,
      * shows these to the user and throws an exception.
-     * 
      */
     private def void checkErrors(List<BuildProblem> problems) {
         if(problems.isNullOrEmpty) {
@@ -441,8 +440,8 @@ class SimulationContext {
         }
         buildResult.problems.addAll(problems)
         KielerModelingBuilder.showBuildProblems(problems)
-        if(!problems.isNullOrEmpty) {
-            throw new Exception("Errors occured when creating the simulation: \n- "+problems.map[toString].join("\n- "))
+        if(!buildResult.errors.isNullOrEmpty) {
+            throw new Exception("Errors occured when creating the simulation: \n- "+buildResult.errors.map[toString].join("\n- "))
         }
     }
     

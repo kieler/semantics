@@ -132,6 +132,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.UserSchedule">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Fby">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

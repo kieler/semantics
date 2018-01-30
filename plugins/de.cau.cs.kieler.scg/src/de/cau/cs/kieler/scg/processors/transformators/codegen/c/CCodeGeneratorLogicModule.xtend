@@ -161,9 +161,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             }
             
             // Handle pre variable if necessary.
-            if (assignment.expression !== null && assignment.expression instanceof OperatorExpression &&
-                (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
-                (assignment.expression as OperatorExpression).addPreVariable(serializer)                    
+            if (assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
+                for (preOE : assignment.expression.asOperatorExpression.getPreOperatorExpressions) {
+                    preOE.addPreVariable(serializer)            
+                }        
             }
         }
         

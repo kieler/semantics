@@ -363,7 +363,7 @@
                 class="de.cau.cs.kieler.kicool.ui.view.CompilerView"
                 icon="icons/IMBC_gear.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler"
-                name="IMB Compiler"
+                name="Kieler Compiler"
                 restorable="true">
           </view>
        </extension>
