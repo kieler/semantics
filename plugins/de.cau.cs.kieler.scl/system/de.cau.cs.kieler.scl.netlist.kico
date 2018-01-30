@@ -5,14 +5,14 @@ public system de.cau.cs.kieler.scl.netlist
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
 pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
-de.cau.cs.kieler.scg.processors.transformators.dependency
+de.cau.cs.kieler.scg.processors.dependency
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
-de.cau.cs.kieler.scg.processors.transformators.basicBlocks
-de.cau.cs.kieler.scg.processors.transformators.expressions
-de.cau.cs.kieler.scg.processors.transformators.guards
-de.cau.cs.kieler.scg.processors.transformators.scheduler
-de.cau.cs.kieler.scg.processors.transformators.sequentializer
+de.cau.cs.kieler.scg.processors.basicBlocks
+de.cau.cs.kieler.scg.processors.expressions
+de.cau.cs.kieler.scg.processors.guards
+de.cau.cs.kieler.scg.processors.scheduler
+de.cau.cs.kieler.scg.processors.sequentializer
 post process de.cau.cs.kieler.scg.processors.copyPropagation
 post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
 post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent  
