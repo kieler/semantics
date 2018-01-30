@@ -22,6 +22,8 @@ import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.kexpressions.ValueType
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -46,8 +48,28 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(Await).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Await) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Await).toList.forEach[transform]
+        }
     }
     
     def transform(Await await) {
@@ -62,11 +84,11 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
             val label = createLabel
             val variable = createNewUniqueVariable(createIntValue(0))
             val decl = createDeclaration(ValueType.INT, variable)
-            if (await.delay.expression !== null) {
+            if (await.delay.delay !== null) {
                 val scope = createScopeStatement(decl)
                 await.replace(scope)
-                val lt = createLT(createValuedObjectReference(variable), await.delay.expression)
-                val conditional = createConditional(await.delay.expression)
+                val lt = createLT(createValuedObjectReference(variable), await.delay.delay.copy)
+                val conditional = createConditional(await.delay.expression.copy)
                 conditional.statements.add(incrementInt(variable))
                 conditional.annotations.add(createAnnotation(0))
                 val conditional2 = newIfThenGoto(lt, label, false)
@@ -74,24 +96,36 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
                 scope.statements.add(createPause)
                 scope.statements.add(conditional)
                 scope.statements.add(conditional2)
-                if (await.statements !== null) {
+                if (!await.statements?.empty) {
+                    lastStatement = await.statements.last
                     statements.addAll(pos+1, await.statements)
+                }
+                else {
+                    lastStatement = scope
                 }
             }
             else {
                 if (await.delay.immediate) {
                     statements.set(pos, label)
-                    statements.add(pos+1, newIfThenGoto(createNot(await.delay.expression), label, true))
-                    if (await.statements !== null) {
-                        statements.add(pos+2, await.statements)
+                    statements.add(pos+1, newIfThenGoto(createNot(await.delay.expression.copy), label, true))
+                    if (!await.statements?.empty) {
+                        lastStatement = await.statements.last
+                        statements.addAll(pos+2, await.statements)
+                    }
+                    else {
+                        lastStatement = statements.get(pos+1)
                     }
                 }
                 else {
                     statements.set(pos, label)
                     statements.add(pos+1, createPause)
-                    statements.add(pos+2, newIfThenGoto(createNot(await.delay.expression), label, false))
-                    if (await.statements !== null) {
-                        statements.add(pos+3, await.statements)
+                    statements.add(pos+2, newIfThenGoto(createNot(await.delay.expression.copy), label, false))
+                    if (!await.statements?.empty) {
+                        lastStatement = await.statements.last
+                        statements.addAll(pos+3, await.statements)
+                    }
+                    else {
+                        lastStatement = statements.get(pos+2)
                     }
                 }
             }
@@ -110,13 +144,13 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
         for (var i=0; i<cases.length; i++) {
             val c = cases.get(i)
             if (c.delay !== null) {
-                if (c.delay.expression !== null) {
+                if (c.delay.delay !== null) {
                     val variable = createNewUniqueVariable(createIntValue(0))
                     val decl = createDeclaration(ValueType.INT, variable)
                     scope.declarations.add(decl)
                     val conditional = createConditional(c.delay.expression)
                     conditional.statements.add(incrementInt(variable))
-                    val lt = createLT(createValuedObjectReference(variable), c.delay.expression)
+                    val lt = createLT(createValuedObjectReference(variable), c.delay.delay)
                     val conditional2 = newIfThenGoto(lt, nextLabel, false)
                     scope.statements.add(1, conditional)
                     scope.statements.add(conditional2)
@@ -171,6 +205,7 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
         scope.statements.add(createPause)
         scope.statements.add(createGotoStatement(startLabel))
         scope.statements.add(endLabel)
-        await.replace(scope)        
+        await.replace(scope)
+        lastStatement = scope
     }
 }

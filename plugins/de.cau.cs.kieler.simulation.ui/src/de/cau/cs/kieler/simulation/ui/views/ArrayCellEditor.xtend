@@ -266,7 +266,7 @@ class ArrayCellEditor extends CellEditor {
             
             private def List<Object> getArrayElementHistory(NDimensionalArrayElement element) {
                 if(variable != null) {
-                    val history = variable.getHistory(HistoryColumnLabelProvider.MAX_HISTORY_LENGTH+1, false)
+                    val history = variable.getHistory(HistoryColumnLabelProvider.MAX_HISTORY_LENGTH+1, false, false)
                     if(!history.isNullOrEmpty) {
                         val index = element.index
                         val historyOfThisElement = history.map[(it.value as NDimensionalArray).get(index)]

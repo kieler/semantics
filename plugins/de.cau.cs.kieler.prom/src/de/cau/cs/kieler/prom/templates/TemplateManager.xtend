@@ -26,6 +26,12 @@ import java.util.Map
 import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.ecore.EObject
+import freemarker.core.ParseException
+import com.google.common.base.Strings
+import org.eclipse.core.runtime.Path
+import de.cau.cs.kieler.prom.PromPlugin
+import freemarker.core.InvalidReferenceException
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class generates wrapper code for models.
@@ -53,6 +59,12 @@ class TemplateManager {
     private static var String macroDefinitions = null
     
     /**
+     * An intermediate template that is processed
+     */
+    @Accessors(PUBLIC_GETTER)
+    private static var String templateCodeWithMacroCalls
+    
+    /**
      * Processes the template context.
      * 
      * @param config The template context
@@ -73,26 +85,23 @@ class TemplateManager {
         val map = newHashMap
         
         // Add additional mappings from configuration
-        if(config.additionalMappings != null) {
+        if(config.additionalMappings !== null) {
             map.putAll(config.additionalMappings)
         }
         
         // Get mapping of macro calls
-        if(config.macroCallDatas != null) {
-            val templateCodeWithMacroCalls = getTemplateCodeWithMacroCalls(config.templateFile, config.macroCallDatas)
-
-            // Debug log macro calls
-//            System.err.println(templateCodeWithMacroCalls)
-
+        templateCodeWithMacroCalls = null
+        if(config.macroCallDatas !== null) {
+            templateCodeWithMacroCalls = getTemplateCodeWithMacroCalls(config.templateFile, config.macroCallDatas)
             // Add implicit include of assignment macros such as <@init> and <@output>
             FreemarkerConfiguration.stringTemplateLoader.putTemplate("injectionMacros", getOrInitializeMacroDefinitions )
             FreemarkerConfiguration.configuration.addAutoInclude("injectionMacros")
             // Get template with macro calls and now implicitly loaded snippet definitions.
-            template = new Template("templateWithMacroCalls", templateCodeWithMacroCalls, FreemarkerConfiguration.configuration)
+            val tmpFileName = Files.getNameWithoutExtension(config.templateFile.name)+"_WithMacroCalls.ftl"
+            template = new Template(tmpFileName, templateCodeWithMacroCalls, FreemarkerConfiguration.configuration)
         } else {
             template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
         }
-        
         // Add the template name, path, location, etc. to the mapping
         var templateFileSubstitution = new ResourceSubstitution("template") {
             override getValue() {

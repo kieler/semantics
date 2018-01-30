@@ -208,10 +208,11 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getFBYExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -297,10 +298,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     FunctionCallEffect returns FunctionCallEffect
 	 *
 	 * Constraint:
-	 *     (
-	 *         (annotations+=Annotation* functionName=ID (parameters+=Parameter parameters+=Parameter*)?) | 
-	 *         (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
-	 *     )
+	 *     (annotations+=Annotation* functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_FunctionCallEffect(ISerializationContext context, FunctionCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

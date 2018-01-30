@@ -61,8 +61,7 @@ import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-
-
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -81,28 +80,66 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     }
 
     override getName() {
-        return "SCEstIntermediateProcessor"
+        return "Intermediate"
     }
 
-    public static var IProperty<EObject> NEXT_STATEMENT_TO_TRANSFORM = 
-        new Property<EObject>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
+    public static var IProperty<EObjectReferencePropertyData> NEXT_STATEMENT_TO_TRANSFORM = 
+        new Property<EObjectReferencePropertyData>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.nextstatementtotransform", null)
+        
+    public static var IProperty<Boolean> TRANSFORM_THIS_STATEMENT = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.transformthisstatement", false)
+
+    public static var IProperty<Boolean> DYNAMIC_COMPILATION = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.dynamiccompilation", true)
+
+    public static var IProperty<Boolean> APPEND_PROCESSORS = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.append", false)        
     
     @Inject
     extension EsterelTransformationExtensions
     
     override process() {
-        var EObject obj = if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) !== null) 
-                                environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) else model
+        var EObject obj
+        val processorsToAdd = <String>newLinkedList
+        if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) === null) {
+            obj = model
+            processorsToAdd += INIT
+            processorsToAdd += RUN
+            processorsToAdd += ID
+            environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(model))
+        } else {
+            obj = environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM).getObject as EObject
         
-        // the next object which needs to be transformed and the corresponding processor id
-        val nextObj = obj.nextStatement 
-        val processorID = nextObj.getCorrespondingProcessorID 
-        environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, nextObj)
-        // TODO add processorID to processorList (see identityDynamic)
-        // and additionally add processorID of this intermediate processor to processorList
-        // but only if it is not an EsterelProgram; if that is the case, only one transformation is left
-        // and for a module add multiple processors to the processor list (signal, sensor transformation ...)
-        // before the next module is going to be transformed
+            // the next object which needs to be transformed and the corresponding processor id
+            val nextObj = obj.nextStatement 
+            if (nextObj === null) {
+                throw new Exception("The next statement to transform can not be null!")
+            }
+            val processorID = nextObj.getCorrespondingProcessorID 
+            environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
+            if (nextObj instanceof Module) {
+                processorsToAdd += SENSOR
+                processorsToAdd += CONSTANT
+                processorsToAdd += SIGNAL
+            }
+            else {
+                processorsToAdd += processorID
+            }
+            // as long as there are Esterel statements, add intermediate processor to the end of the compilation chain
+            if (!(nextObj instanceof EsterelProgram)) {
+                processorsToAdd += ID
+            }
+        }
+        
+        // Add new processors
+        if (environment.getProperty(APPEND_PROCESSORS)) {
+            compilationContext.addProcessorEntries(this, processorsToAdd)
+        } else { // Add to the end of the system
+            for (pid : processorsToAdd) {
+                compilationContext.addProcessorEntry(pid)
+            }
+        }
+        
     }
     
     def getCorrespondingProcessorID(EObject obj) {
@@ -113,6 +150,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             Do : return DO
             Emit : return EMIT
             EsterelParallel : return PARALLEL
+            EsterelProgram : return SCL
             EveryDo : return EVERYDO
             Exec : return EXEC
             Function : return FUNCTION
@@ -138,10 +176,17 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     def nextStatement(EObject object) {
         var obj = object
         var up = true
+        var transform = false
+        // Do, EveryDo and Loop transformation create Esterel statements which need to be transformed.
+        // This can be done directly (there is no need to find the next statement to transform).
+        if (environment.getProperty(TRANSFORM_THIS_STATEMENT)) {
+            environment.setProperty(TRANSFORM_THIS_STATEMENT, false)
+            return obj
+        }
+        // at the beginning start with going down in the tree
         if (obj instanceof EsterelProgram) {
             up = false
         }
-        var transform = false
         while (!transform) {
             
             /* 
@@ -261,25 +306,18 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         up = false
                     }
                     else {
-                        val present = parent.eContainer as Present
-                        if (!present.elseStatements.empty) {
-                            obj = present.elseStatements.head
+                        val ifTest = parent.eContainer as IfTest
+                        if (!ifTest.elseStatements.empty) {
+                            obj = ifTest.elseStatements.head
                             up = false
                         }
                         else {
-                            obj = present
+                            obj = ifTest
                             transform = true
                         }
                     }
                 }
                 else if (parent instanceof Trap) {
-                    val statements = parent.statements
-                    pos = list.indexOf(obj)
-                    if (pos+1 < statements.length) {
-                        obj = statements.get(pos+1)
-                        up = false
-                    }
-                    else  { // check TrapHandler
                         if (!parent.trapHandler.empty) {
                             obj = parent.trapHandler.head
                             up = false
@@ -288,8 +326,6 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             obj = parent
                             transform = true
                         }
-                    }
-                    
                 }
                 else if (parent instanceof TrapHandler) {
                     val handler = parent.containingList
@@ -635,6 +671,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
     public static val FUNCTION = de.cau.cs.kieler.esterel.processors.transformators.incremental.FunctionTransformation.ID
     public static val HALT = de.cau.cs.kieler.esterel.processors.transformators.incremental.HaltTransformation.ID
     public static val IFTEST = de.cau.cs.kieler.esterel.processors.transformators.incremental.IfTestTransformation.ID
+    public static val INIT = de.cau.cs.kieler.esterel.processors.transformators.incremental.InitializationTransformation.ID
     public static val LOCALSIGNAL = de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalSignalDeclTransformation.ID
     public static val LOCALVARIABLE = de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalVariableTransformation.ID
     public static val LOOP = de.cau.cs.kieler.esterel.processors.transformators.incremental.LoopTransformation.ID

@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Set
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -41,8 +43,28 @@ class SetTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(Set).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Set) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Set).toList.forEach[transform]
+        }
     }
     
     def transform(Set set) {
@@ -55,6 +77,7 @@ class SetTransformation extends InplaceProcessor<EsterelProgram> {
         statements.set(pos, assign3)
         statements.add(pos, assign2)
         statements.add(pos, assign1)
+        lastStatement = assign3
     }
     
 }

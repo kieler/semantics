@@ -47,7 +47,7 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
     public static def String getHistoryText(Object element) {
         if(element instanceof Variable) {
             // use +1 here to indicate when the history is actually longer than displayed
-            val history = element.getHistory(MAX_HISTORY_LENGTH+1, false)
+            val history = element.getHistory(MAX_HISTORY_LENGTH+1, false, false)
             return createHistoryText(history.map[it.value])
         }
         return ""

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Java Code Generator Struct Module
@@ -78,7 +79,10 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             for (valuedObject : declaration.valuedObjects) {
                 indent
                 code.append("public ")
-                code.append(declaration.type.serializeHR)
+                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    declaration.type.serializeHR
+                    else declaration.hostType
+                code.append(declarationType)
                 if (valuedObject.isArray) {
                     for (cardinality : valuedObject.cardinalities) {
                         code.append("[]")
@@ -114,7 +118,20 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     protected def createArrayForCardinalityIndex(ValuedObject valuedObject, int index, extension CCodeSerializeHRExtensions serializer) {
         val declaration = valuedObject.variableDeclaration
 
-        valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, serializer)
+        switch(declaration.type) {
+        case ValueType.BOOL,
+        case ValueType.FLOAT,
+        case ValueType.INT: {            
+            indent(2)
+            code.append(valuedObject.name + " = new " + declaration.type.serializeHR)
+            for (c : valuedObject.cardinalities) {
+                code.append("[" + c.serializeHR + "]")
+            }
+            code.append(";\n")
+        }
+        default:
+            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, serializer)
+        }
     }
     
     protected def void createArrayForCardinalityIndexHelper(ValuedObject valuedObject, int index, String assignmentPart, String expressionPart, extension CCodeSerializeHRExtensions serializer) {

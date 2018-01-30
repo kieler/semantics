@@ -28,6 +28,8 @@ import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.Parallel
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -52,8 +54,28 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(Abort).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Abort) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Abort).toList.forEach[transform]
+        }
     }
     
     def transform(Abort abort) {
@@ -104,7 +126,6 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     conditional3.statements.addAll(abort.doStatements)
                     scope.statements.add(conditional3)
                 }
-                abort.replace(scope)
             }
             else { // abort without a count delay
                 abort.statements.add(label)
@@ -137,8 +158,6 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     scope.statements.add(conditional4)
                 }
                 scope.statements.addAll(abort.statements)
-                abort.replace(scope)
-                
             }
         }
         // ABORT CASES
@@ -160,8 +179,8 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
             thread1.statements.add(createAssignment(depthFlag, createTrue))
             scope.statements.add(label)
             for ( c : abort.cases ) {
-                // creating counting variables for cases with an expression before the signal expression
-                if (c.delay.expression !== null) {
+                // creating counting variables for cases with a count delay before the signal expression
+                if (c.delay.delay !== null) {
                     val variable = createNewUniqueVariable(createIntValue(0))
                     val decl2 = createDeclaration(ValueType.INT, variable)
                     countingVariables.add(variable)
@@ -193,22 +212,22 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 if (c.delay.immediate) {
                     conditional2 = newIfThenGoto(copy(c.delay.expression), label2, false)
                 }
-                else if (c.delay.expression === null) {
+                else if (c.delay.delay === null) {
                     conditional2 = newIfThenGoto(createAnd(copy(c.delay.expression), createValuedObjectReference(depthFlag)), label2, false)
                 }
                 else {
                     countingVariables.get(i)
-                    conditional2 = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), copy(c.delay.expression)), label2, false)
+                    conditional2 = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), copy(c.delay.delay)), label2, false)
                     i++
                 }
                 conditional2.statements.addAll(0, c.statements)
                 scope.statements.add(conditional2)
             }
             scope.statements.add(label2)
-            abort.replace(scope)
-            
         }
         abort.getContainingList.checkGotos
+        abort.replace(scope)
+        lastStatement = scope
     }
     
     def transformPauses(Abort abort, Label label, ValuedObject abortFlag, ValuedObject depthFlag, LinkedList<ValuedObject> countingVariables) {
@@ -227,13 +246,13 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 if (abort.weak) {
                     // e.g. "weak abort immediate A"
                     if (abort.delay.isImmediate) {
-                        val conditional = newIfThenGoto(abort.delay.expression, label2, false)
+                        val conditional = newIfThenGoto(abort.delay.expression.copy, label2, false)
                         conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                         insertConditionalAbove(pause, conditional)
                     }
                     else {
                         // e.g. "weak abort when A"
-                        if (abort.delay.expression === null) {
+                        if (abort.delay.delay === null) {
                             val expr = createAnd(copy(abort.delay.expression), createValuedObjectReference(depthFlag))
                             val conditional = newIfThenGoto(expr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
@@ -242,7 +261,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                         }
                         // e.g. "weak abort when 3 A"
                         else {
-                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.expression))
+                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.delay))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                             insertConditionalAbove(pause, conditional)
@@ -253,19 +272,19 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 else {
                     // e.g. "abort immediate A"
                     if (abort.delay.isImmediate) {
-                        var conditional = newIfThenGoto(abort.delay.expression, label2, false)
+                        var conditional = newIfThenGoto(abort.delay.expression.copy, label2, false)
                         statements.add(pos+1, conditional)
                     }
                     else {
                         // e.g. "abort when A"
-                        if (abort.delay.expression === null) {
-                            var conditional = newIfThenGoto(abort.delay.expression, label2, false)
+                        if (abort.delay.delay === null) {
+                            var conditional = newIfThenGoto(abort.delay.expression.copy, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                             statements.add(pos+1, conditional)
                         }
                         // e.g. "abort when 3 A"
                         else {
-                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.expression))
+                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.delay))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                             statements.add(pos+1, conditional)
@@ -300,8 +319,8 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
         var i = 0
         for (c : abort.cases) {
             // e.g. "case 3 A"
-            if (c.delay.expression !== null) {
-                val conditional = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), copy(c.delay.expression)), label, false)
+            if (c.delay.delay !== null) {
+                val conditional = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), copy(c.delay.delay)), label, false)
                 conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                 if (abort.weak) {
                     insertConditionalAbove(statement, conditional)

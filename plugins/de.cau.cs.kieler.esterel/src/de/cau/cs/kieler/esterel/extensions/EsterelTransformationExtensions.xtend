@@ -87,6 +87,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.esterel.PresentCase
+import de.cau.cs.kieler.esterel.TickReference
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -830,6 +831,13 @@ class EsterelTransformationExtensions {
      * @return The Module list which includes the given Module
      */
     def getContainingList(Module module) {
+        if (module === null || module.eContainer === null || module.eContainingFeature === null) {
+            throw new Exception("The module " + module.name + " does not have a containing list.\n"
+                + "module: " + module
+                + "\neContainer: " + module.eContainer
+                + "\nContainingFeature:" + module.eContainingFeature
+            )
+        }
         module.eContainer.eGet(module.eContainingFeature) as EList<Module>
     }
     
@@ -903,6 +911,20 @@ class EsterelTransformationExtensions {
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
         SCLFactory::eINSTANCE.createAssignment => [
             it.reference = objectToAssign.createValuedObjectReference
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+    
+    /**
+     * Creates an assignment with a SignalReference instead of a ValuedObjectReference.
+     * 
+     * @param objectToAssign The valued object to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createSignalAssignment(ValuedObject objectToAssign, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.reference = objectToAssign.createSignalReference
             it.expression = EcoreUtil.copy(expression)
         ]
     }
@@ -1099,12 +1121,15 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Creates a new Esterel Halt
+     * Adds the functionality of a halt statement at the end of a list.
      * 
-     * @return The newly created Esterel Halt
+     * @param statements The list of statements which needs the halt functionality at the end 
      */
-    def createHalt() {
-        EsterelFactory::eINSTANCE.createHalt
+    def addHaltFunctionality(EList<Statement> statements) {
+        val label = createLabel
+        statements.add(label)
+        statements.add(createPause)
+        statements.add(label.createGotoStatement)
     }
     
     /**
@@ -1609,34 +1634,52 @@ class EsterelTransformationExtensions {
             references += obj
         }
         for (ref : references) {
-            val signal = ref.valuedObject as Signal
-            // if the SignalReference references a transformed signal
-            if (newSignals.containsKey(signal)) {
-                val parent = ref.eContainer
-                if ( (parent instanceof OperatorExpression) && 
-                     ((parent as OperatorExpression).operator == OperatorType.VAL)
-                ) {
-                    if (newSignals.get(signal).s_val === null) {
-                        throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+            if (ref instanceof TickReference) {
+                // TODO after run transformation: e.g. "module _2 [signal tick/A]" and an "emit A" in the submodule _2 
+                // would later lead to an assignment "true = true || true"
+                ref.replace(createTrue)
+            }
+            else if (ref.valuedObject instanceof Signal){
+                val signal = ref.valuedObject as Signal
+                // if the SignalReference references a transformed signal
+                if (newSignals.containsKey(signal)) {
+                    val parent = ref.eContainer
+                    if ( (parent instanceof OperatorExpression) && 
+                         ((parent as OperatorExpression).operator == OperatorType.VAL)
+                    ) {
+                        if (newSignals.get(signal).s_val === null) {
+                            throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+                        }
+                        parent.replace(createValuedObjectReference(newSignals.get(signal).s_val))
                     }
-                    parent.replace(createValuedObjectReference(newSignals.get(signal).s_val))
-                }
-                else if (parent instanceof Assignment) {
-                    if (parent.isCurAssignment) {
-                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                    else if (parent instanceof Assignment) {
+                        if (parent.isCurAssignment) {
+                            parent.annotations.clear
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                            val localRefs = parent.expression.eAllContents.filter(SignalReference).toList
+                            if (!localRefs.empty) {
+                                for (localRef : localRefs) {
+                                    if (localRef.valuedObject == signal) {
+                                        localRef.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                                    }
+                                }
+                            }
+                        }
+                        else if (parent.isSetAssignment) {
+                            parent.annotations.clear
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
+                        }
+                        else if (parent.isValAssignment) {
+                            parent.annotations.clear
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
+                        }
+                        else {
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s))
+                        }
                     }
-                    else if (parent.isSetAssignment) {
-                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
-                    }
-//                    else if (parent.isValAssignment) {
-//                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
-//                    }
                     else {
                         ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                     }
-                }
-                else {
-                    ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                 }
             }
         }
@@ -1949,6 +1992,17 @@ class EsterelTransformationExtensions {
      */
     def createSignalReference(ValuedObject signal) {
         EsterelFactory::eINSTANCE.createSignalReference => [
+            it.valuedObject = signal
+        ]
+    }
+    
+    /**
+     * Create a TickReference
+     * 
+     * @param signal The tick signal
+     */
+    def createTickReference(Signal signal) {
+        EsterelFactory::eINSTANCE.createTickReference => [
             it.valuedObject = signal
         ]
     }

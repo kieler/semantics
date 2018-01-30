@@ -112,6 +112,24 @@
             class="de.cau.cs.kieler.scg.processors.transformators.SurfaceDepthSeparatorProcessor">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.CopyPropagationV2">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.SmartRegisterAllocation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.CleanupValuedObjects">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.ConditionalMerger">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.HaltStateRemover">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.scg.processors.ssa.SCCPOptimization">
       </Processor>
    </extension>

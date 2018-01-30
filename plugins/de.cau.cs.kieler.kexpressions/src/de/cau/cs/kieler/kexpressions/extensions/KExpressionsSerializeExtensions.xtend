@@ -47,7 +47,7 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
  */
 class KExpressionsSerializeExtensions {
 
-   def dispatch CharSequence serialize(ValueType valueType) {
+    def dispatch CharSequence serialize(ValueType valueType) {
         return valueType.literal;
     }
 
@@ -95,6 +95,10 @@ class KExpressionsSerializeExtensions {
     protected def CharSequence serializeOperatorExpressionPRE(OperatorExpression expression) {
     	"pre(" + expression.subExpressions.head.serialize + ")"
     }   
+
+    protected def CharSequence serializeOperatorExpressionFBY(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " -> ")
+    }
     
     protected def CharSequence serializeOperatorExpressionNot(OperatorExpression expression) {
     	"!" + expression.subExpressions.head.serialize
@@ -196,6 +200,8 @@ class KExpressionsSerializeExtensions {
             return expression.serializeOperatorExpressionVAL
         } else if (expression.operator == OperatorType::PRE) {
             return expression.serializeOperatorExpressionPRE
+        } else if (expression.operator == OperatorType::FBY) {
+            return expression.serializeOperatorExpressionFBY
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeOperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {
@@ -276,7 +282,7 @@ class KExpressionsSerializeExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
-        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+        if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serialize
         }        
         vo

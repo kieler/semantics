@@ -44,6 +44,7 @@ class JavaSimulationBackend extends OriginBasedSimulationBackend {
      * {@inheritDoc}
      */
     override getSupportedProcessors() {
-        return #["de.cau.cs.kieler.scg.processors.codegen.java"]
+        return #["de.cau.cs.kieler.scg.processors.codegen.java",
+                 "de.cau.cs.kieler.scg.processors.transformators.sjlp"]
     }
 }

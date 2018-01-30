@@ -52,7 +52,11 @@ class SimpleTemplateProcessor extends TemplateProcessor {
         for(l : listeners)
             l.beforeProcessing(this)
         // Process
-        generatedCode = TemplateManager.process(context)
+        val problem = super.processContext()
+        if(problem !== null) {
+            result.addProblem(problem)
+            return result
+        }
         // Notify listeners
         for(l : listeners)
             l.afterProcessing(this)

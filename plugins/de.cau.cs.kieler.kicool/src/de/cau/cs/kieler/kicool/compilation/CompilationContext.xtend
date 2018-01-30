@@ -170,7 +170,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val startTimestamp = System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         
-        processorInstance.executeCoProcessors(processorReference.preprocesses)
+        processorInstance.executeCoProcessors(processorReference.preprocesses, false)
         
         try {
             if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
@@ -183,7 +183,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             e.printStackTrace
         }
 
-        processorInstance.executeCoProcessors(processorReference.postprocesses)
+        processorInstance.executeCoProcessors(processorReference.postprocesses, true)
         
         val stopTimestamp = System.nanoTime
         environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
@@ -339,14 +339,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     /** 
      * Adds a single processor entry at the end of the root processor group.
-     * Adding processor systems this was is not supported at the moment.
+     * Adding processor systems is not supported at the moment.
      */
     def void addProcessorEntry(ProcessorEntry processorEntry) {
         val processorEntryPoint = system.processors
         if (processorEntryPoint instanceof ProcessorGroup) {
-                processorEntryPoint.processors += processorEntry
-                processorEntry.populate(this)
-                notify(new CompilationChanged(this, system))
+            processorEntryPoint.processors += processorEntry
+            processorEntry.populate(this)
+            notify(new CompilationChanged(this, system, processorEntry))
         } else {
             throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
         }
@@ -357,6 +357,39 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             it.id = processorId
         ]
         processorEntry.addProcessorEntry 
+    }
+ 
+    /** 
+     * Adds a list of processor entries at the given position of the root processor group.
+     * Adding processor systems is not supported at the moment.
+     */
+    def void addProcessorEntries(Processor<?,?> position, List<ProcessorEntry> processorEntries) {
+        val processorEntryPoint = system.processors
+        if (processorEntryPoint instanceof ProcessorGroup) {
+            for (newEntry : processorEntries.reverseView) {
+                val posProcessor = processorMap.entrySet.findFirst[value == position]?.key
+                if (posProcessor === null) {
+                    throw new IllegalArgumentException("Given position processor does not exist.")
+                }
+                val idx = processorEntryPoint.processors.indexOf(posProcessor)
+                if (posProcessor === null) {
+                    throw new IllegalArgumentException("Given position processor does not exist in the processor group.")
+                }
+                processorEntryPoint.processors.add(idx + 1, newEntry)
+                newEntry.populate(this)
+                notify(new CompilationChanged(this, system, newEntry))
+            }
+        } else {
+            throw new IllegalStateException("Tried to add a processor programmatically, but there was no processor group.")
+        }
+    }
+    
+    def void addProcessorEntries(Processor<?,?> position, String... processorIds) {
+        position.addProcessorEntries(processorIds.map[ id |
+            (KiCoolFactory.eINSTANCE.createProcessorReference => [
+                it.id = id
+            ]) as ProcessorEntry
+        ])
     }
     
     @Inject TracingIntegration tracingIntegrationInstance
@@ -383,9 +416,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         return getIntermediateProcessors        
     }
     
-    protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences) {
+    protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences, boolean isPostProcessor) {
         for (processorReference : processorReferences) {
-            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent)
+            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
         }
     }
     

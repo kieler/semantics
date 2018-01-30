@@ -31,6 +31,8 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * @author ssm
@@ -253,8 +255,24 @@ class KExpressionsValuedObjectExtensions {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
     }
     
+    def List<OperatorExpression> getPreOperatorExpressions(OperatorExpression operatorExpression) {
+        if (operatorExpression.operator == OperatorType.PRE) {
+            return <OperatorExpression> newLinkedList(operatorExpression)
+        } else {
+            val l = <OperatorExpression> newLinkedList
+            for (se : operatorExpression.subExpressions.filter(OperatorExpression)) {
+                l.addAll(se.getPreOperatorExpressions)
+            }
+            return l
+        }
+    }    
+    
     def asValue(Expression expression) {
         expression as Value
+    }
+
+    def asVectorValue(Expression expression) {
+        expression as VectorValue
     }
 
     def asValuedObjectReference(Expression expression) {

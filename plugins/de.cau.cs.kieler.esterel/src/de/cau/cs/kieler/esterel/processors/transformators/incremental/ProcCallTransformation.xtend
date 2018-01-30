@@ -20,6 +20,8 @@ import de.cau.cs.kieler.esterel.ProcedureCall
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kexpressions.ValueType
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -43,8 +45,28 @@ class ProcCallTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(ProcedureCall).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof ProcedureCall) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(ProcedureCall).toList.forEach[transform]
+        }
     }
     
     def transform(ProcedureCall procCall) {
@@ -63,6 +85,7 @@ class ProcCallTransformation extends InplaceProcessor<EsterelProgram> {
         val scope = createScopeStatement(decl)
         scope.statements.add(createAssignment(variable, function))
         procCall.replace(scope)
+        lastStatement = scope
     }
     
 }

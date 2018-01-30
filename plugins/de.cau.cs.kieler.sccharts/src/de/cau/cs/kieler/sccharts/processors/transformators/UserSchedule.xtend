@@ -37,7 +37,7 @@ class UserSchedule extends SCChartsProcessor {
     @Inject extension SCChartsStateExtensions
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.userSchedule"
+        "de.cau.cs.kieler.sccharts.processors.userSchedule"
     }
     
     override getName() {
@@ -65,13 +65,19 @@ class UserSchedule extends SCChartsProcessor {
     }
     
     protected def void transformUserScheduleState(State state) {
+        val schedule = state.schedule
+        
+        for (t : state.outgoingTransitions) {
+            t.applyUserSchedule(schedule)    
+        }
+        
         if (state.simple) return;
         
-        val schedule = state.schedule
         
         for (a : state.actions) {
             a.applyUserSchedule(schedule)
         }
+        
         
         // Dataflow regions are not necessary because they are already transformed.
         for (r : state.regions.filter(ControlflowRegion).toList) {
@@ -102,7 +108,7 @@ class UserSchedule extends SCChartsProcessor {
     }
     
     protected def void applyUserSchedule(Action action, List<ScheduleObjectReference> schedule) {
-        action.trigger.addScheduleCopy(schedule)
+        action.trigger?.addScheduleCopy(schedule)
         for (e : action.effects) {
             e.applyUserSchedule(schedule)
         }

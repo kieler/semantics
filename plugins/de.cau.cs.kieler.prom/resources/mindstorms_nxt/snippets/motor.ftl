@@ -10,13 +10,18 @@
          @Wrapper MotorSpeed, B
          output int speed; -->
 <#macro MotorSpeed port brake=true>
+    <@init>
+        // Motor ${port}
+        int lastMotor${port}_${varName} = 0;
+    </@>
     <@input>
         // Motor ${port}
         scchart.${varName} = Motor.${port}.getSpeed();
     </@>
     <@output>
         // Motor ${port}
-        if (Math.abs(scchart.${varName}) != Motor.${port}.getSpeed()) {
+        if (lastMotor${port}_${varName} != scchart.${varName}) {
+            lastMotor${port}_${varName} = scchart.${varName};
             Motor.${port}.setSpeed(Math.abs(scchart.${varName}));
             if(scchart.${varName} == 0)
                 <#if brake>

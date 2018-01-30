@@ -14,8 +14,11 @@ import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Thread
 import de.cau.cs.kieler.scl.Statement
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.Parallel
 
 class SCEstFormatter extends EsterelFormatter {
 	
@@ -63,4 +66,42 @@ class SCEstFormatter extends EsterelFormatter {
 		}
 		format(set.getExpression(), document);
 	}
+	
+   override dispatch void format(Pause pause, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+        for (Annotation annotations : pause.getAnnotations()) {
+            format(annotations, document);
+        }
+        pause.regionFor.keyword(";")?.prepend[ noSpace ]
+    }
+    
+    override dispatch void format(Parallel parallel, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+        for (Thread threads : parallel.getThreads()) {
+            format(threads, document);
+        }
+        parallel.append[ newLine ]
+        parallel.regionFor.keyword("par").prepend[ newLine ]
+        parallel.regionFor.keyword("join").prepend[ newLine ]
+    }
+    
+    override dispatch void format(Thread thread, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+        for (Annotation annotations : thread.getAnnotations()) {
+            format(annotations, document);
+        }
+        for (Declaration declarations : thread.getDeclarations()) {
+            format(declarations, document);
+        }
+        for (Statement statements : thread.getStatements()) {
+            format(statements, document);
+            statements.surround[ indent ]
+        }
+        
+        if (thread.regionFor.keyword("{") !== null) {
+            thread.regionFor.keyword("{").append[ newLine ]
+        } else {
+            thread.prepend[ newLine ]
+        }
+    }
 }

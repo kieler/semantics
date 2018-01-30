@@ -2,37 +2,43 @@ public system de.cau.cs.kieler.sccharts.netlist.simple
     version 1 
     label "Netlist-based Compilation (simple)"
 
-de.cau.cs.kieler.sccharts.processors.transformators.reference
-de.cau.cs.kieler.sccharts.processors.transformators.for 
-de.cau.cs.kieler.sccharts.processors.transformators.prTransitions
-de.cau.cs.kieler.sccharts.processors.transformators.const
-de.cau.cs.kieler.sccharts.processors.transformators.history
-de.cau.cs.kieler.sccharts.processors.transformators.signal
-de.cau.cs.kieler.sccharts.processors.transformators.suspend
-de.cau.cs.kieler.sccharts.processors.transformators.countDelay
-de.cau.cs.kieler.sccharts.processors.transformators.^pre
-de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
-de.cau.cs.kieler.sccharts.processors.transformators.deferred
-de.cau.cs.kieler.sccharts.processors.transformators.static
-de.cau.cs.kieler.sccharts.processors.transformators.duringAction
-de.cau.cs.kieler.sccharts.processors.transformators.complexFinalState
-de.cau.cs.kieler.sccharts.processors.transformators.abort
-de.cau.cs.kieler.sccharts.processors.transformators.exitAction
-de.cau.cs.kieler.sccharts.processors.transformators.initialization
-de.cau.cs.kieler.sccharts.processors.transformators.entryAction
-de.cau.cs.kieler.sccharts.processors.transformators.connector
-de.cau.cs.kieler.sccharts.processors.transformators.userSchedule
-de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
-de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth    
-de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
+de.cau.cs.kieler.sccharts.processors.reference
+de.cau.cs.kieler.sccharts.processors.for 
+de.cau.cs.kieler.sccharts.processors.prTransitions
+de.cau.cs.kieler.sccharts.processors.const
+de.cau.cs.kieler.sccharts.processors.fby
+de.cau.cs.kieler.sccharts.processors.history
+de.cau.cs.kieler.sccharts.processors.signal
+de.cau.cs.kieler.sccharts.processors.suspend
+de.cau.cs.kieler.sccharts.processors.countDelay
+de.cau.cs.kieler.sccharts.processors.^pre
+de.cau.cs.kieler.sccharts.processors.weakSuspend
+de.cau.cs.kieler.sccharts.processors.deferred
+de.cau.cs.kieler.sccharts.processors.static
+de.cau.cs.kieler.sccharts.processors.duringAction
+de.cau.cs.kieler.sccharts.processors.complexFinalState
+de.cau.cs.kieler.sccharts.processors.abort
+de.cau.cs.kieler.sccharts.processors.exitAction
+de.cau.cs.kieler.sccharts.processors.initialization
+de.cau.cs.kieler.sccharts.processors.entryAction
+de.cau.cs.kieler.sccharts.processors.connector
+de.cau.cs.kieler.sccharts.processors.userSchedule
+de.cau.cs.kieler.sccharts.processors.triggerEffect
+de.cau.cs.kieler.sccharts.processors.surfaceDepth    
+de.cau.cs.kieler.sccharts.scg.processors.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
-pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop true
-de.cau.cs.kieler.scg.processors.transformators.dependency
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
+de.cau.cs.kieler.scg.processors.dependency
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
-de.cau.cs.kieler.scg.processors.transformators.basicBlocks
-de.cau.cs.kieler.scg.processors.transformators.expressions
-de.cau.cs.kieler.scg.processors.transformators.guards
-de.cau.cs.kieler.scg.processors.transformators.scheduler
-de.cau.cs.kieler.scg.processors.transformators.sequentializer
+de.cau.cs.kieler.scg.processors.basicBlocks
+post process de.cau.cs.kieler.scg.processors.expressions
+de.cau.cs.kieler.scg.processors.guards
+de.cau.cs.kieler.scg.processors.scheduler
+de.cau.cs.kieler.scg.processors.sequentializer
+post process de.cau.cs.kieler.scg.processors.copyPropagation
+post process de.cau.cs.kieler.scg.processors.conditionalMerger
+post process de.cau.cs.kieler.scg.processors.haltStateRemover
+post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent  
 de.cau.cs.kieler.scg.processors.codegen.c

@@ -69,7 +69,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     }
 
     override getName() {
-        return "SCSSA"
+        return "Sequential SSA"
     }
     
     override process() {

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
@@ -61,6 +62,8 @@ import org.eclipse.swt.dnd.DropTargetEvent
 import org.eclipse.swt.dnd.FileTransfer
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
+import org.eclipse.swt.events.FocusAdapter
+import org.eclipse.swt.events.FocusEvent
 import org.eclipse.swt.events.MouseAdapter
 import org.eclipse.swt.events.MouseEvent
 import org.eclipse.swt.graphics.Color
@@ -68,6 +71,7 @@ import org.eclipse.swt.graphics.RGB
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.layout.RowLayout
+import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.FileDialog
@@ -81,8 +85,10 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
-import java.awt.KeyboardFocusManager
-import de.cau.cs.kieler.prom.console.PromConsole
+import org.eclipse.swt.widgets.MessageBox
+import javax.swing.FocusManager
+import org.eclipse.core.runtime.preferences.IEclipsePreferences
+import org.eclipse.jface.action.IAction
 
 /**
  * The KiVis View.
@@ -102,6 +108,11 @@ class KiVisView extends ViewPart {
      * The file extension of configuration files for simulation visualization. 
      */
     public static val KIVIS_FILE_EXTENSION = "kivis"
+    
+    /**
+     * Attribute to store the corresponding flag
+     */
+    private static val String SHOW_SIMULATION_STOPPED_DIALOG_ATTR = "showSimulationStoppedDialog"
 
     /**
      * The simulation listener that updates this view.
@@ -232,7 +243,7 @@ class KiVisView extends ViewPart {
     /**
      * Icon for closing the message container.
      */
-    val CLOSE_ICON = PromUIPlugin.imageDescriptorFromPlugin(KiVisUiModule.PLUGIN_ID, "icons/close.png")
+    private val CLOSE_ICON = PromUIPlugin.imageDescriptorFromPlugin(KiVisUiModule.PLUGIN_ID, "icons/close.png")
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -246,6 +257,24 @@ class KiVisView extends ViewPart {
         // Create canvas
         createCanvas(control)
         canvas.layoutData = new GridData(GridData.FILL_BOTH)
+        // Show focus events to fix KISEMA-1266
+        canvas.addFocusListener(new FocusAdapter() {
+            override focusGained(FocusEvent e) {
+                PromConsole.print("kivis canvas received focus")
+            }
+            override focusLost(FocusEvent e) {
+                PromConsole.print("kivis canvas lost focus")
+            }
+        })
+        canvas.svgCanvas.addFocusListener(new java.awt.event.FocusAdapter() {
+            override focusGained(java.awt.event.FocusEvent e) {
+                PromConsole.print("kivis svg canvas received focus")
+            }
+            override focusLost(java.awt.event.FocusEvent e) {
+                PromConsole.print("kivis svg canvas lost focus")
+            }
+        })
+        
         // Create menu and toolbars.
         createMenu
         createToolbar
@@ -570,8 +599,7 @@ class KiVisView extends ViewPart {
      * @param file The file handle to be saved in the preferences
      */
     private def void saveUsedKiVisFile(IFile file) {
-        val prefs = InstanceScope.INSTANCE.getNode(KiVisUiModule.PLUGIN_ID)
-        prefs.put(KiVisUiModule.LAST_KIVIS_FILE, file?.fullPath.toOSString)
+        preferences.put(KiVisUiModule.LAST_KIVIS_FILE, file?.fullPath.toOSString)
     }
 
     /**
@@ -698,12 +726,14 @@ class KiVisView extends ViewPart {
                         kiVisView.update(simMan.currentPool, false)
                         if(e.operation == SimulationOperation.STOP) {
                             // Move focus away as workaround for KISEMA-1266
-                            if(kiVisView.canvas.svgCanvas.hasFocus && DataPoolView.instance !== null) {
-                                PromUIPlugin.asyncExecInUI[
-                                    PromConsole.print("Setting focus to Data Pool View")
-                                    DataPoolView.instance.setFocus    
-                                ]
-                            }
+                            // TODO: Remove if not needed anymore
+                            PromUIPlugin.asyncExecInUI[
+                                if(kiVisView.showSimulationStoppedDialog) {
+                                    val dialog = new MessageBox(kiVisView.control.shell)
+                                    dialog.message = "Simulation stopped.\nReleasing focus of Simulation Visualization View."
+                                    dialog.open
+                                }
+                            ]
                         }    
                     }
                 }
@@ -867,6 +897,22 @@ class KiVisView extends ViewPart {
                 }
             }
         });
+        mgr.add(new Action("Release Focus") {
+            override run() {
+                // Show a dialog that will catch the focus as workaround for KISEMA-1266
+                // TODO: Remove if not needed anymore
+                val dialog = new MessageBox(control.shell)
+                dialog.message = "Focus released"
+                dialog.open
+            }
+        });
+        val action = new Action("Show Simulation Stopped Dialog", IAction.AS_CHECK_BOX) {
+            override run() {
+                showSimulationStoppedDialog = !showSimulationStoppedDialog
+            }
+        }
+        action.checked = showSimulationStoppedDialog
+        mgr.add(action)
     }
 
     /**
@@ -1047,5 +1093,30 @@ class KiVisView extends ViewPart {
      */
     private def String getEventId(String svgElementId, String eventType) {
         return svgElementId+"."+eventType
+    }
+    
+    /**
+     * Returns the flag to indicate if a dialog should be shown when the simulation is stopped.
+     * This is a workaround for KISEMA-1266
+     */
+    private def boolean getShowSimulationStoppedDialog() {
+        // TODO: Remove if not needed anymore
+        return preferences.getBoolean(SHOW_SIMULATION_STOPPED_DIALOG_ATTR, false)
+    }
+    
+    /**
+     * Sets the flag to indicate if a dialog should be shown when the simulation is stopped.
+     * This is a workaround for KISEMA-1266
+     */
+    private def void setShowSimulationStoppedDialog(boolean value) {
+        // TODO: Remove if not needed anymore
+        preferences.putBoolean(SHOW_SIMULATION_STOPPED_DIALOG_ATTR, value)
+    }
+    
+    /**
+     * Returns the preferences for this view.
+     */
+    private def IEclipsePreferences getPreferences() {
+        InstanceScope.INSTANCE.getNode(KiVisUiModule.PLUGIN_ID)
     }
 }

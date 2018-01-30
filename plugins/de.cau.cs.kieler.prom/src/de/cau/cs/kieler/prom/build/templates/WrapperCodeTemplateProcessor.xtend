@@ -22,6 +22,7 @@ import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
+import org.eclipse.core.runtime.Path
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -94,7 +95,11 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         context.additionalMappings = additionalMappings
         context.macroCallDatas = macroCallDatas
         // Process the context and notify listeners
-        generatedCode = TemplateManager.process(context)
+        val problem = super.processContext()
+        if(problem !== null) {
+            result.addProblem(problem)
+            return result
+        }
         // Notify listeners
         for(l : listeners)
             l.afterProcessing(this)

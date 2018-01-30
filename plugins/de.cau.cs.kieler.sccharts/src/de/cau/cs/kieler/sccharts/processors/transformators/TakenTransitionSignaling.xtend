@@ -73,7 +73,7 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     }
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling"
+        "de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling"
     }
     
     override getName() {
@@ -82,8 +82,10 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     
     override process() {
         val model = getModel
-                
-        for (rootState : model.rootStates.clone) {
+        
+        // Just consider the root state. Otherwise, the taken takenTransition interface will not be bound properly 
+        // across reference states.          
+        for (rootState : newArrayList(model.rootStates.head)) {
             val transitions = rootState.getTransitions
             if(transitions.size > 0) {
                 environment.setProperty(ARRAY_SIZE, transitions.size)

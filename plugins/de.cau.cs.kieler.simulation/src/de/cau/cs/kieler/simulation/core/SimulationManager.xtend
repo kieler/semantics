@@ -84,7 +84,7 @@ class SimulationManager extends Configurable {
      * thus the actually waited time might be smaller, if the tick took longer to execute.
      */
     @Accessors(PUBLIC_GETTER)
-    private static var int desiredTickPause = DEFAULT_PAUSE
+    private static var int desiredTickPause = loadDesiredTickPause
     
     /**
      * List of event listeners
@@ -99,6 +99,7 @@ class SimulationManager extends Configurable {
     
     private static val DISABLED_LISTENERS_ATTR = "disabledSimulationListeners"
     private static val MAX_HISTORY_LENGTH_ATTR = "maxHistoryLength"
+    private static val DESIRED_PAUSE_ATTR = "desiredTickPause"
     
     /**
      * The name of an input variable in the data pool,
@@ -153,10 +154,12 @@ class SimulationManager extends Configurable {
     /**
      * Instances of the data handlers in the step actions without duplicates.
      */
+    @Accessors(PUBLIC_GETTER)
     private val Set<DataHandler> dataHandlers = newHashSet()
     /**
      * The list of step actions that make up a macro tick simulation.
      */
+    @Accessors(PUBLIC_GETTER)
     private val List<StepAction> actions = newArrayList()
 
     /**
@@ -274,6 +277,7 @@ class SimulationManager extends Configurable {
     public static def void setDesiredTickPause(int value) {
         if(value >= MIN_PAUSE && value <= MAX_PAUSE) {
             desiredTickPause = value
+            saveDesiredTickPause
         } else {
             throw new IllegalArgumentException("Desired pause for simulation must be between "+MIN_PAUSE+" to "+MAX_PAUSE)
         }
@@ -324,9 +328,32 @@ class SimulationManager extends Configurable {
     }
     
     /**
+     * Adds a step action before all others.
+     * 
+     * @param method The method to be performed. Can be null if the handler has only a single method.
+     * @param handler The handler that should perform the method
+     */
+    public def void prependAction(String method, DataHandler handler) {
+        if(method == null) {
+            prependAction(handler)
+        } else {
+            addHandler(handler)
+            actions.add(0, new StepAction(method, handler))    
+        }
+    }
+    
+    /**
+     * Adds a step action for a handler, which has only a single operation it can perform.
+     * 
+     * @param handler The handler that should perform its method
+     */
+    public def void prependAction(DataHandler handler) {
+        addHandler(handler)
+        actions.add(0, new StepAction(handler))
+    }
+    
+    /**
      * Adds a step action.
-     * A step action to read a data handler should not be added, if that handler is updated after every step anyway. 
-     * In this case it is sufficient to add this handler to the list of data handlers. 
      * 
      * @param method The method to be performed. Can be null if the handler has only a single method.
      * @param handler The handler that should perform the method
@@ -799,5 +826,20 @@ class SimulationManager extends Configurable {
      */
     private static def Preferences getPreferences() {
         return InstanceScope.INSTANCE.getNode(SimulationPlugin.PLUGIN_ID)
+    }
+    
+    /**
+     * Loads the desired tick pause from the preferences.
+     */
+    private static def int loadDesiredTickPause() {
+        return preferences.getInt(DESIRED_PAUSE_ATTR, DEFAULT_PAUSE)
+    }
+    
+    /**
+     * Saves the desired tick pause to the preferences.
+     */
+    private static def void saveDesiredTickPause() {
+        preferences.putInt(DESIRED_PAUSE_ATTR, desiredTickPause)
+        preferences.flush
     }
 }

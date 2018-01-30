@@ -90,7 +90,7 @@ class AnnotationsExtensions {
     }
 	
 	def boolean hasAnnotation(Annotatable annotatable, String name) {
-		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
+		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name ].empty
 	}
 
     def boolean hasPragma(Pragmatable pragmatable, String name) {

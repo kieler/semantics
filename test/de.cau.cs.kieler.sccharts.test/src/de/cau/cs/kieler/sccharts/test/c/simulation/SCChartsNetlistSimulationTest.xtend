@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
+import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.simulation.SimulationContext
@@ -31,6 +32,7 @@ import org.eclipse.core.runtime.Platform
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
 import static org.junit.Assert.*
 
 /**
@@ -80,8 +82,9 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
         assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation", Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
         
-        // Custom backend that compiles from sctx to c without additional frontend and transition signaling
-        // and without communication of register variables.
+        // Don't communicate register variables, because this is not needed for the tests and significantly slower
+        RegisterVariablesFinder.enabled = false
+        // Custom backend that compiles from sctx to c without transition signaling.
         val simBackend = new CSimulationBackend() {
             override getBuildConfigOrigin() {
                 return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-test.kibuild"

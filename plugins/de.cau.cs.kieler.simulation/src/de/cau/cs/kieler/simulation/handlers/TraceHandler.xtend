@@ -258,6 +258,13 @@ class TraceHandler extends DefaultDataHandler {
             return (a.value == (b.value != 0))
         } else if (a.value instanceof Integer && b.value instanceof Boolean) {
             return ((a.value != 0) == b.value)
+        } else if(a.value instanceof Integer && b.value instanceof Integer
+            || a.value instanceof Float && b.value instanceof Float
+            || a.value instanceof Double && b.value instanceof Double) {
+            return (a.value == b.value)
+        } else if(a.value instanceof Number && b.value instanceof Number) {
+            // Compare numbers that are not of same class (e.g. float and double)
+            return a.value.toString == b.value.toString
         } else {
             return (a.value == b.value)
         }

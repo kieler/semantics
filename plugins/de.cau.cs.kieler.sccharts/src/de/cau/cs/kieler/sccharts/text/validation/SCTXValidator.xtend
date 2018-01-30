@@ -4,20 +4,29 @@
 package de.cau.cs.kieler.sccharts.text.validation
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsPackage
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
@@ -35,17 +44,11 @@ import de.cau.cs.kieler.sccharts.processors.transformators.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
+import org.eclipse.elk.core.data.LayoutMetaDataService
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 import org.eclipse.xtext.validation.CheckType
-import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 //import org.eclipse.xtext.validation.Check
 
@@ -68,8 +71,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     
+    /** Service class for accessing layout options by name */
+    private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
+    
     static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
-        
+
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
@@ -85,12 +91,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported";
     static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
-    static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem! Strong abort transitions must have a higher priority than weak abort or termination transitions.";
+    static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem!\nStrong abort transitions must have a higher priority than weak abort or termination transitions.";
     static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger";
     
     static val String MISSING_BINDING_FOR = "Missing binding for variable: ";
 
-    static val String VALUEDOBJECT_TRANSITION_SCOPE_WRONG = "Variable or signal used out of its scope. Declare it one hierarchy layer up!";
+    static val String VALUEDOBJECT_TRANSITION_SCOPE_WRONG = "Variable or signal used out of its scope.\nDeclare it one hierarchy layer up!";
     
     static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object.";
     static val String CANNOT_BIND_ARRAYCELL_TO_ARRAY = "You cannot bind a single array cell to an array."
@@ -107,6 +113,32 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String BROKEN_FOLDER_IMPORT = "Broken Import: There are no SCCharts models in the given directory."
 
     static val String COUNT_DELAY_OF_0 = "A count delay of 0 is not allowed on a trigger"
+    
+    static val String LAYOUT_ANNOTATION_ID = "Invalid layout option id.\nThere is no layout option with the given id or the given suffix is not unique.\nSee https://www.eclipse.org/elk/reference/options.html for all available layout options."
+    static val String LAYOUT_ANNOTATION_VALUE = "Invalid layout option value.\nThe given value can not be parsed into a valid value for the given layout option."
+    static val String LAYOUT_ANNOTATION_FORMAT = "Layout annotation must have the format '@layout[id] value'"
+
+    /**
+     * Checks if given layout annotation uses an existing unique layout option id (suffix).
+     */
+    @Check
+    def void checkImportPragma(Annotation anno) {
+        if ("layout".equals(anno.name)) { // FIXME magic string
+            if (anno instanceof TypedStringAnnotation) {
+                val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(anno.type ?: "")
+                if (data === null) {
+                    warning(LAYOUT_ANNOTATION_ID, anno, null);
+                } else {
+                    if (data.parseValue(anno.values?.head ?: "".toLowerCase) === null) {
+                        warning(LAYOUT_ANNOTATION_VALUE, anno, null);
+                    }
+                }
+            } else {
+                warning(LAYOUT_ANNOTATION_FORMAT, anno, null);
+            }
+        }
+    }
+
 
     @Check
     def void checkImportPragma(StringPragma pragma) {
@@ -123,14 +155,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             }
         }
-    }    
-
+    }
+    
     /**
      * Check that there are no immediate loops between states in a region.
      * 
      * @param region The region 
      */
-    // Normal validation occurs when the xtext build is triggered. 
+    // NORMAL Check is executed on save/build and request only
     @Check(NORMAL)
     public def void checkNoImmediateLoops(ControlflowRegion region) {
         // Perform depth first search on states,
@@ -183,8 +215,12 @@ class SCTXValidator extends AbstractSCTXValidator {
         visited.put(state, 1)
         // Find loops in outgoing immediate transitions.
         for(t : state.outgoingTransitions) {
-            if(t.isImplicitlyImmediate) {
+            // Ignore termination transitions because they could have non-immediate inner behaviour.
+            val isTerminationTransition = (t.preemption == PreemptionType.TERMINATION)
+            if(!isTerminationTransition && t.isImplicitlyImmediate) {
                 val target = t.targetState
+                // It is not checked whether or not a superstate has a delay.
+                // A appropriate check should be implemented in the future. 
                 if(findImmediateLoop(target, visited)) {
                     return true
                 }

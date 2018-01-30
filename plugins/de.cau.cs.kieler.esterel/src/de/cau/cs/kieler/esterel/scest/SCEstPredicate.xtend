@@ -20,6 +20,8 @@ import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.esterel.SCEstStatement
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Assignment
 
 /**
  * @author als
@@ -37,7 +39,9 @@ class SCEstPredicate implements Predicate<Object> {
                     Label,
                     Goto,
                     Conditional,
-                    Parallel : true
+                    ScopeStatement,
+                    Parallel,
+                    Assignment : true
                     default : false
                 }
             ]

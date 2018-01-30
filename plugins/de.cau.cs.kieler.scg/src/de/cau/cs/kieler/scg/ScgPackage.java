@@ -135,22 +135,22 @@ public interface ScgPackage extends EPackage {
     int SC_GRAPH__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
-	/**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+	int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Basic Blocks</b></em>' containment reference list.
@@ -1027,13 +1027,22 @@ public interface ScgPackage extends EPackage {
 	int EXIT__NEXT = NODE_FEATURE_COUNT + 1;
 
 	/**
+     * The feature id for the '<em><b>Final</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__FINAL = NODE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Exit</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int EXIT_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+	int EXIT_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlFlowImpl <em>Control Flow</em>}' class.
@@ -1104,13 +1113,22 @@ public interface ScgPackage extends EPackage {
 	int BASIC_BLOCK__PREDECESSORS = 1;
 
 	/**
+     * The feature id for the '<em><b>Thread Entry</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASIC_BLOCK__THREAD_ENTRY = 2;
+
+    /**
      * The feature id for the '<em><b>Go Block</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__GO_BLOCK = 2;
+	int BASIC_BLOCK__GO_BLOCK = 3;
 
 	/**
      * The feature id for the '<em><b>Depth Block</b></em>' attribute.
@@ -1119,7 +1137,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__DEPTH_BLOCK = 3;
+	int BASIC_BLOCK__DEPTH_BLOCK = 4;
 
 	/**
      * The feature id for the '<em><b>Synchronizer Block</b></em>' attribute.
@@ -1128,7 +1146,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__SYNCHRONIZER_BLOCK = 4;
+	int BASIC_BLOCK__SYNCHRONIZER_BLOCK = 5;
 
 	/**
      * The feature id for the '<em><b>Entry Block</b></em>' attribute.
@@ -1137,7 +1155,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__ENTRY_BLOCK = 5;
+	int BASIC_BLOCK__ENTRY_BLOCK = 6;
 
 	/**
      * The feature id for the '<em><b>Dead Block</b></em>' attribute.
@@ -1146,7 +1164,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__DEAD_BLOCK = 6;
+	int BASIC_BLOCK__DEAD_BLOCK = 7;
 
 	/**
      * The feature id for the '<em><b>Term Block</b></em>' attribute.
@@ -1155,7 +1173,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__TERM_BLOCK = 7;
+    int BASIC_BLOCK__TERM_BLOCK = 8;
 
     /**
      * The feature id for the '<em><b>Pre Guard</b></em>' reference.
@@ -1164,16 +1182,25 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__PRE_GUARD = 8;
+	int BASIC_BLOCK__PRE_GUARD = 9;
 
 	/**
+     * The feature id for the '<em><b>Final Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASIC_BLOCK__FINAL_BLOCK = 10;
+
+    /**
      * The number of structural features of the '<em>Basic Block</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK_FEATURE_COUNT = 9;
+	int BASIC_BLOCK_FEATURE_COUNT = 11;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
@@ -1732,17 +1759,6 @@ public interface ScgPackage extends EPackage {
 	EReference getSCGraph_Nodes();
 
 	/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getDeclarations <em>Declarations</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Declarations</em>'.
-     * @see de.cau.cs.kieler.scg.SCGraph#getDeclarations()
-     * @see #getSCGraph()
-     * @generated
-     */
-	EReference getSCGraph_Declarations();
-
-	/**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getBasicBlocks <em>Basic Blocks</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2096,6 +2112,17 @@ public interface ScgPackage extends EPackage {
 	EReference getExit_Next();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Exit#isFinal <em>Final</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Final</em>'.
+     * @see de.cau.cs.kieler.scg.Exit#isFinal()
+     * @see #getExit()
+     * @generated
+     */
+    EAttribute getExit_Final();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ControlFlow <em>Control Flow</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2201,6 +2228,17 @@ public interface ScgPackage extends EPackage {
 	EReference getBasicBlock_Predecessors();
 
 	/**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.BasicBlock#getThreadEntry <em>Thread Entry</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Thread Entry</em>'.
+     * @see de.cau.cs.kieler.scg.BasicBlock#getThreadEntry()
+     * @see #getBasicBlock()
+     * @generated
+     */
+    EReference getBasicBlock_ThreadEntry();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isGoBlock <em>Go Block</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2278,6 +2316,17 @@ public interface ScgPackage extends EPackage {
 	EReference getBasicBlock_PreGuard();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isFinalBlock <em>Final Block</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Final Block</em>'.
+     * @see de.cau.cs.kieler.scg.BasicBlock#isFinalBlock()
+     * @see #getBasicBlock()
+     * @generated
+     */
+    EAttribute getBasicBlock_FinalBlock();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.SchedulingBlock <em>Scheduling Block</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2491,14 +2540,6 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
 		EReference SC_GRAPH__NODES = eINSTANCE.getSCGraph_Nodes();
-
-		/**
-         * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference SC_GRAPH__DECLARATIONS = eINSTANCE.getSCGraph_Declarations();
 
 		/**
          * The meta object literal for the '<em><b>Basic Blocks</b></em>' containment reference list feature.
@@ -2785,6 +2826,14 @@ public interface ScgPackage extends EPackage {
 		EReference EXIT__NEXT = eINSTANCE.getExit_Next();
 
 		/**
+         * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXIT__FINAL = eINSTANCE.getExit_Final();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ControlFlowImpl <em>Control Flow</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2875,6 +2924,14 @@ public interface ScgPackage extends EPackage {
 		EReference BASIC_BLOCK__PREDECESSORS = eINSTANCE.getBasicBlock_Predecessors();
 
 		/**
+         * The meta object literal for the '<em><b>Thread Entry</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BASIC_BLOCK__THREAD_ENTRY = eINSTANCE.getBasicBlock_ThreadEntry();
+
+        /**
          * The meta object literal for the '<em><b>Go Block</b></em>' attribute feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2931,6 +2988,14 @@ public interface ScgPackage extends EPackage {
 		EReference BASIC_BLOCK__PRE_GUARD = eINSTANCE.getBasicBlock_PreGuard();
 
 		/**
+         * The meta object literal for the '<em><b>Final Block</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BASIC_BLOCK__FINAL_BLOCK = eINSTANCE.getBasicBlock_FinalBlock();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

@@ -38,9 +38,7 @@ import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
-
-
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb
@@ -65,8 +63,28 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(Trap).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Trap) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Trap).toList.forEach[transform]
+        }
     }
     
     def transform(Trap trap) {
@@ -135,7 +153,8 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
             transformReferences(parallel, exitVariables)
         }
         transformTrapExpressions(scope, exitVariables)
-        trap.replace(scope)        
+        trap.replace(scope)      
+        lastStatement = scope  
     }
     
     def transformPausesAndJoinsAndExits(Statement statement, Conditional conditional, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {
@@ -165,6 +184,9 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
     def transformExit(Exit exit, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {
         val statements =  exit.getContainingList
         val pos = statements.indexOf(exit)
+        if (!exitVariables.containsKey(exit.trap)) {
+            return
+        }
         val pair = exitVariables.get(exit.trap)
         val assignment = createAssignment(pair.key, createTrue)
         statements.set(pos, createGotoStatement(findClosestLabel(label, exit)))
@@ -186,7 +208,9 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
                 newOperator = OperatorType.LOGICAL_AND
             }
             else {
-                throw new UnsupportedOperationException("The following combine operator is not supported! " + operator.toString)
+                statements.add(pos+1, createAssignment(pair.value, exit.expression))
+                return
+//                throw new UnsupportedOperationException("The following combine operator is not supported! " + operator.toString)
             }
             var expr = createOperatorExpression(createValuedObjectReference(pair.value), exit.expression, newOperator)
             statements.add(pos+1, createAssignment(pair.value, expr))

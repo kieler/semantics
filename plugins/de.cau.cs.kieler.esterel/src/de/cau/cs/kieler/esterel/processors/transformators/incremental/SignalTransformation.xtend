@@ -26,6 +26,7 @@ import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author mrb
@@ -51,7 +52,24 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(Module).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Module) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+        }
+        else {
+            model.eAllContents.filter(Module).toList.forEach[transform]
+        }
     }
     
     def transform(Module module) {
@@ -60,7 +78,10 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
         
         for (declaration : declarations) {
             for (signal : declaration.valuedObjects.filter(Signal)) {
-                val s = createSignalVariable(createFalse, null, signal.name)
+                val s = createSignalVariable(null, null, signal.name)
+                if (declaration instanceof OutputDeclaration) {
+                    s.initialValue = createFalse
+                }
                 signal.name = signal.name.createNewUniqueSignalName
                 val decl = createDeclaration(ValueType.BOOL, s)
                 var decl2 = createDeclaration(null, null)
@@ -136,7 +157,8 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
             for (signal : signals) {
                 val keyValue = signalsMap.get(signal)
                 val s = keyValue.s
-                if (signal.type != ValueType.PURE) {
+                // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
+                if (signal.type != ValueType.PURE && signal.combineOperator !== null && signal.combineOperator != CombineOperator.NONE) {
                     val s_set = keyValue.s_set
                     val s_cur = keyValue.s_cur
                     val s_val = keyValue.s_val

@@ -321,31 +321,32 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
-		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
+		private final Keyword cCallKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_2_0 = (CrossReference)cValuedObjectAssignment_2.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_2_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_2_0.eContents().get(1);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_1_0 = (RuleCall)cParametersAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_0_2 = (Group)cGroup_3_0.eContents().get(2);
+		private final Keyword cCommaKeyword_3_0_2_0 = (Keyword)cGroup_3_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_2_1 = (Assignment)cGroup_3_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_2_1_0 = (RuleCall)cParametersAssignment_3_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
 		
 		//// Reference Call Effect Rule
 		//// A reference call effect works similar to the reference call expression. Additionally, it may be
 		//// preceded by a list of annotations.
 		//ReferenceCallEffect keffects::ReferenceCallEffect:
 		//	annotations+=Annotation*
-		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-		//	'()');
+		//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()');
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (','
+		//annotations+=Annotation* 'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (','
 		//parameters+=Parameter)* ')' | '()')
 		public Group getGroup() { return cGroup; }
 
@@ -355,72 +356,59 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
+		//'call'
+		public Keyword getCallKeyword_1() { return cCallKeyword_1; }
+
 		//valuedObject=[kexpressions::ValuedObject|PrimeID]
-		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
+		public Assignment getValuedObjectAssignment_2() { return cValuedObjectAssignment_2; }
 
 		//[kexpressions::ValuedObject|PrimeID]
-		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_2_0() { return cValuedObjectValuedObjectCrossReference_2_0; }
 
 		//PrimeID
-		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_2_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_2_0_1; }
 
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-		public Group getGroup_2_0() { return cGroup_2_0; }
+		public Group getGroup_3_0() { return cGroup_3_0; }
 
 		//'('
-		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
+		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
+		public Assignment getParametersAssignment_3_0_1() { return cParametersAssignment_3_0_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_3_0_1_0() { return cParametersParameterParserRuleCall_3_0_1_0; }
 
 		//(',' parameters+=Parameter)*
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		public Group getGroup_3_0_2() { return cGroup_3_0_2; }
 
 		//','
-		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
+		public Keyword getCommaKeyword_3_0_2_0() { return cCommaKeyword_3_0_2_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
+		public Assignment getParametersAssignment_3_0_2_1() { return cParametersAssignment_3_0_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_3_0_2_1_0() { return cParametersParameterParserRuleCall_3_0_2_1_0; }
 
 		//')'
-		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
+		public Keyword getRightParenthesisKeyword_3_0_3() { return cRightParenthesisKeyword_3_0_3; }
 
 		//'()'
-		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
+		public Keyword getLeftParenthesisRightParenthesisKeyword_3_1() { return cLeftParenthesisRightParenthesisKeyword_3_1; }
 	}
 
 	public class FunctionCallEffectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.FunctionCallEffect");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0_0 = (RuleCall)cAnnotationsAssignment_0_0.eContents().get(0);
-		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
-		private final Keyword cExternKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
-		private final Assignment cFunctionNameAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
-		private final RuleCall cFunctionNameIDTerminalRuleCall_0_1_1_0 = (RuleCall)cFunctionNameAssignment_0_1_1.eContents().get(0);
-		private final Alternatives cAlternatives_0_1_2 = (Alternatives)cGroup_0_1.eContents().get(2);
-		private final Group cGroup_0_1_2_0 = (Group)cAlternatives_0_1_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_0_1_2_0_0 = (Keyword)cGroup_0_1_2_0.eContents().get(0);
-		private final Assignment cParametersAssignment_0_1_2_0_1 = (Assignment)cGroup_0_1_2_0.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_0_1_2_0_1_0 = (RuleCall)cParametersAssignment_0_1_2_0_1.eContents().get(0);
-		private final Group cGroup_0_1_2_0_2 = (Group)cGroup_0_1_2_0.eContents().get(2);
-		private final Keyword cCommaKeyword_0_1_2_0_2_0 = (Keyword)cGroup_0_1_2_0_2.eContents().get(0);
-		private final Assignment cParametersAssignment_0_1_2_0_2_1 = (Assignment)cGroup_0_1_2_0_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_0_1_2_0_2_1_0 = (RuleCall)cParametersAssignment_0_1_2_0_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_0_1_2_0_3 = (Keyword)cGroup_0_1_2_0.eContents().get(3);
-		private final Keyword cLeftParenthesisRightParenthesisKeyword_0_1_2_1 = (Keyword)cAlternatives_0_1_2.eContents().get(1);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cExternKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cFunctionNameAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cFunctionNameIDTerminalRuleCall_1_1_0 = (RuleCall)cFunctionNameAssignment_1_1.eContents().get(0);
 		private final Alternatives cAlternatives_1_2 = (Alternatives)cGroup_1.eContents().get(2);
@@ -434,81 +422,29 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParametersParameterParserRuleCall_1_2_0_2_1_0 = (RuleCall)cParametersAssignment_1_2_0_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2_0_3 = (Keyword)cGroup_1_2_0.eContents().get(3);
 		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_2_1 = (Keyword)cAlternatives_1_2.eContents().get(1);
-		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
 		//// Function Call Effect Rule
 		//// A function call effect works similar to the function call expression. Additionally, it may be
 		//// preceded by a list of annotations.
 		//FunctionCallEffect keffects::FunctionCallEffect:
 		//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-		//	| '()')) | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-		//	| '()')
-		//	'>';
+		//	| '()'));
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
-		//| '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') '>'
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
-		public Group getGroup_0() { return cGroup_0; }
+		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_0_0() { return cAnnotationsAssignment_0_0; }
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
 		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0_0; }
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
-		public Group getGroup_0_1() { return cGroup_0_1; }
-
-		//'extern'
-		public Keyword getExternKeyword_0_1_0() { return cExternKeyword_0_1_0; }
-
-		//functionName=ID
-		public Assignment getFunctionNameAssignment_0_1_1() { return cFunctionNameAssignment_0_1_1; }
-
-		//ID
-		public RuleCall getFunctionNameIDTerminalRuleCall_0_1_1_0() { return cFunctionNameIDTerminalRuleCall_0_1_1_0; }
-
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
-		public Alternatives getAlternatives_0_1_2() { return cAlternatives_0_1_2; }
-
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-		public Group getGroup_0_1_2_0() { return cGroup_0_1_2_0; }
-
-		//'('
-		public Keyword getLeftParenthesisKeyword_0_1_2_0_0() { return cLeftParenthesisKeyword_0_1_2_0_0; }
-
-		//parameters+=Parameter
-		public Assignment getParametersAssignment_0_1_2_0_1() { return cParametersAssignment_0_1_2_0_1; }
-
-		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_0_1_2_0_1_0() { return cParametersParameterParserRuleCall_0_1_2_0_1_0; }
-
-		//(',' parameters+=Parameter)*
-		public Group getGroup_0_1_2_0_2() { return cGroup_0_1_2_0_2; }
-
-		//','
-		public Keyword getCommaKeyword_0_1_2_0_2_0() { return cCommaKeyword_0_1_2_0_2_0; }
-
-		//parameters+=Parameter
-		public Assignment getParametersAssignment_0_1_2_0_2_1() { return cParametersAssignment_0_1_2_0_2_1; }
-
-		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_0_1_2_0_2_1_0() { return cParametersParameterParserRuleCall_0_1_2_0_2_1_0; }
-
-		//')'
-		public Keyword getRightParenthesisKeyword_0_1_2_0_3() { return cRightParenthesisKeyword_0_1_2_0_3; }
-
-		//'()'
-		public Keyword getLeftParenthesisRightParenthesisKeyword_0_1_2_1() { return cLeftParenthesisRightParenthesisKeyword_0_1_2_1; }
-
-		//'<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') '>'
 		public Group getGroup_1() { return cGroup_1; }
 
-		//'<'
-		public Keyword getLessThanSignKeyword_1_0() { return cLessThanSignKeyword_1_0; }
+		//'extern'
+		public Keyword getExternKeyword_1_0() { return cExternKeyword_1_0; }
 
 		//functionName=ID
 		public Assignment getFunctionNameAssignment_1_1() { return cFunctionNameAssignment_1_1; }
@@ -548,9 +484,6 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_1_2_1() { return cLeftParenthesisRightParenthesisKeyword_1_2_1; }
-
-		//'>'
-		public Keyword getGreaterThanSignKeyword_1_3() { return cGreaterThanSignKeyword_1_3; }
 	}
 
 	public class PrintCallEffectElements extends AbstractParserRuleElementFinder {
@@ -1025,8 +958,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-	//	'()');
+	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
 	public ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return pReferenceCallEffect;
 	}
@@ -1040,9 +973,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//FunctionCallEffect keffects::FunctionCallEffect:
 	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()')) | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()')
-	//	'>';
+	//	| '()'));
 	public FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return pFunctionCallEffect;
 	}
@@ -1430,13 +1361,25 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	| FBYExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
 	
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
+	}
+
+	//FBYExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//	subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
+		return gaKExpressions.getFBYExpressionAccess();
+	}
+	
+	public ParserRule getFBYExpressionRule() {
+		return getFBYExpressionAccess().getRule();
 	}
 
 	//// Atomic Expression Rule
@@ -1911,10 +1854,20 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 
+	//enum FBYOperator returns OperatorType:
+	//	FBY="->";
+	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
+		return gaKExpressions.getFBYOperatorAccess();
+	}
+	
+	public EnumRule getFBYOperatorRule() {
+		return getFBYOperatorAccess().getRule();
+	}
+
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
-	//	STRING="string" | HOST="host";
+	//	STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
@@ -2185,7 +2138,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID (('.' | '-') ID)* ("#" INT)?;
+	//	ID (('.' | '-') ID)* ('#' INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -2254,7 +2207,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
-	//terminal ML_COMMENT:
+	//@ Override terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
@@ -2266,7 +2219,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	} 
 
-	//terminal SL_COMMENT:
+	//@ Override terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
@@ -2278,7 +2231,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getNUMBERRule();
 	} 
 
-	//terminal INT returns ecore::EInt:
+	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
@@ -2296,13 +2249,13 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getBOOLEANRule();
 	} 
 
-	//terminal STRING:
+	//@ Override terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
 	} 
 
-	//terminal ID:
+	//@ Override terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();

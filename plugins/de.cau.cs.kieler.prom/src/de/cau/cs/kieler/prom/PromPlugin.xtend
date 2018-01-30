@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom
 
 import com.google.common.base.Charsets
 import com.google.common.io.CharStreams
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -37,8 +38,10 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
+import org.eclipse.core.runtime.Plugin
 import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.SubMonitor
@@ -51,10 +54,6 @@ import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.util.StringInputStream
-import org.osgi.framework.BundleActivator
-import org.osgi.framework.BundleContext
-import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
-import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -62,9 +61,9 @@ import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
  * 
  * @author aas
  */
-class PromPlugin implements BundleActivator  {
+class PromPlugin extends Plugin  {
     
-    private static BundleContext context
+    public static var PromPlugin instance
     
     // The plug-in ID
     public static val PLUGIN_ID = "de.cau.cs.kieler.prom"
@@ -105,30 +104,18 @@ class PromPlugin implements BundleActivator  {
      * The constructor
      */
     new() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see BundleActivator#start(org.osgi.framework.BundleContext)
-     */
-    static def BundleContext getContext() {
-        return PromPlugin.context
+        super()
+        instance = this
     }
     
-    /*
-     * (non-Javadoc)
-     * @see BundleActivator#start(org.osgi.framework.BundleContext)
+    /**
+     * Returns a string with the content from the given input stream.
      */
-    override void start(BundleContext context) throws Exception {
-        PromPlugin.context = context
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see BundleActivator#stop(org.osgi.framework.BundleContext)
-     */
-    override void stop(BundleContext context) throws Exception {
-        PromPlugin.context = null
+    public static def String toString(InputStream stream) {
+        val isr = new InputStreamReader(stream, Charsets.UTF_8)
+        val text = CharStreams.toString(isr)
+        isr.close
+        return text
     }
     
     /**

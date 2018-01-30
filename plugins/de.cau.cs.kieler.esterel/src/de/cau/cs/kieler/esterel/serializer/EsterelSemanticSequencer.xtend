@@ -590,7 +590,7 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
      *         )
      *     )
      */
-    protected override sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+    protected override sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
         context.sequenceValuedOperatorExpression(semanticObject)
     }
     
@@ -736,7 +736,7 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
                 feeder.accept(grammarAccess.valuedObjectPreExpressionAccess.
                     subExpressionsSignalReferenceExpressionParserRuleCall_1_2_0, semanticObject.subExpressions.head, 0)                
             }
-            default: context.sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(semanticObject)
+            default: context.sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(semanticObject)
         }
         feeder.finish();
     }

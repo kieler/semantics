@@ -1211,13 +1211,25 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	| FBYExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
 	
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
+	}
+
+	//FBYExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//	subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
+		return gaKExpressions.getFBYExpressionAccess();
+	}
+	
+	public ParserRule getFBYExpressionRule() {
+		return getFBYExpressionAccess().getRule();
 	}
 
 	//// Atomic Expression Rule
@@ -1692,10 +1704,20 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 
+	//enum FBYOperator returns OperatorType:
+	//	FBY="->";
+	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
+		return gaKExpressions.getFBYOperatorAccess();
+	}
+	
+	public EnumRule getFBYOperatorRule() {
+		return getFBYOperatorAccess().getRule();
+	}
+
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
-	//	STRING="string" | HOST="host";
+	//	STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
@@ -1966,7 +1988,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	super::ID (('.' | '-') super::ID)* ("#" INT)?;
+	//	super::ID (('.' | '-') super::ID)* ('#' INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -2035,7 +2057,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
-	//terminal ML_COMMENT:
+	//@ Override terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
@@ -2047,7 +2069,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	} 
 
-	//terminal SL_COMMENT:
+	//@ Override terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
@@ -2059,7 +2081,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getNUMBERRule();
 	} 
 
-	//terminal INT returns ecore::EInt:
+	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
@@ -2071,7 +2093,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getFLOATRule();
 	} 
 
-	//terminal STRING:
+	//@ Override terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();

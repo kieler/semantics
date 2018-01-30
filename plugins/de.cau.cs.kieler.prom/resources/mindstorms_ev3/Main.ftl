@@ -25,13 +25,13 @@ public class ${file_basename} {
     public static ${model_name} scchart = new ${model_name}();
     
     public static void main(String[] args) {
-        
-        // Init Annotations
-${inits}
 
         // Init SCChart
         System.out.println("running...");
         scchart.reset();
+        
+        // Init Annotations
+${inits}
         
         // Tick loop
         while(!Button.ESCAPE.isDown()){

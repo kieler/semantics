@@ -43,7 +43,24 @@ class ExecTransformation extends InplaceProcessor<EsterelProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        model.eAllContents.filter(Exec).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Exec) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+        }
+        else {
+            model.eAllContents.filter(Exec).toList.forEach[transform]
+        }
     }
     
     def transform(Exec exec) {

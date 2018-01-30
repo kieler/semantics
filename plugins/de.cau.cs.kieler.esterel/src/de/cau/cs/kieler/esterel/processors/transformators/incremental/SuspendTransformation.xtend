@@ -22,6 +22,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Pause
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -46,14 +48,34 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(Suspend).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Suspend) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Suspend).toList.forEach[transform]
+        }
     }
     
     def transform(Suspend suspend) {
         val statements = getContainingList(suspend)
         val pos = statements.indexOf(suspend)
-        if (suspend.delay.expression !== null) {
+        if (suspend.delay.delay !== null) {
             // create a scope because a declaration (variable for counting) is needed
             val variable = createNewUniqueVariable(createIntValue(0))
             val scope = createScopeStatement(createDeclaration(ValueType.INT, variable))
@@ -84,16 +106,30 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
             thread2.statements.add(createLabel)
             scope.statements.add(parallel)
             suspend.replace(scope)
+            lastStatement = scope
         }
         else {
             transformPauses(suspend, null)
             if (suspend.delay.isImmediate) {
                 val label = createLabel
                 statements.set(pos, label)
-                statements.add(pos+1, newIfThenGoto(suspend.delay.expression, label, true))
-                statements.addAll(pos+2, suspend.statements)
+                val cond = newIfThenGoto(suspend.delay.expression, label, true)
+                statements.add(pos+1, cond)
+                if (suspend.statements.empty) {
+                    lastStatement = cond
+                }
+                else {
+                    lastStatement = suspend.statements.last
+                    statements.addAll(pos+2, suspend.statements)
+                }
             }
             else {
+                if (!suspend.statements.empty) {
+                    lastStatement = suspend.statements.last
+                }
+                else {
+                    throw new Exception("Difficult to decide the next statement to transform at the moment.")
+                }
                 statements.addAll(pos, suspend.statements)
                 statements.remove(suspend)
             }
@@ -107,8 +143,8 @@ class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
             val pos = statements.indexOf(pause)
             val label = createLabel
             var Conditional conditional
-            if (suspend.delay.expression !== null && variable !== null) {
-                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), copy(suspend.delay.expression)), label, false)
+            if (suspend.delay.delay !== null && variable !== null) {
+                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), copy(suspend.delay.delay)), label, false)
             }
             else {
                 conditional = newIfThenGoto(copy(suspend.delay.expression), label, false)

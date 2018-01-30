@@ -154,3 +154,20 @@
         }
     </@>
 </#macro>
+
+<#-- TickCount -->
+<#-- As input variable, counts the ticks.
+     The initial tick is tick 0, the following are tick 1, 2, 3, ...
+     
+     Example for SCCharts:
+         @Wrapper TickCount
+         input int tickCount; -->
+<#macro TickCount>
+    <@init>
+      scchart.${varName} = -1; // Start with -1 because increasing is done before each tick.
+    </@>
+    <@input>
+        // TickCount
+        scchart.${varName}++;
+    </@>
+</#macro>

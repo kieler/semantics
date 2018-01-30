@@ -40,6 +40,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.Replacements
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -64,7 +65,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.reference"
+        "de.cau.cs.kieler.sccharts.processors.reference"
     }
     
     override getName() {
@@ -73,14 +74,15 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     override process() {
         replacedWithLiterals.clear
-        dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.transformators.dataflow") as Dataflow
+        dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.dataflow") as Dataflow
         if (dataflowProcessor !== null) {
             dataflowProcessor.setEnvironment(sourceEnvironment, environment)
         }
         
         val model = getModel
         
-        for(rootState : model.rootStates.toList) {
+        // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
+        for(rootState : newArrayList(model.rootStates.head)) {
             val statesWithReferences = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
@@ -99,6 +101,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                 throw new IllegalStateException("References objects are not contained in the resource!")
         }
         
+        for (var i = 1; i < model.rootStates.size; i++) {
+            model.rootStates.remove(1)
+        }
     }   
     
     /** Expands one referenced state and keeps track of the replacement stack. */
@@ -282,6 +287,12 @@ class Reference extends SCChartsProcessor implements Traceable {
             subExpression.replaceReferences(replacements)
         }
     }
+    
+    protected dispatch def void replaceReferences(VectorValue vectorValue, Replacements replacements) {
+        for(value : vectorValue.values) {
+            value.replaceReferences(replacements)
+        }
+    }    
     
     /** Literals will not be replaced. */
     protected dispatch def void replaceReferences(Value value, Replacements replacements) {

@@ -19,6 +19,8 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Repeat
 import de.cau.cs.kieler.kexpressions.ValueType
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -42,8 +44,28 @@ class RepeatTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(Repeat).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Repeat) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Repeat).toList.forEach[transform]
+        }
     }
     
     def transform(Repeat repeat) {
@@ -59,6 +81,7 @@ class RepeatTransformation extends InplaceProcessor<EsterelProgram> {
         ifStatement.statements.add(createGotoStatement(label))
         scope.statements.add(ifStatement)
         repeat.replace(scope)
+        lastStatement = scope
     }
     
 }

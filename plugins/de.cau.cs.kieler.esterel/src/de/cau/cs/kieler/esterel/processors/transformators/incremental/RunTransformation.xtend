@@ -61,6 +61,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.Sustain
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
@@ -104,6 +107,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         
     // sorted renamings    
     var signalRenamings = new HashMap<Signal, Signal>
+    var sensorRenamings = new HashMap<Sensor, Sensor>
     var constantRenamings = new HashMap<Constant, ConstantRenaming>
     var functionRenamings = new HashMap<Function, Function>
     var procedureRenamings = new HashMap<Procedure, Procedure>
@@ -119,6 +123,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     var valuedObjectReferences = new LinkedList<ValuedObjectReference>
     var constantExpressions = new LinkedList<ConstantExpression>
     var emits = new LinkedList<Emit>
+    var sustains = new LinkedList<Sustain>
     var unemits = new LinkedList<UnEmit>
     var sets = new LinkedList<Set>
     var execs = new LinkedList<Exec>
@@ -181,6 +186,24 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
             for (signal : signalDecl.signals) {
                 parentSignals.put(signal.name, signal)
             }
+        }
+    }
+    
+    /**
+     * Put surrounding local signals into parentSignals map
+     * 
+     * @param obj An EObject
+     * @param parentModule The surroundingModule
+     */
+    def void getLocalSignals(EObject obj, Module parentModule) {
+        var parent = obj.eContainer
+        while ((parent !== null) && !(parent instanceof Module)) {
+            if (parent instanceof LocalSignalDeclaration) {
+                parent.valuedObjects.filter(Signal).forEach[s |
+                    parentSignals.put(s.name, s)
+                ]
+            }
+            parent = parent.eContainer
         }
     }
     
@@ -288,6 +311,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      * @param parentModule The surrounding Module
      */
     def transformRunStatement(Run run, Module parentModule) {
+        getLocalSignals(run, parentModule)
         parentModule.getSignals
         parentModule.getConstants
         parentModule.getSensors
@@ -320,10 +344,9 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         // FUNCTIONS
         moduleRenaming = transformFunctions(moduleRenaming, parentModule)
         
-        scope.statements.add(moduleRenaming.module.statements)
+        scope.statements.addAll(moduleRenaming.module.statements)
         statementList.set(pos, scope)        
-        var moduleContainingList = moduleRenaming.module.getContainingList
-        moduleContainingList.remove(moduleRenaming.module)
+        moduleRenaming.module.remove
         
         // TODO PROCEDURES and TASKS will not be transformed at the moment
     }
@@ -333,6 +356,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      */
     def clearMapsLists() {
         signalRenamings.clear
+        sensorRenamings.clear
         constantRenamings.clear
         functionRenamings.clear
         procedureRenamings.clear
@@ -343,6 +367,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         parentSensors.clear
         valuedObjectReferences.clear
         emits.clear
+        sustains.clear
         unemits.clear
         sets.clear
         execs.clear
@@ -364,7 +389,12 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                 for (renaming : oneTypeRenaming.renamings) {
                     switch renaming {
                         SignalRenaming: {
-                            signalRenamings.put(renaming.oldName.valuedObject as Signal, renaming.newName.valuedObject as Signal)
+                            if (renaming.oldName.valuedObject instanceof Signal) {
+                                signalRenamings.put(renaming.oldName.valuedObject as Signal, renaming.newName.valuedObject as Signal)
+                            }
+                            else if (renaming.oldName.valuedObject instanceof Sensor) {
+                                sensorRenamings.put(renaming.oldName.valuedObject as Sensor, renaming.newName.valuedObject as Sensor)
+                            }
                         }
                         ConstantRenaming: {
                             constantRenamings.put(renaming.oldName, renaming)
@@ -414,10 +444,10 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      * @param name The name of the sensor
      * @param type The type of the sensor
      */
-    def Signal checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
+    def Sensor checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
         var correspondingSensor = parentSensors.get(name)
-        if (correspondingSensor instanceof Signal) {
-            var swt = correspondingSensor.eContainer as Sensor
+        if (correspondingSensor instanceof Sensor) {
+            var swt = correspondingSensor as Sensor
             if (typeIdent.type !== null && swt.type?.type == typeIdent.type) {
                 return correspondingSensor
             }
@@ -450,6 +480,9 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                 }
                 Emit: {
                     emits.add(o)
+                }
+                Sustain: {
+                    sustains.add(o)
                 }
                 UnEmit: {
                     unemits.add(o)
@@ -495,45 +528,55 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                 else {
                     relatedSignal = checkIfSignalExistsByNameAndType(signal.name, signal.type, signal.idType)
                 }
-                // transform all references
                 if (relatedSignal instanceof Signal) {
-                    for (voRef : valuedObjectReferences) {
-                        if (voRef.valuedObject == signal) {
-                            voRef.valuedObject = relatedSignal
-                        }
+                    if (relatedSignal.name.equals("tick")) {
+                        tickTransformation(signal, relatedSignal)
                     }
-                    for (emit : emits) {
-                        if (emit.signal == signal) {
-                            emit.signal = relatedSignal
+                    else {
+                        // transform all references
+                        for (voRef : valuedObjectReferences) {
+                            if (voRef.valuedObject == signal) {
+                                voRef.valuedObject = relatedSignal
+                            }
                         }
-                    }
-                    for (unemit : unemits) {
-                        if (unemit.signal == signal) {
-                            unemit.signal = relatedSignal
+                        for (emit : emits) {
+                            if (emit.signal == signal) {
+                                emit.signal = relatedSignal
+                            }
                         }
-                    }
-                    for (set : sets) {
-                        if (set.signal == signal) {
-                            set.signal = relatedSignal
+                        for (sustain : sustains) {
+                            if (sustain.signal == signal) {
+                                sustain.signal = relatedSignal
+                            }
                         }
-                    }
-                    for (exec : execs) {
-                        if (exec.returnSignal == signal) {
-                            exec.returnSignal = relatedSignal
+                        for (unemit : unemits) {
+                            if (unemit.signal == signal) {
+                                unemit.signal = relatedSignal
+                            }
                         }
-                    }
-                    for (ri : relationImplications) {
-                        if (ri.first == signal) {
-                            ri.first = relatedSignal
+                        for (set : sets) {
+                            if (set.signal == signal) {
+                                set.signal = relatedSignal
+                            }
                         }
-                        if (ri.second == signal) {
-                            ri.second = relatedSignal
+                        for (exec : execs) {
+                            if (exec.returnSignal == signal) {
+                                exec.returnSignal = relatedSignal
+                            }
                         }
-                    }
-                    for (ri : relationIncompatibilities) {
-                        for (var i=0; i<ri.incomp.length; i++) {
-                            if (ri.incomp.get(i) == signal) {
-                                ri.incomp.set(i, relatedSignal)
+                        for (ri : relationImplications) {
+                            if (ri.first == signal) {
+                                ri.first = relatedSignal
+                            }
+                            if (ri.second == signal) {
+                                ri.second = relatedSignal
+                            }
+                        }
+                        for (ri : relationIncompatibilities) {
+                            for (var i=0; i<ri.incomp.length; i++) {
+                                if (ri.incomp.get(i) == signal) {
+                                    ri.incomp.set(i, relatedSignal)
+                                }
                             }
                         }
                     }
@@ -547,6 +590,63 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     }
     
     /**
+     * Special case: old signal will be renamed to "tick"
+     */
+    def tickTransformation(Signal signal, Signal relatedSignal) {
+        val tickRef = relatedSignal.createTickReference
+        if (relatedSignal instanceof Signal) {
+            for (voRef : valuedObjectReferences) {
+                if (voRef.valuedObject == signal) {
+                    voRef.replace(tickRef)
+                }
+            }
+            for (emit : emits) {
+                if (emit.signal == signal) {
+                    emit.remove
+                }
+            }
+            for (sustain : sustains) {
+                if (sustain.signal == signal) {
+                    sustain.signal = relatedSignal // TODO 
+                }
+            }
+            for (unemit : unemits) {
+                if (unemit.signal == signal) {
+                    unemit.remove
+                }
+            }
+            for (set : sets) {
+                if (set.signal == signal) {
+                    set.remove
+                }
+            }
+            for (exec : execs) {
+                if (exec.returnSignal == signal) {
+                    exec.returnSignal = relatedSignal
+                }
+            }
+            for (ri : relationImplications) {
+                if (ri.first == signal) {
+                    ri.first = relatedSignal
+                }
+                if (ri.second == signal) {
+                    ri.second = relatedSignal
+                }
+            }
+            for (ri : relationIncompatibilities) {
+                for (var i=0; i<ri.incomp.length; i++) {
+                    if (ri.incomp.get(i) == signal) {
+                        ri.incomp.set(i, relatedSignal)
+                    }
+                }
+            }
+        }
+        else {
+            throw new UnsupportedOperationException("There is no corresponding signal in the parent Module for " + signal.name + "!")
+        }
+    }
+    
+    /**
      * Transform all renamings for the constants and all references from the old to the new constants
      * 
      * @param moduleRenaming ModuleRenaming of a run statement
@@ -554,7 +654,8 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      */
     def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.constantDeclarations) {
-                for (constant : decl.constants) {
+                for (var i=0; i<decl.constants.length; i++) {
+                    val constant = decl.constants.get(i)
                     var updateReferences = true
                     var ConstantRenaming relatedConstantRenaming
                     if (constantRenamings.containsKey(constant)) {
@@ -580,6 +681,7 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                     else {
                         constant.name = createNewUniqueConstantName(constant.name)
                         parentModule.declarations.add(createConstantDecl(constant, constant.type))
+                        i-- // because the old constant of "decl.sensors"
                     }
                     
                 }
@@ -596,12 +698,19 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
     def transformSensors(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.sensorDeclarations) {
             for (var i=0; i<decl.valuedObjects.size; i++) {
-                var sensorWType = decl.valuedObjects.get(i) as Sensor
-                var sensor = checkIfSensorExistsByNameAndType(sensorWType.name, sensorWType.type)
-                if (sensor instanceof Sensor) {
+                val sensorWType = decl.valuedObjects.get(i) as Sensor
+                var Sensor relatedSensor
+                // if the sensor is in the renaming list, rename sensor
+                if (sensorRenamings.containsKey(sensorWType)) {
+                    relatedSensor = sensorRenamings.get(sensorWType)
+                }
+                else {
+                    relatedSensor = checkIfSensorExistsByNameAndType(sensorWType.name, sensorWType.type)
+                }
+                if (relatedSensor instanceof Sensor) {
                     for (voRef : valuedObjectReferences) {
                         if (voRef.valuedObject == sensorWType) {
-                            voRef.valuedObject = sensor
+                            voRef.valuedObject = relatedSensor
                         }
                     }
                 }

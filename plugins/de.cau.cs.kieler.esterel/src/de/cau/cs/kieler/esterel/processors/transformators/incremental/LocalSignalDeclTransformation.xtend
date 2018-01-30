@@ -23,6 +23,9 @@ import de.cau.cs.kieler.esterel.extensions.NewSignals
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.kexpressions.ValueType
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author mrb
@@ -47,8 +50,28 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
+    var EObject lastStatement
+    
     override process() {
-        model.eAllContents.filter(LocalSignalDeclaration).toList.forEach[transform]
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof LocalSignalDeclaration) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(LocalSignalDeclaration).toList.forEach[transform]
+        }
     }    
     
     def transform(LocalSignalDeclaration localSignals) {
@@ -84,6 +107,7 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
         }
         createParallelForSignals(scope, signalsMap)
         localSignals.replace(scope)
+        lastStatement = scope
         transformReferences(scope, signalsMap)
     }
     
@@ -107,7 +131,8 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
         for (signal : signals) {
             val keyValue = signalsMap.get(signal)
             val s = keyValue.s
-            if (signal.type != ValueType.PURE) {
+            // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
+            if (signal.type != ValueType.PURE && signal.combineOperator !== null && signal.combineOperator != CombineOperator.NONE) {
                 val s_set = keyValue.s_set
                 val s_cur = keyValue.s_cur
                 val s_val = keyValue.s_val

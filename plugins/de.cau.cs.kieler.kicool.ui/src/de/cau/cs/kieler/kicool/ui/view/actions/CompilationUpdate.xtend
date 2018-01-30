@@ -30,6 +30,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDa
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetProcessor
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.addNewProcessor
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
@@ -84,7 +85,8 @@ class CompilationUpdate extends KiCoolUIObserver {
                     notification.applyNotifications
                 }
             CompilationChanged: {
-                notification.reinitializeSynthesis
+                notification.addNewProcessor(view.viewContext.viewModel, view)
+                view.doLayout(true)             
             } 
         }
         

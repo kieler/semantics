@@ -115,7 +115,10 @@ class EsterelSytaxHelper {
     
     def fixTickReferences(EsterelProgram program) {
         if (program.tick === null) {
-            program.tick = KExpressionsFactory.eINSTANCE.createValuedObject => [
+//            program.tick = KExpressionsFactory.eINSTANCE.createValuedObject => [
+//                name = "tick"
+//            ]
+            program.tick = EsterelFactory.eINSTANCE.createSignal => [
                 name = "tick"
             ]
         }

@@ -12,6 +12,9 @@
  */
 package de.cau.cs.kieler.prom.build.templates
 
+import com.google.common.io.Files
+import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.BuildProblem
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
@@ -19,6 +22,7 @@ import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -71,7 +75,7 @@ abstract class TemplateProcessor extends Configurable {
      * The main method that takes care of actual processing of the input template.
      */
     abstract public def FileGenerationResult process()
-    
+        
     /**
      * Adds the listener.
      * 
@@ -109,17 +113,27 @@ abstract class TemplateProcessor extends Configurable {
     }
     
     /**
-     * Processes the template context and notifies listeners. 
+     * Processes the template context and produces a build problem if needed. 
      */
-    protected def void processContext() {
-        // Notify listeners
-        for(l : listeners)
-            l.beforeProcessing(this)
+    protected def BuildProblem processContext() {
         // Process
-        generatedCode = TemplateManager.process(context)
-        // Notify listeners
-        for(l : listeners)
-            l.afterProcessing(this)
+        try {
+            generatedCode = TemplateManager.process(context)
+        } catch(Exception e) {
+            var BuildProblem problem
+            if(TemplateManager.templateCodeWithMacroCalls === null) {
+                // The problem was directly in the source template
+                problem = BuildProblem.createError(context.templateFile, e)
+            } else {
+                // Create file for the intermediate template with macro calls to debug it
+                val tmpFileName = Files.getNameWithoutExtension(context.templateFile.name)+"_WithMacroCalls.ftl"
+                val tmpFile = context.templateFile.parent.getFile(new Path(tmpFileName))
+                PromPlugin.createResource(tmpFile, TemplateManager.templateCodeWithMacroCalls)
+                problem = BuildProblem.createError(tmpFile, e)
+            }
+            return problem
+        }
+        return null
     }
     
     /**

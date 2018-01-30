@@ -23,12 +23,12 @@ public class ${file_basename} {
 //        RConsole.openUSB(10000);
 //        RConsole.println("RConsole opened");
 
-        // Init Annotations
-${inits}
-
         // Init SCChart
         System.out.println("running...");
         scchart.reset();
+
+        // Init Annotations
+${inits}
         
         // Tick loop
         while(!Button.ESCAPE.isDown()){
