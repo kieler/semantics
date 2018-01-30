@@ -378,6 +378,7 @@ class EsterelFormatter extends SCLFormatter {
 		
 		present.regionFor.keyword("then").append[ newLine ]
 	    present.regionFor.keyword("else").append[ newLine ]
+	    present.regionFor.keyword("end").prepend[ newLine ]
 //		present.append[ newLine ]
 		
         
