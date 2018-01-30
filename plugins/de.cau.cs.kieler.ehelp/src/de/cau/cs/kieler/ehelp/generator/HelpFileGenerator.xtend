@@ -112,7 +112,7 @@ class HelpFileGenerator {
                     var returnText = '''<html>
 							<body><h2>
 							<a name="«chapter.helpId»">
-							<span lang="EN-US">«chapter.title.camelCase»</span></a></h2>'''
+							<span lang="EN-US">«chapter.title»</span></a></h2>'''
 
                     val chapterGeneratedImplicitOutline = EHelpConsts.generateImplicitOutline
 
@@ -152,10 +152,10 @@ class HelpFileGenerator {
                 private def String generateTOCChapter(Chapter chapter) {
                     if (!chapter.
                         hasSubchapters) {
-                        return '''<topic href="«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title»"/>''' +
+                        return '''<topic href="«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title.removeHTMLCode»"/>''' +
                             "\n"
                     } else {
-                        var returnText = '''<topic href="«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title»">''' +
+                        var returnText = '''<topic href="«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title.removeHTMLCode»">''' +
                             "\n"
                         for (subchapter : chapter.subchapters) {
                             returnText += subchapter.generateTOCChapter
@@ -421,6 +421,36 @@ class HelpFileGenerator {
                     }
                     return chapterIndexCache.get(chapter)
                 }
+
+
+                // ------------------------------------------------------------------------
+                // Remove HTML code
+                def removeHTMLCode(String text) {
+                    var returnText = ''''''
+                    var nextCharacter = ''
+                    var htmlon = false
+                    for (var int c = 0; c < text.length; c++) {
+                        val character = text.substring(c, c + 1)
+                        if (c < text.length-1) {
+                            nextCharacter = text.substring(c+1, c + 2)
+                        }
+                        
+                        if ((character) == "<" && (nextCharacter != "<")) {
+                            htmlon = true
+                        }
+                        
+                        if (!htmlon) {
+                            returnText += character
+                        }
+                        
+                        
+                        if ((character == ">") && (nextCharacter != ">")) {
+                            htmlon = false
+                        } 
+                    }
+                    return returnText
+                }
+
 
                 // ------------------------------------------------------------------------
                 // Start all new words with a capital letter, all other letters small
