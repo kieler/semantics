@@ -76,8 +76,13 @@ class SSACoreExtensions {
         return anno.annotations.filter(StringAnnotation).exists[it.name == SSA && it.values.head == function.id]
     }
     
-    def <T extends Annotatable> T markSSA(T anno) {
+    def <T extends Annotatable> T unmarkSSA(T anno) {
         anno.annotations.removeIf[name == SSA]
+        return anno
+    }    
+    
+    def <T extends Annotatable> T markSSA(T anno) {
+        anno.unmarkSSA
         anno.annotations += createAnnotation => [
             name = SSA
         ]
@@ -85,13 +90,13 @@ class SSACoreExtensions {
     }
 
     def <T extends Annotatable> T markSSA(T anno, SSAFunction function) {
-        anno.annotations.removeIf[name == SSA]
+        anno.unmarkSSA
         anno.createStringAnnotation(SSA, function.id)
         return anno
     }
     
     def <T extends Annotatable> T markSSADecl(T anno, ValuedObject vo) {
-        anno.annotations.removeIf[name == SSA]
+        anno.unmarkSSA
         anno.annotations += createReferenceAnnotation => [
             name = SSA
             it.object = vo
@@ -101,7 +106,7 @@ class SSACoreExtensions {
     
     def ssaOrigVO(Declaration decl) {
         val origAnno = decl.annotations.findFirst[it.name == SSA && it instanceof ReferenceAnnotation]
-        if (origAnno != null) {
+        if (origAnno !== null) {
             return (origAnno as ReferenceAnnotation).object as ValuedObject
         } else {
             return null
@@ -150,10 +155,15 @@ class SSACoreExtensions {
         for (decl : scg.declarations.filter(VariableDeclaration).filter[!hasAnnotation(ANNOTATION_IGNORE_DECLARATION)].toList) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
+                    // Same interface modifiers
+                    input = decl.input
+                    output = decl.output
+                    type = decl.type
+                    
                     scg.declarations += it
                     trace(it, decl, vo)
                     markSSADecl(vo)
-                    type = decl.type
+                    
                     valuedObjects += vo.copy
                 ])
             }

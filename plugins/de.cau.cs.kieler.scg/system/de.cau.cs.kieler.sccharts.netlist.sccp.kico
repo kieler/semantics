@@ -1,0 +1,41 @@
+public system de.cau.cs.kieler.sccharts.netlist.sccp
+    version 1 
+    label "Netlist-based Compilation with SCCP"
+
+de.cau.cs.kieler.sccharts.processors.transformators.reference
+de.cau.cs.kieler.sccharts.processors.transformators.for 
+de.cau.cs.kieler.sccharts.processors.transformators.prTransitions
+de.cau.cs.kieler.sccharts.processors.transformators.const
+de.cau.cs.kieler.sccharts.processors.transformators.history
+de.cau.cs.kieler.sccharts.processors.transformators.signal
+de.cau.cs.kieler.sccharts.processors.transformators.suspend
+de.cau.cs.kieler.sccharts.processors.transformators.countDelay
+de.cau.cs.kieler.sccharts.processors.transformators.^pre
+de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
+de.cau.cs.kieler.sccharts.processors.transformators.deferred
+de.cau.cs.kieler.sccharts.processors.transformators.static
+de.cau.cs.kieler.sccharts.processors.transformators.duringAction
+de.cau.cs.kieler.sccharts.processors.transformators.complexFinalState
+de.cau.cs.kieler.sccharts.processors.transformators.abort
+de.cau.cs.kieler.sccharts.processors.transformators.exitAction
+de.cau.cs.kieler.sccharts.processors.transformators.initialization
+de.cau.cs.kieler.sccharts.processors.transformators.entryAction
+de.cau.cs.kieler.sccharts.processors.transformators.connector
+de.cau.cs.kieler.sccharts.processors.transformators.userSchedule
+de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
+de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth    
+de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop true
+de.cau.cs.kieler.scg.processors.transformators.dependency
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
+de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+de.cau.cs.kieler.scg.processors.transformators.expressions
+de.cau.cs.kieler.scg.processors.transformators.guards
+de.cau.cs.kieler.scg.processors.transformators.scheduler
+de.cau.cs.kieler.scg.processors.transformators.sequentializer
+pre process de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+pre process de.cau.cs.kieler.scg.processors.ssa.sequential
+de.cau.cs.kieler.scg.processors.ssa.optimizer.sccp
+de.cau.cs.kieler.scg.processors.codegen.c

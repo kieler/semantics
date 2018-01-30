@@ -50,6 +50,11 @@ import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import com.google.common.collect.Multimap
+import com.google.common.collect.HashBiMap
 
 /**
  * @author als
@@ -68,13 +73,24 @@ class SSATransformationExtensions {
     @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     
-    def validate(Processor<?,?> processor, SCGraph scg) {
+    @Accessors var boolean SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING = false
+    
+    def validateStructure(Processor<?,?> processor, SCGraph scg) {
         // It is expected that this node is an entry node.
         val entryNode = scg.nodes.head
         if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
             processor.environment.errors.add("The SSA analysis expects an entry node as first node in the first basic block!", entryNode)
         }
     }
+    
+    def validateExpressions(Processor<?,?> processor, SCGraph scg) {
+        // Check for side effects
+//        val entryNode = scg.nodes.head
+//        if (scg.nodes.exists[eAllContents.filter(OperatorExpression).exists[operator == OperatorType.POSTFIX_ADD || operator == OperatorType.POSTFIX_SUB]]) {
+//            processor.environment.errors.add("The SSA analysis cannot handle expressions with side-effects. (v++/v--)", entryNode)
+//        }
+    }            
+        
     
     def getPhiPlacer() {
         return [ ValuedObject vo, Node bbHead |
@@ -144,7 +160,7 @@ class SSATransformationExtensions {
     }
 
     def rename(DominatorTree dt, BasicBlock start, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
-        val placedParameter = <Parameter, BasicBlock>newHashMap
+        val placedParameter = HashBiMap.<Parameter, BasicBlock>create
         val versionStack = <ValuedObject, LinkedList<Integer>>newHashMap
         val versionStackFunc = [ ValuedObject vo |
             var voStack = versionStack.get(vo)
@@ -162,23 +178,23 @@ class SSATransformationExtensions {
     protected def void recursiveRename(BasicBlock block, DominatorTree dt, Function<ValuedObject, Deque<Integer>> stack, BiMap<ValuedObject, VariableDeclaration> ssaDecl, Map<Parameter, BasicBlock> parameter) {
         val renamedDefs = <ValuedObject>newLinkedList
         for (sb : block.schedulingBlocks) {
-            for (s : sb.nodes) {
-                if (!s.isSSA && (s instanceof Assignment || s instanceof Conditional)) {
-                    val expr = if (s instanceof Assignment) s.asAssignment.expression else s.asConditional.condition
-                    for (ref : expr.allReferences.filter[!valuedObject.variableDeclaration.input && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+            for (n : sb.nodes) {
+                if (!n.isSSA && (n instanceof Assignment || n instanceof Conditional)) {
+                    val expr = if (n instanceof Assignment) n.asAssignment.expression else n.asConditional.condition
+                    for (ref : expr.allReferences.filter[(!valuedObject.variableDeclaration.input || !SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING) && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                         val vo = ref.valuedObject
                         ref.valuedObject = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek)
                     }
                 }
-                if (s instanceof Assignment) {
+                if (n instanceof Assignment) {
                     // create new version
-                    var vo = s.valuedObject
+                    var vo = n.valuedObject
                     if (!vo.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                         val version = ssaDecl.get(vo).valuedObjects.size
                         val newVO = vo.copy
                         ssaDecl.get(vo).valuedObjects.add(newVO)
                         stack.get(vo).push(version)
-                        s.valuedObject = newVO
+                        n.valuedObject = newVO
                         renamedDefs.add(vo)
                     }
                 }
@@ -241,4 +257,38 @@ class SSATransformationExtensions {
         }
         return defsite
     }
+    
+    def Multimap<Assignment, Assignment> placeMoveInstructions(SCGraph scg, BiMap<Parameter, BasicBlock> parameterMapping) {
+        val placed = HashMultimap.create
+        for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
+            val bb = node.basicBlock
+            val parameter = node.expression.eContents.filter(Parameter).toList
+            for (entry : (bb.firstNode.incoming.groupBy[(it.eContainer as Node).basicBlock] => [entrySet.removeIf[!parameterMapping.containsKey(key)]]).entrySet) {
+                val link = entry.value.head
+                val linkBB = entry.key
+                val linkNode = (link.eContainer as Node)
+                val linkSB = linkNode.schedulingBlock
+                scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
+                    markSSA(PHI_ASM)
+                    valuedObject = node.valuedObject
+                    expression = parameter.findFirst[parameterMapping.get(it) == linkBB].expression.copy
+                    
+                    // Add new asm to SB
+                    if (linkSB !== null) {
+                        linkSB.nodes.add(linkSB.nodes.indexOf(linkNode), it)
+                    }
+                    
+                    // Fix CF
+                    link.target = it
+                    next = createControlFlow => [
+                        target = node.next.target
+                    ]
+                    
+                    placed.put(node, it)
+                ]
+            }
+        }
+        return placed
+    }
+    
 }
