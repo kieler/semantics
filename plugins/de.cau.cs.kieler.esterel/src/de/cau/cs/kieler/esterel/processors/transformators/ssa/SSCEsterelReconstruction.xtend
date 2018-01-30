@@ -54,7 +54,7 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.processors.transformators.ssa.WeakUnemitSSATransformation
+import de.cau.cs.kieler.scg.processors.ssa.WeakUnemitSSATransformation
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.SCLPackage

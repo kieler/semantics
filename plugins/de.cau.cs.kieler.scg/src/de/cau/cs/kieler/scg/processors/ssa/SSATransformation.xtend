@@ -10,7 +10,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
@@ -24,6 +24,8 @@ import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
+import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
+import de.cau.cs.kieler.scg.ssa.SSAParameterProperty
 
 /**
  * The SSA transformation for SCGs
@@ -32,13 +34,13 @@ import javax.inject.Inject
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
+class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.transformators.ssa.regular"
+        return "de.cau.cs.kieler.scg.processors.ssa.sequential"
     }
 
     override getName() {
@@ -59,7 +61,8 @@ class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Tra
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
-        validate(scg)
+        validateStructure(scg)
+        validateExpressions(scg)
         
         if (scg.nodes.exists[it instanceof Fork || it instanceof Surface]) {
             environment.warnings.add("Cannot handle SCG with Concurrency or synchronous ticks")
@@ -80,7 +83,8 @@ class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Tra
         // ---------------
         // 2. Renaming
         // ---------------
-        dt.rename(entryBB, ssaDecl)
+        val parameters = dt.rename(entryBB, ssaDecl)
+        environment.setProperty(SSA_PARAMETER_PROPERTY, new SSAParameterProperty(parameters))
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
 

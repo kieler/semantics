@@ -10,7 +10,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
@@ -56,7 +56,7 @@ class CSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.transformators.ssa.cssa"
+        return "de.cau.cs.kieler.scg.processors.ssa.cssa"
     }
 
     override getName() {
@@ -82,7 +82,8 @@ class CSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable
     
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
-        validate(scg)
+        validateStructure(scg)
+        validateExpressions(scg)
         
         if (scg.nodes.exists[it instanceof Surface]) {
             environment.warnings.add("Cannot handle SCG with Concurrency or synchronous ticks")

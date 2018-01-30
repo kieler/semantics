@@ -10,7 +10,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.annotations.AnnotationsFactory
@@ -80,7 +80,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.transformators.ssa.wuscc"
+        return "de.cau.cs.kieler.scg.processors.ssa.wuscc"
     }
 
     override getName() {
@@ -114,7 +114,8 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
 
     // -------------------------------------------------------------------------
     def transform(SCGraph scg) {
-        validate(scg)
+        validateStructure(scg)
+        validateExpressions(scg)
         val entryBB = scg.basicBlocks.head
         
         // Add implicit assignments at the entry and after each pause 

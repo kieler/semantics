@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
@@ -65,11 +65,11 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.transformators.ssa.scssa"
+        return "de.cau.cs.kieler.scg.processors.ssa.scssa"
     }
 
     override getName() {
-        return "Sequential SSA"
+        return "SCSSA"
     }
     
     override process() {
@@ -93,9 +93,9 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
+        validateStructure(scg)
+        validateExpressions(scg)
         
-        // It is expected that this node is an entry node.
-        validate(scg)
         val entryNode = scg.nodes.head
         val entryBB = scg.basicBlocks.head
         // map for saving parameter references
