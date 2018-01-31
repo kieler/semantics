@@ -169,13 +169,22 @@ public interface CViewModelPackage extends EPackage
   int COMPONENT__REFERENCE_UNRESOLVED = 6;
 
   /**
+   * The feature id for the '<em><b>Project Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__PROJECT_NAME = 7;
+
+  /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT__LOCATION = 7;
+  int COMPONENT__LOCATION = 8;
 
   /**
    * The feature id for the '<em><b>Reference Line</b></em>' attribute.
@@ -184,7 +193,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__REFERENCE_LINE = 8;
+  int COMPONENT__REFERENCE_LINE = 9;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -193,7 +202,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__CHILDREN = 9;
+  int COMPONENT__CHILDREN = 10;
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute.
@@ -202,7 +211,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__TOOLTIP = 10;
+  int COMPONENT__TOOLTIP = 11;
 
   /**
    * The feature id for the '<em><b>Rawdata</b></em>' attribute.
@@ -211,7 +220,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__RAWDATA = 11;
+  int COMPONENT__RAWDATA = 12;
 
   /**
    * The feature id for the '<em><b>Filtered</b></em>' attribute.
@@ -220,7 +229,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__FILTERED = 12;
+  int COMPONENT__FILTERED = 13;
 
   /**
    * The feature id for the '<em><b>Hide</b></em>' attribute.
@@ -229,7 +238,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__HIDE = 13;
+  int COMPONENT__HIDE = 14;
 
   /**
    * The number of structural features of the '<em>Component</em>' class.
@@ -238,7 +247,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 14;
+  int COMPONENT_FEATURE_COUNT = 15;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -469,6 +478,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EAttribute getComponent_ReferenceUnresolved();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getProjectName <em>Project Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Project Name</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getProjectName()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_ProjectName();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}'.
@@ -780,6 +800,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute COMPONENT__REFERENCE_UNRESOLVED = eINSTANCE.getComponent_ReferenceUnresolved();
+
+    /**
+     * The meta object literal for the '<em><b>Project Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__PROJECT_NAME = eINSTANCE.getComponent_ProjectName();
 
     /**
      * The meta object literal for the '<em><b>Location</b></em>' attribute feature.

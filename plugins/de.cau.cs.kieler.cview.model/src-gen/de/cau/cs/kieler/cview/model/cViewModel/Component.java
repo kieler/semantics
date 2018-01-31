@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLanguageID <em>Language ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceUnresolved <em>Reference Unresolved</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getProjectName <em>Project Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceLine <em>Reference Line</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getChildren <em>Children</em>}</li>
@@ -222,6 +223,32 @@ public interface Component extends EObject
    * @generated
    */
   void setReferenceUnresolved(String value);
+
+  /**
+   * Returns the value of the '<em><b>Project Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Project Name</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Project Name</em>' attribute.
+   * @see #setProjectName(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_ProjectName()
+   * @model
+   * @generated
+   */
+  String getProjectName();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getProjectName <em>Project Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Project Name</em>' attribute.
+   * @see #getProjectName()
+   * @generated
+   */
+  void setProjectName(String value);
 
   /**
    * Returns the value of the '<em><b>Location</b></em>' attribute.

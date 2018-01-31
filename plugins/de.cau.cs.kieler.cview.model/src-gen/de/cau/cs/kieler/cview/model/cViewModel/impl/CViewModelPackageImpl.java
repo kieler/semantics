@@ -232,7 +232,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_Location()
+  public EAttribute getComponent_ProjectName()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(7);
   }
@@ -242,7 +242,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_ReferenceLine()
+  public EAttribute getComponent_Location()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(8);
   }
@@ -252,9 +252,19 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getComponent_ReferenceLine()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getComponent_Children()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(9);
+    return (EReference)componentEClass.getEStructuralFeatures().get(10);
   }
 
   /**
@@ -264,7 +274,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    */
   public EAttribute getComponent_Tooltip()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(10);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(11);
   }
 
   /**
@@ -274,7 +284,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    */
   public EAttribute getComponent_Rawdata()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(11);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(12);
   }
 
   /**
@@ -284,7 +294,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    */
   public EAttribute getComponent_Filtered()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(12);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(13);
   }
 
   /**
@@ -294,7 +304,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    */
   public EAttribute getComponent_Hide()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(13);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(14);
   }
 
   /**
@@ -449,6 +459,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEAttribute(componentEClass, COMPONENT__LANGUAGE_ID);
     createEReference(componentEClass, COMPONENT__REFERENCE);
     createEAttribute(componentEClass, COMPONENT__REFERENCE_UNRESOLVED);
+    createEAttribute(componentEClass, COMPONENT__PROJECT_NAME);
     createEAttribute(componentEClass, COMPONENT__LOCATION);
     createEAttribute(componentEClass, COMPONENT__REFERENCE_LINE);
     createEReference(componentEClass, COMPONENT__CHILDREN);
@@ -515,6 +526,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEAttribute(getComponent_LanguageID(), ecorePackage.getEString(), "languageID", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Reference(), this.getComponent(), null, "reference", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_ReferenceUnresolved(), ecorePackage.getEString(), "referenceUnresolved", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_ProjectName(), ecorePackage.getEString(), "projectName", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Location(), ecorePackage.getEString(), "location", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_ReferenceLine(), ecorePackage.getEInt(), "referenceLine", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Children(), this.getComponent(), null, "children", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

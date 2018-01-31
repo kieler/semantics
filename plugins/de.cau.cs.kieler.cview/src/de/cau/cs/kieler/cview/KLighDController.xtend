@@ -86,6 +86,8 @@ class KLighDController extends AbstractKLighDController {
         var filePath = getFilePath(element);
         var folderPath = getDirPath(element);
         val projectPath = getProjectPath(element);
+        
+        val projectName = getProjectName(element);
 
         if (monitor.canceled) {
             return null;
@@ -106,6 +108,7 @@ class KLighDController extends AbstractKLighDController {
             val dir = cViewModelExtensions.createDir
             dir.location = projectPath;
             dir.name = element.toString.componentName
+            dir.projectName = projectName
             // dir.project = true
             model.components.add(dir)
             if (parent != null) {
@@ -122,6 +125,7 @@ class KLighDController extends AbstractKLighDController {
             val dir = cViewModelExtensions.createDir
             dir.location = folderPath;
             dir.name = element.toString.componentName
+            dir.projectName = projectName
             model.components.add(dir)
             if (parent != null) {
                 dir.parent = parent
@@ -137,6 +141,7 @@ class KLighDController extends AbstractKLighDController {
             val file = cViewModelExtensions.createFile; // CViewModelFactory.eINSTANCE.createFile;
             model.components.add(file);
             file.location = filePath;
+            file.projectName = projectName
             file.name = element.toString.componentName
 
             // Add all functions to the file

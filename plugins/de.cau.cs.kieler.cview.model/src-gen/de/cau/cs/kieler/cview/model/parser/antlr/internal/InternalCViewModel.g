@@ -309,9 +309,9 @@ ruleComponent returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_20='location'
+		otherlv_20='projectName'
 		{
-			newLeafNode(otherlv_20, grammarAccess.getComponentAccess().getLocationKeyword_18());
+			newLeafNode(otherlv_20, grammarAccess.getComponentAccess().getProjectNameKeyword_18());
 		}
 		otherlv_21='='
 		{
@@ -319,9 +319,35 @@ ruleComponent returns [EObject current=null]
 		}
 		(
 			(
-				lv_location_22_0=RULE_STRING
+				lv_projectName_22_0=RULE_STRING
 				{
-					newLeafNode(lv_location_22_0, grammarAccess.getComponentAccess().getLocationSTRINGTerminalRuleCall_20_0());
+					newLeafNode(lv_projectName_22_0, grammarAccess.getComponentAccess().getProjectNameSTRINGTerminalRuleCall_20_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"projectName",
+						lv_projectName_22_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_23='location'
+		{
+			newLeafNode(otherlv_23, grammarAccess.getComponentAccess().getLocationKeyword_21());
+		}
+		otherlv_24='='
+		{
+			newLeafNode(otherlv_24, grammarAccess.getComponentAccess().getEqualsSignKeyword_22());
+		}
+		(
+			(
+				lv_location_25_0=RULE_STRING
+				{
+					newLeafNode(lv_location_25_0, grammarAccess.getComponentAccess().getLocationSTRINGTerminalRuleCall_23_0());
 				}
 				{
 					if ($current==null) {
@@ -330,25 +356,25 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"location",
-						lv_location_22_0,
+						lv_location_25_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
 		(
-			otherlv_23='referenceLine'
+			otherlv_26='referenceLine'
 			{
-				newLeafNode(otherlv_23, grammarAccess.getComponentAccess().getReferenceLineKeyword_21_0());
+				newLeafNode(otherlv_26, grammarAccess.getComponentAccess().getReferenceLineKeyword_24_0());
 			}
-			otherlv_24='='
+			otherlv_27='='
 			{
-				newLeafNode(otherlv_24, grammarAccess.getComponentAccess().getEqualsSignKeyword_21_1());
+				newLeafNode(otherlv_27, grammarAccess.getComponentAccess().getEqualsSignKeyword_24_1());
 			}
 			(
 				(
-					lv_referenceLine_25_0=RULE_INT
+					lv_referenceLine_28_0=RULE_INT
 					{
-						newLeafNode(lv_referenceLine_25_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_21_2_0());
+						newLeafNode(lv_referenceLine_28_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_24_2_0());
 					}
 					{
 						if ($current==null) {
@@ -357,20 +383,20 @@ ruleComponent returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"referenceLine",
-							lv_referenceLine_25_0,
+							lv_referenceLine_28_0,
 							"org.eclipse.xtext.common.Terminals.INT");
 					}
 				)
 			)
 		)?
 		(
-			otherlv_26='children'
+			otherlv_29='children'
 			{
-				newLeafNode(otherlv_26, grammarAccess.getComponentAccess().getChildrenKeyword_22_0());
+				newLeafNode(otherlv_29, grammarAccess.getComponentAccess().getChildrenKeyword_25_0());
 			}
-			otherlv_27='='
+			otherlv_30='='
 			{
-				newLeafNode(otherlv_27, grammarAccess.getComponentAccess().getEqualsSignKeyword_22_1());
+				newLeafNode(otherlv_30, grammarAccess.getComponentAccess().getEqualsSignKeyword_25_1());
 			}
 			(
 				(
@@ -379,22 +405,22 @@ ruleComponent returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getComponentRule());
 						}
 					}
-					otherlv_28=RULE_ID
+					otherlv_31=RULE_ID
 					{
-						newLeafNode(otherlv_28, grammarAccess.getComponentAccess().getChildrenComponentCrossReference_22_2_0());
+						newLeafNode(otherlv_31, grammarAccess.getComponentAccess().getChildrenComponentCrossReference_25_2_0());
 					}
 				)
 			)*
 		)?
-		otherlv_29='tooltip'
+		otherlv_32='tooltip'
 		{
-			newLeafNode(otherlv_29, grammarAccess.getComponentAccess().getTooltipKeyword_23());
+			newLeafNode(otherlv_32, grammarAccess.getComponentAccess().getTooltipKeyword_26());
 		}
 		(
 			(
-				lv_tooltip_30_0=RULE_STRING
+				lv_tooltip_33_0=RULE_STRING
 				{
-					newLeafNode(lv_tooltip_30_0, grammarAccess.getComponentAccess().getTooltipSTRINGTerminalRuleCall_24_0());
+					newLeafNode(lv_tooltip_33_0, grammarAccess.getComponentAccess().getTooltipSTRINGTerminalRuleCall_27_0());
 				}
 				{
 					if ($current==null) {
@@ -403,20 +429,20 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"tooltip",
-						lv_tooltip_30_0,
+						lv_tooltip_33_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
-		otherlv_31='rawdata'
+		otherlv_34='rawdata'
 		{
-			newLeafNode(otherlv_31, grammarAccess.getComponentAccess().getRawdataKeyword_25());
+			newLeafNode(otherlv_34, grammarAccess.getComponentAccess().getRawdataKeyword_28());
 		}
 		(
 			(
-				lv_rawdata_32_0=RULE_STRING
+				lv_rawdata_35_0=RULE_STRING
 				{
-					newLeafNode(lv_rawdata_32_0, grammarAccess.getComponentAccess().getRawdataSTRINGTerminalRuleCall_26_0());
+					newLeafNode(lv_rawdata_35_0, grammarAccess.getComponentAccess().getRawdataSTRINGTerminalRuleCall_29_0());
 				}
 				{
 					if ($current==null) {
@@ -425,16 +451,16 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"rawdata",
-						lv_rawdata_32_0,
+						lv_rawdata_35_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
 		(
 			(
-				lv_filtered_33_0='filtered'
+				lv_filtered_36_0='filtered'
 				{
-					newLeafNode(lv_filtered_33_0, grammarAccess.getComponentAccess().getFilteredFilteredKeyword_27_0());
+					newLeafNode(lv_filtered_36_0, grammarAccess.getComponentAccess().getFilteredFilteredKeyword_30_0());
 				}
 				{
 					if ($current==null) {
@@ -446,9 +472,9 @@ ruleComponent returns [EObject current=null]
 		)?
 		(
 			(
-				lv_hide_34_0='hide'
+				lv_hide_37_0='hide'
 				{
-					newLeafNode(lv_hide_34_0, grammarAccess.getComponentAccess().getHideHideKeyword_28_0());
+					newLeafNode(lv_hide_37_0, grammarAccess.getComponentAccess().getHideHideKeyword_31_0());
 				}
 				{
 					if ($current==null) {

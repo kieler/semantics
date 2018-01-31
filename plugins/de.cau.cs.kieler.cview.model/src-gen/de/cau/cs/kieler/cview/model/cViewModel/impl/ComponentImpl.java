@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLanguageID <em>Language ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceUnresolved <em>Reference Unresolved</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getProjectName <em>Project Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceLine <em>Reference Line</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getChildren <em>Children</em>}</li>
@@ -168,6 +169,26 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @ordered
    */
   protected String referenceUnresolved = REFERENCE_UNRESOLVED_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getProjectName() <em>Project Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getProjectName()
+   * @generated
+   * @ordered
+   */
+  protected static final String PROJECT_NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getProjectName() <em>Project Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getProjectName()
+   * @generated
+   * @ordered
+   */
+  protected String projectName = PROJECT_NAME_EDEFAULT;
 
   /**
    * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
@@ -526,6 +547,29 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getProjectName()
+  {
+    return projectName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setProjectName(String newProjectName)
+  {
+    String oldProjectName = projectName;
+    projectName = newProjectName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__PROJECT_NAME, oldProjectName, projectName));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getLocation()
   {
     return location;
@@ -699,6 +743,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return basicGetReference();
       case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
         return getReferenceUnresolved();
+      case CViewModelPackage.COMPONENT__PROJECT_NAME:
+        return getProjectName();
       case CViewModelPackage.COMPONENT__LOCATION:
         return getLocation();
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
@@ -748,6 +794,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return;
       case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
         setReferenceUnresolved((String)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__PROJECT_NAME:
+        setProjectName((String)newValue);
         return;
       case CViewModelPackage.COMPONENT__LOCATION:
         setLocation((String)newValue);
@@ -806,6 +855,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
         setReferenceUnresolved(REFERENCE_UNRESOLVED_EDEFAULT);
         return;
+      case CViewModelPackage.COMPONENT__PROJECT_NAME:
+        setProjectName(PROJECT_NAME_EDEFAULT);
+        return;
       case CViewModelPackage.COMPONENT__LOCATION:
         setLocation(LOCATION_EDEFAULT);
         return;
@@ -855,6 +907,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return reference != null;
       case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
         return REFERENCE_UNRESOLVED_EDEFAULT == null ? referenceUnresolved != null : !REFERENCE_UNRESOLVED_EDEFAULT.equals(referenceUnresolved);
+      case CViewModelPackage.COMPONENT__PROJECT_NAME:
+        return PROJECT_NAME_EDEFAULT == null ? projectName != null : !PROJECT_NAME_EDEFAULT.equals(projectName);
       case CViewModelPackage.COMPONENT__LOCATION:
         return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
@@ -894,6 +948,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(languageID);
     result.append(", referenceUnresolved: ");
     result.append(referenceUnresolved);
+    result.append(", projectName: ");
+    result.append(projectName);
     result.append(", location: ");
     result.append(location);
     result.append(", referenceLine: ");

@@ -19,6 +19,7 @@ Component:
            'reference' '=' reference=[Component]
            'referenceUnresolved' '=' referenceUnresolved=STRING
 //           ('referenceFile' '=' referenceFile=[File])?
+           'projectName' '=' projectName=STRING
            'location' '=' location=STRING
            ('referenceLine' '=' referenceLine=INT)?
            ('children' '=' children+=([Component])*)?
