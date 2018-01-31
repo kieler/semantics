@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.processors.transformators.ssa
+package de.cau.cs.kieler.esterel.processors.ssa
 
 import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
@@ -79,7 +79,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> implements Traceable {
 
-    public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel"
+    public static val ID = "de.cau.cs.kieler.esterel.processors.ssa.ssc.scg2esterel"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --

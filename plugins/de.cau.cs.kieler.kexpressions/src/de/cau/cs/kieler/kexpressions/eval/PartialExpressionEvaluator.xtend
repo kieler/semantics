@@ -36,7 +36,8 @@ class PartialExpressionEvaluator {
     }
     
     def Expression evaluate(Expression expression) {
-        return expression
+        // TODO: implement
+        return expression // DO NOTHING
     }
     
 }

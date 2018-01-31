@@ -16,9 +16,9 @@ de.cau.cs.kieler.esterel.processors.transformators.kernel.abort
 de.cau.cs.kieler.esterel.processors.transformators.kernel.await
 de.cau.cs.kieler.esterel.processors.transformators.kernel.present
 
-de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl
+de.cau.cs.kieler.esterel.processors.ssa.ssc.scest2scl
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
-de.cau.cs.kieler.scg.processors.transformators.dependency
-de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+de.cau.cs.kieler.scg.processors.dependency
+de.cau.cs.kieler.scg.processors.basicBlocks
 de.cau.cs.kieler.scg.processors.ssa.wuscc
-de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel
+de.cau.cs.kieler.esterel.processors.ssa.ssc.scg2esterel

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.processors.transformators.ssa
+package de.cau.cs.kieler.esterel.processors.ssa
 
 import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
@@ -75,7 +75,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     static val strict = false
     public static val ARTIFICIAL_JOIN = "ARTIFICIAL_JOIN"
     
-    public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl"
+    public static val ID = "de.cau.cs.kieler.esterel.processors.ssa.ssc.scest2scl"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --

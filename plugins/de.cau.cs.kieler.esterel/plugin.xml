@@ -146,13 +146,13 @@
   <extension
         point="de.cau.cs.kieler.kicool.processor">
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SCEstToSSCSCLTransformation">
+           class="de.cau.cs.kieler.esterel.processors.ssa.SCEstToSSCSCLTransformation">
      </Processor>
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSASCL2SSAEsterel">
+           class="de.cau.cs.kieler.esterel.processors.ssa.SSASCL2SSAEsterel">
      </Processor>
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction">
+           class="de.cau.cs.kieler.esterel.processors.ssa.SSCEsterelReconstruction">
      </Processor>
   </extension>
   <extension
