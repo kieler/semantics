@@ -165,10 +165,12 @@ public class SelectExportDialog extends Dialog {
                 for (TableItem tableItem : tableItems) {
                     tableItem.setChecked(!tableItem.getChecked());
                 }
-                // updateSelectedList();
-                updateTable();
-                refreshTextColorsAndItemName();
-                okPressed();
+                if (tableItems.length > 0) {
+                    // updateSelectedList();
+                    updateTable();
+                    refreshTextColorsAndItemName();
+                    okPressed();
+                }
             }
 
             public void mouseDown(final MouseEvent e) {

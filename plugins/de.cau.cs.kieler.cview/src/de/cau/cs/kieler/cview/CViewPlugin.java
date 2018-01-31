@@ -432,11 +432,13 @@ public class CViewPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     public static String extractId(String item) {
-        int start = item.lastIndexOf("(");
-        if (start >= 0) {
-            int end = item.lastIndexOf(")");
-            if (end > start) {
-                return item.substring(start + 1, end);
+        if (item != null) {
+            int start = item.lastIndexOf("(");
+            if (start >= 0) {
+                int end = item.lastIndexOf(")");
+                if (end > start) {
+                    return item.substring(start + 1, end);
+                }
             }
         }
         return "";

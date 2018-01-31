@@ -78,26 +78,28 @@ public class CommandHandler implements IHandler {
                         break;
                     }
                 }
-
-                FileDialog dlg = new FileDialog(Display.getCurrent().getActiveShell(),
-                        SWT.SINGLE | SWT.SAVE);
-                dlg.setOverwrite(true);
-                String[] exts = { "*.*" };
-                String ext = selectedHook.getFileExtension();
-                if (ext != null) {
-                    exts[0] = "*." + ext;
-                }
-                dlg.setFilterExtensions(exts);
-                String fileToWrite = dlg.open();
-                if (fileToWrite != null) {
-                    boolean success = false;
-                    if (ext != null && !fileToWrite.endsWith("." + ext)) {
-                        fileToWrite += "." + ext;
+                
+                if (selectedHook != null) {
+                    FileDialog dlg = new FileDialog(Display.getCurrent().getActiveShell(),
+                            SWT.SINGLE | SWT.SAVE);
+                    dlg.setOverwrite(true);
+                    String[] exts = { "*.*" };
+                    String ext = selectedHook.getFileExtension();
+                    if (ext != null) {
+                        exts[0] = "*." + ext;
                     }
-                    System.out.println("Exporting to " + fileToWrite);
-                    
-                    // After selecting the file name call the external export model method
-                    ExportHandler.exportModel(fileToWrite, selectedHook);
+                    dlg.setFilterExtensions(exts);
+                    String fileToWrite = dlg.open();
+                    if (fileToWrite != null) {
+                        boolean success = false;
+                        if (ext != null && !fileToWrite.endsWith("." + ext)) {
+                            fileToWrite += "." + ext;
+                        }
+                        System.out.println("Exporting to " + fileToWrite);
+                        
+                        // After selecting the file name call the external export model method
+                        ExportHandler.exportModel(fileToWrite, selectedHook);
+                    }
                 }
             }
 
