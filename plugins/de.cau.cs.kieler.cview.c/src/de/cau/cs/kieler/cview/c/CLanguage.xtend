@@ -47,6 +47,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition
 import java.util.HashMap
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression
+import org.eclipse.core.resources.IFile
 
 /**
  * @author cmot
@@ -186,8 +187,8 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         }
 
         // ------------------------------------------------------------------------
-        override Object parseFile(char[] fileContent) {
-            return CFileParser.parse(fileContent);
+        override Object parseFile(char[] fileContent, IFile file) { 
+            return CFileParser.parse(fileContent, file);
         }
 
         HashMap<IASTNode, Component> functionComponents = newHashMap()

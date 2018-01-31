@@ -17,9 +17,13 @@ import java.util.Set;
 import java.util.logging.ErrorManager;
 
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -114,6 +118,11 @@ public class CViewPlugin extends AbstractUIPlugin {
         cacheFileParsed.clear();
     }
 
+    public static IFile getIFile(String fileLocation) {
+        IPath componentPath = new Path(fileLocation);
+        return ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(componentPath);
+    }
+
     private static char[] cacheGetFileRaw(String fileLocation) {
         if (cacheFileRaw.containsKey(fileLocation)) {
             return cacheFileRaw.get(fileLocation);
@@ -147,8 +156,14 @@ public class CViewPlugin extends AbstractUIPlugin {
                 char[] content = getFileRaw(fileLocation);
                 try {
                     ICViewLanguage language = CViewLanguageExtensions.getLanguage(fileLocation);
-                    returnValue = language.parseFile(content);
-                    cachePutFileParsed(fileLocation, returnValue);
+                    
+                    IFile file = CViewPlugin.getIFile(fileLocation);
+                    if (file != null) {
+                        returnValue = language.parseFile(content, file);
+                        cachePutFileParsed(fileLocation, returnValue);
+                    } else {
+                        CViewPlugin.raiseError("Cannot parse file '"+fileLocation+"'.");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

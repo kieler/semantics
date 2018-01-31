@@ -15,6 +15,7 @@ package de.cau.cs.kieler.cview.hooks;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
@@ -124,7 +125,7 @@ public interface ICViewLanguage {
      * @param fileContent
      * @return
      */
-    Object parseFile(char[] fileContent);
+    Object parseFile(char[] fileContent, IFile file);
 
     /**
      * Return the set of file extensions that belong to this language. modelCreateFileSubComponents

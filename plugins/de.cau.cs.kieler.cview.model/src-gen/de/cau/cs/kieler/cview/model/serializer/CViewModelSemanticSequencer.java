@@ -71,7 +71,6 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *         languageID=STRING 
 	 *         reference=[Component|ID] 
 	 *         referenceUnresolved=STRING 
-	 *         projectName=STRING 
 	 *         location=STRING 
 	 *         referenceLine=INT? 
 	 *         children+=[Component|ID]* 

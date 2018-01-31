@@ -275,23 +275,6 @@ public abstract class AbstractKLighDController {
 
     // -------------------------------------------------------------------------
     
-    public String getProjectName(IFile file) {
-        return file.getProject().getName();
-    }
-
-    public String getProjectName(IFolder folder) {
-        return folder.getProject().getName();
-    }
-    
-    public String getProjectName(IProject project) {
-        return project.getName();
-    }
-    
-    public String getProjectName(Object object) {
-        // No project name
-        return null;
-    }    
-    
     
     public String getFilePath(Object object) {
         IFile file = null;

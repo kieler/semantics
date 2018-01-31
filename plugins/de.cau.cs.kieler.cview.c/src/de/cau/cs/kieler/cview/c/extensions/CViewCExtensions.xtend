@@ -87,7 +87,7 @@ class CViewCExtensions {
     def IASTTranslationUnit getAST(Component component) {
         return CViewPlugin.getFileParsed(component.location) as IASTTranslationUnit
     }
-
+    
     // -------------------------------------------------------------------------
     // Get the containing struct iff a declaration inside a struct, or null otherwise
     def Component getContainingStruct(Component declComponent) {

@@ -25,6 +25,11 @@ import java.util.HashMap
 import org.eclipse.cdt.core.parser.ScannerInfo
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider
 import org.eclipse.cdt.core.parser.DefaultLogService
+import org.eclipse.cdt.core.model.ITranslationUnit
+import org.eclipse.cdt.core.model.CoreModel
+import org.eclipse.cdt.core.CCorePlugin
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Path
 
 /**
  * @author cmot
@@ -32,16 +37,28 @@ import org.eclipse.cdt.core.parser.DefaultLogService
  */
 class CFileParser {
 
-    def static IASTTranslationUnit parse(char[] code) throws Exception {
-        val fc = FileContent.create("/Path/ToResolveIncludePaths.cpp", code);
-        val macroDefinitions = new HashMap<String, String>();
-        val String[] includeSearchPaths = #[]
-        val si = new ScannerInfo(macroDefinitions, includeSearchPaths);
-        val ifcp = IncludeFileContentProvider.getEmptyFilesProvider();
-        val idx = null;
-        val options = ILanguage.OPTION_IS_SOURCE_UNIT;
-        val log = new DefaultLogService();
-        return GPPLanguage.getDefault().getASTTranslationUnit(fc, si, ifcp, idx, options, log);
+    def static IASTTranslationUnit parse(char[] code, IFile file) throws Exception {
+
+// DEPRECATED OLD PARSING CODE
+//        val fc = FileContent.create("/Path/ToResolveIncludePaths.cpp", code);
+//        val macroDefinitions = new HashMap<String, String>();
+//        val String[] includeSearchPaths = #[]
+//        val si = new ScannerInfo(macroDefinitions, includeSearchPaths);
+//        val ifcp = IncludeFileContentProvider.getEmptyFilesProvider();
+//        val idx = null;
+//        val options = ILanguage.OPTION_IS_SOURCE_UNIT;
+//        val log = new DefaultLogService();
+//        return GPPLanguage.getDefault().getASTTranslationUnit(fc, si, ifcp, idx, options, log);
+
+//        val componentPath = new Path(component.location)
+//        val componentFile = ResourcesPlugin.workspace.root.getFileForLocation(componentPath)
+        
+        val componentTU = CoreModel.^default.create(file.rawLocation) as ITranslationUnit
+        val componentProject = CoreModel.^default.CModel.getCProject(file.project.name)
+        val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
+        componentIndex.acquireReadLock
+        val ast = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
+        return ast
     }
 
 }
