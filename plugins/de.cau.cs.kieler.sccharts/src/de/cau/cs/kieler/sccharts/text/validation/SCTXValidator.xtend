@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl
 
 //import org.eclipse.xtext.validation.Check
 
@@ -258,7 +259,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             val name = r.name
             if(!name.isNullOrEmpty) {
                 if(names.contains(name)) {
-                    warning(DUPLICATE_REGION+" '"+name+"'", r, null, -1)
+                    warning(DUPLICATE_REGION+" '"+name+"'", r, AnnotationsPackageImpl.eINSTANCE.namedObject_Name, -1)
                 } else {
                     names.add(name)
                 }    
@@ -523,7 +524,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     /**
      * Checks if the given valued signal has a combination function.
      * This check can be removed if there is a transformation
-     * that handles valued signals without combination function (see KISEMA-1071).   
+     * that handles valued signals without combination dfunction (see KISEMA-1071).   
      */
     // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check
