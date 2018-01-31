@@ -43,7 +43,7 @@ class SCGManipulationExtensions {
         }
         
         node.allNext.forEach[target = null]
-        node.eContents.clear
+        node.eContents.toList.forEach[remove]
         
         node.schedulingBlock?.nodes?.remove(node)
         node.remove
