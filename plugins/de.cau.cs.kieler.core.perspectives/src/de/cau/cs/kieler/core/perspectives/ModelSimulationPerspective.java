@@ -22,12 +22,12 @@ import org.eclipse.ui.IPerspectiveFactory;
  * {@link ModelingPerspective} but is extended by the data table, the signals view and the execution
  * manager.
  * 
- * @author nbw
+ * @author nbw ssm
  * 
  * @kieler.design 2015-07-02 nbw cmot ssm als ima rvh
  * @kieler.rating yellow 2015-07-03 cmot ssm als KI-87
  */
-public class SimulationPerspective implements IPerspectiveFactory {
+public class ModelSimulationPerspective implements IPerspectiveFactory {
 
     /** {@inheritDoc} */
     public void createInitialLayout(IPageLayout layout) {

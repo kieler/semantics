@@ -37,7 +37,7 @@ class UserSchedule extends SCChartsProcessor {
     @Inject extension SCChartsStateExtensions
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.userSchedule"
+        "de.cau.cs.kieler.sccharts.processors.userSchedule"
     }
     
     override getName() {

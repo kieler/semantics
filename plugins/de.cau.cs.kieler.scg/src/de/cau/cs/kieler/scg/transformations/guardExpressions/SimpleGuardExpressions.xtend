@@ -52,6 +52,15 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
+import de.cau.cs.kieler.scg.processors.analyzer.ThreadData
+import de.cau.cs.kieler.scg.processors.analyzer.LoopData
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Depth
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -73,33 +82,16 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceable {
     
-        
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
-    
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.expressions"
+        "de.cau.cs.kieler.scg.processors.expressions"
     }
     
     override getName() {
         "Expressions"
     }
 
-//    override getProducedFeatureId() {
-//        return SCGFeatures::GUARD_EXPRESSIONS_ID
-//    }
-//
-//    override getRequiredFeatureIds() {
-//        return newHashSet(SCGFeatures::BASICBLOCK_ID)
-//    }
-
-
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    
     @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
@@ -109,9 +101,6 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     @Inject extension KEffectsSerializeExtensions
     @Inject extension KEffectsExtensions
 
-    // -------------------------------------------------------------------------
-    // -- Globals
-    // -------------------------------------------------------------------------
     protected val schedulingBlocks = <SchedulingBlock>newArrayList
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected val schedulingBlockGuardCache = <Guard, SchedulingBlock>newHashMap
@@ -122,33 +111,11 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     protected val predecessorSBCache = <Predecessor, List<SchedulingBlock>>newHashMap
     protected val predecessorTwinMark = <SchedulingBlock>newHashSet
 
-    /*    public static val SCHIZOPHRENIC_SUFFIX = "_s"
-    protected val schizophrenicGuards = <ValuedObject> newHashSet
-    protected var schizophrenicGuardCounter = 0
-    protected var Declaration schizoDeclaration = null
-    protected var Set<Node> pilData = null
-    protected var SynchronizerData joinData = null
-    
-    protected val newSchizoGuards = <Guard> newHashSet*/
     protected val conditionalGuards = <Conditional, Guard>newHashMap
-
-    // -------------------------------------------------------------------------
-    // -- Guard Creator
-    // -------------------------------------------------------------------------    
+    
     override SCGraph createGuards(SCGraph scg) {
-        // KiCo does this check via feature isContained
-        //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-        //    || scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)
-        //) {
-        //    return scg
-        //}
-
         val timestamp = System.currentTimeMillis
-//        compilerContext = context
-
-//        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
-
-        //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
@@ -197,7 +164,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
                 p.cacheTwin(basicBlockList)
             }
             val conditional = p.conditional
-            if (conditional != null && !conditionalGuards.keySet.contains(conditional)) {
+            if (conditional !== null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
                 newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name.replaceFirst("^_", "")
 
@@ -452,10 +419,52 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // --- CREATE GUARDS: DEPTH BLOCK 
     protected def void createDepthBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         guard.setDefaultTrace
-        guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+        val firstExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             setOperator(OperatorType::PRE)
             subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
-        ]
+        ] 
+        if (schedulingBlock.basicBlock.finalBlock) {
+            val joinNode = schedulingBlock.basicBlock.threadEntry.allPrevious.map[eContainer].head.asNode.asFork.join
+            val joinBlock = schedulingBlockCache.get(joinNode)
+            if (!joinBlock.basicBlock.deadBlock) {
+                val joinNodeGuard = schedulingBlockCache.get(joinNode).guards.head
+                val secondExpression = (KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    setOperator(OperatorType::PRE)
+                    subExpressions.add(joinNodeGuard.reference.valuedObject.reference)
+                ]).negate
+                
+                val surface = schedulingBlock.nodes.head.asDepth.surface
+                val forkNodeGuard = schedulingBlockCache.get(joinNode.fork).guards.head
+                val considerForkGuard = joinNode.immediateFeedback && surface.isInSurface
+                
+                val thirdExpression = if (considerForkGuard)
+                    KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                       setOperator(OperatorType::LOGICAL_OR)
+                        subExpressions.add(secondExpression)
+                        subExpressions.add(
+                            KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                                setOperator(OperatorType::PRE)
+                                subExpressions.add(forkNodeGuard.reference.valuedObject.reference)
+                            ]                        
+                        )
+                    ]                 
+                    else secondExpression
+                
+                guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    setOperator(OperatorType::LOGICAL_AND)
+                    subExpressions.add(firstExpression)
+                    subExpressions.add(thirdExpression)
+                ]
+            } else {
+                guard.expression = firstExpression
+            }
+        } else {
+            guard.expression = firstExpression 
+        }        
+//        guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+//            setOperator(OperatorType::PRE)
+//            subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
+//        ]
     }
 
     // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
@@ -477,7 +486,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, this,
             schedulingBlockCache)
 
-        val newGuards = synchronizer.newGuards
+//        val newGuards = synchronizer.newGuards
 
         //        newSchizoGuards += newGuards
 // FIXME: Verify removal of unowned guards
@@ -580,7 +589,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-                val twinVOR = twin.guards.head.valuedObject.reference
+//                val twinVOR = twin.guards.head.valuedObject.reference
 
             //            	guard.volatile += twinVOR.valuedObject
             //                expression.subExpressions.add(0, twinVOR.negate)
@@ -602,7 +611,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-                val twinVOR = twin.guards.head.valuedObject.reference
+//                val twinVOR = twin.guards.head.valuedObject.reference
 
             //            	guard.volatile += twinVOR.valuedObject
             //                expression.subExpressions.add(0, twinVOR.negate)
@@ -624,7 +633,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {
         val bb = predecessor.basicBlock
         var predList = predecessorBBCache.get(bb)
-        if (predList == null) {
+        if (predList === null) {
             predList = <Predecessor>newArrayList => [add(predecessor)]
             predecessorBBCache.put(bb, predList)
         } else {
@@ -671,4 +680,32 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         return null
     }
 
+
+    private def immediateFeedback(Join join) {
+        join.nodeExistsPath(join.fork, false)
+    }
+    
+    private def isInSurface(Node node) {
+        val visited = <Node> newHashSet
+        val searchStack = <Node> newLinkedList => [ add(node) ]
+        
+        while (!searchStack.empty) {
+            val head = searchStack.pop
+            
+            if (head instanceof Entry) {
+                return true
+            }
+            
+            visited += head
+            val nextNodes = head.allPrevious?.map[ eContainer ].filter(Node).
+                filter[ !(it instanceof Depth) ].
+                filter[ !visited.contains(it) ].toList
+            if (nextNodes !== null && nextNodes.contains(null)) {
+                throw new IllegalStateException("The successor node list in the surface check has a null entry. This should not happen!")
+            }
+            searchStack.addAll(nextNodes)
+        }
+        
+        return false
+    }
 }

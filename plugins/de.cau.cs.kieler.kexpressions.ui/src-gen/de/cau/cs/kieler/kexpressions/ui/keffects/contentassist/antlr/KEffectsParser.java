@@ -47,6 +47,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
 					put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
+					put(grammarAccess.getFBYExpressionAccess().getAlternatives(), "rule__FBYExpression__Alternatives");
 					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
@@ -149,6 +150,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getGroup_1_2(), "rule__ModExpression__Group_1_2__0");
 					put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 					put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
+					put(grammarAccess.getFBYExpressionAccess().getGroup_0(), "rule__FBYExpression__Group_0__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
@@ -274,6 +276,9 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_2(), "rule__TernaryOperation__OperatorAssignment_0_2");
 					put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_3(), "rule__TernaryOperation__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_5(), "rule__TernaryOperation__SubExpressionsAssignment_0_5");
+					put(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__FBYExpression__SubExpressionsAssignment_0_1");
+					put(grammarAccess.getFBYExpressionAccess().getOperatorAssignment_0_2(), "rule__FBYExpression__OperatorAssignment_0_2");
+					put(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__FBYExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");

@@ -59,7 +59,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     private static val String ANNOTATION_HOSTCODE = "hostcode"
      
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
+        "de.cau.cs.kieler.scg.processors.sequentializer"
     }
     
     override getName() {

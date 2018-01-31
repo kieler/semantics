@@ -54,7 +54,7 @@ class History extends SCChartsProcessor implements Traceable {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.history"
+        "de.cau.cs.kieler.sccharts.processors.history"
     }
     
     override getName() {

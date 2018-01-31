@@ -816,13 +816,22 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__STATES = REGION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Final</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__FINAL = REGION_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Controlflow Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 1;
+    int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
@@ -2038,6 +2047,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getControlflowRegion_States();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ControlflowRegion#isFinal <em>Final</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Final</em>'.
+     * @see de.cau.cs.kieler.sccharts.ControlflowRegion#isFinal()
+     * @see #getControlflowRegion()
+     * @generated
+     */
+    EAttribute getControlflowRegion_Final();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowRegion <em>Dataflow Region</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2536,6 +2556,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference CONTROLFLOW_REGION__STATES = eINSTANCE.getControlflowRegion_States();
+
+        /**
+         * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CONTROLFLOW_REGION__FINAL = eINSTANCE.getControlflowRegion_Final();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.

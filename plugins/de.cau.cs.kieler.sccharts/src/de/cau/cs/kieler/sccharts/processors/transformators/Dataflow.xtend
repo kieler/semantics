@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * @author ssm
@@ -60,7 +61,7 @@ class Dataflow extends SCChartsProcessor {
     static val GENERATED_PREFIX = "__df_"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.dataflow"
+        "de.cau.cs.kieler.sccharts.processors.dataflow"
     }
     
     override getName() {
@@ -99,7 +100,10 @@ class Dataflow extends SCChartsProcessor {
         // Search for used referenced declarations.
         val rdInstances = <ValuedObject> newLinkedHashSet
         for (equation : dataflowRegion.equations.immutableCopy) {
-            equation.allAssignmentReferences.filter[ isReferenceDeclarationReference ].forEach[
+            equation.allAssignmentReferences.filter[ 
+                isReferenceDeclarationReference &&
+                (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0
+            ].forEach[
                 rdInstances += it.valuedObject
             ]
         }

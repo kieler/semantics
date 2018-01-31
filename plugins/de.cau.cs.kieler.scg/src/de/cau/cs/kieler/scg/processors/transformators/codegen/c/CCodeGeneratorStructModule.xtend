@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * C Code Generator Struct Module
@@ -64,7 +65,10 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
                 if (declaration instanceof VariableDeclaration) {
-                    code.append(indentation + declaration.type.serializeHR)
+                    val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                        declaration.type.serializeHR
+                        else declaration.hostType
+                    code.append(indentation + declarationType)
                     code.append(" ")
                     code.append(valuedObject.name)
                     if (valuedObject.isArray) {

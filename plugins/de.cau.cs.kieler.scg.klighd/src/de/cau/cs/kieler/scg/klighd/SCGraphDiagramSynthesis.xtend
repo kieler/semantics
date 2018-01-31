@@ -339,6 +339,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     private static val KColor SCHIZO_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 245; it.green = 96; it.blue = 33;]
+    private static val KColor PASSIVE_REGION_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
+        [it.red = 255; it.green = 101; it.blue = 127;]
 
     public static val KColor NODE_PRIORITY_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
         [it.red = 255; it.green = 30; it.blue = 30;]
@@ -1252,6 +1254,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
+            
+            if (exit.final) {
+                figure.background = PASSIVE_REGION_COLOR.copy
+            }
+            
             // Add ports for control-flow routing.
             if (isGuardSCG) {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
@@ -1951,6 +1958,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         sbContainer.getData(KRoundedRectangle) => [
                             it.lineWidth = 2.0f
                         ]
+                    }
+                    
+                    if (schedulingBlock.basicBlock.finalBlock && schedulingBlock.basicBlock.schedulingBlocks.head == schedulingBlock) {
+                        sbContainer.KRendering.lineStyle = LineStyle::DASH
+                        sbContainer.KRendering.foreground = PASSIVE_REGION_COLOR.copy
+                        sbContainer.KRendering.background = PASSIVE_REGION_COLOR.copy
+                        sbContainer.KRendering.background.alpha = 96
                     }
                 }
         }

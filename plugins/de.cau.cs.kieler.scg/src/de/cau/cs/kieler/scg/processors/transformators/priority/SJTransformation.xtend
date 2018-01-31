@@ -95,7 +95,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.sjlp"
+        "de.cau.cs.kieler.scg.processors.sjlp"
     }
     
     override getName() {

@@ -185,7 +185,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
         // ... and fill the list with the exit nodes of all threads.
-        data.join.allPrevious.forEach[ exitNodes.add(it.eContainer as Exit) ]        
+        data.join.allPrevious.map[ eContainer ].filter(Exit).filter[ !final ].forEach[ exitNodes += it ]        
         
         // Build an empty expression for each exit node.
         for(exit:exitNodes){

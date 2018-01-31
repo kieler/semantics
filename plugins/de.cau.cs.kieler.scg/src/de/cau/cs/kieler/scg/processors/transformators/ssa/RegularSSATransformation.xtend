@@ -38,7 +38,7 @@ class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Tra
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.transformators.ssa.regular"
+        return "de.cau.cs.kieler.scg.processors.ssa.regular"
     }
 
     override getName() {
