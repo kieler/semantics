@@ -20,6 +20,7 @@ import com.google.inject.Inject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -157,6 +158,14 @@ class SCChartsStateExtensions {
             if (cfr.allFinalStates.empty) return false
         }
         return true
+    }
+    
+    def State getEnclosingState(EObject eObject) {
+        var enclosing = eObject.eContainer
+        while (!(enclosing instanceof State) && enclosing !== null) {
+            enclosing = enclosing.eContainer
+        }    
+        return if (enclosing !== null) enclosing as State else null 
     }
          
 }

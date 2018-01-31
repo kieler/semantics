@@ -25,6 +25,7 @@ package de.cau.cs.kieler.scg;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Exit#getEntry <em>Entry</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Exit#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Exit#isFinal <em>Final</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getExit()
@@ -85,5 +86,31 @@ public interface Exit extends Node {
      * @generated
      */
     void setNext(ControlFlow value);
+
+    /**
+     * Returns the value of the '<em><b>Final</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Final</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Final</em>' attribute.
+     * @see #setFinal(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getExit_Final()
+     * @model
+     * @generated
+     */
+    boolean isFinal();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Exit#isFinal <em>Final</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Final</em>' attribute.
+     * @see #isFinal()
+     * @generated
+     */
+    void setFinal(boolean value);
 
 } // Exit

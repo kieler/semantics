@@ -56,7 +56,7 @@ class CSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.transformators.ssa.cssa"
+        return "de.cau.cs.kieler.scg.processors.ssa.cssa"
     }
 
     override getName() {

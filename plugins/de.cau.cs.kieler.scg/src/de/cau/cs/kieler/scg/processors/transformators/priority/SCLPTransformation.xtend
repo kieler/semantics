@@ -106,7 +106,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     private var threadPriorities = new HashMap<Node, ArrayList<Integer>>
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.sclp"
+        "de.cau.cs.kieler.scg.processors.sclp"
     }
     
     override getName() {

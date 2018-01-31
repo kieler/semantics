@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.State;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -26,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -38,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#getStates <em>States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#isFinal <em>Final</em>}</li>
  * </ul>
  *
  * @generated
@@ -58,6 +61,25 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * @ordered
      */
     protected EList<State> states;
+
+    /**
+     * The default value of the '{@link #isFinal() <em>Final</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFinal()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean FINAL_EDEFAULT = false;
+                /**
+     * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFinal()
+     * @generated
+     * @ordered
+     */
+    protected boolean final_ = FINAL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -88,6 +110,27 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
             states = new EObjectContainmentWithInverseEList<State>(State.class, this, SCChartsPackage.CONTROLFLOW_REGION__STATES, SCChartsPackage.STATE__PARENT_REGION);
         }
         return states;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isFinal() {
+        return final_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFinal(boolean newFinal) {
+        boolean oldFinal = final_;
+        final_ = newFinal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CONTROLFLOW_REGION__FINAL, oldFinal, final_));
     }
 
     /**
@@ -129,6 +172,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
         switch (featureID) {
             case SCChartsPackage.CONTROLFLOW_REGION__STATES:
                 return getStates();
+            case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
+                return isFinal();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -146,6 +191,9 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
                 getStates().clear();
                 getStates().addAll((Collection<? extends State>)newValue);
                 return;
+            case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
+                setFinal((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -161,6 +209,9 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
             case SCChartsPackage.CONTROLFLOW_REGION__STATES:
                 getStates().clear();
                 return;
+            case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
+                setFinal(FINAL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -175,8 +226,26 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
         switch (featureID) {
             case SCChartsPackage.CONTROLFLOW_REGION__STATES:
                 return states != null && !states.isEmpty();
+            case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
+                return final_ != FINAL_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (final: ");
+        result.append(final_);
+        result.append(')');
+        return result.toString();
     }
 
 } //ControlflowRegionImpl

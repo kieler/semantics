@@ -43,25 +43,13 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
     //-------------------------------------------------------------------------
     
     override getId() {
-        return SCGTransformations::BASICBLOCK_SCPLUS_ID
+        "de.cau.cs.kieler.scg.processors.basicBlocks.SCplus"
     }
 
     override getName() {
-        return SCGTransformations::BASICBLOCK_SCPLUS_NAME
+        "Basic Blocks SC+"
     }
 
-//    override getProducedFeatureId() {
-//        return SCGFeatures::BASICBLOCK_ID
-//    }
-//
-//    override getRequiredFeatureIds() {
-//        return newHashSet(SCGFeatures::DEPENDENCY_ID)
-//    }
-    
-    // -------------------------------------------------------------------------
-    // -- Transformation methods
-    // -------------------------------------------------------------------------
-    
     override boolean schedulingBlockSplitter(Node node, Node lastNode) {
         super.schedulingBlockSplitter(node, lastNode) ||
         node.eContents.filter(typeof(DataDependency)).filter[ concurrent && !confluent ].empty

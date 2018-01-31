@@ -67,12 +67,14 @@
         eOpposite="#//Entry/exit"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BasicBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"
         eType="#//SchedulingBlock" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
         eType="#//Predecessor" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="threadEntry" eType="#//Entry"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="goBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="depthBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="synchronizerBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -80,6 +82,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deadBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="termBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preGuard" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="finalBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"

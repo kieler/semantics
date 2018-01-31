@@ -38,7 +38,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     @Inject Injector injector
     
     public static val IProperty<Boolean> DEBUG_COMMENTS = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.codegen", false)
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.codegen", false)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.codegen.c"

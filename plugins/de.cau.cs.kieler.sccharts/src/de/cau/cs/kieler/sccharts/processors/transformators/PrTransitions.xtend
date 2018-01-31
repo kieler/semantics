@@ -53,7 +53,7 @@ class PrTransitions extends SCChartsProcessor {
     private static val GENERATE_PREFIX = "__prT_"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.prTransitions"
+        "de.cau.cs.kieler.sccharts.processors.prTransitions"
     }
     
     override getName() {

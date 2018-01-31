@@ -61,7 +61,7 @@ class Dataflow extends SCChartsProcessor {
     static val GENERATED_PREFIX = "__df_"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.dataflow"
+        "de.cau.cs.kieler.sccharts.processors.dataflow"
     }
     
     override getName() {

@@ -123,7 +123,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    SCHEDULE(9, "SCHEDULE", "SCHEDULE");
+    SCHEDULE(9, "SCHEDULE", "SCHEDULE"), /**
+     * The '<em><b>UNKNOWN</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #UNKNOWN_VALUE
+     * @generated
+     * @ordered
+     */
+    UNKNOWN(10, "UNKNOWN", "UNKNOWN");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -278,6 +286,21 @@ public enum ValueType implements Enumerator {
     public static final int SCHEDULE_VALUE = 9;
 
     /**
+     * The '<em><b>UNKNOWN</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>UNKNOWN</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #UNKNOWN
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int UNKNOWN_VALUE = 10;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -295,6 +318,7 @@ public enum ValueType implements Enumerator {
             STRING,
             REFERENCE,
             SCHEDULE,
+            UNKNOWN,
         };
 
     /**
@@ -361,6 +385,7 @@ public enum ValueType implements Enumerator {
             case STRING_VALUE: return STRING;
             case REFERENCE_VALUE: return REFERENCE;
             case SCHEDULE_VALUE: return SCHEDULE;
+            case UNKNOWN_VALUE: return UNKNOWN;
         }
         return null;
     }

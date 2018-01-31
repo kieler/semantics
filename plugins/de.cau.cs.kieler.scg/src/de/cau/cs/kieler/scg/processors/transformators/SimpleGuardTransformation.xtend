@@ -73,7 +73,7 @@ class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> implements Tr
     
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.guards"
+        "de.cau.cs.kieler.scg.processors.guards"
     }
     
     override getName() {

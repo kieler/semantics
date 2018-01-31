@@ -167,10 +167,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getFBYExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -249,6 +250,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     NegExpression returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
+	 *     FBYExpression returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     VectorValueMember returns OperatorExpression
@@ -323,10 +325,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression
 	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
 	 *     )
 	 */
-	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -370,6 +373,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns BoolValue
 	 *     NegExpression returns BoolValue
 	 *     TernaryOperation returns BoolValue
+	 *     FBYExpression returns BoolValue
 	 *     AtomicExpression returns BoolValue
 	 *     AtomicValuedExpression returns BoolValue
 	 *     BoolValue returns BoolValue
@@ -429,6 +433,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns FloatValue
 	 *     NegExpression returns FloatValue
 	 *     TernaryOperation returns FloatValue
+	 *     FBYExpression returns FloatValue
 	 *     AtomicExpression returns FloatValue
 	 *     AtomicValuedExpression returns FloatValue
 	 *     FloatValue returns FloatValue
@@ -488,6 +493,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     NegExpression returns FunctionCall
 	 *     TernaryOperation returns FunctionCall
+	 *     FBYExpression returns FunctionCall
 	 *     AtomicExpression returns FunctionCall
 	 *     AtomicValuedExpression returns FunctionCall
 	 *     FunctionCall returns FunctionCall
@@ -553,6 +559,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns IntValue
 	 *     NegExpression returns IntValue
 	 *     TernaryOperation returns IntValue
+	 *     FBYExpression returns IntValue
 	 *     AtomicExpression returns IntValue
 	 *     AtomicValuedExpression returns IntValue
 	 *     IntValue returns IntValue
@@ -624,6 +631,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns RandomCall
 	 *     NegExpression returns RandomCall
 	 *     TernaryOperation returns RandomCall
+	 *     FBYExpression returns RandomCall
 	 *     AtomicExpression returns RandomCall
 	 *     AtomicValuedExpression returns RandomCall
 	 *     RandomCall returns RandomCall
@@ -676,6 +684,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     NegExpression returns RandomizeCall
 	 *     TernaryOperation returns RandomizeCall
+	 *     FBYExpression returns RandomizeCall
 	 *     AtomicExpression returns RandomizeCall
 	 *     AtomicValuedExpression returns RandomizeCall
 	 *     RandomizeCall returns RandomizeCall
@@ -728,6 +737,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     NegExpression returns ReferenceCall
 	 *     TernaryOperation returns ReferenceCall
+	 *     FBYExpression returns ReferenceCall
 	 *     AtomicExpression returns ReferenceCall
 	 *     AtomicValuedExpression returns ReferenceCall
 	 *     ReferenceCall returns ReferenceCall
@@ -801,6 +811,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns StringValue
 	 *     NegExpression returns StringValue
 	 *     TernaryOperation returns StringValue
+	 *     FBYExpression returns StringValue
 	 *     AtomicExpression returns StringValue
 	 *     AtomicValuedExpression returns StringValue
 	 *     StringValue returns StringValue
@@ -860,6 +871,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns TextExpression
 	 *     NegExpression returns TextExpression
 	 *     TernaryOperation returns TextExpression
+	 *     FBYExpression returns TextExpression
 	 *     AtomicExpression returns TextExpression
 	 *     AtomicValuedExpression returns TextExpression
 	 *     TextExpression returns TextExpression
@@ -918,6 +930,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     NegExpression returns ValuedObjectReference
 	 *     TernaryOperation returns ValuedObjectReference
+	 *     FBYExpression returns ValuedObjectReference
 	 *     AtomicExpression returns ValuedObjectReference
 	 *     AtomicValuedExpression returns ValuedObjectReference
 	 *     ValuedObjectTestExpression returns ValuedObjectReference
@@ -983,6 +996,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns VectorValue
 	 *     NegExpression returns VectorValue
 	 *     TernaryOperation returns VectorValue
+	 *     FBYExpression returns VectorValue
 	 *     AtomicExpression returns VectorValue
 	 *     AtomicValuedExpression returns VectorValue
 	 *     VectorValue returns VectorValue
