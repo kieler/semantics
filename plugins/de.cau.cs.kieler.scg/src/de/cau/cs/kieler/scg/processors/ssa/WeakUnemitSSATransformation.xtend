@@ -347,7 +347,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         }
     }
     
-    // TODO doas not work with signal reinc example
+    // TODO does not work with signal reinc example
     private def mergeIneffectiveSSAVersions(SCGraph scg) {
         val uses = scg.uses
         val defs = scg.allDefs

@@ -55,6 +55,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import com.google.common.collect.Multimap
 import com.google.common.collect.HashBiMap
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
  * @author als
@@ -94,7 +95,39 @@ class SSATransformationExtensions {
 //            processor.environment.errors.add("The SSA analysis cannot handle expressions with side-effects. (v++/v--)", entryNode)
 //        }
     }            
-        
+
+    def normalizeAssignments(SCGraph scg) {
+        for (asm : scg.nodes.filter(Assignment).filter[operator != AssignOperator.ASSIGN]) {
+            val OperatorType op = switch (asm.operator) {
+                case ASSIGNADD: OperatorType.ADD
+                case ASSIGNAND: OperatorType.BITWISE_AND
+                case ASSIGNDIV: OperatorType.DIV
+                case ASSIGNMOD: OperatorType.MOD
+                case ASSIGNMUL: OperatorType.MULT
+                case ASSIGNOR: OperatorType.BITWISE_OR
+                case ASSIGNSHIFTLEFT: OperatorType.SHIFT_LEFT
+                case ASSIGNSHIFTRIGHT: OperatorType.SHIFT_RIGHT
+                case ASSIGNSHIFTRIGHTUNSIGNED: OperatorType.SHIFT_RIGHT_UNSIGNED
+                case ASSIGNSUB: OperatorType.SUB
+                case ASSIGNXOR: OperatorType.BITWISE_XOR
+                case POSTFIXADD: OperatorType.ADD
+                case POSTFIXSUB: OperatorType.SUB
+                default: throw new UnsupportedOperationException("Cannot handle assign operator: " + asm.operator)
+            }
+            if (asm.operator == AssignOperator.POSTFIXADD || asm.operator == AssignOperator.POSTFIXSUB) {
+                asm.expression = createOperatorExpression(op) => [
+                    subExpressions += asm.reference.copy
+                    subExpressions += createIntValue(1)           
+                ]
+            } else {
+                asm.expression = createOperatorExpression(op) => [
+                    subExpressions += asm.reference.copy
+                    subExpressions += asm.expression           
+                ]
+            }
+            asm.operator = AssignOperator.ASSIGN
+        }
+    }
     
     def getPhiPlacer() {
         return [ ValuedObject vo, Node bbHead |

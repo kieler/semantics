@@ -91,6 +91,8 @@ class CSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable
             environment.warnings.add("Cannot handle SCG with Concurrency or synchronous ticks")
         }
         
+        scg.normalizeAssignments
+        
         val entryBB = scg.basicBlocks.head
         
         // Create new declarations for SSA versions

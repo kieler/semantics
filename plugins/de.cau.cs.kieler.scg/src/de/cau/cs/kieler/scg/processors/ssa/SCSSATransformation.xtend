@@ -96,6 +96,8 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         validateStructure(scg)
         validateExpressions(scg)
         
+        scg.normalizeAssignments
+        
         val entryNode = scg.nodes.head
         val entryBB = scg.basicBlocks.head
         // map for saving parameter references
