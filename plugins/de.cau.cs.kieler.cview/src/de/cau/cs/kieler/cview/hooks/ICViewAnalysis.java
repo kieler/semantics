@@ -35,7 +35,8 @@ public interface ICViewAnalysis {
     String getName();
 
     /**
-     * Define an id for this connection analysis hook.
+     * Define a (unique) ID for this connection analysis hook. It must differ from any other
+     * analysis hook IDs.
      * 
      * @return the name
      */

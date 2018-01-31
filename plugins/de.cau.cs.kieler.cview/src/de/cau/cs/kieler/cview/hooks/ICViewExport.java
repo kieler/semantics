@@ -34,15 +34,16 @@ public interface ICViewExport {
     String getName();
 
     /**
-     * Define an id for this export hook.
+     * Define a (unique) ID for this connection export hook. It must differ from any other export
+     * hook IDs.
      * 
      * @return the name
      */
     String getId();
-    
-    
+
     /**
      * Define the file extension for the export dialog.
+     * 
      * @return
      */
     String getFileExtension();

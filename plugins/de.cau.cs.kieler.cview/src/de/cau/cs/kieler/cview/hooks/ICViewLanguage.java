@@ -30,7 +30,8 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 public interface ICViewLanguage {
 
     /**
-     * Define an id for this language extension hook.
+     * Define a (unique) ID for this language extension hook. It must differ from any other language
+     * extension hook IDs.
      * 
      * @return the name
      */
@@ -107,8 +108,7 @@ public interface ICViewLanguage {
      * @return
      */
     boolean diagramIsVisible(Component component);
-    
-    
+
     /**
      * Used to create any file subcomponents, e.g., functions, declarations, types, ... If
      * parseContent is false, then the content shall not be parsed to increase speed.
@@ -134,8 +134,7 @@ public interface ICViewLanguage {
      * @return
      */
     Set<String> fileExtensions();
-    
-    
+
     /**
      * Return a set of build-in connections for this language, e.g., type, include or function
      * connections or null.

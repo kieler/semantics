@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.ErrorManager;
@@ -18,7 +19,9 @@ import java.util.logging.ErrorManager;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.TextProcessor;
@@ -34,6 +37,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
+import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.internal.WorkbenchWindowConfigurer;
 import org.eclipse.ui.part.ViewPart;
@@ -51,8 +55,13 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.ui.SelectAnalysisDialog;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import org.eclipse.core.runtime.Status;
 
-public class CViewPlugin implements BundleActivator {
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+
+public class CViewPlugin extends AbstractUIPlugin {
+//    public class CViewPlugin implements AbstractUIPlugin {
+//}
 
     static final String CONSOLE_NAME = "C View Log";
     static final String CONSOLEVIEWID = "org.eclipse.ui.console.ConsoleView";
@@ -85,6 +94,18 @@ public class CViewPlugin implements BundleActivator {
 
     // True if monitor was canceled, enforces complete rebuild
     static public boolean monitorCanceled = false;
+
+    static private CViewPlugin instance = null;
+    
+    // -------------------------------------------------------------------------
+
+    public CViewPlugin() {
+        CViewPlugin.instance = this;
+    }
+    
+    private static CViewPlugin getInstance() {
+        return  CViewPlugin.instance;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -367,12 +388,21 @@ public class CViewPlugin implements BundleActivator {
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(EXPORT_HOOK_EXTENSION_POINT_ID);
+        // Remember all hook ids to raise error if double ids
+        HashSet<String> extensionIDs = new HashSet<String>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
                 ICViewExport instance = (ICViewExport) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
                 instance = (ICViewExport) getGuiceInstance(instance);
+                String currentId = instance.getId();
+                if (extensionIDs.contains(currentId)) {
+                    raiseWarning("The CView Analysis ID '"+currentId+"' is already registered by "
+                            + "another component. Make sure all analysis component have unique IDs!");
+                } else {
+                    extensionIDs.add(currentId);
+                }
                 exportHooks.add(instance);
             } catch (CoreException e) {
                 e.printStackTrace();
@@ -453,11 +483,21 @@ public class CViewPlugin implements BundleActivator {
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(ANALYSIS_HOOK_EXTENSION_POINT_ID);
+        // Remember all hook ids to raise error if double ids
+        HashSet<String> extensionIDs = new HashSet<String>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
                 ICViewAnalysis instance =
                         (ICViewAnalysis) extension.createExecutableExtension("class");
+                String currentId = instance.getId();
+                //TODO: Remove
+                if (extensionIDs.contains(currentId)) {
+                    raiseWarning("The CView Analysis ID '"+currentId+"' is already registered by "
+                            + "another component. Make sure all analysis component have unique IDs!");
+                } else {
+                    extensionIDs.add(currentId);
+                }
                 // Handle the case that wee need Google Guice for instantiation
                 instance = (ICViewAnalysis) getGuiceInstance(instance);
                 int prio = instance.priority();
@@ -617,7 +657,7 @@ public class CViewPlugin implements BundleActivator {
                         if (languageHookChache.containsKey(handledType)) {
                             ICViewLanguage otherLanguage = languageHookChache.get(handledType);
                             // Error, already a language
-                            printlnConsole("ERROR: Already a language (" + otherLanguage.getId()
+                            raiseError("ERROR: Already a language (" + otherLanguage.getId()
                                     + ") that handles the following component custom ID: "
                                     + handledType + ". Ignoring " + language.getId());
                         } else {
@@ -646,6 +686,8 @@ public class CViewPlugin implements BundleActivator {
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(LANGUAGE_HOOK_EXTENSION_POINT_ID);
+        // Remember all hook ids to raise error if double ids
+        HashSet<String> extensionIDs = new HashSet<String>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
@@ -653,6 +695,13 @@ public class CViewPlugin implements BundleActivator {
                         (ICViewLanguage) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
                 instance = (ICViewLanguage) getGuiceInstance(instance);
+                String currentId = instance.getId();
+                if (extensionIDs.contains(currentId)) {
+                    raiseWarning("The CView Analysis ID '"+currentId+"' is already registered by "
+                            + "another component. Make sure all analysis component have unique IDs!");
+                } else {
+                    extensionIDs.add(currentId);
+                }
                 languageHooks.add(instance);
             } catch (CoreException e) {
                 e.printStackTrace();
@@ -662,4 +711,22 @@ public class CViewPlugin implements BundleActivator {
     }
 
     // -------------------------------------------------------------------------
+    
+//    if (monitor.canceled) {
+//        return null;
+//    }
+    
+    static void raiseError(String text) {
+        Status status = new Status(IStatus.ERROR, CViewPlugin.PLUGIN_ID, text);
+        CViewPlugin.getInstance().getLog().log(status);
+        printlnConsole("ERROR: " + text);
+    }
+    
+    static void raiseWarning(String text) {
+        Status status = new Status(IStatus.WARNING, CViewPlugin.PLUGIN_ID, text);
+        CViewPlugin.getInstance().getLog().log(status);
+        printlnConsole("WARNING: " + text);
+    }
+    
+    
 }
