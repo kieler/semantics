@@ -21,6 +21,7 @@
     <module>de.cau.cs.kieler.esterel.feature</module>
     <module>de.cau.cs.kieler.sccharts.feature</module>
     <module>de.cau.cs.kieler.ehelp.feature</module>
+    <module>de.cau.cs.kieler.cview.feature</module>
 <!--
     <module>de.cau.cs.kieler.uml2.feature</module>
 -->
