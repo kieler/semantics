@@ -56,17 +56,17 @@ abstract class SimulationCompiler extends Configurable {
     /**
      * The output folder in which the simulation should be saved.
      */
-    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin", #[String])
+    public val outputFolder = new ConfigurableAttribute("outputFolder", null, #[String])
     /**
      * A library folder required for the simulation that must be created if it does not exist yet. 
      */
-    public val libFolder = new ConfigurableAttribute("libFolder", "kieler-gen/sim/lib", #[String])
+    public val libFolder = new ConfigurableAttribute("libFolder", null, #[String])
     /**
      * The maximum allowed compilation time in seconds.
      * If the compilation takes longer than this, the process is terminated and an exception is thrown. 
      */
     public val timeout = new ConfigurableAttribute("timeout", 10, #[Integer])
-        
+    
     /**
      * Placeholder for the file to be compiled.
      */
@@ -75,6 +75,7 @@ abstract class SimulationCompiler extends Configurable {
             return file
         }
     }
+    
     /**
      * Placeholder for the file to be created.
      */
@@ -197,6 +198,11 @@ abstract class SimulationCompiler extends Configurable {
         // Create libraries and files required for compilation
         initializeCompilation
         
+        // Skip compilation
+        if(!command.isDefined) {
+            return new FileGenerationResult
+        }
+        
         // Run command on simulation code
         val processArguments = getProcessArguments
         val processDirectory = getProcessDirectory
@@ -223,7 +229,7 @@ abstract class SimulationCompiler extends Configurable {
      * @param file The file to be compiled
      * @return true if the file can be compiled, false otherwise.
      */
-    public def boolean canCompile(IFile file) {
+    public def boolean isSupported(IFile file) {
         return supportedFileExtensions.contains(file.fileExtension)
     }
     
@@ -261,10 +267,7 @@ abstract class SimulationCompiler extends Configurable {
     /**
      * Prepares the compilation.
      */
-    protected def void initializeCompilation() {
-        Assert.isNotNull(command.stringValue)
-        Assert.isNotNull(outputFolder.stringValue)
-        Assert.isNotNull(libFolder.stringValue)
+    public def void initializeCompilation() {
         if(monitor != null) {
             monitor.subTask("Compiling simulation:" + file.name)
         }
@@ -295,7 +298,7 @@ abstract class SimulationCompiler extends Configurable {
      * Initializes the lib folders by copying their origin.
      * @param project the project to copy the files into
      */
-    protected def void createLibrary(IProject project) {
+    public def void createLibrary(IProject project) {
         for(libFolderData : libFolderDatas) {
             val origin = libFolderData.origin
             if(!origin.isNullOrEmpty) {

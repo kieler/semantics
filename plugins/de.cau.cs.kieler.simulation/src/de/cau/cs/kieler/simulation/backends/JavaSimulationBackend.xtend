@@ -47,4 +47,11 @@ class JavaSimulationBackend extends OriginBasedSimulationBackend {
         return #["de.cau.cs.kieler.scg.processors.codegen.java",
                  "de.cau.cs.kieler.scg.processors.transformators.sjlp"]
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedFileExtensions() {
+        return #["java"]
+    }
 }

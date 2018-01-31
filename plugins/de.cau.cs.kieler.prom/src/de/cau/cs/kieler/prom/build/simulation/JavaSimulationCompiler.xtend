@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.jdt.core.JavaCore
+import de.cau.cs.kieler.prom.build.FileGenerationResult
 
 /**
  * Compiles Java code for the simulation.
@@ -31,16 +32,6 @@ import org.eclipse.jdt.core.JavaCore
  *
  */
 class JavaSimulationCompiler extends SimulationCompiler {
-    /**
-     * The default command to compile java files into class files.
-     */
-    private static val DEFAULT_COMPILATION_COMMAND = "javac -cp \"kieler-gen\" -d bin \"${file_path}\" "
-    
-    /**
-     * The default command to compile class files into a jar file.
-     */
-    private static val DEFAULT_JAR_COMMAND = "jar cvfe \"./${outputFolder}/${executable_name}\" sim.code.${file_basename} -C bin ."
-    
     /**
      * The command that is executed to create an executable jar file from the class files.
      */
@@ -62,14 +53,9 @@ class JavaSimulationCompiler extends SimulationCompiler {
 
     /**
      * Constructor
+     * 
      */
-    new() {
-        command.value = DEFAULT_COMPILATION_COMMAND
-        jarCommand.value = DEFAULT_JAR_COMMAND
-        // The directory structure of the json lib must follow its package declaration
-        libFolder.value = "kieler-gen/org/json"
-        // Same for the SJ library folder
-        sjLibFolder.value = "kieler-gen/de/cau/cs/kieler/scg/processors/transformators/priority"
+    new() {   
     }
     
     /**
@@ -88,6 +74,11 @@ class JavaSimulationCompiler extends SimulationCompiler {
         this.file = file
         // Create libraries and files required for compilation
         initializeCompilation
+        
+        // Skip compilation
+        if(!command.isDefined || !jarCommand.isDefined) {
+            return new FileGenerationResult
+        }
         
         // Run command on simulation code to create class files
         val processDirectory = getProcessDirectory
@@ -172,7 +163,7 @@ class JavaSimulationCompiler extends SimulationCompiler {
     override createLibrary(IProject project) {
         super.createLibrary(project)
         // Exclude the sim folder from beeing built.
-        // The files of the simulation are compiled independent of the Java project builder
+        // The files of the simulation are compiled independently of the Java project builder
         // and some projects (e.g. Mindstorms NXT) have issues in these files.
         if(PromPlugin.isJavaProject(project)) {
             val jProject = JavaCore.create(project);

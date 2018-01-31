@@ -107,7 +107,7 @@ class PromProjectDrafts implements IProjectDraftInitializer{
         var env = new ProjectDraftData("Generic")
         env.addInitialResource("assets/CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/c/CSimulation.ftl")
         env.addInitialResource("assets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/c/CSimulationSnippets.ftl")
-        env.addInitialResource("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/c/c-backend.kibuild")
+        env.addInitialResource("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/c/BuildConfig.kibuild")
         
         env.modelFile = "${project_name}"
         env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
@@ -123,7 +123,7 @@ class PromProjectDrafts implements IProjectDraftInitializer{
         env.addInitialResource("assets/OutputTemplate.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/java/OutputTemplate.ftl")
         env.addInitialResource("assets/JavaSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/java/JavaSimulation.ftl") 
         env.addInitialResource("assets/JavaSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/java/JavaSimulationSnippets.ftl")
-        env.addInitialResource("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/java/java-backend.kibuild") 
+        env.addInitialResource("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/java/BuildConfig.kibuild") 
 
         env.modelFile = "src/model/${project_name}"
         env.associatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
