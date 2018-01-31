@@ -222,35 +222,43 @@ litigation.
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.klighd.freehep.feature" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.elk.feature" version="0.1.0.201607121925"/>
+      <import feature="org.eclipse.elk.ui.feature" version="0.1.0.201607121925"/>
+      <import feature="org.eclipse.elk.graphviz.feature" version="0.1.0.201607121925"/>
+      <import feature="de.cau.cs.kieler.klighd.view.feature" version="0.3.1.201610170203"/>
    </requires>
 
+
    <plugin
-         id="de.cau.cs.kieler.ehelp"
+         id="de.cau.cs.kieler.cview"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.ehelp.ide"
+         id="de.cau.cs.kieler.cview.model"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.ehelp.imagepaste"
+         id="de.cau.cs.kieler.cview.model.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.ehelp.ui"
+         id="de.cau.cs.kieler.cview.c"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 
 </feature>
