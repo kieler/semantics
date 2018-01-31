@@ -377,6 +377,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
                 }
                 processorEntryPoint.processors.add(idx + 1, newEntry)
                 newEntry.populate(this)
+                // Fix order in processor instance sequence
+                val newInstance = processorMap.get(newEntry)
+                processorInstancesSequence.remove(newInstance)
+                processorInstancesSequence.add(processorInstancesSequence.indexOf(position) + 1, newInstance)
                 notify(new CompilationChanged(this, system, newEntry))
             }
         } else {
