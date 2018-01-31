@@ -92,7 +92,8 @@ class SystemSelectionManager implements SelectionListener {
         systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
         
         for(system : systems.filter[!filter || hasInput(modelClassFilter)].
-            filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ]
+            filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ].
+            filter[ !developer || (view !== null && view.developerToggle !== null && view.developerToggle.checked) ]
         ) {
             var name = system.label
             if (name.nullOrEmpty) name = system.id

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getStartsets <em>Startsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#isPublic <em>Public</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#isDeveloper <em>Developer</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem()
@@ -216,5 +217,31 @@ public interface System extends EObject {
      * @generated
      */
     void setPublic(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Developer</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Developer</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Developer</em>' attribute.
+     * @see #setDeveloper(boolean)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Developer()
+     * @model
+     * @generated
+     */
+    boolean isDeveloper();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#isDeveloper <em>Developer</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Developer</em>' attribute.
+     * @see #isDeveloper()
+     * @generated
+     */
+    void setDeveloper(boolean value);
 
 } // System

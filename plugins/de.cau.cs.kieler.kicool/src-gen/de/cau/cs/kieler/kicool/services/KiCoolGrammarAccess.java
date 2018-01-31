@@ -24,41 +24,43 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cPublicAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cPublicPublicKeyword_0_0 = (Keyword)cPublicAssignment_0.eContents().get(0);
-		private final Keyword cSystemKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cIdQualifiedIDParserRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
-		private final Keyword cVersionKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cVersionAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cVersionINTTerminalRuleCall_4_0 = (RuleCall)cVersionAssignment_4.eContents().get(0);
-		private final Keyword cLabelKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Assignment cLabelAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cLabelEStringParserRuleCall_6_0 = (RuleCall)cLabelAssignment_6.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cInputKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cInputClassAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cInputClassIDTerminalRuleCall_7_1_0 = (RuleCall)cInputClassAssignment_7_1.eContents().get(0);
+		private final Assignment cDeveloperAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cDeveloperDeveloperKeyword_1_0 = (Keyword)cDeveloperAssignment_1.eContents().get(0);
+		private final Keyword cSystemKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cIdQualifiedIDParserRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
+		private final Keyword cVersionKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cVersionAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cVersionINTTerminalRuleCall_5_0 = (RuleCall)cVersionAssignment_5.eContents().get(0);
+		private final Keyword cLabelKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cLabelAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cLabelEStringParserRuleCall_7_0 = (RuleCall)cLabelAssignment_7.eContents().get(0);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cSetKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cStartsetsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cStartsetsKVPairParserRuleCall_8_1_0 = (RuleCall)cStartsetsAssignment_8_1.eContents().get(0);
-		private final Assignment cIntermediatesAssignment_9 = (Assignment)cGroup.eContents().get(9);
-		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_9_0 = (RuleCall)cIntermediatesAssignment_9.eContents().get(0);
-		private final Assignment cProcessorsAssignment_10 = (Assignment)cGroup.eContents().get(10);
-		private final RuleCall cProcessorsProcessorGroupParserRuleCall_10_0 = (RuleCall)cProcessorsAssignment_10.eContents().get(0);
+		private final Keyword cInputKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cInputClassAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cInputClassIDTerminalRuleCall_8_1_0 = (RuleCall)cInputClassAssignment_8_1.eContents().get(0);
+		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
+		private final Keyword cSetKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cStartsetsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cStartsetsKVPairParserRuleCall_9_1_0 = (RuleCall)cStartsetsAssignment_9_1.eContents().get(0);
+		private final Assignment cIntermediatesAssignment_10 = (Assignment)cGroup.eContents().get(10);
+		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_10_0 = (RuleCall)cIntermediatesAssignment_10.eContents().get(0);
+		private final Assignment cProcessorsAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cProcessorsProcessorGroupParserRuleCall_11_0 = (RuleCall)cProcessorsAssignment_11.eContents().get(0);
 		
 		///**
 		// * @author ssm
 		// * @kieler.design 2016-10-19 proposed 
 		// * @kieler.rating 2016-10-19 proposed yellow
 		// */ System kicool::System:
-		//	public?='public'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
-		//	startsets+=KVPair)*
+		//	public?='public'? developer?='developer'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString
+		//	('input' inputClass=ID)? ('set' startsets+=KVPair)*
 		//	intermediates+=IntermediateReference*
 		//	processors=ProcessorGroup;
 		@Override public ParserRule getRule() { return rule; }
 
-		//public?='public'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
-		//startsets+=KVPair)* intermediates+=IntermediateReference* processors=ProcessorGroup
+		//public?='public'? developer?='developer'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input'
+		//inputClass=ID)? ('set' startsets+=KVPair)* intermediates+=IntermediateReference* processors=ProcessorGroup
 		public Group getGroup() { return cGroup; }
 
 		//public?='public'?
@@ -67,68 +69,74 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//'public'
 		public Keyword getPublicPublicKeyword_0_0() { return cPublicPublicKeyword_0_0; }
 
+		//developer?='developer'?
+		public Assignment getDeveloperAssignment_1() { return cDeveloperAssignment_1; }
+
+		//'developer'
+		public Keyword getDeveloperDeveloperKeyword_1_0() { return cDeveloperDeveloperKeyword_1_0; }
+
 		//'system'
-		public Keyword getSystemKeyword_1() { return cSystemKeyword_1; }
+		public Keyword getSystemKeyword_2() { return cSystemKeyword_2; }
 
 		//id=QualifiedID
-		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
+		public Assignment getIdAssignment_3() { return cIdAssignment_3; }
 
 		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_2_0() { return cIdQualifiedIDParserRuleCall_2_0; }
+		public RuleCall getIdQualifiedIDParserRuleCall_3_0() { return cIdQualifiedIDParserRuleCall_3_0; }
 
 		//'version'
-		public Keyword getVersionKeyword_3() { return cVersionKeyword_3; }
+		public Keyword getVersionKeyword_4() { return cVersionKeyword_4; }
 
 		//version=INT
-		public Assignment getVersionAssignment_4() { return cVersionAssignment_4; }
+		public Assignment getVersionAssignment_5() { return cVersionAssignment_5; }
 
 		//INT
-		public RuleCall getVersionINTTerminalRuleCall_4_0() { return cVersionINTTerminalRuleCall_4_0; }
+		public RuleCall getVersionINTTerminalRuleCall_5_0() { return cVersionINTTerminalRuleCall_5_0; }
 
 		//'label'
-		public Keyword getLabelKeyword_5() { return cLabelKeyword_5; }
+		public Keyword getLabelKeyword_6() { return cLabelKeyword_6; }
 
 		//label=EString
-		public Assignment getLabelAssignment_6() { return cLabelAssignment_6; }
+		public Assignment getLabelAssignment_7() { return cLabelAssignment_7; }
 
 		//EString
-		public RuleCall getLabelEStringParserRuleCall_6_0() { return cLabelEStringParserRuleCall_6_0; }
+		public RuleCall getLabelEStringParserRuleCall_7_0() { return cLabelEStringParserRuleCall_7_0; }
 
 		//('input' inputClass=ID)?
-		public Group getGroup_7() { return cGroup_7; }
-
-		//'input'
-		public Keyword getInputKeyword_7_0() { return cInputKeyword_7_0; }
-
-		//inputClass=ID
-		public Assignment getInputClassAssignment_7_1() { return cInputClassAssignment_7_1; }
-
-		//ID
-		public RuleCall getInputClassIDTerminalRuleCall_7_1_0() { return cInputClassIDTerminalRuleCall_7_1_0; }
-
-		//('set' startsets+=KVPair)*
 		public Group getGroup_8() { return cGroup_8; }
 
+		//'input'
+		public Keyword getInputKeyword_8_0() { return cInputKeyword_8_0; }
+
+		//inputClass=ID
+		public Assignment getInputClassAssignment_8_1() { return cInputClassAssignment_8_1; }
+
+		//ID
+		public RuleCall getInputClassIDTerminalRuleCall_8_1_0() { return cInputClassIDTerminalRuleCall_8_1_0; }
+
+		//('set' startsets+=KVPair)*
+		public Group getGroup_9() { return cGroup_9; }
+
 		//'set'
-		public Keyword getSetKeyword_8_0() { return cSetKeyword_8_0; }
+		public Keyword getSetKeyword_9_0() { return cSetKeyword_9_0; }
 
 		//startsets+=KVPair
-		public Assignment getStartsetsAssignment_8_1() { return cStartsetsAssignment_8_1; }
+		public Assignment getStartsetsAssignment_9_1() { return cStartsetsAssignment_9_1; }
 
 		//KVPair
-		public RuleCall getStartsetsKVPairParserRuleCall_8_1_0() { return cStartsetsKVPairParserRuleCall_8_1_0; }
+		public RuleCall getStartsetsKVPairParserRuleCall_9_1_0() { return cStartsetsKVPairParserRuleCall_9_1_0; }
 
 		//intermediates+=IntermediateReference*
-		public Assignment getIntermediatesAssignment_9() { return cIntermediatesAssignment_9; }
+		public Assignment getIntermediatesAssignment_10() { return cIntermediatesAssignment_10; }
 
 		//IntermediateReference
-		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_9_0() { return cIntermediatesIntermediateReferenceParserRuleCall_9_0; }
+		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_10_0() { return cIntermediatesIntermediateReferenceParserRuleCall_10_0; }
 
 		//processors=ProcessorGroup
-		public Assignment getProcessorsAssignment_10() { return cProcessorsAssignment_10; }
+		public Assignment getProcessorsAssignment_11() { return cProcessorsAssignment_11; }
 
 		//ProcessorGroup
-		public RuleCall getProcessorsProcessorGroupParserRuleCall_10_0() { return cProcessorsProcessorGroupParserRuleCall_10_0; }
+		public RuleCall getProcessorsProcessorGroupParserRuleCall_11_0() { return cProcessorsProcessorGroupParserRuleCall_11_0; }
 	}
 
 	public class IntermediateReferenceElements extends AbstractParserRuleElementFinder {
@@ -606,8 +614,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	// * @kieler.design 2016-10-19 proposed 
 	// * @kieler.rating 2016-10-19 proposed yellow
 	// */ System kicool::System:
-	//	public?='public'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
-	//	startsets+=KVPair)*
+	//	public?='public'? developer?='developer'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString
+	//	('input' inputClass=ID)? ('set' startsets+=KVPair)*
 	//	intermediates+=IntermediateReference*
 	//	processors=ProcessorGroup;
 	public SystemElements getSystemAccess() {

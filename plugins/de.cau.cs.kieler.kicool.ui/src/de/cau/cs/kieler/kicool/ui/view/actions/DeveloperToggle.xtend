@@ -37,6 +37,8 @@ class DeveloperToggle extends AbstractAction {
     private var StoreSystemAction storeSystemAction
     private var RegisterProcessorAction registerProcessorAction
     
+    @Accessors boolean isChecked
+    
     new(CompilerView view) {
         super(view, 
             "Developer Mode", 
@@ -49,6 +51,7 @@ class DeveloperToggle extends AbstractAction {
     }
     
     override void invoke() {
+        isChecked = action.isChecked
         separator.visible = action.isChecked
         toolBar.find(openSystemAction.action.id).visible = action.isChecked
         toolBar.find(loadSystemAction.action.id).visible = action.isChecked

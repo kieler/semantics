@@ -139,7 +139,13 @@
             system="system/de.cau.cs.kieler.sccharts.priority.simple.kico">
       </TransformationSystem>
       <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.priority.kico">
+      </TransformationSystem>
+      <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.ssm.kico">
       </TransformationSystem>
    </extension>
 

@@ -243,6 +243,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 * Constraint:
 	 *     (
 	 *         public?='public'? 
+	 *         developer?='developer'? 
 	 *         id=QualifiedID 
 	 *         version=INT 
 	 *         label=EString 

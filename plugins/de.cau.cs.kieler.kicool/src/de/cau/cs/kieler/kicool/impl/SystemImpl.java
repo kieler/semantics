@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getInputClass <em>Input Class</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getStartsets <em>Startsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isPublic <em>Public</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isDeveloper <em>Developer</em>}</li>
  * </ul>
  *
  * @generated
@@ -170,6 +171,26 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * @ordered
      */
     protected boolean public_ = PUBLIC_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isDeveloper() <em>Developer</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDeveloper()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean DEVELOPER_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isDeveloper() <em>Developer</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDeveloper()
+     * @generated
+     * @ordered
+     */
+    protected boolean developer = DEVELOPER_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -367,6 +388,27 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isDeveloper() {
+        return developer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDeveloper(boolean newDeveloper) {
+        boolean oldDeveloper = developer;
+        developer = newDeveloper;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__DEVELOPER, oldDeveloper, developer));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -404,6 +446,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return getStartsets();
             case KiCoolPackage.SYSTEM__PUBLIC:
                 return isPublic();
+            case KiCoolPackage.SYSTEM__DEVELOPER:
+                return isDeveloper();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -443,6 +487,9 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__PUBLIC:
                 setPublic((Boolean)newValue);
                 return;
+            case KiCoolPackage.SYSTEM__DEVELOPER:
+                setDeveloper((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -479,6 +526,9 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__PUBLIC:
                 setPublic(PUBLIC_EDEFAULT);
                 return;
+            case KiCoolPackage.SYSTEM__DEVELOPER:
+                setDeveloper(DEVELOPER_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -507,6 +557,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return startsets != null && !startsets.isEmpty();
             case KiCoolPackage.SYSTEM__PUBLIC:
                 return public_ != PUBLIC_EDEFAULT;
+            case KiCoolPackage.SYSTEM__DEVELOPER:
+                return developer != DEVELOPER_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -531,6 +583,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
         result.append(inputClass);
         result.append(", public: ");
         result.append(public_);
+        result.append(", developer: ");
+        result.append(developer);
         result.append(')');
         return result.toString();
     }
