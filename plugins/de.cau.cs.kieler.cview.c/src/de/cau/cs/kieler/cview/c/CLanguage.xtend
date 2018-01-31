@@ -228,7 +228,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
 
         override modelCreateFileSubComponents(CViewModel model, Component fileComponent, boolean parse) {
             val filePath = fileComponent.location
-            println("praseCFile '" + filePath + "'")
+            println("Parsing C file '" + filePath + "'")
             var content = fileComponent.fileRaw
             fileComponent.rawdata = String.valueOf(content)
             val tooltip = extractTooltip(fileComponent.rawdata)
