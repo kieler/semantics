@@ -101,6 +101,9 @@ class ExecutableSimulator extends DefaultSimulator {
      */
     private val timeLimiter = new SimpleTimeLimiter()
     
+    private static val KILL_TIMEOUT_IN_SECONDS = 2
+    private static val RESPONSE_TIMEOUT_IN_SECONDS = 2
+    
     /**
      * A listener to be notified when the started executable is going to be deleted by a simulation compiler.
      * In this case, the running simulation is stopped, so that the simulation compiler can update the executable.
@@ -270,7 +273,7 @@ class ExecutableSimulator extends DefaultSimulator {
             // Kill the process and wait until it has been destroyed,
             // but with a time limit in case the process cannot be killed or does not respond at all.
             try {
-                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 2, TimeUnit.SECONDS, true)
+                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], KILL_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS, true)
             } catch(UncheckedTimeoutException e) {
                 throw new IOException("Failed attempt to kill process '" + processBuilder.command + "' in '" + processBuilder.directory, e)
             } finally {
@@ -307,7 +310,7 @@ class ExecutableSimulator extends DefaultSimulator {
                 }
             }
             try {
-                line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, true)
+                line = timeLimiter.callWithTimeout(callable, RESPONSE_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS, true)
             } catch(UncheckedTimeoutException e) {
                 SimulationManager.instance.stop
                 throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n" 
