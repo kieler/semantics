@@ -55,7 +55,10 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 
 /**
- * The SSA transformation for SCGs
+ * The Sparse Conditional Constant Propagation for SCGs.
+ * 
+ * Based on "Modern Compiler Implementation in Java", Second Edition, by Appel and Palsberg
+ * and "Concurrent Static Single Assignment Form and Constant Propagation for Explicitly Parallel Programs" by Lee, Midki, and Padua
  * 
  * @author als
  * @kieler.design proposed

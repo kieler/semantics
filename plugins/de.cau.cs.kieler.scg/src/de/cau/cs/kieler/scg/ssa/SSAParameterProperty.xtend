@@ -33,7 +33,7 @@ class SSAParameterProperty implements IKiCoolCloneable {
     public static val IProperty<SSAParameterProperty> SSA_PARAMETER_PROPERTY = 
         new Property<SSAParameterProperty>("de.cau.cs.kieler.scg.processors.ssa.paramer", null)
     
-    val BiMap<Parameter, BasicBlock> parameterMapping
+    val Map<Parameter, BasicBlock> parameterMapping
     
     override isMutable() {
         false

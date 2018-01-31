@@ -44,7 +44,9 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
- * The SSA transformation for SCGs
+ * The SSA transformation for SCGs.
+ * 
+ * Based on "Concurrent Static Single Assignment Form and Constant Propagation for Explicitly Parallel Programs" by Lee, Midki, and Padua
  * 
  * @author als
  * @kieler.design proposed

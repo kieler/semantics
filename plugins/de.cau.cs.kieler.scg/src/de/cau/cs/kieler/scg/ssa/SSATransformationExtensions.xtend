@@ -78,7 +78,11 @@ class SSATransformationExtensions {
     def validateStructure(Processor<?,?> processor, SCGraph scg) {
         // It is expected that this node is an entry node.
         val entryNode = scg.nodes.head
-        if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
+        try {
+            if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
+                processor.environment.errors.add("The SSA analysis expects an entry node as first node in the first basic block!", entryNode)
+            }
+        } catch (NullPointerException npe) {
             processor.environment.errors.add("The SSA analysis expects an entry node as first node in the first basic block!", entryNode)
         }
     }
@@ -160,11 +164,11 @@ class SSATransformationExtensions {
     }
 
     def rename(DominatorTree dt, BasicBlock start, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
-        val placedParameter = HashBiMap.<Parameter, BasicBlock>create
+        val placedParameter = <Parameter, BasicBlock>newHashMap
         val versionStack = <ValuedObject, LinkedList<Integer>>newHashMap
         val versionStackFunc = [ ValuedObject vo |
             var voStack = versionStack.get(vo)
-            if (voStack == null) {
+            if (voStack === null) {
                 voStack = newLinkedList(0)
                 versionStack.put(vo, voStack)
             }
@@ -258,7 +262,7 @@ class SSATransformationExtensions {
         return defsite
     }
     
-    def Multimap<Assignment, Assignment> placeMoveInstructions(SCGraph scg, BiMap<Parameter, BasicBlock> parameterMapping) {
+    def Multimap<Assignment, Assignment> placeMoveInstructions(SCGraph scg, Map<Parameter, BasicBlock> parameterMapping) {
         val placed = HashMultimap.create
         for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
             val bb = node.basicBlock
