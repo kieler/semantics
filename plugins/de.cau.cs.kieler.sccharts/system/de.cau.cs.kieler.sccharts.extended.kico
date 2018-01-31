@@ -6,6 +6,7 @@ de.cau.cs.kieler.sccharts.processors.reference
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
 de.cau.cs.kieler.sccharts.processors.const
+de.cau.cs.kieler.sccharts.processors.fby
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.signal
 	de.cau.cs.kieler.sccharts.processors.^pre
@@ -22,6 +23,7 @@ de.cau.cs.kieler.sccharts.processors.const
 	
 [ label "Statecharts"
 	de.cau.cs.kieler.sccharts.processors.duringAction
+	pre process de.cau.cs.kieler.sccharts.processors.finalRegion
 	de.cau.cs.kieler.sccharts.processors.complexFinalState
 	de.cau.cs.kieler.sccharts.processors.abort
 	de.cau.cs.kieler.sccharts.processors.exitAction

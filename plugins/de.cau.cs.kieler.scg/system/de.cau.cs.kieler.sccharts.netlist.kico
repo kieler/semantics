@@ -19,6 +19,7 @@ de.cau.cs.kieler.sccharts.processors.fby
 	de.cau.cs.kieler.sccharts.processors.static
 ] [ label "Statecharts"
 	de.cau.cs.kieler.sccharts.processors.duringAction
+	pre process de.cau.cs.kieler.sccharts.processors.finalRegion
 	de.cau.cs.kieler.sccharts.processors.complexFinalState
 	de.cau.cs.kieler.sccharts.processors.abort
 	de.cau.cs.kieler.sccharts.processors.exitAction

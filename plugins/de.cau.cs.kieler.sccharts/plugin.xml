@@ -135,6 +135,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.Fby">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.FinalRegion">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
