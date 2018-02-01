@@ -122,6 +122,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 processorsToAdd += SENSOR
                 processorsToAdd += CONSTANT
                 processorsToAdd += SIGNAL
+                processorsToAdd += FUNCTION
             }
             else {
                 processorsToAdd += processorID
