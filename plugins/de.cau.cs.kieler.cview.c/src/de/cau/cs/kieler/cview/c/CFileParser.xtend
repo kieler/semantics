@@ -39,12 +39,17 @@ import de.cau.cs.kieler.cview.CViewPlugin
 class CFileParser {
 
     def static IASTTranslationUnit parse(char[] code, IFile file) throws Exception {
-
-        val location = file.rawLocation
-        val componentTU = CoreModel.^default.create(location) as ITranslationUnit
         var IASTTranslationUnit returnAst = null
-
-        if (componentTU == null) {
+        val location = file.rawLocation
+        try {
+            // default mechanism
+             val componentTU = CoreModel.^default.create(location) as ITranslationUnit
+             val defaultCoreModel = CoreModel.getDefault()
+             val componentProject = defaultCoreModel.CModel.getCProject(file.project.name)
+             val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
+             componentIndex.acquireReadLock
+             returnAst = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
+        } catch(Exception e) {
             // backup mechanism  --- WARNING MIGHT NOT FIND INTERDEPENDENCIES BETWEEN FILES
             val fc = FileContent.create("/Path/ToResolveIncludePaths.cpp", code);
             val macroDefinitions = new HashMap<String, String>();
@@ -58,14 +63,7 @@ class CFileParser {
             CViewPlugin.raiseWarning(
                 "No C project found for file '" + location +
                     "', parsing in isolation only! Some interdependencies migh be missed.")
-         } else {
-                    // default mechanism
-                    val defaultCoreModel = CoreModel.getDefault()
-                    val componentProject = defaultCoreModel.CModel.getCProject(file.project.name)
-                    val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
-                    componentIndex.acquireReadLock
-                    returnAst = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
-         }
+        }
 
          return returnAst
     }
