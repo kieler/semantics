@@ -59,6 +59,7 @@ EsterelThread returns scl::Statement:
 
 @Override
 EsterelAssignment returns scl::Assignment:
+    (annotations += Annotation)*
     reference=VariableOrSignalReference ":=" expression=Expression
 ;
     
