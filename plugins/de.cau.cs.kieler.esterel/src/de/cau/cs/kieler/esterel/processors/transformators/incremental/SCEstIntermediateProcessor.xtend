@@ -62,6 +62,7 @@ import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import de.cau.cs.kieler.esterel.EsterelThread
 
 /**
  * @author mrb
@@ -186,6 +187,12 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
              */
             if (up) {
                 var list = obj.containingList
+                if (list === null) {
+                    throw new Exception("IntermediateProcessor: Found an object which"
+                                        + " is not contained by a list."
+                                        + "\nThis should not have happened!"
+                    )
+                }
                 var pos = list.indexOf(obj)
                 var parent = obj.eContainer
                 if (pos+1 < list.length) {
@@ -210,24 +217,20 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 else if (parent instanceof Present) {
                     // obj can be in 'statements', 'cases' or 'elseStatements'
                     var statements = parent.statements
-                    if ( (statements.contains(obj)) || (parent.cases?.contains(obj)) ) {
-                        if (!parent.elseStatements.empty) {
-                            obj = parent.elseStatements.head
-                            up = false
-                        }
-                        else {
-                            obj = parent
-                            transform = true
-                        }
+                    if ( ( statements.contains(obj) || parent.cases.contains(obj) )
+                         && !parent.elseStatements.empty
+                    ) {
+                        obj = parent.elseStatements.head
+                        up = false
                     }
-                    else { // obj is last statement in elseStatements
+                    else { // obj is last statement in elseStatements or elseStatements is empty
                         obj = parent
                         transform = true
                     }
                 }
                 else if (parent instanceof IfTest) {
                     var statements = parent.statements
-                    // obj can be in 'statements', 'elseIf' or 'elseStatements'
+                    // obj can be last in 'statements', 'elseIf' or 'elseStatements'
                     if (statements.contains(obj)) {
                         if (!parent.elseif.empty) {
                             obj = parent.elseif.head
@@ -252,13 +255,13 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             transform = true
                         }
                     }
-                    else { // obj is in elseStatements
+                    else { // obj is last in elseStatements
                         obj = parent
                         transform = true
                     }
                 }
                 else if (parent instanceof Trap) {
-                    if ( (!parent.trapHandler.empty) && (!parent.trapHandler.contains(obj)) ) {
+                    if ( parent.statements.contains(obj) && !parent.trapHandler.empty ) {
                         obj = parent.trapHandler.head
                         up = false
                     }
@@ -301,14 +304,13 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         obj = parent.watchingStatements.head
                         up = false
                     }
-                    else { // obj last in watchingStatements
+                    else { // obj last in watchingStatements or watchingStatements are empty
                             obj = parent
                             transform = true
                     }
                 }
                 else if (parent instanceof Conditional) {
-                    val statements = parent.statements
-                    if (statements.contains(obj) && parent.^else instanceof ElseScope) {
+                    if (parent.statements.contains(obj) && parent.^else instanceof ElseScope) {
                         obj = parent.^else
                         up = false
                     }
@@ -337,6 +339,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 else if (parent instanceof EsterelProgram) {
                     obj = parent
                     transform = true
+                }
+                else {
+                    throw new Exception("IntermediateProcessor: This point should never be reached.")
                 }
             }
             
@@ -485,8 +490,6 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             switch (obj) {
-                                /* set 'obj' to the eContainer of 'obj' if it is not a statement
-                                 * because only statements can be transformed */
                                 PresentCase,
                                 ElsIf,
                                 Case,
@@ -494,10 +497,14 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                                 TrapHandler : {
                                     up = true
                                 }
-                                Thread,
+                                EsterelThread,
+                                Thread, // empty (esterel)thread should not be possible
                                 ElseScope : {
                                     obj = obj.eContainer
                                     transform = true
+                                }
+                                default : { // empty Block statement
+                                    transform = true 
                                 }
                             }
                         }
@@ -513,7 +520,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         up = true
                     }
                     
-                    Run : {
+                    Run : { // must not be used since all run statements should already been transformed
                         if (obj.module?.module instanceof Module) {
                             obj = obj.module.module
                         }
