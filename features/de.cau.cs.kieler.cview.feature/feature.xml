@@ -215,7 +215,8 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
+      <update label="KIELER PHT SCCharts Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
+      <update label="KIELER KLighD Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-11/"/>
    </url>
 
    <requires>
