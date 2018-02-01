@@ -135,8 +135,6 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequencer {
@@ -796,7 +794,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *
 	 * Constraint:
 	 *     (
-	 *         (reference=VariableOrSignalReference expression=Expression) | 
+	 *         (annotations+=Annotation* reference=VariableOrSignalReference expression=Expression) | 
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             reference=ValuedObjectReference 
@@ -820,19 +818,10 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     InstructionStatement returns Assignment
 	 *
 	 * Constraint:
-	 *     (reference=VariableOrSignalReference expression=Expression)
+	 *     (annotations+=Annotation* reference=VariableOrSignalReference expression=Expression)
 	 */
 	protected void sequence_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__REFERENCE));
-			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEsterelAssignmentAccess().getReferenceVariableOrSignalReferenceParserRuleCall_0_0(), semanticObject.getReference());
-		feeder.accept(grammarAccess.getEsterelAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

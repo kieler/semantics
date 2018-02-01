@@ -608,38 +608,56 @@ ruleEsterelAssignment returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEsterelAssignmentAccess().getReferenceVariableOrSignalReferenceParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getEsterelAssignmentAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
 	    }
-		lv_reference_0_0=ruleVariableOrSignalReference		{
+		lv_annotations_0_0=ruleAnnotation		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEsterelAssignmentRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_0_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.Annotation");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEsterelAssignmentAccess().getReferenceVariableOrSignalReferenceParserRuleCall_1_0()); 
+	    }
+		lv_reference_1_0=ruleVariableOrSignalReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEsterelAssignmentRule());
 	        }
        		set(
        			$current, 
        			"reference",
-        		lv_reference_0_0, 
+        		lv_reference_1_0, 
         		"de.cau.cs.kieler.esterel.scest.SCEst.VariableOrSignalReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_1=':=' 
+)	otherlv_2=':=' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getEsterelAssignmentAccess().getColonEqualsSignKeyword_1());
+    	newLeafNode(otherlv_2, grammarAccess.getEsterelAssignmentAccess().getColonEqualsSignKeyword_2());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEsterelAssignmentAccess().getExpressionExpressionParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getEsterelAssignmentAccess().getExpressionExpressionParserRuleCall_3_0()); 
 	    }
-		lv_expression_2_0=ruleExpression		{
+		lv_expression_3_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEsterelAssignmentRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_2_0, 
+        		lv_expression_3_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
