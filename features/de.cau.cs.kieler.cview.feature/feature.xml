@@ -216,7 +216,7 @@ litigation.
 
    <url>
       <update label="KIELER PHT SCCharts Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
-      <update label="KIELER KLighD Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02/"/>
+      <update label="KIELER KLighD 2017-02-03 Release" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-03/plugins//"/>
    </url>
 
    <requires>
