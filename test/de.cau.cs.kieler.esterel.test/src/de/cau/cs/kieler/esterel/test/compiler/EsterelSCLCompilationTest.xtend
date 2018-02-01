@@ -89,7 +89,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     @Test(timeout=15000)
     @StopOnFailure
     def void testValidation(EsterelProgram est, TestModelData modelData) {
-//        assumeFalse(true); // Do nothing !!
+        assumeFalse(true); // Do nothing !!
 
         assumeTrue(est.hasNoEsterelType) // skip if program includes esterel type
         
