@@ -21,11 +21,13 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.ssa.SSAParameterProperty
 import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
+
+import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
-import de.cau.cs.kieler.scg.ssa.SSAParameterProperty
 
 /**
  * The SSA transformation for SCGs
@@ -39,8 +41,11 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.scg.processors.ssa.sequential"
+    
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.ssa.sequential"
+        return ID
     }
 
     override getName() {
@@ -85,7 +90,7 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
         // ---------------
         // 2. Renaming
         // ---------------
-        val parameters = dt.rename(entryBB, ssaDecl)
+        val parameters = dt.rename(entryBB, ssaDecl)[isSSA(PHI)]
         environment.setProperty(SSA_PARAMETER_PROPERTY, new SSAParameterProperty(parameters))
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot

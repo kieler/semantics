@@ -13,14 +13,13 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
 package de.cau.cs.kieler.scg.processors.ssa.optimizer
 
 import com.google.common.collect.Multimap
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Value
@@ -40,9 +39,12 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSATransformation
+import de.cau.cs.kieler.scg.processors.ssa.SimpleSCSSATransformation
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
@@ -50,9 +52,10 @@ import java.util.Map
 import javax.inject.Inject
 
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
+import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
+import de.cau.cs.kieler.kexpressions.Parameter
 
 /**
  * The Sparse Conditional Constant Propagation for SCGs.
@@ -85,6 +88,8 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
     
+    public static val SUPPORTED_SSA_TYPES = #[SSATransformation.ID, SimpleSCSSATransformation.ID]
+    
     public static val IProperty<Boolean> REMOVE_OUTPUTS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.sccp.removeOutputs", false)
     public static val IProperty<Boolean> PROPAGATE_OUTPUTS = 
@@ -115,21 +120,28 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     protected val voWorkList = <ValuedObject>newLinkedList
     protected val blockWorkList = <BasicBlock>newLinkedList
     // Terminating Threads
-    protected var term = <BasicBlock, Integer>newHashMap
+    protected val term = <BasicBlock, Integer>newHashMap
+    // superfluous conditionals
+    protected var superfluousConditionals = <Conditional, Boolean>newHashMap
     // Analysis results
     protected val inputs = <ValuedObject>newHashSet
     protected var DominatorTree dt;
     protected var Map<ValuedObject, Assignment> defs;
     protected var Multimap<ValuedObject, Node> uses;
+    // SSA data
+    protected var Map<Parameter, BasicBlock> parameterMapping
 
     // -------------------------------------------------------------------------    
     
     def SCGraph transform(SCGraph scg) {
-        if (scg.nodes.exists[it instanceof Fork || it instanceof Surface]) {
-            environment.warnings.add("Cannot handle SCG with Concurrency or synchronous ticks")
+        if (!SUPPORTED_SSA_TYPES.contains(scg.annotations.filter(StringAnnotation).findFirst[ name == SCGAnnotations.ANNOTATION_SSA ]?.values?.head)) {
+            environment.errors.add("SCG is not in compatible SSA form")
         }
-        if (!scg.isSSA) {
-            environment.errors.add("SCG is not in SSA form")
+        
+        parameterMapping = environment.getProperty(SSA_PARAMETER_PROPERTY)?.parameterMapping
+        if (parameterMapping === null) {
+            environment.errors.add("Missing SSA parameter mapping information!")
+            return scg
         }
         
         // init
@@ -168,26 +180,17 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         // ---------------
         // 2. Kill dead code
         // --------------- 
-        val deadBlocks = scg.basicBlocks.filter[!executable.contains(it)].toList
+        val deadBlocks = scg.basicBlocks.filter[!executable.contains(it)].toSet
         for (bb : deadBlocks) {
             // Fix incoming CF
             val firstNode = bb.schedulingBlocks.head.nodes.head
             for (incoming : firstNode.allPrevious) {
                 val prev = incoming.eContainer as Node
                 if (prev instanceof Conditional) {
-                    if (prev.then == incoming) {
-                        prev.allPrevious.toList.forEach[target = prev.then.target]
-                    } else {
-                        prev.allPrevious.toList.forEach[target = prev.^else.target]
-                    }
-                    
-                    // Remove conditional
-                    prev.removeNode(false)
-                    defs.values.remove(prev)
-                    uses.values.remove(prev)
+                    prev.removeConditional(prev.then == incoming)
                 } else {
                     incoming.target = null
-                    prev.eContents.remove(incoming)
+                    prev.eContents.toList.forEach[remove]
                 }
             }
             
@@ -197,29 +200,48 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                     node.removeNode(false)
                     defs.values.remove(node)
                     uses.values.remove(node)
-                }                
+                }
             }
             
             // clear sb
+            bb.schedulingBlocks.forEach[ guards.forEach[remove] ]
             bb.schedulingBlocks.clear
+            
+            // fix predecessor information in non-dead successor block
+            for (nonDeadBB : dt.successors(bb).filter[!deadBlocks.contains(it)]) {
+                nonDeadBB.fixSSANodes(bb)
+                nonDeadBB.predecessors.removeIf[basicBlock == bb]
+            }
+            
         }
+        if (!deadBlocks.empty) environment.infos.add("Removed " + deadBlocks.size + " dead blocks")
         scg.basicBlocks.removeAll(deadBlocks)
+        
+        // Remove superfluous conditionals
+        for (entry : superfluousConditionals.entrySet.filter[key.eContainer !== null]) {
+            entry.key.removeConditional(entry.value)
+        }
+        if (!superfluousConditionals.empty) environment.infos.add("Removed " + superfluousConditionals.size + " dead conditional branches")
         
         // ---------------
         // 3. Propagate Constants
         // ---------------
         if (!constants.empty) {
+            var propagated = 0
             for (const : constants.entrySet) {
                 var boolean skippedPhi = false
                 if (!const.key.isOutput || environment.getProperty(PROPAGATE_OUTPUTS)) {
-                    // Replace in uses
-                    for (node : uses.get(const.key)) {
-                        if (!node.isSSA || environment.getProperty(PROPAGATE_INTO_PHI)) {
-                            for (vor : node.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const.key].toList) {
-                                vor.replace(const.value.copy)
+                    if (uses.containsKey(const.key)) {
+                        propagated++
+                        // Replace in uses
+                        for (node : uses.get(const.key)) {
+                            if (!node.isSSA || environment.getProperty(PROPAGATE_INTO_PHI)) {
+                                for (vor : node.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const.key].toList) {
+                                    vor.replace(const.value.copy)
+                                }
+                            } else {
+                                skippedPhi = true
                             }
-                        } else {
-                            skippedPhi = true
                         }
                     }
                 }
@@ -234,6 +256,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                     node.removeNode(true)
                 }
             }
+            environment.infos.add("Propagated " + propagated + " constants")
         }
         
         // ---------------
@@ -248,7 +271,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                 
         return scg
     }
-    
+        
     protected def void handleBlock(BasicBlock block) {
         // Activate next iff only one block outgoing
         val successors = dt.successors(block)
@@ -276,7 +299,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         }
     }
     
-    protected def void handleVO(ValuedObject vo){
+    protected def void handleVO(ValuedObject vo) {
         for (use : uses.get(vo)) {
             if (executable.contains(use.basicBlock)) {
                 use.handleNode
@@ -284,7 +307,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         }
     }
     
-    protected def dispatch void handleNode(Assignment asm){
+    protected def dispatch void handleNode(Assignment asm) {
         if (asm.isSSA) {
             if (asm.isSSA(PHI)) {
                 var Value constantValue
@@ -305,46 +328,44 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                 if (constantValue !== null) {
                     asm.valuedObject.raiseConstant(constantValue)
                 }
+            } else if (asm.isSSA(PSI)) {
+                asm.valuedObject.raiseOverdefined
+            } else if (asm.isSSA(PI)) {
+                asm.valuedObject.raiseOverdefined
             }
-            // TODO others
+            // TODO others?
         } else {
             asm.evaluateAssignment
         }
     } 
     
-    protected def dispatch void handleNode(Conditional cond){
-        val parEvalResult = new PartialExpressionEvaluator(constants).evaluate(cond.condition)
+    protected def dispatch void handleNode(Conditional cond) {
+        superfluousConditionals.remove(cond)
+        val parEval = new PartialExpressionEvaluator(constants)
+        val parEvalResult = parEval.evaluate(cond.condition)
         if (parEvalResult instanceof Value) { // Can be evaluated
-            var branch = false
-            
-            if (parEvalResult instanceof BoolValue) {
-                branch = parEvalResult.value
-            } else if (parEvalResult instanceof IntValue) {
-                branch = parEvalResult.value != 0
-            } else {
-                throw new UnsupportedOperationException("Unsupported value type in result of conditional evaluation")
-            }
-            
+            val branch = parEval.isThruthy(parEvalResult)
             // Activate branch
             if (branch) {
                 cond.then.target.basicBlock.markExecutable
             } else {
                 cond.^else.target.basicBlock.markExecutable
             }
+            superfluousConditionals.put(cond, branch)
         } else if (parEvalResult.isOverdefined) { // Mark both
             cond.then.target.basicBlock.markExecutable
             cond.^else.target.basicBlock.markExecutable
         }
     } 
           
-    protected def dispatch void handleNode(Fork fork){
+    protected def dispatch void handleNode(Fork fork) {
         // Execute Threads
         dt.successors(fork.basicBlock).forEach[markExecutable]
     }
      
-    protected def dispatch void handleNode(Node n){
+    protected def dispatch void handleNode(Node n) {
         // Pass
-    }    
+    }
     
     protected def void markExecutable(BasicBlock block) {
         // Mark only on first time
@@ -416,6 +437,50 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             if (constants.containsKey(vo)) {
                 voWorkList.add(vo)
                 constants.remove(vo)
+            }
+        }
+    }
+    
+    def void removeConditional(Conditional c, boolean branch) {
+        val bb = c.basicBlock
+        // remove successor
+        val deadTargetBB = (if(!branch) c.then.target else c.^else.target).basicBlock
+        deadTargetBB.fixSSANodes(bb)
+        deadTargetBB.predecessors.removeIf[basicBlock == bb]
+        
+        // reroute
+        c.allPrevious.toList.forEach[ target = if(branch) c.then.target else c.^else.target ]
+        c.removeNode(false)
+        
+        // fix predecessor information in successor block
+        val info = dt.successors(bb).map[predecessors.findFirst[basicBlock == bb && conditional == c]].filterNull.head
+        if (info !== null) {
+            info.conditional = null
+            info.branchType = null
+        }
+        
+        defs.values.remove(c)
+        uses.values.remove(c)
+    }
+    
+    def void fixSSANodes(BasicBlock target, BasicBlock source) {
+        // Fix ssa nodes
+        for (n : target.schedulingBlocks.head.nodes.filter(Assignment).filter[isSSA].toList) {
+            val fc = n.expression as FunctionCall
+            fc.parameters.removeIf[parameterMapping.get(it) == source]
+            if (fc.parameters.size == 1) {
+                val voUses = uses.get(n.valuedObject)
+                val newVO = (fc.parameters.head.expression as ValuedObjectReference).valuedObject
+                for (use : voUses) {
+                    use.eAllContents.filter(ValuedObjectReference).filter[valuedObject == n.valuedObject].forEach[
+                        valuedObject = newVO
+                    ]
+                    uses.put(newVO, use)
+                }
+                uses.keys.remove(n.valuedObject)
+                n.removeNode(true)
+                defs.values.remove(n)
+                uses.values.remove(n)
             }
         }
     }

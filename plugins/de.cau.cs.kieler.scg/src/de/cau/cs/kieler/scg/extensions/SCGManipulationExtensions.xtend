@@ -43,9 +43,19 @@ class SCGManipulationExtensions {
         }
         
         node.allNext.forEach[target = null]
-        node.eContents.toList.forEach[remove]
+        node.dependencies.forEach[target = null]
+        node.eContents.immutableCopy.forEach[remove]
+        node.incoming.immutableCopy.forEach[target = null; remove]
         
-        node.schedulingBlock?.nodes?.remove(node)
+        
+        val sb = node.schedulingBlock
+        if (sb !== null) {
+            sb.nodes.remove(node)
+            if (sb.nodes.empty) {
+                sb.remove
+                sb.guards?.forEach[remove]
+            }
+        }
         node.remove
     }
     

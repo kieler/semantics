@@ -56,6 +56,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import com.google.common.collect.Multimap
 import com.google.common.collect.HashBiMap
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 /**
  * @author als
@@ -133,8 +134,8 @@ class SSATransformationExtensions {
         return [ ValuedObject vo, Node bbHead |
             // Create Phi assignment
             val asm = sCGFactory.createAssignment
+            val scg = bbHead.eContainer as SCGraph
             val bbHeadSB = bbHead.schedulingBlock
-            bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead), asm)
             asm.valuedObject = vo
             asm.markSSA(PHI)
             asm.expression = PHI.createFunction
@@ -143,10 +144,16 @@ class SSATransformationExtensions {
                 val cf = bbHead.allNext.head
                 asm.createControlFlow.target = cf.target
                 cf.target = asm
+
+                scg.nodes.add(scg.nodes.indexOf(bbHead) + 1, asm)
+                bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead) + 1, asm)
             } else {
                 // Insert before
                 bbHead.allPrevious.toList.forEach[target = asm]
                 asm.createControlFlow.target = bbHead
+                
+                scg.nodes.add(scg.nodes.indexOf(bbHead), asm)
+                bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead), asm)
             }
             
             return asm
@@ -180,7 +187,6 @@ class SSATransformationExtensions {
                         var bbHead = frontierBlock.firstNode
                         
                         val asm = placer.apply(vo, bbHead)
-                        scg.nodes.add(scg.nodes.indexOf(bbHead), asm)
                         placedAssignment.add(asm)
                         
                         // Add to work
@@ -196,7 +202,7 @@ class SSATransformationExtensions {
         return placedAssignment
     }
 
-    def rename(DominatorTree dt, BasicBlock start, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
+    def rename(DominatorTree dt, BasicBlock start, BiMap<ValuedObject, VariableDeclaration> ssaDecl, Function1<Assignment, Boolean> ssaPredicate) {
         val placedParameter = <Parameter, BasicBlock>newHashMap
         val versionStack = <ValuedObject, LinkedList<Integer>>newHashMap
         val versionStackFunc = [ ValuedObject vo |
@@ -207,12 +213,12 @@ class SSATransformationExtensions {
             }
             return voStack
         ]
-        recursiveRename(start, dt, versionStackFunc, ssaDecl, placedParameter)
+        recursiveRename(start, dt, versionStackFunc, ssaPredicate, ssaDecl, placedParameter)
         
         return placedParameter
     }
     
-    protected def void recursiveRename(BasicBlock block, DominatorTree dt, Function<ValuedObject, Deque<Integer>> stack, BiMap<ValuedObject, VariableDeclaration> ssaDecl, Map<Parameter, BasicBlock> parameter) {
+    protected def void recursiveRename(BasicBlock block, DominatorTree dt, Function<ValuedObject, Deque<Integer>> stack, Function1<Assignment, Boolean> ssaPredicate, BiMap<ValuedObject, VariableDeclaration> ssaDecl, Map<Parameter, BasicBlock> parameter) {
         val renamedDefs = <ValuedObject>newLinkedList
         for (sb : block.schedulingBlocks) {
             for (n : sb.nodes) {
@@ -239,7 +245,7 @@ class SSATransformationExtensions {
         }
         for (m : dt.successors(block)) {
             for (sb : m.schedulingBlocks) {
-                for (asm : sb.nodes.filter(Assignment).filter[isSSA(PHI)]) {
+                for (asm : sb.nodes.filter(Assignment).filter(ssaPredicate)) {
                     val vo = if (ssaDecl.containsKey(asm.valuedObject)) {
                         asm.valuedObject
                     } else {
@@ -254,7 +260,7 @@ class SSATransformationExtensions {
         }
         val bbs = (block.eContainer as SCGraph).basicBlocks
         for (m : dt.children(block).sortBy[bbs.indexOf(it)]) {
-            m.recursiveRename(dt, stack, ssaDecl, parameter)
+            m.recursiveRename(dt, stack, ssaPredicate, ssaDecl, parameter)
         }
         // leave version scopes
         for (vo : renamedDefs) {

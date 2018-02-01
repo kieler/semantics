@@ -73,16 +73,19 @@
             class="de.cau.cs.kieler.scg.processors.ssa.SCSSATransformation">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.scg.processors.ssa.SimpleSCSSATransformation">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.scg.processors.ssa.WeakUnemitSSATransformation">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.ssa.DeSSATransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.ssa.optimizer.SCCP">
+            class="de.cau.cs.kieler.scg.processors.ssa.UnSSATransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.ssa.optimizer.CopyPropagation">
+            class="de.cau.cs.kieler.scg.processors.ssa.optimizer.SCCP">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
@@ -125,6 +128,9 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.HaltStateRemover">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.PartialExpressionEvaluator">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">

@@ -148,7 +148,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // ---------------
         // 2. Renaming
         // ---------------
-        bbVersion = dt.rename(entryBB, ssaDecl)
+        bbVersion = dt.rename(entryBB, ssaDecl)[isSSA]
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
         
