@@ -90,7 +90,6 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
                 val lt = createLT(createValuedObjectReference(variable), await.delay.delay.copy)
                 val conditional = createConditional(await.delay.expression.copy)
                 conditional.statements.add(incrementInt(variable))
-                conditional.annotations.add(createAnnotation(0))
                 val conditional2 = newIfThenGoto(lt, label, false)
                 scope.statements.add(label)
                 scope.statements.add(createPause)
