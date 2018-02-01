@@ -27,7 +27,7 @@ public class CommandHandler implements IHandler {
     public static String CMD_SELECT_ID = "de.cau.cs.kieler.cview.command.select";
     public static String CMD_FILTER_ID = "de.cau.cs.kieler.cview.command.filter";
     public static String CMD_EXPORT_ID = "de.cau.cs.kieler.cview.command.export";
-    public static String CMD_REFRESH_ID = "de.cau.cs.kieler.cview.command";
+    public static String CMD_REFRESH_ID = "de.cau.cs.kieler.cview.command.refresh";
 
     // -------------------------------------------------------------------------
 

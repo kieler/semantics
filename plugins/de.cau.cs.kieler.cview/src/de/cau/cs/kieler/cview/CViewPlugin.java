@@ -733,13 +733,13 @@ public class CViewPlugin extends AbstractUIPlugin {
 //        return null;
 //    }
     
-    static void raiseError(String text) {
+    public static void raiseError(String text) {
         Status status = new Status(IStatus.ERROR, CViewPlugin.PLUGIN_ID, text);
         CViewPlugin.getInstance().getLog().log(status);
         printlnConsole("ERROR: " + text);
     }
     
-    static void raiseWarning(String text) {
+    public static void raiseWarning(String text) {
         Status status = new Status(IStatus.WARNING, CViewPlugin.PLUGIN_ID, text);
         CViewPlugin.getInstance().getLog().log(status);
         printlnConsole("WARNING: " + text);

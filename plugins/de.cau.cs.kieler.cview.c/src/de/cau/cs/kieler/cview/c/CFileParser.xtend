@@ -30,6 +30,7 @@ import org.eclipse.cdt.core.model.CoreModel
 import org.eclipse.cdt.core.CCorePlugin
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Path
+import de.cau.cs.kieler.cview.CViewPlugin
 
 /**
  * @author cmot
@@ -39,26 +40,35 @@ class CFileParser {
 
     def static IASTTranslationUnit parse(char[] code, IFile file) throws Exception {
 
-// DEPRECATED OLD PARSING CODE
-//        val fc = FileContent.create("/Path/ToResolveIncludePaths.cpp", code);
-//        val macroDefinitions = new HashMap<String, String>();
-//        val String[] includeSearchPaths = #[]
-//        val si = new ScannerInfo(macroDefinitions, includeSearchPaths);
-//        val ifcp = IncludeFileContentProvider.getEmptyFilesProvider();
-//        val idx = null;
-//        val options = ILanguage.OPTION_IS_SOURCE_UNIT;
-//        val log = new DefaultLogService();
-//        return GPPLanguage.getDefault().getASTTranslationUnit(fc, si, ifcp, idx, options, log);
+        val location = file.rawLocation
+        val componentTU = CoreModel.^default.create(location) as ITranslationUnit
+        var IASTTranslationUnit returnAst = null
 
-//        val componentPath = new Path(component.location)
-//        val componentFile = ResourcesPlugin.workspace.root.getFileForLocation(componentPath)
-        
-        val componentTU = CoreModel.^default.create(file.rawLocation) as ITranslationUnit
-        val componentProject = CoreModel.^default.CModel.getCProject(file.project.name)
-        val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
-        componentIndex.acquireReadLock
-        val ast = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
-        return ast
+        if (componentTU == null) {
+            // backup mechanism  --- WARNING MIGHT NOT FIND INTERDEPENDENCIES BETWEEN FILES
+            val fc = FileContent.create("/Path/ToResolveIncludePaths.cpp", code);
+            val macroDefinitions = new HashMap<String, String>();
+            val String[] includeSearchPaths = #[]
+            val si = new ScannerInfo(macroDefinitions, includeSearchPaths);
+            val ifcp = IncludeFileContentProvider.getEmptyFilesProvider();
+            val idx = null;
+            val options = ILanguage.OPTION_IS_SOURCE_UNIT;
+            val log = new DefaultLogService();
+            returnAst = GPPLanguage.getDefault().getASTTranslationUnit(fc, si, ifcp, idx, options, log);
+            CViewPlugin.raiseWarning(
+                "No C project found for file '" + location +
+                    "', parsing in isolation only! Some interdependencies migh be missed.")
+         } else {
+                    // default mechanism
+                    val defaultCoreModel = CoreModel.getDefault()
+                    val componentProject = defaultCoreModel.CModel.getCProject(file.project.name)
+                    val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
+                    componentIndex.acquireReadLock
+                    returnAst = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
+         }
+
+         return returnAst
     }
 
 }
+        

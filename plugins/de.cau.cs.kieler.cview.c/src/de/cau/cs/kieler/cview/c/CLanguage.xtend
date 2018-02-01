@@ -237,6 +237,11 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
 
             if (parse || OPTION_CONNECTION_TYPE.isOptionRequired || OPTION_CONNECTION_FUNC.isOptionRequired) {
                 val ast = fileComponent.AST
+                
+                if (ast == null) {
+                    CViewPlugin.raiseError("Cannot parse file '"+fileComponent.location+"'")
+                    return
+                }
 
                 val visitor = new ASTVisitor() {
 
