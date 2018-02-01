@@ -104,7 +104,7 @@ class LayoutHook extends SynthesisActionHook {
         // Find global direction annotation
         for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
-            if (data != null && data.id == CoreOptions.DIRECTION.id) {
+            if (data !== null && data.id == CoreOptions.DIRECTION.id) {
                 golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
             }
         }
@@ -112,7 +112,7 @@ class LayoutHook extends SynthesisActionHook {
         // Process hierarchy
         for (node : rootNode.eAllContentsOfType(KNode).toList) {
             val source = node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
-            if (source != null) {
+            if (source !== null) {
                 val baseDepth = (node.parent ?: rootNode).getProperty(HV_DEPTH) ?: 0
                 if (source instanceof State) {
                     // Increase depth only after regions because states have no layouted children
@@ -198,7 +198,7 @@ class LayoutHook extends SynthesisActionHook {
 
     private def processAlternatingLayoutAnnotation(KNode node, Scope scope) {
         val annotation = scope.annotations.findLast[isAlternatingLayoutAnnotation]
-        if (annotation != null) {
+        if (annotation !== null) {
             val isHV = annotation.name.equalsIgnoreCase(HV_ANNOTATION)
             val offset = node.getProperty(HV_DEPTH) ?: 0
             val workingset = newLinkedHashMap(new Pair(scope, node))
@@ -213,7 +213,7 @@ class LayoutHook extends SynthesisActionHook {
                 // Add child elements to processing queue
                 for (nextScope : subScope.eContents.filter(Scope)) {
                     val nextElement = subNode.children.findFirst[isAssociatedWith(nextScope)];
-                    if (nextElement != null && !nextScope.annotations.exists[isAlternatingLayoutAnnotation]) {
+                    if (nextElement !== null && !nextScope.annotations.exists[isAlternatingLayoutAnnotation]) {
                         workingset.put(nextScope, nextElement)
                     }
                 }

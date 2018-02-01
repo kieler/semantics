@@ -365,7 +365,7 @@ class DataPool implements Cloneable {
      * @return the list of previous data pools
      */
     public def List<DataPool> getHistory() {
-        return getHistory(-1, true)
+        return getHistory(-1, true, false)
     }
     
     /**
@@ -373,10 +373,16 @@ class DataPool implements Cloneable {
      * 
      * @param maxSize The maximum amount of history entries to show
      * @param includeInitialization Determines whether the initial data pool should be included
+     * @param includeCurrent Determines whether the current object (this) should be included in the returned list, or only its history
      * @return the list of previous data pools
      */
-    public def List<DataPool> getHistory(int maxSize, boolean includeInitialization) {
+    public def List<DataPool> getHistory(int maxSize, boolean includeInitialization, boolean includeCurrent) {
         val List<DataPool> history = newArrayList()
+        // Add current data pool
+        if(includeCurrent) {
+            history.add(this)
+        }
+        // Add previous data pools
         var int size = 0
         var next = this.previousPool
         while(next !== null && (maxSize < 0 || size < maxSize)) {
@@ -389,6 +395,7 @@ class DataPool implements Cloneable {
                 next = null
             }
         }
+        // Reverse list, such that the oldest pool is the first element
         return history.reverse
     }
     

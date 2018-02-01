@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.prom.console.PromConsole
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.annotations.CommentAnnotation
 
 /**
  * Model analyzer for KExpression declarations.
@@ -86,10 +87,12 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                     val varName = valuedObject.name
                     // Each annotation gets its own macro call
                     for (annotation : decl.annotations) {
-                        val data = new MacroCallData 
-                        data.initializeForCodeGeneration(varName, varType, isInput, isOutput)
-                        initData(data, annotation)
-                        allDatas.add(data)
+                        if(!(annotation instanceof CommentAnnotation)) {
+                            val data = new MacroCallData 
+                            data.initializeForCodeGeneration(varName, varType, isInput, isOutput)
+                            initData(data, annotation)
+                            allDatas.add(data)    
+                        }
                     }
                 }
             } else {

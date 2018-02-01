@@ -49,9 +49,9 @@ class SynchronizerSelector {
     protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
         typeof(InstantaneousSynchronizer),
         typeof(DepthSynchronizer),
-        typeof(SurfaceSynchronizer),
-        typeof(MasterSlaveSynchronizer),
-        typeof(DepthJoinSynchronizer),
+//        typeof(SurfaceSynchronizer),
+//        typeof(MasterSlaveSynchronizer),
+//        typeof(DepthJoinSynchronizer),
         typeof(SurfaceSynchronizer)
     )
     protected val DEFAULT_SYNCHRONIZER = typeof(SurfaceSynchronizer)

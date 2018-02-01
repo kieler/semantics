@@ -99,7 +99,7 @@ class Model implements Cloneable {
      * @return the history of previous models
      */
     public def List<Model> getHistory() {
-        return getHistory(-1, true)
+        return getHistory(-1, true, false)
     }
     
     /**
@@ -107,11 +107,12 @@ class Model implements Cloneable {
      * 
      * @param maxSize The maximum amount of history entries to show
      * @param includeInitialization Determines whether the initial data pool should be included
+     * @param includeCurrent Determines whether the current object (this) should be included in the returned list, or only its history
      * @return the history of previous models
      */
-    public def List<Model> getHistory(int maxSize, boolean includeInitialization) {
+    public def List<Model> getHistory(int maxSize, boolean includeInitialization, boolean includeCurrent) {
         val List<Model> history = newArrayList()
-        val pools = pool.getHistory(maxSize, includeInitialization)
+        val pools = pool.getHistory(maxSize, includeInitialization, includeCurrent)
         for(p : pools) {
             for(m : p.models) {
                 if(name != null && name.equals(m.name)) {

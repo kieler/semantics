@@ -560,8 +560,9 @@ class SCGThreadExtensions {
         
         // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
         localFlow.add(next)
-        val nextFlows = next.target.allNext.filter[!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)]
-        if (next.target instanceof Fork) {
+        if (next.target === null) {
+            
+        } else if (next.target instanceof Fork) {
        		val fork = next.target as Fork
         	var newType = type
         	val entries = fork.allNext.map[ target ]
@@ -574,6 +575,7 @@ class SCGThreadExtensions {
         		localFlow, newType, threadTypes, source
         	)
         } else {
+            val nextFlows = next.target.allNext.filter[!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)]
     	    for (nextFlow : nextFlows) {
 	    	    nextFlow.accumulateThreadControlFlowsTypes(localFlow, type, threadTypes, source)
            }

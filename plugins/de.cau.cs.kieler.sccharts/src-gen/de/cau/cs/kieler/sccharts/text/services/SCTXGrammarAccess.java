@@ -984,46 +984,49 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cControlflowRegionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
-		private final Keyword cRegionKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameExtendedIDParserRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
-		private final Assignment cLabelAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_4_0 = (RuleCall)cLabelAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cForKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cCounterVariableAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cCounterVariableCounterVariableParserRuleCall_5_1_0 = (RuleCall)cCounterVariableAssignment_5_1.eContents().get(0);
-		private final Keyword cColonKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
-		private final Assignment cForStartAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
-		private final RuleCall cForStartIntOrReferenceParserRuleCall_5_3_0 = (RuleCall)cForStartAssignment_5_3.eContents().get(0);
-		private final Group cGroup_5_4 = (Group)cGroup_5.eContents().get(4);
-		private final Keyword cFullStopFullStopKeyword_5_4_0 = (Keyword)cGroup_5_4.eContents().get(0);
-		private final Assignment cForEndAssignment_5_4_1 = (Assignment)cGroup_5_4.eContents().get(1);
-		private final RuleCall cForEndIntOrReferenceParserRuleCall_5_4_1_0 = (RuleCall)cForEndAssignment_5_4_1.eContents().get(0);
+		private final Assignment cFinalAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cFinalFinalKeyword_2_0 = (Keyword)cFinalAssignment_2.eContents().get(0);
+		private final Keyword cRegionKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cNameExtendedIDParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cScheduleKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cScheduleAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_6_1_0 = (RuleCall)cScheduleAssignment_6_1.eContents().get(0);
-		private final Alternatives cAlternatives_7 = (Alternatives)cGroup.eContents().get(7);
-		private final Group cGroup_7_0 = (Group)cAlternatives_7.eContents().get(0);
-		private final Keyword cColonKeyword_7_0_0 = (Keyword)cGroup_7_0.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_7_0_1 = (Assignment)cGroup_7_0.eContents().get(1);
-		private final RuleCall cDeclarationsDeclarationWOSemicolonParserRuleCall_7_0_1_0 = (RuleCall)cDeclarationsAssignment_7_0_1.eContents().get(0);
-		private final Assignment cStatesAssignment_7_0_2 = (Assignment)cGroup_7_0.eContents().get(2);
-		private final RuleCall cStatesStateParserRuleCall_7_0_2_0 = (RuleCall)cStatesAssignment_7_0_2.eContents().get(0);
-		private final Group cGroup_7_1 = (Group)cAlternatives_7.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_7_1_0 = (Keyword)cGroup_7_1.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_7_1_1 = (Assignment)cGroup_7_1.eContents().get(1);
-		private final RuleCall cDeclarationsDeclarationWOSemicolonParserRuleCall_7_1_1_0 = (RuleCall)cDeclarationsAssignment_7_1_1.eContents().get(0);
-		private final Alternatives cAlternatives_7_1_2 = (Alternatives)cGroup_7_1.eContents().get(2);
-		private final Assignment cStatesAssignment_7_1_2_0 = (Assignment)cAlternatives_7_1_2.eContents().get(0);
-		private final RuleCall cStatesImplicitStateParserRuleCall_7_1_2_0_0 = (RuleCall)cStatesAssignment_7_1_2_0.eContents().get(0);
-		private final Assignment cStatesAssignment_7_1_2_1 = (Assignment)cAlternatives_7_1_2.eContents().get(1);
-		private final RuleCall cStatesStateParserRuleCall_7_1_2_1_0 = (RuleCall)cStatesAssignment_7_1_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_7_1_3 = (Keyword)cGroup_7_1.eContents().get(3);
+		private final Keyword cForKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cCounterVariableAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cCounterVariableCounterVariableParserRuleCall_6_1_0 = (RuleCall)cCounterVariableAssignment_6_1.eContents().get(0);
+		private final Keyword cColonKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final Assignment cForStartAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
+		private final RuleCall cForStartIntOrReferenceParserRuleCall_6_3_0 = (RuleCall)cForStartAssignment_6_3.eContents().get(0);
+		private final Group cGroup_6_4 = (Group)cGroup_6.eContents().get(4);
+		private final Keyword cFullStopFullStopKeyword_6_4_0 = (Keyword)cGroup_6_4.eContents().get(0);
+		private final Assignment cForEndAssignment_6_4_1 = (Assignment)cGroup_6_4.eContents().get(1);
+		private final RuleCall cForEndIntOrReferenceParserRuleCall_6_4_1_0 = (RuleCall)cForEndAssignment_6_4_1.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cScheduleKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cScheduleAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_7_1_0 = (RuleCall)cScheduleAssignment_7_1.eContents().get(0);
+		private final Alternatives cAlternatives_8 = (Alternatives)cGroup.eContents().get(8);
+		private final Group cGroup_8_0 = (Group)cAlternatives_8.eContents().get(0);
+		private final Keyword cColonKeyword_8_0_0 = (Keyword)cGroup_8_0.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_8_0_1 = (Assignment)cGroup_8_0.eContents().get(1);
+		private final RuleCall cDeclarationsDeclarationWOSemicolonParserRuleCall_8_0_1_0 = (RuleCall)cDeclarationsAssignment_8_0_1.eContents().get(0);
+		private final Assignment cStatesAssignment_8_0_2 = (Assignment)cGroup_8_0.eContents().get(2);
+		private final RuleCall cStatesStateParserRuleCall_8_0_2_0 = (RuleCall)cStatesAssignment_8_0_2.eContents().get(0);
+		private final Group cGroup_8_1 = (Group)cAlternatives_8.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_8_1_0 = (Keyword)cGroup_8_1.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_8_1_1 = (Assignment)cGroup_8_1.eContents().get(1);
+		private final RuleCall cDeclarationsDeclarationWOSemicolonParserRuleCall_8_1_1_0 = (RuleCall)cDeclarationsAssignment_8_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_8_1_2 = (Alternatives)cGroup_8_1.eContents().get(2);
+		private final Assignment cStatesAssignment_8_1_2_0 = (Assignment)cAlternatives_8_1_2.eContents().get(0);
+		private final RuleCall cStatesImplicitStateParserRuleCall_8_1_2_0_0 = (RuleCall)cStatesAssignment_8_1_2_0.eContents().get(0);
+		private final Assignment cStatesAssignment_8_1_2_1 = (Assignment)cAlternatives_8_1_2.eContents().get(1);
+		private final RuleCall cStatesStateParserRuleCall_8_1_2_1_0 = (RuleCall)cStatesAssignment_8_1_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_8_1_3 = (Keyword)cGroup_8_1.eContents().get(3);
 		
 		//ControlflowRegion sccharts::ControlflowRegion:
 		//	{sccharts::ControlflowRegion} annotations+=Annotation*
+		//	final?='final'?
 		//	'region' name=ExtendedID? label=STRING? ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..'
 		//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? (':'
 		//	declarations+=DeclarationWOSemicolon*
@@ -1034,7 +1037,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}');
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::ControlflowRegion} annotations+=Annotation* 'region' name=ExtendedID? label=STRING? ('for'
+		//{sccharts::ControlflowRegion} annotations+=Annotation* final?='final'? 'region' name=ExtendedID? label=STRING? ('for'
 		//counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? ('schedule'
 		//schedule+=ScheduleObjectReference+)? (':' declarations+=DeclarationWOSemicolon* states+=State* | '{'
 		//declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+) '}')
@@ -1049,117 +1052,123 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 
+		//final?='final'?
+		public Assignment getFinalAssignment_2() { return cFinalAssignment_2; }
+
+		//'final'
+		public Keyword getFinalFinalKeyword_2_0() { return cFinalFinalKeyword_2_0; }
+
 		//'region'
-		public Keyword getRegionKeyword_2() { return cRegionKeyword_2; }
+		public Keyword getRegionKeyword_3() { return cRegionKeyword_3; }
 
 		//name=ExtendedID?
-		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
+		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 
 		//ExtendedID
-		public RuleCall getNameExtendedIDParserRuleCall_3_0() { return cNameExtendedIDParserRuleCall_3_0; }
+		public RuleCall getNameExtendedIDParserRuleCall_4_0() { return cNameExtendedIDParserRuleCall_4_0; }
 
 		//label=STRING?
-		public Assignment getLabelAssignment_4() { return cLabelAssignment_4; }
+		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_4_0() { return cLabelSTRINGTerminalRuleCall_4_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 
 		//('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
-		public Group getGroup_5() { return cGroup_5; }
-
-		//'for'
-		public Keyword getForKeyword_5_0() { return cForKeyword_5_0; }
-
-		//counterVariable=CounterVariable
-		public Assignment getCounterVariableAssignment_5_1() { return cCounterVariableAssignment_5_1; }
-
-		//CounterVariable
-		public RuleCall getCounterVariableCounterVariableParserRuleCall_5_1_0() { return cCounterVariableCounterVariableParserRuleCall_5_1_0; }
-
-		//':'
-		public Keyword getColonKeyword_5_2() { return cColonKeyword_5_2; }
-
-		//forStart=IntOrReference
-		public Assignment getForStartAssignment_5_3() { return cForStartAssignment_5_3; }
-
-		//IntOrReference
-		public RuleCall getForStartIntOrReferenceParserRuleCall_5_3_0() { return cForStartIntOrReferenceParserRuleCall_5_3_0; }
-
-		//('..' forEnd=IntOrReference)?
-		public Group getGroup_5_4() { return cGroup_5_4; }
-
-		//'..'
-		public Keyword getFullStopFullStopKeyword_5_4_0() { return cFullStopFullStopKeyword_5_4_0; }
-
-		//forEnd=IntOrReference
-		public Assignment getForEndAssignment_5_4_1() { return cForEndAssignment_5_4_1; }
-
-		//IntOrReference
-		public RuleCall getForEndIntOrReferenceParserRuleCall_5_4_1_0() { return cForEndIntOrReferenceParserRuleCall_5_4_1_0; }
-
-		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_6() { return cGroup_6; }
 
+		//'for'
+		public Keyword getForKeyword_6_0() { return cForKeyword_6_0; }
+
+		//counterVariable=CounterVariable
+		public Assignment getCounterVariableAssignment_6_1() { return cCounterVariableAssignment_6_1; }
+
+		//CounterVariable
+		public RuleCall getCounterVariableCounterVariableParserRuleCall_6_1_0() { return cCounterVariableCounterVariableParserRuleCall_6_1_0; }
+
+		//':'
+		public Keyword getColonKeyword_6_2() { return cColonKeyword_6_2; }
+
+		//forStart=IntOrReference
+		public Assignment getForStartAssignment_6_3() { return cForStartAssignment_6_3; }
+
+		//IntOrReference
+		public RuleCall getForStartIntOrReferenceParserRuleCall_6_3_0() { return cForStartIntOrReferenceParserRuleCall_6_3_0; }
+
+		//('..' forEnd=IntOrReference)?
+		public Group getGroup_6_4() { return cGroup_6_4; }
+
+		//'..'
+		public Keyword getFullStopFullStopKeyword_6_4_0() { return cFullStopFullStopKeyword_6_4_0; }
+
+		//forEnd=IntOrReference
+		public Assignment getForEndAssignment_6_4_1() { return cForEndAssignment_6_4_1; }
+
+		//IntOrReference
+		public RuleCall getForEndIntOrReferenceParserRuleCall_6_4_1_0() { return cForEndIntOrReferenceParserRuleCall_6_4_1_0; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_7() { return cGroup_7; }
+
 		//'schedule'
-		public Keyword getScheduleKeyword_6_0() { return cScheduleKeyword_6_0; }
+		public Keyword getScheduleKeyword_7_0() { return cScheduleKeyword_7_0; }
 
 		//schedule+=ScheduleObjectReference+
-		public Assignment getScheduleAssignment_6_1() { return cScheduleAssignment_6_1; }
+		public Assignment getScheduleAssignment_7_1() { return cScheduleAssignment_7_1; }
 
 		//ScheduleObjectReference
-		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_7_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_7_1_0; }
 
 		//':' declarations+=DeclarationWOSemicolon* states+=State* | '{' declarations+=DeclarationWOSemicolon*
 		//(states+=ImplicitState | states+=State+) '}'
-		public Alternatives getAlternatives_7() { return cAlternatives_7; }
+		public Alternatives getAlternatives_8() { return cAlternatives_8; }
 
 		//':' declarations+=DeclarationWOSemicolon* states+=State*
-		public Group getGroup_7_0() { return cGroup_7_0; }
+		public Group getGroup_8_0() { return cGroup_8_0; }
 
 		//':'
-		public Keyword getColonKeyword_7_0_0() { return cColonKeyword_7_0_0; }
+		public Keyword getColonKeyword_8_0_0() { return cColonKeyword_8_0_0; }
 
 		//declarations+=DeclarationWOSemicolon*
-		public Assignment getDeclarationsAssignment_7_0_1() { return cDeclarationsAssignment_7_0_1; }
+		public Assignment getDeclarationsAssignment_8_0_1() { return cDeclarationsAssignment_8_0_1; }
 
 		//DeclarationWOSemicolon
-		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_7_0_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_7_0_1_0; }
+		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_8_0_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_8_0_1_0; }
 
 		//states+=State*
-		public Assignment getStatesAssignment_7_0_2() { return cStatesAssignment_7_0_2; }
+		public Assignment getStatesAssignment_8_0_2() { return cStatesAssignment_8_0_2; }
 
 		//State
-		public RuleCall getStatesStateParserRuleCall_7_0_2_0() { return cStatesStateParserRuleCall_7_0_2_0; }
+		public RuleCall getStatesStateParserRuleCall_8_0_2_0() { return cStatesStateParserRuleCall_8_0_2_0; }
 
 		//'{' declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+) '}'
-		public Group getGroup_7_1() { return cGroup_7_1; }
+		public Group getGroup_8_1() { return cGroup_8_1; }
 
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_7_1_0() { return cLeftCurlyBracketKeyword_7_1_0; }
+		public Keyword getLeftCurlyBracketKeyword_8_1_0() { return cLeftCurlyBracketKeyword_8_1_0; }
 
 		//declarations+=DeclarationWOSemicolon*
-		public Assignment getDeclarationsAssignment_7_1_1() { return cDeclarationsAssignment_7_1_1; }
+		public Assignment getDeclarationsAssignment_8_1_1() { return cDeclarationsAssignment_8_1_1; }
 
 		//DeclarationWOSemicolon
-		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_7_1_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_7_1_1_0; }
+		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_8_1_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_8_1_1_0; }
 
 		//states+=ImplicitState | states+=State+
-		public Alternatives getAlternatives_7_1_2() { return cAlternatives_7_1_2; }
+		public Alternatives getAlternatives_8_1_2() { return cAlternatives_8_1_2; }
 
 		//states+=ImplicitState
-		public Assignment getStatesAssignment_7_1_2_0() { return cStatesAssignment_7_1_2_0; }
+		public Assignment getStatesAssignment_8_1_2_0() { return cStatesAssignment_8_1_2_0; }
 
 		//ImplicitState
-		public RuleCall getStatesImplicitStateParserRuleCall_7_1_2_0_0() { return cStatesImplicitStateParserRuleCall_7_1_2_0_0; }
+		public RuleCall getStatesImplicitStateParserRuleCall_8_1_2_0_0() { return cStatesImplicitStateParserRuleCall_8_1_2_0_0; }
 
 		//states+=State+
-		public Assignment getStatesAssignment_7_1_2_1() { return cStatesAssignment_7_1_2_1; }
+		public Assignment getStatesAssignment_8_1_2_1() { return cStatesAssignment_8_1_2_1; }
 
 		//State
-		public RuleCall getStatesStateParserRuleCall_7_1_2_1_0() { return cStatesStateParserRuleCall_7_1_2_1_0; }
+		public RuleCall getStatesStateParserRuleCall_8_1_2_1_0() { return cStatesStateParserRuleCall_8_1_2_1_0; }
 
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_7_1_3() { return cRightCurlyBracketKeyword_7_1_3; }
+		public Keyword getRightCurlyBracketKeyword_8_1_3() { return cRightCurlyBracketKeyword_8_1_3; }
 	}
 
 	public class DataflowRegionElements extends AbstractParserRuleElementFinder {
@@ -2442,6 +2451,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ControlflowRegion sccharts::ControlflowRegion:
 	//	{sccharts::ControlflowRegion} annotations+=Annotation*
+	//	final?='final'?
 	//	'region' name=ExtendedID? label=STRING? ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..'
 	//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? (':'
 	//	declarations+=DeclarationWOSemicolon*
@@ -2735,8 +2745,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
 		return gaKExt.getVariableDeclarationAccess();
@@ -2751,8 +2761,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)*
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKExt.getVariableDeclarationWOSemicolonAccess();
@@ -2847,28 +2857,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getPriorityProtocolAccess().getRule();
 	}
 
-	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
-	////    annotations+=Annotation*
-	////    (
-	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
-	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
-	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
-	////        ';'
-	////    ) | (
-	////        'extern' extern = STRING
-	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	////    );
-	////    
-	////ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-	////    annotations+=Annotation*
-	////    (
-	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
-	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
-	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
-	////    ) | (
-	////        'extern' extern = STRING
-	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	////    );
 	//// Valued Object Rule
 	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
@@ -3387,13 +3375,25 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	| FBYExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
 	
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
+	}
+
+	//FBYExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//	subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
+		return gaKExpressions.getFBYExpressionAccess();
+	}
+	
+	public ParserRule getFBYExpressionRule() {
+		return getFBYExpressionAccess().getRule();
 	}
 
 	//// Atomic Expression Rule
@@ -3868,10 +3868,20 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 
+	//enum FBYOperator returns OperatorType:
+	//	FBY="->";
+	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
+		return gaKExpressions.getFBYOperatorAccess();
+	}
+	
+	public EnumRule getFBYOperatorRule() {
+		return getFBYOperatorAccess().getRule();
+	}
+
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
-	//	STRING="string" | HOST="host";
+	//	STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}

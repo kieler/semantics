@@ -156,7 +156,7 @@ class Variable implements Cloneable {
      * @return the previous versions of this variable
      */
     public def List<Variable> getHistory() {
-        return getHistory(-1, true)
+        return getHistory(-1, true, false)
     }
     
     /**
@@ -164,11 +164,12 @@ class Variable implements Cloneable {
      * 
      * @param maxSize The maximum amount of history entries to show
      * @param includeInitialization Determines whether the initial data pool should be included
+     * @param includeCurrent Determines whether the current object (this) should be included in the returned list, or only its history
      * @return the previous versions of this variable
      */
-    public def List<Variable> getHistory(int maxSize, boolean includeInitialization) {
+    public def List<Variable> getHistory(int maxSize, boolean includeInitialization, boolean includeCurrent) {
         val List<Variable> history = newArrayList()
-        val models = model.getHistory(maxSize, includeInitialization)
+        val models = model.getHistory(maxSize, includeInitialization, includeCurrent)
         for(m : models) {
             for(v : m.variables) {
                 if(name != null && name.equals(v.name)) {

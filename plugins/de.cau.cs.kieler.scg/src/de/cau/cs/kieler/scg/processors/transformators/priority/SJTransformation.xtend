@@ -95,7 +95,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.sjlp"
+        "de.cau.cs.kieler.scg.processors.sjlp"
     }
     
     override getName() {
@@ -344,7 +344,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             if(!(prev instanceof Fork) && (!(prev instanceof Surface)) && prevPrio.value != prio.value) {
                 var newLabel = "_L_" + labelNr++
                 sb.appendInd("prioB(" + prio.value + ", " + newLabel +  ");\n")
-                sb.appendInd("break;\n\n")
+                sb.appendInd("if (true) break;\n\n")
                 sb.addCase(newLabel)
                 val entry = node.threadEntry
                 if(entry.hasAnnotation("exitPrio")) {
@@ -359,12 +359,12 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             if(prev instanceof Entry) {
                 labeledNodes.put(node, labeledNodes.get(prev))
             }
-        }
+        } 
 
         // If the node has already been visited before, add a gotoB, instead of translating it again
         if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
             sb.appendInd("gotoB(" + labeledNodes.get(node) + ");\n")
-            sb.appendInd("break;\n\n")
+            sb.appendInd("if (true) break;\n\n")
             return
             
         } else if(!labeledNodes.containsKey(node)) {
@@ -491,7 +491,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             elseSB.transformNode(cond.^else.target)
         }
         // Create break
-        sb.appendInd("break;\n\n")
+        sb.appendInd("if (true) break;\n\n")
         
         // Paste if-case
         if(isIfTranslated) {
@@ -599,7 +599,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             sb.appendInd("fork(" + thread.key + ", " + thread.value + ");\n")
         }
         sb.appendInd("gotoB(" + forkLabel + ");\n")
-        sb.appendInd("break;\n\n")
+        sb.appendInd("if (true) break;\n\n")
 
         // Append all threads
         for(child : childrenStringBuilders.reverse) {
@@ -629,7 +629,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             
             // Go to the new join-"state"
             sb.appendInd("gotoB(" + newLabel + ");\n")
-            sb.appendInd("break;\n\n")
+            sb.appendInd("if (true) break;\n\n")
         }
         val nextLabel = "_L_" + labelNr++
         
@@ -643,7 +643,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         sb.append(") {\n")
         currentIndentation += DEFAULT_INDENTATION
         sb.appendInd("pauseB(" + newLabel + ");\n")
-        sb.appendInd("break;\n")
+        sb.appendInd("if (true) break;\n")
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("}\n\n")
         
@@ -698,7 +698,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         
         if(!exit.entry.hasAnnotation("joinThread")) {
             sb.appendInd("termB();\n")
-            sb.appendInd("break;\n\n")            
+            sb.appendInd("if (true) break;\n\n")            
         } else {
             // Go to join
             if(exit.next !== null) {
@@ -712,7 +712,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
                 }
                 
                 sb.appendInd("gotoB(" + newLabel + ");\n")
-                sb.appendInd("break;\n\n")
+                sb.appendInd("if (true) break;\n\n")
             }
         }
     }
@@ -735,7 +735,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         if(prio != depPrio) {
             val newLabel = "_L_" + labelNr++
             sb.appendInd("prioB(" + depPrio + ", " + newLabel + ");\n")
-            sb.appendInd("break;\n\n")
+            sb.appendInd("if (true) break;\n\n")
             sb.addCase(newLabel)
         }
         if(sur.threadEntry.hasAnnotation("exitPrio")) {
@@ -747,7 +747,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         val newLabel = "_L_" + labelNr++
         sb.appendInd("pauseB(" + newLabel + ");\n")
         labeledNodes.put(sur.depth, newLabel)
-        sb.appendInd("break;\n\n")
+        sb.appendInd("if (true) break;\n\n")
         
         sb.transformNode(sur.depth)
     }

@@ -84,10 +84,10 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
     
     /** Only save conflicting dependencies in the model. */
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.dependency.saveOnlyConflictingDependencies", false)
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.dependency.saveOnlyConflictingDependencies", false)
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.dependency"
+        "de.cau.cs.kieler.scg.processors.dependency"
     }
     
     override getName() {

@@ -32,6 +32,20 @@ class FileGenerationResult {
     private List<BuildProblem> problems = newArrayList
     
     /**
+     * Returns the build problems that are warnings.
+     */
+    public def Iterable<BuildProblem> warnings() {
+        return problems.filter[it.isWarning]
+    }
+    
+    /**
+     * Returns the build problems that are errors.
+     */
+    public def Iterable<BuildProblem> errors() {
+        return problems.filter[it.isError]
+    }
+    
+    /**
      * Adds a created file.
      */
     public def void addCreatedFile(IFile createdFile) {

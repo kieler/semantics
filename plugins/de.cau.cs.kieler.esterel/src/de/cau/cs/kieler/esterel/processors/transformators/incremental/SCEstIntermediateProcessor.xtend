@@ -92,44 +92,55 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
 
     public static var IProperty<Boolean> DYNAMIC_COMPILATION = 
         new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.dynamiccompilation", true)
-        
+
+    public static var IProperty<Boolean> APPEND_PROCESSORS = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.append", false)        
     
     @Inject
     extension EsterelTransformationExtensions
     
     override process() {
         var EObject obj
+        val processorsToAdd = <String>newLinkedList
         if (environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM) === null) {
             obj = model
-            compilationContext.addProcessorEntry(INIT)
-            compilationContext.addProcessorEntry(RUN)
-            compilationContext.addProcessorEntry(ID)
+            processorsToAdd += INIT
+            processorsToAdd += RUN
+            processorsToAdd += ID
             environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(model))
-            return
-        }
-        else {
+        } else {
             obj = environment.getProperty(NEXT_STATEMENT_TO_TRANSFORM).getObject as EObject
+        
+            // the next object which needs to be transformed and the corresponding processor id
+            val nextObj = obj.nextStatement 
+            if (nextObj === null) {
+                throw new Exception("The next statement to transform can not be null!")
+            }
+            val processorID = nextObj.getCorrespondingProcessorID 
+            environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
+            if (nextObj instanceof Module) {
+                processorsToAdd += SENSOR
+                processorsToAdd += CONSTANT
+                processorsToAdd += SIGNAL
+            }
+            else {
+                processorsToAdd += processorID
+            }
+            // as long as there are Esterel statements, add intermediate processor to the end of the compilation chain
+            if (!(nextObj instanceof EsterelProgram)) {
+                processorsToAdd += ID
+            }
         }
         
-        // the next object which needs to be transformed and the corresponding processor id
-        val nextObj = obj.nextStatement 
-        if (nextObj === null) {
-            throw new Exception("The next statement to transform can not be null!")
+        // Add new processors
+        if (environment.getProperty(APPEND_PROCESSORS)) {
+            compilationContext.addProcessorEntries(this, processorsToAdd)
+        } else { // Add to the end of the system
+            for (pid : processorsToAdd) {
+                compilationContext.addProcessorEntry(pid)
+            }
         }
-        val processorID = nextObj.getCorrespondingProcessorID 
-        environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
-        if (nextObj instanceof Module) {
-            compilationContext.addProcessorEntry(SENSOR)
-            compilationContext.addProcessorEntry(CONSTANT)
-            compilationContext.addProcessorEntry(SIGNAL)
-        }
-        else {
-            compilationContext.addProcessorEntry(processorID)
-        }
-        // as long as there are Esterel statements, add intermediate processor to the end of the compilation chain
-        if (!(nextObj instanceof EsterelProgram)) {
-            compilationContext.addProcessorEntry(ID)
-        }
+        
     }
     
     def getCorrespondingProcessorID(EObject obj) {

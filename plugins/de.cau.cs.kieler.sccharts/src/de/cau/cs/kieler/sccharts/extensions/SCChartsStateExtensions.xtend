@@ -20,6 +20,7 @@ import com.google.inject.Inject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -56,7 +57,7 @@ class SCChartsStateExtensions {
     }
     
     def boolean isRootState(State state) {
-        state.parentRegion == null && state.eContainer != null && state.eContainer instanceof SCCharts
+        state.parentRegion === null && state.eContainer !== null && state.eContainer instanceof SCCharts
     }    
     
     def boolean isHierarchical(State state) {
@@ -65,6 +66,10 @@ class SCChartsStateExtensions {
     
     def boolean isSimple(State state) {
         !state.isHierarchical && state.actions.size == 0
+    }
+    
+    def boolean isSuperstate(State state) {
+        state.isHierarchical || state.actions.size > 0
     }
     
     def State setInitial(State state) {
@@ -119,7 +124,7 @@ class SCChartsStateExtensions {
     // was retrieveFinalState
     def State getOrCreateSimpleFinalState(ControlflowRegion region, String id) {
         val finalState = region.getSimpleFinalState
-        if (finalState != null) { return finalState }
+        if (finalState !== null) { return finalState }
         region.createState(id).setFinal
     }
 
@@ -132,7 +137,7 @@ class SCChartsStateExtensions {
     }
 
     def boolean isReferencedState(State state) {
-        state.reference != null
+        state.reference !== null
     }  
     
     def State copyState(State state) {
@@ -141,7 +146,7 @@ class SCChartsStateExtensions {
         // Fix valued object references
         state.valuedObjects.toList.forEach [
             val newValuedObject = newState.findValuedObjectByName(it.name)
-            if (newValuedObject != null) {
+            if (newValuedObject !== null) {
                 newState.replaceAllOccurrences(it, newValuedObject)
             }
         ]
@@ -153,6 +158,14 @@ class SCChartsStateExtensions {
             if (cfr.allFinalStates.empty) return false
         }
         return true
+    }
+    
+    def State getEnclosingState(EObject eObject) {
+        var enclosing = eObject.eContainer
+        while (!(enclosing instanceof State) && enclosing !== null) {
+            enclosing = enclosing.eContainer
+        }    
+        return if (enclosing !== null) enclosing as State else null 
     }
          
 }

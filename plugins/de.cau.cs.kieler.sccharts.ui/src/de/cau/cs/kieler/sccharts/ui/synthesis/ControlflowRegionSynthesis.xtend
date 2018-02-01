@@ -113,7 +113,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 forLabel + sLabel.toString
 
             // Expanded
-            node.addRegionFigure => [
+            node.addRegionFigure(region.final) => [
                 setAsExpandedView
                 associateWith(region)
                 addDoubleClickAction(ReferenceExpandAction::ID)
@@ -136,7 +136,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
 
             // Collapsed
-            node.addRegionFigure => [
+            node.addRegionFigure(region.final) => [
                 setAsCollapsedView
                 associateWith(region)
                 if (sLabel.length > 0) it.setUserScheduleStyle
@@ -150,7 +150,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             }
 
         } else {
-            node.addRegionFigure;
+            node.addRegionFigure(region.final);
         }
 
         val returnNodes = <KNode> newArrayList(node)
@@ -187,7 +187,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
         // Expanded
-        node.addRegionFigure => [
+        node.addRegionFigure(false) => [
             setAsExpandedView
             addStatesArea(false)
             addDoubleClickAction(ReferenceExpandAction::ID)
@@ -197,7 +197,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         ]
 
         // Collapsed
-        node.addRegionFigure => [
+        node.addRegionFigure(false) => [
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID)

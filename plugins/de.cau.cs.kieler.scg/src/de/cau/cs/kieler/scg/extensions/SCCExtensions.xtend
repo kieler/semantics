@@ -72,23 +72,24 @@ class SCCExtensions {
         var neighbors = <Node> newLinkedList
         
         if(n instanceof Entry) {
-            if(n.next != null) {
+            if(n.next !== null) {
                 neighbors.add(n.next.target)                
             }
         }
         
         if(n instanceof Exit) {
-            if(n.next != null) {
+            if(n.next !== null) {
                 neighbors.add(n.next.target)
             }
         }
         
         if(n instanceof Assignment) {
-            neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.target)
         }
         
         if(n instanceof Conditional) {
-            neighbors.addAll(n.then.target, n.^else.target)
+            if (n.then !== null) neighbors.add(n.then.target)
+            if (n.^else !== null) neighbors.add(n.^else.target)
         }
         
         if(n instanceof Fork) {
@@ -98,11 +99,11 @@ class SCCExtensions {
         }
         
         if(n instanceof Join) {
-            neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.target)
         }
         
         if(n instanceof Depth) {
-            neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.target)
         }
         
         if(n instanceof Surface) {
@@ -171,7 +172,7 @@ class SCCExtensions {
         for(dep : n.dependencies) {
             if(dep instanceof DataDependency) {
                 if(dep.concurrent && !dep.confluent) {
-                    if(dep.target != null) {
+                    if(dep.target !== null) {
                         deps.add(dep.target)                        
                     }
                 }

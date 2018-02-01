@@ -308,6 +308,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeValueTypeEnumRuleCall_5_0_1_0 = (RuleCall)cTypeAssignment_5_0_1.eContents().get(0);
 		private final Assignment cSignalAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
 		private final Keyword cSignalSignalKeyword_5_1_0 = (Keyword)cSignalAssignment_5_1.eContents().get(0);
+		private final Group cGroup_5_2 = (Group)cAlternatives_5.eContents().get(2);
+		private final Assignment cTypeAssignment_5_2_0 = (Assignment)cGroup_5_2.eContents().get(0);
+		private final RuleCall cTypeHostTypeEnumRuleCall_5_2_0_0 = (RuleCall)cTypeAssignment_5_2_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_2_1_0 = (RuleCall)cHostTypeAssignment_5_2_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_0 = (RuleCall)cValuedObjectsAssignment_6.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
@@ -323,14 +328,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	const?='const'?
 		//	input?='input'?
 		//	output?='output'?
-		//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-		//	valuedObjects+=ValuedObject)* ';'
+		//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* const?='const'? input?='input'? output?='output'? static?='static'? (signal?='signal'?
-		//type=ValueType | signal?='signal') valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-		//annotations+=CommentAnnotatonSL?
+		//type=ValueType | signal?='signal' | type=HostType hostType=STRING) valuedObjects+=ValuedObject (','
+		//valuedObjects+=ValuedObject)* ';' annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -363,7 +368,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'static'
 		public Keyword getStaticStaticKeyword_4_0() { return cStaticStaticKeyword_4_0; }
 
-		//signal?='signal'? type=ValueType | signal?='signal'
+		//signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//signal?='signal'? type=ValueType
@@ -386,6 +391,21 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'signal'
 		public Keyword getSignalSignalKeyword_5_1_0() { return cSignalSignalKeyword_5_1_0; }
+
+		//type=HostType hostType=STRING
+		public Group getGroup_5_2() { return cGroup_5_2; }
+
+		//type=HostType
+		public Assignment getTypeAssignment_5_2_0() { return cTypeAssignment_5_2_0; }
+
+		//HostType
+		public RuleCall getTypeHostTypeEnumRuleCall_5_2_0_0() { return cTypeHostTypeEnumRuleCall_5_2_0_0; }
+
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_5_2_1() { return cHostTypeAssignment_5_2_1; }
+
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_2_1_0; }
 
 		//valuedObjects+=ValuedObject
 		public Assignment getValuedObjectsAssignment_6() { return cValuedObjectsAssignment_6; }
@@ -436,6 +456,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeValueTypeEnumRuleCall_5_0_1_0 = (RuleCall)cTypeAssignment_5_0_1.eContents().get(0);
 		private final Assignment cSignalAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
 		private final Keyword cSignalSignalKeyword_5_1_0 = (Keyword)cSignalAssignment_5_1.eContents().get(0);
+		private final Group cGroup_5_2 = (Group)cAlternatives_5.eContents().get(2);
+		private final Assignment cTypeAssignment_5_2_0 = (Assignment)cGroup_5_2.eContents().get(0);
+		private final RuleCall cTypeHostTypeEnumRuleCall_5_2_0_0 = (RuleCall)cTypeAssignment_5_2_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_2_1_0 = (RuleCall)cHostTypeAssignment_5_2_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_0 = (RuleCall)cValuedObjectsAssignment_6.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
@@ -450,14 +475,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	const?='const'?
 		//	input?='input'?
 		//	output?='output'?
-		//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-		//	valuedObjects+=ValuedObject)*
+		//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* const?='const'? input?='input'? output?='output'? static?='static'? (signal?='signal'?
-		//type=ValueType | signal?='signal') valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-		//annotations+=CommentAnnotatonSL?
+		//type=ValueType | signal?='signal' | type=HostType hostType=STRING) valuedObjects+=ValuedObject (','
+		//valuedObjects+=ValuedObject)* annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -490,7 +515,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'static'
 		public Keyword getStaticStaticKeyword_4_0() { return cStaticStaticKeyword_4_0; }
 
-		//signal?='signal'? type=ValueType | signal?='signal'
+		//signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//signal?='signal'? type=ValueType
@@ -513,6 +538,21 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'signal'
 		public Keyword getSignalSignalKeyword_5_1_0() { return cSignalSignalKeyword_5_1_0; }
+
+		//type=HostType hostType=STRING
+		public Group getGroup_5_2() { return cGroup_5_2; }
+
+		//type=HostType
+		public Assignment getTypeAssignment_5_2_0() { return cTypeAssignment_5_2_0; }
+
+		//HostType
+		public RuleCall getTypeHostTypeEnumRuleCall_5_2_0_0() { return cTypeHostTypeEnumRuleCall_5_2_0_0; }
+
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_5_2_1() { return cHostTypeAssignment_5_2_1; }
+
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_2_1_0; }
 
 		//valuedObjects+=ValuedObject
 		public Assignment getValuedObjectsAssignment_6() { return cValuedObjectsAssignment_6; }
@@ -1095,28 +1135,6 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cCombineOperatorAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_4_1_0 = (RuleCall)cCombineOperatorAssignment_4_1.eContents().get(0);
 		
-		////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
-		////    annotations+=Annotation*
-		////    (
-		////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
-		////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
-		////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
-		////        ';'
-		////    ) | (
-		////        'extern' extern = STRING
-		////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-		////    );
-		////    
-		////ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-		////    annotations+=Annotation*
-		////    (
-		////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
-		////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
-		////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
-		////    ) | (
-		////        'extern' extern = STRING
-		////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-		////    );
 		//// Valued Object Rule
 		//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 		//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
@@ -1414,8 +1432,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public VariableDeclarationElements getVariableDeclarationAccess() {
 		return pVariableDeclaration;
@@ -1430,8 +1448,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)*
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return pVariableDeclarationWOSemicolon;
@@ -1526,28 +1544,6 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getPriorityProtocolAccess().getRule();
 	}
 
-	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
-	////    annotations+=Annotation*
-	////    (
-	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
-	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
-	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
-	////        ';'
-	////    ) | (
-	////        'extern' extern = STRING
-	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	////    );
-	////    
-	////ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-	////    annotations+=Annotation*
-	////    (
-	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
-	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
-	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
-	////    ) | (
-	////        'extern' extern = STRING
-	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	////    );
 	//// Valued Object Rule
 	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
@@ -2066,13 +2062,25 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	| FBYExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
 	
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
+	}
+
+	//FBYExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//	subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
+		return gaKExpressions.getFBYExpressionAccess();
+	}
+	
+	public ParserRule getFBYExpressionRule() {
+		return getFBYExpressionAccess().getRule();
 	}
 
 	//// Atomic Expression Rule
@@ -2547,10 +2555,20 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 
+	//enum FBYOperator returns OperatorType:
+	//	FBY="->";
+	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
+		return gaKExpressions.getFBYOperatorAccess();
+	}
+	
+	public EnumRule getFBYOperatorRule() {
+		return getFBYOperatorAccess().getRule();
+	}
+
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
-	//	STRING="string" | HOST="host";
+	//	STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}

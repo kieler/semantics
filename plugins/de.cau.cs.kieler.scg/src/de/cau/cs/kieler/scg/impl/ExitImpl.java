@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ExitImpl#getEntry <em>Entry</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ExitImpl#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.ExitImpl#isFinal <em>Final</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +50,26 @@ public class ExitImpl extends NodeImpl implements Exit {
      * @ordered
      */
     protected ControlFlow next;
+
+    /**
+     * The default value of the '{@link #isFinal() <em>Final</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFinal()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean FINAL_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFinal()
+     * @generated
+     * @ordered
+     */
+    protected boolean final_ = FINAL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -177,6 +198,27 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isFinal() {
+        return final_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFinal(boolean newFinal) {
+        boolean oldFinal = final_;
+        final_ = newFinal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.EXIT__FINAL, oldFinal, final_));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -217,6 +259,8 @@ public class ExitImpl extends NodeImpl implements Exit {
                 return basicGetEntry();
             case ScgPackage.EXIT__NEXT:
                 return getNext();
+            case ScgPackage.EXIT__FINAL:
+                return isFinal();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -234,6 +278,9 @@ public class ExitImpl extends NodeImpl implements Exit {
                 return;
             case ScgPackage.EXIT__NEXT:
                 setNext((ControlFlow)newValue);
+                return;
+            case ScgPackage.EXIT__FINAL:
+                setFinal((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -253,6 +300,9 @@ public class ExitImpl extends NodeImpl implements Exit {
             case ScgPackage.EXIT__NEXT:
                 setNext((ControlFlow)null);
                 return;
+            case ScgPackage.EXIT__FINAL:
+                setFinal(FINAL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -269,8 +319,26 @@ public class ExitImpl extends NodeImpl implements Exit {
                 return entry != null;
             case ScgPackage.EXIT__NEXT:
                 return next != null;
+            case ScgPackage.EXIT__FINAL:
+                return final_ != FINAL_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (final: ");
+        result.append(final_);
+        result.append(')');
+        return result.toString();
     }
 
 } //ExitImpl

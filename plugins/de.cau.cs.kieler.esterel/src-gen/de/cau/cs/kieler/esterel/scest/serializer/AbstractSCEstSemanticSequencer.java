@@ -503,6 +503,14 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_AddExpression_AndExpression_BitwiseNotExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getTernaryOperationRule()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getFBYExpressionRule()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getShiftLeftExpressionRule()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
@@ -515,10 +523,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				else if (action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ShiftRightUnsignedExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getTernaryOperationRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAtomicExpressionRule()
