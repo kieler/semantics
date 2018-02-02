@@ -94,7 +94,7 @@ class HelpFileGenerator {
                                     val subchapter2 = subchapter as Chapter
                                     if (subchapter2 != null) {
                                         returnText +=
-                                            '''<li><a href="«subchapter2.fileName».«EHelpConsts.htmlFileExtension»">«subchapter2.title.camelCase»</a></li>'''
+                                            '''<li><a href="«subchapter2.fileName».«EHelpConsts.htmlFileExtension»">«subchapter2.title»</a></li>'''
                                     }
                                 }
                                 returnText += '''</ol></p>'''
