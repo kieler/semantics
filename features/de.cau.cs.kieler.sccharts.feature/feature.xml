@@ -215,7 +215,13 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
+      <update label="KIELER PHT SCCharts Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
+      <discovery label="KIELER KLighD 2017-02-01 Release" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/"/>
+      <discovery label="CDT" url="http://download.eclipse.org/tools/cdt/releases/9.2"/>
+      <discovery label="ELK" url="http://download.eclipse.org/elk/updates/releases/0.2.1/"/>
+      <discovery label="LEJOS" url="http://www.lejos.org/tools/eclipse/plugin/nxj/"/>
+      <discovery label="JAVAX" url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/"/>
+      <discovery label="NEON" url="http://download.eclipse.org/releases/neon"/>
    </url>
 
    <requires>
