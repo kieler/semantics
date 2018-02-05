@@ -140,7 +140,7 @@ abstract class SimulationBackend {
         if(lastProcessorId.isNullOrEmpty) {
             throw new Exception("Cannot resolve compile chain '"+compileChain+"'")
         } else {
-            for(backend : SimulationBackend.backends) {
+            for(backend : SimulationBackend.getBackends) {
                 if(backend.isProcessorOutputSupported(lastProcessorId)) {
                     return backend
                 }

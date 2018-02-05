@@ -185,10 +185,10 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         })
         
         // Show combo with predefined compile chains
-        val tts = "de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling"
+        val tts = "de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling"
         val scchartCompileChains = #[
-            new CompileChainPreset("Netlist C with TTS (default)", #[tts,"de.cau.cs.kieler.sccharts.netlist.c"]), 
-            new CompileChainPreset("Netlist C", #["de.cau.cs.kieler.sccharts.netlist.c"]),
+            new CompileChainPreset("Netlist C with TTS (default)", #[tts,"de.cau.cs.kieler.sccharts.netlist.simple"]), 
+            new CompileChainPreset("Netlist C", #["de.cau.cs.kieler.sccharts.netlist.simple"]),
             new CompileChainPreset("Netlist Java with TTS", #[tts,"de.cau.cs.kieler.sccharts.netlist.java"]),
             new CompileChainPreset("Netlist Java", #["de.cau.cs.kieler.sccharts.netlist.java"]),
             new CompileChainPreset("Prio Java with TTS", #[tts,"de.cau.cs.kieler.sccharts.priority.java"]),
