@@ -40,7 +40,7 @@ class JavaSimulationCompiler extends SimulationCompiler {
     /**
      * The library directory in which the SJ library should be saved.
      */
-    public val sjLibFolder = new ConfigurableAttribute("sjLibFolder", null, #[String])
+    public val sjLibFolder = new ConfigurableAttribute("sjLibFolder", null, true, #[String])
     
     /**
      * Placeholder for the SJ library folder.

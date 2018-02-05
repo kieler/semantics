@@ -56,16 +56,16 @@ abstract class SimulationCompiler extends Configurable {
     /**
      * The output folder in which the simulation should be saved.
      */
-    public val outputFolder = new ConfigurableAttribute("outputFolder", null, #[String])
+    public val outputFolder = new ConfigurableAttribute("outputFolder", null, true, #[String])
     /**
      * A library folder required for the simulation that must be created if it does not exist yet. 
      */
-    public val libFolder = new ConfigurableAttribute("libFolder", null, #[String])
+    public val libFolder = new ConfigurableAttribute("libFolder", null, true, #[String])
     /**
      * The maximum allowed compilation time in seconds.
      * If the compilation takes longer than this, the process is terminated and an exception is thrown. 
      */
-    public val timeout = new ConfigurableAttribute("timeout", 10, #[Integer])
+    public val timeout = new ConfigurableAttribute("timeout", 10, true, #[Integer])
     
     /**
      * Placeholder for the file to be compiled.
