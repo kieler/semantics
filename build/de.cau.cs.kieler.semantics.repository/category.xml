@@ -7,7 +7,7 @@
          Binary features for KIELER SCCharts and related projects.
       </description>
   </category-def>
-  <category-def name="kieler-sccharts-src" label="KIELER Feature Sources">
+  <category-def name="kieler-sccharts-src" label="KIELER Features (Sources)">
     <description>
          Source features for KIELER SCCharts and related projects.
       </description>
