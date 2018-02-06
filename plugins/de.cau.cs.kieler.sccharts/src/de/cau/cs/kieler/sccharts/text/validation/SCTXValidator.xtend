@@ -77,6 +77,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
 
+    static val String REGION_CANNOT_TERMINATE = "All or none concurrent regions should have final states."
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
@@ -259,7 +260,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             val name = r.name
             if(!name.isNullOrEmpty) {
                 if(names.contains(name)) {
-                    warning(DUPLICATE_REGION+" '"+name+"'", r, AnnotationsPackageImpl.eINSTANCE.namedObject_Name, -1)
+                    warning(DUPLICATE_REGION+" '"+name+"'", r, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
                 } else {
                     names.add(name)
                 }    
@@ -448,6 +449,31 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     /**
+     * A final state only makes sense if all regions can terminate.
+     * Thus if there is one final state, the other regions should also have final states.
+     * 
+     * @param state the state
+     */
+    @Check
+    public def void checkAllHaveFinalStates(de.cau.cs.kieler.sccharts.ControlflowRegion region) {
+        val finalStates = region.states.filter[it.isFinal]
+        if(!finalStates.isNullOrEmpty) {
+            for(r : region.parentState.regions.filter(ControlflowRegion)) {
+                // Only check other regions
+                if(r !== region) {
+                    val otherHasFinalState = r.states.exists[it.isFinal]
+                    // Warn if this region cannot terminate
+                    if(!otherHasFinalState) {
+                        for(finalState : finalStates) {
+                            warning(REGION_CANNOT_TERMINATE, finalState, AnnotationsPackage.eINSTANCE.namedObject_Name);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
      * A state with a termination transition should have final states in all its
      * inner regions. 
      * A simple state with a termination transition must have inner behaviour or no termination transition at all.
@@ -472,7 +498,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                 for (region : regions) {
                     val foundFinal = !region.states.filter[ isFinal ].empty
                     if (!foundFinal) {
-                        warning(REGION_NO_FINAL_STATE, region, null, -1);
+                        warning(REGION_NO_FINAL_STATE, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1);
                     }
                 }
             }
