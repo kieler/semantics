@@ -135,6 +135,12 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.Fby">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.FinalStateOptimizations">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.AlwaysTerminatedRegion">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
