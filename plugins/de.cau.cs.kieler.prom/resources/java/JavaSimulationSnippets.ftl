@@ -2,6 +2,8 @@
 /* MACROS TO SEND / RECEIVE A VARIABLE
 /*****************************************************************************/
 <#macro Simulate interface indices...>
+    <#-- host types are not supported -->
+    <#if varType != "host">
     <@input>
     // Receive ${varName}
     if(json.has("${varName}")) {
@@ -48,6 +50,7 @@
       jsonVar.put("interface", ${interface});
     }
     </@>
+    </#if>
 </#macro>
 
 <#macro value_getter>

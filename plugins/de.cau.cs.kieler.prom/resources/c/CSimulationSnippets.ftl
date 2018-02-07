@@ -4,6 +4,8 @@
 /*****************************************************************************/
 -->
 <#macro Simulate interface indices...>
+    <#-- host types are not supported -->
+    <#if varType != "host">
     <@input>
       <#-- setting strings is not supported at the moment -->
       <#if varType != "string">
@@ -66,6 +68,7 @@
           cJSON_AddNumberToObject(variable, "interface", ${interface});
         }
     </@>
+    </#if>
 </#macro>
 
 <#macro array_elem indices>
