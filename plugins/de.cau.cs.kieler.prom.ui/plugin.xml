@@ -391,5 +391,26 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
+    <extension
+          point="org.eclipse.ui.bindings">
+       <scheme
+             description="Default key bindings for KIELER"
+             id="de.cau.cs.kieler.prom.ui.keyBindingScheme"
+             name="KIELER Key Bindings"
+             parentId="org.eclipse.ui.defaultAcceleratorConfiguration">
+       </scheme>
+       <key
+             commandId="org.eclipse.ui.project.buildProject"
+             contextId="org.eclipse.ui.contexts.window"
+             schemeId="de.cau.cs.kieler.prom.ui.keyBindingScheme"
+             sequence="M1+B">
+       </key>
+       <key
+             commandId="org.eclipse.ui.project.buildAll"
+             contextId="org.eclipse.ui.contexts.window"
+             schemeId="de.cau.cs.kieler.prom.ui.keyBindingScheme"
+             sequence="M1+M2+B">
+       </key>
+    </extension>
 
 </plugin>
