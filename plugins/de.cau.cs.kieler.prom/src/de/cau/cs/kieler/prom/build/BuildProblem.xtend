@@ -101,7 +101,7 @@ class BuildProblem {
      * @param cause The exception that caused the issue
      */
     static def BuildProblem createError(IResource res, Exception cause) {
-        return createError(res, cause.message, cause)
+        return createError(res, cause.toString, cause)
     }
     
     /**
