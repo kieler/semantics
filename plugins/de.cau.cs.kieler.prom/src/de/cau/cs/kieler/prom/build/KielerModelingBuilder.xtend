@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.prom.build
 
-import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
@@ -22,11 +21,13 @@ import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
 import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
+import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -35,6 +36,7 @@ import org.eclipse.core.resources.IResourceDeltaVisitor
 import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -42,8 +44,6 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
-import org.eclipse.core.resources.IFolder
-import org.eclipse.core.runtime.Path
 
 /**
  * The kieler modeling builder has three main tasks:

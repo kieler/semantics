@@ -79,6 +79,18 @@ class VariableInterfaceType {
     }
     
     /**
+     * Returns the interface type with the given name or null if none.
+     */
+    public static def VariableInterfaceType getInterfaceType(String name) {
+        for(vit : ALL_INTERFACE_TYPES) {
+            if(vit.name == name) {
+                return vit
+            }
+        }
+        return null
+    }
+    
+    /**
      * Returns true if the given bitmask contains the bitmask of this instance.
      */
     private def boolean matches(int bitmask) {

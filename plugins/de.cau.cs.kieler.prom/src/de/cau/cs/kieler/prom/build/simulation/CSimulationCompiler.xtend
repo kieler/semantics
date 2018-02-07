@@ -54,7 +54,7 @@ class CSimulationCompiler extends SimulationCompiler {
      * {@inheritDoc}
      */
     override getLibFolderOrigin() {
-        return "platform:/plugin/de.cau.cs.kieler.prom/resources/c/cJSON"
+        return "platform:/plugin/de.cau.cs.kieler.prom/resources/c/lib"
     }
     
     /**
