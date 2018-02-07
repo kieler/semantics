@@ -411,6 +411,12 @@
              schemeId="de.cau.cs.kieler.prom.ui.keyBindingScheme"
              sequence="M1+M2+B">
        </key>
+       <key
+             commandId="org.eclipse.ui.edit.text.cut.line"
+             contextId="org.eclipse.ui.contexts.window"
+             schemeId="de.cau.cs.kieler.prom.ui.keyBindingScheme"
+             sequence="M1+M2+X">
+       </key>
     </extension>
 
 </plugin>
