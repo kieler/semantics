@@ -97,6 +97,7 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         // Process the context and notify listeners
         val problem = super.processContext()
         if(problem !== null) {
+            problem.issueSource = modelFile
             result.addProblem(problem)
             return result
         }

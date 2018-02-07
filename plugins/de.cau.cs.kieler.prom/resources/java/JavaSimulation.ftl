@@ -1,4 +1,5 @@
 <#include "/assets/JavaSimulationSnippets.ftl" >
+<#include "/assets/JavaSimulationWrapperSnippets.ftl" >
 package sim.code;
 
 import java.io.BufferedReader;
@@ -22,12 +23,22 @@ public class ${file_basename} {
         model.reset();
         sendVariables();
         nextTick = 1;
+        
+        // Initialize annotations
+        ${inits}
+        
         while (true) {
            // Receive variables
            receiveVariables();
+            
+           // Update input annotations
+           ${inputs}
            
            // Reaction of model
            model.tick();
+           
+           // Update output annotations
+           ${outputs}
            
            // Send variables
            sendVariables();
@@ -45,7 +56,7 @@ public class ${file_basename} {
           JSONObject arrayObject;
           JSONArray jsonArray;
           
-${inputs}
+${sim_inputs}
         
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +71,7 @@ ${inputs}
         JSONObject arrayObject;
         JSONArray jsonArray;
         
-${outputs}
+${sim_outputs}
     
         System.out.println(json.toString());
     }

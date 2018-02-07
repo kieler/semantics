@@ -36,6 +36,7 @@ import de.cau.cs.kieler.annotations.CommentAnnotation
 abstract class DeclarationAnalyzer extends ModelAnalyzer {
     
     private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
+    private static val SIMULATION_WRAPPER_CODE_ANNOTATION_NAME = "SimWrapper"
     private static val EXCLUDE_SIMULATION_ANNOTATION_NAME = "ExcludeInSimulation"
     
     /**
@@ -152,7 +153,17 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                         }
                     }
                     
-                    // Add another macro call for the separate value holding variable 
+                    // Each annotation gets its own macro call
+                    for (annotation : decl.annotations) {
+                        if(!(annotation instanceof CommentAnnotation) && annotation.name == SIMULATION_WRAPPER_CODE_ANNOTATION_NAME) {
+                            val wrapperData = new MacroCallData 
+                            wrapperData.initializeForCodeGeneration(varName, varType, isInput, isOutput)
+                            initData(wrapperData, annotation)
+                            allDatas.add(wrapperData)    
+                        }
+                    }
+                    
+                    // In case of valued signals: Add another macro call for the separate value holding variable
                     val isValuedSignal = decl.signal && (decl.type !== ValueType.PURE)
                     if (isValuedSignal) {
                         val valData = data.clone as MacroCallData
@@ -189,7 +200,7 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
             StringAnnotation: data.arguments.addAll(annotation.values)
         }
         
-        if(data.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME && !data.arguments.isEmpty){
+        if(!data.arguments.isEmpty && (data.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME || data.name == SIMULATION_WRAPPER_CODE_ANNOTATION_NAME) ){
             // Explicit wrapper annotation
             // -> actual snippet name is the first argument.
             data.name = data.arguments.remove(0)

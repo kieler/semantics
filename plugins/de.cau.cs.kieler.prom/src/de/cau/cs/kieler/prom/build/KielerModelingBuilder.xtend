@@ -39,7 +39,6 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
@@ -205,7 +204,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     public static def void deleteMarkers(IResource res) {
         if(res != null && res.exists) {
-            val markers = res.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
+            val markers = res.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_ZERO)
             if(!markers.isNullOrEmpty) {
                 for(m : markers){
                     m.delete()
@@ -231,6 +230,12 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                     marker = createErrorMarker(res, problem.message)
                 }
                 if(marker !== null) {
+                    // Set the original source of the issue
+                    if(problem.issueSource !== null) {
+                        marker.setAttribute("issueSource", problem.issueSource.location.toOSString)
+                    }
+                    
+                    // Set the line number
                     var Integer line
                     if(problem.line > 0) {
                         line = problem.line
@@ -359,10 +364,13 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             initialize(false)
             // Find further templates that needs to be rebuilt
             changedTemplates.addAll(getTemplatesThatNeedRebuild(changedModels))
+            val changedFiles = (changedModels + changedTemplates)
             // Delete markers on the files from previous builds
-            for(res : (changedModels + changedTemplates)) {
-                deleteMarkers(res)    
+            for(res : changedFiles) {
+                deleteMarkers(res)
             }
+            // Delete markers linked to this resources
+            deleteAllLinkedMarkers(changedFiles)
             // Build the changed models
             buildModels(changedModels)
             // Process templates
@@ -374,7 +382,29 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * Deletes all markers that occured during a former build of this project.
      */
     private def void deleteAllMarkers() {
-        deleteMarkers(project)
+        val markers = project.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
+        if(!markers.isNullOrEmpty) {
+            for(m : markers){
+                m.delete()
+            }    
+        }
+    }
+    
+    /**
+     * Deletes all markers that have an issue source in of the changed files.
+     */
+    private def void deleteAllLinkedMarkers(Iterable<IFile> changedFiles) {
+        val markers = project.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
+        if(!markers.isNullOrEmpty) {
+            for(marker : markers) {
+                val issueSource = marker.getAttribute("issueSource")
+                for(res : changedFiles) {
+                    if(issueSource !== null && issueSource == res.location.toOSString) {
+                        marker.delete
+                    }
+                }
+            }          
+        }
     }
     
     /**

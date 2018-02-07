@@ -25,7 +25,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class MacroCallData implements Cloneable {
     /**
-     * The name of the macro call.
+     * The name of the macro.
      * e.g. 'Clock' for an annotation '@Clock 500'.
      */
     @Accessors
@@ -33,7 +33,7 @@ class MacroCallData implements Cloneable {
     
     /**
      * A list with the arguments for this macro call.
-     * e.g. #['500'] for an annotation '@Clock 500'.
+     * e.g. #[500] for an annotation '@Clock 500'.
      */
     @Accessors
     private List<String> arguments = newArrayList()
@@ -106,6 +106,8 @@ class MacroCallData implements Cloneable {
         if(!isOutput) {
             this.phases.remove(CodeGenerationPhase.OUTPUT_PHASE)    
         }
+        this.phases.remove(CodeGenerationPhase.SIM_INPUT_PHASE)
+        this.phases.remove(CodeGenerationPhase.SIM_OUTPUT_PHASE)
     }
     
     /**
@@ -124,6 +126,7 @@ class MacroCallData implements Cloneable {
         this.interfaceTypes = VariableInterfaceType.getInterfaceTypes(isInput, isOutput, isInternal)
         // Add the arguments for the macro call
         this.arguments.add(String.valueOf(VariableInterfaceType.getBitmask(interfaceTypes)))
+        this.phases = newHashSet(CodeGenerationPhase.SIM_INPUT_PHASE, CodeGenerationPhase.SIM_OUTPUT_PHASE)
     }
     
     /**

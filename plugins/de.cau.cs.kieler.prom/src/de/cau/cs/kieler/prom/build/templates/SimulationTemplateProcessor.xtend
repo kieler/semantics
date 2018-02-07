@@ -187,6 +187,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         // Process
         val problem = super.processContext()
         if(problem !== null) {
+            problem.issueSource = modelFile
             result.addProblem(problem)
             return result
         }

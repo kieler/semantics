@@ -6,7 +6,7 @@
 <#macro Simulate interface indices...>
     <#-- host types are not supported -->
     <#if varType != "host">
-    <@input>
+    <@sim_input>
       <#-- setting strings is not supported at the moment -->
       <#if varType != "string">
         // Receive ${varName}
@@ -33,7 +33,7 @@
         }
       </#if>
     </@>
-    <@output>
+    <@sim_output>
         // Send ${varName}
         variable = cJSON_CreateObject();
         cJSON_AddItemToObject(root, "${varName}", variable);
