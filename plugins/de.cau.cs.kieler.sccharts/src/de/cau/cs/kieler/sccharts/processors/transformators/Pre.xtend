@@ -147,7 +147,9 @@ class Pre extends SCChartsProcessor implements Traceable {
         // Thus the pre variable has the value of the original variable from the last tick.
         val preRegion = state.createControlflowRegion(valuedObject.preRegionName, valuedObject.preRegionName)
         val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init")
+        preInit.final = true
         val preWait = preRegion.createState(GENERATED_PREFIX + "Wait")
+        preWait.final = true
 
         // Immediate transition for assignments
         val transInitWait = preInit.createImmediateTransitionTo(preWait)
