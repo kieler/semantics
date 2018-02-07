@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
@@ -141,11 +142,34 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param message The message of the marker 
      */
     private static def IMarker createMarker(IResource res, String message) {
-        val marker = res.createMarker(PROBLEM_MARKER_TYPE)
-        marker.setAttribute(IMarker.LINE_NUMBER, 1);
-        marker.setAttribute(IMarker.MESSAGE, message);
-        marker.setAttribute(IMarker.LOCATION, res.projectRelativePath.toOSString);
-        return marker
+        if(res.exists) {
+            // Try to use the projects build config if possible,
+            // because it is easier to open, such that the user can see the marker.
+            var IMarker marker = null
+            if(res.type == IResource.PROJECT) {
+                val project = res as IProject
+                val configFilePath = project.getPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
+                if(configFilePath !== null) {
+                    val configFile = project.getFile(configFilePath)
+                    if(configFile.exists) {
+                        marker = configFile.createMarker(PROBLEM_MARKER_TYPE)
+                    }
+                }
+            }
+            if(marker === null) {
+                marker = res.createMarker(PROBLEM_MARKER_TYPE)    
+            }
+            marker.setAttribute(IMarker.LINE_NUMBER, 1);
+            marker.setAttribute(IMarker.MESSAGE, message);
+            marker.setAttribute(IMarker.LOCATION, res.projectRelativePath.toOSString);
+            return marker
+        } else if(res !== null) {
+            return createMarker(res.parent, message)
+        } else {
+            throw new Exception("Cannot create error marker without resource\n"
+                              + "(original error:"+message+")"
+            )
+        }
     }
     
     /**
@@ -172,6 +196,22 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
         return marker
+    }
+    
+    /**
+     * Deletes all kieler modeling builder problems from the given resource and all its contained resources.
+     * 
+     * @param res The resource
+     */
+    public static def void deleteMarkers(IResource res) {
+        if(res != null && res.exists) {
+            val markers = res.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
+            if(!markers.isNullOrEmpty) {
+                for(m : markers){
+                    m.delete()
+                }    
+            }
+        }
     }
     
     /**
@@ -234,7 +274,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 case AUTO_BUILD,
                 case INCREMENTAL_BUILD : {
                     val delta = getDelta(project);
-                    if (delta == null) {
+                    if (delta === null) {
                        fullBuild;
                     } else {
                        incrementalBuild(delta);
@@ -242,13 +282,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 }
             }
         } catch(Exception e) {
-            // Show any exception as error marker on the project or build configuration
+            // Show any exception as error marker on the project
             e.printStackTrace
-            val res = if(buildConfigFile !== null)
-                          buildConfigFile
-                      else
-                          project
-            val problem = BuildProblem.createError(res, e)
+            val problem = BuildProblem.createError(project, e)
             showBuildProblems(problem)
         }
         
@@ -260,8 +296,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def void fullBuild() {
         // Re-initialize
-        isInitialized = false
-        initialize
+        initialize(true)
+        // Delete all markers of previous builds
+        deleteAllMarkers
         // Build all model files
         val modelFiles = findModelFilesInProject
         buildModels(modelFiles)
@@ -273,9 +310,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * Perform an incremental build of the given files, which changed since the last build.
      */
     private def void incrementalBuild(IResourceDelta delta) {
-        // Initialize
         abortIncrementalBuild = false
-        initialize
         // Find changed files
         monitor.subTask("Searching changed files")
         val ArrayList<IFile> changedModels = newArrayList()
@@ -290,7 +325,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                             changedModels.add(file)
                         } else if(isTemplate(file)) {
                             changedTemplates.add(file)
-                        } else if(isBuildConfiguration(file)) {
+                        } else if(isBuildConfiguration(file) || isCompilationConfiguration(file)) {
                             // The configuration changed: Do a full build instead of an incremental build
                             abortIncrementalBuild = true
                             fullBuild
@@ -315,14 +350,31 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         } catch (CoreException e) {
             e.printStackTrace();
         }
-        // If a full build is started, there is no need to continue the incremental build
-        if(!abortIncrementalBuild) {
+        
+        // If a full build is started, there is no need to continue the incremental build.
+        // If no files changed, there is no need to continue the build.
+        val requiresBuild = !abortIncrementalBuild && !(changedModels.isEmpty && changedTemplates.isEmpty)
+        if(requiresBuild) {
+            // Initialize the build
+            initialize(false)
+            // Find further templates that needs to be rebuilt
+            changedTemplates.addAll(getTemplatesThatNeedRebuild(changedModels))
+            // Delete markers on the files from previous builds
+            for(res : (changedModels + changedTemplates)) {
+                deleteMarkers(res)    
+            }
             // Build the changed models
             buildModels(changedModels)
             // Process templates
-            changedTemplates.addAll(getTemplatesThatNeedRebuild(changedModels))
             processTemplates(changedTemplates) 
         }
+    }
+    
+    /**
+     * Deletes all markers that occured during a former build of this project.
+     */
+    private def void deleteAllMarkers() {
+        deleteMarkers(project)
     }
     
     /**
@@ -364,7 +416,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def boolean isOutputFolder(IFolder folder) {
         if(buildConfig === null) {
-            initialize
+            initialize(true)
         }
         if(buildConfig !== null) {
             for(modelCompiler : modelCompilers) {
@@ -567,7 +619,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * Removes all markers and re-initialzes this builder.
      */
     private def void clean() {
-        initialize
+        initialize(true)
         // Delete all generated files
         for(compiler : modelCompilers) {
             compiler.clean
@@ -578,8 +630,8 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         for(processor : templateProcessors) {
             processor.clean
         }
-        // Delete all markers
-        deleteMarkers(project)
+        // Delete all markers of previous builds
+        deleteAllMarkers
         // Re-initialize
         isInitialized = false
         createResourceSet
@@ -588,36 +640,35 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     /**
      * Initialize this builder.
      */
-    private def void initialize() {
-        monitor.subTask("Initializing build")
-        // Clear last configuration
-        modelCompilers.clear
-        simulationCompilers.clear
-        templateProcessors.clear
-        // Load configuration file
-        deleteMarkers(project)
-        val configFilePath = project.getPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
-        if (configFilePath.isNullOrEmpty) {
-            // Add warning marker because no build configuration was found
-            createErrorMarker(project, "No kibuild file has been set in the project properties.\n"
-                                       + "Use a kibuild file "
-                                       + "to define how model files are compiled.")
-        } else {
-            try {
-                buildConfigFile = project.getFile(configFilePath)
-                val model = ModelImporter.load(buildConfigFile)
-                if(model !== null && model instanceof BuildConfiguration) {
-                        initializeConfiguration(model as BuildConfiguration)
-                } else {
-                    throw new Exception("Build configuration '" + buildConfigFile.projectRelativePath + "' could not be loaded")
-                }
-            } catch (Exception e) {
-                createErrorMarker(project, e.message)
-            }
-        }
-        
-        if(!isInitialized) {
+    private def void initialize(boolean force) {
+        if(force || !isInitialized) {
             isInitialized = true
+            monitor.subTask("Initializing build")
+            // Clear last configuration
+            modelCompilers.clear
+            simulationCompilers.clear
+            templateProcessors.clear
+            // Load configuration file
+            val configFilePath = project.getPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
+            if (configFilePath.isNullOrEmpty) {
+                // Add warning marker because no build configuration was found
+                createErrorMarker(project, "No kibuild file has been set in the project properties.\n"
+                                           + "Use a kibuild file "
+                                           + "to define how model files are compiled.")
+            } else {
+                try {
+                    buildConfigFile = project.getFile(configFilePath)
+                    val model = ModelImporter.load(buildConfigFile)
+                    if(model !== null && model instanceof BuildConfiguration) {
+                            initializeConfiguration(model as BuildConfiguration)
+                    } else {
+                        throw new Exception("Build configuration '" + buildConfigFile.projectRelativePath + "' could not be loaded")
+                    }
+                } catch (Exception e) {
+                    createErrorMarker(project, e.message)
+                }
+            }
+            
             createResourceSet
         }
     }
@@ -662,24 +713,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         return PromPlugin.findFiles(membersWithoutBinDirectory, null as List<String>).filter[isModel(it)].toList
     }
     
-    
-    
-    /**
-     * Deletes all kieler modeling builder problems from the given resource and all its contained resources.
-     * 
-     * @param res The resource
-     */
-    public static def void deleteMarkers(IResource res) {
-        if(res != null && res.exists) {
-            val markers = res.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
-            if(!markers.isNullOrEmpty) {
-                for(m : markers){
-                    m.delete()
-                }    
-            }
-        }
-    }
-    
     /**
      * Lets all simulation compilers process the given file that can handle it.
      * 
@@ -688,7 +721,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     private def void compileSimulationCode(IFile file) {
         if(!monitor.isCanceled) {
             for(simulationCompiler : simulationCompilers) {
-                if(simulationCompiler.canCompile(file)) {
+                if(simulationCompiler.isSupported(file)) {
                     monitor.subTask("Compiling simulation code "+file.name)
                     val result = simulationCompiler.compile(file)
                     showBuildProblems(result.problems)
