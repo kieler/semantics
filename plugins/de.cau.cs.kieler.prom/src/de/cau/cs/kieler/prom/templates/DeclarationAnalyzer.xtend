@@ -36,6 +36,7 @@ import de.cau.cs.kieler.annotations.CommentAnnotation
 abstract class DeclarationAnalyzer extends ModelAnalyzer {
     
     private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
+    private static val EXCLUDE_SIMULATION_ANNOTATION_NAME = "ExcludeInSimulation"
     
     /**
      * {@inheritDoc}
@@ -120,12 +121,14 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
     protected def List<MacroCallData> getSimulationInterface(Iterable<Declaration> declarations) {
         val allDatas = <MacroCallData> newArrayList
         for(decl : declarations.filter(VariableDeclaration)) {
-            for(valuedObject : decl.valuedObjects) {
-                if(!decl.const) {
+            var skip = decl.annotations.exists[it.name == EXCLUDE_SIMULATION_ANNOTATION_NAME]
+            val varType = decl.type.literal
+            val isInput = decl.isInput
+            val isOutput = decl.isOutput
+            val isConst = decl.const
+            if(!skip && !isConst) {
+                for(valuedObject : decl.valuedObjects) {
                     val varName = valuedObject.name
-                    val varType = decl.type.literal
-                    val isInput = decl.isInput
-                    val isOutput = decl.isOutput
                     val data = new MacroCallData 
                     data.initializeForSimulationGeneration(varName, varType, isInput, isOutput, true)
                     allDatas.add(data)
