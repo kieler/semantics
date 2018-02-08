@@ -19,6 +19,9 @@ import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.simulation.core.SimulationManager.*
 
 /**
  * The control in the data pool view to set the desired simulation pause in play mode.
@@ -31,6 +34,7 @@ class SimulationDelayContribution extends ControlContribution {
     /**
      * The spinner
      */
+    @Accessors
     var Spinner spinner
     
     /**

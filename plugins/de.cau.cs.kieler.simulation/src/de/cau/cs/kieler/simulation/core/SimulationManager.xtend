@@ -102,16 +102,16 @@ class SimulationManager extends Configurable {
     private static val DESIRED_PAUSE_ATTR = "desiredTickPause"
     
     /**
-     * The name of an input variable in the data pool,
+     * The name of a variable in the data pool,
      * which should receive the current system time as value.
      */
-    public val currentTimeVariable = new ConfigurableAttribute("currentTimeVariable", null, #[String])
+    public static var String currentTimeVariable
     
     /**
-     * The name of an output variable in the data pool,
+     * The name of a variable in the data pool,
      * that determines the next time the tick function should be called.
      */
-    public val nextTickTimeVariable = new ConfigurableAttribute("nextTickTimeVariable",null, #[String])
+    public static var String nextTickTimeVariable
     
     /**
      * The job that executes the step actions concurrently when playing.
