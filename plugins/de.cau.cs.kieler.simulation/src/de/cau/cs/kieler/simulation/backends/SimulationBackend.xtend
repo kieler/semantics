@@ -12,10 +12,17 @@
  */
 package de.cau.cs.kieler.simulation.backends
 
+import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
 import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import java.util.List
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
 
 /**
@@ -92,12 +99,99 @@ abstract class SimulationBackend {
     }
     
     /**
+     * Searches for a suited simulation backend for the given file.
+     * 
+     * @param file The file handle
+     * @return A simulation backend that supports the given file
+     * @throws Exception if no suited simulation backend is found.
+     */
+    public static def SimulationBackend findSimulationBackend(IFile file) {
+        val simBack = SimulationBackend.backends.findFirst[it.isSupported(file)]
+        if(simBack === null) {
+            throw new Exception("No simulation backend was found for the file '"+file.name+"'") 
+        }
+        return simBack
+    }
+    
+    /**
+     * Searches for a suited simulation backend for the given compile chain.
+     * Relevant for the simulation backend is the last processor that creates the target code for the models.
+     * 
+     * @param compileChain The compileChain
+     * @return A simulation backend for the given compile chain
+     * @throws Exception if no suited simulation backend is found.
+     */
+    public static def SimulationBackend findSimulationBackend(String compileChain) {
+        val lastProcessorOrSystemId = KiCoModelCompiler.splitCompileChain(compileChain).last
+        var String lastProcessorId
+        try {
+            val system = KiCoolRegistration.getSystemById(lastProcessorOrSystemId)
+            // If there was no exception, then this is a system
+            lastProcessorId = system.processors.getLastProcessorId    
+        } catch (Exception ex) {
+            try {
+                val processor = KiCoolRegistration.getProcessorClass(lastProcessorOrSystemId)
+                // If there was no exception, then this is a processor
+                lastProcessorId = lastProcessorOrSystemId
+            } catch(Exception e) {
+            }
+        }
+        // Find a suited simulation backend for the processor id
+        if(lastProcessorId.isNullOrEmpty) {
+            throw new Exception("Cannot resolve compile chain '"+compileChain+"'")
+        } else {
+            for(backend : SimulationBackend.getBackends) {
+                if(backend.isProcessorOutputSupported(lastProcessorId)) {
+                    return backend
+                }
+            }
+            throw new Exception("No simulation backend was found for the result of the last processor '"+lastProcessorId+"'")    
+        }
+    }
+    
+    /**
+     * Returns the last processor id of the given processor entry.
+     * The entry may also be a group of processors. The id of the last processor in this group is returned in this case.
+     */
+    private static def String getLastProcessorId(ProcessorEntry processors) {
+        if(processors instanceof ProcessorGroup) { 
+            return processors.processors.last.lastProcessorId
+        } else if (processors instanceof ProcessorReference) {
+            return processors.id
+        } else if (processors instanceof ProcessorSystem) {
+            return processors.id
+        }
+    } 
+    
+    /**
+     * Returns the supported file extensions of programming languages that can be simulated using this backend.
+     */
+    abstract def List<String> getSupportedFileExtensions()
+    
+    /**
+     * Returns true if the given file has a file extension that is supported by this simulation backend.
+     */
+    public def boolean isSupported(IFile file) {
+        return isSupported(file.fileExtension)
+    }
+    
+    /**
+     * Returns true if the given file extension corresponds to a programming language that can be simulated using this backend.
+     */
+    public def boolean isSupported(String fileExtension) {
+        if(fileExtension === null) {
+            return false
+        }
+        return supportedFileExtensions.contains(fileExtension.toLowerCase)
+    }
+    
+    /**
      * Checks if this simulation backend can be used with the result of the given processor.
      * 
      * @param processorId The id of a processor
      * @return true if this simulation backend can be used with the result of the given processor, false otherwise.
      */
-    public def boolean isSupported(String processorId) {
+    public def boolean isProcessorOutputSupported(String processorId) {
         val supportedProcessors = getSupportedProcessors
         return supportedProcessors.isNullOrEmpty || supportedProcessors.contains(processorId)
     }

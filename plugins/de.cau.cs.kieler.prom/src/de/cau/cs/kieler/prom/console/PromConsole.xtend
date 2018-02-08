@@ -12,11 +12,9 @@
  */
 package de.cau.cs.kieler.prom.console
 
-import com.google.common.base.Charsets
 import com.google.common.base.Strings
-import com.google.common.io.CharStreams
-import java.io.InputStream
-import java.io.InputStreamReader
+import java.io.PrintWriter
+import java.io.StringWriter
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -41,6 +39,18 @@ class PromConsole {
      */
     public static def void print(String msg){
         print(msg, ConsoleStyle.INFO)
+    }
+    
+    /**
+     * Write the exception stack trace to the console.
+     * 
+     * @param e The exception to be printed
+     */
+    public static def void printStackTrace(Exception e){
+        val sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        val exceptionAsString = sw.toString();
+        print(exceptionAsString, ConsoleStyle.ERROR)
     }
     
     /**

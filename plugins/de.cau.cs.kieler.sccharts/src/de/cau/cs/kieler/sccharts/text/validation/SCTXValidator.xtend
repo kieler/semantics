@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl
 
 //import org.eclipse.xtext.validation.Check
 
@@ -76,6 +77,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
 
+    static val String REGION_CANNOT_TERMINATE = "All or none concurrent regions should have final states."
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
@@ -258,7 +260,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             val name = r.name
             if(!name.isNullOrEmpty) {
                 if(names.contains(name)) {
-                    warning(DUPLICATE_REGION+" '"+name+"'", r, null, -1)
+                    warning(DUPLICATE_REGION+" '"+name+"'", r, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
                 } else {
                     names.add(name)
                 }    
@@ -314,7 +316,10 @@ class SCTXValidator extends AbstractSCTXValidator {
                     warning(NON_REACHABLE_TRANSITION, trans, null)
                 }
                 if(!immediateTransitionWithoutTrigger && trans.trigger === null) {
-                    immediateTransitionWithoutTrigger = true
+                    // A termination transition does not count, because the inner behavior defines a trigger
+                    if(!trans.isTermination) {
+                        immediateTransitionWithoutTrigger = true    
+                    }
                 }
             } else {
                 // An delayed transition after a delayed transition without trigger is not reachable.
@@ -444,6 +449,31 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     /**
+     * A final state only makes sense if all regions can terminate.
+     * Thus if there is one final state, the other regions should also have final states.
+     * 
+     * @param state the state
+     */
+    @Check
+    public def void checkAllHaveFinalStates(de.cau.cs.kieler.sccharts.ControlflowRegion region) {
+        val finalStates = region.states.filter[it.isFinal]
+        if(!finalStates.isNullOrEmpty) {
+            for(r : region.parentState.regions.filter(ControlflowRegion)) {
+                // Only check other regions
+                if(r !== region) {
+                    val otherHasFinalState = r.states.exists[it.isFinal]
+                    // Warn if this region cannot terminate
+                    if(!otherHasFinalState) {
+                        for(finalState : finalStates) {
+                            warning(REGION_CANNOT_TERMINATE, finalState, AnnotationsPackage.eINSTANCE.namedObject_Name);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
      * A state with a termination transition should have final states in all its
      * inner regions. 
      * A simple state with a termination transition must have inner behaviour or no termination transition at all.
@@ -453,12 +483,14 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     public def void checkFinalStates(de.cau.cs.kieler.sccharts.State state) {
         // Check if state has termination transition
-        val foundTermination = !state.outgoingTransitions.filter[ isTermination ].empty
+        val terminationTransitions = state.outgoingTransitions.filter[ isTermination ]
+        val foundTermination = !terminationTransitions.empty
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
             if(regions.isEmpty && state.reference === null) {
-                error(NO_REGION, state, null, -1);
+                val trans = terminationTransitions.get(0)
+                error(NO_REGION, trans, null, -1);
             }
 
             // Now test for every region
@@ -466,7 +498,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                 for (region : regions) {
                     val foundFinal = !region.states.filter[ isFinal ].empty
                     if (!foundFinal) {
-                        warning(REGION_NO_FINAL_STATE, region, null, -1);
+                        warning(REGION_NO_FINAL_STATE, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1);
                     }
                 }
             }
@@ -518,7 +550,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     /**
      * Checks if the given valued signal has a combination function.
      * This check can be removed if there is a transformation
-     * that handles valued signals without combination function (see KISEMA-1071).   
+     * that handles valued signals without combination dfunction (see KISEMA-1071).   
      */
     // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check

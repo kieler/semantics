@@ -8,6 +8,8 @@ model compiler kico {
   // Generate simulation from output of compilation
   process simulation template {
     file: assets/JavaSimulation.ftl
+    // Only communicate input and output variables because internal variables are not needed for the tests
+    interfaceTypes: input, output
   }
 }
 
