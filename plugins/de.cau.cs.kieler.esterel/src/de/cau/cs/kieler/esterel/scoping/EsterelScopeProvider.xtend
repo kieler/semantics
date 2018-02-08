@@ -148,7 +148,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
         val run = context.eContainer?.eContainer
         if (run instanceof Run) {
             if (run.module !== null && run.module.module !== null) {
-                var scopeElems = getAllSignals(run.module.module);
+                var scopeElems = getAllElements(run.module.module, COLLECT_SIGNALS)
                 // sensors are treated as signals
                 scopeElems.addAll(getAllElements(run.module.module, COLLECT_SENSORS))
                 return new SimpleScope(scopeElems)

@@ -296,33 +296,42 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public class EsterelAssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.EsterelAssignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cReferenceAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cReferenceVariableOrSignalReferenceParserRuleCall_0_0 = (RuleCall)cReferenceAssignment_0.eContents().get(0);
-		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cReferenceAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cReferenceVariableOrSignalReferenceParserRuleCall_1_0 = (RuleCall)cReferenceAssignment_1.eContents().get(0);
+		private final Keyword cColonEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
 		//@ Override EsterelAssignment scl::Assignment:
+		//	annotations+=Annotation*
 		//	reference=VariableOrSignalReference ":=" expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
 
-		//reference=VariableOrSignalReference ":=" expression=Expression
+		//annotations+=Annotation* reference=VariableOrSignalReference ":=" expression=Expression
 		public Group getGroup() { return cGroup; }
 
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
 		//reference=VariableOrSignalReference
-		public Assignment getReferenceAssignment_0() { return cReferenceAssignment_0; }
+		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
 
 		//VariableOrSignalReference
-		public RuleCall getReferenceVariableOrSignalReferenceParserRuleCall_0_0() { return cReferenceVariableOrSignalReferenceParserRuleCall_0_0; }
+		public RuleCall getReferenceVariableOrSignalReferenceParserRuleCall_1_0() { return cReferenceVariableOrSignalReferenceParserRuleCall_1_0; }
 
 		//":="
-		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
+		public Keyword getColonEqualsSignKeyword_2() { return cColonEqualsSignKeyword_2; }
 
 		//expression=Expression
-		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
 
 		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
+		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
 	}
 
 	public class VariableOrSignalReferenceElements extends AbstractParserRuleElementFinder {
@@ -754,6 +763,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//@ Override EsterelAssignment scl::Assignment:
+	//	annotations+=Annotation*
 	//	reference=VariableOrSignalReference ":=" expression=Expression;
 	public EsterelAssignmentElements getEsterelAssignmentAccess() {
 		return pEsterelAssignment;

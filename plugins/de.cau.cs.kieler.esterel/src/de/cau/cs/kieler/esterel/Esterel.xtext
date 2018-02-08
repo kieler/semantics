@@ -314,6 +314,7 @@ Sustain:
 // = 7.5.2 Assignment and Procedure Call
 // -------------------------------------
 EsterelAssignment returns scl::Assignment:
+    (annotations += Annotation)*
     reference=VariableReference ":=" expression=Expression
 ;
     

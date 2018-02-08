@@ -62,6 +62,7 @@ import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import de.cau.cs.kieler.esterel.EsterelThread
 
 /**
  * @author mrb
@@ -121,6 +122,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 processorsToAdd += SENSOR
                 processorsToAdd += CONSTANT
                 processorsToAdd += SIGNAL
+                processorsToAdd += FUNCTION
             }
             else {
                 processorsToAdd += processorID
@@ -197,6 +199,12 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
              */
             if (up) {
                 var list = obj.containingList
+                if (list === null) {
+                    throw new Exception("IntermediateProcessor: Found an object which"
+                                        + " is not contained by a list."
+                                        + "\nThis should not have happened!"
+                    )
+                }
                 var pos = list.indexOf(obj)
                 var parent = obj.eContainer
                 if (pos+1 < list.length) {
@@ -219,61 +227,25 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                 }
                 else if (parent instanceof Present) {
-                    // obj can be in 'statements' or 'elseStatements'
+                    // obj can be in 'statements', 'cases' or 'elseStatements'
                     var statements = parent.statements
-                    if (statements.contains(obj)) {
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
-                            up = false
-                        }
-                        else if (!parent.elseStatements.empty) {
-                            obj = parent.elseStatements.head
-                            up = false
-                        }
-                        else {
-                            obj = parent
-                            transform = true
-                        }
-                    }
-                    else { // obj is in elseStatements
-                        statements = parent.elseStatements
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
-                            up = false
-                        }
-                        else {
-                            obj = parent
-                            transform = true
-                        }
-                    }
-                }
-                else if (parent instanceof PresentCase) {
-                    val cases = parent.containingList
-                    if (pos+1 < cases.length) {
-                        obj = cases.get(pos+1)
+                    if ( ( statements.contains(obj) || parent.cases.contains(obj) )
+                         && !parent.elseStatements.empty
+                    ) {
+                        obj = parent.elseStatements.head
                         up = false
                     }
-                    else {
-                        val present = parent.eContainer as Present
-                        if (!present.elseStatements.empty) {
-                            obj = present.elseStatements.head
-                            up = false
-                        }
-                        else {
-                            obj = present
-                            transform = true
-                        }
+                    else { // obj is last statement in elseStatements or elseStatements is empty
+                        obj = parent
+                        transform = true
                     }
                 }
                 else if (parent instanceof IfTest) {
                     var statements = parent.statements
-                    // obj can be in 'statements' or 'elseStatements'
+                    // obj can be last in 'statements', 'elseIf' or 'elseStatements'
                     if (statements.contains(obj)) {
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = list.get(pos+1)
+                        if (!parent.elseif.empty) {
+                            obj = parent.elseif.head
                             up = false
                         }
                         else if (!parent.elseStatements.empty) {
@@ -285,11 +257,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             transform = true
                         }
                     }
-                    else { // obj is in elseStatements
-                        statements = parent.elseStatements
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
+                    else if (parent.elseif.contains(obj)) {
+                        if (!parent.elseStatements.empty) {
+                            obj = parent.elseStatements.head
                             up = false
                         }
                         else {
@@ -297,57 +267,25 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             transform = true
                         }
                     }
-                }
-                else if (parent instanceof ElsIf) {
-                    val elsifs = parent.containingList
-                    pos = elsifs.indexOf(parent)
-                    if (pos+1 < elsifs.length) {
-                        obj = elsifs.get(pos+1)
-                        up = false
-                    }
-                    else {
-                        val ifTest = parent.eContainer as IfTest
-                        if (!ifTest.elseStatements.empty) {
-                            obj = ifTest.elseStatements.head
-                            up = false
-                        }
-                        else {
-                            obj = ifTest
-                            transform = true
-                        }
+                    else { // obj is last in elseStatements
+                        obj = parent
+                        transform = true
                     }
                 }
                 else if (parent instanceof Trap) {
-                        if (!parent.trapHandler.empty) {
-                            obj = parent.trapHandler.head
-                            up = false
-                        }
-                        else {
-                            obj = parent
-                            transform = true
-                        }
-                }
-                else if (parent instanceof TrapHandler) {
-                    val handler = parent.containingList
-                    pos = handler.indexOf(parent)
-                    if (pos+1 < handler.length) {
-                        obj = handler.get(pos+1)
+                    if ( parent.statements.contains(obj) && !parent.trapHandler.empty ) {
+                        obj = parent.trapHandler.head
                         up = false
                     }
                     else {
-                        obj = parent.eContainer
+                        obj = parent
                         transform = true
                     }
                 }
                 else if (parent instanceof Abort) {
                     var statements = parent.statements
                     if (statements.contains(obj)) {
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
-                            up = false
-                        }
-                        else if (!parent.doStatements.empty){
+                        if (!parent.doStatements.empty){
                             obj = parent.doStatements.head
                             up = false
                         }
@@ -360,93 +298,42 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                             transform = true
                         }
                     }
-                    else { // obj must be in doStatements
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
-                            up = false
-                        }
-                        else {
-                            obj = parent
-                            transform = true
-                        }
+                    else { // obj must be last in doStatements or the last case
+                        obj = parent
+                        transform = true
                     }
                     
                 }
-                else if ((parent instanceof Case) || (parent instanceof ExecCase)) {
-                    val statements = (parent as StatementContainer).statements
-                    pos = statements.indexOf(obj)
-                    if (pos+1 < statements.length) {
-                        obj = statements.get(pos+1)
-                        up = false
-                    }
-                    else {
-                        obj = parent.eContainer
-                        transform = true
-                    }
+                else if (parent instanceof Case || parent instanceof ExecCase || parent instanceof ElsIf
+                    || parent instanceof TrapHandler || parent instanceof PresentCase
+                ) {
+                    obj = parent
                 }
                 else if (parent instanceof Do) {
                     // statements and watchingStatements
                     var statements = parent.statements
-                    if (statements.contains(obj)) {
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
-                            up = false
-                        }
-                        else {
-                            if (!parent.watchingStatements.empty) {
-                                obj = parent.watchingStatements.head
-                                up = false
-                            }
-                            else {
-                                obj = parent
-                                transform = true
-                            }
-                        }
+                    if (statements.contains(obj) && !parent.watchingStatements.empty) {
+                        obj = parent.watchingStatements.head
+                        up = false
                     }
-                    else { // obj in watchingStatements
-                        statements = parent.watchingStatements
-                        pos = statements.indexOf(obj)
-                        if (pos+1 < statements.length) {
-                            obj = statements.get(pos+1)
-                            up = false
-                        }
-                        else {
+                    else { // obj last in watchingStatements or watchingStatements are empty
                             obj = parent
                             transform = true
-                        }
                     }
                 }
                 else if (parent instanceof Conditional) {
-                    val statements = parent.statements
-                    pos = statements.indexOf(obj)
-                    if (pos+1 < statements.length) {
-                        obj = statements.get(pos+1)
+                    if (parent.statements.contains(obj) && parent.^else instanceof ElseScope) {
+                        obj = parent.^else
                         up = false
                     }
                     else {
-                        if (parent.^else !== null) {
-                            obj = parent.^else.statements.head
-                            up = false
-                        }
-                        else {
-                            obj = parent
-                            up = true
-                        }
+                        obj = parent
+                        transform = true
                     }
                 }
                 else if (parent instanceof ElseScope) {
-                    val statements = parent.statements
-                    pos = statements.indexOf(obj)
-                    if (pos+1 < statements.length) {
-                        obj = statements.get(pos+1)
-                        up = false
-                    }
-                    else {
-                        obj = parent.eContainer
-                        up = true
-                    }
+                    obj = parent.eContainer
+                    transform = true
                 }
                 else if (parent instanceof Module) {
                     obj = parent
@@ -464,6 +351,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 else if (parent instanceof EsterelProgram) {
                     obj = parent
                     transform = true
+                }
+                else {
+                    throw new Exception("IntermediateProcessor: This point should never be reached.")
                 }
             }
             
@@ -612,15 +502,23 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         }
                         else {
                             switch (obj) {
-                                /* set 'obj' to the eContainer of 'obj' if it is not a statement
-                                 * because only statements can be transformed */
+                                PresentCase,
                                 ElsIf,
                                 Case,
                                 ExecCase,
-                                Thread,
-                                ElseScope : obj = obj.eContainer
+                                TrapHandler : {
+                                    up = true
+                                }
+                                EsterelThread,
+                                Thread, // empty (esterel)thread should not be possible
+                                ElseScope : {
+                                    obj = obj.eContainer
+                                    transform = true
+                                }
+                                default : { // empty Block statement
+                                    transform = true 
+                                }
                             }
-                            transform = true
                         }
                     }
                     /* The following statements do not have to be transformed. 
@@ -634,7 +532,7 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                         up = true
                     }
                     
-                    Run : {
+                    Run : { // must not be used since all run statements should already been transformed
                         if (obj.module?.module instanceof Module) {
                             obj = obj.module.module
                         }

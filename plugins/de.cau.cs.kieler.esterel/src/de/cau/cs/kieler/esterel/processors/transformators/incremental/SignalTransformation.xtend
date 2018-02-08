@@ -27,6 +27,10 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.esterel.SignalDeclaration
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.esterel.TypeDeclaration
+import de.cau.cs.kieler.esterel.RelationDeclaration
+import de.cau.cs.kieler.esterel.TaskDeclaration
+import de.cau.cs.kieler.esterel.ProcedureCall
 
 /**
  * @author mrb
@@ -119,6 +123,13 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
         createParallelForSignals(module, newSignals)
         transformReferences(module, newSignals)
         module.declarations.removeIf[it instanceof SignalDeclaration]
+        
+        /* SignalTransformation removes other Esterel declarations which have to be removed before
+         * the transformation to an SCLProgram */
+        module.declarations.removeIf[ 
+            it instanceof TypeDeclaration || it instanceof RelationDeclaration
+            || it instanceof TaskDeclaration || it instanceof ProcedureCall
+        ]
     }
     
     /*

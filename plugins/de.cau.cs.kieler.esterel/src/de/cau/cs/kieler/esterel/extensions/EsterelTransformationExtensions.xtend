@@ -1150,18 +1150,18 @@ class EsterelTransformationExtensions {
         EsterelFactory::eINSTANCE.createAwait
     }
     
-    /**
-     * Creates a new IntAnnotation with a specific value
-     * 
-     * @param depth The depth of the statement which includes this annotation
-     * @return The newly created Annotation
-     */
-    def createAnnotation(int depth) {
-        AnnotationsFactory::eINSTANCE.createIntAnnotation => [
-            name = generatedAnnotation
-            value = depth
-        ]
-    }
+//    /**
+//     * Creates a new IntAnnotation with a specific value
+//     * 
+//     * @param depth The depth of the statement which includes this annotation
+//     * @return The newly created Annotation
+//     */
+//    def createAnnotation(int depth) {
+//        AnnotationsFactory::eINSTANCE.createIntAnnotation => [
+//            name = generatedAnnotation
+//            value = depth
+//        ]
+//    }
     
     /**
      * Creates a new Annotation with a specific name

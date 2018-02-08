@@ -108,14 +108,14 @@ abstract class ModelAnalyzer {
      * Checks whether the models within the given files can be analyzed by this instance.
      */
     public def isSupported(IFile file) {
-        return file != null && isSupported(file.fileExtension)
+        return file !== null && isSupported(file.fileExtension)
     }
     
     /**
      * Checks whether the models with the given file extension can be analyzed by this instance.
      */
     public def isSupported(String fileExtension) {
-        if(fileExtension == null) {
+        if(fileExtension === null) {
             return false
         }
         return supportedFileExtensions.contains(fileExtension.toLowerCase)
@@ -125,7 +125,7 @@ abstract class ModelAnalyzer {
      * Checks whether the model can be analyzed by this instance.
      */
     public def isSupported(EObject model) {
-        if(model == null) {
+        if(model === null) {
             return false
         }
         for(supportedModelType : supportedModelTypes) {
@@ -144,7 +144,7 @@ abstract class ModelAnalyzer {
     public def String getCompileChain() {
         val prefs = getPreferences
         val value = prefs.get(COMPILE_CHAIN_ATTR, null)
-        if(value == null) {
+        if(value === null) {
             return Strings.nullToEmpty(defaultCompileChain)
         } else {
             return value
@@ -178,7 +178,7 @@ abstract class ModelAnalyzer {
      */
     public static def List<ModelAnalyzer> getAnalyzers() {
         // Initialize if not done yet
-        if(analyzers == null) { 
+        if(analyzers === null) { 
             initAnalyzers
         }
         return analyzers

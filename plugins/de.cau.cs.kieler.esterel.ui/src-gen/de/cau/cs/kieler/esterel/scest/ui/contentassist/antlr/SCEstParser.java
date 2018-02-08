@@ -560,8 +560,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEsterelModuleAccess().getStatementsAssignment_5(), "rule__EsterelModule__StatementsAssignment_5");
 					put(grammarAccess.getEsterelThreadAccess().getStatementsAssignment_0_1_1_1(), "rule__EsterelThread__StatementsAssignment_0_1_1_1");
 					put(grammarAccess.getEsterelThreadAccess().getStatementsAssignment_1_1_1(), "rule__EsterelThread__StatementsAssignment_1_1_1");
-					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_0(), "rule__EsterelAssignment__ReferenceAssignment_0");
-					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_2(), "rule__EsterelAssignment__ExpressionAssignment_2");
+					put(grammarAccess.getEsterelAssignmentAccess().getAnnotationsAssignment_0(), "rule__EsterelAssignment__AnnotationsAssignment_0");
+					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_1(), "rule__EsterelAssignment__ReferenceAssignment_1");
+					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_3(), "rule__EsterelAssignment__ExpressionAssignment_3");
 					put(grammarAccess.getUnEmitAccess().getAnnotationsAssignment_0(), "rule__UnEmit__AnnotationsAssignment_0");
 					put(grammarAccess.getUnEmitAccess().getSignalAssignment_2(), "rule__UnEmit__SignalAssignment_2");
 					put(grammarAccess.getSetAccess().getAnnotationsAssignment_0(), "rule__Set__AnnotationsAssignment_0");

@@ -643,8 +643,9 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSustainAccess().getAnnotationsAssignment_0(), "rule__Sustain__AnnotationsAssignment_0");
 					put(grammarAccess.getSustainAccess().getSignalAssignment_2(), "rule__Sustain__SignalAssignment_2");
 					put(grammarAccess.getSustainAccess().getExpressionAssignment_3_1(), "rule__Sustain__ExpressionAssignment_3_1");
-					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_0(), "rule__EsterelAssignment__ReferenceAssignment_0");
-					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_2(), "rule__EsterelAssignment__ExpressionAssignment_2");
+					put(grammarAccess.getEsterelAssignmentAccess().getAnnotationsAssignment_0(), "rule__EsterelAssignment__AnnotationsAssignment_0");
+					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_1(), "rule__EsterelAssignment__ReferenceAssignment_1");
+					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_3(), "rule__EsterelAssignment__ExpressionAssignment_3");
 					put(grammarAccess.getVariableReferenceAccess().getValuedObjectAssignment_1(), "rule__VariableReference__ValuedObjectAssignment_1");
 					put(grammarAccess.getProcedureCallAccess().getAnnotationsAssignment_0(), "rule__ProcedureCall__AnnotationsAssignment_0");
 					put(grammarAccess.getProcedureCallAccess().getProcedureAssignment_2(), "rule__ProcedureCall__ProcedureAssignment_2");
