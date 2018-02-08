@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 // Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
