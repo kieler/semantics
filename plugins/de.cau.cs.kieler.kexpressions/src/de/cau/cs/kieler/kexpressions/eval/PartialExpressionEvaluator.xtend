@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kexpressions.eval
 
+import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -29,10 +30,12 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import java.util.HashMap
 import java.util.Map
-import com.google.inject.Guice
+import org.eclipse.xtend.lib.annotations.Accessors
+
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+
 /**
  * @author als
  * @kieler.design proposed
@@ -44,27 +47,53 @@ class PartialExpressionEvaluator {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsCompareExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
+    
+    // -- Config --
+    
+    @Accessors var boolean inplace = false
+//    @Accessors var boolean compute = false
+    
+    // -- Vars --
     
     val Map<ValuedObject, Value> values
     
     new() {
+        this(emptyMap)
+    }
+    
+    new(Map<ValuedObject, Value> values) {
         if (injector === null) {
             injector = Guice.createInjector
             injector.injectMembers(this)
         }
-        this.values = emptyMap
-    }
-    
-    new(HashMap<ValuedObject, Value> values) {
         this.values = values
     }
     
     def Expression evaluate(Expression expression) {
-        val parEval = expression?.eval
-        return if (parEval !== null) parEval else expression
+        val parEval = //if (compute) {
+//            synchronized (this) {
+//                // Java JShell requires 1.9
+//                throw new UnsupportedOperationException("Not yet implemented")
+//            }
+//        } else {
+            expression?.eval
+//        }
+
+        if (parEval !== null) {
+            return parEval
+        } else if (inplace) {
+            return expression
+        } else {
+            return expression.copy
+        }
     }
+    
+    // ------------------------------------
+    // General HELPER
+    // ------------------------------------
     
     def boolean isThruthy(Value value) {
         return switch(value) {
@@ -92,12 +121,13 @@ class PartialExpressionEvaluator {
         if (values.containsKey(vor.valuedObject)) {
             return values.get(vor.valuedObject)
         }
-        return vor.valuedObject.reference
+        return if (inplace) vor else vor.valuedObject.reference
     }
     
     protected dispatch def Expression eval(OperatorExpression op) {
         val newOp = createOperatorExpression(op.operator)
         switch (op.operator) {
+            // BOOLEAN LOGIC
             case LOGICAL_AND: {
                 for (parEval : op.subExpressions.map[eval].filterNull) {
                     if (parEval instanceof Value) {
@@ -105,7 +135,7 @@ class PartialExpressionEvaluator {
                             return createBoolValue(false) 
                         }
                         // skip operand
-                    } else {
+                    } else if (!newOp.subExpressions.exists[equals2(parEval)]) { // add only if unique operant
                         newOp.subExpressions += parEval
                     }
                 }
@@ -122,7 +152,7 @@ class PartialExpressionEvaluator {
                             return createBoolValue(true) 
                         }
                         // skip operand
-                    } else {
+                    } else if (!newOp.subExpressions.exists[equals2(parEval)]) { // add only if unique operant
                         newOp.subExpressions += parEval
                     }
                 }
@@ -135,18 +165,119 @@ class PartialExpressionEvaluator {
             case NOT: {
                 val parEval = op.subExpressions.head.eval
                 if (parEval instanceof Value) {
-                    return createBoolValue(parEval.isThruthy)
+                    return createBoolValue(parEval.isFalsy)
                 } else {
                     return parEval
                 }
             }
-            default: return op.copy // Not yet supported
+            // COMPARISON
+            // CALCULATION
+            // SPECIAL
+            case CONDITIONAL: {
+                for (parEval : op.subExpressions.map[eval]) {
+                    newOp.subExpressions += parEval
+                }
+                val cond = newOp.subExpressions.head
+                if (cond instanceof Value) {
+                    if (cond.isThruthy) {
+                        return newOp.subExpressions.get(1) 
+                    } else {
+                        return newOp.subExpressions.get(2) 
+                    }
+                } else {
+                    return newOp
+                }
+            }
+            default: return if (inplace) op else op.copy // Not yet supported
         }
     }
     
     // Fallback
     protected dispatch def Expression eval(Expression exp) {
         return null // Not yet supported
-    }    
+    }
+    
+//    
+//    protected def Expression compute(List<Value> values, OperatorType op) {
+//        if (values.size == 0) {
+//            throw new IllegalArgumentException("No values to compute")
+//        } else if (values.size == 1) {
+//            return values.head
+//        }
+//
+//        val type = values.checkTypeForComputation(op)
+//        val result = engine.eval(values.map[toValueString(type)].join(" " + op.literal + " "));
+//        return switch(type) {
+//            case BOOL: createBoolValue(result as Boolean)
+//            case INT:
+//            case LOAT:
+//            case DOUBLE:
+//            case STRING:
+//            default: throw new IllegalStateException("Cannot occur")
+//        }
+//        return null // Not yet supported
+//    }
+//    
+//    protected def ValueType checkTypeForComputation(List<Value> values, OperatorType op) {
+//        if (values.size == 0) {
+//            throw new IllegalArgumentException("No values to compute")
+//        } else if (values.size == 1) {
+//            return values.head.valueType
+//        }
+//        if (values.head instanceof StringValue) { // concat
+//            return ValueType.STRING
+//        } else if (op.name().startsWith("BITWISE")) { // bitwise
+//            if (values.forall[valueType == ValueType.BOOL || valueType == ValueType.INT]) {
+//                if (values.forall[valueType == ValueType.BOOL]) {
+//                    return ValueType.BOOL
+//                } else {
+//                    return ValueType.INT
+//                }
+//            }
+//        } else { // regular computation
+//            val types = values.groupBy[valueType]
+//            if (!(types.containsKey(ValueType.BOOL) || types.containsKey(ValueType.STRING))) { // only numbers
+//                // select highest precision
+//                if (types.containsKey(ValueType.DOUBLE)) {
+//                    return ValueType.DOUBLE
+//                } else if (types.containsKey(ValueType.FLOAT)) {
+//                    return ValueType.FLOAT
+//                } else if (types.containsKey(ValueType.INT)) {
+//                    return ValueType.INT
+//                }
+//            }
+//        }
+//        throw new IllegalArgumentException("Incompatible value types " + values.map[class].join(", ") + " for operation " + op.name())
+//    }   
+//    
+//    protected def ValueType valueType(Value value) {
+//        return switch(value) {
+//            BoolValue: ValueType.BOOL
+//            IntValue: ValueType.INT
+//            FloatValue: ValueType.FLOAT
+//            DoubleValue: ValueType.DOUBLE
+//            StringValue: ValueType.STRING
+//            default: throw new IllegalArgumentException("Unsupported value type: " + value.class)
+//        }
+//    }
+//    
+//    protected def String toValueString(Value value, ValueType targetType) {
+//        return switch(value) {
+//            BoolValue: {
+//                if (targetType == ValueType.BOOL) {
+//                    return value.value.toString
+//                } else if (value.value) {
+//                    return "1"
+//                } else {
+//                    return "0"
+//                }
+//            }
+//            IntValue: value.value.toString
+//            FloatValue: value.value.toString
+//            DoubleValue: value.value.toString
+//            StringValue: value.value
+//            default: throw new IllegalArgumentException("Unsupported value type: " + value.class)
+//        }
+//    }      
     
 }
