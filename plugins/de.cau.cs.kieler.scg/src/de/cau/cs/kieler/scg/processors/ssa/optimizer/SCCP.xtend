@@ -239,6 +239,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                                 for (vor : node.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const.key].toList) {
                                     vor.replace(const.value.copy)
                                 }
+                                // TODO clean up dependency
                             } else {
                                 skippedPhi = true
                             }
