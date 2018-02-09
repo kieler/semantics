@@ -52,6 +52,9 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.model.properties.IProperty
+
 /**
  * The SSA transformation for SCGs
  * 
@@ -89,8 +92,12 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     @Inject extension IOPreserverExtensions
     @Inject extension MergeExpressionExtension
     @Inject extension SSATransformationExtensions
+    
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    public static val IProperty<Boolean> SCHEDULE_MERGE_EXPRESSIONS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.scssa.schedule", false)
        
-
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
         validateStructure(scg)
@@ -110,27 +117,34 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         // ---------------
         // 1. Prepare Update Scheduling
         // ---------------
-        scg.prepareUpdateScheduling
+        if (environment.getProperty(SCHEDULE_MERGE_EXPRESSIONS)) {
+            scg.prepareUpdateScheduling
+            scg.snapshot
+        }
 
         // ---------------
         // 2. Preserve output behavior
         // ---------------
         scg.preprocessIO(entryNode as Entry, ssaDecl)
+        scg.snapshot
 
         // ---------------
         // 3. Place Merge Expressions
         // ---------------
         scg.placeMergeExp(dt, ssaReferences, ssaDecl)
+        scg.snapshot
         
         // ---------------
         // 4. Create IO Preserving Assignments
         // ---------------
         val preserverAsm = scg.createPreservingAssignments(dt, ssaReferences, ssaDecl)
+        scg.snapshot
 
         // ---------------
         // 5. Rename Variables
         // ---------------
         scg.rename(dt, entryBB, ssaDecl, ssaReferences)
+        scg.snapshot
 
         // ---------------
         // 6. Optimize concurrent dominant writes
@@ -138,12 +152,14 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         
         scg.updateSSAVersions
         scg.optimizeConcurrentDominantWrite(dt)
+        scg.snapshot
         
         // ---------------
         // 7. Preserve delayed Values
         // ---------------
         scg.postprocessIO(entryNode as Entry, ssaDecl, preserverAsm)
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
+        scg.snapshot
 
         // ---------------
         // 8. Compact SSA merge expression
@@ -151,6 +167,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         for (e : scg.mergeExpressions.values) {
             e.replace(e.reduce)
         }
+        scg.snapshot
         
         // ---------------
         // 9. Remove unused ssa versions
@@ -183,7 +200,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
             }
             for (vor : refs) {
                 val concurrentNodes = node.incoming.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
-                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, dt)
+                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, dt, environment.getProperty(SCHEDULE_MERGE_EXPRESSIONS))
                 vor.replace(mergeExp)
             }
         }
