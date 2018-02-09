@@ -212,7 +212,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
                 if (!declDepPair.key.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
-                    val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
+                    val refs = (if (node instanceof Assignment) node.expression else if (node instanceof Conditional) node.condition).allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
                         ref.replace(createOperatorExpression(OperatorType.LOGICAL_OR) => [
                             subExpressions += ref.copy
@@ -370,7 +370,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 for (v : versions.drop(1)) {
                     defs.get(v).forEach[valuedObject = effective]
                     for (u : uses.get(v)) {
-                        val expr = u.eContents.filter(Expression).head
+                        val expr = if (u instanceof Assignment) u.expression else if (u instanceof Conditional) u.condition
                         expr.allReferences.filter[valuedObject == v].toList.forEach[it.replace(createBoolValue(false))]
                         expr.replace(expr.parEval)
                     }
