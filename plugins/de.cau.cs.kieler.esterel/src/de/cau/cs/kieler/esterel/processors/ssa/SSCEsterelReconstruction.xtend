@@ -215,8 +215,10 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                         (asm.getAnnotation(WeakUnemitSSATransformation.BRANCH_ANNOTATION) as StringAnnotation).values.head
                     }
                     val stms = reverseMapping.get(attachNode)
-                    if (stms.empty || stms.size > 1) {
+                    if (stms.size > 1) {
                         throw new IllegalArgumentException("Too many attach nodes")
+                    } else if (stms.empty && attachNode instanceof Entry) {
+                        module.statements.head.addSSAAssignment(asm, true)
                     } else if (stms.head instanceof Await || (stms.head instanceof Loop && (stms.head as Loop).delay !== null)) {
                         throw new IllegalArgumentException("Cannot attach inside non-kernel statements")
                     } else if (stms.head instanceof EsterelThread) {

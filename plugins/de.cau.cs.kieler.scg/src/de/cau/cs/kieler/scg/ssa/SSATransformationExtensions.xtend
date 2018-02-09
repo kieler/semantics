@@ -67,6 +67,7 @@ class SSATransformationExtensions {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -222,7 +223,7 @@ class SSATransformationExtensions {
         val renamedDefs = <ValuedObject>newLinkedList
         for (sb : block.schedulingBlocks) {
             for (n : sb.nodes) {
-                if (!n.isSSA && (n instanceof Assignment || n instanceof Conditional)) {
+                if (!n.isSSA && (n instanceof Assignment || n instanceof Conditional) && !n.isInputPreserver) {
                     val expr = if (n instanceof Assignment) n.asAssignment.expression else n.asConditional.condition
                     for (ref : expr.allReferences.filter[(!valuedObject.variableDeclaration.input || !SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING) && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                         val vo = ref.valuedObject

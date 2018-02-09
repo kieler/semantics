@@ -109,6 +109,9 @@ class MergeExpressionExtension {
             
             // Compile SCG scheduling
             // TODO KICOOL!!!
+            if (true) throw new UnsupportedOperationException("Scheduled merge expressions using kicool not yet implemented")
+            val SCGraph schedSCG = null
+            val Multimap<EObject, EObject> mapping = null
 //            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.GUARD_EXPRESSIONS_ID +","+ SCGFeatures.GUARDS_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
 //            context.advancedSelect = false;
 //            context.setProperty(Tracing.ACTIVE_TRACING, true);
@@ -122,8 +125,6 @@ class MergeExpressionExtension {
 //            // Extract schedule and map to original VOs
 //            val schedSCG = result.object as SCGraph
 //            val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(schedSCG, copy);
-val SCGraph schedSCG = null
-val Multimap<EObject, EObject> mapping = null
             var ValuedObject findCopyVO = null
             for (d : schedSCG.declarations) {
                 for (v : d.valuedObjects) {
@@ -159,12 +160,12 @@ val Multimap<EObject, EObject> mapping = null
      * Creates a SC specific merge expressions for the given reading node.
      * For combine expressions a prior preparation is needed.
      */
-    def Expression createMergeExpression(Node readingNode, List<Node> concurrentNodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl, DominatorTree dt) {
+    def Expression createMergeExpression(Node readingNode, List<Node> concurrentNodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl, DominatorTree dt, boolean schedule) {
         val scg = readingNode.eContainer as SCGraph
         val hasUpdates = scg.hasUpdates(vo)
-        val mexpression = if (hasUpdates) {
+        val mexpression = if (hasUpdates && schedule) {
             scg.getScheduledExpression(vo, ssaDecl)
-        }else{
+        } else {
             scg.getPatternExpression(vo, ssaDecl, dt)
         }
         

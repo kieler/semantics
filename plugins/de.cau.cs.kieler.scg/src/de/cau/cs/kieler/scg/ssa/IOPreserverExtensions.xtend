@@ -67,6 +67,7 @@ class IOPreserverExtensions {
     // -------------------------------------------------------------------------
     
     public static val OUTPUT_PRESERVER = "scg.ssa.output.preserver"
+    public static val INPUT_PRESERVER = "scg.ssa.input.preserver"
     public static val REGISTER = "scg.ssa.delay.register"
     public static val TERM = "scg.ssa.delay.term"
     
@@ -198,7 +199,7 @@ class IOPreserverExtensions {
                 if (!nodes.empty) {
                     map.put(vo, sCGFactory.createAssignment => [
                         valuedObject = entry.value.valuedObjects.findFirst[isRegister]
-                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt)
+                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt, false)
                     ])
                 } else {
                     map.put(vo, sCGFactory.createAssignment => [
@@ -218,7 +219,7 @@ class IOPreserverExtensions {
                     if (nodes.empty) {
                         expression = iovo.reference
                     } else {
-                        expression = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt)
+                        expression = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt, false)
                     }
                 ])
             }
@@ -252,12 +253,22 @@ class IOPreserverExtensions {
             }
         }
     }
+
+    def isInputPreserver(Node node) {
+        return node.hasAnnotation(INPUT_PRESERVER)
+    }
+    
+    def markInputPreserver(Assignment asm) {
+        asm.annotations += createAnnotation => [
+            name = INPUT_PRESERVER
+        ]
+    }
     
     def isOutputPreserver(Node node) {
         return node.hasAnnotation(OUTPUT_PRESERVER)
     }
     
-    private def markOutputPreserver(Assignment asm) {
+    def markOutputPreserver(Assignment asm) {
         asm.annotations += createAnnotation => [
             name = OUTPUT_PRESERVER
         ]
@@ -267,7 +278,7 @@ class IOPreserverExtensions {
         return vo.hasAnnotation(REGISTER)
     }
     
-    private def markRegister(ValuedObject vo) {
+    def markRegister(ValuedObject vo) {
         vo.annotations += createAnnotation => [
             name = REGISTER
         ]
@@ -277,7 +288,7 @@ class IOPreserverExtensions {
         return vo.hasAnnotation(TERM)
     }
     
-    private def markTerm(ValuedObject vo) {
+    def markTerm(ValuedObject vo) {
         vo.annotations += createAnnotation => [
             name = TERM
         ]

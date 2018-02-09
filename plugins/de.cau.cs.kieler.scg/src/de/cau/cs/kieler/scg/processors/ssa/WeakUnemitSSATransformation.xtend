@@ -64,6 +64,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -103,6 +104,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     @Inject extension KExpressionsDeclarationExtensions
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
+    @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
@@ -230,12 +232,13 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (n : nodes) {
             val cf = n.eContents.filter(ControlFlow).head
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
-            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !input && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME handle input
                 for (vo : d.valuedObjects) {
                     scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                         annotations += createAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
+                        markInputPreserver
                         next = createControlFlow => [
                             target = cf.target
                         ]
