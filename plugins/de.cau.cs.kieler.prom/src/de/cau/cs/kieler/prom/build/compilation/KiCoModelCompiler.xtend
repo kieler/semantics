@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.prom.console.PromConsole
 
 /**
  * Model compiler that uses KiCo.
@@ -241,7 +242,13 @@ class KiCoModelCompiler extends ModelCompiler {
         for(l : listeners)
             l.beforeIntermediateCompilation(this)
         // Compile and check results
-        context.compile
+        try {
+            context.compile
+        } catch (Exception e) {
+            val p = BuildProblem.createError(file, "Exception during KiCo compilation. See the console for a stack trace", e)
+            PromConsole.printStackTrace(e)
+            compilationResult.addProblem(p)
+        }
         resultModel = checkResults(context)
         // Notify listeners
         for(l : listeners)

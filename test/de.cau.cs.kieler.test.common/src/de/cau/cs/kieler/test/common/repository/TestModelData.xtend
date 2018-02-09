@@ -12,11 +12,12 @@
  */
 package de.cau.cs.kieler.test.common.repository
 
+import com.google.common.io.Files
 import java.nio.file.Path
+import java.util.List
 import java.util.Map
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Data
-import java.util.List
 
 /**
  * Data holder for test models in the models repository.
@@ -43,4 +44,14 @@ class TestModelData {
     val Map<String, String> additionalProperties
     /** Flag indicating that this model is confidential and its content should not be publish in any way. */
     val boolean confidential
+    
+    /** The file name (incl. extension) of the loaded model. */
+    public def String modelFile() {
+        return modelPath.fileName.toString
+    }
+    
+    /** The file name without extension of the loaded model. */
+    public def String modelFileBasename() {
+        return Files.getNameWithoutExtension(modelFile)
+    }
 }

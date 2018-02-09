@@ -23,15 +23,10 @@ import org.eclipse.core.runtime.IProgressMonitor
 class CSimulationCompiler extends SimulationCompiler {
     
     /**
-     * The default command to compile C code using the gcc.
-     */
-    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" -lm"
-    
-    /**
      * Constructor
+     * 
      */
-    new() {
-        command.value = DEFAULT_COMMAND
+    new() {   
     }
     
     /**
@@ -54,7 +49,7 @@ class CSimulationCompiler extends SimulationCompiler {
      * {@inheritDoc}
      */
     override getLibFolderOrigin() {
-        return "platform:/plugin/de.cau.cs.kieler.prom/resources/c/cJSON"
+        return "platform:/plugin/de.cau.cs.kieler.prom/resources/c/lib"
     }
     
     /**

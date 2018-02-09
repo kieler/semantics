@@ -38,7 +38,7 @@ class FileExtensions {
     public static val TRACES = #[ESO, KTRACE]
 
     // Configurations
-    public static val COMPILATION_SYSTEM = "kico"
+    public static val COMPILATION_CONFIG = "kico"
     public static val BUILD_CONFIG = "kibuild"
     public static val SIM_CONFIG = "kisim"
     public static val SIM_VISUALIZATION = "kivis"
@@ -155,6 +155,16 @@ class FileExtensions {
      */
     public static def boolean isBuildConfiguration(IFile file) {
         return matches(file, BUILD_CONFIG)
+    }
+    
+    /**
+     * Checks if the file contains a compilation configuration for the KIELER compiler.
+     * 
+     * @param file The file
+     * @return true if the file contains a compilation configuration, false otherwise
+     */
+    public static def boolean isCompilationConfiguration(IFile file) {
+        return matches(file, COMPILATION_CONFIG)
     }
     
     /**

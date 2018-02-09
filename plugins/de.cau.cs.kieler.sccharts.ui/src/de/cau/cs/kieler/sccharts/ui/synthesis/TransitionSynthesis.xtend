@@ -45,8 +45,14 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
-    public static final SynthesisOption SHOW_USER_LABELS =
-            SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE);
+    public static val SynthesisOption SHOW_USER_LABELS =
+            SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE)
+            
+    /**
+     * Immediate transition will be more likely drwn from left to right as long as there are no more than this threshold
+     *  number of other edges to flip to break a cycle.
+     */ 
+    public static val IMMEDIATE_TRANSITION_DIRECTION_THRESHOLD = 6
 
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
@@ -65,6 +71,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0)
+            if (transition.isImplicitlyImmediate) {
+                edge.setLayoutOption(LayeredOptions::PRIORITY_DIRECTION, IMMEDIATE_TRANSITION_DIRECTION_THRESHOLD)
+            }
         } else {
             edge.setLayoutOption(CoreOptions::SPACING_EDGE_LABEL, 2.0);
         }

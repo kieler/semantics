@@ -12,10 +12,13 @@
  */
 package de.cau.cs.kieler.simulation.ui.preferences
 
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import de.cau.cs.kieler.prom.ui.UIUtil
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import java.util.List
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.jface.preference.PreferencePage
 import org.eclipse.jface.viewers.ArrayContentProvider
@@ -27,20 +30,21 @@ import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
+import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
+import org.eclipse.swt.widgets.Spinner
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
+import org.eclipse.xtend.lib.annotations.Data
 
 import static de.cau.cs.kieler.prom.build.RegisterVariablesFinder.*
-import org.eclipse.swt.widgets.Spinner
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import org.eclipse.swt.events.SelectionAdapter
+import static de.cau.cs.kieler.simulation.core.SimulationManager.*
 
 /**
  * @author aas
@@ -66,6 +70,11 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
      * The text field to set the compile chain of the current model analyzer.
      */
     private var Text compileChainField
+    
+    /**
+     * The control to select a predefined compile chain
+     */
+    private var ComboViewer compileChainPresetControl
     
     /**
      * The control to set the maximum history length
@@ -160,8 +169,9 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         
         // Create a text field to set the compile chain of the model analyzer
         val label = new Label(group, SWT.NONE) 
-        label.text = "Default compile chain"
+        label.text = "Default compile chain (comma separated)"
         
+        // Show text field that sets the compile chain
         compileChainField = new Text(group, SWT.MULTI)
         compileChainField.layoutData = new GridData(GridData.FILL_BOTH)
         // Set the current analyzer
@@ -173,6 +183,43 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
                 }
             }
         })
+        
+        // Show combo with predefined compile chains
+        val tts = "de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling"
+        val scchartCompileChains = #[
+            new CompileChainPreset("Netlist C with TTS (default)", #[tts,"de.cau.cs.kieler.sccharts.netlist.simple"]), 
+            new CompileChainPreset("Netlist C", #["de.cau.cs.kieler.sccharts.netlist.simple"]),
+            new CompileChainPreset("Netlist Java with TTS", #[tts,"de.cau.cs.kieler.sccharts.netlist.java"]),
+            new CompileChainPreset("Netlist Java", #["de.cau.cs.kieler.sccharts.netlist.java"]),
+            new CompileChainPreset("Prio Java with TTS", #[tts,"de.cau.cs.kieler.sccharts.priority.java"]),
+            new CompileChainPreset("Prio Java", #["de.cau.cs.kieler.sccharts.priority.java"])
+        ]
+        
+        val comp = UIUtil.createComposite(group, 2)
+        val label2 = new Label(comp, SWT.NONE) 
+        label2.text = "Compile chain presets (SCCharts only)"
+        
+        compileChainPresetControl = UIUtil.createCombo(comp, scchartCompileChains.toList)
+        compileChainPresetControl.selection = null
+        compileChainPresetControl.labelProvider = new LabelProvider() {
+            override getText(Object elem) {
+                if(elem instanceof CompileChainPreset) {
+                    return elem.name
+                }
+                return super.getText(elem)
+            }
+        }
+        
+        // Add selection listener
+        compileChainPresetControl.addSelectionChangedListener[e|
+            if(e !== null && e.selection instanceof StructuredSelection) {
+                val sel = (e.selection as StructuredSelection).firstElement
+                if(sel instanceof CompileChainPreset) {
+                    val compileChainDefault = sel
+                    compileChainField.text = compileChainDefault.compileChain.join(",\n")
+                }    
+            }
+        ]
     }
     
     /**
@@ -181,7 +228,11 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
     private def void setCurrentAnalyzer(ModelAnalyzer analyzer) {
         this.currentAnalyzer = analyzer
         if(currentAnalyzer !== null) {
-            compileChainField.text = currentAnalyzer.compileChain    
+            compileChainField.text = currentAnalyzer.compileChain
+            // Default values for the compile chain are only available for SCCharts
+            if(compileChainPresetControl !== null) {
+                compileChainPresetControl.control.enabled = currentAnalyzer.isSupported(FileExtensions.SCCHART)    
+            }
         } else {
             compileChainField.text = ""
         }
@@ -203,5 +254,11 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         setCurrentAnalyzer(currentAnalyzer)
         
         super.performDefaults
+    }
+    
+    @Data
+    private static class CompileChainPreset {
+        val String name
+        val List<String> compileChain
     }
 }
