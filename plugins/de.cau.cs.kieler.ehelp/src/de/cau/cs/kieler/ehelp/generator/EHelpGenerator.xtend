@@ -89,6 +89,12 @@ class EHelpGenerator extends AbstractGenerator implements IOutputConfigurationPr
 				val keywordFileName = EHelpConsts.genFolderName + "/" + EHelpConsts.contextFileName
 				fsa.generateFile(keywordFileName, model.generateContextXml)
 			}
+
+            // Optional complete help file creation
+            if (EHelpConsts.generateCompleteDocumentation) {
+                val keywordFileName = EHelpConsts.genFolderName + "/" + EHelpConsts.completeDocumentationFileName
+                fsa.generateFile(keywordFileName, model.generateCompleteDocumentation)
+            }
 			
 
 		// Clear all images, then copy the used images to the gen folder

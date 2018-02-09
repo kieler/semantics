@@ -27,6 +27,8 @@ class EHelpConsts {
     public static final val boolean DEFAULT_GENERATE_CONTEXT_FILE = true;
     public static final val String  DEFAULT_CONTEXT_FILE_NAME = "context.xml";
     public static final val String  DEFAULT_CONTEXT_ID_EXT = ".help";
+    public static final val boolean DEFAULT_GENERATE_COMPLETE_DOCUMENTATION = false;
+    public static final val String DEFAULT_COMPLETE_DOCUMENTATION_FILE_NAME = "HelpComplete.html";
 
     public static final val int     DEFAULT_GENERATE_IMPLICIT_OUTLINE = 0;
     
@@ -127,6 +129,14 @@ class EHelpConsts {
 
     def static generateImplicitOutline() {
         return getCustomizationValue("generateImplicitOutline", DEFAULT_GENERATE_IMPLICIT_OUTLINE) as Integer
+    }
+
+    def static getCompleteDocumentationFileName() {
+        return getCustomizationValue("getCompleteDocumentationFileName", DEFAULT_COMPLETE_DOCUMENTATION_FILE_NAME) as String
+    }
+
+    def static generateCompleteDocumentation() {
+        return getCustomizationValue("generateCompleteDocumentation", DEFAULT_GENERATE_COMPLETE_DOCUMENTATION) as Boolean
     }
 
 }

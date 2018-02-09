@@ -109,4 +109,20 @@ public interface IEHelpCustomization {
 	 * @return 0, 1, 2, or 3
 	 */
 	int generateImplicitOutline();
+	
+	
+	/**
+	 * Define the name of the optional documentation file which contains the complete help content.
+	 *     
+	 * @return String file name
+	 */
+    String getCompleteDocumentationFileName();
+    
+    
+    /**
+     * Define whether a complete documentation file is generated.
+     * 
+     * @return true iff optional complete docu file shall be generated
+     */
+    boolean generateCompleteDocumentation();
 }
