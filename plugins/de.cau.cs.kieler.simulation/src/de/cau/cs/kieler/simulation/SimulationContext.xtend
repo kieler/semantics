@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
@@ -28,6 +27,7 @@ import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
 import de.cau.cs.kieler.prom.drafts.ProjectDraftData
+import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -212,13 +212,18 @@ class SimulationContext {
         this.simulationBackend = simulationBackend
         // If the backend changes, the temporary project needs to be re-initialized
         initializedProject = false
-        // Model compilers
-        val buildConfig = simulationBackend.buildConfig
-        modelCompilers = buildConfig.createModelCompilers
-        modelCompilers.setProgressMonitor
-        // Prepare simulation compilers
-        simulationCompilers = buildConfig.createSimulationCompilers
-        simulationCompilers.setProgressMonitor
+        if(simulationBackend !== null) {
+            // Model compilers
+            val buildConfig = simulationBackend.buildConfig
+            modelCompilers = buildConfig.createModelCompilers
+            modelCompilers.setProgressMonitor
+            // Prepare simulation compilers
+            simulationCompilers = buildConfig.createSimulationCompilers
+            simulationCompilers.setProgressMonitor
+        } else {
+            modelCompilers = null
+            simulationCompilers = null
+        }
     }
     
     /**
@@ -318,6 +323,35 @@ class SimulationContext {
     }
     
     /**
+     * Compiles the target code, which has to be ready for simulation, to an executable.
+     * The created executable is added automatically to the simulation to be created.
+     * 
+     * @param f The file handle of the target code
+     */
+    public def void compileTargetCodeForSimulation(IFile file) {
+        // Find a simulation backend for the file
+        if(simulationBackend === null) {
+            val newSimulationBackend = SimulationBackend.findSimulationBackend(file)
+            setSimulationBackend(newSimulationBackend)
+        }
+        if(buildResult === null) {
+            buildResult = new FileGenerationResult
+        }
+        // Compile the file with all simulation compilers
+        for (simulationCompiler : simulationCompilers) {
+            val simCompilationResult = simulationCompiler.compile(file)
+            if(isCanceled) {
+                return
+            }
+            // Check result for errors
+            checkErrors(simCompilationResult.problems)
+            // Add the created executables to the executables that should be simulated
+            executableFiles.addAll(simCompilationResult.createdFiles)
+            buildResult.createdFiles.addAll(simCompilationResult.createdFiles)
+        }
+    }
+    
+    /**
      * Compiles the model to an executable that is ready for simulation.
      * The created executable is added automatically to the simulation to be created.
      * 
@@ -361,18 +395,8 @@ class SimulationContext {
             checkErrors(modelCompilationResult.problems)
             
             // Compile simulation code to executable
-            for (simulationCompiler : simulationCompilers) {
-                for (simFile : modelCompilationResult.createdSimulationFiles) {
-                    val simCompilationResult = simulationCompiler.compile(simFile)
-                    if(isCanceled) {
-                        return
-                    }
-                    // Check result for errors
-                    checkErrors(simCompilationResult.problems)
-                    // Add the created executables to the executables that should be simulated
-                    executableFiles.addAll(simCompilationResult.createdFiles)
-                    buildResult.createdFiles.addAll(simCompilationResult.createdFiles)
-                }
+            for (simFile : modelCompilationResult.createdSimulationFiles) {
+                compileTargetCodeForSimulation(simFile)
             }
         }
     }
@@ -396,8 +420,9 @@ class SimulationContext {
             modelFile = modelFolder.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
             PromPlugin.createResource(modelFile)
             // Find a suited simulation backend for the compile chain of the model analyzer
-            if(simulationBackend == null) {
-                setSimulationBackend(getSimulationBackend(modelAnalyzer.compileChain.trim))    
+            if(simulationBackend === null) {
+                val newSimulationBackend = SimulationBackend.findSimulationBackend(modelAnalyzer.compileChain.trim)
+                setSimulationBackend(newSimulationBackend)    
             }
         } else {
             throw new Exception("Cannot create a simulation. No model analyzer was found for "+model)    
@@ -470,54 +495,4 @@ class SimulationContext {
     private def ProjectDraftData getProjectDraft() {
         return simulationBackend?.projectDraft
     }
-    
-    /**
-     * Searches for a suited simulation backend for the given compile chain.
-     * Relevant for the simulation backend is the last processor that creates the target code for the models.
-     * 
-     * @param compileChain The compileChain
-     * @return A simulation backend for the given compile chain
-     * @throws Exception if no suited simulation backend is found.
-     */
-    private def SimulationBackend getSimulationBackend(String compileChain) {
-        val lastProcessorOrSystemId = KiCoModelCompiler.splitCompileChain(compileChain).last
-        var String lastProcessorId
-        try {
-            val system = KiCoolRegistration.getSystemById(lastProcessorOrSystemId)
-            // If there was no exception, then this is a system
-            lastProcessorId = system.processors.getLastProcessorId    
-        } catch (Exception ex) {
-            try {
-                val processor = KiCoolRegistration.getProcessorClass(lastProcessorOrSystemId)
-                // If there was no exception, then this is a processor
-                lastProcessorId = lastProcessorOrSystemId
-            } catch(Exception e) {
-            }
-        }
-        // Find a suited simulation backend for the processor id
-        if(lastProcessorId.isNullOrEmpty) {
-            throw new Exception("Cannot resolve compile chain '"+compileChain+"'")
-        } else {
-            for(backend : SimulationBackend.backends) {
-                if(backend.isSupported(lastProcessorId)) {
-                    return backend
-                }
-            }
-            throw new Exception("No simulation backend was found for the result of the last processor '"+lastProcessorId+"'")    
-        }
-    }
-    
-    /**
-     * Returns the last processor id of the given processor entry.
-     * The entry may also be a group of processors. The id of the last processor in this group is returned in this case.
-     */
-    private def String getLastProcessorId(ProcessorEntry processors) {
-        if(processors instanceof ProcessorGroup) { 
-            return processors.processors.last.lastProcessorId
-        } else if (processors instanceof ProcessorReference) {
-            return processors.id
-        } else if (processors instanceof ProcessorSystem) {
-            return processors.id
-        }
-    } 
 }

@@ -146,8 +146,8 @@ class LayoutHook extends SynthesisActionHook {
 
     def void setSidebarDirection(KNode node) {
         switch (LAYOUT_DIRECTION.objectValue) {
-            case "HV": node.setDepthDirection(true, 0)
-            case "VH": node.setDepthDirection(false, 0)
+            case "HV": node.setDepthDirection(true)
+            case "VH": node.setDepthDirection(false)
             case "Down": node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
             case "Right": node.setLayoutOption(CoreOptions.DIRECTION, Direction.RIGHT)
             default: return
@@ -157,7 +157,7 @@ class LayoutHook extends SynthesisActionHook {
 
     override processRegion(Region region, KNode node) {
         val regions = region.parentState?.regions
-        if (region != null) {
+        if (region !== null) {
             node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
             
             if (region instanceof DataflowRegion){
@@ -198,16 +198,18 @@ class LayoutHook extends SynthesisActionHook {
 
     private def processAlternatingLayoutAnnotation(KNode node, Scope scope) {
         val annotation = scope.annotations.findLast[isAlternatingLayoutAnnotation]
+        val depth = node.getProperty(HV_DEPTH)
         if (annotation !== null) {
+            node.setProperty(HV_DEPTH, 0)
             val isHV = annotation.name.equalsIgnoreCase(HV_ANNOTATION)
-            val offset = node.getProperty(HV_DEPTH) ?: 0
             val workingset = newLinkedHashMap(new Pair(scope, node))
             while (!workingset.empty) {
                 val subScope = workingset.keySet.head
                 val subNode = workingset.remove(subScope)
+                val d = subNode.getProperty(HV_DEPTH)
 
                 if (subScope instanceof ControlflowRegion) {
-                    subNode.setDepthDirection(isHV, offset)
+                    subNode.setDepthDirection(isHV)
                 }
 
                 // Add child elements to processing queue
@@ -215,10 +217,16 @@ class LayoutHook extends SynthesisActionHook {
                     val nextElement = subNode.children.findFirst[isAssociatedWith(nextScope)];
                     if (nextElement !== null && !nextScope.annotations.exists[isAlternatingLayoutAnnotation]) {
                         workingset.put(nextScope, nextElement)
+                        if (nextScope instanceof State) {
+                            nextElement.setProperty(HV_DEPTH, d + 1)
+                        } else {
+                            nextElement.setProperty(HV_DEPTH, d)
+                        }
                     }
                 }
             }
         }
+        node.setProperty(HV_DEPTH, depth) // Restore
     }
 
     private def isAlternatingLayoutAnnotation(Annotation annotation) {
@@ -237,9 +245,9 @@ class LayoutHook extends SynthesisActionHook {
         return node.getProperty(BLOCK_ALTERNATIN_LAYOUT);
     }
 
-    private def setDepthDirection(KNode node, boolean isHV, int depthOffset) {
+    private def setDepthDirection(KNode node, boolean isHV) {
         if (!node.isBlockingAlternatingLayout) {
-            val depth = (node.getProperty(HV_DEPTH) ?: 0) - depthOffset
+            val depth = (node.getProperty(HV_DEPTH) ?: 0)
             if (Boolean.logicalXor(isHV,(depth % 2 == 0))) {
                 node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
             } else {

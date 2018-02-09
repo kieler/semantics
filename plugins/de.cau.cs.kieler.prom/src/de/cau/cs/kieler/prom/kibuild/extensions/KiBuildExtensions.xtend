@@ -10,8 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom
+package de.cau.cs.kieler.prom.kibuild.extensions
 
+import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
 import de.cau.cs.kieler.prom.build.templates.SimpleTemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
@@ -21,7 +23,6 @@ import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor
 import java.util.List
 import org.eclipse.core.runtime.IConfigurationElement
-import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 
 /**
  * Extension methods to work with KiBuild files.
@@ -30,6 +31,45 @@ import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
  *
  */
 class KiBuildExtensions {
+    
+    extension static val AttributeMappingExtensions attributeMappingExtensions = new AttributeMappingExtensions
+    extension static val KiBuildCreateExtensions kiBuildCreateExtensions = new KiBuildCreateExtensions
+    
+    /**
+     * Sets an attribute for all model compilers.
+     */
+    public def void setModelCompilerAttribute(BuildConfiguration config, String attributeName, String value) {
+        for(m : config.modelCompilers) {
+            m.attributes.setAttribute(attributeName, value)
+        }
+    }
+    
+    /**
+     * Sets an attribute for all model compilers.
+     */
+    public def void setModelCompilerAttributeToStringList(BuildConfiguration config, String attributeName, List<String> values) {
+        for(m : config.modelCompilers) {
+            m.attributes.setAttributeToStringList(attributeName, values)
+        }
+    }
+    
+    /**
+     * Sets an attribute for all simulation compilers.
+     */
+    public def void setSimulationCompilerAttribute(BuildConfiguration config, String attributeName, String value) {
+        for(s : config.simulationCompilers) {
+            s.attributes.setAttribute(attributeName, value)
+        }
+    }
+    
+    /**
+     * Sets an attribute for all template processors.
+     */
+    public def void setTemplateProcessorAttribute(BuildConfiguration config, String attributeName, String value) {
+        for(t : config.templateProcessors) {
+            t.attributes.setAttribute(attributeName, value)
+        }
+    }
     
     /**
      * Creates the model compilers that are configured in the build configuration.

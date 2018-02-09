@@ -75,24 +75,39 @@ class NDimensionalArraySerializer implements JsonSerializer<NDimensionalArray>,
                 indices.add(i)
             }
             
-            val List<Object> values = newArrayList()        
-            for(jsonValue : jsonValues) {
-                val value = JsonManager.jsonAsObject(jsonValue)
-                if(value instanceof Double) {
-                    val intValue = value.intValue 
-                    if(value == intValue) {
-                        values.add(intValue)
-                    } else {
-                        values.add(value)
-                    }
-                } else {
-                    values.add(value)    
-                }
-            }
+            val List<Object> values = newArrayList()
+            values.addAll(jsonValues)
             val array = new NDimensionalArray(values, indices)
             return array
         } catch (Exception e) {
             throw new Exception("Cannot deserialize NDimensionalArray", e)
+        }
+    }
+    
+    /**
+     * Adds the values of a (possibly multidimensional) json array to the target list.
+     */
+    private def void addAll(List<Object> targetList, JsonArray jsonArray) {
+        for(jsonValue : jsonArray) {
+            if(jsonValue instanceof JsonArray) {
+                // The values in this array are other arrays.
+                targetList.addAll(jsonValue)
+            } else {
+                // The values in this array seem to be primitives.
+                val value = JsonManager.jsonAsObject(jsonValue)
+                if(value !== null) {
+                    if(value instanceof Double) {
+                        val intValue = value.intValue 
+                        if(value == intValue) {
+                            targetList.add(intValue)
+                        } else {
+                            targetList.add(value)
+                        }
+                    } else {
+                        targetList.add(value)    
+                    }    
+                }
+            }
         }
     }
 }
