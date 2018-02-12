@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import de.cau.cs.kieler.simulation.backends.SimulationBackend
 
 /**
  * @author aas
@@ -87,6 +88,8 @@ class SimulationUtil {
                     context.simInFile = file
                 } else if(isModel(file)) {
                     context.compileModelForSimulation(file)
+                } else if(isTargetCode(file)) {
+                    context.compileTargetCodeForSimulation(file)
                 } else if(isExecutable(file)) {
                     // The check for executables has to be the last check, because Windows
                     // seems to recognize other files than an exe as executable.
@@ -95,6 +98,14 @@ class SimulationUtil {
             }
             context.start    
         ]
+    }
+    
+    /**
+     * Returns true if there is a simulation backend that supports the given file.
+     * In this case it is assumed that the file is ready for simulation.
+     */
+    private static def boolean isTargetCode(IFile file) {
+        return SimulationBackend.backends.exists[it.isSupported(file)]
     }
     
     /**

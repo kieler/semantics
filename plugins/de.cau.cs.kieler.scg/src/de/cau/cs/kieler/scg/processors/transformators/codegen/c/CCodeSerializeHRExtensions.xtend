@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
  * @author ssm
@@ -143,7 +144,14 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).text
             }
-            var assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
+            var String assignmentStr
+            if (assignment.operator == AssignOperator::ASSIGNMIN) {
+                assignmentStr = valuedObjectName + " = (" + valuedObjectName + " < " + assignmentText + ") ? " + valuedObjectName + " : " + assignmentText
+            } else if (assignment.operator == AssignOperator::ASSIGNMAX) {
+                assignmentStr = valuedObjectName + " = (" + valuedObjectName + " > " + assignmentText + ") ? " + valuedObjectName + " : " + assignmentText
+            } else {
+                assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
+            }
             assignmentStr
         } else if (assignment.expression instanceof TextExpression) {
             (assignment.expression as TextExpression).text

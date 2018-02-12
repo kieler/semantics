@@ -74,7 +74,6 @@ class StateStyles {
      * Adds a connector figure.
      */
     def KRoundedRectangle addConnectorFigure(KNode node) {
-        node.setNodeSize(2, 2);
         node.addRoundedRectangle(7, 7, baseLineWidth) => [
             background = STATE_CONNECTOR.color;
             foreground = STATE_CONNECTOR.color;
