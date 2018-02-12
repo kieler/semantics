@@ -164,9 +164,9 @@ class ExpandCollapseHook extends SynthesisHook {
             } else {
                 node.initiallyCollapse
             }
-        } else if (region.annotations.exists[name.equalsIgnoreCase(COLLAPSE_ANNOTATION)]) {
+        } else if (region.annotations.exists[name !== null && name.equalsIgnoreCase(COLLAPSE_ANNOTATION)]) {
             node.initiallyCollapse
-        } else if (region.annotations.exists[name.equalsIgnoreCase(EXPAND_ANNOTATION)]) {
+        } else if (region.annotations.exists[name !== null && name.equalsIgnoreCase(EXPAND_ANNOTATION)]) {
             node.initiallyExpand
         } else {
             node.initiallyExpand
