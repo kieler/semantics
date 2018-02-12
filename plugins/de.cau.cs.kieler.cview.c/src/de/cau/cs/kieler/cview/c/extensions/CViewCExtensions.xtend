@@ -84,8 +84,8 @@ class CViewCExtensions {
 
     // -------------------------------------------------------------------------
     // Return the attached AST
-    def IASTTranslationUnit getAST(Component component) {
-        return CViewPlugin.getFileParsed(component.location) as IASTTranslationUnit
+    def IASTTranslationUnit getAST(Component component, String option) { 
+        return CViewPlugin.getFileParsed(component.location, option) as IASTTranslationUnit
     }
     
     // -------------------------------------------------------------------------

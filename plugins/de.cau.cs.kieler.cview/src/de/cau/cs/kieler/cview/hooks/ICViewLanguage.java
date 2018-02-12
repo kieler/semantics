@@ -123,9 +123,10 @@ public interface ICViewLanguage {
      * The central parse method for creating a parsed version of the file.
      * 
      * @param fileContent
+     * @param option an optional option string identifier, if any or null
      * @return
      */
-    Object parseFile(char[] fileContent, IFile file);
+    Object parseFile(char[] fileContent, IFile file, String option);
 
     /**
      * Return the set of file extensions that belong to this language. modelCreateFileSubComponents

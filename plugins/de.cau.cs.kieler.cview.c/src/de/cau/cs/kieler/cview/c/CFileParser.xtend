@@ -38,18 +38,27 @@ import de.cau.cs.kieler.cview.CViewPlugin
  */
 class CFileParser {
 
-    def static IASTTranslationUnit parse(char[] code, IFile file) throws Exception {
+    def static IASTTranslationUnit parse(char[] code, IFile file, String option) throws Exception {
         var IASTTranslationUnit returnAst = null
         val location = file.rawLocation
-        try {
-            // default mechanism
-             val componentTU = CoreModel.^default.create(location) as ITranslationUnit
-             val defaultCoreModel = CoreModel.getDefault()
-             val componentProject = defaultCoreModel.CModel.getCProject(file.project.name)
-             val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
-             componentIndex.acquireReadLock
-             returnAst = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
-        } catch(Exception e) {
+        var backup = (option == CLanguage.OPTION_PARSE_ISOLATED)
+
+        if (!backup) {
+            try {
+                // default mechanism
+                val componentTU = CoreModel.^default.create(location) as ITranslationUnit
+                val defaultCoreModel = CoreModel.getDefault()
+                val componentProject = defaultCoreModel.CModel.getCProject(file.project.name)
+                val componentIndex = CCorePlugin.indexManager.getIndex(componentProject)
+                componentIndex.acquireReadLock
+                returnAst = componentTU.getAST(componentIndex, ITranslationUnit.AST_SKIP_INDEXED_HEADERS)
+            } catch (Exception e) {
+                backup = true
+            }
+
+        }
+
+        if (backup) {
             // backup mechanism  --- WARNING MIGHT NOT FIND INTERDEPENDENCIES BETWEEN FILES
             val fc = FileContent.create("/Path/ToResolveIncludePaths.cpp", code);
             val macroDefinitions = new HashMap<String, String>();
@@ -60,13 +69,11 @@ class CFileParser {
             val options = ILanguage.OPTION_IS_SOURCE_UNIT;
             val log = new DefaultLogService();
             returnAst = GPPLanguage.getDefault().getASTTranslationUnit(fc, si, ifcp, idx, options, log);
-            CViewPlugin.raiseWarning(
-                "No C project found for file '" + location +
-                    "', parsing in isolation only! Some interdependencies migh be missed.")
+            CViewPlugin.raiseWarning("No C project found for file '" + location +
+                "', parsing in isolation only! Some interdependencies migh be missed.")
         }
 
-         return returnAst
+        return returnAst
     }
 
 }
-        

@@ -72,6 +72,11 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
     public static String CONNECTION_TYPE_REFERENCE_FUNC = "de.cau.cs.kieler.cview.c.connectiontype.func"
     public static String CONNECTION_TYPE_REFERENCE_TYPE = "de.cau.cs.kieler.cview.c.connectiontype.type"
     public static String CONNECTION_TYPE_INCLUSION = "de.cau.cs.kieler.cview.c.connectiontype.inclusion"
+    
+    // Parse options
+    // Use these options of calls to parseFile()
+    public static String OPTION_PARSE_INDEXED = "OPTION_PARSE_INDEXED"
+    public static String OPTION_PARSE_ISOLATED = "OPTION_PARSE_ISOLATED"
 
     // Options
     public static String OPTION_CONNECTION_FUNC = "de.cau.cs.kieler.cview.c.option.func"
@@ -187,8 +192,8 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         }
 
         // ------------------------------------------------------------------------
-        override Object parseFile(char[] fileContent, IFile file) { 
-            return CFileParser.parse(fileContent, file);
+        override Object parseFile(char[] fileContent, IFile file, String option) { 
+            return CFileParser.parse(fileContent, file, option);
         }
 
         HashMap<IASTNode, Component> functionComponents = newHashMap()
@@ -236,7 +241,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
             fileComponent.tooltip = tooltip
 
             if (parse || OPTION_CONNECTION_TYPE.isOptionRequired || OPTION_CONNECTION_FUNC.isOptionRequired) {
-                val ast = fileComponent.AST
+                val ast = fileComponent.getAST(CLanguage.OPTION_PARSE_ISOLATED)
                 
                 if (ast == null) {
                     CViewPlugin.raiseError("Cannot parse file '"+fileComponent.location+"'")
@@ -443,7 +448,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
             if (SHOW_INCLUSION.getBooleanValue || OPTION_CONNECTION_INCLUSION.isOptionRequired) {
                 for (component : model.components) {
                     if (component.isFile && component.isFileHandled(fileExtensions())) {
-                        val ast = component.AST
+                        val ast = component.getAST(CLanguage.OPTION_PARSE_ISOLATED)
                         if (ast != null) {
                             for (include : ast.translationUnit.includeDirectives) {
                                 val includedComponents = model.getComponentByIncludePath(include.name.toString)

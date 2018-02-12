@@ -75,7 +75,7 @@ class DefaultLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         return
     }
     
-    override parseFile(char[] fileContent, IFile file) {
+    override parseFile(char[] fileContent, IFile file, String option) {
         return null
     }
     

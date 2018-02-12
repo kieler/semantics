@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.ErrorManager;
 
@@ -142,15 +144,29 @@ public class CViewPlugin extends AbstractUIPlugin {
     }
 
     private static void cachePutFileParsed(String fileLocation, Object fileParsed) {
-        cacheFileParsed.put(fileLocation, fileParsed);
+        if (fileParsed == null) {
+            // clear for all options
+            cacheFileParsed.forEach((key, value) -> {
+                if (key.endsWith("@" + fileLocation)) {
+                    cacheFileParsed.put(key, null);
+                }
+            });
+        } else {
+            cacheFileParsed.put(fileLocation, fileParsed);
+        }
     }
 
-    public static Object getFileParsed(String fileLocation) {
+    public static Object getFileParsed(String fileLocation, String option) {
         Object returnValue = null;
+        String option2 = option;
+        if (option == null) {
+            option2 = "";
+        }
         if (modified(fileLocation)) {
+            // for ALL (used/saved) options, null these
             cachePutFileParsed(fileLocation, null);
         }
-        returnValue = cacheGetFileParsed(fileLocation);
+        returnValue = cacheGetFileParsed(option2 + "@" +fileLocation);
         if (returnValue == null) {
             try {
                 char[] content = getFileRaw(fileLocation);
@@ -159,8 +175,8 @@ public class CViewPlugin extends AbstractUIPlugin {
                     
                     IFile file = CViewPlugin.getIFile(fileLocation);
                     if (file != null) {
-                        returnValue = language.parseFile(content, file);
-                        cachePutFileParsed(fileLocation, returnValue);
+                        returnValue = language.parseFile(content, file, option2);
+                        cachePutFileParsed(option2 + "@" + fileLocation, returnValue);
                     } else {
                         CViewPlugin.raiseError("Cannot parse file '"+fileLocation+"'.");
                     }

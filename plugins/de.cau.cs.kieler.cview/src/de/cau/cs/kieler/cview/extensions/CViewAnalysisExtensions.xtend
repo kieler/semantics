@@ -56,8 +56,9 @@ class CViewAnalysisExtensions {
     }
 
     // Get the file raw    
-    def fileParsed(Component fileComponent) {
-        return CViewPlugin.getFileParsed(fileComponent.location)
+    // The optional option may be null or can be interpreted by the parser
+    def fileParsed(Component fileComponent, String option) {
+        return CViewPlugin.getFileParsed(fileComponent.location, option)
     }
 
     // ------------------------------------------------------------------------
