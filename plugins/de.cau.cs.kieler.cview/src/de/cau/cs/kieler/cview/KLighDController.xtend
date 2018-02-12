@@ -205,48 +205,48 @@ class KLighDController extends AbstractKLighDController {
             val component = model.addToModel(element, monitor)
         }
 
-//        // Resolve references
-//        referenceMapping.clear
-//        // Build list of mappings
-//        for (component : model.components) {
-//            if (monitor.canceled) {
-//                CViewPlugin.monitorCanceled = true
-//                return model
-//            }
-//            val String referenceType = component.type.literal
-//            val String referenceId = referenceType + "__@#$__" + component.name
-//            referenceMapping.put(referenceId, component)
-//        // CViewPlugin.printlnConsole("INFO: Put Ref. '" + referenceId + "'")
-//        }
-//        
-//        // Resolve
-//        CViewPlugin.printlnConsole("-------- RESOLVING START ------------")
-//        for (component : model.components) {
-//            if (monitor.canceled) {
-//                CViewPlugin.monitorCanceled = true
-//                return model
-//            }
-//            if (component.isReference && !component.resolved) {
-//                val thisType = component.type.literal
-//                var String referenceType = thisType
-//                if (thisType == "DECL") {
-//                    referenceType = "TYPEDEF"
-//                } else if (thisType == "TYPEDEF") {
-//                    referenceType = "STRUCT"
-//                }
-//                val String referenceId = referenceType + "__@#$__" + component.referenceUnresolved
-//                if ((!component.referenceUnresolved.nullOrEmpty) && referenceMapping.containsKey(referenceId)) {
-//                    val Component otherComponent = referenceMapping.get(referenceId)
-//                    // Here we set the reference if we have found it
-//                    component.reference = otherComponent
-//                    CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
-//                } else {
-//                    // Claim that we have not found
-//                    CViewPlugin.printlnConsole("ERROR: Could not resolve '" + referenceId + "'")
-//                }
-//            }
-//        }
-//        CViewPlugin.printlnConsole("-------- RESOLVING END ------------")
+        // Resolve references
+        referenceMapping.clear
+        // Build list of mappings
+        for (component : model.components) {
+            if (monitor.canceled) {
+                CViewPlugin.monitorCanceled = true
+                return model
+            }
+            val String referenceType = component.type.literal
+            val String referenceId = referenceType + "__@#$__" + component.name
+            referenceMapping.put(referenceId, component)
+        // CViewPlugin.printlnConsole("INFO: Put Ref. '" + referenceId + "'")
+        }
+        
+        // Resolve
+        CViewPlugin.printlnConsole("-------- RESOLVING START ------------")
+        for (component : model.components) {
+            if (monitor.canceled) {
+                CViewPlugin.monitorCanceled = true
+                return model
+            }
+            if (component.isReference && !component.resolved) {
+                val thisType = component.type.literal
+                var String referenceType = thisType
+                if (thisType == "DECL") {
+                    referenceType = "TYPEDEF"
+                } else if (thisType == "TYPEDEF") {
+                    referenceType = "STRUCT"
+                }
+                val String referenceId = referenceType + "__@#$__" + component.referenceUnresolved
+                if ((!component.referenceUnresolved.nullOrEmpty) && referenceMapping.containsKey(referenceId)) {
+                    val Component otherComponent = referenceMapping.get(referenceId)
+                    // Here we set the reference if we have found it
+                    component.reference = otherComponent
+                    CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
+                } else {
+                    // Claim that we have not found
+                    CViewPlugin.printlnConsole("ERROR: Could not resolve '" + referenceId + "'")
+                }
+            }
+        }
+        CViewPlugin.printlnConsole("-------- RESOLVING END ------------")
 
         printlnConsole("INFO: - Build-in connections")
 
