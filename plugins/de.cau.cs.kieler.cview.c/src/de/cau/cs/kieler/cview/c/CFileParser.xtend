@@ -41,7 +41,7 @@ class CFileParser {
     def static IASTTranslationUnit parse(char[] code, IFile file, String option) throws Exception {
         var IASTTranslationUnit returnAst = null
         val location = file.rawLocation
-        var backup = (option == CLanguage.OPTION_PARSE_ISOLATED)
+        var backup = (option.equals(CLanguage.OPTION_PARSE_ISOLATED))   
 
         if (!backup) {
             try {
