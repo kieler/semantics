@@ -1848,7 +1848,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
 
         // Add the container to the original parent.
-        kParent.children += kContainer
+        if (kParent !== null) kParent.children += kContainer
 
         // Determine all interleaving edges...        
         //        val iSecEdges = new ArrayList<KEdge>
