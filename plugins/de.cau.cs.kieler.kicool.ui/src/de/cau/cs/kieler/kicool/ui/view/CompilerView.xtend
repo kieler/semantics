@@ -52,6 +52,8 @@ import de.cau.cs.kieler.klighd.ZoomStyle
  */
 class CompilerView extends DiagramViewPart {
     
+    public static val ID = "de.cau.cs.kieler.kicool.ui.view.compiler"
+    
     @Accessors private static val List<CompilerView> VIEWS = newLinkedList
     
     @Accessors private CompilerViewPartListener partListener

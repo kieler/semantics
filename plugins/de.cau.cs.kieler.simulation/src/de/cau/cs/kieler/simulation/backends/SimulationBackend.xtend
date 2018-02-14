@@ -127,12 +127,16 @@ abstract class SimulationBackend {
         try {
             val system = KiCoolRegistration.getSystemById(lastProcessorOrSystemId)
             // If there was no exception, then this is a system
-            lastProcessorId = system.processors.getLastProcessorId    
+            if(system !== null) {
+                lastProcessorId = system.processors.getLastProcessorId    
+            }    
         } catch (Exception ex) {
             try {
                 val processor = KiCoolRegistration.getProcessorClass(lastProcessorOrSystemId)
                 // If there was no exception, then this is a processor
-                lastProcessorId = lastProcessorOrSystemId
+                if(processor !== null) {
+                    lastProcessorId = lastProcessorOrSystemId    
+                }
             } catch(Exception e) {
             }
         }

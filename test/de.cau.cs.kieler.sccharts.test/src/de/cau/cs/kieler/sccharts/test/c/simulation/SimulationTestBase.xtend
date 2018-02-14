@@ -114,7 +114,6 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      */
     protected def SimulationContext createSimulationContext() {
         val context = new SimulationContext
-        context.overwriteCompileChain = false
         context.simulationBackend = simulationBackend
         return context
     }
@@ -141,6 +140,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
             simulationBackend.buildConfig.setModelCompilerAttributeToStringList("compileChain", compileChain)    
         }
         val context = createSimulationContext
+        context.customCompileChain = compileChain.join(",")
         compileModelAndStartSimulationTest(context, scc, modelData)
     }
     
