@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.prom.build
 
-import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
@@ -22,6 +21,7 @@ import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
 import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
+import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.util.ArrayList
 import java.util.List
