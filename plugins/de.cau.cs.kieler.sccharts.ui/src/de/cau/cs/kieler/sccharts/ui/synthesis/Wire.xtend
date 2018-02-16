@@ -29,6 +29,7 @@ class Wire {
     @Accessors var Expression sink = null
     @Accessors var Expression semanticSource = null
     @Accessors var Expression semanticSink = null
+    @Accessors var int sinkIndex = 0
     @Accessors var boolean sourceIsInterface = false
     @Accessors var boolean sinkIsInterface = false
     @Accessors var ReferenceDeclaration semanticSourceReferenceDeclaration = null
@@ -41,7 +42,7 @@ class Wire {
     }
     
     def ReferenceDeclaration getReferenceDeclaration() {
-        if (semanticSourceReferenceDeclaration != null) return semanticSourceReferenceDeclaration 
+        if (semanticSourceReferenceDeclaration !== null) return semanticSourceReferenceDeclaration 
             else semanticSinkReferenceDeclaration
     }
 

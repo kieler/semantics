@@ -163,13 +163,13 @@ class LayoutHook extends SynthesisActionHook {
             if (region instanceof DataflowRegion){
                 node.eAllContents.filter(KNode).forEach[
                     val source = it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as EObject;
-                    if (source != null && source instanceof ValuedObject && source.eContainer instanceof Annotatable) {
+                    if (source !== null && source instanceof ValuedObject && source.eContainer instanceof Annotatable) {
                         it.processLayoutOptionAnnotations(source.eContainer as Annotatable)
                     }
                 ]            
                 node.eAllContents.filter(KEdge).forEach[
                     val source = it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as EObject;
-                    if (source != null && source.eContainer instanceof Annotatable) {
+                    if (source !== null && source.eContainer instanceof Annotatable) {
                         it.processLayoutOptionAnnotations(source.eContainer as Annotatable)
                     }
                 ]

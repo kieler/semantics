@@ -79,7 +79,7 @@ class Wiring {
         
         val wire = createWire(source, sink)
         
-        // Dependening on the source's (sink's) type, we have to set wire characteristics.
+        // Depending on the source's (sink's) type, we have to set wire characteristics.
         // In the case of an operator expression, we also have to create more wires.
         switch(source) {
             Value: wire.sourceIsInterface = true
@@ -92,8 +92,9 @@ class Wiring {
                 }
             }
             OperatorExpression: {
-                for (expression : source.subExpressions) {
-                    expression.create(source)
+                for (expression : source.subExpressions.indexed) {
+                    val w = expression.value.create(source)
+                    w.sinkIndex = expression.key
                 }    
             }
         }
@@ -148,7 +149,7 @@ class Wiring {
      */
     protected def Wire createWire(Expression source, Expression sink) {
         val oldWire = index.get(new Pair<Expression, Expression>(source, sink))
-        if (oldWire != null) return oldWire
+        if (oldWire !== null) return oldWire
         
         val wire = new Wire(source, sink, this) 
         
@@ -156,11 +157,11 @@ class Wiring {
         var semanticSink = sink
         if (source instanceof ValuedObjectReference) {
             var existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null))
-            if (existingSemanticReference != null) {
+            if (existingSemanticReference !== null) {
                 // Directly connect the semantic source to the source of an already existing wire. 
                 if (existingSemanticReference instanceof ValuedObjectReference) {
                     val existingWire = existingSemanticReference.getSemanticSinkWire
-                    if (existingWire != null && source.subReference == null) {
+                    if (existingWire !== null && source.subReference === null) {
                         // We don't want to use the existing semantic wire to the node if the subreference points to 
                         // a referenced node. Therefore, only redirect to the existing wire if there is no subreference. 
                         existingSemanticReference = existingWire.semanticSource
@@ -174,7 +175,7 @@ class Wiring {
         if (sink instanceof ValuedObjectReference) {
             val srValuedObject = null // if (sink.subReference != null) sink.subReference.valuedObject else null
             val existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject))
-            if (existingSemanticReference != null) {
+            if (existingSemanticReference !== null) {
                 semanticSink = existingSemanticReference
             } else {
                 semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject), sink)

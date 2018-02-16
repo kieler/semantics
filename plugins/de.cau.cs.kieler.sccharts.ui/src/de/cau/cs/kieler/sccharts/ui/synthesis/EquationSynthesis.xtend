@@ -56,7 +56,8 @@ import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.emf.ecore.EObject
 import java.util.EnumSet
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.alg.layered.options.NodeFlexibility
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 
 /**
  * @author ssm
@@ -83,10 +84,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationStyles
     @Inject Injector injector
     
+    
     static val ANNOTATION_FIGURE = "figure"
     
     private val PORT_LABEL_FONT_SIZE = 6
     
+    protected static val PORT_IN_PREFIX = "in"
+    protected static val PORT_OUT_PREFIX = "out"
+    
+    protected val defaultFigures = #{
+        'OperatorExpression' -> 'OperatorExpression.kgt',
+        'OperatorExpressionADD' -> 'OperatorExpressionADD.kgt',
+        'OperatorExpressionSUB' -> 'OperatorExpressionSUB.kgt'
+    }
+     
     protected val referenceNodes = <KNode> newHashSet
 
     override performTranformation(Assignment element) {
@@ -112,27 +123,34 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected def createSources(Wiring wiring, List<KNode> nodes) {
         for (wire : wiring.wires) {
             val nodeExists = wire.semanticSource.nodeExists
-            var KNode node = wire.semanticSource.createNode
+            var KNode node 
             if (!nodeExists) {
-                if (wire.semanticSourceReferenceDeclaration != null) {
+                if (wire.semanticSourceReferenceDeclaration !== null) {
+                    node = wire.semanticSource.createNode
                     node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSourceReferenceDeclaration)
                 } else {
                     var text = wire.semanticSource.serializeHR.toString
                     if (wire.source instanceof OperatorExpression) {
-                        node.addOperatorNodeFigure.associateWith(wire.semanticSource)
+                        node = wire.semanticSource.createKGTNode(wire.source)
+//                        node.addOperatorNodeFigure.associateWith(wire.semanticSource)
+                        node.associateWith(wire.semanticSource)
                         text = wire.semanticSource.asOperatorExpression.operator.toString
+                        node.addNodeLabel(text)
                     } else {
+                        node = wire.semanticSource.createNode
                         node.addInputNodeFigure.associateWith(wire.source)
+                        node.addNodeLabel(text)
+                        node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment.CENTER)
+                        node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
+                        val port = wire.semanticSource.createPort("out") => [
+                            addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
+                        ]   
+                        node.ports += port       
+                        port.associateWith(wire.semanticSource)
                     }
-                    node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment.CENTER)
-                    node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
-                    val port = wire.semanticSource.createPort("out") => [
-                        addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
-                    ]   
-                    node.ports += port       
-                    port.associateWith(wire.semanticSource)
-                    node.addNodeLabel(text)
                 }            
+            } else {
+                node = wire.semanticSource.createNode
             }
             nodes += node
         }
@@ -144,7 +162,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             var node = wire.semanticSink.createNode
             
             if (!nodeExists) {
-                if (wire.semanticSinkReferenceDeclaration != null) {
+                if (wire.semanticSinkReferenceDeclaration !== null) {
                     node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration)
                 } else { 
                     node.addOutputNodeFigure.associateWith(wire.sink)
@@ -163,15 +181,26 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             var sourcePort = wire.semanticSource.getPort("out")
             var targetNode = wire.semanticSink.getNode
             var targetPort = null as KPort
-            if (wire.semanticSinkReferenceDeclaration != null) {
+            if (wire.semanticSinkReferenceDeclaration !== null) {
                 // If it is a reference, connect it to the specific port
                 if (wire.sink.asValuedObjectReference.subReference !== null) {
                     targetPort = targetNode.getPort(wire.sink.asValuedObjectReference.subReference.valuedObject)
                 }
             }
-            if (wire.semanticSourceReferenceDeclaration != null) {
+            if (wire.semanticSourceReferenceDeclaration !== null) {
                 if (wire.source.asValuedObjectReference.subReference !== null) 
                     sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)
+            }
+            if (wire.semanticSink instanceof OperatorExpression) {
+                val exp = wire.semanticSink.asOperatorExpression.subExpressions.get(wire.sinkIndex)
+                if (exp instanceof ValuedObjectReference) {
+                    if (targetNode.portExists(exp.valuedObject)) {
+                        targetPort = targetNode.getPort(exp.valuedObject)
+                    }
+                }
+                if (targetPort === null) {
+                    targetPort = targetNode.createDynamicInputPort(wire)
+                }
             }
             if (targetPort === null) {
                 targetPort = targetNode.getPort(wire) => [
@@ -196,7 +225,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         edge.source = sourceNode
         edge.sourcePort = sourcePort
         edge.target = targetNode
-        if (targetPort != null) edge.targetPort = targetPort
+        if (targetPort !== null) edge.targetPort = targetPort
         edge.addWireFigure
         if (!label.nullOrEmpty) {
             edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
@@ -305,4 +334,101 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             // Display default reference actor
         }            
     }
+    
+    protected def KNode createKGTNode(Object createExtensionObject, String figureId) {
+        val node = getKGTFromBundle(defaultFigures.get(figureId))
+        createExtensionObject.addNode(node)
+        return node    
+    }
+    
+    protected def KNode createKGTNode(Object createExtensionObject, Object figureObject) {
+        var figureId = "OperatorExpression"
+        
+        if (figureObject instanceof OperatorExpression) {
+            val literalString = "OperatorExpression" + figureObject.operator.getName
+            if (defaultFigures.keySet.contains(literalString))
+                figureId = literalString
+        }
+        
+        val node = createExtensionObject.createKGTNode(figureId)
+        
+        if (figureObject instanceof OperatorExpression) {
+            for (p : node.ports) {
+                val id = p.getId
+                if (id !== null) {
+                    if (id.startsWith(PORT_IN_PREFIX)) {
+                        try {
+                            val n = Integer.parseInt(id.substring(2))
+                            if (n < figureObject.subExpressions.size) {
+                                val exp = figureObject.subExpressions.get(n)
+                                if (exp instanceof ValuedObjectReference) {
+                                    val v = exp.valuedObject
+                                    node.addPort(v, p)
+                                }
+                            }
+                        } catch(NumberFormatException e) {
+                            // abort at convert issues
+                        }                        
+                        
+                    } 
+                    
+                    else if (id.startsWith(PORT_OUT_PREFIX)) {
+                        createExtensionObject.addPort("out", p)
+                    }                   
+                }
+            }
+        }
+        
+        return node
+    }
+    
+    protected def KPort createDynamicInputPort(KNode node, Wire wire) {
+        var maxIndex = -1
+        var KPort maxPort = null 
+        for (p : node.ports) {
+            val id = p.getId
+            if (id !== null) {
+                if (id.startsWith(PORT_IN_PREFIX)) {
+                    
+                    try {
+                        val n = Integer.parseInt(id.substring(2))
+                        if (n == wire.sinkIndex) return p
+                        if (n > maxIndex) {
+                            maxIndex = n
+                            maxPort = p
+                        }
+                    } catch(NumberFormatException e) {
+                        // abort at convert issues
+                    }                        
+                    
+                }                    
+            }
+        }
+        
+        if (maxPort === null) return null
+        
+        var KPort result = null
+        for (pi : (maxIndex + 1) .. wire.sinkIndex) {
+            result = maxPort.copy
+            
+            result.setId(PORT_IN_PREFIX + pi)
+            
+            node.ports.add(0, result)
+        }   
+        return result     
+    } 
+    
+    static def getId(KLabeledGraphElement node) {
+        node.eContents?.filter(KIdentifier)?.head?.id
+    }    
+
+    private def setId(KLabeledGraphElement node, String id) {
+        node.getData(KIdentifier).id = id
+        node
+    }
+    
+    static def KLabel getLabel(KNode node) {
+        node.eContents.filter(KLabel).head
+    }
+    
 }

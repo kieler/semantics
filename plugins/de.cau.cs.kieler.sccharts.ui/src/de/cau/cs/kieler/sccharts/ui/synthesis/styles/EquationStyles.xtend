@@ -145,7 +145,11 @@ class EquationStyles {
      * Adds a title label to a simple state figure.
      */
     def KText addNodeLabel(KNode node, String text) {
-        node.contentContainer.addText(text) => [
+        var cc = node.contentContainer
+        if (cc === null) {
+            cc = node.data.filter(KContainerRendering).head
+        }
+        return cc.addText(text) => [
             fontSize = 10;
             // Add surrounding space
             setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);

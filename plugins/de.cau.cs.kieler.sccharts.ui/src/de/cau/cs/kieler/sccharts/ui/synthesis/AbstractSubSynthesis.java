@@ -21,11 +21,14 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
+import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule;
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ISynthesisHooks;
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks;
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks.Type;
@@ -47,6 +50,9 @@ public abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphEl
     
     /** The input type this synthesis handles */
     protected final Type hookType;
+    /** Prefix for the resource location when loading KGTs from the bundle **/
+    protected static String SKIN_FOLDER = "resources/skins/";
+    protected static String skinPrefix = "default/";
     
     @Inject
     public AbstractSubSynthesis() {
@@ -147,6 +153,16 @@ public abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphEl
     
     public ViewContext getUsedContext() {
         return parent.getUsedContext();
+    }
+    
+    /**
+     * Loads a KGT from the bundle.
+     * 
+     * @param resourceLocation
+     * @return the KNode from the KGT
+     */
+    public static KNode getKGTFromBundle(String resourceLocation) {
+        return KiCoolSynthesis.getKGTFromBundle(SCChartsUiModule.PLUGIN_ID, resourceLocation, SKIN_FOLDER + skinPrefix);
     }
 
 }

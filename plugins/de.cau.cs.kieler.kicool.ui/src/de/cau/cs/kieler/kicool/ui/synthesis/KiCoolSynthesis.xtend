@@ -83,8 +83,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     /**
      * Load a KGT from a bundle.
      */
-    def static getKGTFromBundle(String bundleId, String resourceLocation) {
-        val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + SkinSelector.skinPrefix + resourceLocation, true)
+    def static getKGTFromBundle(String bundleId, String resourceLocation, String skinPrefix) {
+        val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + skinPrefix + resourceLocation, true)
         val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
         val res = newResourceSet.createResource(newURI)
@@ -97,5 +97,9 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         }         
         return KGraphUtil::createInitializedNode
     }    
+    
+    def static getKGTFromBundle(String bundleId, String resourceLocation) {
+        return getKGTFromBundle(bundleId, resourceLocation, SkinSelector.skinPrefix)
+    }
     
 }
