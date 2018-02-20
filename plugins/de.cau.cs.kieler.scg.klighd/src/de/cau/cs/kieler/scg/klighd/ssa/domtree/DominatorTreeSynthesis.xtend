@@ -133,7 +133,7 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         nodes.entrySet.forEach[nodes.createDTEdge(value, key, dt)]
 
         val dtDiagram = createNode
-        dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.mrtree.mrTree")
+        dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.mrtree")
         dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
         dtDiagram.children += nodes.values
 
