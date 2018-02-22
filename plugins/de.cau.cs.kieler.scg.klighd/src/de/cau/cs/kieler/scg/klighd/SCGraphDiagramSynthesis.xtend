@@ -2053,7 +2053,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         if (pilNodes.empty) return;
         
-        for (n : pilNodes) {
+        for (n : pilNodes.filter[ it !== null]) {
             val nextFlows = n.allNext
             var hasFlows = false
             for (flow : nextFlows) {
