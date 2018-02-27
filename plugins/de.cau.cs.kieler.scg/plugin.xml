@@ -130,7 +130,7 @@
             class="de.cau.cs.kieler.scg.processors.optimizer.HaltStateRemover">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.optimizer.PartialExpressionEvaluator">
+            class="de.cau.cs.kieler.scg.processors.optimizer.PartialExpressionEvaluation">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">

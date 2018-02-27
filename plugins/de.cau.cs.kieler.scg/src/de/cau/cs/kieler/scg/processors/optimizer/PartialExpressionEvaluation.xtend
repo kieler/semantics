@@ -12,6 +12,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  */
 package de.cau.cs.kieler.scg.processors.optimizer
 
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
@@ -28,7 +29,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class PartialExpressionEvaluator extends InplaceProcessor<SCGraphs> implements Traceable {
+class PartialExpressionEvaluation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -38,7 +39,7 @@ class PartialExpressionEvaluator extends InplaceProcessor<SCGraphs> implements T
     }
 
     override getName() {
-        return "Partial Expression Evaluator"
+        return "Partial Expression Evaluation"
     }
     
     override process() {
@@ -49,7 +50,10 @@ class PartialExpressionEvaluator extends InplaceProcessor<SCGraphs> implements T
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    extension de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator = new de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
+    extension PartialExpressionEvaluator = new PartialExpressionEvaluator() => [ 
+        compute = true
+        inplace = true
+    ]
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
