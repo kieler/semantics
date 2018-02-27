@@ -55,6 +55,7 @@ import de.cau.cs.kieler.scg.GuardDependency
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author als
@@ -112,6 +113,10 @@ class MergeExpressionExtension {
             if (true) throw new UnsupportedOperationException("Scheduled merge expressions using kicool not yet implemented")
             val SCGraph schedSCG = null
             val Multimap<EObject, EObject> mapping = null
+            
+//            val context = Compile.createCompilationContext("", schedSCG)
+//            context.startEnvironment.setProperty(Environment.INPLACE, true)
+//            context.compile
 //            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.GUARD_EXPRESSIONS_ID +","+ SCGFeatures.GUARDS_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
 //            context.advancedSelect = false;
 //            context.setProperty(Tracing.ACTIVE_TRACING, true);
@@ -602,7 +607,7 @@ class MergeExpressionExtension {
     def getMergeExpressions(SCGraph scg) {
         val map = HashMultimap.create
         for (node : scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional)))) {
-            val expr = node.eContents.filter(Expression).head
+            val expr = if (node instanceof Assignment) node.expression else (node as Conditional).condition
             if (expr instanceof FunctionCall) {
                 map.put(node, expr)
             } else if (expr instanceof OperatorExpression) {

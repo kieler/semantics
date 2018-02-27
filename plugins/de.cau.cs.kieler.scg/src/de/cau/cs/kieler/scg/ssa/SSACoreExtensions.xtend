@@ -132,20 +132,22 @@ class SSACoreExtensions {
                 names += vo.name
             }
         }
-        for (decl : scg.declarations.filter[isSSA]) {
-            for (vo : decl.valuedObjects.filter[!isRegister && !isTerm].indexed) {
-                val origName = decl.ssaOrigVO.name
-                var newName = new StringBuilder(origName + vo.key)
-                if (origName.charAt(origName.length - 1).isDigit) {
-                    newName.insert(origName.length, '_')
+        for (decl : scg.variableDeclarations.filter[isSSA]) {
+            if (!decl.input || decl.valuedObjects.size > 1) {
+                for (vo : decl.valuedObjects.filter[!isRegister && !isTerm].indexed) {
+                    val origName = decl.ssaOrigVO.name
+                    var newName = new StringBuilder(origName + vo.key)
+                    if (origName.charAt(origName.length - 1).isDigit) {
+                        newName.insert(origName.length, '_')
+                    }
+                    while(names.contains(newName.toString)) {
+                        newName.insert(origName.length, '_')
+                    }
+                    if (vo.value.isSSA(COMBINE)) {
+                        newName.append("up")
+                    }
+                    vo.value.name = newName.toString
                 }
-                while(names.contains(newName.toString)) {
-                    newName.insert(origName.length, '_')
-                }
-                if (vo.value.isSSA(COMBINE)) {
-                    newName.append("up")
-                }
-                vo.value.name = newName.toString
             }
         }
     }
@@ -188,7 +190,7 @@ class SSACoreExtensions {
     }
     
     def isUpdate(Assignment asm) {
-        return asm.eAllContents.filter(ValuedObjectReference).exists[valuedObject == asm.valuedObject]
+        return asm.expression.eAllContents.filter(ValuedObjectReference).exists[valuedObject == asm.valuedObject]
     }
     
     /**

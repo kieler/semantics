@@ -151,6 +151,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         // ---------------
         
         scg.updateSSAVersions
+        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.optimizeConcurrentDominantWrite(dt)
         scg.snapshot
         
@@ -158,7 +159,6 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         // 7. Preserve delayed Values
         // ---------------
         scg.postprocessIO(entryNode as Entry, ssaDecl, preserverAsm)
-        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
 
         // ---------------
@@ -192,7 +192,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         val nodes = newLinkedHashSet
         for (node : newArrayList(scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional))))) {
-            val expr = node.eContents.filter(Expression).head
+            val expr = if (node instanceof Assignment) node.expression else (node as Conditional).condition //node.eContents.filter(Expression).head
             val refs = if (node instanceof Assignment && !node.isOutputPreserver) {
                 newArrayList(expr.allReferences.filter[valuedObject != (node as Assignment).valuedObject])
             } else {

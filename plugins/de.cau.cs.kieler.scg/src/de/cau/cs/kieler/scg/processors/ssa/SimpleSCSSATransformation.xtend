@@ -44,9 +44,13 @@ import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
+import de.cau.cs.kieler.scg.Entry
 
 /**
  * The SSA transformation for SCGs with simplified SC semantics.
+ * 
+ * - Uses psi/pi node for merging versions without further semantic information.
+ * - Does not preserve outputs naming.
  * 
  * @author als
  * @kieler.design proposed
@@ -94,6 +98,7 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
         scg.normalizeAssignments
         
         val entryBB = scg.basicBlocks.head
+        val entryNode = entryBB.nodes.head as Entry
         
         // Create new declarations for SSA versions
         val ssaDecl = scg.createSSADeclarations
@@ -102,7 +107,8 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
         // ---------------
         // 2. Preserve output behavior
         // ---------------
-//        scg.preprocessIO(entryNode as Entry, ssaDecl)
+        scg.createInputPreservingAssignments(entryNode, true)
+//        scg.snapshot
         
         // ---------------
         // 1. Place Phi & Psi
@@ -117,7 +123,6 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
             
             return asm
         ]
-        scg.snapshot
         
         // ---------------
         // 3. Place Pi at thread read access on shared variables
@@ -131,7 +136,6 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
         // ---------------
         val parameters = dt.rename(entryBB, ssaDecl)[isSSA]
         environment.setProperty(SSA_PARAMETER_PROPERTY, new SSAParameterProperty(parameters))
-        scg.snapshot
         
         // ---------------
         // 5. Fix Pi references
@@ -150,7 +154,12 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
             ref.value.expression = ref.key.valuedObject.reference
         }
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, ID)
-        scg.snapshot
+//        scg.snapshot
+
+        // ---------------
+        // 6. Remove input preserver
+        // ---------------
+        scg.removeInputPreservingAssignments
 
         // ---------------
         // 6. Remove unused ssa versions

@@ -39,6 +39,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -62,6 +64,7 @@ class IOPreserverExtensions {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions   
     @Inject extension KEffectsExtensions
+    @Inject extension SCGManipulationExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
@@ -253,6 +256,56 @@ class IOPreserverExtensions {
             }
         }
     }
+    
+    // -------------------------------------
+    // General
+    
+    def createInputPreservingAssignments(SCGraph scg, Entry entry, boolean onlyForWrittenInputs) {
+        val positions = <Node>newArrayList(entry)
+        val isDefined = <ValuedObject>newHashSet
+        for (n : scg.nodes) {
+            if (onlyForWrittenInputs && n instanceof Assignment) {
+                isDefined += (n as Assignment).valuedObject
+            } else if (n instanceof Depth) {
+                positions += n
+            }
+        }
+        for (node : positions) {
+            for (decl : scg.variableDeclarations.reverseView.filter[input && !isSSA]) {
+                for (vo : decl.valuedObjects.reverseView) {
+                    if (!onlyForWrittenInputs || isDefined.contains(vo)) {
+                        // Create self assignment which will not be renamed
+                        val asm = sCGFactory.createAssignment => [
+                            valuedObject = vo
+                            expression = vo.reference
+                            markInputPreserver
+                        ]
+                        val sb = node.schedulingBlock
+                        sb.nodes.add(sb.nodes.indexOf(node) + 1, asm)
+                        scg.nodes.add(scg.nodes.indexOf(node) + 1, asm)
+                        // Insert after
+                        val next = node.allNext.head
+                        asm.createControlFlow.target = next.target
+                        next.target = asm
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    def removeInputPreservingAssignments(SCGraph scg) {
+        val uses = scg.uses
+        for (n : scg.nodes.filter(Assignment).filter[isInputPreserver].toList) {
+            val origVO = (n.expression as ValuedObjectReference).valuedObject
+            for (use : uses.get(n.valuedObject)) {
+                use.eAllContents.filter(ValuedObjectReference).filter[valuedObject == n.valuedObject].forEach[valuedObject = origVO]
+            }
+            n.removeNode(true)
+        }
+    }
+    
+    // -------------------------------------
 
     def isInputPreserver(Node node) {
         return node.hasAnnotation(INPUT_PRESERVER)
