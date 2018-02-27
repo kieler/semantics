@@ -116,13 +116,18 @@ class PartialExpressionEvaluator {
         return if (inplace) vor else vor.copy//valuedObject.reference
     }
     
+    /**
+     * Returns null if eval should be aborted
+     */
     protected dispatch def Expression eval(OperatorExpression op) {
         val newOp = createOperatorExpression(op.operator)
         switch (op.operator) {
             // BOOLEAN LOGIC
             case LOGICAL_AND: {
-                for (parEval : op.subExpressions.immutableCopy.map[eval].filterNull) {
-                    if (parEval instanceof Value) {
+                for (parEval : op.subExpressions.immutableCopy.map[eval]) {
+                    if (parEval === null) {
+                        return null
+                    } else if (parEval instanceof Value) {
                         if (parEval.isFalsy) {
                             return createBoolValue(false) 
                         }
@@ -138,8 +143,10 @@ class PartialExpressionEvaluator {
                 }
             }
             case LOGICAL_OR: {
-                for (parEval : op.subExpressions.immutableCopy.map[eval].filterNull) {
-                    if (parEval instanceof Value) {
+                for (parEval : op.subExpressions.immutableCopy.map[eval]) {
+                    if (parEval === null) {
+                        return null
+                    } else if (parEval instanceof Value) {
                         if (parEval.isThruthy) {
                             return createBoolValue(true) 
                         }
@@ -156,7 +163,9 @@ class PartialExpressionEvaluator {
             }
             case NOT: {
                 val parEval = op.subExpressions.head.eval
-                if (parEval instanceof Value) {
+                if (parEval === null) {
+                    return null
+                } else if (parEval instanceof Value) {
                     return createBoolValue(parEval.isFalsy)
                 } else {
                     newOp.subExpressions += parEval
@@ -182,6 +191,9 @@ class PartialExpressionEvaluator {
             case SHIFT_RIGHT_UNSIGNED,
             case SUB: {
                 for (parEval : op.subExpressions.immutableCopy.map[eval]) {
+                    if (parEval === null) {
+                        return null
+                    }
                     newOp.subExpressions += parEval
                 }
                 if (newOp.subExpressions.forall[it instanceof Value]) { // No partial computation
@@ -196,7 +208,9 @@ class PartialExpressionEvaluator {
             }
             case BITWISE_NOT: {
                 val parEval = op.subExpressions.head.eval
-                if (parEval instanceof BoolValue) {
+                if (parEval === null) {
+                    return null
+                } else if (parEval instanceof BoolValue) {
                     return createBoolValue(parEval.isFalsy)
                 } else if (parEval instanceof IntValue && compute) {
                     return createIntValue((parEval as IntValue).value.bitwiseNot)
@@ -208,6 +222,9 @@ class PartialExpressionEvaluator {
             // SPECIAL
             case CONDITIONAL: {
                 for (parEval : op.subExpressions.immutableCopy.map[eval]) {
+                    if (parEval === null) {
+                        return null
+                    }
                     newOp.subExpressions += parEval
                 }
                 val cond = newOp.subExpressions.head
@@ -231,20 +248,20 @@ class PartialExpressionEvaluator {
     
     // Fallback
     protected dispatch def Expression eval(Expression exp) {
-        return if (inplace) exp else exp.copy
+        return null
     }
     
     // ------------------------------------
     // Compute
     // ------------------------------------
     
-    def Expression compute(OperatorExpression oexp) {
-        if (oexp.operator == OperatorType.DIV) { // Division might loose precision because of mission type system in KExpressions
-            return oexp
-        }
+    /**
+     * Returns null if eval should be aborted
+     */
+    def Value compute(OperatorExpression oexp) {
         if (oexp.subExpressions.size > 2) {
             // FIXME support!
-            return oexp
+            return null
         }
         // Only compute integer/bool
         if (oexp.subExpressions.forall[it instanceof IntValue || it instanceof BoolValue]) {
@@ -276,17 +293,24 @@ class PartialExpressionEvaluator {
                 // CALCULATION
                 case ADD: createIntValue(op0 + op1)
                 case BITWISE_AND: createIntValue(op0.bitwiseAnd(op1))
-                case BITWISE_OR: createIntValue(op0.bitwiseAnd(op1))
-                case BITWISE_XOR: createIntValue(op0.bitwiseAnd(op1))
+                case BITWISE_OR: createIntValue(op0.bitwiseOr(op1))
+                case BITWISE_XOR: createIntValue(op0.bitwiseXor(op1))
+                case DIV: {
+                    if (op0 % op1 == 0) {
+                        createIntValue(op0 / op1)
+                    } else { // This would require floating point handling an a proper type system
+                        return null
+                    }
+                }
                 case MOD: createIntValue(op0 % op1)
                 case MULT: createIntValue(op0 * op1)
-                case SHIFT_LEFT: createIntValue(op0.bitwiseAnd(op1))
-                case SHIFT_RIGHT: createIntValue(op0.bitwiseAnd(op1))
-                case SHIFT_RIGHT_UNSIGNED: createIntValue(op0.bitwiseAnd(op1))
+                case SHIFT_LEFT: createIntValue(op0.shiftLeft(op1))
+                case SHIFT_RIGHT: createIntValue(op0.shiftRight(op1))
+                case SHIFT_RIGHT_UNSIGNED: createIntValue(op0.shiftRightUnsigned(op1))
                 case SUB: createIntValue(op0 - op1)
-                default: oexp
+                default: null
             }
         }
-        return oexp
+        return null
     }
 }
