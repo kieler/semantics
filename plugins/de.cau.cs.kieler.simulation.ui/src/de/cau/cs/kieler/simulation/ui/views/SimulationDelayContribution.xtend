@@ -13,12 +13,12 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import org.eclipse.jface.action.ControlContribution
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
+import org.eclipse.ui.menus.WorkbenchWindowControlContribution
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.core.SimulationManager.*
@@ -30,7 +30,7 @@ import static de.cau.cs.kieler.simulation.core.SimulationManager.*
  * @author aas
  *
  */
-class SimulationDelayContribution extends ControlContribution {
+class SimulationDelayContribution extends WorkbenchWindowControlContribution {
     /**
      * The spinner
      */

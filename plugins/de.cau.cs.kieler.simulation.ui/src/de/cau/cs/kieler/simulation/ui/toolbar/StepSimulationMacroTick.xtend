@@ -28,7 +28,7 @@ class StepSimulationMacroTick extends SimulationToolbarButton {
      */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null && !justRestarted) {
+        if(simulation !== null && !justRestarted) {
             simulation.stepMacroTick()
         }
         return null

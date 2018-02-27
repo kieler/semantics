@@ -15,7 +15,6 @@ package de.cau.cs.kieler.simulation.ui.views
 import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
@@ -402,10 +401,7 @@ class DataPoolView extends ViewPart {
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager()
         // The toolbar items are ordered from left to right in the order that they are added
-        tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
-                                         "Tick #0000 (-000)",
-                                         "Last executed macro tick")
-        mgr.add(tickInfo)
+        mgr.add(new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo"))
         mgr.add(new Separator())
         mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
             override run() {
@@ -444,12 +440,10 @@ class DataPoolView extends ViewPart {
                 if(mod.hasBit(SWT.CTRL)) {
                     if(e.keyCode == SWT.ARROW_RIGHT) {
                         if(manager !== null) {
-                            PromConsole.print("Step History Forward")
                             manager.stepHistoryForward()
                         }
                     } else if(e.keyCode == SWT.ARROW_LEFT) {
                         if(manager !== null) {
-                            PromConsole.print("Step History Back")
                             manager.stepHistoryBack()
                         }
                     }
@@ -457,14 +451,12 @@ class DataPoolView extends ViewPart {
                     // No CTRL + RIGHT: Step Macro Tick
                     if(e.keyCode == SWT.ARROW_RIGHT) {
                         if(manager !== null) {
-                            PromConsole.print("Step Macro Tick")
                             manager.stepMacroTick()
                         }
                     }
                     // No CTRL + SPACE: Play Simulation
                     if(e.keyCode == SWT.SPACE) {
                         if(manager !== null) {
-                            PromConsole.print("Playing Simulation")
                             if(manager.isPlaying) {
                                 manager.pause()
                             } else {
@@ -754,26 +746,6 @@ class DataPoolView extends ViewPart {
     }
     
     /**
-     * Updates the info label with the current tick count.
-     */
-    private def void updateTickInfo() {
-        var String txt = null
-        val simMan = SimulationManager.instance
-        if(!simMan.isStopped) {
-            val macroTick = simMan.currentMacroTickNumber
-            val subTick = simMan.currentSubTickNumber
-            txt = "Tick #"+macroTick
-            if(subTick > 0) {
-                txt += "," + subTick
-            }
-            if(SimulationManager.instance.positionInHistory > 0) {
-                txt += " (-" + SimulationManager.instance.positionInHistory + ")"
-            }
-        }
-        tickInfo?.setText(Strings.nullToEmpty(txt))
-    }
-    
-    /**
      * Sets the text of this view's status line.
      * 
      * @param value The new status line text
@@ -866,8 +838,6 @@ class DataPoolView extends ViewPart {
                 PromUIPlugin.asyncExecInUI[
                     // Update data pool view
                     if(e.pool == SimulationManager.instance?.currentPool) {
-                        // Update tick info
-                        dataPoolView.updateTickInfo
                         // Set pool data
                         dataPoolView.setDataPool(e.pool)
                     }

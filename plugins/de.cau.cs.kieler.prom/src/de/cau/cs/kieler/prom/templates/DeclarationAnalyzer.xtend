@@ -14,6 +14,7 @@ package de.cau.cs.kieler.prom.templates
 
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.BooleanAnnotation
+import de.cau.cs.kieler.annotations.CommentAnnotation
 import de.cau.cs.kieler.annotations.FloatAnnotation
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
@@ -22,10 +23,10 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.annotations.CommentAnnotation
 
 /**
  * Model analyzer for KExpression declarations.
@@ -101,10 +102,10 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                 // Print warning if explicit wrapper code annotation on variable
                 // that is neither input nor output
                 val valuedObject = decl.valuedObjects.get(0)
-                if(valuedObject != null) {
+                if(valuedObject !== null) {
                     for (annotation : decl.annotations) {
                          if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
-                             PromConsole.print('''Warning: Variable '«valuedObject.name»' is neither input nor output but has an explicit wrapper code annotation.''');
+                             PromConsole.buildConsole.warn('''Variable '«valuedObject.name»' is neither input nor output but has an explicit wrapper code annotation.''')
                          }
                     }
                 }
@@ -147,7 +148,7 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                                     throw new Exception("Array sizes must have an integer or integer constant as initial value")
                                 }
                             }
-                            if(intValue != null) {
+                            if(intValue !== null) {
                                 data.arguments.add(intValue.value.toString)
                             }
                         }

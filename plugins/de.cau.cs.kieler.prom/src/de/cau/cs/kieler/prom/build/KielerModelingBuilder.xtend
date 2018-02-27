@@ -20,6 +20,7 @@ import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
 import de.cau.cs.kieler.prom.configurable.AttributeExtensions
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
@@ -44,6 +45,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 
 /**
  * The kieler modeling builder has three main tasks:
@@ -221,35 +223,35 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     public static def void showBuildProblems(BuildProblem... problems) {
         val maxLine = <IResource, Integer>newHashMap
         for(problem : problems) {
+            // Write the problem's cause to the console
+            if(problem.cause !== null) {
+                PromConsole.buildConsole.printStackTrace(problem.cause)    
+            }
+            // Show an error marker for the problem
             val res = problem.res
             if(res !== null) {
-                var IMarker marker
-                if(problem.isWarning) {
-                    marker = createWarningMarker(res, problem.message)
+                var IMarker marker = if(problem.isWarning)
+                                         createWarningMarker(res, problem.message)
+                                     else
+                                         createErrorMarker(res, problem.message)
+                // Set the original source of the issue
+                if(problem.issueSource !== null) {
+                    marker.setAttribute("issueSource", problem.issueSource.location.toOSString)
+                }
+                // Set the line number
+                var Integer line
+                if(problem.line > 0) {
+                    line = problem.line
                 } else {
-                    marker = createErrorMarker(res, problem.message)
-                }
-                if(marker !== null) {
-                    // Set the original source of the issue
-                    if(problem.issueSource !== null) {
-                        marker.setAttribute("issueSource", problem.issueSource.location.toOSString)
-                    }
-                    
-                    // Set the line number
-                    var Integer line
-                    if(problem.line > 0) {
-                        line = problem.line
+                    line = maxLine.get(res)
+                    if(line === null) {
+                        line = 1
                     } else {
-                        line = maxLine.get(res)
-                        if(line === null) {
-                            line = 1
-                        } else {
-                            line = line + 1 
-                        }
-                        maxLine.put(res, line)
+                        line = line + 1 
                     }
-                    marker.setAttribute(IMarker.LINE_NUMBER, line)
+                    maxLine.put(res, line)
                 }
+                marker.setAttribute(IMarker.LINE_NUMBER, line)
             }
         }
     }
@@ -516,6 +518,8 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         if(files.isNullOrEmpty) {
             return
         }
+        
+        PromConsole.buildConsole.info("Building "+files.map[it.name].join(","))
         
         // Remember which file correspods to which model, to load them only once
         val modelForFile = <String, EObject>newHashMap

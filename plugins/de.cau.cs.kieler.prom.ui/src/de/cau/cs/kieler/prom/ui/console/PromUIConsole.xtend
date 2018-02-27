@@ -32,7 +32,7 @@ class PromUIConsole implements IConsole {
     /**
      * The name of the console
      */
-    private static val CONSOLE_NAME = "KIELER Project Management"
+    private val String name
     
     /**
      * The console
@@ -44,9 +44,10 @@ class PromUIConsole implements IConsole {
      */
     private static Map<ConsoleStyle, MessageConsoleStream> consoleStreams = newHashMap;
     
-    new() {
+    new(String name) {
         super()
-        console = findOrCreateConsole(CONSOLE_NAME)
+        this.name = name
+        console = findOrCreateConsole(name)
     }
     
     /**
@@ -62,17 +63,17 @@ class PromUIConsole implements IConsole {
     }
     
     /**
-     * {@inheritDoc}
+     * Brings the console to the front.
      */
-    override bringToFront() {
+    public def void bringToFront() {
         val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
         consoleManager.showConsoleView(console)
     }
 
     /**
-     * {@inheritDoc}
+     * Removes all text from the console.
      */
-    override clear() {
+    public def void clear() {
         console.clearConsole()
     }
 

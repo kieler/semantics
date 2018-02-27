@@ -299,6 +299,17 @@
                tooltip="Step History Forward">
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.trim.status">
+         <toolbar
+               id="de.cau.cs.kieler.simulation.ui.toolbar.globalSimulationStatusLine">
+            <control
+                  class="de.cau.cs.kieler.simulation.ui.views.TickInfoContribution"
+                  id="de.cau.cs.kieler.simulation.ui.toolbar.globalTickInfo">
+            </control>
+         </toolbar>
+      </menuContribution>
       </extension>
    <extension
          point="org.eclipse.ui.views">

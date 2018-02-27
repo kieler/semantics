@@ -12,23 +12,25 @@
  */
 package de.cau.cs.kieler.prom.console
 
+import java.util.Map
+
 /**
- * IConsole implementation that prints to System.out and System.err.
- * 
  * @author aas
  *
  */
-class SystemConsole implements IConsole {
+abstract class PromConsoleHandler {
+    private Map<String, IConsole> consoles = newHashMap
     
-    /**
-     * Prints the given message.
-     * If the style for an error is used, then System.err is used to print the message.
-     */
-    override print(String msg, ConsoleStyle style) {
-        if(style == ConsoleStyle.ERROR) {
-            System.err.println(msg)
+    public def IConsole getConsole(String name) {
+        var console = consoles.get(name)
+        if(console !== null) {
+            return console
         } else {
-            System.out.println(msg)
+            console = createConsole(name)
+            consoles.put(name, console)
+            return console
         }
     }
+    
+    protected def IConsole createConsole(String name)
 }

@@ -2,7 +2,7 @@ package de.cau.cs.kieler.prom.ui
 
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.console.PromConsole
-import de.cau.cs.kieler.prom.ui.console.PromUIConsole
+import de.cau.cs.kieler.prom.ui.console.PromUIConsoleHandler
 import de.cau.cs.kieler.prom.ui.internal.KiBuildActivator
 import org.eclipse.core.runtime.Status
 import org.eclipse.swt.widgets.Display
@@ -39,7 +39,7 @@ class PromUIPlugin extends KiBuildActivator {
         plugin = this
         
         // Register console
-        PromConsole.currentConsole = new PromUIConsole
+        PromConsole.currentConsoleHandler = new PromUIConsoleHandler()
         // Register preference store
         PromPlugin.preferenceStore = preferenceStore
     }

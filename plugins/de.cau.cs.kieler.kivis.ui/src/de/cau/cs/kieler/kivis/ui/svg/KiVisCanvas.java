@@ -33,7 +33,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import javax.swing.FocusManager;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 
@@ -51,7 +50,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.kivis.ui.internal.KiVisActivator;
-import de.cau.cs.kieler.prom.PromPlugin;
+import de.cau.cs.kieler.prom.console.ConsoleStyle;
 import de.cau.cs.kieler.prom.console.PromConsole;
 
 /**
@@ -138,11 +137,11 @@ public class KiVisCanvas extends Composite {
             
             frame.addFocusListener(new FocusAdapter() {
                 public void focusGained(FocusEvent e) {
-                    PromConsole.print("awt frame received focus");
+                    PromConsole.getDebugConsole().info("awt frame received focus");
                 }
 
                 public void focusLost(FocusEvent e) {
-                    PromConsole.print("awt frame lost focus");
+                    PromConsole.getDebugConsole().info("awt frame lost focus");
                 }
             });
         } catch (Throwable t) {

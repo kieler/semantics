@@ -13,7 +13,9 @@
 package de.cau.cs.kieler.simulation
 
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import java.util.List
@@ -24,7 +26,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
-import de.cau.cs.kieler.simulation.backends.SimulationBackend
 
 /**
  * @author aas
@@ -202,7 +203,7 @@ class SimulationUtil {
                 sim.addAction("check", traceHandler)
                 sim.addAction("loadNextTick", traceHandler)
                 
-                PromConsole.print("Added trace to running simulation")
+                PromConsole.simulationConsole.info("Added trace to running simulation")
             }
         }
     }
