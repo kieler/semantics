@@ -18,6 +18,9 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Predecessor
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * The SCG Extensions are a collection of common methods for SCG manipulation.
@@ -30,13 +33,18 @@ class SCGManipulationExtensions {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    extension ScgFactory = ScgFactory::eINSTANCE
     
     def void removeNode(Node node, boolean rerouteCF) {
+        val prev = newArrayList
         if (rerouteCF) {
             if (node instanceof Conditional) {
                 throw new IllegalArgumentException("Cannot reroute controlflow of a conditional")
             } else {
-                node.allPrevious.toList.forEach[target = node.allNext.head?.target]
+                node.allPrevious.toList.forEach[
+                    prev += it.eContainer as Node
+                    target = node.allNext.head?.target
+                ]
             }
         } else {
             node.allPrevious.toList.forEach[target = null; remove]
@@ -47,13 +55,34 @@ class SCGManipulationExtensions {
         node.eContents.immutableCopy.forEach[remove]
         node.incoming.immutableCopy.forEach[target = null; remove]
         
-        
         val sb = node.schedulingBlock
         if (sb !== null) {
             sb.nodes.remove(node)
             if (sb.nodes.empty) {
+                val bb = sb.basicBlock
                 sb.remove
                 sb.guards?.forEach[remove]
+                if (bb.schedulingBlocks.empty) {
+                    val scg = bb.eContainer as SCGraph
+                    for ( sbb : scg.basicBlocks.filter[predecessors.exists[basicBlock == bb]]) {
+                        if (rerouteCF) {
+                            if (node instanceof Conditional) {
+                                throw new IllegalArgumentException("Cannot reroute controlflow of a conditional")
+                            } else {
+                                sbb.predecessors.removeIf[basicBlock == bb]
+                                for (p : prev) {
+                                    val pbb = p.basicBlock
+                                    if (!sbb.predecessors.exists[basicBlock == pbb]) {
+                                        sbb.predecessors.add(createPredecessor => [ basicBlock = pbb ])
+                                    }
+                                }
+                            }
+                        } else {
+                            sbb.predecessors.removeIf[basicBlock == bb]
+                        }
+                    }
+                    bb.remove
+                }
             }
         }
         node.remove

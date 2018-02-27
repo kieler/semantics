@@ -35,7 +35,7 @@ de.cau.cs.kieler.scg.processors.basicBlocks
 post process de.cau.cs.kieler.scg.processors.ssa.scssa.simple
 post process de.cau.cs.kieler.scg.processors.ssa.optimizer.sccp
 post process de.cau.cs.kieler.scg.processors.ssa.unssa
-post process de.cau.cs.kieler.scg.processors.expressions
+pre process de.cau.cs.kieler.scg.processors.expressions
 pre process de.cau.cs.kieler.scg.processors.guards
 de.cau.cs.kieler.scg.processors.scheduler
 de.cau.cs.kieler.scg.processors.sequentializer
@@ -43,6 +43,6 @@ post process de.cau.cs.kieler.scg.processors.copyPropagation
 post process de.cau.cs.kieler.scg.processors.conditionalMerger
 post process de.cau.cs.kieler.scg.processors.haltStateRemover
 post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
-post process de.cau.cs.kieler.scg.processors.expressions
+post process de.cau.cs.kieler.scg.processors.pareval
 post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent  
 de.cau.cs.kieler.scg.processors.codegen.c
