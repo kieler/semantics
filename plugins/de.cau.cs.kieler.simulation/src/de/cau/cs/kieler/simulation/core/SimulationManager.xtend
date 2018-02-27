@@ -413,6 +413,22 @@ class SimulationManager extends Configurable {
         }
     }
     
+    public def void loadSimulation(List<DataPool> simulation) {
+        // Link data pools
+        var DataPool previousPool = null
+        for(pool : simulation) {
+            pool.previousPool = previousPool
+            previousPool = pool
+        }
+        
+        // Replace current state with loaded state
+        // (previousPool is the last pool in the list after the above loop)
+        currentState = new StepState(previousPool, previousPool.actionIndex)
+        
+        // Notify listeners
+        fireEvent(SimulationOperation.MACRO_STEP)
+    }
+    
     /**
      * Execute a single step action and save the resulting state.
      */

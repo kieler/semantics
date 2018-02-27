@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
-import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
@@ -88,6 +87,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.core.SimulationManager.*
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+import de.cau.cs.kieler.prom.console.PromConsole
 
 /**
  * Displays the data of a running simulation.
@@ -286,9 +286,17 @@ class DataPoolView extends ViewPart {
                     }
                 }
                 if(!files.isNullOrEmpty) {
-                    if(files.size == 1 && FileExtensions.isTrace(files.get(0))) {
-                        // Add the trace to a running simulation
-                        SimulationUtil.appendToSimulation(files)
+                    if(files.size == 1) {
+                        val file = files.get(0)
+                        if(FileExtensions.isTrace(file)) {
+                            // Add the trace to a running simulation
+                            SimulationUtil.appendToSimulation(files)
+                        } if(FileExtensions.isSimulationHistory(file)) {
+                            // Load the simulation history
+                            OpenSimulationAction.loadSimulation(file)
+                        } else {
+                            SimulationUtil.startSimulation(files)
+                        }
                     } else {
                         SimulationUtil.startSimulation(files)    
                     }
@@ -420,9 +428,9 @@ class DataPoolView extends ViewPart {
         simulationDelayContribution = new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause")
         mgr.add(simulationDelayContribution)
         mgr.add(new Separator())
-        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
-        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
-        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
+        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter, false))
+        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter, true))
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter, true))
         mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
         mgr.add(new Separator())
     }

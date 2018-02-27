@@ -32,17 +32,22 @@ class SaveSimulationAction extends DataPoolViewToolbarAction {
     /**
      * The trace printer that turns the data pool of the current simulation to a trace file.
      */
-    private var TracePrinter tracePrinter
+    private val TracePrinter tracePrinter
+    
+    private val boolean removeInitialTick
     
     /**
      * Constructor
      * 
      * @param title The title of this action
      * @param imageName The name of an image file for this action. The image must be in the plugin's icons folder.
+     * @param tracePrinter The trace printer that generates the file from a simulation history
+     * @param removeInitialTick Determines if an initial tick should be removed
      */
-    new(String title, String imageName, TracePrinter tracePrinter) {
+    new(String title, String imageName, TracePrinter tracePrinter, boolean removeInitialTick) {
         super(title, imageName)
         this.tracePrinter = tracePrinter
+        this.removeInitialTick = removeInitialTick
     }
     
     /**
@@ -85,7 +90,9 @@ class SaveSimulationAction extends DataPoolViewToolbarAction {
                 history.add(simMan.currentPool)
                 // The first pool in the history is created after the initialization, not after the first tick.
                 // Thus it should be removed from the history to create a valid trace of all ticks.
-                history.remove(0)
+                if(removeInitialTick) {
+                    history.remove(0)
+                }
                 val fileContent = tracePrinter.getFileContent(history)
                 PromPlugin.createResource(selectedFile, fileContent, true)
             }
