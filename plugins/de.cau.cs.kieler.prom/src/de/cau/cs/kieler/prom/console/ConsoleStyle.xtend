@@ -24,6 +24,7 @@ class ConsoleStyle {
     public static val INFO = new ConsoleStyle(0, 0, 0)
     public static val WARNING = new ConsoleStyle(255, 255, 0)
     public static val ERROR = new ConsoleStyle(255, 0, 0)
+    public static val SIMULATION = new ConsoleStyle(200, 0, 255)
     
     @Accessors(PUBLIC_GETTER)
     private int r

@@ -37,6 +37,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 
 /**
  * Creates a new process by starting an executable or shell command and sends / receives variables of this process using JSON.
@@ -358,7 +359,7 @@ class ExecutableSimulator extends DefaultSimulator {
      * @param txt The text 
      */
     private def void printFromSimulation(String txt) {
-        PromConsole.print("Simulation:"+txt)
+        PromConsole.print(txt, ConsoleStyle.SIMULATION)
     }
     
     /**
