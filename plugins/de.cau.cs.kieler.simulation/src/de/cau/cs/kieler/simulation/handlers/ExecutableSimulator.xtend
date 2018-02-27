@@ -339,7 +339,7 @@ class ExecutableSimulator extends DefaultSimulator {
             } else {
                 // Check error timeout
                 val time = System.currentTimeMillis 
-                if(time-startTime < 0 || time-startTime > RESPONSE_TIMEOUT_IN_SECONDS * 10) {
+                if(time-startTime < 0 || time-startTime > RESPONSE_TIMEOUT_IN_SECONDS * 10000) {
                     SimulationManager.instance.stop
                     throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                         + "is not responding with a JSON object.")
