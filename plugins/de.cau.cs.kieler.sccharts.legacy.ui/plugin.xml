@@ -406,6 +406,40 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.legacy.ui.convert"
+               label="Convert to SCTx"
+               mnemonic="C"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <adapt
+                              type="org.eclipse.core.resources.IProject">
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.core.resources.IFolder">
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.core.resources.IFile">
+                           <test
+                                 property="org.eclipse.core.resources.extension"
+                                 value="sct">
+                           </test>
+                        </adapt>
+                     </or>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
 
    <extension
