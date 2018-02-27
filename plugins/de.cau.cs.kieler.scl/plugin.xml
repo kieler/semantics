@@ -19,6 +19,18 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.scl.prio.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.ssa.seq.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.ssa.scssa.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.ssa.cssa.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.ssa.cssa.sccp.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.resource.extension">

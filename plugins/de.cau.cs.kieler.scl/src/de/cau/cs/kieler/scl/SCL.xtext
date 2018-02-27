@@ -41,6 +41,7 @@ Goto returns Goto:
     semicolon?=';'?
 ;
 
+@Override 
 Assignment returns Assignment:
     (annotations += Annotation)*
     reference = ValuedObjectReference

@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.netlist.sccp
+system de.cau.cs.kieler.sccharts.netlist.sccp
     version 1 
     label "Netlist-based Compilation with SCCP"
 
