@@ -108,7 +108,7 @@ class PartialExpressionEvaluator {
     // ------------------------------------
     
     protected dispatch def Expression eval(ValuedObjectReference vor) {
-        if (vor.indices.nullOrEmpty && vor.subReference == null) { // Cannot handle valued object references with indices or sub-references
+        if (vor.indices.nullOrEmpty && vor.subReference === null) { // Cannot handle valued object references with indices or sub-references
             if (values.containsKey(vor.valuedObject)) {
                 return values.get(vor.valuedObject)
             }
@@ -121,7 +121,7 @@ class PartialExpressionEvaluator {
         switch (op.operator) {
             // BOOLEAN LOGIC
             case LOGICAL_AND: {
-                for (parEval : op.subExpressions.map[eval].filterNull) {
+                for (parEval : op.subExpressions.immutableCopy.map[eval].filterNull) {
                     if (parEval instanceof Value) {
                         if (parEval.isFalsy) {
                             return createBoolValue(false) 
@@ -138,7 +138,7 @@ class PartialExpressionEvaluator {
                 }
             }
             case LOGICAL_OR: {
-                for (parEval : op.subExpressions.map[eval].filterNull) {
+                for (parEval : op.subExpressions.immutableCopy.map[eval].filterNull) {
                     if (parEval instanceof Value) {
                         if (parEval.isThruthy) {
                             return createBoolValue(true) 
@@ -159,7 +159,8 @@ class PartialExpressionEvaluator {
                 if (parEval instanceof Value) {
                     return createBoolValue(parEval.isFalsy)
                 } else {
-                    return parEval
+                    newOp.subExpressions += parEval
+                    return newOp
                 }
             }
             // COMPARISON & CALCULATION
@@ -180,7 +181,7 @@ class PartialExpressionEvaluator {
             case SHIFT_RIGHT,
             case SHIFT_RIGHT_UNSIGNED,
             case SUB: {
-                for (parEval : op.subExpressions.map[eval]) {
+                for (parEval : op.subExpressions.immutableCopy.map[eval]) {
                     newOp.subExpressions += parEval
                 }
                 if (newOp.subExpressions.forall[it instanceof Value]) { // No partial computation
@@ -200,12 +201,13 @@ class PartialExpressionEvaluator {
                 } else if (parEval instanceof IntValue && compute) {
                     return createIntValue((parEval as IntValue).value.bitwiseNot)
                 } else {
-                    return parEval
+                    newOp.subExpressions += parEval
+                    return newOp
                 }
             }
             // SPECIAL
             case CONDITIONAL: {
-                for (parEval : op.subExpressions.map[eval]) {
+                for (parEval : op.subExpressions.immutableCopy.map[eval]) {
                     newOp.subExpressions += parEval
                 }
                 val cond = newOp.subExpressions.head
