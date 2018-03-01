@@ -478,7 +478,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cConstantExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cFunctionCallParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cSignalOrTickReferenceExpressionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cSignalPreExpressionParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
 		
 		//@ Override AtomicExpression kexpressions::Expression:
 		//	EsterelFunctionCall
@@ -489,12 +488,11 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	| '(' BooleanExpression ')'
 		//	| ConstantExpression
 		//	| FunctionCall
-		//	| SignalOrTickReferenceExpression
-		//	| SignalPreExpression;
+		//	| SignalOrTickReferenceExpression;
 		@Override public ParserRule getRule() { return rule; }
 
 		//EsterelFunctionCall | TrapExpression | BoolValue | ValuedObjectPreExpression | TextExpression | '(' BooleanExpression
-		//')' | ConstantExpression | FunctionCall | SignalOrTickReferenceExpression | SignalPreExpression
+		//')' | ConstantExpression | FunctionCall | SignalOrTickReferenceExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EsterelFunctionCall
@@ -532,9 +530,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SignalOrTickReferenceExpression
 		public RuleCall getSignalOrTickReferenceExpressionParserRuleCall_8() { return cSignalOrTickReferenceExpressionParserRuleCall_8; }
-
-		//SignalPreExpression
-		public RuleCall getSignalPreExpressionParserRuleCall_9() { return cSignalPreExpressionParserRuleCall_9; }
 	}
 
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -842,8 +837,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BooleanExpression ')'
 	//	| ConstantExpression
 	//	| FunctionCall
-	//	| SignalOrTickReferenceExpression
-	//	| SignalPreExpression;
+	//	| SignalOrTickReferenceExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;
 	}

@@ -125,8 +125,7 @@ AtomicExpression returns kexpressions::Expression:
     | '(' BooleanExpression ')'
     | ConstantExpression
     | FunctionCall
-    | SignalOrTickReferenceExpression
-    | SignalPreExpression;
+    | SignalOrTickReferenceExpression;
     
 
 @Override    
@@ -136,4 +135,6 @@ AtomicValuedExpression returns kexpressions::Expression:
     | '(' ValuedExpression ')'
     | AtomicExpression
     | StringValue;
+    
+
       

@@ -1011,19 +1011,6 @@ ruleAtomicExpression returns [EObject current=null]
         $current = $this_SignalOrTickReferenceExpression_10.current; 
         afterParserOrEnumRuleCall();
     }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getSignalPreExpressionParserRuleCall_9()); 
-    }
-    this_SignalPreExpression_11=ruleSignalPreExpression
-    { 
-        $current = $this_SignalPreExpression_11.current; 
-        afterParserOrEnumRuleCall();
-    }
 )
 ;
 
