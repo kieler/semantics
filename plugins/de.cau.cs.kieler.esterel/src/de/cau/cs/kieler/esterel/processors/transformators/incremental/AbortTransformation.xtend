@@ -138,11 +138,12 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     scope.statements.add(conditional)
                 }
                 else {
+                    var ValuedObject depthFlag = null
                     if (abort.weak && !abort.delay.isImmediate) {
-                        val depthFlag = createNewUniqueDepthFlag(createFalse)
+                        depthFlag = createNewUniqueDepthFlag(createFalse)
                         decl.valuedObjects.add(depthFlag)
                     }
-                    transformPauses(abort, label, abortFlag, null, null)
+                    transformPauses(abort, label, abortFlag, depthFlag, null)
                     transformJoins(abort, label, abortFlag)
                     scope.declarations.add(decl)
                 }
