@@ -65,7 +65,7 @@ EsterelAssignment returns scl::Assignment:
     
 VariableOrSignalReference returns kexpressions::ValuedObjectReference:
      ValuedObjectReference
-   | SignalReferenceExpression
+   | SignalOrTickReferenceExpression
    | VariableReference
 ;
       
