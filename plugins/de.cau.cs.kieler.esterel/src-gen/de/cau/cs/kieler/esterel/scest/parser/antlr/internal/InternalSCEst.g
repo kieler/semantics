@@ -702,11 +702,11 @@ ruleVariableOrSignalReference returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getVariableOrSignalReferenceAccess().getSignalOrTickReferenceExpressionParserRuleCall_1()); 
     }
-    this_SignalReferenceExpression_1=ruleSignalReferenceExpression
+    this_SignalOrTickReferenceExpression_1=ruleSignalOrTickReferenceExpression
     { 
-        $current = $this_SignalReferenceExpression_1.current; 
+        $current = $this_SignalOrTickReferenceExpression_1.current; 
         afterParserOrEnumRuleCall();
     }
 

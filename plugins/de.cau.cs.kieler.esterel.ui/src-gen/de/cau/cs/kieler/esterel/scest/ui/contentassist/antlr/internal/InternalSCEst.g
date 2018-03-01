@@ -6126,9 +6126,9 @@ rule__VariableOrSignalReference__Alternatives
 )
 
     |(
-{ before(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); }
-	ruleSignalReferenceExpression
-{ after(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); }
+{ before(grammarAccess.getVariableOrSignalReferenceAccess().getSignalOrTickReferenceExpressionParserRuleCall_1()); }
+	ruleSignalOrTickReferenceExpression
+{ after(grammarAccess.getVariableOrSignalReferenceAccess().getSignalOrTickReferenceExpressionParserRuleCall_1()); }
 )
 
     |(

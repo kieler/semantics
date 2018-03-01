@@ -338,23 +338,23 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.VariableOrSignalReference");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cValuedObjectReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cSignalReferenceExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSignalOrTickReferenceExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cVariableReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//VariableOrSignalReference kexpressions::ValuedObjectReference:
 		//	ValuedObjectReference
-		//	| SignalReferenceExpression
+		//	| SignalOrTickReferenceExpression
 		//	| VariableReference;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ValuedObjectReference | SignalReferenceExpression | VariableReference
+		//ValuedObjectReference | SignalOrTickReferenceExpression | VariableReference
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ValuedObjectReference
 		public RuleCall getValuedObjectReferenceParserRuleCall_0() { return cValuedObjectReferenceParserRuleCall_0; }
 
-		//SignalReferenceExpression
-		public RuleCall getSignalReferenceExpressionParserRuleCall_1() { return cSignalReferenceExpressionParserRuleCall_1; }
+		//SignalOrTickReferenceExpression
+		public RuleCall getSignalOrTickReferenceExpressionParserRuleCall_1() { return cSignalOrTickReferenceExpressionParserRuleCall_1; }
 
 		//VariableReference
 		public RuleCall getVariableReferenceParserRuleCall_2() { return cVariableReferenceParserRuleCall_2; }
@@ -775,7 +775,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableOrSignalReference kexpressions::ValuedObjectReference:
 	//	ValuedObjectReference
-	//	| SignalReferenceExpression
+	//	| SignalOrTickReferenceExpression
 	//	| VariableReference;
 	public VariableOrSignalReferenceElements getVariableOrSignalReferenceAccess() {
 		return pVariableOrSignalReference;
