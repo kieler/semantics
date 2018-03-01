@@ -118,13 +118,15 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             }
             val processorID = nextObj.getCorrespondingProcessorID 
             environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
-            if (nextObj instanceof Module) {
+            if (nextObj instanceof EsterelProgram) {
+                environment.setProperty(DYNAMIC_COMPILATION, false) // this way all modules are checked
                 processorsToAdd += SENSOR
                 processorsToAdd += CONSTANT
                 processorsToAdd += SIGNAL
                 processorsToAdd += FUNCTION
+                processorsToAdd += processorID
             }
-            else {
+            else if (!(nextObj instanceof Module)) {
                 processorsToAdd += processorID
             }
             // as long as there are Esterel statements, add intermediate processor to the end of the compilation chain
