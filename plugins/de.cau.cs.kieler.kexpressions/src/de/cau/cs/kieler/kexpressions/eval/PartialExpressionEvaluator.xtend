@@ -110,7 +110,7 @@ class PartialExpressionEvaluator {
     protected dispatch def Expression eval(ValuedObjectReference vor) {
         if (vor.indices.nullOrEmpty && vor.subReference === null) { // Cannot handle valued object references with indices or sub-references
             if (values.containsKey(vor.valuedObject)) {
-                return values.get(vor.valuedObject)
+                return values.get(vor.valuedObject).copy
             }
         }
         return if (inplace) vor else vor.copy//valuedObject.reference

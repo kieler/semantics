@@ -12,6 +12,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  */
 package de.cau.cs.kieler.scg.processors.ssa.optimizer
 
+import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -37,6 +38,7 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
@@ -54,6 +56,7 @@ import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Map
 import javax.inject.Inject
 
+import static de.cau.cs.kieler.scg.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
 
@@ -92,18 +95,15 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     
     public static val SUPPORTED_SSA_TYPES = #[SSATransformation.ID, SimpleSCSSATransformation.ID]
     
-    // Whether to remove assignments with constant values
-    public static val IProperty<Boolean> REMOVE_CONSTANT_ASSIGNMENTS = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.sccp.removeLocals", true)    
-    // Whether to remove assignments to outputs with constant values (if above is active)
-    public static val IProperty<Boolean> REMOVE_CONSTANT_OUTPUTS = 
+    // Whether to remove assignments with no readers
+    public static val IProperty<Boolean> REMOVE_UNREAD_ASSIGNMENTS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.sccp.removeLocals", true)
+    // Whether to remove assignments to outputs (if above is active)
+    public static val IProperty<Boolean> REMOVE_OUTPUTS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.sccp.removeOutputs", false)
     // Whether to propagate constant values of output variables
     public static val IProperty<Boolean> PROPAGATE_OUTPUTS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.sccp.propagateOutputs", true)
-    // Whether to propagate constant values of variables into ssa functions
-    public static val IProperty<Boolean> PROPAGATE_INTO_PHI = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.sccp.propagateIntoMerge", false)
             
     // -------------------------------------------------------------------------
     
@@ -203,106 +203,156 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         // 2. Kill dead code
         // --------------- 
         val deadBlocks = scg.basicBlocks.filter[!executable.contains(it)].toSet
+        val preserveDeadBBs = newArrayList
         for (bb : deadBlocks) {
-            // Fix incoming CF
-            val firstNode = bb.schedulingBlocks.head.nodes.head
-            for (incoming : firstNode.allPrevious.toList) {
-                val prev = incoming.eContainer as Node
-                if (prev instanceof Conditional) {
-                    prev.removeConditional(prev.then == incoming, false)
-                } else {
-                    incoming.target = null
-                    prev.eContents.toList.forEach[remove]
+            val headSB = bb.schedulingBlocks.head
+            if (headSB !== null &&
+                headSB.nodes.head !== null && (
+                headSB.nodes.head instanceof Join ||
+                headSB.nodes.head instanceof Exit)) { // Do not break entry/exit and fork/join pairs
+                bb.deadBlock = true
+                preserveDeadBBs += bb        
+            } else {
+                // Fix incoming CF
+                val firstNode = bb.schedulingBlocks.head.nodes.head
+                for (incoming : firstNode.allPrevious.toList) {
+                    val prev = incoming.eContainer as Node
+                    if (prev instanceof Conditional) {
+                        prev.removeConditional(prev.then == incoming, false)
+                    } else {
+                        incoming.target = null
+                        prev.eContents.toList.forEach[remove]
+                    }
                 }
-            }
-            
-            // remove all nodes
-            for (sb : bb.schedulingBlocks.immutableCopy) {
-                for (node : sb.nodes.immutableCopy) {
-                    node.removeNode(false)
-                    defs.values.remove(node)
-                    uses.values.remove(node)
+                
+                // remove all nodes
+                for (sb : bb.schedulingBlocks.immutableCopy) {
+                    for (node : sb.nodes.immutableCopy) {
+                        node.removeNode(false)
+                        defs.values.removeIf[it == node]
+                        uses.values.removeIf[it == node]
+                    }
                 }
-            }
-            
-            // clear sb
-            bb.schedulingBlocks.forEach[ guards.forEach[remove] ]
-            bb.schedulingBlocks.clear
-            
-            // fix predecessor information in non-dead successor block
-            for (nonDeadBB : dt.successors(bb).filter[!deadBlocks.contains(it)]) {
-                nonDeadBB.fixSSANodes(bb)
-                nonDeadBB.predecessors.removeIf[basicBlock == bb]
+                
+                // clear sb
+                bb.schedulingBlocks.forEach[ guards.forEach[remove] ]
+                bb.schedulingBlocks.clear
+                
+                // fix predecessor information in non-dead successor block
+                for (nonDeadBB : dt.successors(bb).filter[!deadBlocks.contains(it)]) {
+                    nonDeadBB.fixSSANodes(bb)
+                    nonDeadBB.predecessors.removeIf[basicBlock == bb]
+                }
             }
         }
+        deadBlocks.removeAll(preserveDeadBBs)
         scg.basicBlocks.removeAll(deadBlocks)
-        if (!deadBlocks.empty) scg.snapshot
+        if (!deadBlocks.empty && environment.inDeveloperMode) scg.snapshot
 
         
-        // Remove superfluous conditionals
+        // Remove dead branches
         var deadBranches = 0
         for (entry : superfluousConditionals.entrySet.filter[key.eContainer !== null]) {
             entry.key.removeConditional(entry.value, true)
             deadBranches++
-            scg.snapshot
+            if (environment.inDeveloperMode) scg.snapshot
         }
+        if (!deadBlocks.empty || deadBranches > 0) scg.snapshot
         
         // ---------------
-        // 3. Propagate Constants
+        // 3. Propagate Constants / Apply partial evaluation
         // ---------------
-        if (!constants.empty) {
-            for (const : constants.entrySet) {
-                var boolean skippedPhi = false
-//                if (!const.key.isOutput || environment.getProperty(PROPAGATE_OUTPUTS)) {
-//                    if (uses.containsKey(const.key)) {
-//                        // Replace in uses
-//                        for (node : uses.get(const.key)) {
-//                            if (!node.isSSA || environment.getProperty(PROPAGATE_INTO_PHI)) {
-//                                for (vor : node.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const.key].toList) {
-//                                    vor.replace(const.value.copy)
-//                                }
-//                                // TODO clean up dependency
-//                            } else {
-//                                skippedPhi = true
-//                            }
-//                        }
-//                    }
-//                }
+        val readers = HashMultimap.create
+        for (n : scg.nodes.filter[!isSSA]) {
+            // Replace expressions
+            val replacement = if (parEvalAssinments.containsKey(n)) {
+                parEvalAssinments.get(n)
+            } else if (n instanceof Assignment) {
+                parEvalEngine.evaluate(n.expression)
+            } else if (n instanceof Conditional) {
+                parEvalEngine.evaluate(n.condition)
+            }
+            if (replacement !== null) {
+                if (n instanceof Assignment) {
+                    n.expression.replace(replacement)
+                } else if (n instanceof Conditional) {
+                    n.condition.replace(replacement)
+                }
                 
-                /*
-                 * Assignment must no be removed if it is an output and the associated property is set
-                 * OR an ssa function depends on its execution!
-                 */
-                if (environment.getProperty(REMOVE_CONSTANT_ASSIGNMENTS)
-                    && ((!const.key.isOutput || environment.getProperty(REMOVE_CONSTANT_OUTPUTS)) && !skippedPhi)
-                ) {
-                    // Remove Definition
-                    val node = defs.get(const.key)
-                    if (node !== null && node.dependencies.filter(DataDependency).forall[concurrent == false]) { //FIXME !!!
-                        node?.removeNode(true)
+                // Store new readers
+                val reads = replacement.allReferences.map[valuedObject].toSet
+                uses.entries.removeIf[value == n && !reads.contains(key)]
+                readers.putAll(n, reads)
+            }
+        }
+        if (environment.inDeveloperMode) scg.snapshot
+        
+        // ---------------
+        // 4. Remove superfluous definitions
+        // ---------------
+        if (environment.getProperty(REMOVE_UNREAD_ASSIGNMENTS)) {
+            val useless = defs.entrySet.filter[
+                (!key.isOutput || environment.getProperty(REMOVE_OUTPUTS)) && uses.get(it.key).nullOrEmpty
+            ].map[value].toList
+            do {
+                val def = useless.head
+                useless.remove(0) // pop
+                
+                // Remove from data
+                defs.remove(def.valuedObject, def)
+                uses.values.removeIf[it == def]
+                readers.removeAll(def)
+                
+                // Find more
+                for (more : def.expression.allReferences.map[valuedObject].toSet) {
+                    if ((!more.isOutput || environment.getProperty(REMOVE_OUTPUTS)) && uses.get(more).nullOrEmpty) {
+                        val moreDef = defs.get(more)
+                        if (moreDef !== null) {
+                            useless += moreDef
+                        }
+                    }
+                }
+                
+                // Remove from scg (here is important because remove node clears content)
+                def.removeNode(true)
+            } while (!useless.empty)
+        }
+        if (environment.inDeveloperMode) scg.snapshot
+        
+        // ---------------
+        // 5. Remove superfluous dependencies
+        // --------------- 
+        for (reader : readers.keySet) {
+            val directReads = readers.get(reader)
+            val reads = newHashSet => [addAll(directReads)]
+            // SSA closure
+            for (read : directReads) {
+                val vos = newLinkedList(read)
+                while(!vos.empty) {
+                    val def = defs.get(vos.pop)
+                    if (def !== null && def.isSSA) {
+                        for (param : def.expression.allReferences.map[valuedObject].toSet) {
+                            if (!reads.contains(param)) {
+                                reads += param
+                                vos += param
+                            }
+                        }
                     }
                 }
             }
+            // Remove dependencies
+            reader.incoming.filter(DataDependency).filter[type == WRITE_READ].filter[
+                !reads.contains((eContainer as Assignment).valuedObject)
+            ].toList.forEach[remove]
         }
         
         // ---------------
-        // 4. Apply partial evaluation
-        // ---------------  
-        for (n : scg.nodes) {
-            if (n instanceof Assignment) {
-                if (parEvalAssinments.containsKey(n)) n.expression.replace(parEvalAssinments.get(n))
-            } else if (n instanceof Conditional) {
-                if (parEvalConditionals.containsKey(n)) n.condition.replace(parEvalConditionals.get(n))
-            }
-        }
-        
-        // ---------------
-        // 5. Remove unused ssa versions
+        // 6. Remove unused ssa versions
         // ---------------
         scg.removeUnusedSSAVersions
 
         // ---------------
-        // 6. Update SSA VO version numbering
+        // 7. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
                 
@@ -330,14 +380,14 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         
         // Handle nodes
         for (sb : block.schedulingBlocks) {
-            for (node : sb.nodes) {
+            for (node : sb.nodes.filterNull) {
                 node.handleNode
             }
         }
     }
     
     protected def void handleVO(ValuedObject vo) {
-        for (use : uses.get(vo)) {
+        for (use : uses.get(vo).filterNull) {
             if (executable.contains(use.basicBlock)) {
                 use.handleNode
             }
@@ -345,6 +395,9 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     }
     
     protected def dispatch void handleNode(Assignment asm) {
+        if (asm.valuedObject === null) {
+            return
+        }
         if (asm.isSSA) {
             if (asm.isSSA(PHI)) {
                 var Value constantValue
@@ -406,7 +459,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     
     protected def void markExecutable(BasicBlock block) {
         // Mark only on first time
-        if (!executable.contains(block)) {
+        if (block !== null && !executable.contains(block)) {
             // Mark
             executable.add(block)
             
@@ -415,7 +468,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             val newBlocks = newLinkedList(block)
             val addedBlocks = newHashSet(block)
             while (!newBlocks.empty) {
-                for (succ : dt.successors(newBlocks.pop).filter[executable.contains(it) && !addedBlocks.contains(it)]) {
+                for (succ : dt.successors(newBlocks.pop).filter[executable.contains(it) && !addedBlocks.contains(it)].filterNull) {
                     blockWorkList.add(succ)
                     newBlocks.add(succ)
                     addedBlocks.add(succ)
@@ -489,6 +542,9 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         
         // reroute
         c.allPrevious.toList.forEach[ target = if(!trueBranchDead) c.then.target else c.^else.target ]
+        
+        // remove
+        uses.values.removeIf[it == c]
         c.removeNode(false)
         
         // fix predecessor information in successor block
@@ -501,14 +557,12 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             if (info !== null) {
                 aliveTargetBB.predecessors.remove(info)
             }
-            for (p : bb.predecessors.toList) {
+            for (p : bb.predecessors.immutableCopy) {
                 if (!aliveTargetBB.predecessors.exists[basicBlock == p.basicBlock]) {
                     aliveTargetBB.predecessors.add(p)
                 }
             }
         }
-        
-        uses.values.remove(c)
     }
     
     def void fixSSANodes(BasicBlock target, BasicBlock source) {
@@ -526,10 +580,10 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                         ]
                         uses.put(newVO, use)
                     }
-                    uses.keys.remove(n.valuedObject)
+                    uses.keys.removeIf[it == n.valuedObject]
                     n.removeNode(true)
-                    defs.values.remove(n)
-                    uses.values.remove(n)
+                    defs.values.removeIf[it == n]
+                    uses.values.removeIf[it == n]
                 }
             }
         }

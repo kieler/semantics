@@ -60,9 +60,13 @@ class PartialExpressionEvaluation extends InplaceProcessor<SCGraphs> implements 
         
         for (n : scg.nodes) {
             if (n instanceof Assignment) {
-            	n.expression.replace(n.expression.evaluate)
+                if (n.expression !== null) {
+            	   n.expression.replace(n.expression.evaluate)
+            	}
             } else if (n instanceof Conditional) {
-                n.condition.replace(n.condition.evaluate)
+                if (n.condition !== null) {
+                    n.condition.replace(n.condition.evaluate)
+                }
             }
         }
         

@@ -233,7 +233,7 @@ class SSATransformationExtensions {
                 if (n instanceof Assignment) {
                     // create new version
                     var vo = n.valuedObject
-                    if (!vo.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
+                    if (vo !== null && !vo.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                         val version = ssaDecl.get(vo).valuedObjects.size
                         val newVO = vo.copy
                         ssaDecl.get(vo).valuedObjects.add(newVO)
@@ -296,7 +296,7 @@ class SSATransformationExtensions {
     
     def defSite(SCGraph scg) {
         val defsite = HashMultimap.<ValuedObject, BasicBlock>create
-        for (asm : scg.nodes.filter(Assignment)) {
+        for (asm : scg.nodes.filter(Assignment).filter[valuedObject !== null]) {
             defsite.put(asm.valuedObject, asm.basicBlock)
         }
         return defsite

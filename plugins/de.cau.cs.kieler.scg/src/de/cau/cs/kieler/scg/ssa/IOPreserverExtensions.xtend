@@ -264,7 +264,7 @@ class IOPreserverExtensions {
         val positions = <Node>newArrayList(entry)
         val isDefined = <ValuedObject>newHashSet
         for (n : scg.nodes) {
-            if (onlyForWrittenInputs && n instanceof Assignment) {
+            if (onlyForWrittenInputs && n instanceof Assignment && (n as Assignment).valuedObject !== null) {
                 isDefined += (n as Assignment).valuedObject
             } else if (n instanceof Depth) {
                 positions += n

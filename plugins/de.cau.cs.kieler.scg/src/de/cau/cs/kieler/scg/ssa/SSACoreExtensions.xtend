@@ -228,7 +228,7 @@ class SSACoreExtensions {
     def getAllDefs(SCGraph scg) {
         val def = HashMultimap.<ValuedObject, Assignment>create
         // Analyse graph for defs
-        for (node : scg.nodes.filter(Assignment)) {
+        for (node : scg.nodes.filter(Assignment).filter[valuedObject !== null]) {
             def.put(node.valuedObject, node)
         }
         return def;
@@ -240,7 +240,7 @@ class SSACoreExtensions {
         }
         val def = <ValuedObject, Assignment>newHashMap
         // Analyse graph for defs
-        for (node : scg.nodes.filter(Assignment)) {
+        for (node : scg.nodes.filter(Assignment).filter[valuedObject !== null]) {
             def.put(node.valuedObject, node)
         }
         return def;
