@@ -196,7 +196,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     scope.statements.add(scope.statements.length-1, conditional2)
                 }
             }
-            transformPauses(abort, label, abortFlag, null, countingVariables)
+            transformPauses(abort, label, abortFlag, depthFlag, countingVariables)
             transformJoins(abort, label, abortFlag)
             thread1.statements.add(createGotoStatement(label3))
             thread1.statements.add(label4)
