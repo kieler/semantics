@@ -178,7 +178,7 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
  
     protected def Multimap<Assignment, Parameter> placePi(SCGraph scg) {
         val refs = HashMultimap.<Assignment, Parameter>create
-        val nodes = newHashMap
+        val nodes = newLinkedHashMap
         for (n : scg.nodes.filter[!isSSA]) {
             val incomingDeps = n.incoming.filter(DataDependency).filter[concurrent && (type == WRITE_READ || type == WRITE_RELATIVEWRITE)].toList
             if (!incomingDeps.empty) {
@@ -187,25 +187,27 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
                     val asm = eContainer as Assignment
                     concVODefs.put(asm.valuedObject, asm)
                 ]
+                val sb = n.schedulingBlock
+                var headNode = n
                 for (vo : concVODefs.keySet) {
                     // Create Pi assignment
                     val asm = ScgFactory.eINSTANCE.createAssignment
-                    val sb = n.schedulingBlock
-                    sb.nodes.add(sb.nodes.indexOf(n), asm)
-                    nodes.put(n, asm)
+                    sb.nodes.add(sb.nodes.indexOf(headNode), asm)
+                    nodes.put(headNode, asm)
                     asm.valuedObject = vo
                     asm.markSSA(PI)
                     val func = PI.createFunction
                     asm.expression = func
                     // Insert before
-                    n.allPrevious.toList.forEach[target = asm]
-                    asm.createControlFlow.target = n
+                    headNode.allPrevious.toList.forEach[target = asm]
+                    asm.createControlFlow.target = headNode
                     // Create Parameters
                     for (concDef : concVODefs.get(vo)) {
                         val param = createParameter
                         func.parameters.add(param)
                         refs.put(concDef, param)
                     }
+                    headNode = asm
                 }
             }
         }
