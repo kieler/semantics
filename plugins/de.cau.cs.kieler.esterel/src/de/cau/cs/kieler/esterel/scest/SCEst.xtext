@@ -65,7 +65,7 @@ EsterelAssignment returns scl::Assignment:
     
 VariableOrSignalReference returns kexpressions::ValuedObjectReference:
      ValuedObjectReference
-   | SignalOrTickReferenceExpression
+   | SignalReferenceExpression
    | VariableReference
 ;
       
@@ -125,7 +125,7 @@ AtomicExpression returns kexpressions::Expression:
     | '(' BooleanExpression ')'
     | ConstantExpression
     | FunctionCall
-    | SignalReferenceExpression;
+    | SignalOrTickReferenceExpression;
     
 
 @Override    
