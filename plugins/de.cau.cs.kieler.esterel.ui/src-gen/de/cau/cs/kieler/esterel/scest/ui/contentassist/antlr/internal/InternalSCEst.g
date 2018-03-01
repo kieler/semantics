@@ -6201,6 +6201,12 @@ rule__AtomicExpression__Alternatives
 { after(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); }
 )
 
+    |(
+{ before(grammarAccess.getAtomicExpressionAccess().getSignalPreExpressionParserRuleCall_9()); }
+	ruleSignalPreExpression
+{ after(grammarAccess.getAtomicExpressionAccess().getSignalPreExpressionParserRuleCall_9()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
