@@ -6126,9 +6126,9 @@ rule__VariableOrSignalReference__Alternatives
 )
 
     |(
-{ before(grammarAccess.getVariableOrSignalReferenceAccess().getSignalOrTickReferenceExpressionParserRuleCall_1()); }
-	ruleSignalOrTickReferenceExpression
-{ after(grammarAccess.getVariableOrSignalReferenceAccess().getSignalOrTickReferenceExpressionParserRuleCall_1()); }
+{ before(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); }
+	ruleSignalReferenceExpression
+{ after(grammarAccess.getVariableOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_1()); }
 )
 
     |(
@@ -6196,9 +6196,9 @@ rule__AtomicExpression__Alternatives
 )
 
     |(
-{ before(grammarAccess.getAtomicExpressionAccess().getSignalReferenceExpressionParserRuleCall_8()); }
-	ruleSignalReferenceExpression
-{ after(grammarAccess.getAtomicExpressionAccess().getSignalReferenceExpressionParserRuleCall_8()); }
+{ before(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); }
+	ruleSignalOrTickReferenceExpression
+{ after(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); }
 )
 
 ;

@@ -338,23 +338,23 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.VariableOrSignalReference");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cValuedObjectReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cSignalOrTickReferenceExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSignalReferenceExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cVariableReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//VariableOrSignalReference kexpressions::ValuedObjectReference:
 		//	ValuedObjectReference
-		//	| SignalOrTickReferenceExpression
+		//	| SignalReferenceExpression
 		//	| VariableReference;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ValuedObjectReference | SignalOrTickReferenceExpression | VariableReference
+		//ValuedObjectReference | SignalReferenceExpression | VariableReference
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ValuedObjectReference
 		public RuleCall getValuedObjectReferenceParserRuleCall_0() { return cValuedObjectReferenceParserRuleCall_0; }
 
-		//SignalOrTickReferenceExpression
-		public RuleCall getSignalOrTickReferenceExpressionParserRuleCall_1() { return cSignalOrTickReferenceExpressionParserRuleCall_1; }
+		//SignalReferenceExpression
+		public RuleCall getSignalReferenceExpressionParserRuleCall_1() { return cSignalReferenceExpressionParserRuleCall_1; }
 
 		//VariableReference
 		public RuleCall getVariableReferenceParserRuleCall_2() { return cVariableReferenceParserRuleCall_2; }
@@ -477,7 +477,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		private final RuleCall cConstantExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cFunctionCallParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cSignalReferenceExpressionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cSignalOrTickReferenceExpressionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		//@ Override AtomicExpression kexpressions::Expression:
 		//	EsterelFunctionCall
@@ -488,11 +488,11 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	| '(' BooleanExpression ')'
 		//	| ConstantExpression
 		//	| FunctionCall
-		//	| SignalReferenceExpression;
+		//	| SignalOrTickReferenceExpression;
 		@Override public ParserRule getRule() { return rule; }
 
 		//EsterelFunctionCall | TrapExpression | BoolValue | ValuedObjectPreExpression | TextExpression | '(' BooleanExpression
-		//')' | ConstantExpression | FunctionCall | SignalReferenceExpression
+		//')' | ConstantExpression | FunctionCall | SignalOrTickReferenceExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EsterelFunctionCall
@@ -528,8 +528,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//FunctionCall
 		public RuleCall getFunctionCallParserRuleCall_7() { return cFunctionCallParserRuleCall_7; }
 
-		//SignalReferenceExpression
-		public RuleCall getSignalReferenceExpressionParserRuleCall_8() { return cSignalReferenceExpressionParserRuleCall_8; }
+		//SignalOrTickReferenceExpression
+		public RuleCall getSignalOrTickReferenceExpressionParserRuleCall_8() { return cSignalOrTickReferenceExpressionParserRuleCall_8; }
 	}
 
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -775,7 +775,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableOrSignalReference kexpressions::ValuedObjectReference:
 	//	ValuedObjectReference
-	//	| SignalOrTickReferenceExpression
+	//	| SignalReferenceExpression
 	//	| VariableReference;
 	public VariableOrSignalReferenceElements getVariableOrSignalReferenceAccess() {
 		return pVariableOrSignalReference;
@@ -837,7 +837,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BooleanExpression ')'
 	//	| ConstantExpression
 	//	| FunctionCall
-	//	| SignalReferenceExpression;
+	//	| SignalOrTickReferenceExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;
 	}
