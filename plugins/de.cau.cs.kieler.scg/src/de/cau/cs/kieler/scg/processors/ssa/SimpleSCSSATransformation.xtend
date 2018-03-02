@@ -95,7 +95,7 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
         validateStructure(scg)
         validateExpressions(scg)
         
-        scg.normalizeAssignments
+        scg.prepareUpdates
         
         val entryBB = scg.basicBlocks.head
         val entryNode = entryBB.nodes.head as Entry

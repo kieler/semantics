@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import javax.inject.Inject
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -54,6 +55,7 @@ class UnSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     @Inject extension SCGManipulationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SSACoreExtensions
+    @Inject extension SSATransformationExtensions
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
@@ -64,6 +66,7 @@ class UnSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         for (n : scg.nodes.filter(Assignment).filter[isSSA].toList) {
             n.removeNode(true)
         }
+        if (environment.inDeveloperMode) scg.snapshot
         
         // ---------------
         // 2. Undo renaming
@@ -75,7 +78,8 @@ class UnSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
                     vor.valuedObject = orig
                 }
             }
-        }               
+        } 
+        if (environment.inDeveloperMode) scg.snapshot              
 
         // This transformation removes the SSA property!       
         scg.unmarkSSA 
@@ -84,6 +88,11 @@ class UnSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         // 3. Remove SSA declarations
         // --------------- 
         scg.declarations.removeIf[isSSA]
+        
+        // ---------------
+        // 4. Restore Update form
+        // --------------- 
+        scg.restoreUpdates
         
         return scg
     }

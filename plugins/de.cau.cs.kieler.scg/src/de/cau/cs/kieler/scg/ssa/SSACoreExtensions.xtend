@@ -189,10 +189,6 @@ class SSACoreExtensions {
         return scg.nodes.exists[it instanceof Surface]
     }
     
-    def isUpdate(Assignment asm) {
-        return asm.expression.eAllContents.filter(ValuedObjectReference).exists[valuedObject == asm.valuedObject]
-    }
-    
     /**
      * Remove unused ssa versions.
      */

@@ -70,6 +70,7 @@ class MergeExpressionExtension {
     @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SSACoreExtensions
+    @Inject extension SSATransformationExtensions
     @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     

@@ -57,6 +57,7 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.HashBiMap
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * @author als
@@ -76,7 +77,13 @@ class SSATransformationExtensions {
     @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     
+    public static val ANNOTATION_UPDATE = "de.cau.cs.kieler.scg.ssa.former.update"
+    
     @Accessors var boolean SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING = false
+    
+    // -----------------
+    // SCG Validation
+    // -----------------
     
     def validateStructure(Processor<?,?> processor, SCGraph scg) {
         // It is expected that this node is an entry node.
@@ -98,7 +105,10 @@ class SSATransformationExtensions {
 //        }
     }            
 
-    def normalizeAssignments(SCGraph scg) {
+    // -----------------
+    // SCG Preparation
+    // -----------------
+    def prepareUpdates(SCGraph scg) {
         for (asm : scg.nodes.filter(Assignment).filter[operator != AssignOperator.ASSIGN]) {
             val OperatorType op = switch (asm.operator) {
                 case ASSIGNADD: OperatorType.ADD
@@ -127,10 +137,39 @@ class SSATransformationExtensions {
                     subExpressions += asm.expression           
                 ]
             }
+            asm.annotations += createStringAnnotation(ANNOTATION_UPDATE, asm.operator.getName())
             asm.operator = AssignOperator.ASSIGN
         }
     }
     
+    def isUpdate(Assignment asm) {
+        return asm.hasAnnotation(ANNOTATION_UPDATE)
+    }
+    
+    def restoreUpdates(SCGraph scg) {
+        for (asm : scg.nodes.filter(Assignment).filter[isUpdate]) {
+            val AssignOperator op = AssignOperator.getByName(asm.getStringAnnotationValue(ANNOTATION_UPDATE))
+            if (op !== null) {
+                val exp = asm.expression
+                if (exp instanceof OperatorExpression) {
+                    if (exp.subExpressions.size == 2 && exp.subExpressions.head instanceof ValuedObjectReference) {
+                        if (op == AssignOperator.POSTFIXADD || op == AssignOperator.POSTFIXSUB) {
+                            asm.expression = exp.subExpressions.head
+                        } else {
+                            asm.expression = exp.subExpressions.get(1)
+                        }
+                        asm.removeAnnotations(ANNOTATION_UPDATE)
+                        asm.operator = op
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    // -----------------
+    // General PHI placement
+    // -----------------
     def getPhiPlacer() {
         return [ ValuedObject vo, Node bbHead |
             // Create Phi assignment
@@ -203,6 +242,9 @@ class SSATransformationExtensions {
         return placedAssignment
     }
 
+    // -----------------
+    // General Renaming
+    // -----------------
     def rename(DominatorTree dt, BasicBlock start, BiMap<ValuedObject, VariableDeclaration> ssaDecl, Function1<Assignment, Boolean> ssaPredicate) {
         val placedParameter = <Parameter, BasicBlock>newHashMap
         val versionStack = <ValuedObject, LinkedList<Integer>>newHashMap
@@ -302,6 +344,9 @@ class SSATransformationExtensions {
         return defsite
     }
     
+    // -----------------
+    // Transformation for PHI nodes
+    // -----------------
     def Multimap<Assignment, Assignment> placeMoveInstructions(SCGraph scg, Map<Parameter, BasicBlock> parameterMapping) {
         val placed = HashMultimap.create
         for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
