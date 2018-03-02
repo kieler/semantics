@@ -43,7 +43,12 @@ class SCGManipulationExtensions {
             } else {
                 node.allPrevious.toList.forEach[
                     prev += it.eContainer as Node
-                    target = node.allNext.head?.target
+                    val next = node.allNext.head
+                    if (next !== null) {
+                        target = next.target
+                    } else {
+                        target = null // schizophrenia
+                    }
                 ]
             }
         } else {
@@ -73,7 +78,9 @@ class SCGManipulationExtensions {
                                 for (p : prev) {
                                     val pbb = p.basicBlock
                                     if (!sbb.predecessors.exists[basicBlock == pbb]) {
-                                        sbb.predecessors.add(createPredecessor => [ basicBlock = pbb ])
+                                        val info = bb.predecessors.findFirst[basicBlock == pbb]
+                                        //createPredecessor => [ basicBlock = pbb ]
+                                        sbb.predecessors.add(info.copy)
                                     }
                                 }
                             }
