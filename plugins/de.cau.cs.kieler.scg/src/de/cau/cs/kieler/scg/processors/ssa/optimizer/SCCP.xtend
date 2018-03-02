@@ -210,7 +210,9 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                 headSB.nodes.head !== null && (
                 headSB.nodes.head instanceof Join ||
                 headSB.nodes.head instanceof Exit)) { // Do not break entry/exit and fork/join pairs
-                bb.deadBlock = true
+                if (!bb.finalBlock) {
+                    bb.deadBlock = true
+                }
                 preserveDeadBBs += bb        
             } else {
                 // Fix incoming CF
@@ -372,7 +374,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                 } else {
                     term.put(succ, 1)
                 }
-                if (term.get(succ) == succ.predecessors.size) {
+                if (term.get(succ) == succ.predecessors.filter[!basicBlock.finalBlock].size) {
                     succ.markExecutable
                 }
             } else {
