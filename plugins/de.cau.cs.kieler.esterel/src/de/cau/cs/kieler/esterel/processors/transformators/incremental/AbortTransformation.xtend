@@ -109,8 +109,8 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 val conditional2  = createConditional(copy(abort.delay.expression))
                 conditional2.statements.add(incrementInt(variable))
                 thread1.statements.add(label2)
-                thread1.statements.add(conditional) 
                 thread1.statements.add(createPause)
+                thread1.statements.add(conditional) 
                 thread1.statements.add(conditional2)
                 thread1.statements.add(createGotoStatement(label2))
                 thread1.statements.add(label3)
@@ -232,7 +232,9 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
     }
     
     def transformPauses(Abort abort, Label label, ValuedObject abortFlag, ValuedObject depthFlag, LinkedList<ValuedObject> countingVariables) {
-            val pauses = abort.eAllContents.filter(Pause).toList
+            val tempScope = createScopeStatement(abort.statements)
+            val pauses = tempScope.eAllContents.filter(Pause).toList
+            abort.statements.addAll(tempScope.statements)
             for (pause : pauses) {
                 var statements =  pause.getContainingList
                 var pos = statements.indexOf(pause)
@@ -241,10 +243,9 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 // ABORT CASES
                 if (abort.delay === null) {
                     transformCases(pause, abort, label2, abortFlag, depthFlag, countingVariables)
-                    return
                 }
                 // WEAK ABORT
-                if (abort.weak) {
+                else if (abort.weak) {
                     // e.g. "weak abort immediate A"
                     if (abort.delay.isImmediate) {
                         val conditional = newIfThenGoto(abort.delay.expression.copy, label2, false)

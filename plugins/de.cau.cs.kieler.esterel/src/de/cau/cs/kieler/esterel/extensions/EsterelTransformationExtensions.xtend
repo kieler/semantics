@@ -1500,6 +1500,16 @@ class EsterelTransformationExtensions {
     }
     
     /**
+     * Check for every Goto statement if its target is still inside its Thread
+     * @param object the scope
+     */
+    def void checkGotos(EObject object) {
+        object.eAllContents.filter(Goto).toList.forEach[ g |
+            g.target = findClosestLabel(g.target, g)
+        ]
+    }
+    
+    /**
      * Check if 'statement' is a Goto statement and when it is, check if its target is still inside its Thread
      * 
      * @param statement A statement which needs to be checked

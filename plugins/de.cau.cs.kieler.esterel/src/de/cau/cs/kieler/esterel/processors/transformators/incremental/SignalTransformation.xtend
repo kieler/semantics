@@ -130,6 +130,7 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
             it instanceof TypeDeclaration || it instanceof RelationDeclaration
             || it instanceof TaskDeclaration || it instanceof ProcedureCall
         ]
+        model.checkGotos
     }
     
     /*
