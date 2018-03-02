@@ -292,9 +292,11 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         // ---------------
         if (environment.getProperty(REMOVE_UNREAD_ASSIGNMENTS)) {
             val useless = defs.entrySet.filter[
-                (!key.isOutput || environment.getProperty(REMOVE_OUTPUTS)) && uses.get(it.key).nullOrEmpty
+                key.cardinalities.nullOrEmpty && // Not an array // TODO support arrays
+                (!key.isOutput || environment.getProperty(REMOVE_OUTPUTS)) && // Not an output
+                uses.get(it.key).nullOrEmpty // No uses
             ].map[value].toList
-            do {
+            while (!useless.empty) {
                 val def = useless.head
                 useless.remove(0) // pop
                 
@@ -315,7 +317,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                 
                 // Remove from scg (here is important because remove node clears content)
                 def.removeNode(true)
-            } while (!useless.empty)
+            } 
         }
         if (environment.inDeveloperMode) scg.snapshot
         
