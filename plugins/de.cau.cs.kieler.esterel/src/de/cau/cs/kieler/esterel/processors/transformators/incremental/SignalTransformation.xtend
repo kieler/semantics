@@ -31,6 +31,8 @@ import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.esterel.RelationDeclaration
 import de.cau.cs.kieler.esterel.TaskDeclaration
 import de.cau.cs.kieler.esterel.ProcedureCall
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Thread
 
 /**
  * @author mrb
@@ -154,53 +156,60 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
             val term = createNewUniqueTermFlag(createFalse)
             val decl = createDeclaration(ValueType.BOOL, term)
             val parallel = createParallel
-            val thread1 = createThread
             val thread2 = createThread
-            parallel.threads.add(thread1)
             parallel.threads.add(thread2)
             thread2.statements.addAll(module.statements)
             thread2.statements.add(createAssignment(term, createTrue))
             module.statements.add(parallel)
             module.declarations.add(decl)
             
-            // thread1 statements: the initializations of the output signals
-            val label = createLabel
-            thread1.statements.add(label)
+            // tempThread statements: the initializations of the output signals
+            var Label tempLabel
+            var Thread tempThread 
             for (signal : signals) {
                 val keyValue = signalsMap.get(signal)
                 val s = keyValue.s
                 // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
                 if (signal.type != ValueType.PURE && signal.combineOperator !== null && signal.combineOperator != CombineOperator.NONE) {
+                    tempLabel = createLabel
+                    tempThread = createThread
+                    tempThread.statements.add(tempLabel)
+                    parallel.threads.add(tempThread)
                     val s_set = keyValue.s_set
                     val s_cur = keyValue.s_cur
                     val s_val = keyValue.s_val
                     if (signal.eContainer instanceof OutputDeclaration) {
                         val assign1 = createAssignment(s, createFalse)
-                        thread1.statements.add(assign1)
+                        tempThread.statements.add(assign1)
                     }
                     else if (signal.eContainer instanceof LocalSignalDeclaration) {
                         var assign1 = createAssignment(s, createFalse)
-                        thread1.statements.add(assign1)
+                        tempThread.statements.add(assign1)
                     }
                     val assign2 = createAssignment(s_set, createFalse)
-                    thread1.statements.add(assign2)
+                    tempThread.statements.add(assign2)
                     val conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
                     val assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
                     conditional1.statements.add(assign3)
-                    thread1.statements.add(conditional1)
+                    tempThread.statements.add(conditional1)
                     val conditional2 = createConditional(createValuedObjectReference(s))
                     val assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
                     conditional2.statements.add(assign4)
-                    thread1.statements.add(conditional2)
-                    
+                    tempThread.statements.add(conditional2)
+                    val conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), tempLabel, true)
+                    tempThread.statements.add(conditional)
                 }
                 else if (signal.eContainer instanceof OutputDeclaration) {
+                    tempLabel = createLabel
+                    tempThread = createThread
+                    tempThread.statements.add(tempLabel)
+                    parallel.threads.add(tempThread)
                     val assign1 = createAssignment(s, createFalse)
-                    thread1.statements.add(assign1)
+                    tempThread.statements.add(assign1)
+                    val conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), tempLabel, true)
+                    tempThread.statements.add(conditional)
                 }
             }
-            val conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
-            thread1.statements.add(conditional)
         }
     }
     
