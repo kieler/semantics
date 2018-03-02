@@ -439,14 +439,14 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             val branch = PartialExpressionEvaluator.isThruthy(parEvalResult)
             // Activate branch
             if (branch) {
-                cond.then.target.basicBlock.markExecutable
+                if (cond.then !== null) cond.then.target.basicBlock.markExecutable
             } else {
-                cond.^else.target.basicBlock.markExecutable
+                if (cond.^else !== null) cond.^else.target.basicBlock.markExecutable
             }
             superfluousConditionals.put(cond, !branch)
         } else if (parEvalResult.isOverdefined) { // Mark both
-            cond.then.target.basicBlock.markExecutable
-            cond.^else.target.basicBlock.markExecutable
+            if (cond.then !== null) cond.then.target.basicBlock.markExecutable
+            if (cond.^else !== null) cond.^else.target.basicBlock.markExecutable
         }
     } 
           
@@ -536,32 +536,45 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     
     def void removeConditional(Conditional c, boolean trueBranchDead, boolean fixSSA) {
         val bb = c.basicBlock
-        // remove successor
-        val deadTargetBB = (if(trueBranchDead) c.then.target else c.^else.target).basicBlock
-        val aliveTargetBB = (if(!trueBranchDead) c.then.target else c.^else.target).basicBlock
-        deadTargetBB.predecessors.removeIf[basicBlock == bb]
-        if (fixSSA) deadTargetBB.fixSSANodes(bb)
+
+        // Checking null branches is important for cured schizophrenia
+        val deadTargetBranch = if (trueBranchDead) c.then else c.^else
+        val deadTargetBB = if (deadTargetBranch !== null) deadTargetBranch.target.basicBlock
+        val aliveTargetBranch = if (!trueBranchDead) c.then else c.^else
+        val aliveTargetBB = if (aliveTargetBranch !== null) aliveTargetBranch.target.basicBlock
+        if (deadTargetBB !== null) {
+            deadTargetBB.predecessors.removeIf[basicBlock == bb]
+            if (fixSSA) deadTargetBB.fixSSANodes(bb)
+        }
         
         // reroute
-        c.allPrevious.toList.forEach[ target = if(!trueBranchDead) c.then.target else c.^else.target ]
+        for (p : c.allPrevious.toList) {
+            if (aliveTargetBranch !== null) {
+                p.target = aliveTargetBranch.target
+            } else {
+                p.target = null
+            }
+        }
         
         // remove
         uses.values.removeIf[it == c]
         c.removeNode(false)
         
-        // fix predecessor information in successor block
-        val info = aliveTargetBB.predecessors.findFirst[basicBlock == bb && conditional == c]
-        if (info !== null) {
-            info.conditional = null
-            info.branchType = null
-        }
-        if (bb.eContainer === null) { // removed
+        if (aliveTargetBB !== null) {
+            // fix predecessor information in successor block
+            val info = aliveTargetBB.predecessors.findFirst[basicBlock == bb && conditional == c]
             if (info !== null) {
-                aliveTargetBB.predecessors.remove(info)
+                info.conditional = null
+                info.branchType = null
             }
-            for (p : bb.predecessors.immutableCopy) {
-                if (!aliveTargetBB.predecessors.exists[basicBlock == p.basicBlock]) {
-                    aliveTargetBB.predecessors.add(p)
+            if (bb.eContainer === null) { // removed
+                if (info !== null) {
+                    aliveTargetBB.predecessors.remove(info)
+                }
+                for (p : bb.predecessors.immutableCopy) {
+                    if (!aliveTargetBB.predecessors.exists[basicBlock == p.basicBlock]) {
+                        aliveTargetBB.predecessors.add(p)
+                    }
                 }
             }
         }
