@@ -221,7 +221,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                         prev.removeConditional(prev.then == incoming, false)
                     } else {
                         incoming.target = null
-                        prev.eContents.toList.forEach[remove]
+                        prev.eContents.immutableCopy.forEach[remove]
                     }
                 }
                 
