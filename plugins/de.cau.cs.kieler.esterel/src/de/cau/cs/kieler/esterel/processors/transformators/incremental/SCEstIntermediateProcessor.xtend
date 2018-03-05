@@ -330,7 +330,6 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                     }
                     else {
                         obj = parent
-                        transform = true
                     }
                 }
                 else if (parent instanceof ElseScope) {
