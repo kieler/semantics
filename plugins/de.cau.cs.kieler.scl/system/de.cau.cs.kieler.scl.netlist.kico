@@ -14,6 +14,8 @@ de.cau.cs.kieler.scg.processors.guards
 de.cau.cs.kieler.scg.processors.scheduler
 de.cau.cs.kieler.scg.processors.sequentializer
 post process de.cau.cs.kieler.scg.processors.copyPropagation
+post process de.cau.cs.kieler.scg.processors.conditionalMerger
+post process de.cau.cs.kieler.scg.processors.haltStateRemover
 post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
-post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent  
+post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent
 de.cau.cs.kieler.scg.processors.codegen.c
