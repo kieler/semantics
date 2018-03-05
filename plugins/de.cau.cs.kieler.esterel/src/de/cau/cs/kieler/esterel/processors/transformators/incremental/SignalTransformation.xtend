@@ -30,9 +30,9 @@ import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.esterel.RelationDeclaration
 import de.cau.cs.kieler.esterel.TaskDeclaration
-import de.cau.cs.kieler.esterel.ProcedureCall
 import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Thread
+import de.cau.cs.kieler.esterel.ProcedureDeclaration
 
 /**
  * @author mrb
@@ -130,7 +130,7 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
          * the transformation to an SCLProgram */
         module.declarations.removeIf[ 
             it instanceof TypeDeclaration || it instanceof RelationDeclaration
-            || it instanceof TaskDeclaration || it instanceof ProcedureCall
+            || it instanceof TaskDeclaration || it instanceof ProcedureDeclaration
         ]
         model.checkGotos
     }
