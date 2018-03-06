@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.esterel.serializer
 
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
@@ -20,7 +22,9 @@ import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.TickReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
+import java.util.List
 
 /**
  * @author als
@@ -60,9 +64,10 @@ class EsterelSytaxHelper {
         for (thread : threads) {
             val parent = thread.eContainer
             if (!(parent instanceof EsterelParallel)) {
-                if (parent instanceof StatementContainer) {
-                    parent.statements.addAll(parent.statements.indexOf(thread), thread.statements)
-                    parent.statements.remove(thread)
+                if (thread.eContainingFeature.isMany) {
+                    val container = parent.eGet(thread.eContainingFeature) as List<Statement>
+                    container.addAll(container.indexOf(thread), thread.statements)
+                    container.remove(thread)
                 }
             }
         }
@@ -90,13 +95,30 @@ class EsterelSytaxHelper {
                         container.elseStatements += t
                     }
                 }
+                if (container instanceof Abort) {
+                    if (container.doStatements.size > 1) {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.doStatements)
+                        container.doStatements += t
+                    }
+                }
+                if (container instanceof Do) {
+                    if (container.watchingStatements.size > 1) {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.watchingStatements)
+                        container.watchingStatements += t
+                    }
+                }
             }
         }
     }
     
     def fixTickReferences(EsterelProgram program) {
         if (program.tick === null) {
-            program.tick = KExpressionsFactory.eINSTANCE.createValuedObject => [
+//            program.tick = KExpressionsFactory.eINSTANCE.createValuedObject => [
+//                name = "tick"
+//            ]
+            program.tick = EsterelFactory.eINSTANCE.createSignal => [
                 name = "tick"
             ]
         }

@@ -84,7 +84,10 @@ import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.esterel.PresentCase
+import de.cau.cs.kieler.esterel.TickReference
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -96,7 +99,6 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 class EsterelTransformationExtensions {
 
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
     @Inject extension EsterelExtensions
 
     var static labelSuffix = 0;
@@ -116,6 +118,14 @@ class EsterelTransformationExtensions {
     var static signalSuffix = 0;
     
     var static moduleSuffix = 0;
+    
+    final private static String s_cur = "s_cur"
+    
+    final private static String s_val = "s_val"
+    
+    final private static String s_set = "s_set"
+    
+    final private static String conditionals_above = "conditional_above"
     
     final private static String generatedAnnotation = "depth"
     
@@ -272,7 +282,7 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createTrapVariable(Signal trap) {
-        if (trap != null) {
+        if (trap !== null) {
             createValuedObject(createNewUniqueTrapName(trap.name)) => [
                 it.initialValue = trap.initialValue
                 it.combineOperator = trap.combineOperator
@@ -291,7 +301,7 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createTrapVariable(Expression expr, String name) {
-        if (name != null) {
+        if (name !== null) {
             createValuedObject(createNewUniqueTrapName(name)) => [
                 it.initialValue = expr 
             ]
@@ -309,7 +319,7 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createSignalVariable(Expression expr, CombineOperator op, String name) {
-        if (name != null) {
+        if (name !== null) {
             createValuedObject(name) => [
                 it.initialValue = EcoreUtil.copy(expr)
                 it.combineOperator = op
@@ -398,7 +408,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueVariableName() {
         variableSuffix++
-        "v" + variableSuffix
+        "_v" + variableSuffix
     }
     
     /**
@@ -407,7 +417,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueFlagName() {
         flagSuffix++
-        "f" + flagSuffix
+        "_f" + flagSuffix
     }
     
     /**
@@ -443,7 +453,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueTrapName() {
         trapSuffix++
-        "T" + trapSuffix
+        "_T" + trapSuffix
     }
     
     /**
@@ -463,7 +473,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueSignalName(String name) {
         signalSuffix++
-        if (name != null) {
+        if (name !== null) {
             return name + "_sig"
         }
         else {
@@ -542,7 +552,7 @@ class EsterelTransformationExtensions {
      * @return A statement which increments valObj
      */
     def Statement incrementInt(ValuedObject valuedObjectToIncrement) {
-        createAssignment(valuedObjectToIncrement,
+        createAssignment(valuedObjectToIncrement.createValuedObjectReference,
             KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::ADD
                 subExpressions += createValuedObjectReference(valuedObjectToIncrement)
@@ -555,7 +565,7 @@ class EsterelTransformationExtensions {
       * 
       * @param condition The condition
       * @param targetLabel The targetlabel
-      * @param isImmediate When false a pause statement is added prior to the jump
+      * @param isImmediate When true a pause statement is added prior to the jump
       */
     def Conditional newIfThenGoto(Expression condition, Label targetLabel, boolean isImmediate) {
         SCLFactory::eINSTANCE.createConditional => [
@@ -722,7 +732,7 @@ class EsterelTransformationExtensions {
     def createDeclaration(ValueType type, ValuedObject object) {
         KExpressionsFactory::eINSTANCE.createVariableDeclaration => [
             it.type = type
-            if (object != null) {
+            if (object !== null) {
                 it.valuedObjects.add(object)
             }
         ]
@@ -821,6 +831,13 @@ class EsterelTransformationExtensions {
      * @return The Module list which includes the given Module
      */
     def getContainingList(Module module) {
+        if (module === null || module.eContainer === null || module.eContainingFeature === null) {
+            throw new Exception("The module " + module.name + " does not have a containing list.\n"
+                + "module: " + module
+                + "\neContainer: " + module.eContainer
+                + "\nContainingFeature:" + module.eContainingFeature
+            )
+        }
         module.eContainer.eGet(module.eContainingFeature) as EList<Module>
     }
     
@@ -833,23 +850,149 @@ class EsterelTransformationExtensions {
     def getContainingList(Annotation annotation) {
         annotation.eContainer.eGet(annotation.eContainingFeature) as EList<Annotation>
     }
+    
+    /**
+     * Returns the list in which the given thread is contained.
+     * 
+     * @param thread A thread which is in the returned list 
+     * @return The thread list which includes the given thread
+     */
+    def getContainingList(Thread thread) {
+        thread.eContainer.eGet(thread.eContainingFeature) as EList<Thread>
+    }
+    
+    /**
+     * Returns the list in which the given PresentCase is contained.
+     * 
+     * @param pCase A PresentCase which is in the returned list 
+     * @return The cases list which includes the given case
+     */
+    def getContainingList(PresentCase pCase) {
+        pCase.eContainer.eGet(pCase.eContainingFeature) as EList<PresentCase>
+    }
+    
+    /**
+     * Returns the list in which the given Elsif is contained.
+     * 
+     * @param elsif A ElsIf which is in the returned list 
+     * @return The ElsIf list which includes the given ElsIf
+     */
+    def getContainingList(ElsIf elsif) {
+        elsif.eContainer.eGet(elsif.eContainingFeature) as EList<ElsIf>
+    }
+    
+    /**
+     * Returns the list in which the given EObject is contained.
+     * 
+     * @param obj A EObject which is in the returned list 
+     * @return The EObject list which includes the given EObject
+     */
+    def getContainingList(EObject obj) {
+        obj.eContainer.eGet(obj.eContainingFeature) as EList<EObject>
+    }
+    
+    /**
+     * Returns the list in which the given TrapHandler is contained.
+     * 
+     * @param handler A TrapHandler which is in the returned list 
+     * @return The Handler list which includes the given TrapHandler
+     */
+    def getContainingList(TrapHandler handler) {
+        handler.eContainer.eGet(handler.eContainingFeature) as EList<TrapHandler>
+    }
 
     /**
      * Creates an assignment
      * 
-     * @param objectToAssign The ValuedObject to be assigned with something
+     * @param objectToAssign The valued object to be assigned with something
      * @param expression The expression that should be assigned
      * @return An assignment instruction
      */
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
         SCLFactory::eINSTANCE.createAssignment => [
-            it.valuedObject = objectToAssign
+            it.reference = objectToAssign.createValuedObjectReference
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+    
+    /**
+     * Creates an assignment with a SignalReference instead of a ValuedObjectReference.
+     * 
+     * @param objectToAssign The valued object to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createSignalAssignment(ValuedObject objectToAssign, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.reference = objectToAssign.createSignalReference
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+
+    /**
+     * Creates an assignment
+     * 
+     * @param reference The ValuedObjectReference representing the vo to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createAssignment(ValuedObjectReference reference, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.reference = reference
             it.expression = EcoreUtil.copy(expression)
         ]
     }
     
     def createSCLAssignment(ValuedObject objectToAssign, Expression expression) {
         createAssignment(objectToAssign, expression) 
+    }
+    
+    /**
+     * Creates an assignment for the 's_cur' variable which does not exist yet
+     * therefore the signal is temporarily used for the assignment 
+     * 
+     * @param sigRef The SignalReference representing the signal to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createCurAssignment(SignalReference sigRef, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.annotations += createAnnotation(s_cur)
+            it.reference = sigRef
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+    
+    /**
+     * Creates an assignment for the 's_set' variable which does not exist yet
+     * therefore the signal is temporarily used for the assignment 
+     * 
+     * @param sigRef The SignalReference representing the signal to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createSetAssignment(SignalReference sigRef, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.annotations += createAnnotation(s_set)
+            it.reference = sigRef
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+    
+    /**
+     * Creates an assignment for the 's_val' variable which does not exist yet
+     * therefore the signal is temporarily used for the assignment 
+     * 
+     * @param sigRef The SignalReference representing the signal to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createValAssignment(SignalReference sigRef, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.annotations += createAnnotation(s_val)
+            it.reference = sigRef
+            it.expression = EcoreUtil.copy(expression)
+        ]
     }
     
     /**
@@ -876,8 +1019,22 @@ class EsterelTransformationExtensions {
      */
     def createScopeStatement(Declaration decl) {
         SCLFactory::eINSTANCE.createScopeStatement => [
-            if (decl != null) {
+            if (decl !== null) {
                 it.declarations.add(decl)
+            }
+        ]
+    }
+    
+    /**
+     * Creates a new SCL ScopeStatement
+     * 
+     * @param statements Already existing statements for the Scope statement.
+     * @return The newly created SCL ScopeStatement
+     */
+    def createScopeStatement(EList<Statement> statements) {
+        SCLFactory::eINSTANCE.createScopeStatement => [
+            if (statements !== null) {
+                it.statements.addAll(statements)
             }
         ]
     }
@@ -964,12 +1121,15 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Creates a new Esterel Halt
+     * Adds the functionality of a halt statement at the end of a list.
      * 
-     * @return The newly created Esterel Halt
+     * @param statements The list of statements which needs the halt functionality at the end 
      */
-    def createHalt() {
-        EsterelFactory::eINSTANCE.createHalt
+    def addHaltFunctionality(EList<Statement> statements) {
+        val label = createLabel
+        statements.add(label)
+        statements.add(createPause)
+        statements.add(label.createGotoStatement)
     }
     
     /**
@@ -990,18 +1150,18 @@ class EsterelTransformationExtensions {
         EsterelFactory::eINSTANCE.createAwait
     }
     
-    /**
-     * Creates a new IntAnnotation with a specific value
-     * 
-     * @param depth The depth of the statement which includes this annotation
-     * @return The newly created Annotation
-     */
-    def createAnnotation(int depth) {
-        AnnotationsFactory::eINSTANCE.createIntAnnotation => [
-            name = generatedAnnotation
-            value = depth
-        ]
-    }
+//    /**
+//     * Creates a new IntAnnotation with a specific value
+//     * 
+//     * @param depth The depth of the statement which includes this annotation
+//     * @return The newly created Annotation
+//     */
+//    def createAnnotation(int depth) {
+//        AnnotationsFactory::eINSTANCE.createIntAnnotation => [
+//            name = generatedAnnotation
+//            value = depth
+//        ]
+//    }
     
     /**
      * Creates a new Annotation with a specific name
@@ -1063,114 +1223,165 @@ class EsterelTransformationExtensions {
         ]
     }
     
+//    /**
+//     * Insert a Conditional at the right position after a pause/parallel statement.
+//     * 
+//     * @param statements The list of statements
+//     * @param conditional The conditional which has to be added after a pause/parallel
+//     * @param pos The position of the pause/parallel statement
+//     * @param depth The depth of statement which caused the transformation 
+//     */
+//    def void insertConditional(EList<Statement> statements, Conditional conditional, int pos, int depth) {
+//        // Look for already existing Conditionals after Pause.
+//        // Check whether they have a higher priority than the transformed statement.
+//        // Place the Conditional at the correct position.
+//        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
+//        if (pos+1>=statements.length) {
+//            statements.add(conditional)
+//        }
+//        else {
+//            for (var i=1; pos+i<statements.length; i++) {
+//                if (statements.get(pos+i) instanceof Conditional) {
+//                    var ifTest2 = statements.get(pos+i) as Conditional
+//                    if (!ifTest2.annotations.empty) {
+//                        var deeper = false
+//                        for (var j=0; j<ifTest2.annotations.length; j++) {
+//                            var a = ifTest2.annotations.get(j)
+//                            if (a.name.equals(generatedAnnotation)) {
+//                                deeper = true
+//                                var layer = (a as IntAnnotation).value
+//                                if (depth<layer) {
+//                                    deeper = false
+//                                    j = ifTest2.annotations.length
+//                                }
+//                            }
+//                            
+//                        }
+//                        if (!deeper) {
+//                            statements.add(pos+i, conditional)
+//                            i = statements.length
+//                        }
+//                    }
+//                    else {
+//                        statements.add(pos+i, conditional)
+//                        i = statements.length
+//                    }
+//                }
+//                else {
+//                    statements.add(pos+i, conditional)
+//                    i = statements.length
+//                }
+//                if (pos+i+1==statements.length) {
+//                    statements.add(conditional)
+//                }
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * Insert a Conditional at the right position above a pause statement.
+//     * 
+//     * @param statements The list of statements
+//     * @param conditional The conditional which has to be added above a pause
+//     * @param pos The position of the pause statement
+//     * @param depth The depth of statement which caused the pause transformation 
+//     */
+//    def void insertConditionalAbove(EList<Statement> statements, Conditional conditional, int pos, int depth) {
+//        // Look for already existing Conditionals above Pause.
+//        // Check whether they have a higher priority than the transformed statement.
+//        // Place the Conditional at the correct position.
+//        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
+//        if (pos == 0) {
+//            statements.add(0, conditional)
+//        }
+//        else {
+//            for (var i=1; pos-i>=0; i++) {
+//                if (statements.get(pos-i) instanceof Conditional) {
+//                    var conditional2 = statements.get(pos-i) as Conditional
+//                    if (!conditional2.annotations.empty) {
+//                        var deeper = false
+//                        for (var j=0; j<conditional2.annotations.length; j++) {
+//                            var a = conditional2.annotations.get(j)
+//                            if (a.name.equals(generatedAnnotation)) {
+//                                deeper = true
+//                                var layer = (a as IntAnnotation).value
+//                                if (layer<=depth) {
+//                                    deeper = false
+//                                    j = conditional2.annotations.length
+//                                }
+//                            }
+//                            
+//                        }
+//                        if (!deeper) {
+//                            statements.add(pos+1-i, conditional)
+//                            i = statements.length
+//                        }
+//                    }
+//                    else {
+//                        statements.add(pos+1-i, conditional)
+//                        i = statements.length
+//                    }
+//                }
+//                else {
+//                    statements.add(pos+1-i, conditional)
+//                    i = statements.length
+//                }
+//                if (pos-i==0) {
+//                    statements.add(0, conditional)
+//                }
+//            }
+//        }
+//    }
+
     /**
-     * Insert a Conditional at the right position after a pause/parallel statement.
+     * Insert a conditional above a statement.
      * 
-     * @param statements The list of statements
-     * @param conditional The conditional which has to be added after a pause/parallel
-     * @param pos The position of the pause/parallel statement
-     * @param depth The depth of statement which caused the transformation 
+     * @param statement The statement
+     * @param conditional The conditional statement
      */
-    def void insertConditional(EList<Statement> statements, Conditional conditional, int pos, int depth) {
-        // Look for already existing Conditionals after Pause.
-        // Check whether they have a higher priority than the transformed statement.
-        // Place the Conditional at the correct position.
-        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
-        if (pos+1>=statements.length) {
-            statements.add(conditional)
+    def insertConditionalAbove(Statement statement, Conditional conditional) {
+        val statements = statement.containingList
+        val pos = statements.indexOf(statement)
+        if (existsPauseScope(statement)) {
+            (statements.get(pos-1) as ScopeStatement).statements.add(0, conditional)
         }
         else {
-            for (var i=1; pos+i<statements.length; i++) {
-                if (statements.get(pos+i) instanceof Conditional) {
-                    var ifTest2 = statements.get(pos+i) as Conditional
-                    if (!ifTest2.annotations.empty) {
-                        var deeper = false
-                        for (var j=0; j<ifTest2.annotations.length; j++) {
-                            var a = ifTest2.annotations.get(j)
-                            if (a.name.equals(generatedAnnotation)) {
-                                deeper = true
-                                var layer = (a as IntAnnotation).value
-                                if (depth<layer) {
-                                    deeper = false
-                                    j = ifTest2.annotations.length
-                                }
-                            }
-                            
-                        }
-                        if (!deeper) {
-                            statements.add(pos+i, conditional)
-                            i = statements.length
-                        }
-                    }
-                    else {
-                        statements.add(pos+i, conditional)
-                        i = statements.length
-                    }
-                }
-                else {
-                    statements.add(pos+i, conditional)
-                    i = statements.length
-                }
-                if (pos+i+1==statements.length) {
-                    statements.add(conditional)
-                }
-            }
+            statements.add(pos, createPauseScope(statement, conditional))
         }
     }
     
     /**
-     * Insert a Conditional at the right position above a pause statement.
+     * Create a scope statement, including a conditional and 
+     * an annotations named 'conditionals_above',
+     * and insert it above a given statement.
      * 
-     * @param statements The list of statements
-     * @param conditional The conditional which has to be added above a pause
-     * @param pos The position of the pause statement
-     * @param depth The depth of statement which caused the pause transformation 
+     * @param statement The statement
+     * @param conditional The conditional statement
      */
-    def void insertConditionalAbove(EList<Statement> statements, Conditional conditional, int pos, int depth) {
-        // Look for already existing Conditionals above Pause.
-        // Check whether they have a higher priority than the transformed statement.
-        // Place the Conditional at the correct position.
-        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
-        if (pos == 0) {
-            statements.add(0, conditional)
-        }
-        else {
-            for (var i=1; pos-i>=0; i++) {
-                if (statements.get(pos-i) instanceof Conditional) {
-                    var conditional2 = statements.get(pos-i) as Conditional
-                    if (!conditional2.annotations.empty) {
-                        var deeper = false
-                        for (var j=0; j<conditional2.annotations.length; j++) {
-                            var a = conditional2.annotations.get(j)
-                            if (a.name.equals(generatedAnnotation)) {
-                                deeper = true
-                                var layer = (a as IntAnnotation).value
-                                if (layer<=depth) {
-                                    deeper = false
-                                    j = conditional2.annotations.length
-                                }
-                            }
-                            
-                        }
-                        if (!deeper) {
-                            statements.add(pos+1-i, conditional)
-                            i = statements.length
-                        }
-                    }
-                    else {
-                        statements.add(pos+1-i, conditional)
-                        i = statements.length
-                    }
-                }
-                else {
-                    statements.add(pos+1-i, conditional)
-                    i = statements.length
-                }
-                if (pos-i==0) {
-                    statements.add(0, conditional)
+    def ScopeStatement createPauseScope(Statement statement, Conditional conditional) {
+        createScopeStatement => [
+            it.annotations.add(createAnnotation(conditionals_above))
+            it.statements.add(conditional)
+        ]
+    }
+    
+    /**
+     * Check if a scope before a given statement exists and if so
+     * if it has an annotation named 'conditionals_above'.
+     * 
+     * @param statement The statement
+     */
+    def existsPauseScope(Statement statement) {
+        val pos = statement.containingList.indexOf(statement)
+        if (pos > 0) {
+            val scope = statement.containingList.get(pos-1)
+            if (scope instanceof ScopeStatement) {
+                for (a : scope.annotations) {
+                    if (a.name.equals(conditionals_above)) return true
                 }
             }
         }
+        return false
     }
     
     /**
@@ -1228,7 +1439,7 @@ class EsterelTransformationExtensions {
      */
     def createElseScope(EList<Statement> statements) {
         SCLFactory::eINSTANCE.createElseScope => [
-            if (statements != null) {
+            if (statements !== null) {
                 it.statements.add(statements)
             }
         ]
@@ -1237,45 +1448,45 @@ class EsterelTransformationExtensions {
     /**
      * Create an ElseScope for a Conditional.
      * 
-     * @param statement The statement which belong in the ElseScope
+     * @param statement The statement which belongs in the ElseScope
      * @return An ElseScope with a statement
      */
     def createElseScope(Statement statement) {
         SCLFactory::eINSTANCE.createElseScope => [
-            if (statement != null) {
+            if (statement !== null) {
                 it.statements.add(statement)
             }
         ]
     }
     
-    /**
-     * Copies the generated Annotations of the annotation list to a specific statement.
-     * 
-     * @param annotations The list of annotations
-     * @param statement The statement which will have a copy of the generated annotations.
-     */
-    def void copyAnnotations (EList<Annotation> annotations, Annotatable statement) {
-        for (a : annotations) {
-            if (isGenerated(a)) {
-                statement.annotations.add(EcoreUtil.copy(a))
-            }
-        }
-    }
-    
-    /**
-     * Returns the depth of the given statement, when it has one in its annotations.
-     * 
-     * @param statement The statement in question
-     * @return The depth of the given statement.
-     */
-    def int getDepth(Annotatable statement) {
-        for (Annotation a : statement.annotations) {
-            if (isGenerated(a)) {
-                return (a as IntAnnotation).value
-            }
-        }
-        return 0;
-    }
+//    /**
+//     * Copies the generated Annotations of the annotation list to a specific statement.
+//     * 
+//     * @param annotations The list of annotations
+//     * @param statement The statement which will have a copy of the generated annotations.
+//     */
+//    def void copyAnnotations (EList<Annotation> annotations, Annotatable statement) {
+//        for (a : annotations) {
+//            if (isGenerated(a)) {
+//                statement.annotations.add(EcoreUtil.copy(a))
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * Returns the depth of the given statement, when it has one in its annotations.
+//     * 
+//     * @param statement The statement in question
+//     * @return The depth of the given statement.
+//     */
+//    def int getDepth(Annotatable statement) {
+//        for (Annotation a : statement.annotations) {
+//            if (isGenerated(a)) {
+//                return (a as IntAnnotation).value
+//            }
+//        }
+//        return 0;
+//    }
     
     /**
      * Check for every Goto statement if its target is still inside its Thread
@@ -1285,6 +1496,16 @@ class EsterelTransformationExtensions {
     def void checkGotos(EList<Statement> statements) {
         statements?.forEach [ s |
             s.checkGoto
+        ]
+    }
+    
+    /**
+     * Check for every Goto statement if its target is still inside its Thread
+     * @param object the scope
+     */
+    def void checkGotos(EObject object) {
+        object.eAllContents.filter(Goto).toList.forEach[ g |
+            g.target = findClosestLabel(g.target, g)
         ]
     }
     
@@ -1411,67 +1632,106 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Transform all references to ISignals in the scope of the given object.
+     * Transform all references to signals in the scope of the given EObject.
      * 
      * @param obj The object which contains references to signals
+     * @param newSignals A map for all transformed signals and their new representative
      */
-    def transformReferences(EObject obj) {
-        // iterate over all valued object references contained in the scope
-        // if a reference references a transformed signal then set the reference to the new signal
-        var references = obj.eAllContents.filter(ValuedObjectReference).toList
-        if (obj instanceof ValuedObjectReference) {
+    def transformReferences(EObject obj, HashMap<Signal, NewSignals> newSignals) {
+        
+        val references = obj.eAllContents.filter(SignalReference).toList
+        if (obj instanceof SignalReference) {
             references += obj
         }
         for (ref : references) {
-            if (ref.valuedObject instanceof Signal) {
-                var signal = ref.valuedObject as Signal
-                // if the valued object reference references a transformed signal
+            if (ref instanceof TickReference) {
+                // TODO after run transformation: e.g. "module _2 [signal tick/A]" and an "emit A" in the submodule _2 
+                // would later lead to an assignment "true = true || true"
+                ref.replace(createTrue)
+            }
+            else if (ref.valuedObject instanceof Signal){
+                val signal = ref.valuedObject as Signal
+                // if the SignalReference references a transformed signal
                 if (newSignals.containsKey(signal)) {
-                    var parent = ref.eContainer
-                    if (parent instanceof OperatorExpression) {
-                        if ( (parent as OperatorExpression).operator == OperatorType.VAL) {
-                            if (newSignals.get(signal).s_val == null) {
-                                throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
-                            }
-                            ref.valuedObject = newSignals.get(signal).s_val
-                            removeValueTestOperator(parent)
+                    val parent = ref.eContainer
+                    if ( (parent instanceof OperatorExpression) && 
+                         ((parent as OperatorExpression).operator == OperatorType.VAL)
+                    ) {
+                        if (newSignals.get(signal).s_val === null) {
+                            throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
                         }
-                        else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
-                            if (ref instanceof SignalReference){
-                                var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-                                var pos = list.indexOf(ref)
-                                list.set(pos, createValuedObjectReference(newSignals.get(signal).s))
-                            }
-                            else {
-                                if (newSignals.get(signal).s_val == null) {
-                                    throw new UnsupportedOperationException("The 'pre()' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+                        parent.replace(createValuedObjectReference(newSignals.get(signal).s_val))
+                    }
+                    else if (parent instanceof Assignment) {
+                        if (parent.isCurAssignment) {
+                            parent.annotations.clear
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                            val localRefs = parent.expression.eAllContents.filter(SignalReference).toList
+                            if (!localRefs.empty) {
+                                for (localRef : localRefs) {
+                                    if (localRef.valuedObject == signal) {
+                                        localRef.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                                    }
                                 }
-                                ref.valuedObject = newSignals.get(signal).s_val 
                             }
+                        }
+                        else if (parent.isSetAssignment) {
+                            parent.annotations.clear
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
+                        }
+                        else if (parent.isValAssignment) {
+                            parent.annotations.clear
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
                         }
                         else {
-                            ref.valuedObject = newSignals.get(signal).s
+                            ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                         }
                     }
                     else {
-                        ref.valuedObject = newSignals.get(signal).s
+                        ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                     }
                 }
             }
-            // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer != null && ref instanceof SignalReference && ref.valuedObject != null) {
-                if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
-                    var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(ref)
-                    list.set(pos, createValuedObjectReference(ref.valuedObject))
-                }
-                else {
-                    var voRef = createValuedObjectReference(ref.valuedObject)
-                    setExpression(voRef, ref.eContainer, true)
-                    System.out.println(voRef)
-                }
-            }
         }
+    }
+    
+    /**
+     * Returns 'true' if the assignment was created for the 's_cur' value of a signal 's'.
+     * 
+     * @param assignment The assignment in question
+     * 
+     */
+    def isCurAssignment(Assignment assignment) {
+        for (a : assignment.annotations) {
+            if (a.name.equals(s_cur)) return true
+        }
+        return false
+    }    
+    
+    /**
+     * Returns 'true' if the assignment was created for the 's_val' value of a signal 's'.
+     * 
+     * @param assignment The assignment in question
+     * 
+     */
+    def isValAssignment(Assignment assignment) {
+        for (a : assignment.annotations) {
+            if (a.name.equals(s_val)) return true
+        }
+        return false
+    }
+    
+    /**
+     * Returns 'true' if the assignment was created for the 's_set' value of a signal 's'.
+     * 
+     * @param assignment The assignment in question
+     * 
+     */
+    def isSetAssignment(Assignment assignment) {
+        for (a : assignment.annotations) {
+            if (a.name.equals(s_set)) return true
+        }
+        return false
     }
     
     /**
@@ -1501,132 +1761,6 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Set the given expression where it belongs in the given obj.
-     * If 'o' instanceof Signal => signal.expression = expr
-     * 
-     * @param expr The expression which needs to be placed somewhere
-     * @param o The object which should be able to hold an expression
-     * @param signalExpr set a previous signalExpression
-     */
-    def setExpression(Expression expr, EObject o, boolean signalExpr) {
-        if (o instanceof Signal) {
-            (o as Signal).initialValue = expr
-        }
-        else if (o instanceof Emit) {
-            (o as Emit).expression = expr
-        }
-        else if (o instanceof Sustain) {
-            (o as Sustain).expression = expr
-        }
-        else if (o instanceof Assignment) {
-            (o as Assignment).expression = expr
-        }
-        else if (o instanceof IfTest) {
-            (o as IfTest).expression = expr
-        }
-        else if (o instanceof ElsIf) {
-            (o as ElsIf).expression = expr
-        }
-        else if (o instanceof Repeat) {
-            (o as Repeat).expression = expr
-        }
-        else if (o instanceof Exit) {
-            (o as Exit).expression = expr
-        }
-        else if (o instanceof Variable) {
-            (o as Variable).initialValue = expr
-        }
-        else if (o instanceof DelayExpression) {
-            if (signalExpr) {
-                (o as DelayExpression).expression = expr                
-            }
-            else {
-                (o as DelayExpression).expression = expr
-            }
-        }
-        else if (o instanceof Conditional) {
-            (o as Conditional).expression = expr
-        }
-        else if (o instanceof Set) {
-            (o as Set).expression = expr
-        }
-        else if (o instanceof Present) {
-            (o as Present).expression = expr
-        }
-        else if (o instanceof TrapHandler) {
-            (o as TrapHandler).trapExpr = expr
-        }
-        else {
-            throw new UnsupportedOperationException("The following expression will be homeless! " + expr.toString)
-        }
-        
-    }
-    
-    /**
-     * Checks if the given scope has the interfaceScope annotation
-     * 
-     * @param scope The scope in question
-     */
-    def isInterfaceScope(Statement statement) {
-        if (statement instanceof ScopeStatement) {
-            var scope = statement as ScopeStatement
-            for (a : scope.annotations) {
-                if (a.name.equals(interfaceScope)) {
-                    return true
-                }
-            }
-        }
-        return false
-    }
-    
-    /**
-     * Checks if the given annotation is named "IScope"
-     * 
-     * @param annotation The annotation in question
-     */
-    def isInterfaceAnnotation(Annotation annotation) {
-        annotation.name.equals(interfaceScope)
-    } 
-    
-    /**
-     * Adds the specific interfaceScope annotation to the given scope
-     * 
-     * @param scope The scope which needs an annotation
-     */
-    def markInterfaceScope(ScopeStatement scope) {
-        scope.annotations.add(createScopeAnnotation)
-    }
-    
-    /**
-     * Creates an annotation which has the specific interfaceScope name
-     */
-    def createScopeAnnotation() {
-        AnnotationsFactory::eINSTANCE.createAnnotation => [
-            it.name = interfaceScope
-        ]
-    }
-    
-    /**
-     * Returns a new interface scope or an already existing
-     * 
-     * @param module The module which is searched for the interface scope
-     */
-    def ScopeStatement getIScope(Module module) {
-        var ScopeStatement scope
-        // check whether there is already a scope for the interface declarations or not
-        if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
-            scope = module.statements.get(0) as ScopeStatement
-        }
-        else {
-            scope = createScopeStatement
-            scope.markInterfaceScope
-            scope.statements.add(module.statements)
-            module.statements.add(scope)
-        }
-        return scope
-    }
-    
-    /**
      * Removes the value test operator if the given operator expression is of type VAL
      * 
      * @param expr The operator expression in question 
@@ -1634,14 +1768,7 @@ class EsterelTransformationExtensions {
     def removeValueTestOperator(EObject expr) {
         if (expr instanceof OperatorExpression) {
             if (expr.operator == OperatorType.VAL) {
-                if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
-                    var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(expr)
-                    list.set(pos, expr.subExpressions.get(0))
-                }
-                else {
-                    setExpression(expr.subExpressions.get(0), expr.eContainer, false)
-                }
+                expr.replace(expr.subExpressions.get(0))
             }
         }
     }
@@ -1660,25 +1787,25 @@ class EsterelTransformationExtensions {
         SCLFactory::eINSTANCE.createModule
     }
         
-    /**
-     * Renames an interface scope to the module name
-     * 
-     * @param scope The scope which should be renamed
-     * @param name The name of the module 
-     */
-    def renameIScope(ScopeStatement scope, String name) {
-        var list = newLinkedList
-        for (a : scope.annotations) {
-            if (a.name.equals(interfaceScope)) {
-                list.add(a)
-            }
-        }
-        list.forEach[a | scope.annotations.remove(a)]
-        scope.annotations.add( 
-            AnnotationsFactory::eINSTANCE.createAnnotation => [
-                it.name = name
-            ])
-    } 
+//    /**
+//     * Renames an interface scope to the module name
+//     * 
+//     * @param scope The scope which should be renamed
+//     * @param name The name of the module 
+//     */
+//    def renameIScope(ScopeStatement scope, String name) {
+//        var list = newLinkedList
+//        for (a : scope.annotations) {
+//            if (a.name.equals(interfaceScope)) {
+//                list.add(a)
+//            }
+//        }
+//        list.forEach[a | scope.annotations.remove(a)]
+//        scope.annotations.add( 
+//            AnnotationsFactory::eINSTANCE.createAnnotation => [
+//                it.name = name
+//            ])
+//    } 
     
     /**
      * Create new constant declaration with a TypeIdentifier and Constant
@@ -1765,15 +1892,15 @@ class EsterelTransformationExtensions {
             taskList.addAll(d.eAllContents.filter(Task).toList)
         }
         // update references of the renamings
-        if (run.renamings != null && !run.renamings.empty) {
+        if (run.renamings !== null && !run.renamings.empty) {
             for (oneTypeRenaming : run.renamings) {
                 for (renaming : oneTypeRenaming.renamings) {
                     switch renaming {
                         SignalRenaming: {
                             for (var i=0; i<signalList.length; i++) {
                                 var s = signalList.get(i)
-                                if (s.name.equals(renaming.oldName.name)) {
-                                    renaming.oldName = s
+                                if (s.name.equals(renaming.oldName.valuedObject.name)) {
+                                    renaming.oldName = s.createSignalReference
                                     i = signalList.length
                                 }
                             }
@@ -1837,7 +1964,7 @@ class EsterelTransformationExtensions {
      */
     def createTypeDecl(TypeDefinition type) {
         EsterelFactory::eINSTANCE.createTypeDeclaration => [
-            it.types += type
+            it.valuedObjects += type
         ]
     }
     
@@ -1848,7 +1975,7 @@ class EsterelTransformationExtensions {
      */
     def createFunctionDecl(Function function) {
         EsterelFactory::eINSTANCE.createFunctionDeclaration => [
-            it.functions += function
+            it.valuedObjects += function
         ]
     }
     
@@ -1861,18 +1988,33 @@ class EsterelTransformationExtensions {
         var references = obj.eAllContents.filter(SignalReference).toList
         for (ref : references) {
             // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer != null && ref instanceof SignalReference && ref.valuedObject != null) {
-                if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
-                    var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(ref)
-                    list.set(pos, createValuedObjectReference(ref.valuedObject))
-                }
-                else {
-                    var voRef = createValuedObjectReference(ref.valuedObject)
-                    setExpression(voRef, ref.eContainer, true)
-                }
+            if (ref.eContainer !== null && ref instanceof SignalReference && ref.valuedObject !== null) {
+                ref.replace(createValuedObjectReference(ref.valuedObject))
             }
         }
+    }
+    
+    /**
+     * Create a SignalReference
+     * 
+     * @param signal the signal for the reference
+     * @return a SignalReference
+     */
+    def createSignalReference(ValuedObject signal) {
+        EsterelFactory::eINSTANCE.createSignalReference => [
+            it.valuedObject = signal
+        ]
+    }
+    
+    /**
+     * Create a TickReference
+     * 
+     * @param signal The tick signal
+     */
+    def createTickReference(Signal signal) {
+        EsterelFactory::eINSTANCE.createTickReference => [
+            it.valuedObject = signal
+        ]
     }
  
 }

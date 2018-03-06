@@ -15,7 +15,6 @@ package de.cau.cs.kieler.esterel.scest.validation
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
@@ -70,12 +69,12 @@ class SCEstValidator extends AbstractSCEstValidator {
     @Check
     def void emitSignal(Emit emit) {
         if ((emit.signal as Signal).type.isPure) {
-            if (emit.expression != null) {
+            if (emit.expression !== null) {
                 error(emit.signal.name + " is not a valued signal!", emit, null, -1)
             }
         }
         else {
-            if (emit.expression == null) {
+            if (emit.expression === null) {
                 error("Must be a valued emit since " + emit.signal.name + " is a valued signal!", emit, null, -1)
             }
         }
@@ -83,56 +82,55 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check
     def void annotation(Annotation annotation) {
-        if (annotation.isGenerated || annotation.isInterfaceAnnotation || annotation.isGeneratedModuleAnnotation) {
+        if (annotation.isGenerated  || annotation.isGeneratedModuleAnnotation) {
             error("Annotations of name '" + interfaceScope + "', '" + generatedModule + "' or '" + generatedAnnotation + "' are forbidden!", annotation, null, -1)
         }
     }
     
-    @Check
-    def void combineOperatorValuedObject(ValuedObject vo) {
-        if (vo.eContainer instanceof VariableDeclaration) {
-            var type = (vo.eContainer as VariableDeclaration).type
-            if (!combineOperatorFitsType(type, vo.combineOperator)) {
-                error("The combine operator '" + vo.combineOperator + "' does not fit the valued objects type '" + type + "'!", vo, null, -1)
-            }
-        }
-    }
-    
-    @Check
-    def void combineOperatorIVariable(Variable variable) {
-        var parent = variable.eContainer as EsterelVariableDeclaration
-        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
-            error("The combine operator '" + parent.type?.operator + "' does not fit the variables type '" + parent.type?.type + "'!", variable, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorConstant(Constant constant) {
-        var parent = constant.eContainer as ConstantDeclaration
-        if (!combineOperatorFitsType(constant.type?.type, constant.type?.operator)) {
-            error("The combine operator '" + constant.type?.operator + "' does not fit the constants type '" + constant.type?.type + "'!", constant, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorISignal(Signal signal) {
-        if (signal instanceof Sensor) {
-            var parent = signal.eContainer as Sensor
-            if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
-                error("The combine operator '" + parent.type?.operator + "' does not fit the sensors type '" + parent.type?.type + "'!", signal, null, -1)
-            }
-        }
-        else if (!combineOperatorFitsType(signal.type, signal.combineOperator)) {
-            error("The combine operator '" + signal.combineOperator + "' does not fit the signals type '" + signal.type + "'!", signal, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorTrapSignal(TrapSignal trap) {
-        if (!combineOperatorFitsType(trap.type, trap.combineOperator)) {
-            error("The combine operator '" + trap.combineOperator + "' does not fit the traps type '" + trap.type + "'!", trap, null, -1)
-        }
-    }
+//    @Check
+//    def void combineOperatorValuedObject(ValuedObject vo) {
+//        if (vo.eContainer instanceof VariableDeclaration) {
+//            var type = (vo.eContainer as VariableDeclaration).type
+//            if (!combineOperatorFitsType(type, vo.combineOperator)) {
+//                error("The combine operator '" + vo.combineOperator + "' does not fit the valued objects type '" + type + "'!", vo, null, -1)
+//            }
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorIVariable(Variable variable) {
+//        var parent = variable.eContainer as EsterelVariableDeclaration
+//        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+//            error("The combine operator '" + parent.type?.operator + "' does not fit the variables type '" + parent.type?.type + "'!", variable, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorConstant(Constant constant) {
+//        if (!combineOperatorFitsType(constant.type?.type, constant.type?.operator)) {
+//            error("The combine operator '" + constant.type?.operator + "' does not fit the constants type '" + constant.type?.type + "'!", constant, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorISignal(Signal signal) {
+//        if (signal instanceof Sensor) {
+//            var parent = signal.eContainer as Sensor
+//            if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+//                error("The combine operator '" + parent.type?.operator + "' does not fit the sensors type '" + parent.type?.type + "'!", signal, null, -1)
+//            }
+//        }
+//        else if (!combineOperatorFitsType(signal.type, signal.combineOperator)) {
+//            error("The combine operator '" + signal.combineOperator + "' does not fit the signals type '" + signal.type + "'!", signal, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorTrapSignal(TrapSignal trap) {
+//        if (!combineOperatorFitsType(trap.type, trap.combineOperator)) {
+//            error("The combine operator '" + trap.combineOperator + "' does not fit the traps type '" + trap.type + "'!", trap, null, -1)
+//        }
+//    }
     
     
     /*
@@ -141,153 +139,153 @@ class SCEstValidator extends AbstractSCEstValidator {
      * ##########################################################
      */
     
-    @Check(CheckType.EXPENSIVE)
-    def void expressionISignal(Signal signal) {
-        if (signal.initialValue != null) {
-            if (signal.type.isBool && !signal.initialValue.isBoolExpr) {
-                warning(BOOLEAN_EXPRESSION, null)
-            }
-            else if (signal.type.isCalculationType && !signal.initialValue.isCalculationExpr) {
-                warning(CALCULATION_EXPRESSION, null)
-            }
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionTrapSignal(TrapSignal trap) {
-        if (trap.initialValue != null) {
-            if (trap.type.isBool && !trap.initialValue.isBoolExpr) {
-                warning(BOOLEAN_EXPRESSION, null)
-            }
-            else if (trap.type.isCalculationType && !trap.initialValue.isCalculationExpr) {
-                warning(CALCULATION_EXPRESSION, null)
-            }
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionEmit(Emit emit) {
-        if (emit.expression != null) {
-            if ((emit.signal as Signal).type.isBool && !emit.expression.isBoolExpr) {
-                warning(BOOLEAN_EXPRESSION, null)
-            }
-            else if ((emit.signal as Signal).type.isCalculationType && !emit.expression.isCalculationExpr) {
-                warning(CALCULATION_EXPRESSION, null)
-            }
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionSustain(Sustain sustain) {
-        if (sustain.expression != null) {
-            if ((sustain.signal as Signal).type.isBool && !sustain.expression.isBoolExpr) {
-                warning(BOOLEAN_EXPRESSION, null)
-            }
-            else if ((sustain.signal as Signal).type.isCalculationType && !sustain.expression.isCalculationExpr) {
-                warning(CALCULATION_EXPRESSION, null)
-            }
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionEsterelAssignment(Assignment assign) {
-        if ((assign.valuedObject.eContainer as EsterelVariableDeclaration).type?.type.isBool && !assign.expression.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-        else if ((assign.valuedObject.eContainer as EsterelVariableDeclaration).type?.type.isCalculationType && !assign.expression.isCalculationExpr) {
-            warning(CALCULATION_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionIfTest(IfTest ifTest) {
-        if (!ifTest.expression.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionElsIf(ElsIf elsIf) {
-        if (!elsIf.expression.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionDelayExpr(DelayExpression delay) {
-        if (delay.expression != null && !delay.expression.isCalculationExpr) {
-            warning(CALCULATION_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionRepeat(Repeat repeat) {
-        if (!repeat.expression.isCalculationExpr) {
-            warning("The expression should be of type INT.", null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionExit(Exit exit) {
-        if (exit.expression != null) {
-            if (exit.trap.type.isBool && !exit.expression.isBoolExpr) {
-                warning(BOOLEAN_EXPRESSION, null)
-            }
-            else if (exit.trap.type.isCalculationType && !exit.expression.isCalculationExpr) {
-                warning(CALCULATION_EXPRESSION, null)
-            }
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionIVariable(Variable variable) {
-        if ((variable.eContainer as EsterelVariableDeclaration).type?.type.isBool && !variable.initialValue.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-        else if ((variable.eContainer as EsterelVariableDeclaration).type?.type.isCalculationType && !variable.initialValue.isCalculationExpr) {
-            warning(CALCULATION_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionConditional(Conditional conditional) {
-        if (!conditional.expression.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionAssignment(Assignment assign) {
-        if ((assign.valuedObject.eContainer as VariableDeclaration).type.isBool && !assign.expression.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-        else if ((assign.valuedObject.eContainer as VariableDeclaration).type.isCalculationType && !assign.expression.isCalculationExpr) {
-            warning(CALCULATION_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionSet(Set set) {
-        if (set.signal.type.isBool && !set.expression.isBoolExpr) {
-            warning(BOOLEAN_EXPRESSION, null)
-        }
-        else if (set.signal.type.isCalculationType && !set.expression.isCalculationExpr) {
-            warning(CALCULATION_EXPRESSION, null)
-        }
-    }
-    
-    @Check(CheckType.EXPENSIVE)
-    def void expressionValuedObject(ValuedObject vo) {
-        var parent = vo.eContainer
-        if (parent instanceof VariableDeclaration) {
-            if (parent.type.isBool && !vo.initialValue.isBoolExpr) {
-                warning(BOOLEAN_EXPRESSION, null)
-            }
-            else if (parent.type.isCalculationType && !vo.initialValue.isCalculationExpr) {
-                warning(CALCULATION_EXPRESSION, null)
-            }
-        }
-    }
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionISignal(Signal signal) {
+//        if (signal.initialValue !== null) {
+//            if (signal.type.isBool && !signal.initialValue.isBoolExpr) {
+//                warning(BOOLEAN_EXPRESSION, null)
+//            }
+//            else if (signal.type.isCalculationType && !signal.initialValue.isCalculationExpr) {
+//                warning(CALCULATION_EXPRESSION, null)
+//            }
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionTrapSignal(TrapSignal trap) {
+//        if (trap.initialValue !== null) {
+//            if (trap.type.isBool && !trap.initialValue.isBoolExpr) {
+//                warning(BOOLEAN_EXPRESSION, null)
+//            }
+//            else if (trap.type.isCalculationType && !trap.initialValue.isCalculationExpr) {
+//                warning(CALCULATION_EXPRESSION, null)
+//            }
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionEmit(Emit emit) {
+//        if (emit.expression !== null) {
+//            if ((emit.signal as Signal).type.isBool && !emit.expression.isBoolExpr) {
+//                warning(BOOLEAN_EXPRESSION, null)
+//            }
+//            else if ((emit.signal as Signal).type.isCalculationType && !emit.expression.isCalculationExpr) {
+//                warning(CALCULATION_EXPRESSION, null)
+//            }
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionSustain(Sustain sustain) {
+//        if (sustain.expression !== null) {
+//            if ((sustain.signal as Signal).type.isBool && !sustain.expression.isBoolExpr) {
+//                warning(BOOLEAN_EXPRESSION, null)
+//            }
+//            else if ((sustain.signal as Signal).type.isCalculationType && !sustain.expression.isCalculationExpr) {
+//                warning(CALCULATION_EXPRESSION, null)
+//            }
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionEsterelAssignment(Assignment assign) {
+//        if ((assign.valuedObject.eContainer as EsterelVariableDeclaration).type?.type.isBool && !assign.expression.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//        else if ((assign.valuedObject.eContainer as EsterelVariableDeclaration).type?.type.isCalculationType && !assign.expression.isCalculationExpr) {
+//            warning(CALCULATION_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionIfTest(IfTest ifTest) {
+//        if (!ifTest.expression.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionElsIf(ElsIf elsIf) {
+//        if (!elsIf.expression.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionDelayExpr(DelayExpression delay) {
+//        if (delay.expression !== null && !delay.expression.isCalculationExpr) {
+//            warning(CALCULATION_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionRepeat(Repeat repeat) {
+//        if (!repeat.expression.isCalculationExpr) {
+//            warning("The expression should be of type INT.", null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionExit(Exit exit) {
+//        if (exit.expression !== null) {
+//            if (exit.trap.type.isBool && !exit.expression.isBoolExpr) {
+//                warning(BOOLEAN_EXPRESSION, null)
+//            }
+//            else if (exit.trap.type.isCalculationType && !exit.expression.isCalculationExpr) {
+//                warning(CALCULATION_EXPRESSION, null)
+//            }
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionIVariable(Variable variable) {
+//        if ((variable.eContainer as EsterelVariableDeclaration).type?.type.isBool && !variable.initialValue.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//        else if ((variable.eContainer as EsterelVariableDeclaration).type?.type.isCalculationType && !variable.initialValue.isCalculationExpr) {
+//            warning(CALCULATION_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionConditional(Conditional conditional) {
+//        if (!conditional.expression.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionAssignment(Assignment assign) {
+//        if ((assign.valuedObject.eContainer as VariableDeclaration).type.isBool && !assign.expression.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//        else if ((assign.valuedObject.eContainer as VariableDeclaration).type.isCalculationType && !assign.expression.isCalculationExpr) {
+//            warning(CALCULATION_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionSet(Set set) {
+//        if (set.signal.type.isBool && !set.expression.isBoolExpr) {
+//            warning(BOOLEAN_EXPRESSION, null)
+//        }
+//        else if (set.signal.type.isCalculationType && !set.expression.isCalculationExpr) {
+//            warning(CALCULATION_EXPRESSION, null)
+//        }
+//    }
+//    
+//    @Check(CheckType.EXPENSIVE)
+//    def void expressionValuedObject(ValuedObject vo) {
+//        var parent = vo.eContainer
+//        if (parent instanceof VariableDeclaration) {
+//            if (parent.type.isBool && !vo.initialValue.isBoolExpr) {
+//                warning(BOOLEAN_EXPRESSION, null)
+//            }
+//            else if (parent.type.isCalculationType && !vo.initialValue.isCalculationExpr) {
+//                warning(CALCULATION_EXPRESSION, null)
+//            }
+//        }
+//    }
     
     
     /*
@@ -489,7 +487,7 @@ class SCEstValidator extends AbstractSCEstValidator {
      * @param type The ValueType in question
      */
     def isBoolOrPure(ValueType type) {
-        type == null || type == ValueType.BOOL || type == ValueType.PURE
+        type === null || type == ValueType.BOOL || type == ValueType.PURE
     }
     
     /**
@@ -576,7 +574,7 @@ class SCEstValidator extends AbstractSCEstValidator {
              ) {
                  if (operator == CombineOperator.ADD || operator == CombineOperator.MULT ||
                      operator == CombineOperator.MIN || operator == CombineOperator.MAX  ||
-                     operator == CombineOperator.NONE || operator == null
+                     operator == CombineOperator.NONE || operator === null
                  ) {
                      return true
                  }
@@ -586,7 +584,7 @@ class SCEstValidator extends AbstractSCEstValidator {
          }
          else if (type == ValueType.BOOL) {
              if (operator == CombineOperator.AND || operator == CombineOperator.OR ||
-                     operator == CombineOperator.NONE || operator == null
+                     operator == CombineOperator.NONE || operator === null
                  ) {
                      return true
                  }

@@ -34,6 +34,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.Module
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm, krat
@@ -213,7 +215,7 @@ class SCLExtensions {
 
             stmList = parent.statements
             var index = stmList.indexOf(label) + 1
-            var Statement curStm = label
+            var EObject curStm = label
             while (continue) {
                 if (stmList.size > index) {
                     val nextStatement = stmList.get(index) as Statement
@@ -222,18 +224,18 @@ class SCLExtensions {
                         replaceBy += label -> goto.target
                     }
                     continue = false;
-                } else if (parent instanceof Thread) {
+                } else if (parent instanceof de.cau.cs.kieler.scl.Thread) {
                     continue = false
-                } else if (parent instanceof SCLProgram) {
+                } else if (parent instanceof Module) {
                     continue = false
                 } else if (parent instanceof ElseScope) {
-                    curStm = parent.eContainer as Statement
-                    parent = parent.eContainer.eContainer as Scope
+                    curStm = parent.eContainer as Conditional
+                    parent = curStm.eContainer as StatementContainer
                     stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
                 } else if (parent instanceof Scope) {
-                    curStm = parent as Statement
-                    parent = parent.eContainer as Scope
+                    curStm = parent
+                    parent = parent.eContainer as StatementContainer
                     stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
                 } else {

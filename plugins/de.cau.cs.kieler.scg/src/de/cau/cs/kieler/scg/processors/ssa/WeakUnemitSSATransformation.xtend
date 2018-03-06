@@ -10,7 +10,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.annotations.AnnotationsFactory
@@ -62,6 +62,9 @@ import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -71,7 +74,9 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  * @kieler.rating proposed yellow
  */
 class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
-
+    
+    public static val ACTIVATE_OPTIMIZATIONS = new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.ssa.wuscc.opt", false)
+    
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
@@ -99,6 +104,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     @Inject extension KExpressionsDeclarationExtensions
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
+    @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
@@ -110,7 +116,8 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
 
     // -------------------------------------------------------------------------
     def transform(SCGraph scg) {
-        validate(scg)
+        validateStructure(scg)
+        validateExpressions(scg)
         val entryBB = scg.basicBlocks.head
         
         // Add implicit assignments at the entry and after each pause 
@@ -119,6 +126,8 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // Create new declarations for SSA versions
         val ssaDecl = scg.createSSADeclarations
         val dt = new DominatorTree(scg)
+        
+        if (dt.fragmented) environment.errors.add("DomTree is fragmented")
         
         // ---------------
         // 1. Place Phi
@@ -141,7 +150,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // ---------------
         // 2. Renaming
         // ---------------
-        bbVersion = dt.rename(entryBB, ssaDecl)
+        bbVersion = dt.rename(entryBB, ssaDecl)[isSSA]
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
         
@@ -157,14 +166,18 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         scg.snapshot
         
         // Removes all references to signals that are never emitted
-//        scg.removeAbsentReads  
-//        scg.snapshot
+        if (environment.getProperty(ACTIVATE_OPTIMIZATIONS)) {
+            scg.removeAbsentReads(true)
+        } else {
+            scg.removeAbsentReads(false)
+        }
+        scg.snapshot
               
         // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
         scg.snapshot
         // DONT ACTIVATE: trap-par-example wrong semantics for B
-        // scg.propagatePhi(PHI)
+//         scg.propagatePhi(PHI)
         
         // Removes the introduced implicit writers
         scg.removeImplicitEvironmentAssignments
@@ -175,12 +188,15 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // ---------------
         
         // Removes conditional with constant conditions
-//        scg.removeDeadCodeSimple
-//        scg.snapshot
+        if (environment.getProperty(ACTIVATE_OPTIMIZATIONS)) {
+            scg.removeDeadCodeSimple
+//            scg.snapshot
+        }
         // Removes all ssa versions which are not read
         scg.removeUnusedSSAVersions
         // Merges ssa version which are always used together (in OR expressions)
         scg.mergeIneffectiveSSAVersions
+        scg.removeIneffectiveSSAAssignments
         scg.snapshot
         // Removes version index is only one version exits
         scg.removeSingleSSAVersions
@@ -198,9 +214,9 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
                 if (!declDepPair.key.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
-                    val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
+                    val refs = (if (node instanceof Assignment) node.expression else if (node instanceof Conditional) node.condition).allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
-                        ref.replace(createOperatorExpression(OperatorType.BITWISE_OR) => [
+                        ref.replace(createOperatorExpression(OperatorType.LOGICAL_OR) => [
                             subExpressions += ref.copy
                             subExpressions.addAll(declDepPair.value.map[(eContainer as Assignment).valuedObject.reference])
                         ])
@@ -216,12 +232,13 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (n : nodes) {
             val cf = n.eContents.filter(ControlFlow).head
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
-            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !input && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME handle input
                 for (vo : d.valuedObjects) {
                     scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                         annotations += createAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
+                        markInputPreserver
                         next = createControlFlow => [
                             target = cf.target
                         ]
@@ -245,9 +262,10 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         }
     }
     
-    private def void removeAbsentReads(SCGraph scg) {
+    private def void removeAbsentReads(SCGraph scg, boolean all) {
         val defs = HashMultimap.<ValuedObject, Assignment>create
         val reducedExp = newHashSet
+        val reducedPsi = newHashSet
         for (asm : scg.nodes.filter(Assignment)) {
             defs.put(asm.valuedObject, asm)
         }
@@ -259,13 +277,20 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 if (!use.key.variableDeclaration.input) {
                     if (defs.get(use.key).forall[expression instanceof BoolValue && !(expression as BoolValue).value]) {
                         // remove
-                        val exp = use.value.eContents.filter(Expression).head
-                        reducedExp.add(exp)
-                        val refs = exp.allReferences.filter[valuedObject == use.key].toList
-                        uses.remove(use.key, use.value)
-                        continue = true
-                        for (ref : refs) {
-                            ref.replace(createBoolValue(false))
+                        val v = use.value
+                        if (all || v.isSSA) {
+                            val exp = if (v instanceof Conditional) v.condition else (v as Assignment).expression
+                            reducedExp.add(exp)
+                            val refs = exp.allReferences.filter[valuedObject == use.key].toList
+                            uses.remove(use.key, use.value)
+                            continue = true
+                            for (ref : refs) {
+                                ref.replace(createBoolValue(false))
+                            }
+                            if (v.isSSA) {
+                                (v as Assignment).expression.replace((v as Assignment).expression.parEval)
+                                reducedPsi += v
+                            }
                         }
                     }
                 }
@@ -275,6 +300,15 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (e : reducedExp) {
             e.replace(e.parEval)
         }
+        for (p : reducedPsi.map[it as Assignment]) {
+            if (p.expression instanceof ValuedObjectReference) {
+                scg.nodes.forEach[if (it !== p) eAllContents.filter(ValuedObjectReference).filter[valuedObject == p.valuedObject].forEach[valuedObject = (p.expression as ValuedObjectReference).valuedObject ]]
+                for (in : p.incoming.immutableCopy) {
+                    in.target = p.next.target
+                }
+                p.remove
+            }
+        }      
     }
     
     def Expression parEval(Expression e) {
@@ -293,6 +327,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                         }
                     }
                 }
+                case LOGICAL_OR,
                 case BITWISE_OR: {
                     e.subExpressions.removeIf[it instanceof BoolValue && !(it as BoolValue).value]
                     switch (e.subExpressions.size) {
@@ -315,7 +350,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         }
     }
     
-    // TODO doas not work with signal reinc example
+    // TODO does not work with signal reinc example
     private def mergeIneffectiveSSAVersions(SCGraph scg) {
         val uses = scg.uses
         val defs = scg.allDefs
@@ -338,7 +373,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 for (v : versions.drop(1)) {
                     defs.get(v).forEach[valuedObject = effective]
                     for (u : uses.get(v)) {
-                        val expr = u.eContents.filter(Expression).head
+                        val expr = if (u instanceof Assignment) u.expression else if (u instanceof Conditional) u.condition
                         expr.allReferences.filter[valuedObject == v].toList.forEach[it.replace(createBoolValue(false))]
                         expr.replace(expr.parEval)
                     }
@@ -346,6 +381,16 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 }
             }
         }
+    }
+    
+    private def void removeIneffectiveSSAAssignments(SCGraph scg) {
+        scg.nodes
+            .filter(Assignment)
+            .filter[isSSA]
+            .filter[expression instanceof ValuedObjectReference]
+            .filter[valuedObject === (expression as ValuedObjectReference).valuedObject]
+            .toList
+            .forEach[remove]
     }
     
     private def void removePhiWritesWithoutRead(SCGraph scg) {
@@ -395,7 +440,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // Exit phis
         for (n : exitPhis.keySet) {
             val f = n.expression as FunctionCall
-            n.expression = createOperatorExpression(OperatorType.BITWISE_OR) => [
+            n.expression = createOperatorExpression(OperatorType.LOGICAL_OR) => [
                 subExpressions.addAll(newLinkedHashSet(f.parameters.map[(expression as ValuedObjectReference).valuedObject]).map[reference])
             ]
             val attach = exitPhis.get(n)
@@ -413,7 +458,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
             val versions = (phiNode.expression as FunctionCall).parameters.toMap[
                 bbVersion.get(it)
             ]
-            for (in : node.incoming.immutableCopy) {
+            for (in : node.incoming.filter[versions.containsKey((it.eContainer as Node).basicBlock)].toList) {
                 scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                     val prev = (in.eContainer as Node)
                     var attachPoint = prev
@@ -474,7 +519,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // Join phis
         for (n : phiNodes) {
             val f = n.expression as FunctionCall
-            n.expression = createOperatorExpression(OperatorType.BITWISE_OR) => [
+            n.expression = createOperatorExpression(OperatorType.LOGICAL_OR) => [
                 subExpressions.addAll(newLinkedHashSet(f.parameters.map[(expression as ValuedObjectReference).valuedObject]).map[reference])
             ]
             var attachPoint = n.allPreviousHeadNode
@@ -583,14 +628,20 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 var kill = if (cond.value) c.then else c.^else
                 while (kill.target.incoming.filter(ControlFlow).size == 1) {
                     val t = kill.target
-                    scg.nodes.remove(t)
-                    kill.target = null
-                    kill = (t as Assignment).allNext.head
+                    t.annotations += createAnnotation => [name = "dead"]
+//                    scg.nodes.remove(t)
+//                    kill.target = null
+                    if (t instanceof Surface) {
+//                        scg.nodes.remove(t.depth)
+                        kill = (t.depth).allNext.head
+                    } else {
+                        kill = (t as Node).allNext.head
+                    }
                 }
-                val keep = if (!cond.value) c.then else c.^else
-                c.incoming.toList.forEach[target = keep.target]
-                keep.target = null
-                scg.nodes.remove(c)
+//                val keep = if (!cond.value) c.then else c.^else
+//                c.incoming.immutableCopy.forEach[target = keep.target]
+//                keep.target = null
+//                scg.nodes.remove(c)
             }
         }
     }

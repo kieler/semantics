@@ -13,151 +13,75 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.Abort
-import de.cau.cs.kieler.esterel.Await
-import de.cau.cs.kieler.esterel.Do
-import de.cau.cs.kieler.esterel.EsterelParallel
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.Present
-import de.cau.cs.kieler.esterel.Repeat
-import de.cau.cs.kieler.esterel.Run
-import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Repeat
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.StatementContainer
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.util.EcoreUtil
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
  *
  */
-class RepeatTransformation extends EsterelProcessor {
+class RepeatTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    public static val ID = "de.cau.cs.kieler.esterel.processors.repeat"
+    
     override getId() {
-        return SCEstTransformation::REPEAT_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::REPEAT_NAME
+        return "Repeat"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::REPEAT_ID
-//    }
-//       
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
 
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | transformStatements(m.statements)]
-        return prog
+    var EObject lastStatement
+    
+    override process() {
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Repeat) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Repeat).toList.forEach[transform]
+        }
     }
     
-    def EList<Statement> transformStatements(EList<Statement> statements) {
-        if (statements != null) {
-            for (var i=0; i<statements.length; i++) {
-                var statement = statements.get(i).transformStatement
-                if (statement instanceof Statement) {
-                    statements.set(i, statement)
-                }
-            }
-        }
-        return statements
-    }
-    
-    def Statement transformStatement(Statement statement) {
-        if (statement instanceof Repeat) {
-            var repeat = statement as Repeat
-            var variable = createNewUniqueVariable(createIntValue(0))
-            var decl = createDeclaration(ValueType.INT, variable)
-            var scope = createScopeStatement(decl)
-            var label = createLabel(createNewUniqueLabel) 
-            scope.statements.add(label)
-            scope.statements.add(repeat.statements)
-            var vObjectReference = createValuedObjectReference(variable) 
-            scope.statements.add(incrementInt(variable))
-            var ifStatement = createConditional(createLT(EcoreUtil.copy(vObjectReference), repeat.expression))
-            ifStatement.statements.add(createGotoStatement(label))
-            scope.statements.add(ifStatement)
-            return scope
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).statements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).statements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
-        }
-       else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof StatementContainer) {
-            
-            transformStatements((statement as StatementContainer).statements)
-            
-            if (statement instanceof Trap) {
-                if ((statement as Trap).trapHandler != null) {
-                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
-                }
-            }
-            else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).doStatements)
-                if ((statement as Abort).cases != null) {
-                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
-                }
-            }
-            else if (statement instanceof Await) {
-                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Exec) {
-                if ((statement as Exec).execCaseList != null) {
-                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
-                }
-            }
-            else if (statement instanceof Do) {
-                transformStatements((statement as Do).watchingStatements)
-            }
-            else if (statement instanceof Conditional) {
-                if ((statement as Conditional).getElse() != null) {
-                    transformStatements((statement as Conditional).getElse().statements)
-                }
-            }
-        }
-        else if (statement instanceof Parallel) {
-            (statement as Parallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof Run) {
-            statement.module?.module?.statements.transformStatements    
-        }
-        return statement
+    def transform(Repeat repeat) {
+        val variable = createNewUniqueVariable(createIntValue(0))
+        val decl = createDeclaration(ValueType.INT, variable)
+        val scope = createScopeStatement(decl)
+        val label = createLabel 
+        scope.statements.add(label)
+        scope.statements.add(repeat.statements)
+        val vObjectReference = createValuedObjectReference(variable) 
+        scope.statements.add(incrementInt(variable))
+        val ifStatement = createConditional(createLT( copy(vObjectReference), repeat.expression))
+        ifStatement.statements.add(createGotoStatement(label))
+        scope.statements.add(ifStatement)
+        repeat.replace(scope)
+        lastStatement = scope
     }
     
 }

@@ -64,16 +64,28 @@
             class="de.cau.cs.kieler.scg.processors.transformators.dependencies.DependencyTransformationV2">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.ssa.RegularSSATransformation">
+            class="de.cau.cs.kieler.scg.processors.ssa.SSATransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.ssa.CSSATransformation">
+            class="de.cau.cs.kieler.scg.processors.ssa.CSSATransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.ssa.SCSSATransformation">
+            class="de.cau.cs.kieler.scg.processors.ssa.SCSSATransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.ssa.WeakUnemitSSATransformation">
+            class="de.cau.cs.kieler.scg.processors.ssa.SimpleSCSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.ssa.WeakUnemitSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.ssa.DeSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.ssa.UnSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.ssa.optimizer.SCCP">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
@@ -118,6 +130,9 @@
             class="de.cau.cs.kieler.scg.processors.optimizer.HaltStateRemover">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.PartialExpressionEvaluation">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">
       </Processor>
    </extension>
@@ -140,6 +155,12 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.sccp.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.scssa.kico">
       </TransformationSystem>
    </extension>
 

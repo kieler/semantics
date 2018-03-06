@@ -19,6 +19,9 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.DoubleValue
+import de.cau.cs.kieler.kexpressions.StringValue
 
 /**
  * @author ssm
@@ -28,80 +31,128 @@ import de.cau.cs.kieler.kexpressions.IntValue
 class KExpressionsCompareExtensions {
   
     def dispatch boolean equals2(OperatorExpression expression1, OperatorExpression expression2) {
-        if (expression1 == null && expression2 == null) {
+        if (expression1 === expression2) { // same object or both null
             return true
-        }
-        else if (expression1 != null && expression2 == null) {
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
             return false
         }
-        else if (expression1 == null && expression2 != null) {
+        
+        // op
+        if (expression1.operator != expression2.operator) {
             return false
         }
-        var c = 0
-        for (Expression subExpression1 : expression1.subExpressions) {
-            val subExpression2 = expression2.subExpressions.get(c)
-            c = c + 1
-            if (expression1.operator != expression2.operator) {
-                return false
-            }
-            if (!(subExpression1.equals2(subExpression2))) {
+        
+        // subExpressions
+        if (expression1.subExpressions.size != expression2.subExpressions.size) {
+            return false
+        }
+        for (subExpression1 : expression1.subExpressions.indexed) {
+            val subExpression2 = expression2.subExpressions.get(subExpression1.key)
+            if (!subExpression1.value.equals2(subExpression2)) {
                 return false
             }
         }
+        
         return true
     }
 
-    def dispatch equals2(ValuedObjectReference expression1, ValuedObjectReference expression2) {
-        if (expression1 == null && expression2 == null) {
+    def dispatch boolean equals2(ValuedObjectReference expression1, ValuedObjectReference expression2) {
+        if (expression1 === expression2) { // same object or both null
             return true
-        } else if (expression1 != null && expression2 == null) {
-            return false
-        } else if (expression1 == null && expression2 != null) {
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
             return false
         }
-        return expression1.valuedObject == expression2.valuedObject
+        
+        // vo
+        if (expression1.valuedObject !== expression2.valuedObject) {
+            return false
+        }
+        
+        // indices
+        if (expression1.indices.size != expression2.indices.size) {
+            return false
+        }
+        for (subExpression1 : expression1.indices.indexed) {
+            val subExpression2 = expression2.indices.get(subExpression1.key)
+            if (!subExpression1.value.equals2(subExpression2)) {
+                return false
+            }
+        }
+        
+        // subReference
+        if (expression1.subReference != expression2.subReference && !expression1.subReference.equals2(expression2.subReference)) {
+            return false
+        }
+        
+        return true
     }
 
-    def dispatch equals2(TextExpression expression1, TextExpression expression2) {
-        if (expression1 == null && expression2 == null) {
+    def dispatch boolean equals2(TextExpression expression1, TextExpression expression2) {
+        if (expression1 === expression2) { // same object or both null
             return true
-        } else if (expression1 != null && expression2 == null) {
-            return false
-        } else if (expression1 == null && expression2 != null) {
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
             return false
         }
+        
         return expression1.text.equals(expression2.text)
     }
 
-    def dispatch equals2(BoolValue boolValue1, BoolValue boolValue2) {
-        if (boolValue1 == null && boolValue2 == null) {
+    def dispatch boolean equals2(BoolValue expression1, BoolValue expression2) {
+        if (expression1 === expression2) { // same object or both null
             return true
-        } else if (boolValue1 != null && boolValue2 == null) {
-            return false
-        } else if (boolValue1 == null && boolValue2 != null) {
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
             return false
         }
-        return (boolValue1.value == boolValue2.value)
+        
+        return expression1.value == expression2.value
     }
 
-    def dispatch equals2(IntValue intValue1, IntValue intValue2) {
-        if (intValue1 == null && intValue2 == null) {
+    def dispatch boolean equals2(IntValue expression1, IntValue expression2) {
+        if (expression1 === expression2) { // same object or both null
             return true
-        } else if (intValue1 != null && intValue2 == null) {
-            return false
-        } else if (intValue1 == null && intValue2 != null) {
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
             return false
         }
-        return (intValue1.value == intValue2.value)
+        
+        return expression1.value == expression2.value
     }
 
-    
-    def dispatch equals2(Expression expression1, Expression expression2) {
-        if (expression1 == null && expression2 == null) {
+    def dispatch boolean equals2(FloatValue expression1, FloatValue expression2) {
+        if (expression1 === expression2) { // same object or both null
+            return true
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
+            return false
+        }
+        
+        return expression1.value == expression2.value
+    }
+
+    def dispatch boolean equals2(DoubleValue expression1, DoubleValue expression2) {
+        if (expression1 === expression2) { // same object or both null
+            return true
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
+            return false
+        }
+        
+        return expression1.value == expression2.value
+    }
+
+    def dispatch boolean equals2(StringValue expression1, StringValue expression2) {
+        if (expression1 === expression2) { // same object or both null
+            return true
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
+            return false
+        }
+        
+        return expression1.value.equals(expression2.value)
+    }
+        
+    def dispatch boolean equals2(Expression expression1, Expression expression2) {
+        if (expression1 === expression2) { // same object or both null
             return true
         }
+        
         return false
     }
-    
     
 }

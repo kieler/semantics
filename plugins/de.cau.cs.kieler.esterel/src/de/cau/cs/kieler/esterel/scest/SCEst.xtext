@@ -9,6 +9,7 @@ import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 import "http://www.cau.de/cs/kieler/esterel/Esterel"
 
 //  root rule. a SCEst file can contain multiple modules
+@Override
 EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
     pragmas+=Pragma*
     (modules+=EsterelModule)*;
@@ -17,6 +18,7 @@ EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
  * ###                 7.2 Modules                 ###
  * ###################################################
  */
+@Override
 EsterelModule returns scl::Module:
     (annotations += Annotation)*
     "module" name=ID ":"
@@ -30,10 +32,12 @@ EsterelModule returns scl::Module:
  * ###################################################
  */
 
+@Override
 Statement returns scl::Statement:
     EsterelParallel
 ;
- 
+
+@Override 
 InstructionStatement returns scl::Statement:
 	super
 	// + SCEst
@@ -44,12 +48,25 @@ SCLStatement returns scl::Statement:
     Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
 ;
 
+@Override
 EsterelThread returns scl::Statement:
     (
         InstructionStatement ({EsterelThread.statements+=current} (=>";" statements+=EsterelThread))?
     |
         SCLStatement ({EsterelThread.statements+=current} (statements+=EsterelThread))?
     )
+;
+
+@Override
+EsterelAssignment returns scl::Assignment:
+    (annotations += Annotation)*
+    reference=VariableOrSignalReference ":=" expression=Expression
+;
+    
+VariableOrSignalReference returns kexpressions::ValuedObjectReference:
+     ValuedObjectReference
+   | SignalReferenceExpression
+   | VariableReference
 ;
       
 /* ###################################################
@@ -78,12 +95,14 @@ Set:
  * ###                   Terminal                  ###
  * ###################################################
  */    
-    
+
+@Override    
 terminal ML_COMMENT: 
     ('%' '{') -> ('}' '%')
     |
     ('/*'!'*') -> '*/';
- 
+
+@Override
 terminal SL_COMMENT: 
     ( '//' | '%' ) !('\n'|'\r')* ('\r'? '\n')?;
  
@@ -96,17 +115,20 @@ terminal SL_COMMENT:
 // Esterel is a bit richer than what is provided by kexpressions. 
 // These rules are introduced here.
 // Care about order of the rules! 
+@Override
 AtomicExpression returns kexpressions::Expression:
     EsterelFunctionCall
     | TrapExpression
     | BoolValue
-    | ValuedObjectTestExpression
+    | ValuedObjectPreExpression
     | TextExpression
     | '(' BooleanExpression ')'
     | ConstantExpression
-    | FunctionCall;
+    | FunctionCall
+    | SignalOrTickReferenceExpression;
     
-    
+
+@Override    
 AtomicValuedExpression returns kexpressions::Expression:
     IntValue
     | FloatValue
@@ -114,5 +136,5 @@ AtomicValuedExpression returns kexpressions::Expression:
     | AtomicExpression
     | StringValue;
     
-    
-    
+
+      

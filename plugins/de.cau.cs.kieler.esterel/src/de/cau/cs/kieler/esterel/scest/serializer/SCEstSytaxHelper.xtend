@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.esterel.scest.serializer
 
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
@@ -40,10 +42,14 @@ class SCEstSytaxHelper extends EsterelSytaxHelper {
         for (container : program.eAllContents.filter(StatementContainer).toList) {
             if (!(container instanceof EsterelParallel)) {
                 if (container.statements.size > 1) {
-                    val t = createEsterelThread
-                    t.statements.addAll(container.statements)
-                    t.statements.chainSatements
-                    container.statements += t
+//                    if (container instanceof de.cau.cs.kieler.scl.Thread) {
+//                        container.statements.chainSatements
+//                    } else {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.statements)
+                        t.statements.chainSatements
+                        container.statements += t
+//                    }
                 }
                 if (container instanceof Present) {
                     if (container.elseStatements.size > 1) {
@@ -59,6 +65,22 @@ class SCEstSytaxHelper extends EsterelSytaxHelper {
                         t.statements.addAll(container.elseStatements)
                         t.statements.chainSatements
                         container.elseStatements += t
+                    }
+                }
+                if (container instanceof Abort) {
+                    if (container.doStatements.size > 1) {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.doStatements)
+                        t.statements.chainSatements
+                        container.doStatements += t
+                    }
+                }
+                if (container instanceof Do) {
+                    if (container.watchingStatements.size > 1) {
+                        val t = createEsterelThread
+                        t.statements.addAll(container.watchingStatements)
+                        t.statements.chainSatements
+                        container.watchingStatements += t
                     }
                 }
             }

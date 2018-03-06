@@ -1,0 +1,19 @@
+// Compile models to C code
+model compiler kico {
+  outputFolder: kieler-gen
+  outputFileExtension: c
+  // Compile from Esterel to C without taken transition signaling
+  compileChain: de.cau.cs.kieler.esterel.scest.scl.netlist
+  
+  // Generate simulation from output of compilation
+  process simulation template {
+    file: assets/CSimulation.ftl
+  }
+}
+
+// Compile generated simulation
+simulation compiler c {
+  libFolder: kieler-gen/sim/lib
+  outputFolder: kieler-gen/sim/bin
+  command: "gcc -std=c99 -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
+}

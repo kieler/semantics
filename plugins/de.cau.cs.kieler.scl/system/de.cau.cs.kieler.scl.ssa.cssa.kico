@@ -1,0 +1,11 @@
+system de.cau.cs.kieler.scl.ssa.scssa.simple
+	version 1 
+	label "SCL CSSA for SC"
+
+de.cau.cs.kieler.scl.processors.transformators.scl2scg
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop false
+de.cau.cs.kieler.scg.processors.dependency
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+de.cau.cs.kieler.scg.processors.basicBlocks
+de.cau.cs.kieler.scg.processors.ssa.scssa.simple

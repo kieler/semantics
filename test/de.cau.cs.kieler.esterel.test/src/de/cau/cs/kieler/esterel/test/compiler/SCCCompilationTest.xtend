@@ -12,11 +12,17 @@
  */
 package de.cau.cs.kieler.esterel.test.compiler
 
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.esterel.processors.ssa.SCEstToSSCSCLTransformation
+import de.cau.cs.kieler.esterel.processors.ssa.SSCEsterelReconstruction
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.SCLStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
@@ -34,14 +40,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import static org.junit.Assume.*
 
+import static extension java.lang.Boolean.*
 import static extension java.lang.String.format
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
-import de.cau.cs.kieler.esterel.processors.transformators.ssa.SCEstToSSCSCLTransformation
-import de.cau.cs.kieler.scl.SCLStandaloneSetup
-import de.cau.cs.kieler.scl.SCLProgram
-import de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction
 
 /**
  * Tests if all sensible intermediate results of the SCC compilation for Esterel fullfill basic sanity properties.
@@ -60,6 +62,8 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
     static val sclInjector = new SCLStandaloneSetup().createInjectorAndDoEMFRegistration
     static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
     
+    extension EsterelExtensions = new EsterelExtensions
+    
     //-----------------------------------------------------------------------------------------------------------------
     
     /**
@@ -74,12 +78,13 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("esterel")
-        && !modelData.additionalProperties.containsKey("testSerializability")
+        && (!modelData.additionalProperties.containsKey("testSerializability") || modelData.additionalProperties.get("testSerializability")?.parseBoolean)
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=60000)
+    @Test(timeout=20000)
     def void testCompilation(EsterelProgram est, TestModelData modelData) {
+        assumeTrue("Program is not in kernel esterel form", est.isKernel)
         val context = est.compile
         
         // Check all intermediate results for errors
@@ -127,20 +132,19 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         }
         
         // Check resulting Esterel
-        // -- Check SCL
-        val sccResult = context.processorInstancesSequence.findFirst[SSCEsterelReconstruction.ID.equals(id)]
+        val estResult = context.processorInstancesSequence.findFirst[SSCEsterelReconstruction.ID.equals(id)]
       
         // Validate
         // Create resource
         uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
         resourceSet = uri.xtextResourceSet as XtextResourceSet
         resource = resourceSet.createResource(uri) as XtextResource
-        resource.getContents().add(sccResult.targetModel as EsterelProgram)
+        resource.getContents().add(estResult.targetModel as EsterelProgram)
         
         // Check if validator marks no errors
         validator = sclInjector.getInstance(IResourceValidator)
         validatorResults = validator.validate(est.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
-        assertTrue("Intermediate result of transformation " + sccResult.id + " contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)            
+        assertTrue("Intermediate result of transformation " + estResult.id + " contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)            
         
         // Serialize
         try {
@@ -148,12 +152,12 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
             val outputStream = new ByteArrayOutputStream(25000);
             resource.save(outputStream, saveOptions)
             
-            assertTrue("Serialized %s is empty".format(sccResult.id), outputStream.size > 0)
+            assertTrue("Serialized %s is empty".format(estResult.id), outputStream.size > 0)
         } catch (AssertionError ae) {
             throw ae
         } catch (Exception e) {
-            throw new Exception("Error while serializing %s caused by: %s".format(sccResult.id, e.message), e)
-        }      
+            throw new Exception("Error while serializing %s caused by: %s".format(estResult.id, e.message), e)
+        }
     }
     
     //-----------------------------------------------------------------------------------------------------------------
@@ -161,7 +165,6 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
     private def compile(EsterelProgram est) {
         val context = Compile.createCompilationContext(compilationSystemID, est)
         context.startEnvironment.setProperty(Environment.INPLACE, false)
-
         context.compile
         
         return context

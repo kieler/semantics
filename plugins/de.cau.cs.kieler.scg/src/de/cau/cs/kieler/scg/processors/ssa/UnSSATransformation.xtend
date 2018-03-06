@@ -10,20 +10,19 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
-import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -32,17 +31,17 @@ import javax.inject.Inject
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
+class UnSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.ssa.regular"
+        return "de.cau.cs.kieler.scg.processors.ssa.unssa"
     }
 
     override getName() {
-        return "Sequential SSA"
+        return "UnSSA"
     }
     
     override process() {
@@ -53,46 +52,47 @@ class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Tra
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
     
-    @Inject extension AnnotationsExtensions
-    @Inject extension SSATransformationExtensions
+    @Inject extension SCGManipulationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SSACoreExtensions
+    @Inject extension SSATransformationExtensions
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
-        validate(scg)
         
-        if (scg.nodes.exists[it instanceof Fork || it instanceof Surface]) {
-            environment.warnings.add("Cannot handle SCG with Concurrency or synchronous ticks")
+        // ---------------
+        // 1. Remove SSA nodes
+        // ---------------
+        for (n : scg.nodes.filter(Assignment).filter[isSSA].toList) {
+            n.removeNode(true)
         }
-        
-        val entryBB = scg.basicBlocks.head
-        
-        // Create new declarations for SSA versions
-        val ssaDecl = scg.createSSADeclarations
-        val dt = new DominatorTree(scg)
+        if (environment.inDeveloperMode) scg.snapshot
         
         // ---------------
-        // 1. Place Phi
-        // ---------------
-        dt.placePhi
-        scg.snapshot
-        
-        // ---------------
-        // 2. Renaming
-        // ---------------
-        dt.rename(entryBB, ssaDecl)
-        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
-        scg.snapshot
+        // 2. Undo renaming
+        // --------------- 
+        for (n : scg.nodes) {
+            for (vor : n.eAllContents.filter(ValuedObjectReference).toIterable) {
+                val orig = vor.valuedObject.declaration.ssaOrigVO
+                if (orig !== null) {
+                    vor.valuedObject = orig
+                }
+            }
+        } 
+        if (environment.inDeveloperMode) scg.snapshot              
 
+        // This transformation removes the SSA property!       
+        scg.unmarkSSA 
+        
         // ---------------
-        // 3. Remove unused ssa versions
+        // 3. Remove SSA declarations
+        // --------------- 
+        scg.declarations.removeIf[isSSA]
+        
         // ---------------
-        scg.removeUnusedSSAVersions
-
-        // ---------------
-        // 4. Update SSA VO version numbering
-        // ---------------   
-        scg.updateSSAVersions
+        // 4. Restore Update form
+        // --------------- 
+        scg.restoreUpdates
         
         return scg
     }

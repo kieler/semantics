@@ -379,6 +379,10 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
                 return createTickReferenceAdapter();
             }
             @Override
+            public Adapter caseVariableReference(VariableReference object) {
+                return createVariableReferenceAdapter();
+            }
+            @Override
             public Adapter caseSCEstStatement(SCEstStatement object) {
                 return createSCEstStatementAdapter();
             }
@@ -1489,6 +1493,20 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTickReferenceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.VariableReference <em>Variable Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.esterel.VariableReference
+     * @generated
+     */
+    public Adapter createVariableReferenceAdapter() {
         return null;
     }
 
