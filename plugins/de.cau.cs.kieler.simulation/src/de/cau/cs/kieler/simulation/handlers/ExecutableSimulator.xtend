@@ -104,6 +104,7 @@ class ExecutableSimulator extends DefaultSimulator {
     
     private static val KILL_TIMEOUT_IN_SECONDS = 2
     private static val RESPONSE_TIMEOUT_IN_SECONDS = 2
+    private static val JSON_RESPONSE_TIMEOUT_IN_MILLISECONDS = RESPONSE_TIMEOUT_IN_SECONDS*1000*3
     
     /**
      * A listener to be notified when the started executable is going to be deleted by a simulation compiler.
@@ -340,7 +341,7 @@ class ExecutableSimulator extends DefaultSimulator {
             } else {
                 // Check error timeout
                 val time = System.currentTimeMillis 
-                if(time-startTime < 0 || time-startTime > RESPONSE_TIMEOUT_IN_SECONDS*10) {
+                if(time-startTime < 0 || time-startTime > JSON_RESPONSE_TIMEOUT_IN_MILLISECONDS) {
                     SimulationManager.instance.stop
                     throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                         + "is not responding with a JSON object.")
