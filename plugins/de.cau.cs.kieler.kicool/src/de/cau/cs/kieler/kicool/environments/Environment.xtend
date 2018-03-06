@@ -99,6 +99,9 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Boolean> UNIQUE_NAME_CACHE_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.uniqueNameCacheEnabled", true)
         
+    public static val IProperty<Boolean> DEVELOPER_MODE = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.developerMode", false)   
+             
     public static val IProperty<Boolean> DEBUG_ENVIRONMENT_MODELS = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.debugEnvironmentModels", false)
         
@@ -127,6 +130,10 @@ class Environment extends EnvironmentPropertyHolder {
     
     def Object getModel() {
         getProperty(MODEL)
-    } 
+    }
+    
+    def isInDeveloperMode() {
+        getProperty(DEVELOPER_MODE)
+    }
     
 }

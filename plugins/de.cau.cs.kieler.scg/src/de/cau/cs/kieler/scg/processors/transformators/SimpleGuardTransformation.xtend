@@ -50,13 +50,14 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /** 
  * @author ssm
  * @kieler.design 2017-08-10 proposed 
  * @kieler.rating 2017-08-10 proposed yellow
  */
-class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> implements Traceable {
+class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
         
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
@@ -78,6 +79,10 @@ class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> implements Tr
     
     override getName() {
         "Guards V2"
+    }
+    
+    override getType() {
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     override process() {

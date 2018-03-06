@@ -18,7 +18,11 @@ import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import java.lang.annotation.Target
 import java.util.List
+import java.util.concurrent.ConcurrentHashMap
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.junit.Test
+import org.junit.runner.Description
 import org.junit.runner.Runner
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
@@ -29,13 +33,10 @@ import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 
-import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-
 import static org.junit.Assert.*
-import org.junit.runner.Description
-import java.util.concurrent.ConcurrentHashMap
-import org.eclipse.emf.ecore.EObject
+
+import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
+import static extension java.lang.Integer.*
 
 /**
  * The {@link Runner} for {@link IModelsRepositoryTest}.
@@ -254,7 +255,12 @@ class ModelsRepositoryTestRunner extends Suite {
             builder.append(" - ")
             builder.append(modelData.repositoryPath.fileName)
             builder.append(":")
-            builder.append(modelData.modelPath)
+            if (modelData.confidential) {
+                builder.append("confidential/")
+                builder.append(modelData.modelPath.hashCode.toHexString)
+            } else {
+                builder.append(modelData.modelPath)
+            }
             return builder.toString
         }
         
@@ -265,7 +271,12 @@ class ModelsRepositoryTestRunner extends Suite {
             val builder = new StringBuilder()
             builder.append(modelData.repositoryPath.fileName)
             builder.append("-")
-            builder.append(modelData.modelPath)
+            if (modelData.confidential) {
+                builder.append("confidential/")
+                builder.append(modelData.modelPath.hashCode.toHexString)
+            } else {
+                builder.append(modelData.modelPath)
+            }
             return builder.toString
         }
         
@@ -286,7 +297,16 @@ class ModelsRepositoryTestRunner extends Suite {
             var description = methodDescriptions.get(method);
     
             if (description === null) {
-                description = Description.createTestDescription(testClass.javaClass.name, method.name + " with model " + modelData.modelPath, method.name + "@" + ID);
+                val builder = new StringBuilder()
+                builder.append(method.name)
+                builder.append(" with model ")
+                if (modelData.confidential) {
+                    builder.append("confidential/")
+                    builder.append(modelData.modelPath.hashCode.toHexString)
+                } else {
+                    builder.append(modelData.modelPath)
+                }
+                description = Description.createTestDescription(testClass.javaClass.name, builder.toString, method.name + "@" + ID);
                 methodDescriptions.putIfAbsent(method, description);
             }
     

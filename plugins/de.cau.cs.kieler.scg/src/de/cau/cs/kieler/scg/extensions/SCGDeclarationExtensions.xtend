@@ -182,7 +182,7 @@ class SCGDeclarationExtensions {
         if (valuedObject === null) {
             return null
         }
-        val vo = map.get(valuedObject).peek
+        val vo = map.get(valuedObject)?.peek
         if (vo === null) {
             throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }

@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalVariableDeclarationImpl#getStatements <em>Statements</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalVariableDeclarationImpl#getVariableDeclarations <em>Variable Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalVariableDeclarationImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,14 +50,14 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
     protected EList<Statement> statements;
 
     /**
-     * The cached value of the '{@link #getVariableDeclarations() <em>Variable Declarations</em>}' containment reference list.
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getVariableDeclarations()
+     * @see #getDeclarations()
      * @generated
      * @ordered
      */
-    protected EList<EsterelVariableDeclaration> variableDeclarations;
+    protected EList<EsterelVariableDeclaration> declarations;
 
     /**
      * <!-- begin-user-doc -->
@@ -95,11 +95,11 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<EsterelVariableDeclaration> getVariableDeclarations() {
-        if (variableDeclarations == null) {
-            variableDeclarations = new EObjectContainmentEList<EsterelVariableDeclaration>(EsterelVariableDeclaration.class, this, EsterelPackage.LOCAL_VARIABLE_DECLARATION__VARIABLE_DECLARATIONS);
+    public EList<EsterelVariableDeclaration> getDeclarations() {
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<EsterelVariableDeclaration>(EsterelVariableDeclaration.class, this, EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS);
         }
-        return variableDeclarations;
+        return declarations;
     }
 
     /**
@@ -112,8 +112,8 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
         switch (featureID) {
             case EsterelPackage.LOCAL_VARIABLE_DECLARATION__STATEMENTS:
                 return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
-            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__VARIABLE_DECLARATIONS:
-                return ((InternalEList<?>)getVariableDeclarations()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -128,8 +128,8 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
         switch (featureID) {
             case EsterelPackage.LOCAL_VARIABLE_DECLARATION__STATEMENTS:
                 return getStatements();
-            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__VARIABLE_DECLARATIONS:
-                return getVariableDeclarations();
+            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS:
+                return getDeclarations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -147,9 +147,9 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
                 getStatements().clear();
                 getStatements().addAll((Collection<? extends Statement>)newValue);
                 return;
-            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__VARIABLE_DECLARATIONS:
-                getVariableDeclarations().clear();
-                getVariableDeclarations().addAll((Collection<? extends EsterelVariableDeclaration>)newValue);
+            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends EsterelVariableDeclaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -166,8 +166,8 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
             case EsterelPackage.LOCAL_VARIABLE_DECLARATION__STATEMENTS:
                 getStatements().clear();
                 return;
-            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__VARIABLE_DECLARATIONS:
-                getVariableDeclarations().clear();
+            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS:
+                getDeclarations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -183,8 +183,8 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
         switch (featureID) {
             case EsterelPackage.LOCAL_VARIABLE_DECLARATION__STATEMENTS:
                 return statements != null && !statements.isEmpty();
-            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__VARIABLE_DECLARATIONS:
-                return variableDeclarations != null && !variableDeclarations.isEmpty();
+            case EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
         }
         return super.eIsSet(featureID);
     }

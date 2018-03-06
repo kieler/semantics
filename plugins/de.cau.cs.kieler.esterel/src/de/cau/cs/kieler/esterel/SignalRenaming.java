@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -22,55 +24,55 @@ package de.cau.cs.kieler.esterel;
  */
 public interface SignalRenaming extends Renaming {
     /**
-     * Returns the value of the '<em><b>New Name</b></em>' reference.
+     * Returns the value of the '<em><b>New Name</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>New Name</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>New Name</em>' reference.
-     * @see #setNewName(Signal)
+     * @return the value of the '<em>New Name</em>' containment reference.
+     * @see #setNewName(ValuedObjectReference)
      * @see de.cau.cs.kieler.esterel.EsterelPackage#getSignalRenaming_NewName()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    Signal getNewName();
+    ValuedObjectReference getNewName();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.SignalRenaming#getNewName <em>New Name</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.SignalRenaming#getNewName <em>New Name</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>New Name</em>' reference.
+     * @param value the new value of the '<em>New Name</em>' containment reference.
      * @see #getNewName()
      * @generated
      */
-    void setNewName(Signal value);
+    void setNewName(ValuedObjectReference value);
 
     /**
-     * Returns the value of the '<em><b>Old Name</b></em>' reference.
+     * Returns the value of the '<em><b>Old Name</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Old Name</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Old Name</em>' reference.
-     * @see #setOldName(Signal)
+     * @return the value of the '<em>Old Name</em>' containment reference.
+     * @see #setOldName(ValuedObjectReference)
      * @see de.cau.cs.kieler.esterel.EsterelPackage#getSignalRenaming_OldName()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    Signal getOldName();
+    ValuedObjectReference getOldName();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.SignalRenaming#getOldName <em>Old Name</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.SignalRenaming#getOldName <em>Old Name</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Old Name</em>' reference.
+     * @param value the new value of the '<em>Old Name</em>' containment reference.
      * @see #getOldName()
      * @generated
      */
-    void setOldName(Signal value);
+    void setOldName(ValuedObjectReference value);
 
 } // SignalRenaming

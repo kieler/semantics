@@ -39,6 +39,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -62,11 +64,13 @@ class IOPreserverExtensions {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions   
     @Inject extension KEffectsExtensions
+    @Inject extension SCGManipulationExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
     
     public static val OUTPUT_PRESERVER = "scg.ssa.output.preserver"
+    public static val INPUT_PRESERVER = "scg.ssa.input.preserver"
     public static val REGISTER = "scg.ssa.delay.register"
     public static val TERM = "scg.ssa.delay.term"
     
@@ -189,7 +193,7 @@ class IOPreserverExtensions {
 //        scg.nodes.removeAll(rems)
     }
     
-    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
+    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl, boolean scheduleUpdates) {
         val map = LinkedHashMultimap.create
         if (scg.isDelayed) {
             for (entry : ssaDecl.entrySet.filter[value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
@@ -198,7 +202,7 @@ class IOPreserverExtensions {
                 if (!nodes.empty) {
                     map.put(vo, sCGFactory.createAssignment => [
                         valuedObject = entry.value.valuedObjects.findFirst[isRegister]
-                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt)
+                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt, scheduleUpdates)
                     ])
                 } else {
                     map.put(vo, sCGFactory.createAssignment => [
@@ -218,7 +222,7 @@ class IOPreserverExtensions {
                     if (nodes.empty) {
                         expression = iovo.reference
                     } else {
-                        expression = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt)
+                        expression = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt, false)
                     }
                 ])
             }
@@ -253,11 +257,71 @@ class IOPreserverExtensions {
         }
     }
     
+    // -------------------------------------
+    // General
+    
+    def createInputPreservingAssignments(SCGraph scg, Entry entry, boolean onlyForWrittenInputs) {
+        val positions = <Node>newArrayList(entry)
+        val isDefined = <ValuedObject>newHashSet
+        for (n : scg.nodes) {
+            if (onlyForWrittenInputs && n instanceof Assignment && (n as Assignment).valuedObject !== null) {
+                isDefined += (n as Assignment).valuedObject
+            } else if (n instanceof Depth) {
+                positions += n
+            }
+        }
+        for (node : positions) {
+            for (decl : scg.variableDeclarations.reverseView.filter[input && !isSSA]) {
+                for (vo : decl.valuedObjects.reverseView) {
+                    if (!onlyForWrittenInputs || isDefined.contains(vo)) {
+                        // Create self assignment which will not be renamed
+                        val asm = sCGFactory.createAssignment => [
+                            valuedObject = vo
+                            expression = vo.reference
+                            markInputPreserver
+                        ]
+                        val sb = node.schedulingBlock
+                        sb.nodes.add(sb.nodes.indexOf(node) + 1, asm)
+                        scg.nodes.add(scg.nodes.indexOf(node) + 1, asm)
+                        // Insert after
+                        val next = node.allNext.head
+                        asm.createControlFlow.target = next.target
+                        next.target = asm
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    def removeInputPreservingAssignments(SCGraph scg) {
+        val uses = scg.uses
+        for (n : scg.nodes.filter(Assignment).filter[isInputPreserver].toList) {
+            val origVO = (n.expression as ValuedObjectReference).valuedObject
+            for (use : uses.get(n.valuedObject)) {
+                use.eAllContents.filter(ValuedObjectReference).filter[valuedObject == n.valuedObject].forEach[valuedObject = origVO]
+            }
+            n.removeNode(true)
+        }
+    }
+    
+    // -------------------------------------
+
+    def isInputPreserver(Node node) {
+        return node.hasAnnotation(INPUT_PRESERVER)
+    }
+    
+    def markInputPreserver(Assignment asm) {
+        asm.annotations += createAnnotation => [
+            name = INPUT_PRESERVER
+        ]
+    }
+    
     def isOutputPreserver(Node node) {
         return node.hasAnnotation(OUTPUT_PRESERVER)
     }
     
-    private def markOutputPreserver(Assignment asm) {
+    def markOutputPreserver(Assignment asm) {
         asm.annotations += createAnnotation => [
             name = OUTPUT_PRESERVER
         ]
@@ -267,7 +331,7 @@ class IOPreserverExtensions {
         return vo.hasAnnotation(REGISTER)
     }
     
-    private def markRegister(ValuedObject vo) {
+    def markRegister(ValuedObject vo) {
         vo.annotations += createAnnotation => [
             name = REGISTER
         ]
@@ -277,7 +341,7 @@ class IOPreserverExtensions {
         return vo.hasAnnotation(TERM)
     }
     
-    private def markTerm(ValuedObject vo) {
+    def markTerm(ValuedObject vo) {
         vo.annotations += createAnnotation => [
             name = TERM
         ]
