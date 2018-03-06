@@ -408,7 +408,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueVariableName() {
         variableSuffix++
-        "v" + variableSuffix
+        "_v" + variableSuffix
     }
     
     /**
@@ -417,7 +417,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueFlagName() {
         flagSuffix++
-        "f" + flagSuffix
+        "_f" + flagSuffix
     }
     
     /**
@@ -453,7 +453,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueTrapName() {
         trapSuffix++
-        "T" + trapSuffix
+        "_T" + trapSuffix
     }
     
     /**
