@@ -22,8 +22,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class ConsoleStyle {
     
     public static val INFO = new ConsoleStyle(0, 0, 0)
-    public static val WARNING = new ConsoleStyle(255, 255, 0)
-    public static val ERROR = new ConsoleStyle(255, 0, 0)
+    public static val WARNING = new ConsoleStyle(127, 127, 0)
+    public static val ERROR = new ConsoleStyle(127, 0, 0)
     public static val SIMULATION = new ConsoleStyle(128, 0, 163)
     
     @Accessors(PUBLIC_GETTER)

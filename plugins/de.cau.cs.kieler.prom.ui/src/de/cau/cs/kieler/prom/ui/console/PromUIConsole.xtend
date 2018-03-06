@@ -37,12 +37,12 @@ class PromUIConsole implements IConsole {
     /**
      * The console
      */
-    private static MessageConsole console;
+    private MessageConsole console;
     
     /**
      * The stream of the console to write to
      */
-    private static Map<ConsoleStyle, MessageConsoleStream> consoleStreams = newHashMap;
+    private Map<ConsoleStyle, MessageConsoleStream> consoleStreams = newHashMap;
     
     new(String name) {
         super()
