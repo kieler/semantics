@@ -56,6 +56,12 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import java.io.StringWriter
+import java.io.PrintWriter
+import de.cau.cs.kieler.scg.SCGraphs
 
 /**
  * @author als
@@ -70,7 +76,6 @@ class MergeExpressionExtension {
     @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SSACoreExtensions
-    @Inject extension SSATransformationExtensions
     @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     
@@ -81,6 +86,10 @@ class MergeExpressionExtension {
     val static schedules = <ValuedObject, List<Assignment>>newHashMap
     
     // -------------------------------------------------------------------------
+    
+    def isUpdate(Assignment asm) {
+        return asm.operator != AssignOperator.ASSIGN
+    }
     
     /**
      * Prepares this extension for generation merge expressions for updates.
@@ -101,7 +110,7 @@ class MergeExpressionExtension {
             
             // Remove independent nodes
             // TODO this seems to break the scg sometimes
-            val voCopy = copier.get(vo)      
+            val voCopy = copier.get(vo)
             val independentNodes = copy.nodes.filter(Assignment).filter[valuedObject != voCopy && !eAllContents.filter(ValuedObjectReference).exists[valuedObject == voCopy]].toList
             for (in : independentNodes) {
                 in.incoming.immutableCopy.forEach[ target = in.next.target]
@@ -109,30 +118,35 @@ class MergeExpressionExtension {
             }
             copy.nodes.removeAll(independentNodes)
             
-            // Compile SCG scheduling
-            // TODO KICOOL!!!
-            if (true) throw new UnsupportedOperationException("Scheduled merge expressions using kicool not yet implemented")
-            val SCGraph schedSCG = null
-            val Multimap<EObject, EObject> mapping = null
+            // Compile SCG scheduling       
+            val compileSCGs = sCGFactory.createSCGraphs => [scgs += copy]    
+            val context = Compile.createCompilationContext("de.cau.cs.kieler.scg.netlist", compileSCGs)
+            context.startEnvironment.setProperty(Environment.INPLACE, true)
+            context.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
+            context.compile
             
-//            val context = Compile.createCompilationContext("", schedSCG)
-//            context.startEnvironment.setProperty(Environment.INPLACE, true)
-//            context.compile
-//            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.GUARD_EXPRESSIONS_ID +","+ SCGFeatures.GUARDS_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
-//            context.advancedSelect = false;
-//            context.setProperty(Tracing.ACTIVE_TRACING, true);
-//            val result = KielerCompiler.compile(context);
-//            
-//            // Check result
-//            if (!result.postponedErrors.empty) {
-//                throw new IllegalArgumentException("SCG with ValuedObject "+vo.name+" cannot be scheduled",result.postponedErrors.head)
-//            }
-//            
-//            // Extract schedule and map to original VOs
-//            val schedSCG = result.object as SCGraph
-//            val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(schedSCG, copy);
+            // Check result
+            if (!context.processorInstancesSequence.forall[environment.errors.empty]) {
+                throw new IllegalArgumentException(
+                    "SCG with ValuedObject " + vo.name + " cannot be scheduled" +
+                    context.processorInstancesSequence.findFirst[!environment.errors.empty].environment.errors.get(Environment.REPORT_ROOT).map[ err |
+                         if (err.exception !== null) {
+                             ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
+                         } else {
+                            err.message
+                         }
+                    ].join("\n- "))
+            }
+
+            // Extract schedule and map to original VOs
+//            val schedSCGs = context.processorInstancesSequence.findFirst[id.equals("de.cau.cs.kieler.scg.processors.scheduler")].targetModel as SCGraphs
+//            val schedSCG = schedSCGs.scgs.head
+            val seqSCGs = context.result.model as SCGraphs
+            val seqSCG = seqSCGs.scgs.head
+            val tracing = context.result.getProperty(Tracing.TRACING_DATA)
+            val mapping = tracing.getMapping(seqSCGs, compileSCGs);
             var ValuedObject findCopyVO = null
-            for (d : schedSCG.declarations) {
+            for (d : seqSCG.declarations) {
                 for (v : d.valuedObjects) {
                     if (mapping.get(v).filter(ValuedObject).head == voCopy) {
                         findCopyVO = v
@@ -141,16 +155,25 @@ class MergeExpressionExtension {
             }
             val schedVO = findCopyVO
             val schedule = <Assignment>newArrayList
-            val start = schedSCG.nodes.filter[!incoming.exists(Predicates.or(ScheduleDependency.instanceOf, GuardDependency.instanceOf))].toList
-            var next = start.head
-            while (next != null) {
-                for(a : next.dependencies.filter(GuardDependency).map[target].scheduleOrder.filter(Assignment).filter[valuedObject == schedVO]) {
-                    val copyAsm = mapping.get(a).filter(Assignment).head
+            
+            // Assumption node are present in schedule order
+            for (n : seqSCG.nodes.filter(Assignment)) {
+                if (n.valuedObject == schedVO) {
+                    val copyAsm = mapping.get(n).filter(Assignment).head
                     val asm = copier.entrySet.findFirst[value == copyAsm].key
                     schedule.add(asm as Assignment)
                 }
-                next = next.dependencies.findFirst(ScheduleDependency.instanceOf)?.target
             }
+//            val start = schedSCG.nodes.filter[!incoming.exists[it instanceof ScheduleDependency]].toList //Predicates.or(ScheduleDependency.instanceOf, GuardDependency.instanceOf)
+//            var next = start.head
+//            while (next !== null) {
+//                for(a : next.dependencies.filter(ScheduleDependency).map[target].scheduleOrder.filter(Assignment).filter[valuedObject == schedVO]) {
+//                    val copyAsm = mapping.get(a).filter(Assignment).head
+//                    val asm = copier.entrySet.findFirst[value == copyAsm].key
+//                    schedule.add(asm as Assignment)
+//                }
+//                next = next.dependencies.findFirst(ScheduleDependency.instanceOf)?.target
+//            }
             
             // store schedule
             schedules.put(vo, schedule)
@@ -158,7 +181,7 @@ class MergeExpressionExtension {
     }
     
     private def List<Node> scheduleOrder(Iterable<Node> nodes) {
-        // TODO oder
+        // TODO order
         return nodes.toList
     }
 
@@ -225,7 +248,7 @@ class MergeExpressionExtension {
     }
     
     // -------------------------------------------------------------------------
-    // Structual merge expressions
+    // Structural merge expressions
     // -------------------------------------------------------------------------
     
     def getPatternExpression(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, VariableDeclaration> ssaDecl, DominatorTree dt) {
@@ -441,9 +464,27 @@ class MergeExpressionExtension {
         } else if (head.isUpdate){
              return COMBINE.createFunction => [
                 parameters += createParameter => [
-                    var op = (head.expression as OperatorExpression).operator.getName
-                    if (op.contains("_")) {
-                        op = op.substring(op.indexOf('_')+1)
+//                    var op = (head.expression as OperatorExpression).operator.getName
+//                    if (op.contains("_")) {
+//                        op = op.substring(op.indexOf('_')+1)
+//                    }
+                    val op = switch(head.operator) {
+                        case ASSIGNADD: OperatorType.ADD.literal
+                        case ASSIGNAND: OperatorType.LOGICAL_AND.literal
+                        case ASSIGNDIV: OperatorType.DIV.literal
+                        case ASSIGNMAX: "max"
+                        case ASSIGNMIN: "min"
+                        case ASSIGNMOD: OperatorType.MOD.literal
+                        case ASSIGNMUL: OperatorType.MULT.literal
+                        case ASSIGNOR: OperatorType.LOGICAL_OR.literal
+                        case ASSIGNSHIFTLEFT: OperatorType.SHIFT_LEFT.literal
+                        case ASSIGNSHIFTRIGHT: OperatorType.SHIFT_RIGHT.literal
+                        case ASSIGNSHIFTRIGHTUNSIGNED: OperatorType.SHIFT_RIGHT_UNSIGNED.literal
+                        case ASSIGNSUB: OperatorType.SUB.literal
+                        case ASSIGNXOR: OperatorType.BITWISE_XOR.literal
+                        case POSTFIXADD: "++"
+                        case POSTFIXSUB: "--"
+                        default: throw new IllegalArgumentException("Wrong update operator")
                     }
                     expression = createStringValue(op)
                 ]

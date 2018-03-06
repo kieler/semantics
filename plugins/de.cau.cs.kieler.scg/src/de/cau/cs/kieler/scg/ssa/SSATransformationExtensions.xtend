@@ -142,12 +142,12 @@ class SSATransformationExtensions {
         }
     }
     
-    def isUpdate(Assignment asm) {
+    def isTransformedUpdate(Assignment asm) {
         return asm.hasAnnotation(ANNOTATION_UPDATE)
     }
     
     def restoreUpdates(SCGraph scg) {
-        for (asm : scg.nodes.filter(Assignment).filter[isUpdate]) {
+        for (asm : scg.nodes.filter(Assignment).filter[isTransformedUpdate]) {
             val AssignOperator op = AssignOperator.getByName(asm.getStringAnnotationValue(ANNOTATION_UPDATE))
             if (op !== null) {
                 val exp = asm.expression

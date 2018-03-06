@@ -193,7 +193,7 @@ class IOPreserverExtensions {
 //        scg.nodes.removeAll(rems)
     }
     
-    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
+    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl, boolean scheduleUpdates) {
         val map = LinkedHashMultimap.create
         if (scg.isDelayed) {
             for (entry : ssaDecl.entrySet.filter[value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
@@ -202,7 +202,7 @@ class IOPreserverExtensions {
                 if (!nodes.empty) {
                     map.put(vo, sCGFactory.createAssignment => [
                         valuedObject = entry.value.valuedObjects.findFirst[isRegister]
-                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt, false)
+                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt, scheduleUpdates)
                     ])
                 } else {
                     map.put(vo, sCGFactory.createAssignment => [

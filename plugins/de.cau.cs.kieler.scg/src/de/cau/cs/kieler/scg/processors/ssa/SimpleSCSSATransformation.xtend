@@ -108,7 +108,7 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
         // 2. Preserve output behavior
         // ---------------
         scg.createInputPreservingAssignments(entryNode, true)
-//        scg.snapshot
+        if (environment.inDeveloperMode) scg.snapshot
         
         // ---------------
         // 1. Place Phi & Psi
@@ -154,7 +154,7 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
             ref.value.expression = ref.key.valuedObject.reference
         }
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, ID)
-//        scg.snapshot
+        if (environment.inDeveloperMode) scg.snapshot
 
         // ---------------
         // 6. Remove input preserver
