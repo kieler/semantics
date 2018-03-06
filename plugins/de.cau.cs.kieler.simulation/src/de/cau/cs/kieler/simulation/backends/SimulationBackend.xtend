@@ -157,15 +157,21 @@ abstract class SimulationBackend {
      * Returns the last processor id of the given processor entry.
      * The entry may also be a group of processors. The id of the last processor in this group is returned in this case.
      */
-    private static def String getLastProcessorId(ProcessorEntry processors) {
-        if(processors instanceof ProcessorGroup) { 
-            return processors.processors.last.lastProcessorId
-        } else if (processors instanceof ProcessorReference) {
-            return processors.id
-        } else if (processors instanceof ProcessorSystem) {
-            return processors.id
+    private static def String getLastProcessorId(ProcessorEntry processor) {
+        val id = processor.id
+        if(processor instanceof ProcessorGroup) { 
+            return processor.processors.last.lastProcessorId
+        } else if (processor instanceof ProcessorSystem) {
+            val system = KiCoolRegistration.getSystemById(id)
+            if(system !== null) {
+                return system.processors.lastProcessorId    
+            } else {
+                throw new Exception("Cannot find compilation system with id '"+id+"'")
+            }
+        } else if (processor instanceof ProcessorReference) {
+            return id
         }
-    } 
+    }
     
     /**
      * Returns the supported file extensions of programming languages that can be simulated using this backend.

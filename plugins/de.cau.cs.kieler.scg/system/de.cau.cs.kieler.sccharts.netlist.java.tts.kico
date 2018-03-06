@@ -1,0 +1,6 @@
+public system de.cau.cs.kieler.sccharts.netlist.java.tts
+	version 1
+	label "Netlist-based Compilation (Java) with TTS"
+	
+de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
+system de.cau.cs.kieler.sccharts.netlist.java

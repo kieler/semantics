@@ -133,7 +133,13 @@
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
       </TransformationSystem>
       <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.tts.kico">
+      </TransformationSystem>
+      <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.java.tts.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.simple.kico">
