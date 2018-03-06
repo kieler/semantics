@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.netlist.java.tts
+system de.cau.cs.kieler.sccharts.netlist.java.tts
 	version 1
 	label "Netlist-based Compilation (Java) with TTS"
 	
