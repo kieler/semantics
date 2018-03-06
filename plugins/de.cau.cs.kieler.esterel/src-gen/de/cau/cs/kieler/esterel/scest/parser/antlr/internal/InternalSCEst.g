@@ -1004,11 +1004,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getSignalReferenceExpressionParserRuleCall_8()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); 
     }
-    this_SignalReferenceExpression_10=ruleSignalReferenceExpression
+    this_SignalOrTickReferenceExpression_10=ruleSignalOrTickReferenceExpression
     { 
-        $current = $this_SignalReferenceExpression_10.current; 
+        $current = $this_SignalOrTickReferenceExpression_10.current; 
         afterParserOrEnumRuleCall();
     }
 )

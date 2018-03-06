@@ -6196,9 +6196,9 @@ rule__AtomicExpression__Alternatives
 )
 
     |(
-{ before(grammarAccess.getAtomicExpressionAccess().getSignalReferenceExpressionParserRuleCall_8()); }
-	ruleSignalReferenceExpression
-{ after(grammarAccess.getAtomicExpressionAccess().getSignalReferenceExpressionParserRuleCall_8()); }
+{ before(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); }
+	ruleSignalOrTickReferenceExpression
+{ after(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); }
 )
 
 ;

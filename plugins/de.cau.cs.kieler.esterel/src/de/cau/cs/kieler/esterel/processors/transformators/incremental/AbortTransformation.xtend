@@ -138,11 +138,12 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     scope.statements.add(conditional)
                 }
                 else {
+                    var ValuedObject depthFlag = null
                     if (abort.weak && !abort.delay.isImmediate) {
-                        val depthFlag = createNewUniqueDepthFlag(createFalse)
+                        depthFlag = createNewUniqueDepthFlag(createFalse)
                         decl.valuedObjects.add(depthFlag)
                     }
-                    transformPauses(abort, label, abortFlag, null, null)
+                    transformPauses(abort, label, abortFlag, depthFlag, null)
                     transformJoins(abort, label, abortFlag)
                     scope.declarations.add(decl)
                 }
@@ -195,7 +196,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     scope.statements.add(scope.statements.length-1, conditional2)
                 }
             }
-            transformPauses(abort, label, abortFlag, null, countingVariables)
+            transformPauses(abort, label, abortFlag, depthFlag, countingVariables)
             transformJoins(abort, label, abortFlag)
             thread1.statements.add(createGotoStatement(label3))
             thread1.statements.add(label4)
@@ -231,7 +232,9 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
     }
     
     def transformPauses(Abort abort, Label label, ValuedObject abortFlag, ValuedObject depthFlag, LinkedList<ValuedObject> countingVariables) {
-            val pauses = abort.eAllContents.filter(Pause).toList
+            val tempScope = createScopeStatement(abort.statements)
+            val pauses = tempScope.eAllContents.filter(Pause).toList
+            abort.statements.addAll(tempScope.statements)
             for (pause : pauses) {
                 var statements =  pause.getContainingList
                 var pos = statements.indexOf(pause)
@@ -240,10 +243,9 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                 // ABORT CASES
                 if (abort.delay === null) {
                     transformCases(pause, abort, label2, abortFlag, depthFlag, countingVariables)
-                    return
                 }
                 // WEAK ABORT
-                if (abort.weak) {
+                else if (abort.weak) {
                     // e.g. "weak abort immediate A"
                     if (abort.delay.isImmediate) {
                         val conditional = newIfThenGoto(abort.delay.expression.copy, label2, false)

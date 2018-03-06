@@ -26,6 +26,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Thread
 
 /**
  * @author mrb
@@ -116,19 +118,21 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
         val term = createNewUniqueTermFlag(createFalse)
         val decl = createDeclaration(ValueType.BOOL, term)
         val parallel = createParallel
-        val thread1 = createThread
         val thread2 = createThread
-        parallel.threads.add(thread1)
         parallel.threads.add(thread2)
         thread2.statements.addAll(scope.statements)
         thread2.statements.add(createAssignment(term, createTrue))
         scope.statements.add(parallel)
         scope.declarations.add(decl)
         
-        // thread1 statements: the initializations of the signals
-        val label = createLabel
-        thread1.statements.add(label)
+        // tempThread statements: the initializations of the signals
+        var Label tempLabel
+        var Thread tempThread
         for (signal : signals) {
+            tempLabel = createLabel
+            tempThread = createThread
+            tempThread.statements.add(tempLabel)
+            parallel.threads.add(tempThread)
             val keyValue = signalsMap.get(signal)
             val s = keyValue.s
             // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
@@ -137,25 +141,25 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
                 val s_cur = keyValue.s_cur
                 val s_val = keyValue.s_val
                 val assign1 = createAssignment(s, createFalse)
-                thread1.statements.add(assign1)
+                tempThread.statements.add(assign1)
                 val assign2 = createAssignment(s_set, createFalse)
-                thread1.statements.add(assign2)
+                tempThread.statements.add(assign2)
                 val conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
                 val assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
                 conditional1.statements.add(assign3)
-                thread1.statements.add(conditional1)
+                tempThread.statements.add(conditional1)
                 val conditional2 = createConditional(createValuedObjectReference(s))
                 val assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
                 conditional2.statements.add(assign4)
-                thread1.statements.add(conditional2)
+                tempThread.statements.add(conditional2)
             }
             else {
                 val assign1 = createAssignment(s, createFalse)
-                thread1.statements.add(assign1)
+                tempThread.statements.add(assign1)
             }
+            val conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), tempLabel, true)
+            tempThread.statements.add(conditional)
         }
-        val conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
-        thread1.statements.add(conditional)
     }
     
 }
