@@ -16,7 +16,6 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.DefaultSystemAssociation
 import java.util.ArrayList
-import java.util.Map
 import org.eclipse.jface.action.ControlContribution
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionEvent
@@ -24,10 +23,10 @@ import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
-import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction.retrieveModel
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -39,9 +38,6 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
 class SystemSelectionManager implements SelectionListener {
     
     public static val TEMPORARY_SYSTEM_PREFIX = "TMP "
-    
-    @Accessors private Map<String, System> temporarySystem = 
-        <String, System> newHashMap
     
     private val index = new ArrayList<String>(KiCoolRegistration.getSystemModels.size + 10)
     private var CompilerView view
@@ -88,15 +84,15 @@ class SystemSelectionManager implements SelectionListener {
             modelClassFilter = model.class
         }
         val systems = newLinkedList
-        systems.addAll(temporarySystem.values)
         systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
         
         for(system : systems.filter[!filter || hasInput(modelClassFilter)].
             filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ]
         ) {
+            val id = system.id
             var name = system.label
-            if (name.nullOrEmpty) name = system.id
-            if (temporarySystem.containsValue(system)) name = TEMPORARY_SYSTEM_PREFIX + name
+            if (name.nullOrEmpty) name = id
+            if (KiCoolRegistration.isTemporarySystem(id)) name = TEMPORARY_SYSTEM_PREFIX + name
             combo.add(name)
             index.add(system.id)
         }
@@ -137,20 +133,27 @@ class SystemSelectionManager implements SelectionListener {
    
     def System getSelectedSystem() {
         if (!combo.isDisposed && combo.selectionIndex != -1) {
-            val systemId = index.get(combo.selectionIndex)
+            val systemId = getSelectedSystemId
             if (systemId !== null) {
-                if (temporarySystem.containsKey(systemId)) {
-                    return temporarySystem.get(systemId)
-                } else {
-                    return KiCoolRegistration.getSystemById(systemId)
-                }
+                return KiCoolRegistration.getSystemById(systemId)
             }
         }
         return null
     }
     
+    def String getSelectedSystemId() {
+        if(combo.selectionIndex < 0) {
+            return null
+        }
+        return index.get(combo.selectionIndex)
+    }
+    
     def setTemporarySystem(System system) {
-        temporarySystem.put(system.id, system)
+        try {
+            KiCoolRegistration.registerTemporarySystem(system)    
+        } catch (Exception e) {
+            PromUIPlugin.showError(e)
+        }
         updateSystemList
         view.updateToolbar
     }
