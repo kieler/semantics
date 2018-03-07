@@ -892,11 +892,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectPreExpressionParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getEsterelFunctionCallParserRuleCall_0()); 
     }
-    this_ValuedObjectPreExpression_0=ruleValuedObjectPreExpression
+    this_EsterelFunctionCall_0=ruleEsterelFunctionCall
     { 
-        $current = $this_ValuedObjectPreExpression_0.current; 
+        $current = $this_EsterelFunctionCall_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -905,11 +905,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getEsterelFunctionCallParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTrapExpressionParserRuleCall_1()); 
     }
-    this_EsterelFunctionCall_1=ruleEsterelFunctionCall
+    this_TrapExpression_1=ruleTrapExpression
     { 
-        $current = $this_EsterelFunctionCall_1.current; 
+        $current = $this_TrapExpression_1.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -918,11 +918,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTrapExpressionParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_2()); 
     }
-    this_TrapExpression_2=ruleTrapExpression
+    this_BoolValue_2=ruleBoolValue
     { 
-        $current = $this_TrapExpression_2.current; 
+        $current = $this_BoolValue_2.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -931,11 +931,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectPreExpressionParserRuleCall_3()); 
     }
-    this_BoolValue_3=ruleBoolValue
+    this_ValuedObjectPreExpression_3=ruleValuedObjectPreExpression
     { 
-        $current = $this_BoolValue_3.current; 
+        $current = $this_ValuedObjectPreExpression_3.current; 
         afterParserOrEnumRuleCall();
     }
 

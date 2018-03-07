@@ -117,10 +117,10 @@ terminal SL_COMMENT:
 // Care about order of the rules! 
 @Override
 AtomicExpression returns kexpressions::Expression:
-      ValuedObjectPreExpression
-    | EsterelFunctionCall
+      EsterelFunctionCall
     | TrapExpression
     | BoolValue
+    | ValuedObjectPreExpression
     | TextExpression
     | '(' BooleanExpression ')'
     | ConstantExpression
