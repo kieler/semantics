@@ -23,6 +23,7 @@ import org.junit.Test
  * @author aas
  *
  */
+ /* No need to run this on the build server
 class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
     
     private static val knownToFailTests = <String, List<TestModelData>>newHashMap
@@ -48,11 +49,11 @@ class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
         }
         return isKnownToFail
         && modelData.hasSimulationTrace
+        && modelData.isSCChartsTest
     }
     
     @Test
     def void testKnownToFailStatistics(SCCharts scc, TestModelData modelData) {
-        /* No need to run this on the build server
         for(p : knownToFailProperties) {
             if(modelData.modelProperties.contains(p)) {
                 addKnownToFailTest(p, modelData)
@@ -62,7 +63,6 @@ class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
         // TODO: This should only be called once after ALL tests are done,
         // but there is no hook in the TestRunner to do so
         printStatistics
-        // */
     }
     
     def static void printStatistics() {
@@ -82,3 +82,4 @@ class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
         knownToFailTests.put(property, knownToFailList)
     }
 }
+ */
