@@ -176,6 +176,15 @@ class EsterelScopeProviderUtil {
             for (Module m : p.modules.filter(Module)) {
                 function.collect(m, scopeElems);
             }
+            if (function == COLLECT_SIGNALS ) {
+                val program = parent.eContainer
+                if (program instanceof EsterelProgram) {
+                    if (program.tick !== null) {
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(program.tick
+                                        .getName()), program.tick, emptyMap))
+                    }
+                }
+            }
         }
         return scopeElems;
     }

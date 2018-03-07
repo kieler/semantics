@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.TickReference
 
 /**
  * @author mrb
@@ -77,6 +78,10 @@ class InitializationTransformation extends InplaceProcessor<EsterelProgram> {
         resetSignalSuffix 
         resetModuleSuffix
         clearNewSignalsMap
+        scestProgram.eAllContents.filter(TickReference).toList.forEach[ ref | 
+            val signalReference = ref.valuedObject.createSignalReference
+            EcoreUtil.replace(ref, signalReference)
+        ]
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i)
             if (!m.annotations.isGeneratedModule) {

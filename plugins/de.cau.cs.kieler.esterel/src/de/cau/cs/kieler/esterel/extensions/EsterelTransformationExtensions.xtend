@@ -1651,8 +1651,13 @@ class EsterelTransformationExtensions {
             }
             else if (ref.valuedObject instanceof Signal){
                 val signal = ref.valuedObject as Signal
+                if (signal.name == "tick") {
+                    // TODO after run transformation: e.g. "module _2 [signal tick/A]" and an "emit A" in the submodule _2 
+                    // would later lead to an assignment "true = true || true"
+                    ref.replace(createTrue)
+                }
                 // if the SignalReference references a transformed signal
-                if (newSignals.containsKey(signal)) {
+                else if (newSignals.containsKey(signal)) {
                     val parent = ref.eContainer
                     if ( (parent instanceof OperatorExpression) && 
                          ((parent as OperatorExpression).operator == OperatorType.VAL)
