@@ -892,11 +892,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getEsterelFunctionCallParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectPreExpressionParserRuleCall_0()); 
     }
-    this_EsterelFunctionCall_0=ruleEsterelFunctionCall
+    this_ValuedObjectPreExpression_0=ruleValuedObjectPreExpression
     { 
-        $current = $this_EsterelFunctionCall_0.current; 
+        $current = $this_ValuedObjectPreExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -905,11 +905,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTrapExpressionParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getEsterelFunctionCallParserRuleCall_1()); 
     }
-    this_TrapExpression_1=ruleTrapExpression
+    this_EsterelFunctionCall_1=ruleEsterelFunctionCall
     { 
-        $current = $this_TrapExpression_1.current; 
+        $current = $this_EsterelFunctionCall_1.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -918,11 +918,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTrapExpressionParserRuleCall_2()); 
     }
-    this_BoolValue_2=ruleBoolValue
+    this_TrapExpression_2=ruleTrapExpression
     { 
-        $current = $this_BoolValue_2.current; 
+        $current = $this_TrapExpression_2.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -931,11 +931,11 @@ ruleAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectPreExpressionParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_3()); 
     }
-    this_ValuedObjectPreExpression_3=ruleValuedObjectPreExpression
+    this_BoolValue_3=ruleBoolValue
     { 
-        $current = $this_ValuedObjectPreExpression_3.current; 
+        $current = $this_BoolValue_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -996,19 +996,6 @@ ruleAtomicExpression returns [EObject current=null]
     this_FunctionCall_9=ruleFunctionCall
     { 
         $current = $this_FunctionCall_9.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_8()); 
-    }
-    this_SignalOrTickReferenceExpression_10=ruleSignalOrTickReferenceExpression
-    { 
-        $current = $this_SignalOrTickReferenceExpression_10.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -1102,6 +1089,211 @@ ruleAtomicValuedExpression returns [EObject current=null]
     this_StringValue_6=ruleStringValue
     { 
         $current = $this_StringValue_6.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleValuedObjectPreExpression
+entryRuleValuedObjectPreExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getValuedObjectPreExpressionRule()); }
+	 iv_ruleValuedObjectPreExpression=ruleValuedObjectPreExpression 
+	 { $current=$iv_ruleValuedObjectPreExpression.current; } 
+	 EOF 
+;
+
+// Rule ValuedObjectPreExpression
+ruleValuedObjectPreExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getValuedObjectPreExpressionAccess().getOperatorExpressionAction_0_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorEsterelPreOperatorEnumRuleCall_0_1_0()); 
+	    }
+		lv_operator_1_0=ruleEsterelPreOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_1_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelPreOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_2='(' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getValuedObjectPreExpressionAccess().getLeftParenthesisKeyword_0_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsValuedObjectPreExpressionParserRuleCall_0_3_0()); 
+	    }
+		lv_subExpressions_3_0=ruleValuedObjectPreExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_3_0, 
+        		"de.cau.cs.kieler.esterel.scest.SCEst.ValuedObjectPreExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_4=')' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getValuedObjectPreExpressionAccess().getRightParenthesisKeyword_0_4());
+    }
+)
+    |((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getValuedObjectPreExpressionAccess().getOperatorExpressionAction_1_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorEsterelValueTestOperatorEnumRuleCall_1_1_0()); 
+	    }
+		lv_operator_6_0=ruleEsterelValueTestOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_6_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelValueTestOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsSignalReferenceExpressionParserRuleCall_1_2_0()); 
+	    }
+		lv_subExpressions_7_0=ruleSignalReferenceExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_7_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getValuedObjectOrSignalReferenceParserRuleCall_2()); 
+    }
+    this_ValuedObjectOrSignalReference_8=ruleValuedObjectOrSignalReference
+    { 
+        $current = $this_ValuedObjectOrSignalReference_8.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleValuedObjectOrSignalReference
+entryRuleValuedObjectOrSignalReference returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getValuedObjectOrSignalReferenceRule()); }
+	 iv_ruleValuedObjectOrSignalReference=ruleValuedObjectOrSignalReference 
+	 { $current=$iv_ruleValuedObjectOrSignalReference.current; } 
+	 EOF 
+;
+
+// Rule ValuedObjectOrSignalReference
+ruleValuedObjectOrSignalReference returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getValuedObjectOrSignalReferenceAccess().getTickSignalExpressionParserRuleCall_0()); 
+    }
+    this_TickSignalExpression_0=ruleTickSignalExpression
+    { 
+        $current = $this_TickSignalExpression_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getValuedObjectOrSignalReferenceAccess().getValuedObjectReferenceParserRuleCall_1()); 
+    }
+    this_ValuedObjectReference_1=ruleValuedObjectReference
+    { 
+        $current = $this_ValuedObjectReference_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getValuedObjectOrSignalReferenceAccess().getSignalReferenceExpressionParserRuleCall_2()); 
+    }
+    this_SignalReferenceExpression_2=ruleSignalReferenceExpression
+    { 
+        $current = $this_SignalReferenceExpression_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getValuedObjectOrSignalReferenceAccess().getVariableReferenceParserRuleCall_3()); 
+    }
+    this_VariableReference_3=ruleVariableReference
+    { 
+        $current = $this_VariableReference_3.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -10594,139 +10786,6 @@ ruleNegExpression returns [EObject current=null]
     this_AtomicValuedExpression_3=ruleAtomicValuedExpression
     { 
         $current = $this_AtomicValuedExpression_3.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleValuedObjectPreExpression
-entryRuleValuedObjectPreExpression returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getValuedObjectPreExpressionRule()); }
-	 iv_ruleValuedObjectPreExpression=ruleValuedObjectPreExpression 
-	 { $current=$iv_ruleValuedObjectPreExpression.current; } 
-	 EOF 
-;
-
-// Rule ValuedObjectPreExpression
-ruleValuedObjectPreExpression returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getValuedObjectPreExpressionAccess().getOperatorExpressionAction_0_0(),
-            $current);
-    }
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorEsterelPreOperatorEnumRuleCall_0_1_0()); 
-	    }
-		lv_operator_1_0=ruleEsterelPreOperator		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
-	        }
-       		set(
-       			$current, 
-       			"operator",
-        		lv_operator_1_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.EsterelPreOperator");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)	otherlv_2='(' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getValuedObjectPreExpressionAccess().getLeftParenthesisKeyword_0_2());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsValuedObjectPreExpressionParserRuleCall_0_3_0()); 
-	    }
-		lv_subExpressions_3_0=ruleValuedObjectPreExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
-	        }
-       		add(
-       			$current, 
-       			"subExpressions",
-        		lv_subExpressions_3_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.ValuedObjectPreExpression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)	otherlv_4=')' 
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getValuedObjectPreExpressionAccess().getRightParenthesisKeyword_0_4());
-    }
-)
-    |((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getValuedObjectPreExpressionAccess().getOperatorExpressionAction_1_0(),
-            $current);
-    }
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorEsterelValueTestOperatorEnumRuleCall_1_1_0()); 
-	    }
-		lv_operator_6_0=ruleEsterelValueTestOperator		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
-	        }
-       		set(
-       			$current, 
-       			"operator",
-        		lv_operator_6_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.EsterelValueTestOperator");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsSignalReferenceExpressionParserRuleCall_1_2_0()); 
-	    }
-		lv_subExpressions_7_0=ruleSignalReferenceExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValuedObjectPreExpressionRule());
-	        }
-       		add(
-       			$current, 
-       			"subExpressions",
-        		lv_subExpressions_7_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getValuedObjectPreExpressionAccess().getValuedObjectReferenceParserRuleCall_2()); 
-    }
-    this_ValuedObjectReference_8=ruleValuedObjectReference
-    { 
-        $current = $this_ValuedObjectReference_8.current; 
         afterParserOrEnumRuleCall();
     }
 )

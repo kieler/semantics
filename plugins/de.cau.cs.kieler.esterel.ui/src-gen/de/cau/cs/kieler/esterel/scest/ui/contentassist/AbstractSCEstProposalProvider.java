@@ -44,4 +44,7 @@ public class AbstractSCEstProposalProvider extends de.cau.cs.kieler.esterel.ui.c
 	public void complete_Set(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
+	public void complete_ValuedObjectOrSignalReference(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+	}
 }
