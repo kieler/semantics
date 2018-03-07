@@ -42,6 +42,7 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import org.eclipse.elk.core.math.ElkMargin
+import java.util.EnumSet
 
 /**
  * Styles for {@link Equations}.
@@ -148,6 +149,9 @@ class EquationStyles {
         var cc = node.contentContainer
         if (cc === null) {
             cc = node.data.filter(KContainerRendering).head
+            if (cc === null) {
+                return null
+            }
         }
         return cc.addText(text) => [
             fontSize = 10;
@@ -155,6 +159,21 @@ class EquationStyles {
             setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
         ]
     }
+    
+    def KText addNodeLabel(KNode node, String text, int fontsize) {
+        var cc = node.contentContainer
+        if (cc === null) {
+            cc = node.data.filter(KContainerRendering).head
+            if (cc === null) {
+                return null
+            }
+        }
+        return cc.addText(text) => [
+            fontSize = fontsize;
+            // Add surrounding space
+            setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
+        ]
+    }    
 
     /**
      * Adds a title label to a macro state figure.
@@ -223,6 +242,8 @@ class EquationStyles {
      */
     def KRoundedRectangle addReferenceNodeFigure(KNode node) {
         node.setMinimalNodeSize(48, 34); // same as default figure
+        node.addLayoutParam(CoreOptions.NODE_SIZE_CONSTRAINTS, 
+            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE, SizeConstraint.PORT_LABELS))
         node.addRoundedRectangle(3, 3, baseLineWidth) => [
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);

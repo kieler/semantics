@@ -33,6 +33,8 @@ import org.eclipse.elk.alg.layered.options.FixedAlignment
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
+import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
+import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 
 /**
  * Main diagram synthesis for KiCool.
@@ -61,11 +63,14 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d))
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
+        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT_RIGHT_CONSTRAINT_LOCKING)
+        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
 
         // Workaround until we use the next version of ELK        
         // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize
 //      val aspectRatio = size.x as double / size.y * 2
-        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
+//        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
+        rootNode.setLayoutOption(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
         
         val source = sourceNode
         val processorNodes = model.processors.transform
