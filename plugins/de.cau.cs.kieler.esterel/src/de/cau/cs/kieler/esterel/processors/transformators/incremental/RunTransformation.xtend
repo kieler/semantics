@@ -656,9 +656,11 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      * @param parentModule The parent Module where the constants will be copied to
      */
     def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, Module parentModule) {
-        for (decl : moduleRenaming.module.constantDeclarations) {
-                for (var i=0; i<decl.constants.length; i++) {
-                    val constant = decl.constants.get(i)
+        val decls = moduleRenaming.module.constantDeclarations.toList
+        for (decl : decls) {
+            var constants = decl.constants.toList
+                for (var i=0; i<constants.length; i++) {
+                    val constant = constants.get(i)
                     var updateReferences = true
                     var ConstantRenaming relatedConstantRenaming
                     if (constantRenamings.containsKey(constant)) {
@@ -676,15 +678,19 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                     }
                     if (updateReferences) {
                         for (expr : constantExpressions) {
-                            if (expr.constant == constant) {
+                            if (expr.constant === constant) {
                                 expr.constant = relatedConstantRenaming.newName
+                            }
+                        }
+                        for (ref : valuedObjectReferences) {
+                            if (ref.valuedObject === constant) {
+                                ref.valuedObject = relatedConstantRenaming.newName
                             }
                         }
                     }
                     else {
                         constant.name = createNewUniqueConstantName(constant.name)
                         parentModule.declarations.add(createConstantDecl(constant, constant.type))
-                        i-- // because the old constant of "decl.sensors"
                     }
                     
                 }
