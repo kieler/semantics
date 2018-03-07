@@ -164,6 +164,7 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.tts.kico">
+      </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.sccp.kico">
       </TransformationSystem>
