@@ -104,7 +104,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             KiCoolUiModule.getImageDescriptor("icons/full/etool16/compile.png")
     /** The icon for synchronizing with compiler. */
     private static final ImageDescriptor SYNC_COMPILER_ICON =
-            KiCoolUiModule.getImageDescriptor("icons/full/etool16/pin.png")
+            KiCoolUiModule.getImageDescriptor("icons/full/etool16/link_compile.png")
     /** The icon for fork view button. */
     private static final ImageDescriptor SIDE_BY_SIDE_ICON =
             KiCoolUiModule.getImageDescriptor("icons/full/etool16/side_by_side.png")
@@ -198,7 +198,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         }
         syncCompilerToggleAction.setId("syncCompilerToggleAction")
-        syncCompilerToggleAction.setToolTipText("Link with compiler")
+        syncCompilerToggleAction.setToolTipText("Link with compiler selection")
         syncCompilerToggleAction.setImageDescriptor(SYNC_COMPILER_ICON)
         syncCompilerToggleAction.setChecked(SYNC_COMPILER_TOGGLE_ACTION_DEFAULT_STATE)
 
@@ -596,7 +596,6 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @param context
      */
     package def void updateCompilerModel(Object model) {
-        // TODO adapt to kicool
         if (isActive() && syncCompilerToggleAction.isChecked()) {
             compiledModel = model
             update(ChangeEvent.COMPILER)

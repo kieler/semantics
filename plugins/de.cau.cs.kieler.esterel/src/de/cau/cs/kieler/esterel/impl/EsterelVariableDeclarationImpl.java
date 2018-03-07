@@ -7,6 +7,7 @@ import de.cau.cs.kieler.esterel.EsterelVariableDeclaration;
 import de.cau.cs.kieler.esterel.TypeIdentifier;
 import de.cau.cs.kieler.esterel.Variable;
 
+import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -31,23 +32,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.impl.EsterelVariableDeclarationImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.impl.EsterelVariableDeclarationImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container implements EsterelVariableDeclaration {
-    /**
-     * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getVariables()
-     * @generated
-     * @ordered
-     */
-    protected EList<Variable> variables;
-
+public class EsterelVariableDeclarationImpl extends DeclarationImpl implements EsterelVariableDeclaration {
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
      * <!-- begin-user-doc -->
@@ -75,18 +65,6 @@ public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container
     @Override
     protected EClass eStaticClass() {
         return EsterelPackage.Literals.ESTEREL_VARIABLE_DECLARATION;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Variable> getVariables() {
-        if (variables == null) {
-            variables = new EObjectContainmentEList<Variable>(Variable.class, this, EsterelPackage.ESTEREL_VARIABLE_DECLARATION__VARIABLES);
-        }
-        return variables;
     }
 
     /**
@@ -140,8 +118,6 @@ public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__VARIABLES:
-                return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
             case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__TYPE:
                 return basicSetType(null, msgs);
         }
@@ -156,8 +132,6 @@ public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__VARIABLES:
-                return getVariables();
             case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__TYPE:
                 return getType();
         }
@@ -173,10 +147,6 @@ public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__VARIABLES:
-                getVariables().clear();
-                getVariables().addAll((Collection<? extends Variable>)newValue);
-                return;
             case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__TYPE:
                 setType((TypeIdentifier)newValue);
                 return;
@@ -192,9 +162,6 @@ public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__VARIABLES:
-                getVariables().clear();
-                return;
             case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__TYPE:
                 setType((TypeIdentifier)null);
                 return;
@@ -210,8 +177,6 @@ public class EsterelVariableDeclarationImpl extends MinimalEObjectImpl.Container
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__VARIABLES:
-                return variables != null && !variables.isEmpty();
             case EsterelPackage.ESTEREL_VARIABLE_DECLARATION__TYPE:
                 return type != null;
         }

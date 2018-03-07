@@ -13,284 +13,145 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.Abort
-import de.cau.cs.kieler.esterel.Await
-import de.cau.cs.kieler.esterel.Do
-import de.cau.cs.kieler.esterel.EsterelParallel
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.Present
-import de.cau.cs.kieler.esterel.Run
-import de.cau.cs.kieler.esterel.Suspend
-import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Suspend
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.StatementContainer
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.esterel.DelayExpression
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
  *
  */
-class SuspendTransformation extends EsterelProcessor {
+class SuspendTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.suspend"
+    
     override getId() {
-        return SCEstTransformation::SUSPEND_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::SUSPEND_NAME
+        return "Suspend"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::SUSPEND_ID
-//    }
-//        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::IFTEST_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
-//            SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
-//            SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
-//            SCEstTransformation::DO_ID, SCEstTransformation::RUN_ID)
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | transformStatements(m.statements)]
-        return prog
-    }
+    var EObject lastStatement
     
-    def EList<Statement> transformStatements(EList<Statement> statements) {
-        if (statements != null) {
-            for (var i=0; i<statements.length; i++) {
-                var statement = statements.get(i).transformStatement
-                if (statement instanceof Statement) {
-                    statements.set(i, statement)
-                }
-            }
-        }
-        return statements
-    }
-    
-    // TODO A Transformation for "weak suspend", which was introduced with Esterel v7, is not implemented.
-    
-    def Statement transformStatement(Statement statement) {
-        if (statement instanceof Suspend) {
-            var suspend = statement as Suspend
-            var statements = getContainingList(statement)
-            var pos = statements.indexOf(statement)
-            var depth = suspend.getDepth
-            // without this if statement the first statement of suspend.statements could be not checked in next cycle of transformStatements
-            if (!suspend.statements.empty) {
-                suspend.statements.get(0).transformStatement
-            }
-            suspend.delay.transformReferences
-            if (suspend.delay.expression != null) {
-                // create a scope because a declaration (variable for counting) is needed
-                var variable = createNewUniqueVariable(createIntValue(0))
-                var scope = createScopeStatement(createDeclaration(ValueType.INT, variable))
-                transformStatements(suspend.statements)
-                var parallel = createParallel
-                var thread1 = createThread
-                var thread2 = createThread
-                parallel.threads.add(thread1)
-                parallel.threads.add(thread2)
-                var label = createLabel
-                var label2 = createLabel
-                var termFlag = createNewUniqueFlag(createBoolValue(false))
-                scope.declarations.add(createDeclaration(ValueType.BOOL, termFlag))
-                var conditional = newIfThenGoto(createValuedObjectReference(termFlag), label2, false)
-                conditional.annotations.add(createAnnotation(depth))
-                var conditional2  = createConditional(EcoreUtil.copy(suspend.delay.expression))
-                var conditional3 = createConditional(createEquals(createValuedObjectReference(variable), EcoreUtil.copy(suspend.delay.delay)))
-                conditional3.statements.add(createAssignment(variable, createIntValue(0)))
-                conditional2.statements.add(conditional3)
-                conditional2.statements.add(incrementInt(variable))
-                thread1.statements.add(label)
-                thread1.statements.add(conditional) 
-                thread1.statements.add(createPause)
-                thread1.statements.add(conditional2)
-                thread1.statements.add(createGotoStatement(label))
-                thread1.statements.add(label2)
-                thread2.statements.add(suspend.statements)
-                thread2.statements.add(createAssignment(termFlag, createBoolValue(true)))
-                thread2.statements.add(createLabel)
-                thread2.statements.transformPauses(depth, EcoreUtil.copy(suspend.delay), variable)
-                scope.statements.add(parallel)
-                statements.set(pos,scope)
-                return null
+    override process() {
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Suspend) {
+                transform(nextStatement)
             }
             else {
-                transformPauses(suspend.statements, depth, EcoreUtil.copy(suspend.delay), null)
-                if (suspend.delay.isImmediate) {
-                    var label = createLabel
-                    statements.set(pos, label)
-                    statements.add(pos+1, newIfThenGoto(EcoreUtil.copy(suspend.delay.expression), label, true))
-                    statements.add(pos+2, suspend.statements)
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Suspend).toList.forEach[transform]
+        }
+    }
+    
+    def transform(Suspend suspend) {
+        val statements = getContainingList(suspend)
+        val pos = statements.indexOf(suspend)
+        if (suspend.delay.delay !== null) {
+            // create a scope because a declaration (variable for counting) is needed
+            val variable = createNewUniqueVariable(createIntValue(0))
+            val scope = createScopeStatement(createDeclaration(ValueType.INT, variable))
+            val parallel = createParallel
+            var thread1 = createThread
+            var thread2 = createThread
+            parallel.threads.add(thread1)
+            parallel.threads.add(thread2)
+            val label = createLabel
+            val label2 = createLabel
+            val termFlag = createNewUniqueFlag(createFalse)
+            scope.declarations.add(createDeclaration(ValueType.BOOL, termFlag))
+            val conditional = newIfThenGoto(createValuedObjectReference(termFlag), label2, false)
+            val conditional2  = createConditional(copy(suspend.delay.expression))
+            val conditional3 = createConditional(createEquals(createValuedObjectReference(variable), copy(suspend.delay.delay)))
+            conditional3.statements.add(createAssignment(variable, createIntValue(0)))
+            conditional2.statements.add(conditional3)
+            conditional2.statements.add(incrementInt(variable))
+            thread1.statements.add(label)
+            thread1.statements.add(conditional) 
+            thread1.statements.add(createPause)
+            thread1.statements.add(conditional2)
+            thread1.statements.add(createGotoStatement(label))
+            thread1.statements.add(label2)
+            transformPauses(suspend, variable)
+            thread2.statements.addAll(suspend.statements)
+            thread2.statements.add(createAssignment(termFlag, createBoolValue(true)))
+            thread2.statements.add(createLabel)
+            scope.statements.add(parallel)
+            suspend.replace(scope)
+            lastStatement = scope
+        }
+        else {
+            transformPauses(suspend, null)
+            if (suspend.delay.isImmediate) {
+                val label = createLabel
+                statements.set(pos, label)
+                val cond = newIfThenGoto(suspend.delay.expression, label, true)
+                statements.add(pos+1, cond)
+                if (suspend.statements.empty) {
+                    lastStatement = cond
                 }
                 else {
-                    statements.add(pos, suspend.statements)
-                    statements.remove(statement)
+                    lastStatement = suspend.statements.last
+                    statements.addAll(pos+2, suspend.statements)
                 }
-                return null
-            }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).statements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).statements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof StatementContainer) {
-            
-            transformStatements((statement as StatementContainer).statements)
-            
-            if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements)]
-            }
-            else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).doStatements)
-                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Await) {
-                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Do) {
-                transformStatements((statement as Do).watchingStatements)
-            }
-            else if (statement instanceof Conditional) {
-                transformStatements((statement as Conditional).getElse()?.statements)
-            }
-        }
-        else if (statement instanceof Parallel) {
-            (statement as Parallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof Run) {
-            statement.module?.module?.statements.transformStatements    
-        }
-        return statement
-    }
-    
-    def void transformPauses(EList<Statement> statements, int depth, DelayExpression delay, ValuedObject variable) {
-        for (var i=0; i<statements?.length; i++) {
-            var statement = statements.get(i).transformPause(depth, delay, variable)
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
-            }
-            else if (statement == null) {
-                i = i+1 
-                // a label was added before the pause statement, so
-                // without 'i=i+1' pause would be transformed indefinitely often
-            }
-        }
-    }
-    
-    def Statement transformPause(Statement statement, int depth, DelayExpression delay, ValuedObject variable) {
-        if (statement instanceof Pause) {
-            var statements = getContainingList(statement)
-            var pos = statements.indexOf(statement)
-            var label = createLabel
-            var Conditional conditional
-            if (delay.expression != null && variable != null) {
-                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), EcoreUtil.copy(delay.expression)), label, false)
             }
             else {
-                conditional = newIfThenGoto(EcoreUtil.copy(delay.expression), label, false)
-            }
-            conditional.annotations.add(createAnnotation(depth))
-            insertConditional(statements, conditional, pos, depth)
-            statements.add(pos, label)
-            return null
-        }
-        else if (statement instanceof Present) {
-            transformPauses((statement as Present).statements, depth, delay, variable)
-            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
-            transformPauses((statement as Present).elseStatements, depth, delay, variable)
-        }
-        else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).statements, depth, delay, variable)
-            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.statements, depth, delay, variable)]
-            transformPauses((statement as IfTest).elseStatements, depth, delay, variable)
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, delay, variable)
-            ]
-        }
-        else if (statement instanceof StatementContainer) {
-            if (!(statement instanceof Conditional)) {
-                transformPauses((statement as StatementContainer).statements, depth, delay, variable)
-            }
-            
-            if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformPauses(h.statements, depth, delay, variable)]
-            }
-            else if (statement instanceof Abort) {
-                transformPauses((statement as Abort).doStatements, depth, delay, variable)
-                (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
-            }
-            else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
-            }
-            else if (statement instanceof Do) {
-                transformPauses((statement as Do).watchingStatements, depth, delay, variable)
-            }
-            else if (statement instanceof Conditional) {
-                // Don't transform the pauses in generated Conditionals.
-                var annotations = (statement as Conditional).annotations
-                if (!isGenerated(annotations)) {
-                    transformPauses((statement as StatementContainer).statements, depth, delay, variable)
-                    transformPauses((statement as Conditional).getElse()?.statements, depth, delay, variable)
+                if (!suspend.statements.empty) {
+                    lastStatement = suspend.statements.last
                 }
+                else {
+                    throw new Exception("Difficult to decide the next statement to transform at the moment.")
+                }
+                statements.addAll(pos, suspend.statements)
+                statements.remove(suspend)
             }
+        }        
+    }
+    
+    def transformPauses(Suspend suspend, ValuedObject variable) {
+        val pauses = suspend.eAllContents.filter(Pause).toList
+        for (pause : pauses) {
+            val statements = getContainingList(pause)
+            val pos = statements.indexOf(pause)
+            val label = createLabel
+            var Conditional conditional
+            if (suspend.delay.delay !== null && variable !== null) {
+                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), copy(suspend.delay.delay)), label, false)
+            }
+            else {
+                conditional = newIfThenGoto(copy(suspend.delay.expression), label, false)
+            }
+            statements.add(pos+1, conditional)
+            statements.add(pos, label)
         }
-        else if (statement instanceof Parallel) {
-            (statement as Parallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, delay, variable)
-            ]
-        }
-        else if (statement instanceof Run) {
-            statement.module?.module?.statements.transformPauses(depth, delay, variable)    
-        }
-        return statement
     }
     
 }

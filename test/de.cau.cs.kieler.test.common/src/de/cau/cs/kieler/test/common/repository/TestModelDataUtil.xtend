@@ -28,7 +28,9 @@ class TestModelDataUtil {
      * @return the name of the test model.
      */
     static def getName(TestModelData data) {
-        return if (data.additionalProperties.containsKey("name")) {
+        return if (data.confidential) {
+            "confidential"
+        } else if (data.additionalProperties.containsKey("name")) {
             data.additionalProperties.get("name")
         } else {
             val file = data.modelPath.fileName.toString

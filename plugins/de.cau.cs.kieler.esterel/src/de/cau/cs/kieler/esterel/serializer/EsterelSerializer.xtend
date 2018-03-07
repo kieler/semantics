@@ -30,9 +30,12 @@ class EsterelSerializer extends Serializer {
     @Inject extension EsterelSytaxHelper
     
     override serialize(EObject obj, Appendable appendable, SaveOptions options) throws IOException {
-        if (obj instanceof EsterelProgram) obj.convertSerializerFriendly
-        super.serialize(obj, appendable, options)
-        if (obj instanceof EsterelProgram) obj.convertUserFriendly
+        try {
+            if (obj instanceof EsterelProgram) obj.convertSerializerFriendly
+            super.serialize(obj, appendable, options)
+        } finally {
+            if (obj instanceof EsterelProgram) obj.convertUserFriendly
+        }
     }
     
 }

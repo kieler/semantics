@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.LocalVariableDeclaration#getVariableDeclarations <em>Variable Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.LocalVariableDeclaration#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.EsterelPackage#getLocalVariableDeclaration()
@@ -24,19 +24,19 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface LocalVariableDeclaration extends EsterelStatement, StatementContainer {
     /**
-     * Returns the value of the '<em><b>Variable Declarations</b></em>' containment reference list.
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.esterel.EsterelVariableDeclaration}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Variable Declarations</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Variable Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.EsterelPackage#getLocalVariableDeclaration_VariableDeclarations()
+     * @return the value of the '<em>Declarations</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.EsterelPackage#getLocalVariableDeclaration_Declarations()
      * @model containment="true"
      * @generated
      */
-    EList<EsterelVariableDeclaration> getVariableDeclarations();
+    EList<EsterelVariableDeclaration> getDeclarations();
 
 } // LocalVariableDeclaration

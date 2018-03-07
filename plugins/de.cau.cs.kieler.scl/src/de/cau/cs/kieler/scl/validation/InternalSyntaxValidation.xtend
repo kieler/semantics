@@ -68,8 +68,10 @@ class InternalSyntaxValidation {
     def EObject assureSemicolons(EObject eobj) {
         if (eobj instanceof SCLProgram) {
             for (sc : eobj.eAllContents.filter(StatementContainer).toIterable) {
-                for (part : sc.statements.take(sc.statements.size - 1)) {
-                    part.semicolon = !part.isMetaStatement(null)
+                if (!sc.statements.empty) {
+                    for (part : sc.statements.take(sc.statements.size - 1)) {
+                        part.semicolon = !part.isMetaStatement(null)
+                    }
                 }
             }
         }

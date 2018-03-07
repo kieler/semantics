@@ -30,14 +30,13 @@ class DeveloperToggle extends AbstractAction {
 
     /** The action for toggling debug mode. */
     @Accessors private IToolBarManager toolBar
+    @Accessors boolean isChecked
     
     private var Separator separator
     private var OpenSystemAction openSystemAction
     private var LoadSystemAction loadSystemAction
     private var StoreSystemAction storeSystemAction
     private var RegisterProcessorAction registerProcessorAction
-    
-    @Accessors boolean isChecked
     
     new(CompilerView view) {
         super(view, 

@@ -71,16 +71,22 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.formatting2.SCLFormatter
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import de.cau.cs.kieler.esterel.DelayExpression
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.kexpressions.Declaration
 
 class EsterelFormatter extends SCLFormatter {
 	
 	@Inject extension EsterelGrammarAccess
+    @Inject extension EsterelExtensions
 
 	def dispatch void format(EsterelProgram esterelprogram, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Module module : esterelprogram.getModules()) {
-			format(module, document);
-			module.prepend[ newLine ]
+		for (module : esterelprogram.modules.indexed) {
+			format(module.value, document);
+			if (module.key > 0) module.value.prepend[ newLine ]
+            module.value.regionFor.keyword(":").prepend[ noSpace ].append[ newLine ]
 		}
 	}
 
@@ -89,16 +95,20 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : typedeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (TypeDefinition types : typedeclaration.getTypes()) {
+		for (TypeDefinition types : typedeclaration.types) {
 			format(types, document);
+			types.append[ noSpace ]
 		}
+		typedeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(ConstantDeclaration constantdeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Constant constants : constantdeclaration.getConstants()) {
+		for (Constant constants : constantdeclaration.constants()) {
 			format(constants, document);
+			constants.append[ noSpace ]
 		}
+        constantdeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(Constant constant, extension IFormattableDocument document) {
@@ -113,9 +123,12 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : functiondeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Function functions : functiondeclaration.getFunctions()) {
+		for (Function functions : functiondeclaration.functions()) {
 			format(functions, document);
+			functions.append[ noSpace ]
 		}
+		
+        functiondeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(Function function, extension IFormattableDocument document) {
@@ -131,9 +144,11 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : proceduredeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Procedure procedures : proceduredeclaration.getProcedures()) {
+		for (Procedure procedures : proceduredeclaration.procedures) {
 			format(procedures, document);
+			procedures.append[ noSpace ]
 		}
+        proceduredeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(Procedure procedure, extension IFormattableDocument document) {
@@ -151,9 +166,11 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : taskdeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Task tasks : taskdeclaration.getTasks()) {
+		for (Task tasks : taskdeclaration.tasks) {
 			format(tasks, document);
+			tasks.append[ noSpace ]
 		}
+        taskdeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(Task task, extension IFormattableDocument document) {
@@ -173,7 +190,9 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (ValuedObject valuedObjects : inputdeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
+			valuedObjects.append[ noSpace ]
 		}
+        inputdeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(OutputDeclaration outputdeclaration, extension IFormattableDocument document) {
@@ -183,7 +202,9 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (ValuedObject valuedObjects : outputdeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
+			valuedObjects.append[ noSpace ]
 		}
+        outputdeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(InputOutputDeclaration inputoutputdeclaration, extension IFormattableDocument document) {
@@ -193,7 +214,9 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (ValuedObject valuedObjects : inputoutputdeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
+			valuedObjects.append[ noSpace ]
 		}
+        inputoutputdeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(ReturnDeclaration returndeclaration, extension IFormattableDocument document) {
@@ -203,7 +226,9 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (ValuedObject valuedObjects : returndeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
+			valuedObjects.append[ noSpace ]
 		}
+        returndeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(SensorDeclaration sensordeclaration, extension IFormattableDocument document) {
@@ -213,7 +238,9 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (ValuedObject valuedObjects : sensordeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
+			valuedObjects.append[ noSpace ]
 		}
+        sensordeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(Sensor sensor, extension IFormattableDocument document) {
@@ -228,7 +255,9 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (Relation relations : relationdeclaration.getRelations()) {
 			format(relations, document);
+			relations.append[ noSpace ]
 		}
+        relationdeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(EsterelParallel esterelparallel, extension IFormattableDocument document) {
@@ -236,17 +265,20 @@ class EsterelFormatter extends SCLFormatter {
 		for (Statement threads : esterelparallel.statements) {
 			format(threads, document);
 		}
+		esterelparallel.regionFor.keywords("||").forEach[prepend[ newLine ] append[ newLine ]]
 	}
 
 	def dispatch void format(EsterelThread esterelthread, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Statement statement : esterelthread.getStatements()) {
-			format(statement, document);
-			statement.append[newLine]
+		for (statement : esterelthread.statements.indexed) {
+			format(statement.value, document);
+//			if (statement.key > 0) statement.value.prepend[newLine]
+//			statement.value.surround[ indent ]
 		}
         
-        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_1_1_0).forEach[prepend[ noSpace ]]
-        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_2).forEach[prepend[ noSpace ]]
+        esterelthread.regionFor.keywords(";").forEach[prepend[ noSpace ] append[ newLine ]]
+//        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_1_1_0).forEach[prepend[ noSpace ]]
+//        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_2).forEach[prepend[ noSpace ]]
 	}
 
 	def dispatch void format(Nothing nothing, extension IFormattableDocument document) {
@@ -254,6 +286,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : nothing.getAnnotations()) {
 			format(annotations, document);
 		}
+//		nothing.append[ newLine ]
 	}
 
 	def dispatch void format(Halt halt, extension IFormattableDocument document) {
@@ -261,6 +294,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : halt.getAnnotations()) {
 			format(annotations, document);
 		}
+//		halt.append[ newLine ]
 	}
 
 	def dispatch void format(Block block, extension IFormattableDocument document) {
@@ -273,7 +307,12 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		
 //        block.regionFor.keywords(blockAccess.semicolonKeyword_3_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        block.regionFor.keywordPairs(blockAccess.leftSquareBracketKeyword_2, blockAccess.rightSquareBracketKeyword_4).head?.interior[ indent ]
+//        block.regionFor.keywordPairs(blockAccess.leftSquareBracketKeyword_2, blockAccess.rightSquareBracketKeyword_4).head?.interior[ indent ]
+//        block.append[ newLine ]
+        block.regionFor.keyword(";")?.prepend[ noSpace ]
+        block.regionFor.keywordPairs("[", "]").head?.interior[ indent ]
+        block.regionFor.keyword("[").append[ newLine ]
+        block.regionFor.keyword("]").prepend[ newLine ] 
 	}
 
 	def dispatch void format(Emit emit, extension IFormattableDocument document) {
@@ -282,6 +321,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(annotations, document);
 		}
 		format(emit.getExpression(), document);
+//		emit.append[ newLine ]
 	}
 
 	def dispatch void format(Sustain sustain, extension IFormattableDocument document) {
@@ -290,11 +330,15 @@ class EsterelFormatter extends SCLFormatter {
 			format(annotations, document);
 		}
 		format(sustain.getExpression(), document);
+		
+//		sustain.append[ newLine ]
 	}
 
 	override dispatch void format(Assignment assignment, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(assignment.getExpression(), document);
+		
+//		assignment.append[ newLine ]
 	}
 
 	def dispatch void format(ProcedureCall procedurecall, extension IFormattableDocument document) {
@@ -305,6 +349,8 @@ class EsterelFormatter extends SCLFormatter {
 		for (Expression valueArguments : procedurecall.getValueArguments()) {
 			format(valueArguments, document);
 		}
+		
+//		procedurecall.append[ newLine ]
 	}
 
 	def dispatch void format(Present present, extension IFormattableDocument document) {
@@ -315,14 +361,26 @@ class EsterelFormatter extends SCLFormatter {
 		format(present.getExpression(), document);
 		for (Statement statements : present.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
 		for (PresentCase cases : present.getCases()) {
 			format(cases, document);
+			cases.surround[ indent ]
 		}
 		for (Statement elseStatements : present.getElseStatements()) {
 			format(elseStatements, document);
-			elseStatements.interior[ indent ]
+			elseStatements.surround[ indent ]
 		}
+		
+		if (!present.cases?.empty) {
+		    present.regionFor.keyword("present").append[ newLine ]
+		}
+		
+		present.regionFor.keyword("then").append[ newLine ]
+	    present.regionFor.keyword("else").append[ newLine ]
+	    present.regionFor.keyword("end").prepend[ newLine ]
+//		present.append[ newLine ]
+		
         
 //        present.regionFor.keywords(presentAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 //        present.regionFor.keywords(presentAccess.semicolonKeyword_2_0_1_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
@@ -336,7 +394,11 @@ class EsterelFormatter extends SCLFormatter {
 		format(presentcase.getExpression(), document);
 		for (Statement statements : presentcase.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
+		
+		presentcase.regionFor.keyword("do").append[ newLine ]
+		presentcase.append[ newLine ]
 		
 //        presentcase.regionFor.keywords(presentCaseAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -349,14 +411,19 @@ class EsterelFormatter extends SCLFormatter {
 		format(iftest.getExpression(), document);
 		for (Statement statements : iftest.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
 		for (ElsIf elseif : iftest.getElseif()) {
 			format(elseif, document);
 		}
 		for (Statement elseStatements : iftest.getElseStatements()) {
 			format(elseStatements, document);
+			elseStatements.surround[ indent ]
 		}
 		
+		iftest.regionFor.keyword("then").append[ newLine ]
+        iftest.regionFor.keyword("else").append[ newLine ]
+//        iftest.append[ newLine ]
 //        iftest.regionFor.keywords(ifTestAccess.semicolonKeyword_3_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 //        iftest.regionFor.keywords(ifTestAccess.semicolonKeyword_5_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -369,7 +436,11 @@ class EsterelFormatter extends SCLFormatter {
 		format(elsif.getExpression(), document);
 		for (Statement statements : elsif.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
+		
+		elsif.regionFor.keyword("then").append[ newLine ]
+		elsif.append[ newLine ]
 		
 //        elsif.regionFor.keywords(elsIfAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -384,6 +455,13 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		format(loop.getDelay(), document);
 		
+        loop.regionFor.keyword("loop").append[ newLine ]
+        loop.regionFor.keyword("end").prepend[ newLine ]
+        loop.regionFor.keyword("each").prepend[ newLine ]
+        loop.regionFor.keywordPairs("loop", "end").head?.interior[ indent ]
+        loop.regionFor.keywordPairs("loop", "each").head?.interior[ indent ]
+//        loop.append[ newLine ]
+		
 //        loop.regionFor.keywords(loopAccess.semicolonKeyword_3_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
@@ -397,6 +475,9 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
+		repeat.regionFor.keyword("times").append[ newLine ]
+		repeat.regionFor.keywordPairs("times", "end").head?.interior[ indent ]
+//		repeat.append[ newLine ]
 //        repeat.regionFor.keywords(repeatAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
@@ -416,6 +497,18 @@ class EsterelFormatter extends SCLFormatter {
 			format(cases, document);
 		}
 		
+		if (!abort.cases?.empty) {
+		    abort.regionFor.keyword("when").append[ newLine ]
+		}
+		
+        abort.regionFor.keyword("abort").append[ newLine ]
+        abort.regionFor.keyword("when").prepend[ newLine ]
+        abort.regionFor.keyword("end").prepend[ newLine ]
+        abort.regionFor.keyword("do").prepend[ newLine ]
+        abort.regionFor.keywordPairs("abort", "when").head?.interior[ indent ]
+        abort.regionFor.keywordPairs("do", "end").head?.interior[ indent ]
+//        abort.append[ newLine ]
+		
 //        abort.regionFor.keywords(abortAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 //        abort.regionFor.keywords(abortAccess.semicolonKeyword_4_0_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -428,7 +521,12 @@ class EsterelFormatter extends SCLFormatter {
 		format(caseStm.getDelay(), document);
 		for (Statement statements : caseStm.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
+		
+		caseStm.surround[ indent ]
+		caseStm.append[ newLine ]
+		caseStm.regionFor.keyword("do").append[ newLine ]
 	}
 
 	def dispatch void format(Await await, extension IFormattableDocument document) {
@@ -442,7 +540,12 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (Case cases : await.getCases()) {
 			format(cases, document);
+			cases.surround[ indent ]
 		}
+		
+		await.regionFor.keyword("do").append[ newLine ]
+		await.regionFor.keywordPairs("do", "end").head?.interior[ indent ]
+//		await.append[ newLine ]
 		
 //        await.regionFor.keywords(awaitAccess.semicolonKeyword_2_0_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -457,6 +560,10 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
+		everydo.regionFor.keyword("do").append[ newLine ]
+		everydo.regionFor.keywordPairs("do", "end").head?.interior[ indent ]
+//		everydo.append[ newLine ]
+		
 //        everydo.regionFor.keywords(everyDoAccess.semicolonKeyword_4_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
@@ -469,6 +576,11 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		format(suspend.getDelay(), document);
+		
+		suspend.regionFor.keyword("suspend").append[ newLine ]
+        suspend.regionFor.keyword("when").prepend[ newLine ]
+        suspend.regionFor.keywordPairs("suspend", "when").head?.interior[ indent ]
+//        suspend.append[ newLine ]
 		
 //        suspend.regionFor.keywords(suspendAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -483,10 +595,15 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (Statement statements : trap.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
 		for (TrapHandler trapHandler : trap.getTrapHandler()) {
 			format(trapHandler, document);
 		}
+		
+        trap.regionFor.keyword("in").append[ newLine ]
+        trap.regionFor.keyword("end").prepend[ newLine ]
+        trap.append[ newLine ]
 		
 //        trap.regionFor.keywords(trapAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -496,10 +613,14 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : traphandler.getAnnotations()) {
 			format(annotations, document);
 		}
-		format(traphandler.getTrapExpr(), document);
+		format(traphandler.expression, document);
 		for (Statement statements : traphandler.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
+		
+		traphandler.regionFor.keyword("do").append[ newLine ]
+		traphandler.append[ newLine ]
 		
 //        traphandler.regionFor.keywords(trapHandlerAccess.semicolonKeyword_4_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -510,6 +631,8 @@ class EsterelFormatter extends SCLFormatter {
 			format(annotations, document);
 		}
 		format(exit.getExpression(), document);
+		
+//		exit.append[ newLine ]
 	}
 
 	def dispatch void format(Exec exec, extension IFormattableDocument document) {
@@ -525,7 +648,16 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (ExecCase execCaseList : exec.getExecCaseList()) {
 			format(execCaseList, document);
+			execCaseList.surround[ indent ]
 		}
+		
+		if (!exec.execCaseList?.empty) {
+		    exec.regionFor.keyword("exec").append[ newLine ]
+		}
+		
+		exec.regionFor.keyword("do").append[ newLine ]
+		exec.regionFor.keywordPairs("do", "end").head?.interior[ indent ]
+//		exec.append[ newLine ]
 		
 //        exec.regionFor.keywords(execAccess.semicolonKeyword_2_0_9_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -540,7 +672,10 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (Statement statements : execcase.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
+		execcase.regionFor.keyword("do").append[ newLine ]
+		execcase.append[ newLine ]
 		
 //        execcase.regionFor.keywords(execCaseAccess.semicolonKeyword_11_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
@@ -557,6 +692,10 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
+		localsignaldeclaration.regionFor.keyword("in").append[ newLine ]
+		localsignaldeclaration.regionFor.keywordPairs("in", "end").head?.interior[ indent ]
+//		localsignaldeclaration.append[ newLine ]
+		
 //        localsignaldeclaration.regionFor.keywords(localSignalDeclarationAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
@@ -565,22 +704,28 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : localvariabledeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (EsterelVariableDeclaration variableDeclarations : localvariabledeclaration.getVariableDeclarations()) {
+		for (EsterelVariableDeclaration variableDeclarations : localvariabledeclaration.getDeclarations()) {
 			format(variableDeclarations, document);
 		}
 		for (Statement statements : localvariabledeclaration.getStatements()) {
 			format(statements, document);
 		}
 		
+		localvariabledeclaration.regionFor.keyword("in").append[ newLine ]
+        localvariabledeclaration.regionFor.keywordPairs("in", "end").head?.interior[ indent ]
+//        localvariabledeclaration.append[ newLine ]
+		
 //        localvariabledeclaration.regionFor.keywords(localVariableDeclarationAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(EsterelVariableDeclaration esterelvariabledeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Variable variables : esterelvariabledeclaration.getVariables()) {
+		for (Variable variables : esterelvariabledeclaration.variables()) {
 			format(variables, document);
 		}
 		format(esterelvariabledeclaration.getType(), document);
+		
+		esterelvariabledeclaration.append[ newLine ]
 	}
 
 	def dispatch void format(Variable variable, extension IFormattableDocument document) {
@@ -596,7 +741,11 @@ class EsterelFormatter extends SCLFormatter {
 		format(run.getModule(), document);
 		for (Renamings renamings : run.getRenamings()) {
 			format(renamings, document);
+			renamings.prepend[ newLine ].surround[ indent ]
 		}
+		
+		
+		run.append[ newLine ]
 	}
 
 	def dispatch void format(Renamings renamings, extension IFormattableDocument document) {
@@ -621,6 +770,7 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		for (Statement statements : doStm.getStatements()) {
 			format(statements, document);
+			statements.surround[ indent ]
 		}
 		format(doStm.getDelay(), document);
 		for (Annotation watchingAnnotations : doStm.getWatchingAnnotations()) {
@@ -630,6 +780,11 @@ class EsterelFormatter extends SCLFormatter {
 		for (Statement watchingStatements : doStm.getWatchingStatements()) {
 			format(watchingStatements, document);
 		}
+		
+		doStm.regionFor.keyword("do").append[ newLine ]
+		doStm.regionFor.keyword("timeout").append[ newLine ]
+		doStm.regionFor.keywordPairs("timeout", "end").head?.interior[ indent ]
+//		doStm.append[ newLine ]
 	}
 
 	def dispatch void format(EsterelFunctionCall esterelfunctioncall, extension IFormattableDocument document) {
@@ -656,4 +811,23 @@ class EsterelFormatter extends SCLFormatter {
 		format(delayexpr.getDelay(), document);
 		format(delayexpr.getExpression(), document);
 	}
+	
+    override dispatch void format(Module module, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+        for (Annotation annotations : module.getAnnotations()) {
+            format(annotations, document);
+        }
+        for (Declaration declarations : module.getDeclarations()) {
+            format(declarations, document);
+        }
+        for (Statement statement : module.getStatements()) {
+            format(statement, document);
+        }
+        
+        module.regionFor.keyword(":").append[ newLine ]
+        module.regionFor.keyword(".").append[ newLine ]
+        module.regionFor.keyword(".").prepend[ newLine ]
+        module.regionFor.keyword("end").append[ newLine ]
+        module.regionFor.keyword("end").prepend[ newLine ]
+    }
 }
