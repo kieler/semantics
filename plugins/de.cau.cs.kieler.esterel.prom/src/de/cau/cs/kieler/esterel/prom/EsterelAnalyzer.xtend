@@ -45,6 +45,7 @@ class EsterelAnalyzer extends ModelAnalyzer {
             }
         }
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -105,8 +106,7 @@ class EsterelAnalyzer extends ModelAnalyzer {
      * {@inheritDoc}
      */
     override getDefaultCompileChain() {
-        // TODO: Add a compile chain that compiles strl files to C
-        return ""
+        return "de.cau.cs.kieler.esterel.scest.scl.netlist"
     }
     
     /**

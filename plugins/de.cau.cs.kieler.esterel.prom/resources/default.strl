@@ -1,5 +1,13 @@
 module ${file_basename}:
 
-pause;
+input I;
+output O;
+
+loop
+  present I then
+    emit O
+  end;
+  pause;
+end
 
 end module
