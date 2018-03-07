@@ -20,9 +20,15 @@ import org.junit.Test
  * @author als
  *
  */
-class SCChartsNetlistCSimulationWithCCPTest extends SCChartsCSimulationTestBase {
+class SCChartsNetlistCSimulationWithCCPTest extends SCChartsSimulationTestBase {
+    
+    override protected createSimulationBackend() {
+        return createCSimulationBackend
+    }
+    
     override filter(TestModelData modelData) {
-        return filterForNetlistCompilationTests(modelData)
+        return modelData.isNetlistCompilationTests
+        && modelData.isSCChartsTest
         && !modelData.modelProperties.contains("simulation-fails-netlist-c")
     }
     

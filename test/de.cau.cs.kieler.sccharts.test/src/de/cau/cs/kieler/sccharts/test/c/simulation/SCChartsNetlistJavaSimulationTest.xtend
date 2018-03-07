@@ -20,11 +20,16 @@ import org.junit.Test
  * @author aas
  *
  */
-class SCChartsNetlistJavaSimulationTest extends SCChartsJavaSimulationTestBase {
+class SCChartsNetlistJavaSimulationTest extends SCChartsSimulationTestBase {
     
     override filter(TestModelData modelData) {
-        return filterForNetlistCompilationTests(modelData)
+        return modelData.isNetlistCompilationTests
+        && modelData.isSCChartsTest
         && !modelData.modelProperties.contains("simulation-fails-netlist-java")
+    }
+    
+    override protected createSimulationBackend() {
+        return createJavaSimulationBackend()
     }
     
     @Test
