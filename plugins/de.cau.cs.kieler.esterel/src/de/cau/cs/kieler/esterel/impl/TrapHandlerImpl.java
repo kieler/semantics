@@ -25,22 +25,21 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.impl.TrapHandlerImpl#getTrapExpr <em>Trap Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.impl.TrapHandlerImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandler {
     /**
-     * The cached value of the '{@link #getTrapExpr() <em>Trap Expr</em>}' containment reference.
+     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTrapExpr()
+     * @see #getExpression()
      * @generated
      * @ordered
      */
-    protected Expression trapExpr;
-
+    protected Expression expression;
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -65,8 +64,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression getTrapExpr() {
-        return trapExpr;
+    public Expression getExpression() {
+        return expression;
     }
 
     /**
@@ -74,11 +73,11 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetTrapExpr(Expression newTrapExpr, NotificationChain msgs) {
-        Expression oldTrapExpr = trapExpr;
-        trapExpr = newTrapExpr;
+    public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+        Expression oldExpression = expression;
+        expression = newExpression;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_HANDLER__TRAP_EXPR, oldTrapExpr, newTrapExpr);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_HANDLER__EXPRESSION, oldExpression, newExpression);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -89,18 +88,18 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setTrapExpr(Expression newTrapExpr) {
-        if (newTrapExpr != trapExpr) {
+    public void setExpression(Expression newExpression) {
+        if (newExpression != expression) {
             NotificationChain msgs = null;
-            if (trapExpr != null)
-                msgs = ((InternalEObject)trapExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP_HANDLER__TRAP_EXPR, null, msgs);
-            if (newTrapExpr != null)
-                msgs = ((InternalEObject)newTrapExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP_HANDLER__TRAP_EXPR, null, msgs);
-            msgs = basicSetTrapExpr(newTrapExpr, msgs);
+            if (expression != null)
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP_HANDLER__EXPRESSION, null, msgs);
+            if (newExpression != null)
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP_HANDLER__EXPRESSION, null, msgs);
+            msgs = basicSetExpression(newExpression, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_HANDLER__TRAP_EXPR, newTrapExpr, newTrapExpr));
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_HANDLER__EXPRESSION, newExpression, newExpression));
     }
 
     /**
@@ -111,8 +110,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-                return basicSetTrapExpr(null, msgs);
+            case EsterelPackage.TRAP_HANDLER__EXPRESSION:
+                return basicSetExpression(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -125,8 +124,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-                return getTrapExpr();
+            case EsterelPackage.TRAP_HANDLER__EXPRESSION:
+                return getExpression();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -139,8 +138,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-                setTrapExpr((Expression)newValue);
+            case EsterelPackage.TRAP_HANDLER__EXPRESSION:
+                setExpression((Expression)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -154,8 +153,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-                setTrapExpr((Expression)null);
+            case EsterelPackage.TRAP_HANDLER__EXPRESSION:
+                setExpression((Expression)null);
                 return;
         }
         super.eUnset(featureID);
@@ -169,8 +168,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-                return trapExpr != null;
+            case EsterelPackage.TRAP_HANDLER__EXPRESSION:
+                return expression != null;
         }
         return super.eIsSet(featureID);
     }

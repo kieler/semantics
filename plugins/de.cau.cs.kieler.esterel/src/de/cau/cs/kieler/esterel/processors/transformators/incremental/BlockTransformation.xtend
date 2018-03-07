@@ -13,128 +13,66 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.Abort
-import de.cau.cs.kieler.esterel.Await
-import de.cau.cs.kieler.esterel.Block
-import de.cau.cs.kieler.esterel.Do
-import de.cau.cs.kieler.esterel.EsterelParallel
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.Present
-import de.cau.cs.kieler.esterel.Run
-import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.StatementContainer
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Block
+import de.cau.cs.kieler.scl.ScopeStatement
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
  *
  */
-class  BlockTransformation extends EsterelProcessor {
+class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.block"
+    
     override getId() {
-        return SCEstTransformation::BLOCK_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::BLOCK_NAME
+        return "Block"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::BLOCK_ID
-//    }
-//    
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | transformStatements(m.statements)]
-        return prog
+    var EObject lastStatement
+    
+    override process() {
+        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
+        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
+        
+        if (isDynamicCompilation) {
+            if (nextStatement instanceof Block) {
+                transform(nextStatement)
+            }
+            else {
+                throw new UnsupportedOperationException(
+                    "The next statement to transform and this processor do not match.\n" +
+                    "This processor ID: " + ID + "\n" +
+                    "The statement to transform: " + nextStatement
+                )
+            }
+            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
+        }
+        else {
+            model.eAllContents.filter(Block).toList.forEach[transform]
+        }
     }
     
-    def EList<Statement> transformStatements(EList<Statement> statements) {
-        for (var i=0; i<statements?.length; i++) {
-            var statement = statements.get(i).transformStatement
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
-            }
-        }
-        return statements
-    }
-    
-    def Statement transformStatement(Statement statement) {
-        if (statement instanceof Block) {
-            return createScopeStatement(null) => [
-                statements.add(transformStatements((statement as Block).statements))]
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).statements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).statements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof StatementContainer) {
-            
-            transformStatements((statement as StatementContainer).statements)
-            
-            if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements)]
-            }
-            else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).doStatements)
-                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Await) {
-                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Do) {
-                transformStatements((statement as Do).watchingStatements)
-            }
-            else if (statement instanceof Conditional) {
-                transformStatements((statement as Conditional).getElse()?.statements)
-            }
-        }
-        else if (statement instanceof Parallel) {
-            (statement as Parallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof Run) {
-            statement.module?.module?.statements.transformStatements    
-        }
-        return statement
+    def transform(Block block) {
+        val ScopeStatement scope = block.statements.createScopeStatement
+        block.replace(scope)
+        lastStatement = scope
     }
     
 }

@@ -24,12 +24,16 @@ import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
 class EsterelAnalyzer extends ModelAnalyzer {
+    
+    extension EsterelExtensions = new EsterelExtensions
     
     /**
      * {@inheritDoc}
@@ -45,7 +49,35 @@ class EsterelAnalyzer extends ModelAnalyzer {
      * {@inheritDoc}
      */
     override getSimulationInterface(EObject model) {
-        return null
+        val allDatas = <MacroCallData> newArrayList
+        if (model instanceof EsterelProgram) {
+            for(decl : model.modules.head.signalDeclarations) {
+                val isInput = decl.isInput
+                val isOutput = decl.isOutput
+                
+                for(valuedObject : decl.signals) {
+                    val varName = valuedObject.name
+                    val varType = valuedObject.type.literal
+                    val data = new MacroCallData 
+                    data.initializeForSimulationGeneration(varName, varType, isInput, isOutput, true)
+                    allDatas.add(data)
+                    
+                    // Add another macro call for the separate value holding variable 
+                    val isValuedSignal = valuedObject.type !== ValueType.PURE
+                    if (isValuedSignal) {
+                        val valData = data.clone as MacroCallData
+                        valData.varName = data.varName + "_val"
+                        
+                        // Set type of data to be a pure signal, 
+                        // the other variable is for the value and has the value type
+                        data.varType = ValueType.PURE.literal
+                        
+                        allDatas.add(valData)
+                    }
+                }
+            }
+        }
+        return allDatas
     }
     
     /**

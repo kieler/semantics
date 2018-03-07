@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.kexpressions.Declaration;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -15,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.EsterelVariableDeclaration#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.EsterelVariableDeclaration#getType <em>Type</em>}</li>
  * </ul>
  *
@@ -23,23 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface EsterelVariableDeclaration extends EObject {
-    /**
-     * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.Variable}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Variables</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.EsterelPackage#getEsterelVariableDeclaration_Variables()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Variable> getVariables();
-
+public interface EsterelVariableDeclaration extends Declaration {
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->

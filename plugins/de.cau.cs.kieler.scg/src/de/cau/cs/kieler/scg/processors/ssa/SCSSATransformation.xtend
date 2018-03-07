@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
@@ -52,6 +52,10 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+
 /**
  * The SSA transformation for SCGs
  * 
@@ -69,7 +73,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     }
 
     override getName() {
-        return "Sequential SSA"
+        return "SC SSA"
     }
     
     override process() {
@@ -89,13 +93,17 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     @Inject extension IOPreserverExtensions
     @Inject extension MergeExpressionExtension
     @Inject extension SSATransformationExtensions
+    
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    public static val IProperty<Boolean> SCHEDULE_MERGE_EXPRESSIONS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.scssa.schedule", true)
        
-
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
+        validateStructure(scg)
+        validateExpressions(scg)
         
-        // It is expected that this node is an entry node.
-        validate(scg)
         val entryNode = scg.nodes.head
         val entryBB = scg.basicBlocks.head
         // map for saving parameter references
@@ -108,40 +116,51 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         // ---------------
         // 1. Prepare Update Scheduling
         // ---------------
-        scg.prepareUpdateScheduling
+        if (environment.getProperty(SCHEDULE_MERGE_EXPRESSIONS)) {
+            scg.prepareUpdateScheduling
+            scg.snapshot
+        } else {
+            scg.prepareUpdates
+        }
 
         // ---------------
         // 2. Preserve output behavior
         // ---------------
         scg.preprocessIO(entryNode as Entry, ssaDecl)
+        scg.snapshot
 
         // ---------------
         // 3. Place Merge Expressions
         // ---------------
         scg.placeMergeExp(dt, ssaReferences, ssaDecl)
+        scg.snapshot
         
         // ---------------
         // 4. Create IO Preserving Assignments
         // ---------------
-        val preserverAsm = scg.createPreservingAssignments(dt, ssaReferences, ssaDecl)
+        val preserverAsm = scg.createPreservingAssignments(dt, ssaReferences, ssaDecl, environment.getProperty(SCHEDULE_MERGE_EXPRESSIONS))
+        scg.snapshot
 
         // ---------------
         // 5. Rename Variables
         // ---------------
         scg.rename(dt, entryBB, ssaDecl, ssaReferences)
+        scg.snapshot
 
         // ---------------
         // 6. Optimize concurrent dominant writes
         // ---------------
         
         scg.updateSSAVersions
+        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.optimizeConcurrentDominantWrite(dt)
+        scg.snapshot
         
         // ---------------
         // 7. Preserve delayed Values
         // ---------------
         scg.postprocessIO(entryNode as Entry, ssaDecl, preserverAsm)
-        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
+        scg.snapshot
 
         // ---------------
         // 8. Compact SSA merge expression
@@ -149,6 +168,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         for (e : scg.mergeExpressions.values) {
             e.replace(e.reduce)
         }
+        scg.snapshot
         
         // ---------------
         // 9. Remove unused ssa versions
@@ -173,15 +193,11 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         val nodes = newLinkedHashSet
         for (node : newArrayList(scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional))))) {
-            val expr = node.eContents.filter(Expression).head
-            val refs = if (node instanceof Assignment && !node.isOutputPreserver) {
-                newArrayList(expr.allReferences.filter[valuedObject != (node as Assignment).valuedObject])
-            } else {
-                newArrayList(expr.allReferences)
-            }
+            val expr = if (node instanceof Assignment) node.expression else (node as Conditional).condition
+            val refs = newArrayList(expr.allReferences)
             for (vor : refs) {
                 val concurrentNodes = node.incoming.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
-                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, dt)
+                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, dt, environment.getProperty(SCHEDULE_MERGE_EXPRESSIONS))
                 vor.replace(mergeExp)
             }
         }
@@ -203,21 +219,15 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
                 // rename definitions
                 if (s instanceof Assignment) {
                     if (!s.outputPreserver) {
-                        val isUpdate = s.isUpdate
                         // create new version
                         val vo = s.valuedObject
                         val newVO = vo.copy
                         ssaDecl.get(vo).valuedObjects.add(newVO)
                         s.valuedObject = newVO
                         // transform update
-                        if (isUpdate) {
+                        if (s.isUpdate) {
                             s.valuedObject.markSSA(COMBINE)
-                            val oe = s.expression as OperatorExpression
-                            if (oe.subExpressions.size > 2) {
-                                oe.subExpressions.removeIf[it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo]
-                            } else {
-                                s.expression = oe.subExpressions.filter[!(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo)].head
-                            }
+                            s.operator = AssignOperator.ASSIGN
                         }
                     }
                 }

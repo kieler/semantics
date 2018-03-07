@@ -63,9 +63,6 @@
            class="de.cau.cs.kieler.esterel.processors.transformators.incremental.NothingTransformation">
      </Processor>
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.OptimizationLabelRenamingTransformation">
-     </Processor>
-     <Processor
            class="de.cau.cs.kieler.esterel.processors.transformators.incremental.PresentTransformation">
      </Processor>
      <Processor
@@ -76,6 +73,9 @@
      </Processor>
      <Processor
            class="de.cau.cs.kieler.esterel.processors.transformators.incremental.RunTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SCEstIntermediateProcessor">
      </Processor>
      <Processor
            class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SCLTransformation">
@@ -119,6 +119,12 @@
      <TransformationSystem
            system="system/de.cau.cs.kieler.esterel.scc.kico">
      </TransformationSystem>
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.kernel.scc.kico">
+     </TransformationSystem>
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.scest.scl.struct.incr.kico">
+     </TransformationSystem>
   </extension>
   <extension
         point="de.cau.cs.kieler.kicool.resource.extension">
@@ -140,13 +146,40 @@
   <extension
         point="de.cau.cs.kieler.kicool.processor">
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SCEstToSSCSCLTransformation">
+           class="de.cau.cs.kieler.esterel.processors.ssa.SCEstToSSCSCLTransformation">
      </Processor>
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSASCL2SSAEsterel">
+           class="de.cau.cs.kieler.esterel.processors.ssa.SSASCL2SSAEsterel">
      </Processor>
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction">
+           class="de.cau.cs.kieler.esterel.processors.ssa.SSCEsterelReconstruction">
+     </Processor>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kicool.processor">
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.AwaitKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.AbortKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.HaltKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.LoopEachKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.DoKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.EveryKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.PresentCaseKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.SustainKernelTransformation">
      </Processor>
   </extension>
   <!--extension

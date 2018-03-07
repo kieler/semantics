@@ -16,43 +16,28 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EEnum ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//CombineOperator"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="esterelType" eType="#//TypeDefinition"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TypeDeclaration" eSuperTypes="#//EsterelDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
-        eType="#//TypeDefinition" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TypeDeclaration" eSuperTypes="#//EsterelDeclaration"/>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefinition" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ConstantDeclaration" eSuperTypes="#//EsterelDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="constants" upperBound="-1"
-        eType="#//Constant" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConstantDeclaration" eSuperTypes="#//EsterelDeclaration"/>
   <eClassifiers xsi:type="ecore:EClass" name="Constant" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//TypeIdentifier"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunctionDeclaration" eSuperTypes="#//EsterelDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
-        eType="#//Function" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionDeclaration" eSuperTypes="#//EsterelDeclaration"/>
   <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterTypes" upperBound="-1"
         eType="#//TypeIdentifier" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="returnType" eType="#//TypeIdentifier"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProcedureDeclaration" eSuperTypes="#//EsterelDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="procedures" upperBound="-1"
-        eType="#//Procedure" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcedureDeclaration" eSuperTypes="#//EsterelDeclaration"/>
   <eClassifiers xsi:type="ecore:EClass" name="Procedure" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referenceArguments" upperBound="-1"
         eType="#//TypeIdentifier" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valueArguments" upperBound="-1"
         eType="#//TypeIdentifier" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TaskDeclaration" eSuperTypes="#//EsterelDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tasks" upperBound="-1"
-        eType="#//Task" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskDeclaration" eSuperTypes="#//EsterelDeclaration"/>
   <eClassifiers xsi:type="ecore:EClass" name="Task" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referenceArguments" upperBound="-1"
         eType="#//TypeIdentifier" containment="true"/>
@@ -186,7 +171,7 @@
         eType="#//TrapHandler" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TrapHandler" eSuperTypes="../../de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trapExpr" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Exit" eSuperTypes="#//EsterelStatement">
@@ -216,12 +201,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalSignalDeclaration" eSuperTypes="#//EsterelStatement ../../de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"/>
   <eClassifiers xsi:type="ecore:EClass" name="LocalVariableDeclaration" eSuperTypes="#//EsterelStatement ../../de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variableDeclarations" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="#//EsterelVariableDeclaration" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EsterelVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
-        eType="#//Variable" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EsterelVariableDeclaration" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//TypeIdentifier"
         containment="true"/>
   </eClassifiers>
@@ -248,7 +231,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantRenaming" eSuperTypes="#//Renaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Constant"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Value"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Constant"/>
   </eClassifiers>
@@ -266,8 +249,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Task"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SignalRenaming" eSuperTypes="#//Renaming">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Signal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Signal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Do" eSuperTypes="#//EsterelStatement ../../de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="watchingAnnotations" upperBound="-1"
@@ -306,6 +291,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TrapReference" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="SignalReference" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="TickReference" eSuperTypes="#//SignalReference"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableReference" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="SCEstStatement" eSuperTypes="../../de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnEmit" eSuperTypes="#//SCEstStatement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="#//Signal"/>

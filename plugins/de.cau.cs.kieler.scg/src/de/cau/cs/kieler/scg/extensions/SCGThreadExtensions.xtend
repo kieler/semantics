@@ -127,7 +127,7 @@ class SCGThreadExtensions {
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
                 (!it.target.equals(exit)) &&
-                (!it.hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ]
+                (!it.hasAnnotation(SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ]
                 	=> [ controlFlows.addAll(it) ]
         }
         
