@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.processors.transformators.ssa
+package de.cau.cs.kieler.esterel.processors.ssa
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -49,7 +49,7 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.esterel.processors.transformators.ssa.scl2esterel"
+        return "de.cau.cs.kieler.esterel.processors.ssa.scl2esterel"
     }
 
     override getName() {

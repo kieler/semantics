@@ -78,7 +78,10 @@ class CompilationAction {
             cc.startEnvironment.setProperty(Environment.DEBUG_ENVIRONMENT_MODELS, true)
             cc.startEnvironment.setProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM, true)
         }
-        
+        if (view.developerToggle.checked) {
+            cc.startEnvironment.setProperty(Environment.DEVELOPER_MODE, true)
+        }
+                
         cc.deactiveDisabledProcessors
         
         val updateObserver = new CompilationUpdate(view)

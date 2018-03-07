@@ -10,7 +10,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.ssa
+package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.annotations.AnnotationsFactory
@@ -64,6 +64,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -103,6 +104,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     @Inject extension KExpressionsDeclarationExtensions
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
+    @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
@@ -114,7 +116,8 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
 
     // -------------------------------------------------------------------------
     def transform(SCGraph scg) {
-        validate(scg)
+        validateStructure(scg)
+        validateExpressions(scg)
         val entryBB = scg.basicBlocks.head
         
         // Add implicit assignments at the entry and after each pause 
@@ -147,7 +150,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // ---------------
         // 2. Renaming
         // ---------------
-        bbVersion = dt.rename(entryBB, ssaDecl)
+        bbVersion = dt.rename(entryBB, ssaDecl)[isSSA]
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
         
@@ -211,7 +214,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
                 if (!declDepPair.key.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
-                    val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
+                    val refs = (if (node instanceof Assignment) node.expression else if (node instanceof Conditional) node.condition).allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
                         ref.replace(createOperatorExpression(OperatorType.LOGICAL_OR) => [
                             subExpressions += ref.copy
@@ -229,12 +232,13 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (n : nodes) {
             val cf = n.eContents.filter(ControlFlow).head
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
-            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !input && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME handle input
                 for (vo : d.valuedObjects) {
                     scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                         annotations += createAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
+                        markInputPreserver
                         next = createControlFlow => [
                             target = cf.target
                         ]
@@ -346,7 +350,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         }
     }
     
-    // TODO doas not work with signal reinc example
+    // TODO does not work with signal reinc example
     private def mergeIneffectiveSSAVersions(SCGraph scg) {
         val uses = scg.uses
         val defs = scg.allDefs
@@ -369,7 +373,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 for (v : versions.drop(1)) {
                     defs.get(v).forEach[valuedObject = effective]
                     for (u : uses.get(v)) {
-                        val expr = u.eContents.filter(Expression).head
+                        val expr = if (u instanceof Assignment) u.expression else if (u instanceof Conditional) u.condition
                         expr.allReferences.filter[valuedObject == v].toList.forEach[it.replace(createBoolValue(false))]
                         expr.replace(expr.parEval)
                     }

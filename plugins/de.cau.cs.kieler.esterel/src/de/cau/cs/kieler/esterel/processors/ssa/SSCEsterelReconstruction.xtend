@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.processors.transformators.ssa
+package de.cau.cs.kieler.esterel.processors.ssa
 
 import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
@@ -54,7 +54,7 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.processors.transformators.ssa.WeakUnemitSSATransformation
+import de.cau.cs.kieler.scg.processors.ssa.WeakUnemitSSATransformation
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.SCLPackage
@@ -79,7 +79,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> implements Traceable {
 
-    public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel"
+    public static val ID = "de.cau.cs.kieler.esterel.processors.ssa.ssc.scg2esterel"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -215,8 +215,10 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                         (asm.getAnnotation(WeakUnemitSSATransformation.BRANCH_ANNOTATION) as StringAnnotation).values.head
                     }
                     val stms = reverseMapping.get(attachNode)
-                    if (stms.empty || stms.size > 1) {
+                    if (stms.size > 1) {
                         throw new IllegalArgumentException("Too many attach nodes")
+                    } else if (stms.empty && attachNode instanceof Entry) {
+                        module.statements.head.addSSAAssignment(asm, true)
                     } else if (stms.head instanceof Await || (stms.head instanceof Loop && (stms.head as Loop).delay !== null)) {
                         throw new IllegalArgumentException("Cannot attach inside non-kernel statements")
                     } else if (stms.head instanceof EsterelThread) {

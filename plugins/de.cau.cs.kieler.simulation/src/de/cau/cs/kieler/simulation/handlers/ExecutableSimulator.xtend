@@ -317,15 +317,6 @@ class ExecutableSimulator extends DefaultSimulator {
                                     + "is not responding with a line on stdout", e)    
             }
             
-            Thread.sleep(1);
-            // Check error timeout
-            val time = System.currentTimeMillis 
-            if(time-startTime < 0 || time-startTime > 1000) {
-                SimulationManager.instance.stop
-                throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
-                                    + "is not responding with a JSON object.")
-            }
-            
             // Check that a line was received
             if(line === null) {
                 throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
@@ -345,7 +336,16 @@ class ExecutableSimulator extends DefaultSimulator {
             isJSON = line.startsWith("{") && line.endsWith("}") 
             if(!isJSON) {
                 printFromSimulation(line)
+            } else {
+                // Check error timeout
+                val time = System.currentTimeMillis 
+                if(time-startTime < 0 || time-startTime > RESPONSE_TIMEOUT_IN_SECONDS * 10000) {
+                    SimulationManager.instance.stop
+                    throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
+                                        + "is not responding with a JSON object.")
+                }
             }
+            Thread.sleep(1);
         } while(line === null || !isJSON)
         
         return line

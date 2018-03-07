@@ -109,7 +109,7 @@ class DominatorTree {
             val bb = i.dfvertex
             val parent = bb.dfparent
             var semiCandidate = parent
-            for (predecessor : predecessors(bb).filter[dfNum.containsKey(it)]) {
+            for (predecessor : predecessors(bb).filter[dfNum.containsValue(it)]) {
                 val newSemiCandidate = if (predecessor.dfnum <= bb.dfnum) {
                     predecessor
                 } else {

@@ -15,8 +15,8 @@ package de.cau.cs.kieler.esterel.test.compiler
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
 import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.esterel.processors.transformators.ssa.SCEstToSSCSCLTransformation
-import de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction
+import de.cau.cs.kieler.esterel.processors.ssa.SCEstToSSCSCLTransformation
+import de.cau.cs.kieler.esterel.processors.ssa.SSCEsterelReconstruction
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.scl.SCLProgram
