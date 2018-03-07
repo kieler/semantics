@@ -82,6 +82,8 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("esterel")
         && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+        && !modelData.modelProperties.contains("esterel-to-scl-timeout-fail") // timeout is activated but test runs regardless 
+        && !modelData.modelProperties.contains("esterel-to-scl-timeout-fail-serialization")
         && (!modelData.additionalProperties.containsKey("testSerializability") || modelData.additionalProperties.get("testSerializability").trim.parseBoolean)
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
@@ -127,7 +129,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         }        
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=25000)
     def void testSerializability(EsterelProgram est, TestModelData modelData) {
         assumeFalse(true); // Do nothing !!
         
