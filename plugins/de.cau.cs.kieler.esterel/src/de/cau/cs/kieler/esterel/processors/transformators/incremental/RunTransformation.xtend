@@ -64,6 +64,7 @@ import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.esterel.Sustain
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.esterel.ProcedureCall
 
 /**
  * @author mrb
@@ -344,6 +345,8 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         // FUNCTIONS
         moduleRenaming = transformFunctions(moduleRenaming, parentModule)
         
+        parentModule.addProcedureDeclarations(moduleRenaming.module)
+
         scope.statements.addAll(moduleRenaming.module.statements)
         statementList.set(pos, scope)        
         moduleRenaming.module.remove
@@ -835,6 +838,42 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                     if (same) {
                         return f
                     }
+                }
+            }
+        }
+        return null
+    }
+    
+    /**
+     * Add uesed procedure declarations of the sub module to the parent module
+     * 
+     * @param parentModule The parent module
+     * @param m The sub module
+     */
+    def addProcedureDeclarations(Module parentModule, Module m) {
+        val procCalls = m.eAllContents.filter(ProcedureCall).toList
+        for (pc : procCalls) {
+            val newProc = existsProc(parentModule, pc.procedure)
+            if (newProc === null) {
+                parentModule.declarations.add(pc.procedure.createProcedureDeclaration)
+            }
+            else {
+                pc.procedure = newProc as Procedure
+            }
+        }
+    }
+    
+    /**
+     * Check the procedure declarations for a procedure with the same name as the given procedure
+     * 
+     * @param m The module
+     * @param proc The procedure
+     */
+    def existsProc(Module m, Procedure proc) {
+        for (pd : m.procedureDeclarations) {
+            for (p : pd.valuedObjects) {
+                if (p.name.equals(proc.name)){
+                    return p
                 }
             }
         }

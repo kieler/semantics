@@ -2016,5 +2016,16 @@ class EsterelTransformationExtensions {
             it.valuedObject = signal
         ]
     }
+    
+    /**
+     * Create a ProcedureDeclaration
+     * 
+     * @param p A procedure for the declaration
+     */
+    def createProcedureDeclaration(Procedure p) {
+        EsterelFactory::eINSTANCE.createProcedureDeclaration => [
+            it.valuedObjects.add(p)
+        ]
+    }
  
 }
