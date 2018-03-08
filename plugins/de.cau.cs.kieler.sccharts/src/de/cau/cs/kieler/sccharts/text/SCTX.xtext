@@ -161,7 +161,7 @@ CounterVariable returns kexpressions::ValuedObject:
 // -------------- //
 	
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;    
+    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | TimerAction;    
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
@@ -193,7 +193,11 @@ SucceedingAction returns sccharts::SucceedingAction:
 	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
-
+TimerAction returns sccharts::TimerAction:
+    {sccharts::TimerAction}
+    'period' trigger=ValuedExpression
+    ('label' label=STRING)?;
+    
 // ------------ //
 //  Enum Rules  // 
 // ------------ //

@@ -4,6 +4,7 @@ public system de.cau.cs.kieler.sccharts.netlist.simple
 
 de.cau.cs.kieler.sccharts.processors.reference
 de.cau.cs.kieler.sccharts.processors.for 
+de.cau.cs.kieler.sccharts.processors.timers 
 de.cau.cs.kieler.sccharts.processors.prTransitions
 de.cau.cs.kieler.sccharts.processors.const
 de.cau.cs.kieler.sccharts.processors.fby

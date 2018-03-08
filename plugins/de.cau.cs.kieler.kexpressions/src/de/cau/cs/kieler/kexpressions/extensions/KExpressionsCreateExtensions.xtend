@@ -51,29 +51,11 @@ class KExpressionsCreateExtensions {
     def OperatorExpression createEQExpression() {
         createOperatorExpression(OperatorType::EQ) 
     }
-
-    def OperatorExpression createLEQExpression() {
-        createOperatorExpression(OperatorType::LEQ) 
-    }
-
-    def OperatorExpression createLEExpression() {
-        createOperatorExpression(OperatorType::LT) 
-    }
-
-    def OperatorExpression createGEQExpression() {
-        createOperatorExpression(OperatorType::GEQ) 
-    }
     
     def OperatorExpression createEQSubExpression(OperatorExpression operatorExpression) {
         createEQExpression() => [
             operatorExpression.subExpressions += it
         ]
-    }
-    
-    protected def OperatorExpression safeAddToSubExpression(OperatorExpression operatorExpression, Expression expression) {
-        if (expression != null) 
-            operatorExpression.subExpressions += expression
-        operatorExpression
     }
 
     // Create an EQ Expression add expressionFirst and expressionSecond as sub expressions.
@@ -84,12 +66,32 @@ class KExpressionsCreateExtensions {
         ]
     }
 
+    def OperatorExpression createNEExpression() {
+        createOperatorExpression(OperatorType::NE) 
+    }
+
+    // Create an GEQ Expression add expressionFirst and expressionSecond as sub expressions.
+    def OperatorExpression createNEExpression(Expression firstSubExpression, Expression secondSubExpression) {
+        createNEExpression() => [
+            it.safeAddToSubExpression(firstSubExpression)
+            it.safeAddToSubExpression(secondSubExpression)
+        ]
+    }
+
+    def OperatorExpression createLEQExpression() {
+        createOperatorExpression(OperatorType::LEQ) 
+    }
+
     // Create an LEQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createLEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createLEQExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
             it.safeAddToSubExpression(secondSubExpression)
         ]
+    }
+
+    def OperatorExpression createLEExpression() {
+        createOperatorExpression(OperatorType::LEQ) 
     }
 
     def OperatorExpression createLEExpression(Expression firstSubExpression, Expression secondSubExpression) {
@@ -99,6 +101,10 @@ class KExpressionsCreateExtensions {
         ]
     }
 
+    def OperatorExpression createGEQExpression() {
+        createOperatorExpression(OperatorType::GEQ) 
+    }
+
     // Create an GEQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createGEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createGEQExpression() => [
@@ -106,6 +112,19 @@ class KExpressionsCreateExtensions {
             it.safeAddToSubExpression(secondSubExpression)
         ]
     }
+    
+    def OperatorExpression createGTExpression() {
+        createOperatorExpression(OperatorType::GT) 
+    }
+
+    // Create an GEQ Expression add expressionFirst and expressionSecond as sub expressions.
+    def OperatorExpression createGTExpression(Expression firstSubExpression, Expression secondSubExpression) {
+        createGTExpression() => [
+            it.safeAddToSubExpression(firstSubExpression)
+            it.safeAddToSubExpression(secondSubExpression)
+        ]
+    }
+    
     // Create an AND Expression.
     def OperatorExpression createLogicalAndExpression() {
         createOperatorExpression(OperatorType::LOGICAL_AND)
@@ -244,6 +263,23 @@ class KExpressionsCreateExtensions {
         ]
     }
     
+    // Create an PRE Expression.
+    def OperatorExpression createPreExpression() {
+        createOperatorExpression(OperatorType::PRE)
+    }
+
+    // Create an PRE Expression as a sub expression.
+    def OperatorExpression createPreSubExpression(OperatorExpression operatorExpression) {
+        createPreExpression() => [
+            operatorExpression.subExpressions += it
+        ]
+    }
+    
+    def OperatorExpression createPreExpression(Expression expression) {
+        createPreExpression() => [
+            it.safeAddToSubExpression(expression)
+        ]
+    }    
     
     // Create an int value.
     def IntValue createIntValue(int value) {
@@ -335,6 +371,14 @@ class KExpressionsCreateExtensions {
        val effect = KExpressionsFactory::eINSTANCE.createTextExpression
        effect.text = hostCode;
        effect        
-   }    
+   }
+   
+    // HELPER
+    
+    protected def OperatorExpression safeAddToSubExpression(OperatorExpression operatorExpression, Expression expression) {
+        if (expression !== null) 
+            operatorExpression.subExpressions += expression
+        operatorExpression
+    }
 
 }

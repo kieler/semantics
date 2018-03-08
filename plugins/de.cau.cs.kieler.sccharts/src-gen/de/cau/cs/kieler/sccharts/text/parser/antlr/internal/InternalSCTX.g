@@ -2243,6 +2243,19 @@ ruleLocalAction returns [EObject current=null]
         $current = $this_SucceedingAction_5.current; 
         afterParserOrEnumRuleCall();
     }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getLocalActionAccess().getTimerActionParserRuleCall_6()); 
+    }
+    this_TimerAction_6=ruleTimerAction
+    { 
+        $current = $this_TimerAction_6.current; 
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -3146,6 +3159,80 @@ ruleSucceedingAction returns [EObject current=null]
        			$current, 
        			"label",
         		lv_label_11_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
+	    }
+
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTimerAction
+entryRuleTimerAction returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTimerActionRule()); }
+	 iv_ruleTimerAction=ruleTimerAction 
+	 { $current=$iv_ruleTimerAction.current; } 
+	 EOF 
+;
+
+// Rule TimerAction
+ruleTimerAction returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTimerActionAccess().getTimerActionAction_0(),
+            $current);
+    }
+)	otherlv_1='period' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTimerActionAccess().getPeriodKeyword_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTimerActionAccess().getTriggerValuedExpressionParserRuleCall_2_0()); 
+	    }
+		lv_trigger_2_0=ruleValuedExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTimerActionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_2_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_3='label' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTimerActionAccess().getLabelKeyword_3_0());
+    }
+(
+(
+		lv_label_4_0=RULE_STRING
+		{
+			newLeafNode(lv_label_4_0, grammarAccess.getTimerActionAccess().getLabelSTRINGTerminalRuleCall_3_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTimerActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_4_0, 
         		"de.cau.cs.kieler.annotations.Annotations.STRING");
 	    }
 

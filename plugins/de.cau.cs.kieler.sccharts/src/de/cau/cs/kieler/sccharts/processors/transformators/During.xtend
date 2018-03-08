@@ -83,8 +83,6 @@ class During extends SCChartsProcessor implements Traceable {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    private val nameCache = new UniqueNameCache
-
     //-------------------------------------------------------------------------
     //--                     D U R I N G       A C T I O N                   --
     //-------------------------------------------------------------------------
@@ -93,7 +91,6 @@ class During extends SCChartsProcessor implements Traceable {
     //
     // Transforming During Actions.
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformDuring(rootState)
@@ -123,7 +120,7 @@ class During extends SCChartsProcessor implements Traceable {
             duringAction.setDefaultTrace;
             
             val immediateDuringAction = duringAction.isImmediate
-            val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName(nameCache)
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "During")
             val initialState = region.createInitialState(GENERATED_PREFIX + "I")
             var Transition duringTransition = null
             if (immediateDuringAction) {

@@ -667,8 +667,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
 		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
-		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label'
-		//label=STRING)?
+		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Transition}
@@ -1347,15 +1346,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSuspendActionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cPrecedingActionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cSucceedingActionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cTimerActionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		//// -------------- //
 		////  Action Rules  // 
 		//// -------------- //
 		//LocalAction sccharts::LocalAction:
-		//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;
+		//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | TimerAction;
 		@Override public ParserRule getRule() { return rule; }
 
-		//EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction
+		//EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | TimerAction
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EntryAction
@@ -1375,6 +1375,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SucceedingAction
 		public RuleCall getSucceedingActionParserRuleCall_5() { return cSucceedingActionParserRuleCall_5; }
+
+		//TimerAction
+		public RuleCall getTimerActionParserRuleCall_6() { return cTimerActionParserRuleCall_6; }
 	}
 
 	public class EntryActionElements extends AbstractParserRuleElementFinder {
@@ -2001,6 +2004,51 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_1_0() { return cLabelSTRINGTerminalRuleCall_4_1_0; }
 	}
 
+	public class TimerActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.TimerAction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTimerActionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cPeriodKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTriggerAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTriggerValuedExpressionParserRuleCall_2_0 = (RuleCall)cTriggerAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLabelKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cLabelAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cLabelAssignment_3_1.eContents().get(0);
+		
+		//TimerAction sccharts::TimerAction:
+		//	{sccharts::TimerAction}
+		//	'period' trigger=ValuedExpression ('label' label=STRING)?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{sccharts::TimerAction} 'period' trigger=ValuedExpression ('label' label=STRING)?
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::TimerAction}
+		public Action getTimerActionAction_0() { return cTimerActionAction_0; }
+
+		//'period'
+		public Keyword getPeriodKeyword_1() { return cPeriodKeyword_1; }
+
+		//trigger=ValuedExpression
+		public Assignment getTriggerAssignment_2() { return cTriggerAssignment_2; }
+
+		//ValuedExpression
+		public RuleCall getTriggerValuedExpressionParserRuleCall_2_0() { return cTriggerValuedExpressionParserRuleCall_2_0; }
+
+		//('label' label=STRING)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'label'
+		public Keyword getLabelKeyword_3_0() { return cLabelKeyword_3_0; }
+
+		//label=STRING
+		public Assignment getLabelAssignment_3_1() { return cLabelAssignment_3_1; }
+
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_3_1_0() { return cLabelSTRINGTerminalRuleCall_3_1_0; }
+	}
+
 	public class HiddenKeywordsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.HiddenKeywords");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -2207,6 +2255,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final SuspendActionElements pSuspendAction;
 	private final PrecedingActionElements pPrecedingAction;
 	private final SucceedingActionElements pSucceedingAction;
+	private final TimerActionElements pTimerAction;
 	private final PreemptionTypeElements ePreemptionType;
 	private final PreemptionTypeLegacyElements ePreemptionTypeLegacy;
 	private final DelayTypeElements eDelayType;
@@ -2259,6 +2308,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pSuspendAction = new SuspendActionElements();
 		this.pPrecedingAction = new PrecedingActionElements();
 		this.pSucceedingAction = new SucceedingActionElements();
+		this.pTimerAction = new TimerActionElements();
 		this.ePreemptionType = new PreemptionTypeElements();
 		this.ePreemptionTypeLegacy = new PreemptionTypeLegacyElements();
 		this.eDelayType = new DelayTypeElements();
@@ -2507,7 +2557,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  Action Rules  // 
 	//// -------------- //
 	//LocalAction sccharts::LocalAction:
-	//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;
+	//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | TimerAction;
 	public LocalActionElements getLocalActionAccess() {
 		return pLocalAction;
 	}
@@ -2584,6 +2634,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSucceedingActionRule() {
 		return getSucceedingActionAccess().getRule();
+	}
+
+	//TimerAction sccharts::TimerAction:
+	//	{sccharts::TimerAction}
+	//	'period' trigger=ValuedExpression ('label' label=STRING)?;
+	public TimerActionElements getTimerActionAccess() {
+		return pTimerAction;
+	}
+	
+	public ParserRule getTimerActionRule() {
+		return getTimerActionAccess().getRule();
 	}
 
 	//enum PreemptionType returns sccharts::PreemptionType:
@@ -2972,8 +3033,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -3319,8 +3380,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
