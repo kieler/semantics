@@ -172,10 +172,10 @@ class EsterelScopeProviderUtil {
         if (parent !== null) {
             function.collect(parent as Module, scopeElems);
             // collect from possible other modules
-            val p = (parent as Module).eContainer() as EsterelProgram;
-            for (Module m : p.modules.filter(Module)) {
-                function.collect(m, scopeElems);
-            }
+//            val p = (parent as Module).eContainer() as EsterelProgram;
+//            for (Module m : p.modules.filter(Module)) {
+//                function.collect(m, scopeElems);
+//            }
             if (function == COLLECT_SIGNALS ) {
                 val program = parent.eContainer
                 if (program instanceof EsterelProgram) {

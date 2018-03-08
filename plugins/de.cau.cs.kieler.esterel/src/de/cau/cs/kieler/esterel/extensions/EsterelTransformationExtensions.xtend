@@ -478,7 +478,7 @@ class EsterelTransformationExtensions {
         }
         else {
             signalSuffix++
-            "s" + signalSuffix
+            "_s" + signalSuffix
         }
     }
     
