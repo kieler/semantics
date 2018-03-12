@@ -14,7 +14,7 @@ knode operator {
     size: width = 2 height = 2
     properties: de.cau.cs.kieler.portSide = WEST
         
-    klabel "" { 
+    klabel "+" { 
         ktext {
             styles: fontSize = 4pt
         }
@@ -25,7 +25,7 @@ knode operator {
     size: width = 2 height = 2
     properties: de.cau.cs.kieler.portSide = WEST
     
-    klabel "" { 
+    klabel "+" { 
         ktext {
             styles: fontSize = 4pt
         }

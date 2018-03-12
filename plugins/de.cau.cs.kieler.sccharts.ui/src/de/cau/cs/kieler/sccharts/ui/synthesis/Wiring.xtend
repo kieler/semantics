@@ -50,6 +50,8 @@ class Wiring {
     val index = <Pair<Expression, Expression>, Wire> newHashMap
     /** Storage for valuedObject, subObject expressions */
     val semanticReferenceIndex = <Pair<ValuedObject, ValuedObject>, Expression> newHashMap
+    
+    var externalCounter = 1
 
     /** Main method that receives the list of equations. */
     def createWires(List<Assignment> equations) {
@@ -89,6 +91,8 @@ class Wiring {
                     wire.sourceIsInterface = declaration.input
                 } else if (declaration instanceof ReferenceDeclaration) {
                     wire.semanticSourceReferenceDeclaration = declaration 
+                    wire.externalSourceReferenceCounter = 
+                        if (declaration.isExternalReferenceDeclaration) externalCounter else 0
                 }
             }
             OperatorExpression: {
@@ -106,9 +110,13 @@ class Wiring {
                     wire.sinkIsInterface = declaration.output
                 } else if (declaration instanceof ReferenceDeclaration) {
                     wire.semanticSinkReferenceDeclaration = declaration 
+                    wire.externalSinkReferenceCounter = 
+                        if (declaration.isExternalReferenceDeclaration) externalCounter else 0
                 }
             }
         }
+        
+        externalCounter++
         
         wire 
     }

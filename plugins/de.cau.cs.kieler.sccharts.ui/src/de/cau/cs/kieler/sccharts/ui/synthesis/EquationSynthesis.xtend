@@ -98,14 +98,22 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val IN_PORT = "in"
     protected static val OUT_PORT = "out"
     
+    protected static val DEFAULT_FIGURE_KEY = "OperatorExpression"
+    protected static val UNARY_FIGURE_KEY = "OperatorExpressionUnary"
+    protected static val ARITHMETICAL_FIGURE_KEY = "OperatorExpressionArithmetical"
+    protected static val EXTERNAL_FUNCTION_KEY = "ExternalFunction"
+    
     protected val defaultFigures = #{
-        'OperatorExpression' -> 'OperatorExpression.kgt',
+        DEFAULT_FIGURE_KEY -> 'OperatorExpression.kgt',
+        UNARY_FIGURE_KEY -> 'OperatorExpressionUnary.kgt',
+        ARITHMETICAL_FIGURE_KEY -> 'OperatorExpressionArithmetical.kgt',
         'OperatorExpressionCONDITIONAL' -> 'OperatorExpressionCONDITIONAL.kgt',
+        'OperatorExpressionFBY' -> 'OperatorExpressionFBY.kgt',
         'Input' -> 'Input.kgt',
-        'Output' -> 'Output.kgt'
+        'Output' -> 'Output.kgt',
+        EXTERNAL_FUNCTION_KEY -> "OperatorExpression.kgt"
     }
      
-    protected static val DEFAULT_FIGURE_KEY = "OperatorExpression"
     
     protected val referenceNodes = <KNode> newHashSet
 
@@ -131,16 +139,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     protected def createSources(Wiring wiring, List<KNode> nodes) {
         for (wire : wiring.wires) {
-            val nodeExists = wire.semanticSource.nodeExists
+            val nodeExists = wire.semanticSource.nodeExists(wire.externalSourceReferenceCounter)
             var KNode node 
             if (!nodeExists) {
                 if (wire.semanticSourceReferenceDeclaration !== null) {
-                    node = wire.semanticSource.createNode
-                    node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSourceReferenceDeclaration)
+                    node = wire.semanticSource.createNode(wire.externalSourceReferenceCounter)
+                    node = node.createReferenceNode(wire.semanticSource, wire.externalSourceReferenceCounter, 
+                        wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSourceReferenceDeclaration
+                    )
                 } else {
                     var text = wire.semanticSource.serializeHR.toString
                     if (wire.source instanceof OperatorExpression) {
-                        node = wire.semanticSource.createKGTNode(wire.source)
+                        node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter, wire.source)
 //                        node.addOperatorNodeFigure.associateWith(wire.semanticSource)
                         node.associateWith(wire.semanticSource)
                         text = wire.semanticSource.asOperatorExpression.operator.toString
@@ -150,7 +160,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     } else {
 //                        node = wire.semanticSource.createNode
 //                        node.addInputNodeFigure.associateWith(wire.source)
-                        node = wire.semanticSource.createKGTNode(INPUT_ID)
+                        node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter, INPUT_ID)
                         wire.semanticSource.addPort(OUT_PORT, node.ports.head)
                         node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
 //                        node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment.CENTER)
@@ -171,14 +181,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     protected def createSinks(Wiring wiring, List<KNode> nodes, Set<KNode> usedNodes) {
         for (wire : wiring.wires) {
-            val nodeExists = wire.semanticSink.nodeExists
-            var node = wire.semanticSink.createNode
+            val nodeExists = wire.semanticSink.nodeExists(wire.externalSinkReferenceCounter)
+            var node = wire.semanticSink.createNode(wire.externalSinkReferenceCounter)
             
             if (!nodeExists) {
                 if (wire.semanticSinkReferenceDeclaration !== null) {
-                    node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration)
+                    node = node.createReferenceNode(wire.semanticSink, wire.externalSinkReferenceCounter, 
+                        wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration
+                    )
                 } else { 
-                    node = wire.sink.createKGTNode(OUTPUT_ID)
+                    node = wire.sink.createKGTNode(wire.externalSinkReferenceCounter, OUTPUT_ID)
                     wire.sink.addPort(IN_PORT, node.ports.head)
                     val text = wire.semanticSink.serializeHR.toString
                     node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
@@ -193,9 +205,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     protected def connectWires(Wiring wiring, Set<KNode> usedNodes) {
         for (wire : wiring.wires) {
-            var sourceNode = wire.semanticSource.getNode
+            var sourceNode = wire.semanticSource.getNode(wire.externalSourceReferenceCounter)
             var sourcePort = wire.semanticSource.getPort(OUT_PORT)
-            var targetNode = wire.semanticSink.getNode
+            var targetNode = wire.semanticSink.getNode(wire.externalSinkReferenceCounter)
             var targetPort = null as KPort
             if (wire.semanticSinkReferenceDeclaration !== null) {
                 // If it is a reference, connect it to the specific port
@@ -217,7 +229,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (targetPort === null) {
                     targetPort = targetNode.createDynamicInputPort(wire)
                 }
-            } else {
+            } else if (targetPort === null) {
                 targetPort = wire.sink.getPort(IN_PORT)
             }
             if (targetPort === null) {
@@ -250,9 +262,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
     }
     
-    protected def KNode createReferenceNode(KNode node, Object association, Wire wire, String label, ReferenceDeclaration referenceDeclaration) {
-        if (association.nodeExists) {
-            val oldNode = association.getNode
+    protected def KNode createReferenceNode(KNode node, Object association, Object association2, Wire wire, String label, ReferenceDeclaration referenceDeclaration) {
+        if (association.nodeExists(association2)) {
+            val oldNode = association.getNode(association2)
             if (referenceNodes.contains(oldNode)) return oldNode
         }
         
@@ -353,25 +365,48 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }            
     }
     
-    protected def KNode createKGTNode(Object createExtensionObject, String figureId) {
+    protected def KNode createKGTNode(Object createExtensionObject, Object createExtensionObject2, String figureId) {
         val node = getKGTFromBundle(defaultFigures.get(figureId))
-        createExtensionObject.addNode(node)
+        createExtensionObject.addNode(createExtensionObject2, node)
         return node    
     }
     
-    protected def KNode createKGTNode(Object createExtensionObject, Object figureObject) {
+    protected def KNode createKGTNode(Object createExtensionObject, Object createExtensionObject2, Object figureObject) {
         var figureId = DEFAULT_FIGURE_KEY
         var port1Label = null as String
         
         if (figureObject instanceof OperatorExpression) {
-            if (figureObject.operator == OperatorType.CONDITIONAL) {
-                figureId = DEFAULT_FIGURE_KEY + OperatorType.CONDITIONAL.getName.toString                
-            } else {
-                port1Label = figureObject.operator.serializeHR.toString
+            switch(figureObject.operator) {
+            case PRE,
+            case VAL,
+            case NE,
+            case NOT: figureId = UNARY_FIGURE_KEY 
+            
+            case CONDITIONAL, 
+            case FBY: figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
+            
+            case ADD,
+            case SUB,
+            case MULT,
+            case DIV,
+            case SHIFT_LEFT,
+            case SHIFT_RIGHT,
+            case SHIFT_RIGHT_UNSIGNED,
+            case MOD,
+            case EQ,
+            case GEQ,
+            case GT,
+            case LEQ,
+            case LT: {
+                figureId = ARITHMETICAL_FIGURE_KEY; port1Label = figureObject.operator.serializeHR.toString
+            }
+            
+            
+            default: {}  
             }
         }
         
-        val node = createExtensionObject.createKGTNode(figureId)
+        val node = createExtensionObject.createKGTNode(createExtensionObject2, figureId)
         
         if (figureObject instanceof OperatorExpression) {
             for (p : node.ports) {

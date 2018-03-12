@@ -34,6 +34,8 @@ class Wire {
     @Accessors var boolean sinkIsInterface = false
     @Accessors var ReferenceDeclaration semanticSourceReferenceDeclaration = null
     @Accessors var ReferenceDeclaration semanticSinkReferenceDeclaration = null
+    @Accessors var int externalSourceReferenceCounter = 0
+    @Accessors var int externalSinkReferenceCounter = 0
 
     new(Expression source, Expression sink, Wiring wiring) {
         this.wiring = wiring
