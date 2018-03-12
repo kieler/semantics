@@ -29,6 +29,9 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import java.util.Set
 
 /**
  * The class models a wiring instance if given a list of equations (assignments).
@@ -42,6 +45,7 @@ class Wiring {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExpressionsCompareExtensions
     
     /** The single wires */  
     @Accessors val wires = <Wire> newLinkedHashSet
@@ -50,12 +54,30 @@ class Wiring {
     val index = <Pair<Expression, Expression>, Wire> newHashMap
     /** Storage for valuedObject, subObject expressions */
     val semanticReferenceIndex = <Pair<ValuedObject, ValuedObject>, Expression> newHashMap
+    
+    var externalCounter = 1
 
     /** Main method that receives the list of equations. */
     def createWires(List<Assignment> equations) {
+        val processedEquations = <Assignment> newLinkedHashSet
+        
         for (eq : equations) {
-            eq.createWires
+            // Filter out dupes that would create identical wires.
+            if (eq.unprocessedEquation(processedEquations)) {
+                eq.createWires
+                processedEquations += eq
+            }
         }
+    }
+    
+    private def boolean unprocessedEquation(Assignment equation, Set<Assignment> processedEquations) {
+        for (e : processedEquations) {
+            if (equation.reference.equals2(e.reference) &&
+                equation.expression.equals2(e.expression)) {
+                    return false                    
+            }
+        }
+        return true
     }
     
     /** Create a wiring for a a single assignment. */
@@ -89,6 +111,16 @@ class Wiring {
                     wire.sourceIsInterface = declaration.input
                 } else if (declaration instanceof ReferenceDeclaration) {
                     wire.semanticSourceReferenceDeclaration = declaration 
+                    if (declaration.isExternalReferenceDeclaration) {
+                        wire.externalSourceReferenceCounter = externalCounter
+                        if (source instanceof ReferenceCall) {
+                            for (parameter : source.parameters) {
+                                val eC = externalCounter
+                                val w = parameter.expression.create(source)
+                                w.externalSinkReferenceCounter = eC
+                            }
+                        }
+                    }
                 }
             }
             OperatorExpression: {
@@ -106,9 +138,13 @@ class Wiring {
                     wire.sinkIsInterface = declaration.output
                 } else if (declaration instanceof ReferenceDeclaration) {
                     wire.semanticSinkReferenceDeclaration = declaration 
+//                    wire.externalSinkReferenceCounter = 
+//                        if (declaration.isExternalReferenceDeclaration) externalCounter else 0
                 }
             }
         }
+        
+        externalCounter++
         
         wire 
     }

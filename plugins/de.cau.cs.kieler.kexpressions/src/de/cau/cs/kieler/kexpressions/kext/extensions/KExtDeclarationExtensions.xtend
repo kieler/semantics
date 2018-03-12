@@ -133,4 +133,8 @@ class KExtDeclarationExtensions {
         return null
     }
     
+    def boolean isExternalReferenceDeclaration(ReferenceDeclaration declaration) {
+        declaration.extern.size > 0
+    }
+    
 }

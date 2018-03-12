@@ -154,7 +154,7 @@ class EquationStyles {
             }
         }
         return cc.addText(text) => [
-            fontSize = 10;
+            fontSize = 8
             // Add surrounding space
             setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
         ]

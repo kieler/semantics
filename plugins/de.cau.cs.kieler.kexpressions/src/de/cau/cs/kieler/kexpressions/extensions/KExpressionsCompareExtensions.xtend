@@ -80,7 +80,10 @@ class KExpressionsCompareExtensions {
         }
         
         // subReference
-        if (expression1.subReference != expression2.subReference && !expression1.subReference.equals2(expression2.subReference)) {
+        if (expression1.subReference != expression2.subReference &&
+            (expression1.subReference === null || expression2.subReference === null ||
+            !expression1.subReference.equals2(expression2.subReference))
+        ) {
             return false
         }
         
