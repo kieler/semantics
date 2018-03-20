@@ -130,8 +130,13 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 		// Check if all required nodes were scheduled. If not, abort.
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
-				environment.errors.add("Can't schedule from " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
-					" to " + dependency.target.asAssignment.valuedObject.name, dependency.eContainer, true)
+			    if (dependency.eContainer instanceof Assignment && dependency.target instanceof Assignment) {
+	   			    environment.errors.add("Can't schedule from " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
+                        " to " + dependency.target.asAssignment.valuedObject.name, dependency.eContainer, true)
+    			} else {
+                    environment.errors.add("Can't schedule from " + dependency.eContainer.asNode.class.simpleName + 
+                        " to " + dependency.target.asNode.class.simpleName, dependency.eContainer, true)
+    			}
 			    unscheduableNodes += dependency.eContainer as Node
 				return
 			}
