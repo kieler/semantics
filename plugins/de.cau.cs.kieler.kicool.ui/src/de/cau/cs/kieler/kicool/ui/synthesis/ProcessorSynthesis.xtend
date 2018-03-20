@@ -104,8 +104,10 @@ class ProcessorSynthesis {
                     val edge = createEdge 
                     edge.source = lastNode
                     edge.target = node
-                    edge.addPolyline(0.5f) => [
+//                    edge.addSpline(0.5f) => [
+                    edge.addRoundedBendsPolyline(2.55f) => [
                         foreground = ACTIVE_ENVIRONMENT.color
+                        lineWidth = 0.5f
                         addOwnHeadArrowDecorator
                     ]
                 }

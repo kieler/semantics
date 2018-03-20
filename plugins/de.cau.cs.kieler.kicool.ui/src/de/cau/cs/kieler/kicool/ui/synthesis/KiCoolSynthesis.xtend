@@ -63,8 +63,11 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d))
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT_RIGHT_CONSTRAINT_LOCKING)
+        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
         rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
+        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 5.0)
+        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 2.0)
+        rootNode.setLayoutOption(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
 
         // Workaround until we use the next version of ELK        
         // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize
