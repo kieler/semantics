@@ -21,6 +21,11 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import java.util.Set
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Depth
 
 /** 
  * @author ssm
@@ -46,6 +51,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         new Property<Integer>("de.cau.cs.kieler.scg.processors.loopAnalyzer.maxStrippedNodes", 100)
     public static val IProperty<Boolean> LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.stopAfterFirstLoop", false)
+    public static val IProperty<Integer> LOOP_ANALYZER_ADJACENT_DEPTH =
+        new Property<Integer>("de.cau.cs.kieler.scg.processors.loopAnalyzer.adjacentDepth", 1)
 	
     override getId() {
         "de.cau.cs.kieler.scg.processors.loopAnalyzerV2"
@@ -103,6 +110,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             reverseMap.put(copier.get(sourceNode) as Node, sourceNode)
         }
         
+        val adjacentDepth = environment.getProperty(LOOP_ANALYZER_ADJACENT_DEPTH)
         var i = 0
         for (scg : modelCopy.first.scgs) {
             for (node : scg.nodes.immutableCopy) {
@@ -113,9 +121,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
                 
                     val sourceNode = reverseMap.get(node)
                     if (!loopData.criticalNodes.contains(sourceNode)) {
-                        val adjacentNodes = (sourceNode.incoming.map[ eContainer ].filter(Node) +
-                             sourceNode.allNext.map[ target ] + 
-                             sourceNode.dependencies.map[ target ]).toSet
+                        val adjacentNodes = sourceNode.getAdjacentNodes(<Node> newHashSet, adjacentDepth)
                         if (!adjacentNodes.exists[ loopData.criticalNodes.contains(it) ]) {
                             node.remove   
                         }
@@ -129,6 +135,42 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         }
         modelCopy
     }	
+    
+    private def Set<Node> getAdjacentNodes(Node sourceNode, Set<Node> nodes, int depth) {
+        var localDepth = depth
+        var Iterable<Node> iter
+        if (depth < 1) {
+            switch(sourceNode) {
+                Entry,
+                Depth:  {
+                            iter = sourceNode.allNext.map[ target ];
+                            localDepth = 1
+                        }
+                Exit,
+                Surface:{ 
+                            iter = sourceNode.incoming.map[ eContainer ].filter(Node)
+                            localDepth = 1
+                        } 
+            }       
+        } else {
+            iter = sourceNode.incoming.map[ eContainer ].filter(Node) +
+                   sourceNode.allNext.map[ target ] + 
+                   sourceNode.dependencies.map[ target ]
+        }
+        if (localDepth > 1) {
+            val nList = <Node> newLinkedList            
+            for (n : iter) {
+                if (nodes.add(n)) {
+                    nList += n
+                }
+            }
+            val newDepth = localDepth - 1
+            nList.forEach[ getAdjacentNodes(nodes, newDepth) ]
+        } else {
+            nodes.addAll(iter)
+        } 
+        nodes
+    }
     
 }
 
