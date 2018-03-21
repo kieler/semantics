@@ -95,7 +95,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val PORT_OUT_PREFIX = "out"
     protected static val INPUT_ID = "Input"
     protected static val OUTPUT_ID = "Output"
-    protected static val IN_PORT = "in0"
+    protected static val IN_PORT = "in"
     protected static val OUT_PORT = "out"
     
     protected static val DEFAULT_FIGURE_KEY = "OperatorExpression"

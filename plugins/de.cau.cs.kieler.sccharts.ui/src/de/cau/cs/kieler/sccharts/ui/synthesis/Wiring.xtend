@@ -111,16 +111,18 @@ class Wiring {
                     wire.sourceIsInterface = declaration.input
                 } else if (declaration instanceof ReferenceDeclaration) {
                     wire.semanticSourceReferenceDeclaration = declaration 
-                    if (declaration.isExternalReferenceDeclaration) {
-                        wire.externalSourceReferenceCounter = externalCounter
-                        if (source instanceof ReferenceCall) {
-                            for (parameter : source.parameters) {
-                                val eC = externalCounter
-                                val w = parameter.expression.create(source)
-                                w.externalSinkReferenceCounter = eC
-                            }
-                        }
-                    }
+//                    if (declaration.isExternalReferenceDeclaration) {
+//                        wire.externalSourceReferenceCounter = externalCounter
+//                        if (source instanceof ReferenceCall) {
+//                            for (parameter : source.parameters) {
+//                                val eC = externalCounter
+//                                val w = parameter.expression.create(source)
+//                                w.externalSinkReferenceCounter = eC
+//                            }
+//                        }
+//                    }
+                    wire.externalSourceReferenceCounter = 
+                        if (declaration.isExternalReferenceDeclaration) externalCounter else 0
                 }
             }
             OperatorExpression: {
