@@ -684,7 +684,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     threadSegmentIDText = "ThreadID: " + 
                                         (entry.getAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION) 
                                                                 as IntAnnotation).value.toString  
-                                    val labelTR = addInsideBottomLeftNodeLabel(threadSegmentIDText, 10, 
+                                    val labelTR = addOutsideTopLeftNodeLabel(threadSegmentIDText, 10, 
                                                                         KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.KRendering.setForeground(SCGraphDiagramSynthesis.REGIONLABEL.copy)
                                     ]
@@ -692,7 +692,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 }
                                                                 
                                 if (SHOW_POTENTIALPROBLEMS.booleanValue) {
-                                    addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
+                                    // Workaround for fixing the massive whitespace: using centered labels
+                                    addInsideTopCenteredNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.KRendering.setForeground(REGIONLABEL.copy);
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
