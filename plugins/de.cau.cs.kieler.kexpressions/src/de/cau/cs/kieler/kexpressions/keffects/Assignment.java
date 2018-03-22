@@ -132,5 +132,5 @@ public interface Assignment extends Effect {
      * @generated
      */
     void setSubReference(ValuedObjectReference value);
-
+    
 } // Assignment

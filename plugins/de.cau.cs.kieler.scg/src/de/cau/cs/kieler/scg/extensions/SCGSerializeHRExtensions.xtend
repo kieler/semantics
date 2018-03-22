@@ -22,8 +22,7 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
  */
 class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
-    @Inject
-    extension KEffectsExtensions
+    @Inject extension KEffectsExtensions
 
     dispatch def CharSequence serialize(Assignment assignment) {
         if (assignment.valuedObject !== null) {

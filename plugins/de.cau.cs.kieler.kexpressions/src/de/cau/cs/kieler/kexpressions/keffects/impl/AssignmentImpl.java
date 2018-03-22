@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions;
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
@@ -441,17 +442,24 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (operator: ");
-        result.append(operator);
-        result.append(')');
+//        StringBuffer result = new StringBuffer(super.toString());
+//        result.append(" (operator: ");
+//        result.append(operator);
+//        result.append(')');
+//        return result.toString();
+        StringBuffer result = new StringBuffer("AssignmentImpl");
+        result.append("@");
+        result.append(String.format("%08x", this.hashCode()));
+        result.append(" ");
+        result.append(serializer.serialize(this).toString());
         return result.toString();
     }
+    
+    private static KExpressionsSerializeExtensions serializer = new KExpressionsSerializeExtensions();
 
 } //AssignmentImpl

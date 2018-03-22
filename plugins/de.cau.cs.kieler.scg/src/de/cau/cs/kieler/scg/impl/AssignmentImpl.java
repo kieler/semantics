@@ -18,13 +18,14 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions;
 
 import java.util.Collection;
 
@@ -40,6 +41,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * <!-- begin-user-doc -->
@@ -549,17 +553,26 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+     */    
     @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (operator: ");
-        result.append(operator);
-        result.append(')');
+//        StringBuffer result = new StringBuffer(super.toString());
+//        result.append(" (operator: ");
+//        result.append(operator);
+//        result.append(')');
+//        return result.toString();
+        StringBuffer result = new StringBuffer("AssignmentImpl");
+        result.append("@");
+        result.append(String.format("%08x", this.hashCode()));
+        result.append(" ");
+        result.append(serializer.serialize(this).toString());
         return result.toString();
+
     }
+    
+    private static Injector injector = Guice.createInjector();
+    private static SCGSerializeHRExtensions serializer =  injector.getInstance(SCGSerializeHRExtensions.class);
 
 } //AssignmentImpl
