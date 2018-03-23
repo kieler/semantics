@@ -35,7 +35,7 @@ de.cau.cs.kieler.scg.processors.basicBlocks
 post process de.cau.cs.kieler.scg.processors.ssa.scssa.simple
 post process de.cau.cs.kieler.scg.processors.ssa.optimizer.sccp
 post process de.cau.cs.kieler.scg.processors.ssa.unssa
-pre process de.cau.cs.kieler.scg.processors.expressions
+post process de.cau.cs.kieler.scg.processors.expressions
 pre process de.cau.cs.kieler.scg.processors.guards
 de.cau.cs.kieler.scg.processors.scheduler
 de.cau.cs.kieler.scg.processors.sequentializer
