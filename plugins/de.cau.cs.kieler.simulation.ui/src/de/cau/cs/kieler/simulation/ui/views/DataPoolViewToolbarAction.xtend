@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.ui.views
 
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.IAction
 
 /**
  * Base class for data pool toolbar actions.
@@ -35,7 +36,18 @@ class DataPoolViewToolbarAction extends Action {
      * @param imageName The name of the image file for this action. The file must be in the icon directory.
      */
     new(String title, String imageName) {
-        super(title)
+        this(title, imageName, IAction.AS_PUSH_BUTTON)
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param title The action's title
+     * @param imageName The name of the image file for this action. The file must be in the icon directory.
+     * @param style The style for the action (e.g. IAction.AS_CHECK_BOX)
+     */
+    new(String title, String imageName, int style) {
+        super(title, style)
         this.imageName = imageName
     }
     

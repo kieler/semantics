@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.prom.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -28,8 +27,7 @@ class StepSimulationHistoryForward extends SimulationToolbarButton {
      */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null && !justRestarted) {
-            PromConsole.print("Step History Forward")
+        if(simulation !== null && !justRestarted) {
             simulation.stepHistoryForward()
         }
         return null

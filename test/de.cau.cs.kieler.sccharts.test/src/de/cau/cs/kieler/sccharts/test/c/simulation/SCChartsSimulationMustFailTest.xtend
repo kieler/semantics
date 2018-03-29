@@ -13,13 +13,10 @@
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.junit.Test
-import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import de.cau.cs.kieler.simulation.backends.CSimulationBackend
 
 /**
  * Runs the test cases that must fail and throws an error in case they don't.
@@ -28,15 +25,10 @@ import de.cau.cs.kieler.simulation.backends.CSimulationBackend
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-@RunWith(ModelsRepositoryTestRunner)
-class SimulationMustFailTest extends SimulationTestBase {
+class SCChartsSimulationMustFailTest extends SCChartsSimulationTestBase {
     
     override protected createSimulationBackend() {
-        return new CSimulationBackend() {
-            override getBuildConfigOrigin() {
-                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-netlist-c.kibuild"
-            }        
-        }
+        return super.createCSimulationBackend
     }
     
     override filter(TestModelData modelData) {

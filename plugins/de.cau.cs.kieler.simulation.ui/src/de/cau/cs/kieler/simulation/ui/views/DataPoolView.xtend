@@ -12,9 +12,8 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
-import com.google.common.base.Strings
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
@@ -29,6 +28,8 @@ import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
+import de.cau.cs.kieler.simulation.handlers.TraceEvent
+import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.trace.printer.EsoFilePrinter
 import de.cau.cs.kieler.simulation.trace.printer.KTraceFilePrinter
@@ -51,6 +52,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditor
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter
+import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.TableViewerEditor
@@ -68,19 +70,24 @@ import org.eclipse.swt.dnd.FileTransfer
 import org.eclipse.swt.dnd.TextTransfer
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
+import org.eclipse.swt.events.SelectionAdapter
+import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
+import org.eclipse.swt.widgets.Event
+import org.eclipse.swt.widgets.Listener
+import org.eclipse.swt.widgets.Menu
+import org.eclipse.swt.widgets.MenuItem
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ResourceTransfer
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static de.cau.cs.kieler.simulation.core.SimulationManager.*
 import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
-import de.cau.cs.kieler.prom.FileExtensions
-import de.cau.cs.kieler.simulation.handlers.TraceEvent
-import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
+import de.cau.cs.kieler.prom.console.PromConsole
 
 /**
  * Displays the data of a running simulation.
@@ -140,6 +147,11 @@ class DataPoolView extends ViewPart {
      * The menu contributions that are created at runtime when the menu is opened.
      */
     private val List<IAction> dynamicMenuActions = newArrayList
+
+    /**
+     * The control to set the desired tick pause.
+     */
+    private var SimulationDelayContribution simulationDelayContribution
 
     /**
      * A filter for the table to control which items are visible, e.g., to search for items
@@ -274,9 +286,17 @@ class DataPoolView extends ViewPart {
                     }
                 }
                 if(!files.isNullOrEmpty) {
-                    if(files.size == 1 && FileExtensions.isTrace(files.get(0))) {
-                        // Add the trace to a running simulation
-                        SimulationUtil.appendToSimulation(files)
+                    if(files.size == 1) {
+                        val file = files.get(0)
+                        if(FileExtensions.isTrace(file)) {
+                            // Add the trace to a running simulation
+                            SimulationUtil.appendToSimulation(files)
+                        } if(FileExtensions.isSimulationHistory(file)) {
+                            // Load the simulation history
+                            OpenSimulationAction.loadSimulation(file)
+                        } else {
+                            SimulationUtil.startSimulation(files)
+                        }
                     } else {
                         SimulationUtil.startSimulation(files)    
                     }
@@ -389,10 +409,7 @@ class DataPoolView extends ViewPart {
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager()
         // The toolbar items are ordered from left to right in the order that they are added
-        tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
-                                         "Tick #0000 (-000)",
-                                         "Last executed macro tick")
-        mgr.add(tickInfo)
+        mgr.add(new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo"))
         mgr.add(new Separator())
         mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
             override run() {
@@ -408,11 +425,12 @@ class DataPoolView extends ViewPart {
         mgr.add(new Separator())
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
         mgr.add(new Separator())
-        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
+        simulationDelayContribution = new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause")
+        mgr.add(simulationDelayContribution)
         mgr.add(new Separator())
-        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
-        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
-        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
+        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter, false))
+        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter, true))
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter, true))
         mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
         mgr.add(new Separator())
     }
@@ -430,12 +448,10 @@ class DataPoolView extends ViewPart {
                 if(mod.hasBit(SWT.CTRL)) {
                     if(e.keyCode == SWT.ARROW_RIGHT) {
                         if(manager !== null) {
-                            PromConsole.print("Step History Forward")
                             manager.stepHistoryForward()
                         }
                     } else if(e.keyCode == SWT.ARROW_LEFT) {
                         if(manager !== null) {
-                            PromConsole.print("Step History Back")
                             manager.stepHistoryBack()
                         }
                     }
@@ -443,14 +459,12 @@ class DataPoolView extends ViewPart {
                     // No CTRL + RIGHT: Step Macro Tick
                     if(e.keyCode == SWT.ARROW_RIGHT) {
                         if(manager !== null) {
-                            PromConsole.print("Step Macro Tick")
                             manager.stepMacroTick()
                         }
                     }
                     // No CTRL + SPACE: Play Simulation
                     if(e.keyCode == SWT.SPACE) {
                         if(manager !== null) {
-                            PromConsole.print("Playing Simulation")
                             if(manager.isPlaying) {
                                 manager.pause()
                             } else {
@@ -644,8 +658,79 @@ class DataPoolView extends ViewPart {
             }
             
         })
-            
+        
+        // Create context menu of table
+        createTableContextMenu(viewer);
+        
         return viewer
+    }
+    
+    private def void createTableContextMenu(TableViewer viewer) {
+        val table = viewer.control as Table
+        val menuTable = new Menu(table);
+        table.setMenu(menuTable);
+        
+        // Create menu items
+        
+        // Next tick time variable
+        val setNextTickTimeText = "Receive from variable the next tick time (ms)"
+        val unsetNextTickTimeText = "Clear next tick time variable"
+        val setNextTickTimeMenu = new MenuItem(menuTable, SWT.NONE);
+        setNextTickTimeMenu.setText(setNextTickTimeText);
+        setNextTickTimeMenu.addSelectionListener(new SelectionAdapter() {
+            override widgetSelected(SelectionEvent e) {
+                if(SimulationManager.nextTickTimeVariable.isNullOrEmpty) {
+                    val selVarVars = getSelectedVariables
+                    if(!selVarVars.isNullOrEmpty) {
+                        val selVar = selVarVars.get(0)
+                        SimulationManager.nextTickTimeVariable = selVar.name
+                        setNextTickTimeMenu.setText(unsetNextTickTimeText)
+                        simulationDelayContribution.spinner.enabled = false
+                    }
+                } else {
+                    SimulationManager.nextTickTimeVariable = null
+                    setNextTickTimeMenu.setText(setNextTickTimeText)
+                    simulationDelayContribution.spinner.enabled = true
+                }
+            }
+        })
+        
+        // Current time variable
+        val setCurrentTimeText = "Send selected variable the current system time (ms)"
+        val unsetCurrentTimeText = "Clear current time variable"
+        val setCurrentTimeMenu = new MenuItem(menuTable, SWT.NONE);
+        setCurrentTimeMenu.setText(setCurrentTimeText);
+        setCurrentTimeMenu.addSelectionListener(new SelectionAdapter() {
+            override widgetSelected(SelectionEvent e) {
+                if(SimulationManager.currentTimeVariable.isNullOrEmpty) {
+                    val selVarVars = getSelectedVariables
+                    if(!selVarVars.isNullOrEmpty) {
+                        val selVar = selVarVars.get(0)
+                        SimulationManager.currentTimeVariable = selVar.name
+                        setCurrentTimeMenu.setText(unsetCurrentTimeText);
+                    }    
+                } else {
+                    SimulationManager.currentTimeVariable = null
+                    setCurrentTimeMenu.setText(setCurrentTimeText);
+                }
+            }
+        })
+        
+        // Do not show menu, when no item is selected
+        table.addListener(SWT.MenuDetect, new Listener() {
+          override handleEvent(Event event) {
+            if (table.getSelectionCount() <= 0) {
+              event.doit = false;
+            }
+          }
+        });
+    }
+    
+    private def List<Variable> getSelectedVariables() {
+        if(viewer !== null && viewer.selection !== null && viewer.selection instanceof StructuredSelection) {
+            val sel = viewer.selection as StructuredSelection
+            return sel.iterator.toList
+        }
     }
     
     /**
@@ -666,26 +751,6 @@ class DataPoolView extends ViewPart {
      */
     public def TraceMismatchEvent getTraceMismatch(Variable variable) {
         return traceMismatches.getOrDefault(variable.fullyQualifiedName, null)
-    }
-    
-    /**
-     * Updates the info label with the current tick count.
-     */
-    private def void updateTickInfo() {
-        var String txt = null
-        val simMan = SimulationManager.instance
-        if(!simMan.isStopped) {
-            val macroTick = simMan.currentMacroTickNumber
-            val subTick = simMan.currentSubTickNumber
-            txt = "Tick #"+macroTick
-            if(subTick > 0) {
-                txt += "," + subTick
-            }
-            if(SimulationManager.instance.positionInHistory > 0) {
-                txt += " (-" + SimulationManager.instance.positionInHistory + ")"
-            }
-        }
-        tickInfo?.setText(Strings.nullToEmpty(txt))
     }
     
     /**
@@ -781,8 +846,6 @@ class DataPoolView extends ViewPart {
                 PromUIPlugin.asyncExecInUI[
                     // Update data pool view
                     if(e.pool == SimulationManager.instance?.currentPool) {
-                        // Update tick info
-                        dataPoolView.updateTickInfo
                         // Set pool data
                         dataPoolView.setDataPool(e.pool)
                     }

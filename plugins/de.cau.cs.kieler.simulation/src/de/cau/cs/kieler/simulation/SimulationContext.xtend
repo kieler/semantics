@@ -13,11 +13,6 @@
 package de.cau.cs.kieler.simulation
 
 import com.google.common.io.Files
-import de.cau.cs.kieler.kicool.ProcessorEntry
-import de.cau.cs.kieler.kicool.ProcessorGroup
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorSystem
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
@@ -90,10 +85,20 @@ class SimulationContext {
     
     // Fields for model compilation to executables
     /**
-     * Determines if the compile chain for the specific model should be used (true),
-     * or the compile chain from the given simulation backend build config (false).
+     * Determines the compile chain for model compilation.
+     * <ul>
+     *   <li>BUILD_CONFIG means the compile chain from a model compiler of the build config of the simulation backend will be used.</li>
+     *   <li>MODEL_ANALYZER means the compile chain from the model analyzer of the model to be compiled will be used.</li>
+     *   <li>CUSTOM means the custom compile chain will be used.</li>
+     * </ul>
      */
-    public var boolean overwriteCompileChain = true
+    public var CompileChainSource compileChainSource = CompileChainSource.BUILD_CONFIG
+    
+    /**
+     * Custom compile chain that should be used for model compilation.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private var String customCompileChain
     
     /**
      * The progress monitor.
@@ -203,6 +208,16 @@ class SimulationContext {
             return
         }
         startSimulation
+    }
+    
+    /**
+     * Sets the custom compile chain.
+     */
+    public def void setCustomCompileChain(String value) {
+        customCompileChain = value
+        if(customCompileChain !== null) {
+            compileChainSource = CompileChainSource.CUSTOM
+        }
     }
     
     /**
@@ -380,10 +395,14 @@ class SimulationContext {
         
         // Compile model
         for (modelCompiler : modelCompilers) {
-            // Set compile chain to the compile chain for the model, which is set in the model analyzer
-            if(overwriteCompileChain) {
-                if(modelCompiler instanceof KiCoModelCompiler) {
-                    modelCompiler.setCompileChain(modelAnalyzer.compileChain)
+            // Set compile chain to the compile chain for the model
+            if(modelCompiler instanceof KiCoModelCompiler) {
+                switch(compileChainSource) {
+                    case CUSTOM : modelCompiler.setCompileChain(customCompileChain)
+                    case MODEL_ANALYZER : modelCompiler.setCompileChain(modelAnalyzer.compileChain)
+                    case BUILD_CONFIG : {
+                        // Do not overwrite the loaded compile chain.
+                    }
                 }
             }
             // Compile the model
@@ -419,9 +438,13 @@ class SimulationContext {
             val modelFolder = temporaryProject.getFolder("model")
             modelFile = modelFolder.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
             PromPlugin.createResource(modelFile)
-            // Find a suited simulation backend for the compile chain of the model analyzer
+            // Find a suited simulation backend for the compile chain
             if(simulationBackend === null) {
-                val newSimulationBackend = SimulationBackend.findSimulationBackend(modelAnalyzer.compileChain.trim)
+                var SimulationBackend newSimulationBackend
+                switch(compileChainSource) {
+                    case CUSTOM : newSimulationBackend = SimulationBackend.findSimulationBackend(customCompileChain)
+                    default : newSimulationBackend = SimulationBackend.findSimulationBackend(modelAnalyzer.compileChain)
+                }
                 setSimulationBackend(newSimulationBackend)    
             }
         } else {

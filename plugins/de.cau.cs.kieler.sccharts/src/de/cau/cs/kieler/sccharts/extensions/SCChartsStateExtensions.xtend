@@ -12,15 +12,16 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.sccharts.State
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.State
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -112,6 +113,44 @@ class SCChartsStateExtensions {
         region.states.filter[ isFinal ]
     }
 
+    /**
+     * Returns the direct initial child states of a given state.
+     * 
+     * @param rootState The state
+     * @return the direct child states of the given root state that are initial states 
+     */
+    def List<State> getInitialStates(State rootState) {
+        val states = <State> newArrayList
+        for(region : rootState.regions) {
+            if(region instanceof ControlflowRegion) {
+                val initState = region.states.findFirst[it.isInitial]
+                if(initState != null) {
+                    states.add(initState)
+                }
+            }
+        }
+        return states
+    }
+    
+    /**
+     * Returns the direct final child states of a given state.
+     * 
+     * @param rootState The state
+     * @return the direct child states of the given root state that are final states 
+     */
+    def List<State> getFinalStates(State rootState) {
+        val states = <State> newArrayList
+        for(region : rootState.regions) {
+            if(region instanceof ControlflowRegion) {
+                val initState = region.states.findFirst[it.isFinal]
+                if(initState != null) {
+                    states.add(initState)
+                }
+            }
+        }
+        return states
+    }
+    
     // was getFinalStates
     def getSimpleFinalStates(ControlflowRegion region) {
         region.allFinalStates.filter[ outgoingTransitions.empty && !controlflowRegionsContainStates && actions.empty ]

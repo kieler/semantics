@@ -36,9 +36,20 @@ class ModelCompilationResult extends FileGenerationResult {
      * @return the generated files for simulation, or an empty list if there are none 
      */
     public def List<IFile> getCreatedSimulationFiles() {
-        if(simulationGenerationResult != null) {
+        if(simulationGenerationResult !== null) {
             return simulationGenerationResult.createdFiles    
         }
         return newArrayList
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getProblems() {
+        if(simulationGenerationResult !== null) {
+            return (super.getProblems + simulationGenerationResult.problems).toList            
+        } else {
+            return super.getProblems
+        }
     }
 }

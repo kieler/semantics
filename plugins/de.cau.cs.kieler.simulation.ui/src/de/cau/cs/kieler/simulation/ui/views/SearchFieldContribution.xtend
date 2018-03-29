@@ -12,12 +12,12 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
-import org.eclipse.jface.action.ControlContribution
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Text
+import org.eclipse.ui.menus.WorkbenchWindowControlContribution
 
 /**
  * The search field contribution in the data pool view.
@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Text
  * @author aas
  *
  */
-class SearchFieldContribution extends ControlContribution {
+class SearchFieldContribution extends WorkbenchWindowControlContribution {
     
     /**
      * The text control

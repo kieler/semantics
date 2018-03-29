@@ -13,7 +13,9 @@
 package de.cau.cs.kieler.simulation
 
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import java.util.List
@@ -24,7 +26,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
-import de.cau.cs.kieler.simulation.backends.SimulationBackend
 
 /**
  * @author aas
@@ -36,6 +37,7 @@ class SimulationUtil {
     private static List<IFile> lastFiles
     @Accessors(PUBLIC_GETTER)
     private static EObject lastEObject
+    private static String lastCompileChain
     
     @Accessors(PUBLIC_GETTER)
     private static boolean startingSimulation
@@ -49,7 +51,7 @@ class SimulationUtil {
                 if(!lastFiles.isNullOrEmpty) {
                     startSimulation(lastFiles, childMonitor)
                 } else if(lastEObject !== null) {
-                    startSimulation(lastEObject, childMonitor)
+                    startSimulation(lastEObject, lastCompileChain, childMonitor)
                 }
             ])    
         }
@@ -75,6 +77,7 @@ class SimulationUtil {
         // Remember this configuration for a restart
         lastFiles = files
         lastEObject = null
+        lastCompileChain = null
         synchronizedStart[
             // Start a new simulation
             val context = new SimulationContext
@@ -109,26 +112,41 @@ class SimulationUtil {
     }
     
     /**
-     * @see startSimulation(EObject model, SubMonitor monitor)
+     * @see startSimulation(EObject model, String compileChain)
      */
     public static def void startSimulation(EObject model) {
+        startSimulation(model, null)
+    }
+    
+    /**
+     * @see startSimulation(EObject model, String compileChain, SubMonitor monitor)
+     */
+    public static def void startSimulation(EObject model, String compileChain) {
         PromPlugin.execInJob("Starting simulation", [monitor |
-            startSimulation(model, monitor)
+            startSimulation(model, compileChain, monitor)
         ])
     }
     
     /**
-     * Starts a simulation by compiling an EObject using a suited compile chain
-     * and afterwards starting the executable result.
+     * Starts a simulation by compiling an EObject using the given compile chain,
+     * or a suited compile chain from a model analyzer.
+     * Afterwards the simulation with the compiled executable is started.
      */
-    public static def void startSimulation(EObject model, SubMonitor monitor) {
+    public static def void startSimulation(EObject model, String compileChain, SubMonitor monitor) {
         // Remember this configuration for a restart
-        lastEObject = model
         lastFiles = null
+        lastEObject = model
+        lastCompileChain = compileChain
         synchronizedStart[
             // Start simulation with the model
             val context = new SimulationContext
             context.monitor = monitor
+            if(compileChain !== null) {
+                context.customCompileChain = compileChain    
+                context.compileChainSource = CompileChainSource.CUSTOM
+            } else {
+                context.compileChainSource = CompileChainSource.MODEL_ANALYZER
+            }
             // Compile the model
             context.compileModelForSimulation(model)
             // Start the simulation
@@ -185,7 +203,7 @@ class SimulationUtil {
                 sim.addAction("check", traceHandler)
                 sim.addAction("loadNextTick", traceHandler)
                 
-                PromConsole.print("Added trace to running simulation")
+                PromConsole.simulationConsole.info("Added trace to running simulation")
             }
         }
     }

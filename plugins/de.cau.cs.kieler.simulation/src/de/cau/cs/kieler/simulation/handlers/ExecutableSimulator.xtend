@@ -37,6 +37,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 
 /**
  * Creates a new process by starting an executable or shell command and sends / receives variables of this process using JSON.
@@ -103,6 +104,7 @@ class ExecutableSimulator extends DefaultSimulator {
     
     private static val KILL_TIMEOUT_IN_SECONDS = 2
     private static val RESPONSE_TIMEOUT_IN_SECONDS = 2
+    private static val JSON_RESPONSE_TIMEOUT_IN_MILLISECONDS = RESPONSE_TIMEOUT_IN_SECONDS*1000*3
     
     /**
      * A listener to be notified when the started executable is going to be deleted by a simulation compiler.
@@ -216,7 +218,7 @@ class ExecutableSimulator extends DefaultSimulator {
                     SimulationManager.instance.stop
                     restartSimulationAfterCompilation = true
                     // Notify user why simulation stopped
-                    PromConsole.print("Stopped simulation because the executable '"+executable.fullPath+"' changed")
+                    PromConsole.simulationConsole.info("Stopped simulation because the executable '"+executable.fullPath+"' changed")
                 }
             }
             
@@ -339,7 +341,7 @@ class ExecutableSimulator extends DefaultSimulator {
             } else {
                 // Check error timeout
                 val time = System.currentTimeMillis 
-                if(time-startTime < 0 || time-startTime > RESPONSE_TIMEOUT_IN_SECONDS * 10000) {
+                if(time-startTime < 0 || time-startTime > JSON_RESPONSE_TIMEOUT_IN_MILLISECONDS) {
                     SimulationManager.instance.stop
                     throw new IOException("Process '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                         + "is not responding with a JSON object.")
@@ -358,7 +360,7 @@ class ExecutableSimulator extends DefaultSimulator {
      * @param txt The text 
      */
     private def void printFromSimulation(String txt) {
-        PromConsole.print("Simulation:"+txt)
+        PromConsole.simulationConsole.print(txt, ConsoleStyle.SIMULATION)
     }
     
     /**

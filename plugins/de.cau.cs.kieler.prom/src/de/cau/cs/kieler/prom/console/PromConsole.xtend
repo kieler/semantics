@@ -12,9 +12,6 @@
  */
 package de.cau.cs.kieler.prom.console
 
-import com.google.common.base.Strings
-import java.io.PrintWriter
-import java.io.StringWriter
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -26,70 +23,30 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class PromConsole {
     /**
-     * The currently used console.
-     * Other plugins may replace this console with a UI console.
+     * The currently used console handler to create new consoles.
+     * Other plugins may replace this console handler with a UI console handler.
      */
     @Accessors
-    private static var IConsole currentConsole = new SystemConsole
+    private static var PromConsoleHandler currentConsoleHandler = new SystemConsoleHandler
     
-    /**
-     * Writes to the console.
-     * 
-     * @param message The message to print to the console
-     */
-    public static def void print(String msg){
-        print(msg, ConsoleStyle.INFO)
+    public static val BUILD_CONSOLE_NAME = "KIELER Project Management"
+    public static val SIMULATION_CONSOLE_NAME = "KIELER Simulation"
+    public static val DEBUG_CONSOLE_NAME = "KIELER Internal Debugging"
+    
+    public static def IConsole getBuildConsole() {
+        return getConsole(BUILD_CONSOLE_NAME)
+    }
+    public static def IConsole getSimulationConsole() {
+        return getConsole(SIMULATION_CONSOLE_NAME)
+    }
+    public static def IConsole getDebugConsole() {
+        return getConsole(DEBUG_CONSOLE_NAME)
     }
     
     /**
-     * Write the exception stack trace to the console.
-     * 
-     * @param e The exception to be printed
+     * Returns a (possibly new) console with the given name. 
      */
-    public static def void printStackTrace(Exception e){
-        val sw = new StringWriter();
-        e.printStackTrace(new PrintWriter(sw));
-        val exceptionAsString = sw.toString();
-        print(exceptionAsString, ConsoleStyle.ERROR)
-    }
-    
-    /**
-     * Write the exception and its cause to the console.
-     * 
-     * @param e The exception to be printed
-     */
-    public static def void print(Exception e){
-        var text = ""
-        text += Strings.nullToEmpty(e.toString())
-        if(e.cause !== null) {
-            if(text.length > 0 )
-                text += ":"
-            text += Strings.nullToEmpty(e.cause.localizedMessage)    
-        }
-        print(text, ConsoleStyle.ERROR)
-    }
-    
-    /**
-     * Writes to the console.
-     * 
-     * @param message The message to print to the console
-     * @param style The style for the message
-     */
-    public static def void print(String msg, ConsoleStyle style){
-        currentConsole.print(msg, style)
-    }
-    
-    /**
-     * Brings the console to the front.
-     */
-    public static def void bringToFront() {
-        currentConsole.bringToFront
-    }
-
-    /**
-     * Remove all text from the console.
-     */
-    public static def void clear() {
-        currentConsole.clear
+    private static def IConsole getConsole(String name) {
+        return currentConsoleHandler.getConsole(name)
     }
 }

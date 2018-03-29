@@ -1,0 +1,6 @@
+system de.cau.cs.kieler.sccharts.priority.java.tts
+    version 1 
+    label "Priority-based Compilation (Java) with TTS"
+
+de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
+system de.cau.cs.kieler.sccharts.priority.java

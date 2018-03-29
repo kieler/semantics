@@ -21,6 +21,7 @@ import java.util.Observable
 import java.util.Observer
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.resources.IFile
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 
 /**
  * Updates a progress monitor to show progress of a KiCo compilation.
@@ -63,16 +64,16 @@ class CompilationProgressObserver implements Observer {
      */
     override update(Observable o, Object arg) {
         val context = o as CompilationContext
-        if(context == null
-           || monitor == null
-           || compiledFile == null
+        if(context === null
+           || monitor === null
+           || compiledFile === null
            || !(arg instanceof AbstractProcessorNotification)) {
             return
         }
         val processorNotification = arg as AbstractProcessorNotification
         // Cancel the build if requested
         if(monitor.canceled) {
-            PromConsole.print("Build canceled by the user")
+            PromConsole.buildConsole.info("Build canceled by the user")
             // Cancel all processors
             for(processor : context.processorInstancesSequence) {
                 processor.cancelCompilation

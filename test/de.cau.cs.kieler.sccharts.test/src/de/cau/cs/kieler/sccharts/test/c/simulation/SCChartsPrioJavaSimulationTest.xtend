@@ -20,11 +20,17 @@ import org.junit.Test
  * @author aas
  *
  */
-class SCChartsPrioJavaSimulationTest extends SCChartsJavaSimulationTestBase {
+class SCChartsPrioJavaSimulationTest extends SCChartsSimulationTestBase {
+    
     override filter(TestModelData modelData) {
-        return filterForPriorityCompilationTests(modelData)
+        return modelData.isPriorityCompilationTests
+        && modelData.isSCChartsTest
         && !modelData.modelProperties.contains("simulation-fails-netlist-java")
         && !modelData.modelProperties.contains("simulation-fails-prio-java")
+    }
+    
+    override protected createSimulationBackend() {
+        return createJavaSimulationBackend()
     }
     
     @Test

@@ -14,14 +14,13 @@ package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import java.io.File
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
  * @author aas
@@ -45,9 +44,9 @@ class OpenSimulationAction extends DataPoolViewToolbarAction {
         val msg = "Select the Data Pool to load."
         val dialog = new ResourceSelectionDialog(shell, rootResource, msg);
         dialog.open
-        if(dialog.result != null) {
+        if(dialog.result !== null) {
             val file = dialog.result.get(0)
-            if(file != null && file instanceof IFile) {
+            if(file !== null && file instanceof IFile) {
                 return file as IFile
             }
         }
@@ -56,42 +55,24 @@ class OpenSimulationAction extends DataPoolViewToolbarAction {
     
     override run() {
         val file = openDialog()
-        if(file != null) {
-            // Read data pool from file
+        if(file !== null && file.exists) {
+            loadSimulation(file)
+        }
+    }
+    
+    public static def void loadSimulation(IFile file) {
+        if(SimulationManager.instance !== null && !SimulationManager.instance.isStopped) {
+            // Read data pools from file
             val lines = Files.readLines(new File(file.location.toOSString), Charsets.UTF_8)
             if(!lines.isNullOrEmpty) {
-                // Set the variables of the current pool
-                var String lastNonEmptyLine
+                // Load the data pools
+                val pools = <DataPool>newArrayList()
                 for(line : lines) {
-                    if(!line.isNullOrEmpty) {
-                        lastNonEmptyLine = line
-                    }
+                    val pool = DataPool.createFromJson(line)
+                    pools.add(pool)
                 }
-                // Load the data pool from json
-                val loadedPool = DataPool.createFromJson(lastNonEmptyLine)
-                val currentPool = SimulationManager.instance?.currentPool
-                if(currentPool != null && loadedPool != null) {
-                    // Load the variable values
-                    if(loadedPool.models.size == 1) {
-                        // Set variables of the model
-                        for(loadedVariable : loadedPool.allVariables) {
-                            val currentVariable = currentPool.getVariable(loadedVariable.name)
-                            currentVariable.userValue = loadedVariable.value
-                        }
-                    } else if(loadedPool.models.size > 1) {
-                        // Set variables of all models
-                        for(loadedModel : loadedPool.models) {
-                            for(loadedVariable : loadedModel.variables) {
-                                val currentVariable = currentPool.getVariable(loadedModel.name, loadedVariable.name)
-                                currentVariable.userValue = loadedVariable.value
-                            }
-                        }
-                    }
-                    // Load the action index for the simulation
-                    if(loadedPool.actionIndex >= 0 && SimulationManager.instance != null) {
-                        SimulationManager.instance.currentState.actionIndex = loadedPool.actionIndex
-                    }
-                }
+                // Set pools as new simulation state
+                SimulationManager.instance.loadSimulation(pools)
             }
         }
     }

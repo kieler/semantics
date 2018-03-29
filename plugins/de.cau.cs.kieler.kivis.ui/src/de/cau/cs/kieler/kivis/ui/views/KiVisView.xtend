@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
@@ -34,7 +35,6 @@ import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
-import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.awt.geom.AffineTransform
@@ -51,8 +51,10 @@ import org.eclipse.core.resources.IResourceChangeEvent
 import org.eclipse.core.resources.IResourceChangeListener
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IConfigurationElement
+import org.eclipse.core.runtime.preferences.IEclipsePreferences
 import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.IAction
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
@@ -71,11 +73,11 @@ import org.eclipse.swt.graphics.RGB
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.layout.RowLayout
-import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Label
+import org.eclipse.swt.widgets.MessageBox
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ResourceTransfer
@@ -85,10 +87,6 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
-import org.eclipse.swt.widgets.MessageBox
-import javax.swing.FocusManager
-import org.eclipse.core.runtime.preferences.IEclipsePreferences
-import org.eclipse.jface.action.IAction
 
 /**
  * The KiVis View.
@@ -260,18 +258,18 @@ class KiVisView extends ViewPart {
         // Show focus events to fix KISEMA-1266
         canvas.addFocusListener(new FocusAdapter() {
             override focusGained(FocusEvent e) {
-                PromConsole.print("kivis canvas received focus")
+                PromConsole.debugConsole.info("kivis canvas received focus")
             }
             override focusLost(FocusEvent e) {
-                PromConsole.print("kivis canvas lost focus")
+                PromConsole.debugConsole.info("kivis canvas lost focus")
             }
         })
         canvas.svgCanvas.addFocusListener(new java.awt.event.FocusAdapter() {
             override focusGained(java.awt.event.FocusEvent e) {
-                PromConsole.print("kivis svg canvas received focus")
+                PromConsole.debugConsole.info("kivis svg canvas received focus")
             }
             override focusLost(java.awt.event.FocusEvent e) {
-                PromConsole.print("kivis svg canvas lost focus")
+                PromConsole.debugConsole.info("kivis svg canvas lost focus")
             }
         })
         

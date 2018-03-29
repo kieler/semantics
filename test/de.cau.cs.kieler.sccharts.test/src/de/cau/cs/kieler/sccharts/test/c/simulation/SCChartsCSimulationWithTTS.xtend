@@ -20,10 +20,15 @@ import org.junit.Test
  * @author aas
  *
  */
-class SCChartsCSimulationWithTTS extends SCChartsCSimulationTestBase {
+class SCChartsCSimulationWithTTS extends SCChartsSimulationTestBase {
+    
+    override protected createSimulationBackend() {
+        return createCSimulationBackend
+    }
     
     override filter(TestModelData modelData) {
-        return filterForNetlistCompilationTests(modelData)
+        return modelData.isNetlistCompilationTests
+        && modelData.isSCChartsTest
         && !modelData.modelProperties.contains("simulation-fails-netlist-c-with-tts")
     }
     
