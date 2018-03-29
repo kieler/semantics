@@ -29,4 +29,8 @@ class SourceTargetPair<Source, Target> {
         this.target = target
     }
     
+    override toString() {
+        return "[ " + source.toString + " , " + target.toString + " ]" 
+    }
+    
 }

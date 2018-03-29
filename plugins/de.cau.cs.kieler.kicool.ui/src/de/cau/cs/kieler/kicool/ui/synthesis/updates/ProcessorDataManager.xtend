@@ -143,6 +143,12 @@ class ProcessorDataManager {
         }
     }
     
+    static def void setCompatibilityError(KNode node) {
+        val nodeIdMap = node.createNodeIdMap
+        
+        nodeIdMap.findNode(NODE_PROCESSOR_BODY).setFrameErrorColor
+    }
+    
     
     static def void resetSystem(AbstractCompilationNotification compilationNotification, KNode node, CompilerView view) {
         val allProcessors = compilationNotification.compilationContext.processorMap.keySet.toList

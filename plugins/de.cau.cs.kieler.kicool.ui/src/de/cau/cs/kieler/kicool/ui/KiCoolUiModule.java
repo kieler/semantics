@@ -19,6 +19,9 @@ public class KiCoolUiModule extends de.cau.cs.kieler.kicool.ui.AbstractKiCoolUiM
     /** KIEM ID for source model. */
     public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";    
     
+    public static final String RESOURCE_PATH = "resources/";
+    public static final String ICON_PATH = RESOURCE_PATH + "icons/";
+    
 	public KiCoolUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}

@@ -29,6 +29,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
+import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 
 /**
  * Main class for the registration of systems and processors.
@@ -51,6 +52,7 @@ class KiCoolRegistration {
     private static val List<EObject> systemsModels = loadRegisteredSystemModels
     
     private static val Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>()
+    private static val Map<String, SourceTargetPair> processorModelTypes = new HashMap<String, SourceTargetPair>()
     private static val List<Class<? extends Processor>> processorList = loadRegisteredProcessors
     
     
@@ -131,12 +133,15 @@ class KiCoolRegistration {
     static def loadRegisteredProcessors() {
         val processors = getRegisteredProcessors
         processorMap.clear
+        processorModelTypes.clear
         for(processor : processors) {
             try {
                 val instance = getInstance(processor) as Processor
                 processorMap.put(instance.getId, processor)
+                processorModelTypes.put(instance.getId, instance.getSourceTargetTypes)
+                println(instance.getSourceTargetTypes)
             } catch(Throwable e) {
-                java.lang.System.err.println("KiCool: Cannot load processor " + processor.name);
+                java.lang.System.err.println("KiCool: Cannot load processor " + processor.name + " (" + e + ")");
             }
         }
         processors
@@ -174,5 +179,17 @@ class KiCoolRegistration {
         val clazz = processorMap.get(id)
         if (clazz == null) return null;
         getInstance(clazz) as Processor
+    }
+    
+    static def checkProcessorCompatibility(String source, String target) {
+        if (processorModelTypes.keySet.contains(source) && processorModelTypes.keySet.contains(target)) {
+            val sPair = processorModelTypes.get(source)
+            val tPair = processorModelTypes.get(target)
+            if (sPair.target != tPair.source) {
+                println("STOP")
+                return false
+            }
+        } 
+        return true
     }
 }

@@ -39,6 +39,10 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension org.eclipse.xtext.EcoreUtil2.* 
 import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -50,14 +54,17 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 @ViewSynthesisShared
 class ProcessorSynthesis {
     
+    extension KRenderingFactory = KRenderingFactory::eINSTANCE
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
     @Inject extension KRenderingExtensions  
+    @Inject extension KContainerRenderingExtensions    
     @Inject extension ProcessorStyles 
     @Inject IResourceServiceProvider.Registry regXtext;      
     
     static val PROCESSOR_KGT = "processor.kgt"
     static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
+    static val COMPATIBILITY_ERROR_ICON = "lightning.png"
     static val COLLAPSED_ID = "collapsed"
     static val EXPANDED_ID = "expanded" 
     
@@ -95,7 +102,9 @@ class ProcessorSynthesis {
         collapsedRendering.properties.put(KlighdProperties::COLLAPSED_RENDERING, true)
         expandedRendering.properties.put(KlighdProperties::EXPANDED_RENDERING, true)
         
-        var List<KNode> lastNodes = newArrayList()
+        val List<KNode> lastNodes = newArrayList()
+        val List<ProcessorEntry> lastEntries = newArrayList()
+        val List<KEdge> edges = newArrayList() 
         for(it : processorGroup.processors) {
             val processorNodes = it.transform
             groupNode.children += processorNodes
@@ -104,16 +113,52 @@ class ProcessorSynthesis {
                     val edge = createEdge 
                     edge.source = lastNode
                     edge.target = node
-//                    edge.addSpline(0.5f) => [
                     edge.addRoundedBendsPolyline(2.55f) => [
                         foreground = ACTIVE_ENVIRONMENT.color
                         lineWidth = 0.5f
                         addOwnHeadArrowDecorator
                     ]
+                    edges += edge
                 }
             }
+            
+            if (it instanceof ProcessorReference) {
+                for (le : lastEntries.filter(ProcessorReference)) {
+                    val sourceId = le.id
+                    val targetId = it.id
+                    if (!KiCoolRegistration.checkProcessorCompatibility(sourceId, targetId)) {
+                        for (lastNode : lastNodes) {
+                            lastNode.setCompatibilityError
+                        }
+                        for (node : processorNodes) {            
+                            node.setCompatibilityError
+                        }
+                        for (edge : edges) {
+                            edge.getContainer.addImage(KiCoolUiModule.BUNDLE_ID, KiCoolUiModule.ICON_PATH + COMPATIBILITY_ERROR_ICON) => [
+                                placementData = createKDecoratorPlacementData => [
+                                    rotateWithLine = false
+                                    relative = 0.5f
+                                    width = 6
+                                    height = 10
+                                    setXOffset = -2
+                                    setYOffset = -5
+                                ]              
+                            ]                            
+                        }
+                    }
+                }
+            }
+            
+            edges.clear
             lastNodes.clear
             lastNodes += processorNodes
+            lastEntries.clear
+            switch (it) {
+                ProcessorReference: lastEntries += it
+                ProcessorAlternativeGroup: lastEntries += it.processors
+                ProcessorGroup: lastEntries += it.processors.last
+                ProcessorSystem: lastEntries += it
+            }
         }
         
         newArrayList(groupNode)
