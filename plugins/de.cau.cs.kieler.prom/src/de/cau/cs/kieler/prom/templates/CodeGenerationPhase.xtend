@@ -29,13 +29,16 @@ class CodeGenerationPhase {
     public static val OUTPUT_PHASE = new CodeGenerationPhase("output", false)
     public static val RELEASE_PHASE = new CodeGenerationPhase("release", true, "free")
     
+    public static val SIM_INPUT_PHASE = new CodeGenerationPhase("sim_input", false)
+    public static val SIM_OUTPUT_PHASE = new CodeGenerationPhase("sim_output", false)
+    
     /**
      * Returns all phases.
      * 
      * @return all phases
      */
     public static def getPhases() {
-        return newHashSet(DECLARATION_PHASE, INITIALIZATION_PHASE, INPUT_PHASE, OUTPUT_PHASE, RELEASE_PHASE)    
+        return newHashSet(DECLARATION_PHASE, INITIALIZATION_PHASE, INPUT_PHASE, OUTPUT_PHASE, RELEASE_PHASE, SIM_INPUT_PHASE, SIM_OUTPUT_PHASE)    
     }
     
     /**

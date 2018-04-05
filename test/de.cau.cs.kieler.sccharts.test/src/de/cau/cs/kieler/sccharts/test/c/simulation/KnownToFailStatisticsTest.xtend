@@ -23,7 +23,8 @@ import org.junit.Test
  * @author aas
  *
  */
-class KnownToFailStatisticsTest extends SCChartsCSimulationTestBase {
+ /* No need to run this on the build server
+class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
     
     private static val knownToFailTests = <String, List<TestModelData>>newHashMap
     
@@ -31,7 +32,13 @@ class KnownToFailStatisticsTest extends SCChartsCSimulationTestBase {
                                           "simulation-fails-netlist-c",
                                           "simulation-fails-netlist-c-with-tts",
                                           "simulation-fails-netlist-java",
-                                          "simulation-fails-prio-java"]
+                                          "simulation-fails-netlist-java-with-tts",
+                                          "simulation-fails-prio-java",
+                                          "simulation-fails-prio-java-with-tts"]
+    
+    override protected createSimulationBackend() {
+        return createCSimulationBackend
+    }
     
     override filter(TestModelData modelData) {
         var boolean isKnownToFail = true
@@ -40,15 +47,13 @@ class KnownToFailStatisticsTest extends SCChartsCSimulationTestBase {
                 isKnownToFail = true
             }
         }
-        return !modelData.tracePaths.empty
-        && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
-        && modelData.modelProperties.contains("sccharts")
-        && isKnownToFail
+        return isKnownToFail
+        && modelData.hasSimulationTrace
+        && modelData.isSCChartsTest
     }
     
     @Test
     def void testKnownToFailStatistics(SCCharts scc, TestModelData modelData) {
-        /* No need to run this on the build server
         for(p : knownToFailProperties) {
             if(modelData.modelProperties.contains(p)) {
                 addKnownToFailTest(p, modelData)
@@ -58,7 +63,6 @@ class KnownToFailStatisticsTest extends SCChartsCSimulationTestBase {
         // TODO: This should only be called once after ALL tests are done,
         // but there is no hook in the TestRunner to do so
         printStatistics
-        // */
     }
     
     def static void printStatistics() {
@@ -78,3 +82,4 @@ class KnownToFailStatisticsTest extends SCChartsCSimulationTestBase {
         knownToFailTests.put(property, knownToFailList)
     }
 }
+ */

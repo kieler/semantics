@@ -173,6 +173,10 @@ class SSACoreExtensions {
         return ssaDecl
     }
     
+    def SSADeclarations(SCGraph scg) {
+        return scg.declarations.filter(VariableDeclaration).filter[isSSA]
+    }
+    
     def int SSAVersion(Parameter param) {
         return (param.expression as ValuedObjectReference).SSAVersion
     }

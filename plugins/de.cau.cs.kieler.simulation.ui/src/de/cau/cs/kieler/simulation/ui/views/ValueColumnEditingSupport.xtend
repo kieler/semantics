@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
@@ -61,7 +62,7 @@ class ValueColumnEditingSupport extends EditingSupport {
         } else if(element instanceof NDimensionalArrayElement){
             value = element.value
         }
-        if (value != null) {
+        if (value !== null) {
             if(value instanceof String) {
                 return new TextCellEditor(viewer.table)
             } else if(value instanceof Boolean) {
@@ -95,7 +96,7 @@ class ValueColumnEditingSupport extends EditingSupport {
             value = if(element.isDirty) element.userValue else element.value
         }
         
-        if(value != null) {
+        if(value !== null) {
            if(value instanceof String) {
                 return value
             } else if(value instanceof Boolean) {
@@ -119,7 +120,7 @@ class ValueColumnEditingSupport extends EditingSupport {
      */
     override protected setValue(Object element, Object value) {
         // Don't set null or empty value
-        if(value == null || value instanceof String && "".equals(value)) {
+        if(value === null || value instanceof String && "".equals(value)) {
             return ;
         }
         // Try to set value
@@ -155,7 +156,7 @@ class ValueColumnEditingSupport extends EditingSupport {
             }
 //            println("New value:"+element.value)
         } catch (NumberFormatException e) {
-            PromConsole.print("Can't set value of " + element + " to "+value)
+            PromConsole.debugConsole.print("Can't set value of " + element + " to "+value, ConsoleStyle.ERROR)
         }
         // Update this element
         viewer.refresh(element)

@@ -55,11 +55,7 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     def System getActiveSystem() {
         val String id = activeSystemId
         if (!id.nullOrEmpty) {
-            if (view.systemSelectionManager.temporarySystem.containsKey(id)) {
-                return view.systemSelectionManager.temporarySystem.get(id)
-            } else {
-                return KiCoolRegistration.getSystemById(id)
-            }
+            return KiCoolRegistration.getSystemById(id)
         }
         return null
     }

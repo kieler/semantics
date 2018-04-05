@@ -145,9 +145,9 @@ abstract class ModelAnalyzer {
         val prefs = getPreferences
         val value = prefs.get(COMPILE_CHAIN_ATTR, null)
         if(value === null) {
-            return Strings.nullToEmpty(defaultCompileChain)
+            return Strings.nullToEmpty(defaultCompileChain.trim)
         } else {
-            return value
+            return value.trim
         }
     }
     

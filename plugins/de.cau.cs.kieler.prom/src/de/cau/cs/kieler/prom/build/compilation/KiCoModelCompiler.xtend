@@ -246,7 +246,7 @@ class KiCoModelCompiler extends ModelCompiler {
             context.compile
         } catch (Exception e) {
             val p = BuildProblem.createError(file, "Exception during KiCo compilation. See the console for a stack trace", e)
-            PromConsole.printStackTrace(e)
+            PromConsole.buildConsole.printStackTrace(e)
             compilationResult.addProblem(p)
         }
         resultModel = checkResults(context)

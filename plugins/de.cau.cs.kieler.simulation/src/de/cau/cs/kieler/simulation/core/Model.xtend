@@ -168,6 +168,17 @@ class Model implements Cloneable {
     }
     
     /**
+     * Adds a list of variables.
+     * 
+     * @param vs The variables
+     */
+    public def void addAllVariables(Iterable<Variable> vs) {
+        for(v : vs) {
+            addVariable(v)
+        }
+    }
+    
+    /**
      * Removes a variables.
      * 
      * @param v The variable

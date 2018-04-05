@@ -58,5 +58,12 @@
             class="de.cau.cs.kieler.sccharts.prom.SCChartsAnalyzer">
       </analyzer>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.simulation.dataHandler">
+      <dataHandler
+            class="de.cau.cs.kieler.sccharts.prom.interpreter.SCChartsInterpreter"
+            name="scc">
+      </dataHandler>
+   </extension>
 
 </plugin>

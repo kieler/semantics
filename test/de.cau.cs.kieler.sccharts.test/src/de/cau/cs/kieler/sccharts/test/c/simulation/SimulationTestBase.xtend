@@ -13,11 +13,12 @@
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import com.google.common.io.Files
+import com.google.inject.Injector
 import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.prom.kibuild.extensions.KiBuildExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.backends.CSimulationBackend
+import de.cau.cs.kieler.simulation.backends.JavaSimulationBackend
 import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
@@ -31,7 +32,6 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.util.List
 import org.eclipse.core.internal.resources.ResourceException
 import org.eclipse.core.resources.IResource
-import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
 import org.junit.runner.RunWith
 
@@ -43,13 +43,10 @@ import static org.junit.Assert.*
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCharts> implements SimulationListener {
+abstract class SimulationTestBase<T extends EObject> extends AbstractXTextModelRepositoryTest<T> implements SimulationListener {
     
     /** Extensions */
     protected extension static val KiBuildExtensions kiBuildExtensions = new KiBuildExtensions
-    
-    /** Sct Parser Injector */
-    protected static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
 
     /** Error in simulation */
     protected var TraceMismatchEvent traceError = null
@@ -64,7 +61,7 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
     /**
      * Constructor
      */
-    new() {
+    new(Injector resourceSetInjector) {
         super(resourceSetInjector)
         initialize
     }
@@ -75,38 +72,62 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
     abstract protected def SimulationBackend createSimulationBackend()
     
     /**
-     * Only return models for semantic SCCharts tests.
+     * Creates the C simulation backend for simulation tests.
+     * Can be used to implement createSimulationBackend(). 
      */
-    override filter(TestModelData modelData) {
-        return filterForSimulationTests(modelData)
+    protected def createCSimulationBackend() {
+        return new CSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/c-simulation-test-backend.kibuild"
+            }
+        }
     }
     
     /**
-     * Only return models for semantic SCCharts tests.
+     * Creates the Java simulation backend for simulation tests.
+     * Can be used to implement createSimulationBackend(). 
      */
-    protected def boolean filterForSimulationTests(TestModelData modelData) {
+    protected def createJavaSimulationBackend() {
+        return new JavaSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/java-simulation-test-backend.kibuild"
+            }    
+        }
+    }
+    
+    /**
+     * Checks if the model data is for simulation tests.
+     */
+    protected def boolean isSimulationTest(TestModelData modelData) {
         return !modelData.tracePaths.empty
-        && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
-        && modelData.modelProperties.contains("sccharts")
+        && modelData.hasSimulationTrace
         && !modelData.modelProperties.contains("must-fail")
         && !modelData.modelProperties.contains("known-to-fail")
     }
     
     /**
-     * Only return models for semantic SCCharts tests for netlist-based compilation.
+     * Checks if the model data is a simulation test that supports netlist-based compilation.
      */
-    protected def boolean filterForNetlistCompilationTests(TestModelData modelData) {
-        return filterForSimulationTests(modelData)
+    protected def boolean isNetlistCompilationTests(TestModelData modelData) {
+        return modelData.isSimulationTest
         && !modelData.modelProperties.contains("not-asc")
         && !modelData.modelProperties.contains("not-sasc")
     }
     
     /**
-     * Only return models for semantic SCCharts tests for priority-based compilation.
+     * Checks if the model data is a simulation test that supports priority-based compilation.
      */
-    protected def boolean filterForPriorityCompilationTests(TestModelData modelData) {
-        return filterForSimulationTests(modelData)
+    protected def boolean isPriorityCompilationTests(TestModelData modelData) {
+        return modelData.isSimulationTest
         && !modelData.modelProperties.contains("not-iasc")
+    }
+    
+    /**
+     * Checks if the model data has an associated eso or ktrace file.
+     */
+    protected def boolean hasSimulationTrace(TestModelData modelData) {
+        return !modelData.tracePaths.isEmpty
+        && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
     }
     
     /**
@@ -114,7 +135,6 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      */
     protected def SimulationContext createSimulationContext() {
         val context = new SimulationContext
-        context.overwriteCompileChain = false
         context.simulationBackend = simulationBackend
         return context
     }
@@ -123,9 +143,6 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      * Configure general simulation properties.
      */
     protected def initialize() {
-        // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
-        assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation",
-                   Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
         // Don't communicate register variables because there is no need to go back in the history
         RegisterVariablesFinder.enabled = false
         // Don't delete the temporary simulation project, because this would require its re-initialization
@@ -136,12 +153,13 @@ abstract class SimulationTestBase extends AbstractXTextModelRepositoryTest<SCCha
      * Starts a simulation test of the model and the model data.
      * If the compile chain is not null, the compile chain of the build config will be overwritten to use this instead.
      */
-    protected def void startSimulationTest(List<String> compileChain, SCCharts scc, TestModelData modelData) {
+    protected def void startSimulationTest(List<String> compileChain, EObject model, TestModelData modelData) {
         if(compileChain !== null) {
             simulationBackend.buildConfig.setModelCompilerAttributeToStringList("compileChain", compileChain)    
         }
         val context = createSimulationContext
-        compileModelAndStartSimulationTest(context, scc, modelData)
+        context.customCompileChain = compileChain.join(",")
+        compileModelAndStartSimulationTest(context, model, modelData)
     }
     
     /**

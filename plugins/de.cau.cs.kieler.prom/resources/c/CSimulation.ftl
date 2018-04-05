@@ -1,7 +1,9 @@
 <#include "/assets/CSimulationSnippets.ftl" >
+<#include "/assets/CSimulationWrapperSnippets.ftl" >
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 // Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
@@ -32,7 +34,7 @@ void receiveVariables() {
     cJSON *root = cJSON_Parse(buffer);
     cJSON *variable = 0;
     if(root != NULL) {
-${inputs}    
+${sim_inputs}    
 
     }
   
@@ -47,7 +49,7 @@ void sendVariables() {
     cJSON* arrIndices = 0;
     cJSON* arrValues = 0;
     
-${outputs}
+${sim_outputs}
 
     // Get JSON object as string
     char* outString = cJSON_Print(root);
@@ -73,13 +75,25 @@ int main(int argc, const char* argv[]) {
     reset(&tickData);
     sendVariables();
     nextTick = 1;
+    
+    // Initialize annotations
+    ${decls}
+    ${inits}
+    
+    // Tick loop
     while (1) {
         // Receive variables
         receiveVariables();
+        
+        // Update input annotations
+        ${inputs}
   
         // Reaction of model
         tick(&tickData);
          
+        // Update output annotations
+        ${outputs}
+        
         // Send variables
         sendVariables();
         

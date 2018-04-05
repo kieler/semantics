@@ -31,16 +31,4 @@ class SystemConsole implements IConsole {
             System.out.println(msg)
         }
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override bringToFront() {
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override clear() {
-    }
 }
