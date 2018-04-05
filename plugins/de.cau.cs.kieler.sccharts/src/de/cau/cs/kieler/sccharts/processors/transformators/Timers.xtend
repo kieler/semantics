@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.sccharts.TimerAction
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts During Transformation.
@@ -79,12 +80,16 @@ class Timers extends SCChartsProcessor implements Traceable {
 
     public static val DEFAULT_WAKE = Integer.MAX_VALUE
     // Global var names
-    public static val EXT_WAKE_VAR = "wakeT"
-    public static val SIM_WAKE_VAR = "simWakeT"
-    public static val EXT_DELTA_T_VAR = "deltaT"
-    public static val SIM_DELTA_T_VAR = "simDeltaT"
+    public static val EXT_WAKE_VAR = "_wakeT"
+    public static val EXT_DELTA_T_VAR = "_deltaT"
+    public static val EXT_ABS_T_VAR = "_absTime"
     // Local var names
-    public static val DEVIATION_VAR = "deviation"
+//    public static val DEVIATION_VAR = "_deviation"
+    // Experimental Switches
+    public static val CATCH_UP = true
+    public static val RELATIVE_TIME_REACTION = true
+    public static val SIMULATED_TIME = true
+    public static val ABSOLUTE_TIME_INPUT = true
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
@@ -93,23 +98,34 @@ class Timers extends SCChartsProcessor implements Traceable {
     def void transform(State rootState) {
         if (rootState.allStates.exists[!actions.filter(TimerAction).empty]) {
             // Create VOs
-            val extDeltaT = createValuedObject(EXT_DELTA_T_VAR).uniqueName
+            val absTime = if (ABSOLUTE_TIME_INPUT) {
+                val time =createValuedObject(EXT_ABS_T_VAR).uniqueName
+                rootState.declarations += createIntDeclaration => [
+                    input = true
+                    valuedObjects += time
+                ]
+                time
+            }
+            val deltaT = createValuedObject(EXT_DELTA_T_VAR).uniqueName
             rootState.declarations += createIntDeclaration => [
-                input = true
-                valuedObjects += extDeltaT
+                input = !ABSOLUTE_TIME_INPUT
+                valuedObjects += deltaT
             ]
             val wake = createValuedObject(EXT_WAKE_VAR).uniqueName
+            if (SIMULATED_TIME || ABSOLUTE_TIME_INPUT) {
+                wake.initialValue = createIntValue(0)
+            }
             rootState.declarations += createIntDeclaration => [
                 output = true
                 valuedObjects += wake
             ]
-            val simDeltaT = createValuedObject(SIM_DELTA_T_VAR).uniqueName
-            val simWake = createValuedObject(SIM_WAKE_VAR).uniqueName
-            rootState.declarations += createIntDeclaration => [
-                output = true
-                valuedObjects += simDeltaT
-                valuedObjects += simWake
-            ]
+//            val simDeltaT = createValuedObject(SIM_DELTA_T_VAR).uniqueName
+//            val simWake = createValuedObject(SIM_WAKE_VAR).uniqueName
+//            rootState.declarations += createIntDeclaration => [
+//                output = true
+//                valuedObjects += simDeltaT
+//                valuedObjects += simWake
+//            ]
 
             // Handle period
             for (state : rootState.allStates.filter[!actions.filter(TimerAction).empty].toList) {
@@ -117,7 +133,13 @@ class Timers extends SCChartsProcessor implements Traceable {
                 state.actions.removeAll(periods)
                 
                 // Create clock
-                val clocks = periods.map[createValuedObject("clock").uniqueName].immutableCopy
+                val clocks = newArrayList
+                var idx = 0
+                for (p : periods) {
+                    val vo = createValuedObject(if (periods.size > 1) "clock" + idx++ else "clock")
+                    vo.initialValue = createBoolValue(false)
+                    clocks += vo
+                }
                 state.declarations += createBoolDeclaration => [
                     valuedObjects += clocks
                 ]
@@ -148,204 +170,118 @@ class Timers extends SCChartsProcessor implements Traceable {
                     val clock = clocks.get(pi.key)
                     
                     // Gen clk
-                    val clkRegion = state.createControlflowRegion(GENERATED_PREFIX + "GenClk")
-                    val clkState = clkRegion.createInitialState(GENERATED_PREFIX + "GenClkState") => [final = true]
+//                    val clkRegion = state.createControlflowRegion(GENERATED_PREFIX + "GenClk")
+//                    val clkState = clkRegion.createInitialState(GENERATED_PREFIX + "GenClkState") => [final = true]
                     
-                    val localTime = createValuedObject("localTime")
+                    val absoluteThreshold = period.trigger.eAllContents.filter(ValuedObjectReference).empty
+                    val threshold = createValuedObject(if (periods.size > 1) "threshold" + idx++ else "threshold")
+                    if (absoluteThreshold) {
+                        threshold.initialValue = period.trigger
+                    }
+                    val localTime = createValuedObject(if (periods.size > 1) "localTime" + idx++ else "localTime")
                     localTime.initialValue = createIntValue(0)
-                    clkState.declarations += createIntDeclaration => [
+                    state.declarations += createIntDeclaration => [
                         valuedObjects += localTime
+                        valuedObjects += threshold
                     ]
-
-                    clkState.createDuringAction => [
+                    state.createImmediateDuringAction => [
                         // Update time
-                        createAssignment(localTime, simDeltaT.reference).operator = AssignOperator.ASSIGNADD
+                        createAssignment(localTime, deltaT.reference).operator = AssignOperator.ASSIGNADD
+                        // Calculate threshold
+                        if (!absoluteThreshold) {
+                            createAssignment(threshold, period.trigger).operator = AssignOperator.ASSIGN
+                        }
                         // Fire clock
-                        createAssignment(clock, createGEQExpression(localTime.reference, period.trigger.copy))
+                        createAssignment(clock, createGEQExpression(localTime.reference, threshold.reference))
                         // Reset time
-                        createAssignment(localTime, createOperatorExpression(OperatorType.CONDITIONAL) => [
-                            subExpressions += clock.reference
-                            subExpressions += localTime.reference
-                            subExpressions += createIntValue(0)
-                        ]).operator = AssignOperator.ASSIGNSUB
+                        if (RELATIVE_TIME_REACTION) {
+                            createAssignment(localTime, createOperatorExpression(OperatorType.CONDITIONAL) => [
+                                subExpressions += clock.reference
+                                if (CATCH_UP) {
+                                    subExpressions += threshold.reference
+                                    subExpressions += createIntValue(0)
+                                } else {
+                                    subExpressions += localTime.reference
+                                    subExpressions += createIntValue(0)
+                                }                               
+                            ]).operator = AssignOperator.ASSIGNSUB
+                        } else {
+                            createAssignment(localTime, createOperatorExpression(OperatorType.CONDITIONAL) => [
+                                subExpressions += clock.reference
+                                subExpressions += createOperatorExpression(OperatorType.MOD) => [
+                                    subExpressions += localTime.reference
+                                    subExpressions += threshold.reference
+                                ]
+                                subExpressions += localTime.reference
+                            ]).operator = AssignOperator.ASSIGN
+                        }
+                        // Publish wake up
+                        createAssignment(wake, createSubExpression(period.trigger, localTime.reference)).operator = AssignOperator.ASSIGNMIN
                     ]
                     
-                    clkState.createImmediateDuringAction => [
-                        // Publish wake up
-                        createAssignment(simWake, createSubExpression(period.trigger, localTime.reference)).operator = AssignOperator.ASSIGNMIN
-                    ]
+//                    clkState.createImmediateDuringAction => [
+//                        // Publish wake up
+//                        createAssignment(simWake, createSubExpression(period.trigger, localTime.reference)).operator = AssignOperator.ASSIGNMIN
+//                    ]
                 }
             }
             
-            // Add time simulation region
-            val simRegion = rootState.createControlflowRegion(GENERATED_PREFIX + "SimTime").uniqueName
-            val simState = simRegion.createState(GENERATED_PREFIX + "SimTimeState").uniqueName => [
-                label = ""
-                initial = true
-                final = true
-            ]
-            val deviation = createValuedObject(DEVIATION_VAR).uniqueName
-            deviation.initialValue = createIntValue(0)
-            rootState.declarations += createIntDeclaration => [
-                valuedObjects += deviation
-            ]
-            simState.createDuringAction => [
-                // deviation to expected wake up
-                createAssignment(deviation, createSubExpression(extDeltaT.reference, createPreExpression(wake.reference))).operator = AssignOperator.ASSIGNADD
-                // Passed sim time
-                // Assumption: No early wake up
-                createAssignment(simDeltaT,createPreExpression(simWake.reference))
-            ]
-            simState.createImmediateDuringAction => [
+//            // Add time simulation region
+//            val simRegion = rootState.createControlflowRegion(GENERATED_PREFIX + "SimTime").uniqueName
+//            val simState = simRegion.createState(GENERATED_PREFIX + "SimTimeState").uniqueName => [
+//                label = ""
+//                initial = true
+//                final = true
+//            ]
+//            val deviation = createValuedObject(DEVIATION_VAR).uniqueName
+//            deviation.initialValue = createIntValue(0)
+//            rootState.declarations += createIntDeclaration => [
+//                valuedObjects += deviation
+//            ]
+//            simState.createDuringAction => [
+//                // deviation to expected wake up
+//                createAssignment(deviation, createSubExpression(extDeltaT.reference, createPreExpression(wake.reference))).operator = AssignOperator.ASSIGNADD
+//                // Passed sim time
+//                // Assumption: No early wake up
+//                createAssignment(simDeltaT,createPreExpression(simWake.reference))
+//            ]
+//            simState.createImmediateDuringAction => [
+//                // start wake time collection
+//                createAssignment(simWake, createIntValue(DEFAULT_WAKE))
+//                // set wake time
+//                createAssignment(wake, createSubExpression(simWake.reference, deviation.reference))
+//                // assure wake time >= 0 (catch up case)
+//                createAssignment(wake, createIntValue(0)).operator = AssignOperator.ASSIGNMAX
+//            ]
+            rootState.createImmediateDuringAction => [
                 // start wake time collection
-                createAssignment(simWake, createIntValue(DEFAULT_WAKE))
-                // set wake time
-                createAssignment(wake, createSubExpression(simWake.reference, deviation.reference))
-                // assure wake time >= 0 (catch up case)
-                createAssignment(wake, createIntValue(0)).operator = AssignOperator.ASSIGNMAX
+                createAssignment(wake, createIntValue(DEFAULT_WAKE))
             ]
-        }
-
-    }
-    
-
-                // Early wake up test
-//                effects += createAssignment(deviation) => [ // ext time passed
-//                    operator = AssignOperator.ASSIGNADD
-//                    expression = extDeltaT.reference
-//                ]
-//                effects += createAssignment(simDeltaT) => [ // sim time passed
-//                    expression = createOperatorExpression(OperatorType.CONDITIONAL) => [
-//                        subExpressions += createGEQExpression(deviation.reference, createPreExpression(wake.reference))
-//                        subExpressions += createPreExpression(wake.reference) // good wake up
-//                        subExpressions += createIntValue(0) // early weak up
-//                    ]
-//                ]
-//                effects += createAssignment(deviation) => [ // new deviation
-//                    operator = AssignOperator.ASSIGNSUB
-//                    expression = simDeltaT.reference
-//                ]
-//                effects += createAssignment(wake) => [ // set wake time
-//                    expression = createOperatorExpression(OperatorType.CONDITIONAL) => [
-//                        subExpressions += createNEExpression(deviation.reference, createIntValue(0))
-//                        subExpressions += createSubExpression(simWake.reference, deviation.reference) // good wake up
-//                        subExpressions += createSubExpression(createPreExpression(wake.reference), deviation.reference) // early weak up
-//                    ]
-//                    expression = createIntValue(MINIMUM_WAKE)
-//                ]
-
-    def void transformRVH(State rootState) {
-        if (rootState.allScopes.exists[!actions.filter(TimerAction).empty]) {
-            // Create VOs
-            val t_val = createValuedObject("tUsec_val").uniqueName
-            rootState.declarations += createIntDeclaration => [
-                input = true
-                valuedObjects += t_val
-            ]
-            val wake = createValuedObject("wakeUsec").uniqueName
-            rootState.declarations += createIntDeclaration => [
-                output = true
-                valuedObjects += wake
-            ]
-
-            // add simulation time region
-            val simregion = rootState.createControlflowRegion(GENERATED_PREFIX + "SimTime")
-            val simstate = simregion.createState(GENERATED_PREFIX + "SimTime", "") => [
-                initial = true
-                final = true
-            ]
-            val p = createValuedObject("pUsec").uniqueName
-            rootState.declarations += createIntDeclaration => [
-                valuedObjects += p
-            ]
-            val pMin = createValuedObject("pMinUsec").uniqueName
-            pMin.initialValue = createIntValue(9999999)
-            rootState.declarations += createIntDeclaration => [
-                valuedObjects += pMin
-            ]
-            simstate.createDuringAction => [
-                createAssignment(wake, createIntValue(9999999))
-                createAssignment(p, t_val.reference)
-                createAssignment(t_val, createPreExpression(wake.reference))
-                createAssignment(p, createSubExpression(t_val.reference, p.reference))
-                createAssignment(pMin, p.reference).operator = AssignOperator.ASSIGNMIN
-            ]
-
-            // Handle period
-            for (state : rootState.allStates.filter[!actions.filter(TimerAction).empty].toList) {
-                val periods = state.actions.filter(TimerAction).toList
-                if (periods.size > 1) environment.errors.add("Multiple timer action in same state", state)
-                val period = periods.head
-                state.actions.removeAll(periods)
-
-                // Create clock
-                val clk = createValuedObject("clk").uniqueName
-                state.declarations += createBoolDeclaration => [
-                    valuedObjects += clk
-                ]
-                
-                // Guard regions
-                for(s : state.allStates.toIterable) {
-                    for(a : s.actions.filter[!(it instanceof TimerAction)]) {
-                        if (a.trigger === null) {
-                            a.trigger = clk.reference
-                        } else {
-                            a.trigger = createLogicalAndExpression(clk.reference, a.trigger)
-                        }
+            
+            if (ABSOLUTE_TIME_INPUT || SIMULATED_TIME) {
+                rootState.createDuringAction => [
+                    // calculate delta T
+                    if (ABSOLUTE_TIME_INPUT) {
+                        createAssignment(deltaT, createOperatorExpression(OperatorType.SUB) => [
+                            subExpressions += absTime.reference
+                            subExpressions += createOperatorExpression(OperatorType.PRE) => [
+                                subExpressions += absTime.reference // Normally should be non immediate during
+                            ]
+                        ])
                     }
-                    for(t : s.outgoingTransitions) {
-                        if (t.trigger === null) {
-                            t.trigger = clk.reference
-                        } else {
-                            t.trigger = createLogicalAndExpression(clk.reference, t.trigger)
-                        }
+                    // simulated time
+                    if (SIMULATED_TIME) {
+                        createAssignment(deltaT, createOperatorExpression(OperatorType.CONDITIONAL) => [
+                            subExpressions += createGEQExpression(deltaT.reference, createIntValue(0))
+                            subExpressions += createOperatorExpression(OperatorType.PRE) => [
+                                subExpressions += wake.reference // Normally should be non immediate during
+                            ]
+                            subExpressions += deltaT.reference
+                        ]).operator = AssignOperator.ASSIGN
                     }
-                }
-                
-                // Gen clk
-                val clkRegion = state.createControlflowRegion(GENERATED_PREFIX + "GenClk")
-                val clkState = clkRegion.createInitialState(GENERATED_PREFIX + "GenClkState") =>[final = true]
-                
-                val myWakeUsec = createValuedObject("myWakeUsec").uniqueName
-                myWakeUsec.initialValue = createIntValue(0)
-                clkState.declarations += createIntDeclaration => [
-                    valuedObjects += myWakeUsec
-                ]
-                val s_val = createValuedObject("s_val").uniqueName
-                val s_wake = createValuedObject("s_wake").uniqueName
-                clkState.declarations += createIntDeclaration => [
-                    valuedObjects += s_val
-                    valuedObjects += s_wake
-                ]
-                
-                clkState.createImmediateDuringAction => [
-                    trigger = createGTExpression(myWakeUsec.reference, createIntValue(0))
-                    createAssignment(wake, myWakeUsec.reference).operator = AssignOperator.ASSIGNMIN
-                ]
-                
-                val timerRegion = clkState.createControlflowRegion(GENERATED_PREFIX + "Timer", "")
-                val timerState = timerRegion.createInitialState(GENERATED_PREFIX + "Timer")
-                
-                timerState.createTransitionTo(timerState) => [
-                    trigger = createGEQExpression(t_val.reference, myWakeUsec.reference)
-                    createAssignment(clk, createBoolValue(true))
-                ]
-                timerState.createEntryAction => [
-                    createAssignment(s_val, createIntValue(0))
-                    createAssignment(s_wake, period.trigger)
-                    createAssignment(myWakeUsec, createAddExpression(
-                            createSubExpression(
-                                s_wake.reference,
-                                s_val.reference
-                            ),
-                            t_val.reference
-                        )
-                    )
-                ]
-                timerState.createDuringAction => [
-                    createAssignment(clk, createBoolValue(false))
                 ]
             }
+            
         }
 
     }
