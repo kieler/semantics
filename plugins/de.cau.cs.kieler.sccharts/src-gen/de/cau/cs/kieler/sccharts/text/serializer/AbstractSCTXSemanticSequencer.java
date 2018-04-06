@@ -1187,7 +1187,10 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
-	 *         ((declarations+=DeclarationWOSemicolon* states+=State*) | (declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+)))
+	 *         (
+	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
+	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *         )
 	 *     )
 	 */
 	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
@@ -1432,7 +1435,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     TimerAction returns TimerAction
 	 *
 	 * Constraint:
-	 *     (trigger=ValuedExpression label=STRING?)
+	 *     (delay=DelayType? trigger=ValuedExpression label=STRING?)
 	 */
 	protected void sequence_TimerAction(ISerializationContext context, TimerAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -138,6 +138,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.Timers">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActions">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -152,6 +155,12 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.extended.core.simple.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.core.simple.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.extended.core.kico">
         </TransformationSystem>
      </extension>
 

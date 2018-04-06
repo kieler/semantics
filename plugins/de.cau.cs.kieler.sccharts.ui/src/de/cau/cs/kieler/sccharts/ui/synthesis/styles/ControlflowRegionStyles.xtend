@@ -59,7 +59,10 @@ class ControlflowRegionStyles {
     /** This property is set on the expanded rendering and points to the container holding the declaration labels */
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.region.declarations", null);
-
+    /** This property is set on the expanded rendering and points to the container holding the action labels */
+    public static final IProperty<KContainerRendering> ACTIONS_CONTAINER = new Property<KContainerRendering>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.style.region.actions", null);
+        
     /**
      * Adds a region figure.
      */
@@ -143,7 +146,7 @@ class ControlflowRegionStyles {
      * Adds an area for inner states and a container for declarations.<br>
      * Incompatible with {@link addStatesArea}.
      */
-    def addStatesAndDeclarationsArea(KContainerRendering container, boolean useHeaderSpace, boolean horizontal) {
+    def addStatesAndDeclarationsAndActionsArea(KContainerRendering container, boolean useHeaderSpace, boolean horizontal) {
         container.addRectangle => [
             invisible = true
             setGridPlacement(if (horizontal) 2 else 1)
@@ -152,10 +155,20 @@ class ControlflowRegionStyles {
                 setGridPlacementData().from(LEFT, 3, 0, TOP, 20, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0)
                 invisible = true
                 addRectangle => [
-                    setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                    gridPlacement = 1
                     invisible = true
-                    setGridPlacement(1)
-                    container.setProperty(DECLARATIONS_CONTAINER, it)
+                    addRectangle => [
+                        setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                        invisible = true
+                        setGridPlacement(1)
+                        container.setProperty(DECLARATIONS_CONTAINER, it)
+                    ]
+                    addRectangle => [
+                        setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                        invisible = true
+                        setGridPlacement(1)
+                        container.setProperty(ACTIONS_CONTAINER, it)
+                    ]
                 ]
             ]
             // States Area
@@ -172,6 +185,14 @@ class ControlflowRegionStyles {
      */
     def KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, TextFormat>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
+    }
+    
+    /**
+     * Adds a label in declaration style with the given components.<br>
+     * The first part will be highlighted as keywords.
+     */
+    def KRectangle addActionLabel(KContainerRendering container, List<Pair<CharSequence, TextFormat>> components) {
+        container.getProperty(ACTIONS_CONTAINER)?.addKeywordLabel(components);
     }
     
     /** 

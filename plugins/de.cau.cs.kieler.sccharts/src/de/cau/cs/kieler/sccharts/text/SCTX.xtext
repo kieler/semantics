@@ -128,10 +128,12 @@ ControlflowRegion returns sccharts::ControlflowRegion:
     ((
         ':'
         declarations+=DeclarationWOSemicolon*
+        actions+=LocalAction*
         states+=State*
     )|(
         '{'
         declarations+=DeclarationWOSemicolon*
+        actions+=LocalAction*
         (states+=ImplicitState | states+=State+)
         '}'
     ))  
@@ -195,7 +197,7 @@ SucceedingAction returns sccharts::SucceedingAction:
 
 TimerAction returns sccharts::TimerAction:
     {sccharts::TimerAction}
-    'period' trigger=ValuedExpression
+    delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
     
 // ------------ //
