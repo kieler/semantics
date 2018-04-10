@@ -51,7 +51,7 @@ import static extension java.lang.Boolean.parseBoolean
 class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core.simple"
+    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration

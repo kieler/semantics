@@ -6,8 +6,8 @@ de.cau.cs.kieler.sccharts.processors.reference
 de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
-de.cau.cs.kieler.sccharts.processors.timers
 de.cau.cs.kieler.sccharts.processors.const
+de.cau.cs.kieler.sccharts.processors.timers
 de.cau.cs.kieler.sccharts.processors.fby
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.signal

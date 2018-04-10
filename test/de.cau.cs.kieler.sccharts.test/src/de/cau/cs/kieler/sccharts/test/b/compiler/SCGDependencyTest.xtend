@@ -41,7 +41,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core.simple"
+    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
     private val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.SCG"
     private val dependencyAnalysisV1 = "de.cau.cs.kieler.scg.processors.dependency.v1"
     private val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.dependency"
