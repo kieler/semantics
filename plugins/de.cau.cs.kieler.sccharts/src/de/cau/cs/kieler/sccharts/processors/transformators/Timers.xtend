@@ -122,6 +122,9 @@ class Timers extends SCChartsProcessor implements Traceable {
                 time
             }
             val deltaT = createValuedObject(EXT_DELTA_T_VAR).uniqueName
+            if (absolute_time_input) {
+                deltaT.initialValue = createIntValue(0)
+            }
             rootState.declarations += createIntDeclaration => [
                 input = !absolute_time_input
                 valuedObjects += deltaT
