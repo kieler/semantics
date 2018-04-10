@@ -1,7 +1,0 @@
-system de.cau.cs.kieler.sccharts.core.simple
-	version 1 
-	label "Core SCCharts (simple)"
-    input SCCharts
-    
-de.cau.cs.kieler.sccharts.processors.triggerEffect
-de.cau.cs.kieler.sccharts.processors.surfaceDepth
