@@ -35,7 +35,6 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
-import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -46,7 +45,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 
 /** 
  * @author ssm

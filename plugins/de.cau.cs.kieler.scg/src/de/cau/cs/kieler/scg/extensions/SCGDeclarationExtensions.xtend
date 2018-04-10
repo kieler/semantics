@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.

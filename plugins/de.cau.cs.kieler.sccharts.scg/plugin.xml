@@ -9,6 +9,9 @@
       <Processor
             class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCGTransformation">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG2SCCProcessor">
+      </Processor>
    </extension>
 
 

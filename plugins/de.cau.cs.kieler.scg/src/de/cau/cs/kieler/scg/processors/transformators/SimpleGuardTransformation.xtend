@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -43,14 +42,13 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 
 /** 
  * @author ssm
@@ -161,7 +159,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 VAMap.put(it.valuedObject, it)
 
                 val sb = guardSchedulingBlockMap.get(guard)
-                if (sb != null) {
+                if (sb !== null) {
                     it.trace(sb)
                 }
             ]
@@ -174,7 +172,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             var i = 0
             for(sb : bb.schedulingBlocks) {
                 val assignment = GAMap.get(sb.guards.head)
-                if (assignment != null) {
+                if (assignment !== null) {
                     // Can be null if removed because the bb is dead
                     if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
                     if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
@@ -183,15 +181,15 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                         if (node.incoming.filter(ControlFlow).empty) 
                             mainThreadEntries.put(assignment, node.name)
                         if (node instanceof Exit)
-                        if (node.next == null) 
+                        if (node.next === null) 
                             mainThreadExits += assignment
                     }
                 }
                 
                 // The first one is superfluous, because it is already handled by the expression dependency.
-                if (lastSB != null && i > 1) {
+                if (lastSB !== null && i > 1) {
                     val lastAssignment = GAMap.get(lastSB.guards.head)
-                    if (lastAssignment != null) {
+                    if (lastAssignment !== null) {
                         lastAssignment.createControlDependency(assignment)
                     }
                 }
@@ -209,7 +207,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         }
         
         // Only add the term assignment if a term block is present.
-        if (termAssignment.expression != null) {
+        if (termAssignment.expression !== null) {
             newSCG.nodes += termAssignment
         }
         
@@ -224,7 +222,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     } else if (node instanceof Conditional) {
                         ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
                     }
-                    if (ta != null) {
+                    if (ta !== null) {
                         val targetAssignment = ta
                         dependency.copy => [
                             sourceAssignment.dependencies += it
@@ -248,7 +246,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             ]
             for(reference : VORs) {
                 val sourceAssignment = VAMap.get(reference.valuedObject)
-                if (sourceAssignment != null) {
+                if (sourceAssignment !== null) {
                     val expressionDependency = sourceAssignment.createExpressionDependency(assignment) 
                     expressionDependency.trace(reference)
                 }
@@ -267,7 +265,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             for(assignment : schedulingBlock.nodes.filter(Assignment)) {
                 val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject).peek)
 
-                if (guardAssignment != null) {
+                if (guardAssignment !== null) {
                     val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
                     newSCG.nodes += newAssignment
                     AAMap.put(assignment, newAssignment)
@@ -281,7 +279,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         
         // Restore sequential order in guarded assignments
         for (assignment : AAMap.keySet) {
-            if (assignment.next != null && (assignment.next.target instanceof Assignment) &&
+            if (assignment.next !== null && (assignment.next.target instanceof Assignment) &&
             (schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
                 val controlDependency = AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
                 

@@ -23,6 +23,11 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+
 
 /**
  * @author ssm
@@ -33,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 class KExtDeclarationExtensions {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     
     def DeclarationScope asDeclarationScope(EObject eObject) {
         eObject as DeclarationScope
@@ -136,5 +142,24 @@ class KExtDeclarationExtensions {
     def boolean isExternalReferenceDeclaration(ReferenceDeclaration declaration) {
         declaration.extern.size > 0
     }
+    
+    def ValuedObjectMapping copyScopeDeclarations(
+        DeclarationScope source, DeclarationScope target) {
+        val map = new ValuedObjectMapping
+        for (declaration : source.declarations) {
+            val newDeclaration = createDeclaration(declaration).trace(declaration)
+            declaration.valuedObjects.forEach[ 
+                map.put(it, <ValuedObject> newLinkedList(it.copyValuedObject(newDeclaration)))
+            ]
+            target.declarations += newDeclaration
+        }
+        map
+    }   
+    
+    def ValuedObject copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+        sourceObject.copy => [
+            targetDeclaration.valuedObjects += it
+        ]
+    }        
     
 }

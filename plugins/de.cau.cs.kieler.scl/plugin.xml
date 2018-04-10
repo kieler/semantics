@@ -31,6 +31,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.scl.ssa.cssa.sccp.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.scc.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.resource.extension">

@@ -46,7 +46,7 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
