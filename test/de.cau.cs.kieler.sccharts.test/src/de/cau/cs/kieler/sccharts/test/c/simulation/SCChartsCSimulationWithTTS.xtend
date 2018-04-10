@@ -35,6 +35,6 @@ class SCChartsCSimulationWithTTS extends SCChartsSimulationTestBase {
     @Test
     def void testSimulationNetlistCWithTTS(SCCharts scc, TestModelData modelData) {
         startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling",
-                              "de.cau.cs.kieler.sccharts.netlist.simple"], scc, modelData)
+                              "de.cau.cs.kieler.sccharts.netlist"], scc, modelData)
     }
 }

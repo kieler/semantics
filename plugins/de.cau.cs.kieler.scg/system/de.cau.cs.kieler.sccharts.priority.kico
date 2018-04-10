@@ -1,8 +1,8 @@
-public system de.cau.cs.kieler.sccharts.priority.java
+public system de.cau.cs.kieler.sccharts.priority
     version 1 
-    label "Priority-based Compilation (Java)"
-    
+    label "Priority-based Compilation (C)"
+
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
 system de.cau.cs.kieler.scg.priority
-de.cau.cs.kieler.scg.processors.sjlp
+de.cau.cs.kieler.scg.processors.sclp

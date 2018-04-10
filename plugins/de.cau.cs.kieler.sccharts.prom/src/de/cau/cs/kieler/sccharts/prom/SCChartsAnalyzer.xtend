@@ -95,6 +95,6 @@ class SCChartsAnalyzer extends DeclarationAnalyzer {
      */
     override getDefaultCompileChain() {
         return "de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling, \n"
-             + "de.cau.cs.kieler.sccharts.netlist.simple"
+             + "de.cau.cs.kieler.sccharts.netlist"
     }
 }

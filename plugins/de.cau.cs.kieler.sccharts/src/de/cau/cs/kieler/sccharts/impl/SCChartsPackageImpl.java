@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
+import de.cau.cs.kieler.sccharts.TimerAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -164,6 +165,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass succeedingActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass timerActionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -697,6 +705,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTimerAction() {
+        return timerActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
@@ -831,6 +848,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         succeedingActionEClass = createEClass(SUCCEEDING_ACTION);
 
+        timerActionEClass = createEClass(TIMER_ACTION);
+
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -890,6 +909,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         suspendActionEClass.getESuperTypes().add(this.getLocalAction());
         precedingActionEClass.getESuperTypes().add(this.getLocalAction());
         succeedingActionEClass.getESuperTypes().add(this.getLocalAction());
+        timerActionEClass.getESuperTypes().add(this.getLocalAction());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -957,6 +977,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(precedingActionEClass, PrecedingAction.class, "PrecedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(succeedingActionEClass, SucceedingAction.class, "SucceedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(timerActionEClass, TimerAction.class, "TimerAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

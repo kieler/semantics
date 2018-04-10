@@ -54,8 +54,9 @@ class ProcessorSynthesis {
     @Inject extension KEdgeExtensions 
     @Inject extension KRenderingExtensions  
     @Inject extension ProcessorStyles 
-    @Inject IResourceServiceProvider.Registry regXtext;      
+    @Inject IResourceServiceProvider.Registry regXtext;
     
+    public static val GROUP_NODE = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
     static val PROCESSOR_KGT = "processor.kgt"
     static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
     static val COLLAPSED_ID = "collapsed"
@@ -82,6 +83,7 @@ class ProcessorSynthesis {
     
     dispatch def List<KNode> transform(ProcessorGroup processorGroup) {
         val groupNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_GROUP_KGT)
+        groupNode.setProperty(GROUP_NODE, true)
         
         val collapsedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ COLLAPSED_ID.equals(id) ].head
         val expandedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ EXPANDED_ID.equals(id) ].head

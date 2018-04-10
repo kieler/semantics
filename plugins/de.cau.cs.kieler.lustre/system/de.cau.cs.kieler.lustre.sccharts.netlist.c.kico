@@ -3,4 +3,4 @@ public system de.cau.cs.kieler.lustre.sccharts.netlist.c
 	label "Lustre SCCharts Netlist-based"
 
 de.cau.cs.kieler.lustre.processors.lustre2sccharts
-system de.cau.cs.kieler.sccharts.netlist.simple
+system de.cau.cs.kieler.sccharts.netlist

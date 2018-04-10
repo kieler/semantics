@@ -157,7 +157,7 @@
             system="system/de.cau.cs.kieler.sccharts.netlist.java.tts.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.priority.simple.kico">
+            system="system/de.cau.cs.kieler.sccharts.priority.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.kico">
@@ -170,6 +170,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.scssa.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scg.priority.kico">
       </TransformationSystem>
    </extension>
 

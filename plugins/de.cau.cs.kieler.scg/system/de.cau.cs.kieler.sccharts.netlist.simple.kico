@@ -1,11 +1,13 @@
-public system de.cau.cs.kieler.sccharts.netlist.simple
+system de.cau.cs.kieler.sccharts.netlist.simple
     version 1 
-    label "Netlist-based Compilation (simple)"
+    label "Netlist-based Compilation (simple - deprecated)"
 
 de.cau.cs.kieler.sccharts.processors.reference
+de.cau.cs.kieler.sccharts.processors.regionactions 
 de.cau.cs.kieler.sccharts.processors.for 
 de.cau.cs.kieler.sccharts.processors.prTransitions
 de.cau.cs.kieler.sccharts.processors.const
+de.cau.cs.kieler.sccharts.processors.timers 
 de.cau.cs.kieler.sccharts.processors.fby
 de.cau.cs.kieler.sccharts.processors.history
 de.cau.cs.kieler.sccharts.processors.signal

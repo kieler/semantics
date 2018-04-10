@@ -13,26 +13,29 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import de.cau.cs.kieler.kicool.System
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import org.eclipse.elk.alg.layered.options.FixedAlignment
-import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
-import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
+
+import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
 
 /**
  * Main diagram synthesis for KiCool.
@@ -47,6 +50,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension KNodeExtensions
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
+    
+    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
     
     override transform(System model) {
         val rootNode = model.createNode
@@ -75,9 +80,11 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 
         rootNode.children += nodes 
         
+        if (FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
+        
         rootNode
     }
-    
+        
     public static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
     
     /**
@@ -96,6 +103,25 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             e.printStackTrace
         }         
         return KGraphUtil::createInitializedNode
+    }
+    
+    
+    def void flattenHierarchy(KNode rootNode) {
+        for (node : rootNode.getKNodeIterator(false).toList) {
+            if (!node.children.empty && node.getProperty(ProcessorSynthesis.GROUP_NODE)) {
+                val parent = node.parent
+                val head = node.children.findFirst[it.incomingEdges.empty]
+                val tail = node.children.findFirst[it.outgoingEdges.empty]
+                if (parent !== null && head !== null && tail !== null) {
+                    // Reconnect
+                    node.incomingEdges.immutableCopy.forEach[target = head]
+                    node.outgoingEdges.immutableCopy.forEach[tail.outgoingEdges.add(it)]
+                    // Move
+                    parent.children.addAll(node.children)
+                    parent.children.remove(node)
+                }
+            }
+        }
     }    
     
 }

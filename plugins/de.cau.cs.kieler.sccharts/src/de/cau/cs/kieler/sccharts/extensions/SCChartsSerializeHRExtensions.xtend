@@ -39,6 +39,7 @@ import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.PrecedingAction
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.sccharts.TimerAction
 
 /**
  * @author ssm
@@ -111,6 +112,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             SuspendAction: "suspend"
             PrecedingAction: "preceding"
             SucceedingAction: "succeeding"
+            TimerAction: "period"
             default: ""
         })
 
