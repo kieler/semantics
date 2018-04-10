@@ -45,6 +45,8 @@ import static de.cau.cs.kieler.scg.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 
 /**
  * The SSA transformation for SCGs with simplified SC semantics.
@@ -89,6 +91,7 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
     @Inject extension IOPreserverExtensions
     @Inject extension SSACoreExtensions
     @Inject extension SSATransformationExtensions
+    @Inject extension SCGManipulationExtensions
     
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
@@ -142,13 +145,32 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
         // ---------------
         
         // Fix incoming version
+        val tempDefs = scg.allDefs
+        val superfluousPi = newHashSet
         for (piNode : scg.nodes.filter(Assignment).filter[isSSA(PI)]) {
             // Move a uniqe incoming vo-ref to the front
             val fc = piNode.expression as FunctionCall
+            // This is sequentially incoming version since other parameters are not jet added
             val exp = fc.parameters.findFirst[expression !== null]
             fc.parameters.removeIf[expression !== null]
             fc.parameters.add(0, exp)
+            
+            if (exp.expression instanceof ValuedObjectReference) {
+                val vo = (exp.expression as ValuedObjectReference).valuedObject
+                // If sequentially incoming version is also pi function
+                if (!tempDefs.get(vo).empty) {
+                    val prevDef = tempDefs.get(vo).head
+                    if (prevDef.isSSA(PI) && piNode.onlyImmediatePathsTo(prevDef)) {
+                        // replace usage by previous
+                        // TODO improve performance
+                        scg.eAllContents.filter(ValuedObjectReference).filter[valuedObject == piNode.valuedObject].toList.forEach[valuedObject = vo]
+                        superfluousPi += piNode
+                    }
+                }
+            }
         }
+        superfluousPi.forEach[removeNode(true)]
+        
         // Fix empty parameter
         for (ref : piSSAReferences.entries) {
             ref.value.expression = ref.key.valuedObject.reference
@@ -215,6 +237,10 @@ class SimpleSCSSATransformation extends InplaceProcessor<SCGraphs> implements Tr
             scg.nodes.add(scg.nodes.indexOf(entry.key), entry.value)
         }
         return refs
+    }
+    
+    def void optimizeImmediateRead(Multimap<Assignment, Parameter> multimap) {
+        
     }
 
 }

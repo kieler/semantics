@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.prom.ui.views
 
-import org.eclipse.jface.action.ControlContribution
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
+import org.eclipse.ui.menus.WorkbenchWindowControlContribution
 
 /**
  * Simple control that displays some text in a label.
@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Label
  * @author aas
  *
  */
-class LabelContribution extends ControlContribution {
+class LabelContribution extends WorkbenchWindowControlContribution {
     
     /**
      * The label

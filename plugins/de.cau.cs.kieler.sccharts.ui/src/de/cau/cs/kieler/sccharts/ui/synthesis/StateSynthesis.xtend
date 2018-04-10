@@ -163,7 +163,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Transform all outgoing transitions
         // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
-        for (transition : state.outgoingTransitions) {
+        for (transition : state.outgoingTransitions.reverseView) {
             transition.transform => [ edge |
                 val target = transition.targetState;
                 if (!target.name.nullOrEmpty) {

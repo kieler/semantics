@@ -4,7 +4,7 @@
 <#macro Simulate interface indices...>
     <#-- host types are not supported -->
     <#if varType != "host">
-    <@input>
+    <@sim_input>
     // Receive ${varName}
     if(json.has("${varName}")) {
       jsonVar = json.getJSONObject("${varName}");
@@ -24,11 +24,10 @@
       </#list>
       <#else>
       model.${varName} = jsonVar.<@value_getter />("value");
-      //System.out.println("received ${varName}:"+model.${varName});
       </#if>
     }
     </@>
-    <@output>
+    <@sim_output>
     // Send ${varName}
     jsonVar = new JSONObject();
     json.put("${varName}", jsonVar);

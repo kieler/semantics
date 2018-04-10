@@ -50,6 +50,7 @@ class KiCoolRegistration {
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
     private static val Map<String, System> modelsIdMap = new HashMap<String, System>()
     private static val List<EObject> systemsModels = loadRegisteredSystemModels
+    private static val Map<String, System> temporarySystems = <String, System> newHashMap
     
     private static val Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>()
     private static val Map<String, SourceTargetPair> processorModelTypes = new HashMap<String, SourceTargetPair>()
@@ -68,16 +69,36 @@ class KiCoolRegistration {
         injector.getInstance(object.getClass());
     }
     
-    static def getSystemModels() {
-        systemsModels
+    static def List<EObject> getSystemModels() {
+        val allSystemModels = newArrayList
+        if(!temporarySystems.isEmpty) {
+            allSystemModels.addAll(temporarySystems.values)
+        }
+        allSystemModels.addAll(systemsModels)
+        return allSystemModels
     }
     
-    static def getSystemByResource(String res) {
+    static def registerTemporarySystem(System system) {
+        val id = system.id
+        if(modelsIdMap.containsKey(id)) {
+            throw new Exception("Cannot register temporary system '"+id+"'. Another system with this id is already registered.")
+        }
+        temporarySystems.put(id, system)
+    }
+    
+    static def boolean isTemporarySystem(String id) {
+        return temporarySystems.containsKey(id)
+    }
+    
+    static def System getSystemByResource(String res) {
         checkArgument(modelsMap.containsKey(res), "No processor system registered for resource: " + res)
         modelsMap.get(res)
     }
     
-    static def getSystemById(String id) {
+    static def System getSystemById(String id) {
+        if (temporarySystems.containsKey(id)) {
+            return temporarySystems.get(id)
+        }
         checkArgument(modelsIdMap.containsKey(id), "No processor system registered with id: " + id)
         modelsIdMap.get(id)
     }

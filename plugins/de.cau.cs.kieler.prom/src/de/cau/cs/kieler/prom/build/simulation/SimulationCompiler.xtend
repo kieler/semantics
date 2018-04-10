@@ -359,13 +359,13 @@ abstract class SimulationCompiler extends Configurable {
             // Create build problem for the exception
             result.addProblem(BuildProblem.createError(file, exception))
             // Print the process output as error to the console
-            PromConsole.print(processOutput, ConsoleStyle.ERROR)
+            PromConsole.buildConsole.error(processOutput)
         } else {
             // Add the created file to the result
             result.addCreatedFile(executableFile)
             executableFile.refreshLocal(1, null)
             // Print the process output as info to the console
-            PromConsole.print(processOutput, ConsoleStyle.INFO)
+            PromConsole.buildConsole.info(processOutput)
         }
         return result
     }

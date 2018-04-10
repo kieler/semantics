@@ -14,6 +14,7 @@ package de.cau.cs.kieler.prom.templates
 
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.BooleanAnnotation
+import de.cau.cs.kieler.annotations.CommentAnnotation
 import de.cau.cs.kieler.annotations.FloatAnnotation
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
@@ -22,10 +23,10 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.annotations.CommentAnnotation
 
 /**
  * Model analyzer for KExpression declarations.
@@ -36,6 +37,7 @@ import de.cau.cs.kieler.annotations.CommentAnnotation
 abstract class DeclarationAnalyzer extends ModelAnalyzer {
     
     private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
+    private static val EXCLUDE_SIMULATION_ANNOTATION_NAME = "ExcludeInSimulation"
     
     /**
      * {@inheritDoc}
@@ -99,10 +101,10 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                 // Print warning if explicit wrapper code annotation on variable
                 // that is neither input nor output
                 val valuedObject = decl.valuedObjects.get(0)
-                if(valuedObject != null) {
+                if(valuedObject !== null) {
                     for (annotation : decl.annotations) {
                          if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
-                             PromConsole.print('''Warning: Variable '«valuedObject.name»' is neither input nor output but has an explicit wrapper code annotation.''');
+                             PromConsole.buildConsole.warn('''Variable '«valuedObject.name»' is neither input nor output but has a wrapper code annotation.''')
                          }
                     }
                 }
@@ -120,12 +122,14 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
     protected def List<MacroCallData> getSimulationInterface(Iterable<Declaration> declarations) {
         val allDatas = <MacroCallData> newArrayList
         for(decl : declarations.filter(VariableDeclaration)) {
-            for(valuedObject : decl.valuedObjects) {
-                if(!decl.const) {
+            var skip = decl.annotations.exists[it.name == EXCLUDE_SIMULATION_ANNOTATION_NAME]
+            val varType = decl.type.literal
+            val isInput = decl.isInput
+            val isOutput = decl.isOutput
+            val isConst = decl.const
+            if(!skip && !isConst) {
+                for(valuedObject : decl.valuedObjects) {
                     val varName = valuedObject.name
-                    val varType = decl.type.literal
-                    val isInput = decl.isInput
-                    val isOutput = decl.isOutput
                     val data = new MacroCallData 
                     data.initializeForSimulationGeneration(varName, varType, isInput, isOutput, true)
                     allDatas.add(data)
@@ -143,13 +147,23 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                                     throw new Exception("Array sizes must have an integer or integer constant as initial value")
                                 }
                             }
-                            if(intValue != null) {
+                            if(intValue !== null) {
                                 data.arguments.add(intValue.value.toString)
                             }
                         }
                     }
                     
-                    // Add another macro call for the separate value holding variable 
+                    // Each annotation gets its own macro call
+                    for (annotation : decl.annotations) {
+                        if(!(annotation instanceof CommentAnnotation) && annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
+                            val wrapperData = new MacroCallData 
+                            allDatas.add(wrapperData)
+                            wrapperData.initializeForCodeGeneration(varName, varType, isInput, isOutput)
+                            initData(wrapperData, annotation)
+                        }
+                    }
+                    
+                    // In case of valued signals: Add another macro call for the separate value holding variable
                     val isValuedSignal = decl.signal && (decl.type !== ValueType.PURE)
                     if (isValuedSignal) {
                         val valData = data.clone as MacroCallData
@@ -186,14 +200,12 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
             StringAnnotation: data.arguments.addAll(annotation.values)
         }
         
-        if(data.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME && !data.arguments.isEmpty){
+        if(!data.arguments.isEmpty && data.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME ){
             // Explicit wrapper annotation
             // -> actual snippet name is the first argument.
             data.name = data.arguments.remove(0)
-        }else{
-            // Not an explicit wrapper code annotation
-            // -> ignore if non existing.
-            data.ignoreNonExistingSnippet = true
         }
+        // Ignore if non existing.
+        data.ignoreNonExistingSnippet = true
     }
 }

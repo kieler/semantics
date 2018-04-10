@@ -38,16 +38,19 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.processors.ssa.SSATransformation
 import de.cau.cs.kieler.scg.processors.ssa.SimpleSCSSATransformation
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
@@ -113,6 +116,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     @Inject extension KExpressionsValueExtensions
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
     @Inject extension SCGManipulationExtensions
     @Inject extension SSATransformationExtensions
     @Inject extension SSACoreExtensions
@@ -133,6 +137,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     protected var superfluousConditionals = <Conditional, Boolean>newHashMap
     protected var parEvalConditionals = <Conditional, Expression>newHashMap
     protected var parEvalAssinments = <Assignment, Expression>newHashMap
+    protected var ssaCopyPropagation = HashMultimap.<ValuedObject, ValuedObject>create
     // Analysis results
     protected val inputs = <ValuedObject>newHashSet
     protected var DominatorTree dt;
@@ -259,7 +264,99 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             deadBranches++
             if (environment.inDeveloperMode) scg.snapshot
         }
-        if (!deadBlocks.empty || deadBranches > 0) scg.snapshot
+        
+        // Remove dead threads
+        var deadThreads = 0
+        for (entry : scg.nodes.filter(Entry).filter[!incoming.empty].toList) {
+            if (entry.eContainer !== null) {
+                val threadNodes = <Node>newArrayList()
+                var dead = true
+                var next = entry.next.target
+                while (dead && !(next instanceof Exit)) {
+                    if (next.isSSA) {
+                        val asm = next as Assignment
+                        next = asm.next.target
+                        threadNodes += next
+                    } else {
+                        dead = false
+                    }
+                }
+                if (dead) {
+                    val exit = next as Exit
+                    val fork = entry.allPreviousHeadNode as Fork
+                    val join = fork.join
+                    
+                    entry.removeNode(false)
+                    exit.removeNode(false)
+                    threadNodes.forEach[ node |
+                        node.removeNode(false)
+                        defs.values.removeIf[it == node]
+                        uses.values.removeIf[it == node]
+                    ]
+                    
+                    if (fork.allNext.size == 1) {
+                        val tEntry = fork.allNext.head.target as Entry
+                        val tExit = join.allPreviousHeadNode as Exit
+                        val joinBB = join.basicBlock
+                        joinBB.synchronizerBlock = false
+                        
+                        val psis = <Assignment>newArrayList
+                        next = join.next.target
+                        while (next.isSSA(PSI)) {
+                            psis += next as Assignment
+                            next = (next as Assignment).next.target
+                        }
+                        
+                        fork.removeNode(true)
+                        tEntry.removeNode(true)
+                        tExit.removeNode(true)
+                        join.removeNode(true)
+                        
+                        for (psi : psis) {
+                            val fc = psi.expression as FunctionCall
+                            var ValuedObject replacement
+                            
+                            val sources = ssaCopyPropagation.get(psi.valuedObject)
+                            if (sources.size == 1) {
+                                replacement = sources.head
+                            }
+                            
+                            if (replacement === null) {
+                                for (p : fc.parameters) {
+                                    val pBB = parameterMapping.get(p)
+                                    if (replacement === null &&
+                                        pBB.eContainer !== null &&
+                                        !dt.isDominator(pBB, joinBB)) {
+                                        replacement = (p.expression as ValuedObjectReference).valuedObject
+                                    }
+                                }
+                            }
+                            
+                            if (replacement === null) {
+                                throw new Exception("This should not happen!")
+                            }
+                            
+                            // replace usage by previous
+                            // TODO improve performance
+                            for (vor : scg.eAllContents.filter(ValuedObjectReference).filter[valuedObject == psi.valuedObject].toList) {
+                                vor.valuedObject = replacement
+                            }
+                            
+                            psi.removeNode(true)
+                            defs.values.removeIf[it == psi]
+                            uses.values.removeIf[it == psi]
+                        }
+                    }
+                    
+                    deadThreads++
+                    if (environment.inDeveloperMode) scg.snapshot
+                }
+            }
+        }
+        
+        if (!deadBlocks.empty || deadBranches > 0 || deadThreads > 0) scg.snapshot
+        
+        
         
         // ---------------
         // 3. Propagate Constants / Apply partial evaluation
@@ -293,11 +390,46 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         // 4. Remove superfluous definitions
         // ---------------
         if (environment.getProperty(REMOVE_UNREAD_ASSIGNMENTS)) {
+            val ineffectiveOutputs = <Assignment>newHashSet
+            if (environment.getProperty(REMOVE_OUTPUTS)) {
+                // TDOD handle pauses
+                if (scg.nodes.forall[!(it instanceof Surface)]) {
+                    val exitBB = (entryBB.schedulingBlocks.head.nodes.head as Entry).exit.basicBlock
+                    
+                    for (decl : scg.SSADeclarations.filter[output == true]) {
+                        val uselessDefs = newHashSet
+                        val secureOutputs = newHashSet
+                        for (vo : decl.valuedObjects) {
+                            val def = defs.get(vo)
+                            if (def !== null) {
+                                if (uses.get(vo).nullOrEmpty) {
+                                    uselessDefs += def
+                                }
+                                if (dt.isStrictDominator(def.basicBlock, exitBB)) {
+                                    secureOutputs += def
+                                }
+                            }
+                        }
+                        for (useless : uselessDefs) {
+                            for (secure : secureOutputs) {
+                                // FIXME does not work since dt is initial structure not optimized
+                                if (useless !== secure && dt.isStrictDominator(useless.basicBlock, secure.basicBlock)) {
+                                    ineffectiveOutputs += useless
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             val useless = defs.entrySet.filter[
                 key.cardinalities.nullOrEmpty && // Not an array // TODO support arrays
-                (!key.isOutput || environment.getProperty(REMOVE_OUTPUTS)) && // Not an output
+                !key.isOutput && // Not an output
                 uses.get(it.key).nullOrEmpty // No uses
             ].map[value].toList
+            if (environment.getProperty(REMOVE_OUTPUTS)) {
+                useless.addAll(ineffectiveOutputs)
+            }
             while (!useless.empty) {
                 val def = useless.head
                 useless.remove(0) // pop
@@ -403,14 +535,33 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             return
         }
         if (asm.isSSA) {
-            if (asm.isSSA(PHI)) {
-                var Value constantValue
-                for (vo : (asm.expression as FunctionCall).parameters.map[(it.expression as ValuedObjectReference).valuedObject]) {
-                    val exec = executable.contains(defs.get(vo).basicBlock)
-                    if (overdefined.contains(vo) && (exec || inputs.contains(vo))) {
-                        asm.valuedObject.raiseOverdefined
-                        return
-                    } else if (constants.containsKey(vo) && exec) {
+            var constantSources = newHashSet
+            var Value constantValue
+            val bb = asm.basicBlock
+            val fc = (asm.expression as FunctionCall)
+            
+            for (entry : fc.parameters.map[(it.expression as ValuedObjectReference).valuedObject].indexed) {
+                val vo = entry.value
+                val voDef = defs.get(vo)
+                var exec = executable.contains(voDef.basicBlock)
+                if (asm.isSSA(PHI) && fc.parameters.size == 2 && dt.isStrictDominator(voDef.basicBlock, bb)) {
+                    val cond = bb.predecessors.map[conditional].filterNull.head
+                    if (cond !== null && superfluousConditionals.containsKey(cond)) {
+                        val aliveTargetBranch = if (!superfluousConditionals.get(cond)) cond.then else cond.^else
+                        val sourceBB = parameterMapping.get(fc.parameters.get(entry.key))
+                        if (sourceBB == cond.basicBlock) {
+                            exec = aliveTargetBranch.target.basicBlock == bb
+                        } else {
+                            exec = executable.contains(sourceBB)
+                        }
+                    }
+                }
+                if (overdefined.contains(vo) && (exec || inputs.contains(vo))) {
+                    asm.valuedObject.raiseOverdefined
+                    return
+                } else if (constants.containsKey(vo) && exec) {
+                    constantSources += vo
+                    if (!asm.isSSA(PSI)) {
                         if (constantValue === null) {
                             constantValue = constants.get(vo)
                         } else if (!constants.get(vo).isSameValue(constantValue)) {
@@ -419,15 +570,75 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                         }
                     }
                 }
-                if (constantValue !== null) {
-                    asm.valuedObject.raiseConstant(constantValue)
-                }
-            } else if (asm.isSSA(PSI)) {
-                asm.valuedObject.raiseOverdefined
-            } else if (asm.isSSA(PI)) {
-                asm.valuedObject.raiseOverdefined
             }
-            // TODO others?
+            
+            val vo = asm.valuedObject
+            
+            if (asm.isSSA(PSI) && !constantSources.empty) {
+                // Some SC semantics for psi
+                val sources = newHashSet//HashMultimap.<ValuedObject, ValuedObject>create
+                val work = newHashSet
+                val processed = newHashSet
+                var ValuedObject dominator
+                var Assignment dominatorAsm
+                
+                // compute closure
+                for (source : constantSources) {
+                    work += source
+                    while(!work.empty) {
+                        val nextVO = work.head
+                        work.remove(nextVO)
+                        val nextDef = defs.get(nextVO)
+                        processed += nextVO
+                        if (dt.isDominator(nextDef.basicBlock, bb)) {
+                            if (dominator === null || dt.isStrictDominator(dominatorAsm.basicBlock, nextDef.basicBlock)) {
+                                dominator = nextVO
+                                dominatorAsm = nextDef
+                            }
+                        } else if (ssaCopyPropagation.containsKey(nextVO)) {
+                            for (otherSources : ssaCopyPropagation.get(nextVO)) {
+                                if (!processed.contains(otherSources)) {
+                                    work += otherSources
+                                }
+                            }
+                        } else if (!sources.contains(nextVO)) {
+                            sources += nextVO
+                        }
+                    }
+                    processed.clear
+                }
+                
+                if (sources.empty) {
+                    ssaCopyPropagation.removeAll(vo)
+                    ssaCopyPropagation.put(vo, dominator)
+                    if (constants.containsKey(vo)) {
+                        constantValue = constants.get(dominator)
+                    }
+                } else {
+                    ssaCopyPropagation.removeAll(vo)
+                    ssaCopyPropagation.putAll(vo, sources)
+                    
+                    if (sources.forall[constants.containsKey(it)]) {
+                        for (source : sources) {
+                            if (constantValue === null) {
+                                constantValue = constants.get(source)
+                            } else if (!constants.get(source).isSameValue(constantValue)) {
+                                vo.raiseOverdefined
+                                return
+                            }
+                        }
+                    }
+                }
+                
+            } else if (!constantSources.empty) {
+                ssaCopyPropagation.removeAll(vo)
+                ssaCopyPropagation.putAll(vo, constantSources)
+            }
+
+            if (constantValue !== null) {
+                vo.raiseConstant(constantValue)
+            }
+            
         } else {
             asm.evaluateAssignment
         }

@@ -35,14 +35,14 @@ class FileGenerationResult {
      * Returns the build problems that are warnings.
      */
     public def Iterable<BuildProblem> warnings() {
-        return problems.filter[it.isWarning]
+        return getProblems.filter[it.isWarning]
     }
     
     /**
      * Returns the build problems that are errors.
      */
     public def Iterable<BuildProblem> errors() {
-        return problems.filter[it.isError]
+        return getProblems.filter[it.isError]
     }
     
     /**

@@ -47,7 +47,7 @@ class AdvancedControlsEnabledPropertyTester extends PropertyTester {
     public static def void update() {
         val window = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
         val evaluationService = window.getService(typeof(IEvaluationService)) as IEvaluationService
-        if (evaluationService != null) {
+        if (evaluationService !== null) {
             evaluationService.requestEvaluation(fullyQualifiedProperty)
         }
     }

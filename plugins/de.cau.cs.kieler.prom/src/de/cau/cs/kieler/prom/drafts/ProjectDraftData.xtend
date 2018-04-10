@@ -22,6 +22,8 @@ import java.util.Map
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Path
 import org.eclipse.jface.preference.IPreferenceStore
+import de.cau.cs.kieler.prom.FileExtensions
+import org.eclipse.core.internal.resources.ResourceException
 
 /**
  * Data container for default settings to use in creation of new projects.
@@ -158,7 +160,7 @@ class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
      * @return the created project draft.
      */
     public static def ProjectDraftData loadInstanceFromPreferenceStore(IPreferenceStore store, String name) {
-        if(store == null) {
+        if(store === null) {
             return null
         } else {
             var env = new ProjectDraftData(name)
@@ -184,6 +186,7 @@ class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
      * @param additionalReplacements Replacements for variables in the resources
      */
     public def void createInitialResources(IProject project, Map<String, String> additionalReplacements) {
+        val List<Exception> exceptions = newArrayList
         for(data : initialResources) {
             var resolvedProjectRelativePath = data.projectRelativePath
             try {
@@ -191,13 +194,13 @@ class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
                     resolvedProjectRelativePath = PromPlugin.performStringSubstitution(data.projectRelativePath.trim, project)
                     
                     val path = new Path(resolvedProjectRelativePath)
-                    val isFile = (path.fileExtension != null)
+                    val isFile = (path.fileExtension !== null)
                     
                     if(isFile) {
                         // Setup placeholder replacements
                         val placeholderReplacements = newHashMap
                         placeholderReplacements.put("project_name", project.name)
-                        if(additionalReplacements != null) {
+                        if(additionalReplacements !== null) {
                             placeholderReplacements.putAll(additionalReplacements)
                         }
                         
@@ -206,7 +209,7 @@ class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
                                                   data.origin, placeholderReplacements)
                         
                         // Remember kibuild file in project preferences
-                        if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
+                        if(Files.getFileExtension(resolvedProjectRelativePath) == FileExtensions.BUILD_CONFIG) {
                             project.setPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER, resolvedProjectRelativePath)
                         }
                     } else {
@@ -214,11 +217,18 @@ class ProjectDraftData extends ConfigurationSerializable implements Cloneable{
                         PromPlugin.initializeFolder(project, resolvedProjectRelativePath, data.origin)
                     }
                 }    
-            } catch (Exception e) {
-//                throw new Exception("Could not initialize '" + resolvedProjectRelativePath +"'\n" 
-//                                  + "with '" + data.origin + "'.\n"
-//                                  + "Please make sure that all paths are valid.", e)
+            } catch (ResourceException e) {
+                val isReadOnlyException = e.localizedMessage.matches(".*File .* is read-only.*")
+                if(!isReadOnlyException) {
+                  exceptions.add(e)
+                }
             }
+        }
+        
+        if(!exceptions.isNullOrEmpty) {
+            val exceptionMessages = exceptions.map[it.localizedMessage].fold("\n-\t", [a,b| a+b])
+            throw new Exception("Exception while initializing project '" + project.name +"':"
+                              + exceptionMessages)
         }
     }
     

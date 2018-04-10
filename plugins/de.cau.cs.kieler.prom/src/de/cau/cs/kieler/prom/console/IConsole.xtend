@@ -12,6 +12,10 @@
  */
 package de.cau.cs.kieler.prom.console
 
+import com.google.common.base.Strings
+import java.io.PrintWriter
+import java.io.StringWriter
+
 /**
  * Interface to present information to users in a console. 
  * 
@@ -20,20 +24,65 @@ package de.cau.cs.kieler.prom.console
  */
 interface IConsole {
     /**
+     * Writes an information to the console.
+     * 
+     *  @param message The message to be printed
+     */ 
+    public def void info(String msg) {
+        print(msg, ConsoleStyle.INFO)
+    }
+    
+    /**
+     * Writes an error to the console.
+     * 
+     *  @param message The message to be printed
+     */ 
+    public def void error(String msg) {
+        print(msg, ConsoleStyle.ERROR)
+    }
+    
+    /**
+     * Writes a warning to the console.
+     * 
+     *  @param message The message to be printed
+     */ 
+    public def void warn(String msg) {
+        print(msg, ConsoleStyle.WARNING)
+    }
+    
+    /**
+     * Write the exception stack trace to the console.
+     * 
+     * @param e The exception to be printed
+     */
+    public def void printStackTrace(Exception e){
+        val sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        val exceptionAsString = sw.toString();
+        print(exceptionAsString, ConsoleStyle.ERROR)
+    }
+    
+    /**
+     * Write the exception and its cause to the console.
+     * 
+     * @param e The exception to be printed
+     */
+    public def void print(Exception e){
+        var text = ""
+        text += Strings.nullToEmpty(e.toString())
+        if(e.cause !== null) {
+            if(text.length > 0 )
+                text += ":"
+            text += Strings.nullToEmpty(e.cause.localizedMessage)    
+        }
+        print(text, ConsoleStyle.ERROR)
+    }
+    
+    /**
      * Writes to the console.
      * 
      * @param message The message to print to the console
      * @param style The style to show the message
      */
     def void print(String msg, ConsoleStyle style)
-    
-    /**
-     * Show the console to the user
-     */
-    def void bringToFront()
-    
-    /**
-     * Remove all text from the console
-     */
-    def void clear()
 }

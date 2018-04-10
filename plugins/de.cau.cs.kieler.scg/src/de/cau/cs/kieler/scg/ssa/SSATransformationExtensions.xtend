@@ -58,6 +58,7 @@ import com.google.common.collect.HashBiMap
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scg.Surface
 
 /**
  * @author als
@@ -380,4 +381,13 @@ class SSATransformationExtensions {
         return placed
     }
     
+    
+    // -----------------
+    // Helper
+    // -----------------
+    def boolean onlyImmediatePathsTo(Node n1, Node n2) {
+        // TODO properly implement
+        // For now very conservative assumption
+        return (n1.eContainer as SCGraph).nodes.forall[!(it instanceof Surface)]
+    }
 }

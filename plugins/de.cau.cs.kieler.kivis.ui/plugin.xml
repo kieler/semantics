@@ -43,7 +43,7 @@
              canFinishEarly="false"
              category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
              class="de.cau.cs.kieler.kivis.ui.wizards.KiVisFileWizard"
-             finalPerspective="de.cau.cs.kieler.simulation"
+             finalPerspective="de.cau.cs.kieler.modelSimulation"
              hasPages="true"
              id="de.cau.cs.kieler.kivis.ui.fileWizard"
              name="KiVis File"

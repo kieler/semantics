@@ -42,9 +42,9 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Compiler configuration */
     private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core.simple"
-    private val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG"
-    private val dependencyAnalysisV1 = "de.cau.cs.kieler.scg.processors.transformators.dependency.v1"
-    private val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.transformators.dependency"
+    private val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.SCG"
+    private val dependencyAnalysisV1 = "de.cau.cs.kieler.scg.processors.dependency.v1"
+    private val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.dependency"
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration

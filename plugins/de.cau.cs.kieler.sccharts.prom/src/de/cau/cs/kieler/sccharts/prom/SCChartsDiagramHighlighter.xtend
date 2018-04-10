@@ -22,12 +22,12 @@ import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.templates.VariableInterfaceType
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 import de.cau.cs.kieler.simulation.core.DataPool
@@ -53,6 +53,8 @@ import java.util.Set
  *
  */
 class SCChartsDiagramHighlighter extends DiagramHighlighter {
+    
+    extension static SCChartsStateExtensions scchartsStateExtensions = new SCChartsStateExtensions
     
     /**
      * Single instance.
@@ -431,44 +433,6 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                 enterState(states, initialState)
             }
         }
-    }
-    
-    /**
-     * Returns the direct initial child states of a given state.
-     * 
-     * @param rootState The state
-     * @return the direct child states of the given root state that are initial states 
-     */
-    private def List<State> getInitialStates(State rootState) {
-        val states = <State> newArrayList
-        for(region : rootState.regions) {
-            if(region instanceof ControlflowRegion) {
-                val initState = region.states.findFirst[it.isInitial]
-                if(initState != null) {
-                    states.add(initState)
-                }
-            }
-        }
-        return states
-    }
-    
-    /**
-     * Returns the direct final child states of a given state.
-     * 
-     * @param rootState The state
-     * @return the direct child states of the given root state that are final states 
-     */
-    private def List<State> getFinalStates(State rootState) {
-        val states = <State> newArrayList
-        for(region : rootState.regions) {
-            if(region instanceof ControlflowRegion) {
-                val initState = region.states.findFirst[it.isFinal]
-                if(initState != null) {
-                    states.add(initState)
-                }
-            }
-        }
-        return states
     }
     
     /**

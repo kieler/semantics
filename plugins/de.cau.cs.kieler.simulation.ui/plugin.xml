@@ -71,15 +71,20 @@
                <visibleWhen
                      checkEnabled="false">
                   <and>
-                     <with
-                           variable="activeWorkbenchWindow.activePerspective">
-                        <equals
-                              value="de.cau.cs.kieler.simulation">
-                        </equals>
-                     </with>
                      <test
                            property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
                      </test>
+                     <with
+                           variable="activeWorkbenchWindow.activePerspective">
+                        <or>
+                           <equals
+                                 value="de.cau.cs.kieler.modelSimulation">
+                           </equals>
+                           <equals
+                                 value="de.cau.cs.kieler.environmentSimulation">
+                           </equals>
+                        </or>
+                     </with>
                   </and>
                </visibleWhen>
             </command>
@@ -95,9 +100,14 @@
                      checkEnabled="false">
                   <with
                         variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
+                     <or>
+                        <equals
+                              value="de.cau.cs.kieler.modelSimulation">
+                        </equals>
+                        <equals
+                              value="de.cau.cs.kieler.environmentSimulation">
+                        </equals>
+                     </or>
                   </with>
                </visibleWhen>
             </command>
@@ -113,9 +123,14 @@
                      checkEnabled="false">
                   <with
                         variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
+                     <or>
+                        <equals
+                              value="de.cau.cs.kieler.modelSimulation">
+                        </equals>
+                        <equals
+                              value="de.cau.cs.kieler.environmentSimulation">
+                        </equals>
+                     </or>
                   </with>
                </visibleWhen>
             </command>
@@ -131,9 +146,14 @@
                      checkEnabled="false">
                   <with
                         variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
+                     <or>
+                        <equals
+                              value="de.cau.cs.kieler.modelSimulation">
+                        </equals>
+                        <equals
+                              value="de.cau.cs.kieler.environmentSimulation">
+                        </equals>
+                     </or>
                   </with>
                </visibleWhen>
             </command>
@@ -149,9 +169,14 @@
                      checkEnabled="false">
                   <with
                         variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
+                     <or>
+                        <equals
+                              value="de.cau.cs.kieler.modelSimulation">
+                        </equals>
+                        <equals
+                              value="de.cau.cs.kieler.environmentSimulation">
+                        </equals>
+                     </or>
                   </with>
                </visibleWhen>
             </command>
@@ -166,9 +191,14 @@
                      checkEnabled="false">
                   <with
                         variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
+                     <or>
+                        <equals
+                              value="de.cau.cs.kieler.modelSimulation">
+                        </equals>
+                        <equals
+                              value="de.cau.cs.kieler.environmentSimulation">
+                        </equals>
+                     </or>
                   </with>
                </visibleWhen>
             </command>
@@ -183,9 +213,14 @@
                      checkEnabled="false">
                   <with
                         variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
+                     <or>
+                        <equals
+                              value="de.cau.cs.kieler.modelSimulation">
+                        </equals>
+                        <equals
+                              value="de.cau.cs.kieler.environmentSimulation">
+                        </equals>
+                     </or>
                   </with>
                </visibleWhen>
             </command>
@@ -263,6 +298,17 @@
                style="push"
                tooltip="Step History Forward">
          </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.trim.status">
+         <toolbar
+               id="de.cau.cs.kieler.simulation.ui.toolbar.globalSimulationStatusLine">
+            <control
+                  class="de.cau.cs.kieler.simulation.ui.views.TickInfoContribution"
+                  id="de.cau.cs.kieler.simulation.ui.toolbar.globalTickInfo">
+            </control>
+         </toolbar>
       </menuContribution>
       </extension>
    <extension
@@ -342,7 +388,7 @@
             canFinishEarly="false"
             category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.simulation.ui.wizards.KiSimFileWizard"
-            finalPerspective="de.cau.cs.kieler.simulation"
+            finalPerspective="de.cau.cs.kieler.modelSimulation"
             id="de.cau.cs.kieler.simulation.ui.wizards.kisimFile"
             name="KiSim File"
             project="false">

@@ -68,12 +68,13 @@ class AsynchronousSimulationJob extends Job {
             // Apply user made changes
             pool.applyUserValues
             // Set variable of model to current time if needed
-            if(sim.currentTimeVariable.value != null) {
-                val variable = pool.getVariable(sim.currentTimeVariable.stringValue)
-                if(variable.isInput) {
-                    variable.value = System.currentTimeMillis.intValue
+            if(!SimulationManager.currentTimeVariable.isNullOrEmpty) {
+                val variable = pool.getVariable(SimulationManager.currentTimeVariable)
+                if(variable !== null) {
+                    variable.value = System.currentTimeMillis.intValue    
                 } else {
-                    throw new Exception("The variable that receives the current time must be an input")
+                    throw new Exception("Current time variable '"+SimulationManager.currentTimeVariable+"' was not found in the data pool. "
+                                      + "You can clear this setting in the context menu of the data pool view (right click).")
                 }
             }
             // Perform actions on this new state
@@ -82,12 +83,13 @@ class AsynchronousSimulationJob extends Job {
             sim.setNewState(pool, nextActionIndex)
             
             // Set absolute time for next tick (possibly from a variable in the data pool)
-            if(sim.nextTickTimeVariable.value != null) {
-                val variable = sim.currentPool.getVariable(sim.nextTickTimeVariable.stringValue)
-                if(variable.isOutput) {
-                    nextTickTime = variable.value.doubleValue.intValue
+            if(!SimulationManager.nextTickTimeVariable.isNullOrEmpty) {
+                val variable = sim.currentPool.getVariable(SimulationManager.nextTickTimeVariable)
+                if(variable !== null) {
+                    nextTickTime = variable.value.doubleValue.intValue    
                 } else {
-                    throw new Exception("The variable that determines the time for the next tick must be an output")
+                    throw new Exception("Next tick time variable '"+SimulationManager.nextTickTimeVariable+"' was not found in the data pool. "
+                                      + "You can clear this setting in the context menu of the data pool view (right click).")
                 }
             } else {
                 nextTickTime = timeBeforeTick + SimulationManager.desiredTickPause

@@ -43,6 +43,9 @@ class SCGManipulationExtensions {
             } else {
                 node.allPrevious.toList.forEach[
                     prev += it.eContainer as Node
+                    if (node.allNext.size > 1) {
+                        throw new IllegalArgumentException("Cannot reroute controlflow to more than one target")
+                    }
                     val next = node.allNext.head
                     if (next !== null) {
                         target = next.target

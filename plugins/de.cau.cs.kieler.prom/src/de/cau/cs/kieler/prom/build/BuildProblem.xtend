@@ -42,6 +42,13 @@ class BuildProblem {
     private var Exception cause = null
     
     /**
+     * Resource from which the issue originally started.
+     * If the issue source changes, associated problem markers will be deleted.
+     */
+    @Accessors
+    private var IResource issueSource = null
+    
+    /**
      * A message for the user to understand the problem.
      */
     @Accessors(PUBLIC_GETTER)
