@@ -13,37 +13,30 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TimerAction
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.sccharts.TimerAction
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 /**
- * SCCharts During Transformation.
+ * SCCharts Timers Transformation.
  * 
- * @author cmot
+ * @author als
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -74,6 +67,7 @@ class Timers extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -82,41 +76,62 @@ class Timers extends SCChartsProcessor implements Traceable {
     // Global var names
     public static val EXT_WAKE_VAR = "_wakeT"
     public static val EXT_DELTA_T_VAR = "_deltaT"
-    public static val EXT_ABS_T_VAR = "_absTime"
+    public static val EXT_ABS_T_VAR = "_currentTime"
+    public static val EXT_ABS_WAKE_VAR = "_nextWakeTime"
     // Local var names
 //    public static val DEVIATION_VAR = "_deviation"
     // Experimental Switches
     public static val CATCH_UP = true
     public static val RELATIVE_TIME_REACTION = true
-    public static val SIMULATED_TIME = true
-    public static val ABSOLUTE_TIME_INPUT = true
+    public static val SIMULATED_TIME = false
+    public static val ABSOLUTE_TIME_INPUT = false
+    public static val ABSOLUTE_WAKE_OUTPUT = false
+    
+    // switches
+    public var catch_up = CATCH_UP
+    public var simulated_time = SIMULATED_TIME
+    public var absolute_time_input = ABSOLUTE_TIME_INPUT    
+    public var absolute_wake_output = ABSOLUTE_WAKE_OUTPUT    
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
     }
 
     def void transform(State rootState) {
+        catch_up = if (rootState.hasAnnotation("NoCatchUp")) false else CATCH_UP
+        simulated_time = if (rootState.hasAnnotation("SimulateTime")) true else SIMULATED_TIME
+        absolute_time_input = if (rootState.hasAnnotation("AbsTimeInput")) true else ABSOLUTE_TIME_INPUT
+        absolute_wake_output = if (rootState.hasAnnotation("AbsWakeOutput")) true else ABSOLUTE_WAKE_OUTPUT
+        
         if (rootState.allStates.exists[!actions.filter(TimerAction).empty]) {
             // Create VOs
-            val absTime = if (ABSOLUTE_TIME_INPUT) {
-                val time =createValuedObject(EXT_ABS_T_VAR).uniqueName
+            val absTime = if (absolute_time_input) {
+                val time = createValuedObject(EXT_ABS_T_VAR).uniqueName
                 rootState.declarations += createIntDeclaration => [
                     input = true
                     valuedObjects += time
                 ]
                 time
             }
+            val absWake = if (absolute_wake_output) {
+                val time = createValuedObject(EXT_ABS_WAKE_VAR).uniqueName
+                rootState.declarations += createIntDeclaration => [
+                    output = true
+                    valuedObjects += time
+                ]
+                time
+            }
             val deltaT = createValuedObject(EXT_DELTA_T_VAR).uniqueName
             rootState.declarations += createIntDeclaration => [
-                input = !ABSOLUTE_TIME_INPUT
+                input = !absolute_time_input
                 valuedObjects += deltaT
             ]
             val wake = createValuedObject(EXT_WAKE_VAR).uniqueName
-            if (SIMULATED_TIME || ABSOLUTE_TIME_INPUT) {
+            if (simulated_time || absolute_time_input) {
                 wake.initialValue = createIntValue(0)
             }
             rootState.declarations += createIntDeclaration => [
-                output = true
+                output = !absolute_wake_output
                 valuedObjects += wake
             ]
 //            val simDeltaT = createValuedObject(SIM_DELTA_T_VAR).uniqueName
@@ -197,7 +212,7 @@ class Timers extends SCChartsProcessor implements Traceable {
                         if (RELATIVE_TIME_REACTION) {
                             createAssignment(localTime, createOperatorExpression(OperatorType.CONDITIONAL) => [
                                 subExpressions += clock.reference
-                                if (CATCH_UP) {
+                                if (catch_up) {
                                     subExpressions += threshold.reference
                                     subExpressions += createIntValue(0)
                                 } else {
@@ -216,7 +231,7 @@ class Timers extends SCChartsProcessor implements Traceable {
                             ]).operator = AssignOperator.ASSIGN
                         }
                         // Publish wake up
-                        createAssignment(wake, createSubExpression(period.trigger, localTime.reference)).operator = AssignOperator.ASSIGNMIN
+                        createAssignment(wake, createSubExpression(threshold.reference, localTime.reference)).operator = AssignOperator.ASSIGNMIN
                     ]
                     
 //                    clkState.createImmediateDuringAction => [
@@ -253,26 +268,43 @@ class Timers extends SCChartsProcessor implements Traceable {
 //                // assure wake time >= 0 (catch up case)
 //                createAssignment(wake, createIntValue(0)).operator = AssignOperator.ASSIGNMAX
 //            ]
+
             rootState.createImmediateDuringAction => [
                 // start wake time collection
                 createAssignment(wake, createIntValue(DEFAULT_WAKE))
+                // calculate delta T
+                if (absolute_wake_output) {
+                    createAssignment(absWake, createOperatorExpression(OperatorType.ADD) => [
+                        subExpressions += absTime.reference
+                        subExpressions += wake.reference
+                    ])
+                }
             ]
             
-            if (ABSOLUTE_TIME_INPUT || SIMULATED_TIME) {
+            if (absolute_time_input || simulated_time) {
                 rootState.createDuringAction => [
                     // calculate delta T
-                    if (ABSOLUTE_TIME_INPUT) {
-                        createAssignment(deltaT, createOperatorExpression(OperatorType.SUB) => [
-                            subExpressions += absTime.reference
-                            subExpressions += createOperatorExpression(OperatorType.PRE) => [
-                                subExpressions += absTime.reference // Normally should be non immediate during
+                    if (absolute_time_input) {
+                        createAssignment(deltaT, createOperatorExpression(OperatorType.CONDITIONAL) => [
+                            subExpressions += createGTExpression => [
+                                subExpressions += absTime.reference
+                                subExpressions += createOperatorExpression(OperatorType.PRE) => [
+                                    subExpressions += absTime.reference // Normally should be non immediate during
+                                ]
                             ]
+                            subExpressions += createOperatorExpression(OperatorType.SUB) => [
+                                subExpressions += absTime.reference
+                                subExpressions += createOperatorExpression(OperatorType.PRE) => [
+                                    subExpressions += absTime.reference // Normally should be non immediate during
+                                ]
+                            ]
+                            subExpressions += createIntValue(0)
                         ])
                     }
                     // simulated time
-                    if (SIMULATED_TIME) {
+                    if (simulated_time) {
                         createAssignment(deltaT, createOperatorExpression(OperatorType.CONDITIONAL) => [
-                            subExpressions += createGEQExpression(deltaT.reference, createIntValue(0))
+                            subExpressions += createLEQExpression(deltaT.reference, createIntValue(0))
                             subExpressions += createOperatorExpression(OperatorType.PRE) => [
                                 subExpressions += wake.reference // Normally should be non immediate during
                             ]

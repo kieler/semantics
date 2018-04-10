@@ -191,7 +191,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     protected def insertLiveDeclarationValues(DataPool pool) {
         for (valuedObject : valuedObjectTextMap.keySet) {
             val text = valuedObjectTextMap.get(valuedObject)
-            text.text = valuedObject.reference.modifyTriggerText(text.text, pool)
+            if (text !== null) text.text = valuedObject.reference.modifyTriggerText(text.text, pool)
         }
     }
     
