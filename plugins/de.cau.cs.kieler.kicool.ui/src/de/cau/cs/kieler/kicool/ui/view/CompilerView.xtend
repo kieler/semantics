@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
@@ -19,9 +20,13 @@ import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.CompileTracingToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.DebugEnvironmentModelsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.FlattenSystemViewToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
@@ -39,9 +44,6 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
-import de.cau.cs.kieler.klighd.ZoomStyle
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -65,6 +67,7 @@ class CompilerView extends DiagramViewPart {
     // Must be initialized in the view contributions. Hence, maybe null!
     @Accessors private var SystemSelectionManager systemSelectionManager = null
     @Accessors private var DeveloperToggle developerToggle = null
+    @Accessors private var FlattenSystemViewToggle flattenSystemViewToggle = null
     @Accessors private var ForwardResultToggle forwardResultToggle = null
     @Accessors private var AutoCompileToggle autoCompileToggle = null
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
@@ -128,6 +131,8 @@ class CompilerView extends DiagramViewPart {
         compileTracingToggle = new CompileTracingToggle(this)
         
         developerToggle = new DeveloperToggle(this)
+        flattenSystemViewToggle = new FlattenSystemViewToggle(this)
+        // flattenSystemViewToggle will be added inside developerToggle to have correct visibility
         developerToggle.addContributions(toolBar, menu)
         debugEnvironmentModelsToggle = new DebugEnvironmentModelsToggle(this)
         showPrivateSystemsToggle = new ShowPrivateSystemsToggle(this)
@@ -158,6 +163,7 @@ class CompilerView extends DiagramViewPart {
             memento.loadCheckedValue(autoCompileToggle)
             memento.loadCheckedValue(visualLayoutFeedbackToggle)
             memento.loadCheckedValue(developerToggle)
+            memento.loadCheckedValue(flattenSystemViewToggle)
             memento.loadCheckedValue(compileInplaceToggle)
             memento.loadCheckedValue(compileTracingToggle)
             memento.loadCheckedValues(skinSelectionActions.actions)
@@ -180,6 +186,7 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(autoCompileToggle)
         memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
+        memento.saveCheckedValue(flattenSystemViewToggle)
         memento.saveCheckedValue(compileInplaceToggle)
         memento.saveCheckedValue(compileTracingToggle)
         memento.saveCheckedValues(skinSelectionActions.actions)
@@ -195,6 +202,9 @@ class CompilerView extends DiagramViewPart {
             "de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
+        properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
+            KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object)
+        })
                                 
         updateDiagram(editPartSystemManager.activeSystem, properties)
     }
