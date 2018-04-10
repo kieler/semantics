@@ -29,9 +29,12 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition
 import de.cau.cs.kieler.sccharts.legacy.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.legacy.sccharts.impl.SCChartsPackageImpl
-import java.util.Set
-import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.sccharts.legacy.text.services.SctGrammarAccess
 import java.util.Map
+import java.util.Set
+import org.eclipse.xtext.Keyword
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import org.eclipse.xtext.validation.Check
 
 /**
  * @author ssm, cmot
@@ -40,6 +43,7 @@ import java.util.Map
 class SctValidator extends SctJavaValidator {
     
     @Inject extension SCChartsExtension = sCChartExtension;
+    @Inject var SctGrammarAccess grammar
     @Inject extension KExpressionsValuedObjectExtensions
 
     static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object.";
@@ -51,6 +55,34 @@ class SctValidator extends SctJavaValidator {
     static val String NO_OUTGOING_TRANSITION = "Connector states must have an outgoing transition."
     static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
     static val String IMMEDIATE_LOOP = "There is an immediate loop. The model is not SASC."
+    
+    public static val String LEGACY = "You are using a deprecated textual version of SCCharts!\nThis language version ('.sct') is no longer supported by the KIELER tool.\nPlease convert the file into the new '.sctx' format by performing the 'Covert into SCTx' action in the file's context menu."
+
+    /**
+     * Deprecated info.
+     */    
+    @Check
+    public def void checkNoImmediateLoops(de.cau.cs.kieler.sccharts.legacy.sccharts.State root) {
+        if (root.eContainer === null) {
+            val node = NodeModelUtils.findActualNodeFor(root)
+
+            if (node !== null) {
+                for (n : node.asTreeIterable) {
+                    val ge = n.grammarElement
+                    if (ge instanceof Keyword && ge == grammar.SCChartAccess.scchartKeyword_1) {
+                        messageAcceptor.acceptWarning(
+                            LEGACY,
+                            root,
+                            n.offset,
+                            n.length,
+                            LEGACY
+                        )
+                        return
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Check that there are no immediate loops between states in a region.

@@ -22,6 +22,7 @@ import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.ui.PlatformUI
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 
 /**
  * @author aas
@@ -67,9 +68,14 @@ class SimulateModelInDiagramView implements KiCoModelViewUIContributor {
         }
     }
     
-    override contribute(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {
+    override contributeControls(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {
         this.muc = muc
         toolBar.add(simulateAction)
         toolBar.add(linkCompileChainToCompilerViewAction)
     }
+    
+    override contributeDiagramWarnings(KiCoModelUpdateController muc, Object model, KlighdSynthesisProperties properties) {
+        return null
+    }
+    
 }
