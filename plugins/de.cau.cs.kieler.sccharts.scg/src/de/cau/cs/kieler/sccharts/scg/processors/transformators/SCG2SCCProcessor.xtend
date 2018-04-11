@@ -49,6 +49,8 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import java.util.List
 
 /**
  * @author ssm
@@ -96,9 +98,11 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsFixExtensions
     @Inject extension SCGThreadExtensions    
+    @Inject extension SCGControlFlowExtensions
     
     protected var counter = 0
     protected val finalStates = <ControlflowRegion, State> newHashMap
+    protected val finalIncoming = <Exit, List<Transition>> newHashMap
     protected val visited = <Node> newHashSet
     protected val nodeStateMapping = <Node, State> newHashMap
     
@@ -110,10 +114,13 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         val scopeStack = <Scope> newLinkedList => [ add(rootState) ]
         visited.clear
         finalStates.clear
+        finalIncoming.clear
         nodeStateMapping.clear
         while (!nodeList.empty) {
             val node = nodeList.pop
             
+            // Skip nodes that have already been visited, 
+            // but connect loose ends.
             if (!visited.contains(node.key)) {
                 node.key.transformNode(node.value, scg, nodeList, scopeStack, valuedObjectMap)
             } else if (node.value !== null) {
@@ -123,33 +130,56 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             }
         }
         
-        
         rootState
     }
     
     protected def dispatch void transformNode(Entry entry, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         visited += entry
         val parentState = scopeStack.peek as State
+        
+        // Entry nodes introduce a thread which corresponds to a region.
         val newRegion = parentState.createControlflowRegion("region" + counter++)
         scopeStack.push(newRegion)
+        
+        // Queue the exit node to make sure that the exit node is the last node in this thread.
+        if (entry.next.target != entry.exit) nodeList.push(new Pair<Node, Transition>(entry.exit, null))
         nodeList.push(new Pair<Node, Transition>(entry.next.target, null))
     }
     
     protected def dispatch void transformNode(Exit exit, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        // If there is an incoming path, store it and exit. 
         if (incoming !== null) {
+            if (finalIncoming.keySet.contains(exit)) {
+                finalIncoming.get(exit).add(incoming)
+            } else {
+                val newIncoming = <Transition> newLinkedList => [ add(incoming) ]
+                finalIncoming.put(exit, newIncoming)
+            }
+            return;
+        }
+
+        // Now, the last node in the acutal thread is processed. 
+        // Connect all stored paths to the final node and pop the scope from the stack.
+        if (finalIncoming.keySet.contains(exit)) { 
             val parentRegion = scopeStack.peek as ControlflowRegion
             val finalState = if (finalStates.get(parentRegion) !== null) 
                 finalStates.get(parentRegion) else  
                 parentRegion.createFinalState("state" + counter++)
             finalStates.put(parentRegion, finalState)
-            incoming.targetState = finalState
+            
+            for (inc : finalIncoming.get(exit)) {
+                inc.targetState = finalState
+            }
         }
+        
         scopeStack.pop
         visited += exit
     }
 
     protected def dispatch void transformNode(Fork fork, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         visited += fork
+        
+        // Create a super state for the fork.
         val parentRegion = scopeStack.peek as ControlflowRegion
         val newState = parentRegion.createState("state" + counter++)       
 
@@ -161,6 +191,8 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
 
         nodeStateMapping.put(fork, newState)
 
+        // Push the state scope onto the scope stack and queue the entry nodes of the threads. 
+        // Make sure to push the join node beforehand, so that the control flow continues afterwards. 
         scopeStack.push(newState)
         val forkTargets = fork.next.map[ target ].toList
         
@@ -173,6 +205,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     protected def dispatch void transformNode(Join join, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         visited += join
                     
+        // Remove the state scope from the stack.
         scopeStack.pop
         
         val newTransition = createImmediateTransition => [
@@ -196,6 +229,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         
         nodeStateMapping.put(conditional, newState)
 
+        // Create a transition for both branches and queue both continuations.
         val newTransitionThen = createImmediateTransition => [ 
             newState.outgoingTransitions.add(it)
             trigger = conditional.condition.copyExpression(map)
@@ -242,6 +276,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         
         nodeStateMapping.put(surface, newState)
         
+        // Insert a delay and queue the depth node's successor as continuation.
         val newTransition = createTransition => [
             newState.outgoingTransitions.add(it)
         ]
