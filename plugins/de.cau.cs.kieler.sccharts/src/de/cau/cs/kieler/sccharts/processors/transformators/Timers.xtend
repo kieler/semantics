@@ -292,13 +292,13 @@ class Timers extends SCChartsProcessor implements Traceable {
                             subExpressions += createGTExpression => [
                                 subExpressions += absTime.reference
                                 subExpressions += createOperatorExpression(OperatorType.PRE) => [
-                                    subExpressions += absTime.reference // Normally should be non immediate during
+                                    subExpressions += absTime.reference
                                 ]
                             ]
                             subExpressions += createOperatorExpression(OperatorType.SUB) => [
                                 subExpressions += absTime.reference
                                 subExpressions += createOperatorExpression(OperatorType.PRE) => [
-                                    subExpressions += absTime.reference // Normally should be non immediate during
+                                    subExpressions += absTime.reference
                                 ]
                             ]
                             subExpressions += createIntValue(0)
@@ -306,12 +306,8 @@ class Timers extends SCChartsProcessor implements Traceable {
                     }
                     // simulated time
                     if (simulated_time) {
-                        createAssignment(deltaT, createOperatorExpression(OperatorType.CONDITIONAL) => [
-                            subExpressions += createLEQExpression(deltaT.reference, createIntValue(0))
-                            subExpressions += createOperatorExpression(OperatorType.PRE) => [
-                                subExpressions += wake.reference // Normally should be non immediate during
-                            ]
-                            subExpressions += deltaT.reference
+                        createAssignment(deltaT, createOperatorExpression(OperatorType.PRE) => [
+                            subExpressions += wake.reference
                         ]).operator = AssignOperator.ASSIGN
                     }
                 ]
