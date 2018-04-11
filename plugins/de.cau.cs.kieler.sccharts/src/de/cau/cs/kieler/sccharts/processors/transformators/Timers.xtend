@@ -155,7 +155,7 @@ class Timers extends SCChartsProcessor implements Traceable {
                 var idx = 0
                 for (p : periods) {
                     val vo = createValuedObject(if (periods.size > 1) "clock" + idx++ else "clock")
-                    vo.initialValue = createBoolValue(false)
+                    vo.initialValue = createBoolValue(p.immediate)
                     clocks += vo
                 }
                 state.declarations += createBoolDeclaration => [
@@ -202,7 +202,7 @@ class Timers extends SCChartsProcessor implements Traceable {
                         valuedObjects += localTime
                         valuedObjects += threshold
                     ]
-                    state.createImmediateDuringAction => [
+                    state.createDuringAction => [
                         // Update time
                         createAssignment(localTime, deltaT.reference).operator = AssignOperator.ASSIGNADD
                         // Calculate threshold
@@ -233,6 +233,8 @@ class Timers extends SCChartsProcessor implements Traceable {
                                 subExpressions += localTime.reference
                             ]).operator = AssignOperator.ASSIGN
                         }
+                    ]
+                    state.createImmediateDuringAction => [
                         // Publish wake up
                         createAssignment(wake, createSubExpression(threshold.reference, localTime.reference)).operator = AssignOperator.ASSIGNMIN
                     ]
