@@ -27,7 +27,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -39,6 +41,7 @@ class KExtDeclarationExtensions {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KEffectsExtensions
     
     def DeclarationScope asDeclarationScope(EObject eObject) {
         eObject as DeclarationScope
@@ -160,6 +163,73 @@ class KExtDeclarationExtensions {
         sourceObject.copy => [
             targetDeclaration.valuedObjects += it
         ]
-    }        
+    }    
+    
+    
+    def ValuedObject getValuedObjectCopy(ValuedObject valuedObject, 
+        ValuedObjectMapping map
+    ) {
+        if (valuedObject === null) {
+            throw new IllegalArgumentException("Can't copy valued object. Valued object is null!")
+        }
+        val vo = map.get(valuedObject).peek
+        if (vo === null) {
+            return valuedObject // TODO: Remove
+            //throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
+        }
+        vo
+    }    
+
+    def ValuedObject getValuedObjectCopyWNULL(ValuedObject valuedObject,
+        ValuedObjectMapping map
+    ) {
+        if (valuedObject === null) {
+            return null
+        }
+        val vo = map.get(valuedObject)?.peek
+        if (vo === null) {
+            throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
+        }
+        vo
+    }    
+    
+    def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target, ValuedObjectMapping map) {
+        map.addValuedObjectMapping(source, target)
+        target      
+    }     
+    
+    public def addValuedObjectMapping(ValuedObjectMapping map, ValuedObject source, ValuedObject target) {
+        val deque = map.get(source) 
+        if (deque === null) {
+            map.put(source, <ValuedObject> newLinkedList(target))
+        } else {
+            deque.push(target)
+        }
+    }      
+    
+    def Expression copyExpression(Expression expression, ValuedObjectMapping map) {
+        val newExpression = expression.copy
+        
+        if (newExpression instanceof ValuedObjectReference) {
+            (newExpression as ValuedObjectReference).valuedObject = 
+                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy(map)                    
+        } else {
+            if (newExpression !== null)
+                newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
+                   forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]        
+        }
+        newExpression
+    }            
+    
+    def Assignment copyAssignment(Assignment assignment, ValuedObjectMapping map) {
+        KEffectsFactory.eINSTANCE.createAssignment => [ s |
+            s.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(map)
+            s.expression = assignment.expression.copyExpression(map)
+            s.operator = assignment.operator
+            assignment.indices?.forEach[
+                s.indices += it.copyExpression(map)
+            ] 
+        ]
+    } 
     
 }

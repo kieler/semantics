@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 
 /**
  * @author ssm
@@ -98,34 +99,43 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     
     protected var counter = 0
     protected val finalStates = <ControlflowRegion, State> newHashMap
+    protected val visited = <Node> newHashSet
+    protected val nodeStateMapping = <Node, State> newHashMap
     
     protected def State transform(SCGraph scg) {
         val rootState = createState(scg.name)
         val valuedObjectMap = scg.copyScopeDeclarations(rootState)
         
-        val nodeList = <Node> newLinkedList => [ add(scg.nodes.head) ]
+        val nodeList = <Pair<Node, Transition>> newLinkedList => [ add(new Pair(scg.nodes.head, null)) ]
         val scopeStack = <Scope> newLinkedList => [ add(rootState) ]
-        var Transition transition = null
+        visited.clear
         finalStates.clear
+        nodeStateMapping.clear
         while (!nodeList.empty) {
             val node = nodeList.pop
             
-            transition = node.transformNode(scg, nodeList, scopeStack, transition)
+            if (!visited.contains(node.key)) {
+                node.key.transformNode(node.value, scg, nodeList, scopeStack, valuedObjectMap)
+            } else if (node.value !== null) {
+                if (nodeStateMapping.keySet.contains(node.key)) {
+                    node.value.targetState = nodeStateMapping.get(node.key)
+                } 
+            }
         }
         
         
         rootState
     }
     
-    protected def dispatch Transition transformNode(Entry entry, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
+    protected def dispatch void transformNode(Entry entry, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += entry
         val parentState = scopeStack.peek as State
         val newRegion = parentState.createControlflowRegion("region" + counter++)
         scopeStack.push(newRegion)
-        nodeList += entry.next.target
-        return null
+        nodeList.push(new Pair<Node, Transition>(entry.next.target, null))
     }
     
-    protected def dispatch Transition transformNode(Exit exit, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
+    protected def dispatch void transformNode(Exit exit, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         if (incoming !== null) {
             val parentRegion = scopeStack.peek as ControlflowRegion
             val finalState = if (finalStates.get(parentRegion) !== null) 
@@ -135,22 +145,46 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             incoming.targetState = finalState
         }
         scopeStack.pop
-        return null
+        visited += exit
     }
 
-    protected def dispatch Transition transformNode(Fork fork, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
+    protected def dispatch void transformNode(Fork fork, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += fork
+        val parentRegion = scopeStack.peek as ControlflowRegion
+        val newState = parentRegion.createState("state" + counter++)       
+
+        if (incoming !== null) {
+            incoming.targetState = newState
+        } else {
+            newState.initial = true
+        }        
+
+        nodeStateMapping.put(fork, newState)
+
+        scopeStack.push(newState)
+        val forkTargets = fork.next.map[ target ].toList
         
+        nodeList.push(new Pair<Node, Transition>(fork.join, null))
+        for (target : forkTargets) {
+            nodeList.push(new Pair<Node, Transition>(target, null))            
+        }
     }
 
-    protected def dispatch Transition transformNode(Join join, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
-            
+    protected def dispatch void transformNode(Join join, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += join
+                    
+        scopeStack.pop
+        
+        val newTransition = createImmediateTransition => [
+            setTypeTermination
+            nodeStateMapping.get(join.fork).outgoingTransitions.add(it)
+        ]
+        
+        nodeList.push(new Pair<Node, Transition>(join.next.target, newTransition))        
     }
 
-    protected def dispatch Transition transformNode(Conditional conditional, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
-            
-    }
-
-    protected def dispatch Transition transformNode(Assignment assignment, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
+    protected def dispatch void transformNode(Conditional conditional, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += conditional
         val parentRegion = scopeStack.peek as ControlflowRegion
         val newState = parentRegion.createState("state" + counter++)       
         
@@ -160,19 +194,63 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             newState.initial = true
         }
         
-        nodeList += assignment.next.target
-        
-        createImmediateTransition => [ 
+        nodeStateMapping.put(conditional, newState)
+
+        val newTransitionThen = createImmediateTransition => [ 
+            newState.outgoingTransitions.add(it)
+            trigger = conditional.condition.copyExpression(map)
+        ]
+        val newTransitionElse = createImmediateTransition => [ 
             newState.outgoingTransitions.add(it)
         ]
+        
+        nodeList.push(new Pair<Node, Transition>(conditional.getElse.target, newTransitionElse))
+        nodeList.push(new Pair<Node, Transition>(conditional.then.target, newTransitionThen))        
     }
 
-    protected def dispatch Transition transformNode(Surface surface, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
-            
+    protected def dispatch void transformNode(Assignment assignment, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += assignment
+        val parentRegion = scopeStack.peek as ControlflowRegion
+        val newState = parentRegion.createState("state" + counter++)       
+        
+        if (incoming !== null) {
+            incoming.targetState = newState
+        } else {
+            newState.initial = true
+        }
+        
+        nodeStateMapping.put(assignment, newState)
+
+        val newTransition = createImmediateTransition => [ 
+            newState.outgoingTransitions.add(it)
+            effects += assignment.copyAssignment(map)
+        ]
+        
+        nodeList.push(new Pair<Node, Transition>(assignment.next.target, newTransition))
     }
 
-    protected def dispatch Transition transformNode(Depth depth, SCGraph scg, Deque<Node> nodeList, Deque<Scope> scopeStack, Transition incoming) {
-            
+    protected def dispatch void transformNode(Surface surface, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += surface
+        val parentRegion = scopeStack.peek as ControlflowRegion
+        val newState = parentRegion.createState("state" + counter++)
+        
+        if (incoming !== null) {
+            incoming.targetState = newState
+        } else {
+            newState.initial = true
+        }
+        
+        nodeStateMapping.put(surface, newState)
+        
+        val newTransition = createTransition => [
+            newState.outgoingTransitions.add(it)
+        ]
+        
+        nodeList.push(new Pair<Node, Transition>(surface.depth.next.target, newTransition))
+    }
+
+    protected def dispatch void transformNode(Depth depth, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
+        visited += depth
     }
 
     

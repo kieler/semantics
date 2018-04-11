@@ -160,7 +160,6 @@ class KiCoolRegistration {
                 val instance = getInstance(processor) as Processor
                 processorMap.put(instance.getId, processor)
                 processorModelTypes.put(instance.getId, instance.getSourceTargetTypes)
-                println(instance.getSourceTargetTypes)
             } catch(Throwable e) {
                 java.lang.System.err.println("KiCool: Cannot load processor " + processor.name + " (" + e + ")");
             }
@@ -207,7 +206,6 @@ class KiCoolRegistration {
             val sPair = processorModelTypes.get(source)
             val tPair = processorModelTypes.get(target)
             if (sPair.target != tPair.source) {
-                println("STOP")
                 return false
             }
         } 
