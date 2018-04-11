@@ -119,6 +119,18 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String LAYOUT_ANNOTATION_ID = "Invalid layout option id.\nThere is no layout option with the given id or the given suffix is not unique.\nSee https://www.eclipse.org/elk/reference/options.html for all available layout options."
     static val String LAYOUT_ANNOTATION_VALUE = "Invalid layout option value.\nThe given value can not be parsed into a valid value for the given layout option."
     static val String LAYOUT_ANNOTATION_FORMAT = "Layout annotation must have the format '@layout[id] value'"
+    
+    static val String REGION_ACTION_EXPERIMENTAL = "Actions in regions are highly experimental and may not produce the expected results."    
+
+    /**
+     * Checks if given layout annotation uses an existing unique layout option id (suffix).
+     */
+    @Check
+    def void checkRegionActions(Action action) {
+        if (action.eContainer instanceof ControlflowRegion) {
+            warning(REGION_ACTION_EXPERIMENTAL, action, null);
+        }
+    }
 
     /**
      * Checks if given layout annotation uses an existing unique layout option id (suffix).

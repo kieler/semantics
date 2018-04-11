@@ -62,6 +62,7 @@ class RegionActions extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension ComplexFinalState
 
    
     def SCCharts transform(SCCharts sccharts) {
@@ -85,6 +86,9 @@ class RegionActions extends SCChartsProcessor implements Traceable {
             
             // Fix termination
             if (newRegion.states.exists[final]) {
+                for (s : newRegion.states.filter[isComplexFinalState]) {
+                    environment.errors.add("Cannot handle complex final states.", s, true)
+                }
                 val newFinalState = region.createFinalState("_Done")
                 newState.createTransitionTo(newFinalState).setTypeTermination
             }
