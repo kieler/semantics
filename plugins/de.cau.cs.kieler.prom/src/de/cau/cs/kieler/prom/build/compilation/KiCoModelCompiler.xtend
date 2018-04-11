@@ -64,7 +64,7 @@ class KiCoModelCompiler extends ModelCompiler {
      * For more complex setups it is also possible to provide a map,
      * where the key is the file extension for models and the value is the compile chain to apply.
      */
-    public val compileChain = new ConfigurableAttribute("compileChain", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List, Map])
+    public val compileChain = new ConfigurableAttribute("compileChain", "de.cau.cs.kieler.sccharts.netlist", #[String, List, Map])
     
     /**
      * The file in which the compilation result will be saved

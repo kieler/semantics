@@ -35,6 +35,9 @@ import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
 import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
+import de.cau.cs.kieler.klighd.SynthesisOption
+
+import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
 
 /**
  * Main diagram synthesis for KiCool.
@@ -45,10 +48,12 @@ import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
  */
 @ViewSynthesisShared
 class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
-
+ 
     @Inject extension KNodeExtensions
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
+    
+    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
     
     override transform(System model) {
         val rootNode = model.createNode
@@ -83,9 +88,11 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 
         rootNode.children += nodes 
         
+        if (FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
+        
         rootNode
     }
-    
+        
     public static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
     
     /**
@@ -104,6 +111,25 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             e.printStackTrace
         }         
         return KGraphUtil::createInitializedNode
+    }
+    
+    
+    def void flattenHierarchy(KNode rootNode) {
+        for (node : rootNode.getKNodeIterator(false).toList) {
+            if (!node.children.empty && node.getProperty(ProcessorSynthesis.GROUP_NODE)) {
+                val parent = node.parent
+                val head = node.children.findFirst[it.incomingEdges.empty]
+                val tail = node.children.findFirst[it.outgoingEdges.empty]
+                if (parent !== null && head !== null && tail !== null) {
+                    // Reconnect
+                    node.incomingEdges.immutableCopy.forEach[target = head]
+                    node.outgoingEdges.immutableCopy.forEach[tail.outgoingEdges.add(it)]
+                    // Move
+                    parent.children.addAll(node.children)
+                    parent.children.remove(node)
+                }
+            }
+        }
     }    
     
     def static getKGTFromBundle(String bundleId, String resourceLocation) {

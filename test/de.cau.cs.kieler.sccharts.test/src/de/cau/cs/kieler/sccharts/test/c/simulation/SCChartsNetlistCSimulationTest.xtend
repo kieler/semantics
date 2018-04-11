@@ -34,6 +34,6 @@ class SCChartsNetlistCSimulationTest extends SCChartsSimulationTestBase {
     
     @Test
     def void testSimulationNetlistC(SCCharts scc, TestModelData modelData) {
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist.simple"], scc, modelData)
+        startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist"], scc, modelData)
     }
 }

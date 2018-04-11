@@ -155,6 +155,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSucceedingActionAdapter();
             }
             @Override
+            public Adapter caseTimerAction(TimerAction object) {
+                return createTimerActionAdapter();
+            }
+            @Override
             public Adapter casePragmatable(Pragmatable object) {
                 return createPragmatableAdapter();
             }
@@ -409,6 +413,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSucceedingActionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.TimerAction <em>Timer Action</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.TimerAction
+     * @generated
+     */
+    public Adapter createTimerActionAdapter() {
         return null;
     }
 

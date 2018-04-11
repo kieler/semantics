@@ -57,6 +57,7 @@ import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
+import de.cau.cs.kieler.sccharts.TimerAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess;
 import java.util.Set;
@@ -944,6 +945,9 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 			case SCChartsPackage.SUSPEND_ACTION:
 				sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 				return; 
+			case SCChartsPackage.TIMER_ACTION:
+				sequence_TimerAction(context, (TimerAction) semanticObject); 
+				return; 
 			case SCChartsPackage.TRANSITION:
 				sequence_Transition(context, (Transition) semanticObject); 
 				return; 
@@ -1183,7 +1187,10 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
-	 *         ((declarations+=DeclarationWOSemicolon* states+=State*) | (declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+)))
+	 *         (
+	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
+	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *         )
 	 *     )
 	 */
 	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
@@ -1418,6 +1425,19 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=Double?)? label=STRING?)
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LocalAction returns TimerAction
+	 *     TimerAction returns TimerAction
+	 *
+	 * Constraint:
+	 *     (delay=DelayType? trigger=ValuedExpression label=STRING?)
+	 */
+	protected void sequence_TimerAction(ISerializationContext context, TimerAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -117,16 +117,24 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 setAsExpandedView
                 associateWith(region)
                 addDoubleClickAction(ReferenceExpandAction::ID)
-                if (region.declarations.empty) {
+                if (region.declarations.empty && region.actions.empty) {
                     addStatesArea(!label.nullOrEmpty);
                 } else {
-                    addStatesAndDeclarationsArea(!label.nullOrEmpty, region.declarations.size > 3);
+                    addStatesAndDeclarationsAndActionsArea(!label.nullOrEmpty, region.declarations.size > 3);
                     // Add declarations
                     for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);
                             eAllContents.filter(typeof(KRendering)).forEach[associateWith(declaration)];
+                        ]
+                    }
+                    // Add actions
+                    for (action : region.actions) {
+                        addActionLabel(action.serializeHighlighted(true)) => [
+                            setProperty(TracingVisualizationProperties.TRACING_NODE, true);
+                            associateWith(action);
+                            eAllContents.filter(KRendering).forEach[associateWith(action)];
                         ]
                     }
                 }

@@ -328,7 +328,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(chainToggleAction)
         
         val externalUIContributors = KiCoModelViewUIContributorRegistry.contributors
-        externalUIContributors.forEach[it.contribute(this, toolBar, menu)]
+        externalUIContributors.forEach[it.contributeControls(this, toolBar, menu)]
     }
 
     /**
@@ -354,6 +354,15 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         val warnings = new StringBuilder()
         if (sourceModelHasErrorMarkers) {
             warnings.append("The source model contains error markers.\n")
+        }
+        for (contributor : KiCoModelViewUIContributorRegistry.contributors) {
+            val texts = contributor.contributeDiagramWarnings(this, model, properties)
+            if (texts !== null && texts.length > 0) {
+                for (text : texts) {
+                    warnings.append(text)
+                    warnings.append("\n")
+                }
+            }
         }
         if (warnings.length() > 0) {
             warnings.setLength(warnings.length() - 1)

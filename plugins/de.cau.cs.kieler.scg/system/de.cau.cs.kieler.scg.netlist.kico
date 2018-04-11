@@ -3,7 +3,6 @@ system de.cau.cs.kieler.scg.netlist
 	label "SCG Netlist-based"
 
 pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
-pre process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
 de.cau.cs.kieler.scg.processors.dependency
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin

@@ -514,5 +514,11 @@
             class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyExpandCollapseHook">
       </hook>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.ui.kicoModelViewUIUpdateContributor">
+      <kicoModelViewUIUpdateContributor
+            class="de.cau.cs.kieler.sccharts.legacy.ui.LegacySCTModelViewContributor">
+      </kicoModelViewUIUpdateContributor>
+   </extension>
 
 </plugin>

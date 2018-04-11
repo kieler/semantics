@@ -37,7 +37,7 @@ import static org.junit.Assert.*
 class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.netlist.simple"
+    private val compilationSystemID = "de.cau.cs.kieler.sccharts.netlist"
     
     //-----------------------------------------------------------------------------------------------------------------
     

@@ -186,6 +186,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Align entry/exit */
     private static val SynthesisOption ALIGN_ENTRYEXIT_NODES = SynthesisOption::createCheckOption("Entry & Exit nodes",
         true);
+        
+    /** left or right conditionals */
+    private static val SynthesisOption CONDITIONAL_LEFT_OR_RIGTH = SynthesisOption::createCheckOption("True branches always right",
+        false);
 
     /** Show hierarchy */
     private static val SynthesisOption SHOW_HIERARCHY = SynthesisOption::createCheckOption("Hierarchy", true);
@@ -269,6 +273,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SynthesisOption::createSeparator("Alignment"),
             ALIGN_TICK_START,
             ALIGN_ENTRYEXIT_NODES,
+            CONDITIONAL_LEFT_OR_RIGTH,
             SynthesisOption::createSeparator("Layout"),
             LAYOUT_DEPENDENCIES,
             LAYOUT_SEPARATE_CC,
@@ -951,7 +956,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.0)
             }
             // Removed as suggested by uru (mail to cmot, 11.11.2016)  
-            if (!SCGraph.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID))          
+            if (!SCGraph.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID) && !CONDITIONAL_LEFT_OR_RIGTH.booleanValue)          
                 port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
            
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
@@ -1515,6 +1520,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If the source is a fork node, create a new port for this control flow and attach it.
             // Otherwise, use the outgoing port identified by the given parameter.
             if (sourceObj instanceof Fork) {
+                sourceObj.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                 edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
                     if (topdown())
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::SOUTH)
@@ -1539,6 +1545,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If the target is a join node, create a new port for this control flow and attach it.
             // Otherwise, use the default incoming port.
             if (targetObj instanceof Join) {
+                sourceObj.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                 edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
                     if (topdown())
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::NORTH)

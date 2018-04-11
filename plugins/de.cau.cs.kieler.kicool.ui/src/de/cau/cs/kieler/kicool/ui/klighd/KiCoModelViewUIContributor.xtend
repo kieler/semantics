@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ui.klighd
 
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 
 /**
  * @author als
@@ -22,6 +23,14 @@ import org.eclipse.jface.action.IToolBarManager
  */
 interface KiCoModelViewUIContributor {
     
-    abstract def void contribute(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu)
+    /**
+     * Contributions to toolbar and menu.
+     */
+    abstract def void contributeControls(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu)
+
+    /**
+     * Contributions to diagram warnings (post synthesis).
+     */    
+    abstract def String[] contributeDiagramWarnings(KiCoModelUpdateController muc, Object model, KlighdSynthesisProperties properties)
     
 }
