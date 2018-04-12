@@ -80,6 +80,15 @@ import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
 import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
 import de.cau.cs.kieler.klighd.krendering.KStyle
 import de.cau.cs.kieler.klighd.krendering.LineJoin
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import org.eclipse.ui.progress.UIJob
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Status
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent
 
 /**
  * The data manager handles all synthesis updates.
@@ -96,9 +105,9 @@ class ProcessorDataManager {
     private static ProcessorSynthesis processorSynthesis = new ProcessorSynthesis
     private static ProcessorStyles processorStyles = new ProcessorStyles
     
-    static val NODE_PROCESSOR_BODY = "processorbody"
+    public static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
-    static val NODE_NAME = "name"
+    public static val NODE_NAME = "name"
     static val NODE_PROGRESS = #["p1", "p2", "p3", "p4", "p5"]
     static val NODE_ENVIRONMENT = "environment"
     static val NODE_INTERMEDIATE = "intermediate"
@@ -125,8 +134,13 @@ class ProcessorDataManager {
             return;
         }
         
-        nodeIdMap.findNode(NODE_NAME).label.text = rtProcessor.name
-        
+        val nameNode = nodeIdMap.findNode(NODE_NAME)
+        val label = nameNode.label
+        label.text = rtProcessor.name
+//        label.data.filter(KText).head.setProperty(KlighdProperties.NOT_SELECTABLE, true)
+        val text = label.data.filter(KText).head
+        text.addAction(Trigger::SINGLECLICK, SelectParent.ID)
+        nameNode.containers.forEach[ addAction(Trigger::SINGLECLICK, SelectParent.ID) ]
         
         val toggleOnOffNode = nodeIdMap.findNode(NODE_ACTIVE)
         if (toggleOnOffNode !== null) {
@@ -162,15 +176,23 @@ class ProcessorDataManager {
         }
         
         if (compilationNotification instanceof CompilationStart) {
+            // Set Select Nothing Data
+            node.setProperty(INTERMEDIATE_DATA, 
+                new IntermediateData(null, 
+                    compilationNotification.compilationContext, 
+                    null, view, -1, node
+                ))
+            
+            
             // Set source model
             val sourceNode = node.findNode(NODE_SOURCE)
             val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
             sourceNode.container.removeAllActions
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             sourceNode.setProperty(INTERMEDIATE_DATA, 
-                new IntermediateData(processorUnit, 
+                new IntermediateData(null, 
                     compilationNotification.compilationContext, 
-                    null, view
+                    null, view, -1, sourceNode
                 ))
         }
         
@@ -289,14 +311,19 @@ class ProcessorDataManager {
         if (mMetric !== null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap)?.setLabel(envText)
         
+        var intermediateModelCounter = 0
+        
         
 // This sometimes causes a Klighd exception: Exception in thread "pool-2-thread-30" java.lang.NullPointerException
 //    at de.cau.cs.kieler.klighd.internal.macrolayout.KlighdLayoutConfigurationStore.getContainer(KlighdLayoutConfigurationStore.java:396)
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         if (processorBodyNode !== null) {
+            processorBodyNode.container.removeAllActions
             processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             processorBodyNode.setProperty(INTERMEDIATE_DATA, 
-                new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.targetModel, view))
+                new IntermediateData(processorInstance, processorNotification.compilationContext, 
+                    processorInstance.targetModel, view, intermediateModelCounter++, processorBodyNode
+                ))
         }
         // Does not work on text.
 //        val processorNameNode = NODE_NAME.findNode(nodeIdMap)
@@ -323,7 +350,7 @@ class ProcessorDataManager {
                     new IntermediateData(processorInstance, 
                         processorNotification.compilationContext, 
                         new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.sourceEnvironment),
-                        view
+                        view, intermediateModelCounter++, environmentNode
                     ))
                 intermediatePosX += intermediatePosXInc          
                 environmentNode.container.setFBColor(ENVIRONMENT_MODEL)                 
@@ -339,7 +366,9 @@ class ProcessorDataManager {
                     intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += intermediateNode
                     intermediateNode.setProperty(INTERMEDIATE_DATA, 
-                        new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot, view))
+                        new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot, 
+                            view, intermediateModelCounter++, intermediateNode
+                        ))
                     intermediatePosX += intermediatePosXInc
                     lastModel = snapshot
                 }
@@ -352,7 +381,9 @@ class ProcessorDataManager {
                 finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                 intermediateRootNode.children += finalResultNode 
                 finalResultNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.targetModel, view))
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, 
+                        processorInstance.targetModel, view, intermediateModelCounter++, finalResultNode
+                    ))
                 intermediatePosX += intermediatePosXInc          
                 finalResultNode.container.setFBColor(INTERMEDIATE_FINAL_RESULT)
             }        
@@ -367,7 +398,7 @@ class ProcessorDataManager {
                     new IntermediateData(processorInstance, 
                         processorNotification.compilationContext, 
                         new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.environment), 
-                        view
+                        view, intermediateModelCounter++, environmentNode
                     ))
                 intermediatePosX += intermediatePosXInc          
                 environmentNode.container.setFBColor(ENVIRONMENT_MODEL)                 
@@ -387,10 +418,14 @@ class ProcessorDataManager {
                         val morModel = new MessageObjectListPair(infos.get(infoKey).fillUndefinedColors(INFO), 
                             if (infoKey === null) model else infoKey)
                         infoNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
+                                view, intermediateModelCounter++, infoNode
+                            ))
                     } else {
                         infoNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, infos, view))
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, infos, 
+                                view, intermediateModelCounter++, infoNode
+                            ))
                     }
                         
                     infoNode.container.setFBColor(INFO)
@@ -411,10 +446,14 @@ class ProcessorDataManager {
                         val morModel = new MessageObjectListPair(warnings.get(warningKey).fillUndefinedColors(WARNING), 
                             if (warningKey === null) model else warningKey)
                         warningNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
+                                view, intermediateModelCounter++, warningNode
+                            ))
                     } else {
                         warningNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, 
+                                view, intermediateModelCounter++, warningNode
+                            ))
                     }
                         
                     warningNode.container.setFBColor(WARNING)
@@ -435,10 +474,14 @@ class ProcessorDataManager {
                         val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
                             if (errorKey === null) model else errorKey)
                         errorNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
+                                view, intermediateModelCounter++, errorNode
+                            ))
                     } else {
                         errorNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, 
+                                view, intermediateModelCounter++, errorNode
+                            ))
                     }
                         
                     errorNode.container.setFBColor(ERROR)
@@ -498,8 +541,38 @@ class ProcessorDataManager {
     }
     
     
+    static def Object retrieveIntermediateModel(KNode node, CompilerView view, Object model, IntermediateSelection selection) {
+        retrieveIntermediateModel(node, view, model, selection, true)
+    }
     
-    
+    package static def Object retrieveIntermediateModel(KNode node, CompilerView view, Object model, 
+        IntermediateSelection selection, boolean scheduleUIJob
+    ) {
+        val processorReference = selection.processor?.processorReference
+        val processorNode = if (selection.processor === null) node.findNode(NODE_SOURCE)
+            else node.eAllContents.filter(KNode).filter[ getData(KIdentifier)?.id.startsWith(processorReference.id) ]?.head
+        
+        if (processorNode !== null) {
+            val intermediateData = processorNode.eAllContents.filter(KNode).filter[ 
+                val iData = getProperty(INTERMEDIATE_DATA)
+                return (iData !== null) && (iData.intermediateIndex <= selection.intermediateIndex)
+            ].map[ getProperty(INTERMEDIATE_DATA) ].toIterable.sortBy[ -intermediateIndex ].head
+            
+            if (intermediateData !== null) {
+                if (scheduleUIJob) {
+                    new Thread(new DelayedSelectionUpdate(node, view, model, selection)).start
+                } else {
+                    view.viewer.resetSelectionTo(intermediateData.parentNode)
+                    intermediateData.parentNode.containers.forEach[ 
+                        setProperty(KlighdInternalProperties.SELECTED, true)
+                    ]
+                }
+                return intermediateData.model
+            }
+        }
+         
+        return model 
+    }
     
     
     
@@ -572,6 +645,10 @@ class ProcessorDataManager {
     
     static def getContainer(KNode node) {
         node.getData(KContainerRendering) as KContainerRendering
+    }
+    
+    static def getContainers(KNode node) {
+        node.data.filter(KContainerRendering) 
     }
 
     static def getContainer(KEdge edge) {

@@ -167,6 +167,7 @@ class SystemSelectionManager implements SelectionListener {
             val id = index.get(combo.selectionIndex)
             if (!id.nullOrEmpty) {
                 view.editPartSystemManager.setActiveSystem(id)
+                view.editPartSystemManager.intermediateSelection = null
                 view.updateView
             }
         }
@@ -177,6 +178,7 @@ class SystemSelectionManager implements SelectionListener {
         if (!id.nullOrEmpty) {
             // Workaround: show always the identity system.
             view.editPartSystemManager.setActiveSystem("de.cau.cs.kieler.kicool.identity")
+            view.editPartSystemManager.intermediateSelection = null
             if (updateView) view.updateView
         }
     }

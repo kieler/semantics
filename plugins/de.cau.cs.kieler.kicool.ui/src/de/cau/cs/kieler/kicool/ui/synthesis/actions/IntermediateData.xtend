@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.ui.synthesis.actions
 import org.eclipse.xtend.lib.annotations.Data
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Class for holding the data that is required when the user request an intermediate model.
@@ -29,4 +30,6 @@ class IntermediateData {
     CompilationContext compilationContext
     Object model
     CompilerView view
+    int intermediateIndex
+    KNode parentNode
 }

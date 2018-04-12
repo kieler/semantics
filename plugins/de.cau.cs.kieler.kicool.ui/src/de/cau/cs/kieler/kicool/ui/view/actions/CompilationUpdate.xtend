@@ -31,6 +31,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDa
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.addNewProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.retrieveIntermediateModel
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
@@ -74,6 +75,10 @@ class CompilationUpdate extends KiCoolUIObserver {
                         } else if (model instanceof CodeContainer) {
 //                            model = new CodePlaceHolder(editor.title + ".c", model.head)
                         }
+                        
+                        if (view.editPartSystemManager.intermediateSelection !== null) {
+                            model = retrieveIntermediateModel(view.viewContext.viewModel, view, model, view.editPartSystemManager.intermediateSelection)
+                        } 
                         
                         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                     }

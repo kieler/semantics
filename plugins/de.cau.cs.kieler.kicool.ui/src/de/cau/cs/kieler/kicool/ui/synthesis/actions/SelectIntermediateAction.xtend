@@ -41,6 +41,7 @@ class SelectIntermediateAction implements IAction {
         val intermediateData = kNode.getProperty(INTERMEDIATE_DATA)
         val compilationContext = intermediateData.compilationContext
         val editor = compilationContext.getRootContext.inputEditor
+        val view = intermediateData.view
         var model = intermediateData.model
         if (model instanceof String) {
 //            model = new Container<String>(model)
@@ -50,7 +51,9 @@ class SelectIntermediateAction implements IAction {
         } else if (model instanceof MessageObjectReferences) {
             model = new Container<String>(model.get(null).join("\n"))
         }
-        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)        
+        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+        view.editPartSystemManager.intermediateSelection = 
+            new IntermediateSelection(intermediateData.processor, intermediateData.intermediateIndex)
         
         ActionResult.createResult(false).dontAnimateLayout()
     }

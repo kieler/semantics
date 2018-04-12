@@ -18,6 +18,7 @@ import org.eclipse.ui.IEditorPart
 import de.cau.cs.kieler.core.model.properties.Property
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
 
 /**
  * The EditPartSystemManager keeps track of the active editors and associated systems. 
@@ -35,6 +36,7 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     @Accessors private val editPartCompilationContextMap = <IEditorPart, CompilationContext> newHashMap
     private val editorActionAdapters = <IEditorPart, EditorActionAdapter> newHashMap
     @Accessors IEditorPart activeEditor = null
+    @Accessors IntermediateSelection intermediateSelection
     
     private var CompilerView view
     

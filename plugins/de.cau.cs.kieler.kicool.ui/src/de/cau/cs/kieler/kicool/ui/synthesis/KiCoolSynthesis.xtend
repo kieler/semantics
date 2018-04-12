@@ -38,6 +38,13 @@ import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 import de.cau.cs.kieler.klighd.SynthesisOption
 
 import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 
 /**
  * Main diagram synthesis for KiCool.
@@ -50,6 +57,7 @@ import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
 class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
  
     @Inject extension KNodeExtensions
+    @Inject extension KRenderingExtensions
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
     
@@ -79,6 +87,10 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 //      val aspectRatio = size.x as double / size.y * 2
 //        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
+        
+        rootNode.addRectangle => [
+            addAction(Trigger::SINGLECLICK, SelectNothing.ID)
+        ]
         
         val source = sourceNode
         val processorNodes = model.processors.transform

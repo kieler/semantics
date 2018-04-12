@@ -95,14 +95,14 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /** 
      * Directly return the compilation context of this processor.
      */
-    protected def getCompilationContext() {
+    public def getCompilationContext() {
         environments.source.getProperty(COMPILATION_CONTEXT)
     }
     
     /**
      * Directly return the meta processor of this processor instance.
      */
-    protected def getProcessorReference() {
+    public def getProcessorReference() {
         environments.source.getProperty(PROCESSOR_REFERENCE)
     }
     

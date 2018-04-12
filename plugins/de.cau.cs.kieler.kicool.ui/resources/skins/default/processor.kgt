@@ -26,6 +26,7 @@ knode processor {
             properties:
                 org.eclipse.elk.noLayout = true
                 de.cau.cs.kieler.nodeLabelPlacement = H_LEFT
+                de.cau.cs.kieler.klighd.suppressSelectability = true
             
             krectangle {
                 styles: invisible = true
@@ -33,7 +34,7 @@ knode processor {
             
             klabel "Trigger/Effect"  
             {
-                ktext{
+                ktext {
                 styles:
                     fontName = "Arial"
                     fontSize = 5pt

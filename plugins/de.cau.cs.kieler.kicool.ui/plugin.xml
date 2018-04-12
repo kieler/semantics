@@ -389,6 +389,14 @@
                 class="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction"
                 id="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction">
           </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing"
+                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectNothing">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent"
+                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent">
+          </action>
        </extension>
        <extension
              point="de.cau.cs.kieler.klighd.ui.view.controller">
