@@ -135,5 +135,5 @@ class Environment extends EnvironmentPropertyHolder {
     def isInDeveloperMode() {
         getProperty(DEVELOPER_MODE)
     }
-    
+  
 }

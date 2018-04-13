@@ -21,6 +21,9 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -44,6 +47,22 @@ import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
  */
 class SurfaceDepth extends SCChartsProcessor implements Traceable {
 
+    /** Enable duplicate transition optimization (DTO) */
+    public static val IProperty<Boolean> ENABLE_DTO = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.surfaceDepth.DTO", true)
+       
+    /** Enable superfluous conditional states optimization (SCSO) */
+    public static val IProperty<Boolean> ENABLE_SCSO = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.surfaceDepth.SCSO", true)
+       
+    /** Enable superfluous immediate transition optimization (SITO) */
+    public static val IProperty<Boolean> ENABLE_SITO = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.surfaceDepth.SITO", true)
+       
+    /** Enable dead code optimization */
+    public static val IProperty<Boolean> ENABLE_DCO = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.surfaceDepth.DCO", true)
+       
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
@@ -117,10 +136,23 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
         rootState.allStates.toList.forEach [ targetState |
             targetState.transformSurfaceDepth(rootState)
         ]
+        
+        val scso = environment.getProperty(ENABLE_SCSO)
+        val sito = environment.getProperty(ENABLE_SITO)
+        val dco = environment.getProperty(ENABLE_DCO)
 
-        snapshot
-        rootState.optimizeSuperflousConditionalStates.
-            optimizeSuperflousImmediateTransitions.fixDeadCode
+        if (scso || sito || dco) {
+            snapshot
+            var optimizedRootState = rootState
+            
+            if (scso) optimizedRootState = optimizedRootState.optimizeSuperflousConditionalStates
+            if (sito) optimizedRootState = optimizedRootState.optimizeSuperflousImmediateTransitions
+            if (dco) optimizedRootState = optimizedRootState.fixDeadCode
+            
+            return optimizedRootState
+        } else {
+            return rootState
+        }
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
@@ -305,7 +337,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
         var stateAfterDepth = depthState
 
         // System.out.println("stateAfterDepth:" + stateAfterDepth.id);
-        var doDTO = true;
+        var doDTO = environment.getProperty(ENABLE_DTO)
 
         if (doDTO) {
             var done = false

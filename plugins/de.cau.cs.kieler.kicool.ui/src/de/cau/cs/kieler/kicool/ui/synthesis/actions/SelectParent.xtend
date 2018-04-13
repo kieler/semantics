@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2017 by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -21,11 +21,11 @@ import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 
 /**
- * Class that handles the intermediate model requests.
+ * Class that redirects select actions to the processor body node.
  * 
  * @author ssm
- * @kieler.design 2017-06-10 proposed 
- * @kieler.rating 2017-06-10 proposed yellow
+ * @kieler.design 2018-04-12 proposed 
+ * @kieler.rating 2018-04-12 proposed yellow
  *
  */
 class SelectParent implements IAction {

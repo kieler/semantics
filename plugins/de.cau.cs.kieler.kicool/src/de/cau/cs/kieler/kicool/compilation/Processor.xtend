@@ -28,6 +28,7 @@ import static de.cau.cs.kieler.kicool.environments.Environment.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import de.cau.cs.kieler.kicool.environments.AnnotationModel
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -232,12 +233,21 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * This method does not support tracing and should not be used in the model chain.
      * Let the environment handle m2m mappings.
      */
-    def <T extends EObject> Pair<T, Copier> copyEObjectAndReturnCopier(T model) {
+    static def <T extends EObject> Pair<T, Copier> copyEObjectAndReturnCopier(T model) {
         val copier = new Copier()
         val EObject result = copier.copy(model)
         copier.copyReferences
         return new Pair(result as T, copier)
     }     
+    
+    /** 
+     * Creates an annotation model to conveniently create annotations and add them to the environment
+     * information.
+     */
+    static def <T extends EObject> AnnotationModel<T> createAnnotationModel(T model) {
+        val c = model.copyEObjectAndReturnCopier
+        new AnnotationModel(c.first, c.second)
+    }
     
     
     /**
