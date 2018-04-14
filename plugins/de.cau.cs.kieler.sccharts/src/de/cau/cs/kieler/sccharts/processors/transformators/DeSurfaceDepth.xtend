@@ -93,8 +93,11 @@ class DeSurfaceDepth extends SCChartsProcessor implements Traceable {
             
             if (state.outgoingTransitions.size == 1) {
                 val oT = state.outgoingTransitions.head
-                if (!oT.isImplicitlyImmediate) {
-                    if (state.incomingTransitions.exists[ sourceState == oT.targetState ]) {
+                if (!oT.isImmediate) {
+                    if (state.incomingTransitions.exists[ 
+                        sourceState == oT.targetState &&
+                        trigger === null // We don't want to lose trigger.
+                    ]) {
                         sdStates += state 
                         environment.infos.add(annotationModel.model, 
                            "Surface / Depth", 

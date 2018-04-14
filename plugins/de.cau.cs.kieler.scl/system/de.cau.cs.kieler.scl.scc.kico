@@ -4,3 +4,7 @@ system de.cau.cs.kieler.scl.scc
     
 de.cau.cs.kieler.scl.processors.transformators.scl2scg    
 de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC
+de.cau.cs.kieler.sccharts.processors.deConditionalize
+de.cau.cs.kieler.sccharts.processors.deSurfaceDepth
+de.cau.cs.kieler.sccharts.processors.deImmediateDelay
+de.cau.cs.kieler.sccharts.processors.deTriggerEffect
