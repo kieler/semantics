@@ -93,7 +93,9 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
                 val oT1 = state.outgoingTransitions.head
                 val oT2 = state.outgoingTransitions.get(1)
                 if (oT1.isImmediate && oT2.isImmediate) {
-                    if (oT1.trigger !== null && oT2.trigger === null) {
+                    if (oT1.trigger !== null && oT2.trigger === null &&
+                        !oT2.targetState.final // We don't want to get complex final states.
+                    ) {
                         condStates += state 
                         environment.infos.add(annotationModel.model, 
                            "Conditional Pattern", 
