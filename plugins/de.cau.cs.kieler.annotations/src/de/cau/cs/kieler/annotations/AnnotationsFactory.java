@@ -150,6 +150,15 @@ public interface AnnotationsFactory extends EFactory {
     StringPragma createStringPragma();
 
     /**
+     * Returns a new object of class '<em>Tag Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Tag Annotation</em>'.
+     * @generated
+     */
+    TagAnnotation createTagAnnotation();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -597,6 +597,34 @@ public interface AnnotationsPackage extends EPackage {
     int STRING_PRAGMA_FEATURE_COUNT = PRAGMA_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.annotations.impl.TagAnnotationImpl <em>Tag Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.annotations.impl.TagAnnotationImpl
+     * @see de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl#getTagAnnotation()
+     * @generated
+     */
+    int TAG_ANNOTATION = 15;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TAG_ANNOTATION__NAME = ANNOTATION__NAME;
+
+    /**
+     * The number of structural features of the '<em>Tag Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TAG_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 0;
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -879,6 +907,16 @@ public interface AnnotationsPackage extends EPackage {
     EAttribute getStringPragma_Values();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.annotations.TagAnnotation <em>Tag Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Tag Annotation</em>'.
+     * @see de.cau.cs.kieler.annotations.TagAnnotation
+     * @generated
+     */
+    EClass getTagAnnotation();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1145,6 +1183,16 @@ public interface AnnotationsPackage extends EPackage {
          * @generated
          */
         EAttribute STRING_PRAGMA__VALUES = eINSTANCE.getStringPragma_Values();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.annotations.impl.TagAnnotationImpl <em>Tag Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.annotations.impl.TagAnnotationImpl
+         * @see de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl#getTagAnnotation()
+         * @generated
+         */
+        EClass TAG_ANNOTATION = eINSTANCE.getTagAnnotation();
 
     }
 

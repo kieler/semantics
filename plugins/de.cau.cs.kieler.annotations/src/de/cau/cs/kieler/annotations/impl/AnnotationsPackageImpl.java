@@ -29,6 +29,7 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.annotations.ReferenceAnnotation;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
+import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -149,6 +150,13 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * @generated
      */
     private EClass stringPragmaEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass tagAnnotationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -459,6 +467,15 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTagAnnotation() {
+        return tagAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }
@@ -523,6 +540,8 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         stringPragmaEClass = createEClass(STRING_PRAGMA);
         createEAttribute(stringPragmaEClass, STRING_PRAGMA__VALUES);
+
+        tagAnnotationEClass = createEClass(TAG_ANNOTATION);
     }
 
     /**
@@ -566,6 +585,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         commentAnnotationEClass.getESuperTypes().add(this.getAnnotatable());
         pragmaEClass.getESuperTypes().add(this.getNamedObject());
         stringPragmaEClass.getESuperTypes().add(this.getPragma());
+        tagAnnotationEClass.getESuperTypes().add(this.getAnnotation());
 
         // Initialize classes and features; add operations and parameters
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -609,6 +629,8 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         initEClass(stringPragmaEClass, StringPragma.class, "StringPragma", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getStringPragma_Values(), ecorePackage.getEString(), "values", null, 0, -1, StringPragma.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(tagAnnotationEClass, TagAnnotation.class, "TagAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

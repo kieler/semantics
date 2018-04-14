@@ -80,6 +80,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
             case AnnotationsPackage.COMMENT_ANNOTATION: return createCommentAnnotation();
             case AnnotationsPackage.PRAGMA: return createPragma();
             case AnnotationsPackage.STRING_PRAGMA: return createStringPragma();
+            case AnnotationsPackage.TAG_ANNOTATION: return createTagAnnotation();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -213,6 +214,16 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
     public StringPragma createStringPragma() {
         StringPragmaImpl stringPragma = new StringPragmaImpl();
         return stringPragma;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TagAnnotation createTagAnnotation() {
+        TagAnnotationImpl tagAnnotation = new TagAnnotationImpl();
+        return tagAnnotation;
     }
 
     /**

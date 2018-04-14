@@ -56,7 +56,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
  */
 class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceable {
     
-    /** Enable duplicate transition optimization (DTO) */
+    // Annotations are copied by default.
     public static val IProperty<Boolean> COPY_ANNOTATIONS = 
        new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC.copyAnnotations", true)    
     

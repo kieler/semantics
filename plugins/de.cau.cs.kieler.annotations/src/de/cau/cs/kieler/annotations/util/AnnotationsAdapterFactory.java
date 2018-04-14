@@ -139,6 +139,10 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
                 return createStringPragmaAdapter();
             }
             @Override
+            public Adapter caseTagAnnotation(TagAnnotation object) {
+                return createTagAnnotationAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -365,6 +369,20 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createStringPragmaAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.TagAnnotation <em>Tag Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.TagAnnotation
+     * @generated
+     */
+    public Adapter createTagAnnotationAdapter() {
         return null;
     }
 

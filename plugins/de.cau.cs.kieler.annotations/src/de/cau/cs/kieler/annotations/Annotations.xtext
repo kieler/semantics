@@ -84,7 +84,7 @@ CommentAnnotatonSL returns CommentAnnotation:
 
 // TagAnnotation
 // e.g.: @HVlayout
-TagAnnotation returns Annotation:
+TagAnnotation returns TagAnnotation:
     '@' name=ExtendedID;
     
 PragmaTag returns Pragma:

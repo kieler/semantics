@@ -14,6 +14,8 @@ import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.annotations.TagAnnotation
+import de.cau.cs.kieler.annotations.IntAnnotation
 
 /**
  * Annotations extensions
@@ -143,5 +145,27 @@ class AnnotationsExtensions {
             it.name = name
             values += text
         ]
+    }
+    
+    def boolean hasEqualAnnotationValue(Annotatable source, String name, Annotatable target) {
+        if (!source.hasAnnotation(name) || !target.hasAnnotation(name)) return false;
+        val sourceAnnotation = source.getAnnotation(name)
+        val targetAnnotation = target.getAnnotation(name)
+        
+        switch(sourceAnnotation) {
+            TagAnnotation: if (targetAnnotation instanceof TagAnnotation) return true
+            IntAnnotation: if (targetAnnotation instanceof IntAnnotation) 
+                               if (sourceAnnotation.value == targetAnnotation.value) return true
+            StringAnnotation: if (targetAnnotation instanceof StringAnnotation) {
+                var i = 0 
+                for (s : sourceAnnotation.values) {
+                    if (targetAnnotation.values.size - 1 < i || !targetAnnotation.values.get(i).equals(s)) return false
+                    i++ 
+                }
+                return true
+            }
+        }
+        
+        return false
     }
 }

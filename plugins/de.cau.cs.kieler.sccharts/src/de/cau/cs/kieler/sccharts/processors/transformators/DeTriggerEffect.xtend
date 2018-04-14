@@ -21,7 +21,10 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author ssm
@@ -32,6 +35,10 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
  *
  */
 class DeTriggerEffect extends SCChartsProcessor implements Traceable {
+    
+    /** Merge Trigger / Effect only on same annotation. */
+    public static val IProperty<String> MERGE_ON_SAME_ANNOTATION_NAME = 
+       new Property<String>("de.cau.cs.kieler.sccharts.processors.deTriggerEffect.mergeOnSameAnnotationName", "")
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.deTriggerEffect"
@@ -50,6 +57,7 @@ class DeTriggerEffect extends SCChartsProcessor implements Traceable {
         sccharts.rootStates.forEach[ it.transformSuperstate ]
     }
     
+    @Inject extension AnnotationsExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     
@@ -90,23 +98,32 @@ class DeTriggerEffect extends SCChartsProcessor implements Traceable {
             val inT = state.incomingTransitions.head
             val outT = state.outgoingTransitions.head
             
-            // Perform the following actions to merge trigger and effects:
-            // - Add all effects from the outgoing transition to the incoming transition.
-            // - Re-route the target state from the incoming transition to the target state of the outgoing transitions
-            // - Remove the outgoing transition
-            // - Remove the state.
-            for (e : outT.effects.immutableCopy) {
-                inT.effects.add(e)
+            var merge = true
+            
+            val mergeOnSameAnnotationName = environment.getProperty(MERGE_ON_SAME_ANNOTATION_NAME)
+            if (!mergeOnSameAnnotationName.nullOrEmpty) {
+                if (!state.hasEqualAnnotationValue(mergeOnSameAnnotationName, inT.sourceState)) merge = false
             }
             
-            inT.targetState = outT.targetState
-            
-            outT.sourceState = null
-            outT.targetState = null
-            outT.remove
-            state.remove
-            
-            snapshot
+            if (merge) {
+                // Perform the following actions to merge trigger and effects:
+                // - Add all effects from the outgoing transition to the incoming transition.
+                // - Re-route the target state from the incoming transition to the target state of the outgoing transitions
+                // - Remove the outgoing transition
+                // - Remove the state.
+                for (e : outT.effects.immutableCopy) {
+                    inT.effects.add(e)
+                }
+                
+                inT.targetState = outT.targetState
+                
+                outT.sourceState = null
+                outT.targetState = null
+                outT.remove
+                state.remove
+                
+                snapshot
+            }
         }
     }
     
