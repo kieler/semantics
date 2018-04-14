@@ -13,11 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions;
+
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -456,22 +463,52 @@ public class TransitionImpl extends ActionImpl implements Transition {
 
     /**
      * <!-- begin-user-doc -->
+     * User-defined toString method to ease debugging.
      * <!-- end-user-doc -->
-     * @generated
      */
     @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (preemption: ");
-        result.append(preemption);
-        result.append(", history: ");
-        result.append(history);
-        result.append(", deferred: ");
-        result.append(deferred);
-        result.append(')');
+        StringBuilder result = new StringBuilder("TransitionImpl");
+        result.append('@');
+        result.append(Integer.toHexString(hashCode()));
+        
+        State sourceState = getSourceState();
+        State targetState = getTargetState();
+        Expression trigger = getTrigger();
+        List<Effect> effects = getEffects();
+        
+        result.append(" ");
+        if (sourceState != null) {
+            result.append(sourceState.getName());
+        } else {
+            result.append("<null>");
+        }
+        
+        result.append(" -> ");
+        if (targetState != null) {
+            result.append(targetState.getName());
+        } else {
+            result.append("<null>");
+        }
+        
+        if (trigger != null) {
+            result.append(" Trigger: ");
+            result.append(serializer.serialize(trigger).toString());
+        }
+        
+        if (effects != null && !effects.isEmpty()) {
+            result.append(" Effects: ");
+            for (Effect effect : effects) {
+                result.append(serializer.serialize(effect).toString());
+                result.append(" ");
+            }
+        }
+        
         return result.toString();
     }
 
+    private static SCChartsSerializeHRExtensions serializer = new SCChartsSerializeHRExtensions();
+    
 } //TransitionImpl
