@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * @author ssm
@@ -31,7 +31,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2018-04-13 proposed yellow
  * 
  * Processor that merges transient state with its successors if the transitions match.
- * This revereses parts of the normalization.
+ * This reverses parts of the normalization.
  *
  */
 class DeImmediateDelay extends SCChartsProcessor implements Traceable {
@@ -70,19 +70,28 @@ class DeImmediateDelay extends SCChartsProcessor implements Traceable {
         for (state : stateList) {
             if (state.isSuperstate) state.transformSuperstate
             
-            if (state.outgoingTransitions.size > 1 && state.outgoingTransitions.forall[ immediate ]) {
+            // Find all transient immediate check state pattern and mark them in the annotation model.
+            // The pattern is identified as a state that has
+            // - more than one transitions
+            // - all transitions are immediate
+            // - at least one transition trigger is null (def transition)
+            // - all transitions that are not the def transition have a non-delayed transition variant with the same trigger
+            //   at the target state of the def transition.
+            if (state.outgoingTransitions.size > 1 && 
+                state.outgoingTransitions.forall[ immediate ] &&
+                state.outgoingTransitions.exists[ trigger === null ]
+            ) {
                 val oTDef = state.outgoingTransitions.filter[ trigger === null ].head
                 val tS = oTDef.targetState
                 var mergeable = true
                 for (t : state.outgoingTransitions.filter[ it != oTDef ]) {
-                    mergeable =  mergeable && tS.outgoingTransitions.exists[ trigger.equals2(t.trigger)]
+                    mergeable =  mergeable && 
+                        tS.outgoingTransitions.exists[ !immediate && trigger !== null && trigger.equals2(t.trigger) ]
                 }
                 
                 if (mergeable) {
                     mergeStates += state 
-                    environment.infos.add(annotationModel.model, 
-                       "Mergeable Immediate State", 
-                       annotationModel.get(state), null)
+                    annotationModel.addInfo(state, "Mergeable Immediate State")
                 }
             }
         }
@@ -91,8 +100,15 @@ class DeImmediateDelay extends SCChartsProcessor implements Traceable {
             val oTDef = state.outgoingTransitions.filter[ trigger === null ].head
             val tS = oTDef.targetState
 
+            // Perform the following actions:
+            // - Re-route all incoming transitions to the def transitions target
+            // - For all outgoing transitions that are not the def transition, find the replacement at the target state
+            //   and set it to immediate
+            // - Afterwards remove the transition (including the def transition)
+            // - Preserve the initial flag if necessary
+            // - Remove the state.
             for (t : state.incomingTransitions.immutableCopy) {
-                t.sourceState = tS
+                t.targetState = tS
             }            
             for (t : state.outgoingTransitions.immutableCopy) {
                 if (t !== oTDef) {

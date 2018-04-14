@@ -18,7 +18,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.sccharts.DelayType
 
 /**
@@ -127,15 +126,19 @@ class SCChartsTransitionExtensions {
     
     def isImplicitlyImmediate(Transition transition) {
         (transition.delay == DelayType.IMMEDIATE) || (transition.sourceState.isConnector) || 
-        (transition.preemption == PreemptionType::TERMINATION && transition.trigger == null)
+        (transition.preemption == PreemptionType::TERMINATION && transition.trigger === null)
     }    
     
     def getPriority(Transition transition) {
         val state = transition.eContainer
-        if (state == null) return 0
+        if (state === null) return 0
         if (state instanceof State) {
             return state.outgoingTransitions.indexOf(transition) + 1
         } 
         return 0
+    }
+    
+    def isSelfLoop(Transition transition) {
+        transition.targetState !== null && transition.targetState == transition.sourceState
     }
 }

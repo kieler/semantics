@@ -12,38 +12,17 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.State
-import java.util.Deque
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
-import java.util.List
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * @author ssm
@@ -89,6 +68,14 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
         for (state : stateList) {
             if (state.isSuperstate) state.transformSuperstate
             
+            // Find all conditional pattern and mark them in the annotation model.
+            // The pattern is identified as a state that has
+            // - 2 outgoing transitions
+            // - both are immediate
+            // - the trigger of the first transition is not null
+            // - the trigger of the second transition is null.
+            // Additionally, if a final state is target of the second (else) transition, skip it, because the 
+            // merger would form a complex final state.
             if (state.outgoingTransitions.size == 2) {
                 val oT1 = state.outgoingTransitions.head
                 val oT2 = state.outgoingTransitions.get(1)
@@ -97,19 +84,25 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
                         !oT2.targetState.final // We don't want to get complex final states.
                     ) {
                         condStates += state 
-                        environment.infos.add(annotationModel.model, 
-                           "Conditional Pattern", 
-                           annotationModel.get(state), null)
+                        annotationModel.addInfo(state, "Conditional Pattern")
                     }
                 }
             }
         }
         
-        snapshot
         for (state : condStates) {
+            // oT2 is the transition without trigger (the second from the former search).
             val oT2 = state.outgoingTransitions.filter[ trigger === null ].head
             val tS = oT2.targetState
             
+            // If all outgoing transitions of the target state are immediate, we can perform the merger.
+            // To merge perform the following actions:
+            // - add all outgoing transition that are not oT2 (the else transition) to the target state of oT2 in reverse order
+            // - set their priority to one, because this immitates the order in which the previous state were checked.
+            // - set all incoming transitions to the target state of oT2
+            // - preserve the initial flag if necessary
+            // - remove oT2
+            // - remove the state.
             if (!tS.outgoingTransitions.exists[ !it.isImmediate ]) {
                 for (t : state.outgoingTransitions.immutableCopy.filter[ it != oT2 ].toList.reverse) {
                     t.sourceState = oT2.targetState 
@@ -126,6 +119,9 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
                 state.remove
                 snapshot
             } else {
+                // If we cannot merge, because the outgoing transitions of the target state permit this,
+                // we adjust the priority of oT2 (the else transition) to the lowest priority, because the actual 
+                // state might have been the target of a previous merger. 
                 oT2.setSpecificPriority = state.outgoingTransitions.size
             }
         }         

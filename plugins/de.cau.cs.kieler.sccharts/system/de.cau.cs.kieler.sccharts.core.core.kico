@@ -8,6 +8,8 @@ de.cau.cs.kieler.sccharts.processors.triggerEffect
 pre set de.cau.cs.kieler.sccharts.processors.surfaceDepth.DTO false
 de.cau.cs.kieler.sccharts.processors.surfaceDepth
 de.cau.cs.kieler.sccharts.scg.processors.SCG
+de.cau.cs.kieler.scg.processors.dependency
+de.cau.cs.kieler.scg.processors.priorities
 de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC
 de.cau.cs.kieler.sccharts.processors.deConditionalize
 de.cau.cs.kieler.sccharts.processors.deSurfaceDepth

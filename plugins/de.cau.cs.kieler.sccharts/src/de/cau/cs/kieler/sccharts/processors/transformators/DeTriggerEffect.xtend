@@ -12,39 +12,16 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.State
-import java.util.Deque
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
-import java.util.List
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * @author ssm
@@ -73,9 +50,7 @@ class DeTriggerEffect extends SCChartsProcessor implements Traceable {
         sccharts.rootStates.forEach[ it.transformSuperstate ]
     }
     
-    @Inject extension KExpressionsCompareExtensions
     @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
     
     protected def void transformSuperstate(State state) {
@@ -91,27 +66,40 @@ class DeTriggerEffect extends SCChartsProcessor implements Traceable {
         for (state : stateList) {
             if (state.isSuperstate) state.transformSuperstate
             
+            // Find all trigger / effect pattern and mark them in the annotation model.
+            // The pattern is identified as a state that has
+            // - 1 incoming transition
+            // - 1 outgoing transition
+            // - all outgoing transitions are immediate
+            // - is not a superstate
+            // - and is not the initial state (because the state will be merged with its predecessor).
             if (state.incomingTransitions.size == 1 && state.outgoingTransitions.size == 1 && 
-                state.outgoingTransitions.forall[ immediate ] && !state.isSuperstate
+                state.outgoingTransitions.forall[ 
+                    immediate &&
+                    trigger === null // We don't want to lose triggers.
+                ] && 
+                !state.isSuperstate &&
+                !state.initial // We don't want to (re-)move the initial state.
             ) {
                 mergeStates += state 
-                environment.infos.add(annotationModel.model, 
-                   "Mergeable Trigger / Effect", 
-                   annotationModel.get(state), null)
+                annotationModel.addInfo(state, "Mergeable Trigger / Effect")
             }
         }
         
-        snapshot
         for (state : mergeStates) {
             val inT = state.incomingTransitions.head
             val outT = state.outgoingTransitions.head
             
+            // Perform the following actions to merge trigger and effects:
+            // - Add all effects from the outgoing transition to the incoming transition.
+            // - Re-route the target state from the incoming transition to the target state of the outgoing transitions
+            // - Remove the outgoing transition
+            // - Remove the state.
             for (e : outT.effects.immutableCopy) {
                 inT.effects.add(e)
             }
             
             inT.targetState = outT.targetState
-            
             
             outT.sourceState = null
             outT.targetState = null

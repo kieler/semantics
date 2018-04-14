@@ -244,9 +244,9 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Creates an annotation model to conveniently create annotations and add them to the environment
      * information.
      */
-    static def <T extends EObject> AnnotationModel<T> createAnnotationModel(T model) {
+    def <T extends EObject> AnnotationModel<T> createAnnotationModel(T model) {
         val c = model.copyEObjectAndReturnCopier
-        new AnnotationModel(c.first, c.second)
+        new AnnotationModel(c.first, c.second, this)
     }
     
     
