@@ -59,6 +59,9 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShadowHook">
       </hook>
       <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowAnnotationsHook">
+      </hook>
+      <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook">
       </hook>
       <hook
