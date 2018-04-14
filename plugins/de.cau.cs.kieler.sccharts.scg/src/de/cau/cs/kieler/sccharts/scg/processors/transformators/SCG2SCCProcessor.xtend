@@ -18,20 +18,13 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Node
@@ -49,8 +42,9 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * @author ssm
@@ -61,6 +55,10 @@ import java.util.List
  *
  */
 class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceable {
+    
+    /** Enable duplicate transition optimization (DTO) */
+    public static val IProperty<Boolean> COPY_ANNOTATIONS = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC.copyAnnotations", true)    
     
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC"
@@ -87,18 +85,11 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         setModel(sccharts)
     }
     
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension AnnotationsExtensions
-    @Inject extension KEffectsExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsFixExtensions
-    @Inject extension SCGThreadExtensions    
-    @Inject extension SCGControlFlowExtensions
     
     protected var counter = 0
     protected val finalStates = <ControlflowRegion, State> newHashMap
@@ -165,6 +156,11 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             val finalState = if (finalStates.get(parentRegion) !== null) 
                 finalStates.get(parentRegion) else  
                 parentRegion.createFinalState("state" + counter++)
+                
+            if (environment.getProperty(COPY_ANNOTATIONS)) {
+                exit.copyAnnotations(finalState)
+            }
+                
             finalStates.put(parentRegion, finalState)
             
             for (inc : finalIncoming.get(exit)) {
@@ -183,6 +179,10 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         val parentRegion = scopeStack.peek as ControlflowRegion
         val newState = parentRegion.createState("state" + counter++)       
 
+        if (environment.getProperty(COPY_ANNOTATIONS)) {
+            fork.copyAnnotations(newState)
+        }
+        
         if (incoming !== null) {
             incoming.targetState = newState
         } else {
@@ -238,6 +238,10 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             newState.outgoingTransitions.add(it)
         ]
         
+        if (environment.getProperty(COPY_ANNOTATIONS)) {
+            conditional.copyAnnotations(newState)
+        }
+        
         nodeList.push(new Pair<Node, Transition>(conditional.getElse.target, newTransitionElse))
         nodeList.push(new Pair<Node, Transition>(conditional.then.target, newTransitionThen))        
     }
@@ -246,6 +250,10 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         visited += assignment
         val parentRegion = scopeStack.peek as ControlflowRegion
         val newState = parentRegion.createState("state" + counter++)       
+        
+        if (environment.getProperty(COPY_ANNOTATIONS)) {
+            assignment.copyAnnotations(newState)
+        }
         
         if (incoming !== null) {
             incoming.targetState = newState
@@ -267,6 +275,10 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         visited += surface
         val parentRegion = scopeStack.peek as ControlflowRegion
         val newState = parentRegion.createState("state" + counter++)
+
+        if (environment.getProperty(COPY_ANNOTATIONS)) {
+            surface.copyAnnotations(newState)
+        }
         
         if (incoming !== null) {
             incoming.targetState = newState
