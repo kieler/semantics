@@ -156,6 +156,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.DeTriggerEffect">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGenerator">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -170,6 +173,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.core.core.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.kico">
         </TransformationSystem>
      </extension>
 

@@ -76,4 +76,9 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
         codeContainer.add(codeFilename, code.toString)
     }
     
+    protected def hostcodeSafeName(String string) {
+        if (string === null) return ""
+        string.replaceAll("[\\s-]","_")
+    }    
+    
 }

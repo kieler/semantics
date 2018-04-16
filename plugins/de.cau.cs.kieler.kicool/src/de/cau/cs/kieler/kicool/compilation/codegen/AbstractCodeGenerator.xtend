@@ -31,7 +31,7 @@ import java.util.Map
  */
 abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
     
-    @Inject Injector injector
+    @Inject protected Injector injector
     
     @Accessors(PUBLIC_GETTER) val moduleMap = <E, CodeGeneratorModule<T, E>> newHashMap
     

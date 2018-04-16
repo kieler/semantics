@@ -52,7 +52,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // Constants
     
     public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis";
-    static val maxPreviewLines = 50;
+    public static var maxPreviewLines = 50;
     static val tabSpaces = "  ";
 
     // -------------------------------------------------------------------------

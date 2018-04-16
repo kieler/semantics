@@ -19,6 +19,8 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
 
 /**
  * Generic synthesis for strings.
@@ -33,7 +35,15 @@ class CodeContainerSynthesis extends AbstractDiagramSynthesis<CodeContainer> {
 
     @Inject extension KNodeExtensions
     
+    public static val SynthesisOption MAX_PREVIEW_LINES = SynthesisOption::createRangeOption("Preview Lines", 0, 500, 5, 50)
+    
+    override getDisplayedSynthesisOptions() {
+        <SynthesisOption> newLinkedList => [ add(MAX_PREVIEW_LINES) ]
+    }    
+    
     override transform(CodeContainer model) {
+        CodePlaceHolderSynthesis.maxPreviewLines = MAX_PREVIEW_LINES.intValue
+        
         val rootNode = model.createNode
         val myViewContext = usedContext
         for (file : model.files.keySet) {

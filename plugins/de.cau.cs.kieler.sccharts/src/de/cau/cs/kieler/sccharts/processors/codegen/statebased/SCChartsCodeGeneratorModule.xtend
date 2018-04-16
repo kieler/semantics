@@ -3,34 +3,34 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2017 by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.codegen
+package de.cau.cs.kieler.sccharts.processors.codegen.statebased
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 
 /**
- * The SCGCodeGeneratorModule allows specific configuration for SCG code generators
+ * The SCChartsCodeGeneratorModule allows specific configuration for SCCharts code generators.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2018-04-16 proposed 
+ * @kieler.rating 2018-04-16 proposed yellow 
  * 
  */
-abstract class SCGCodeGeneratorModule extends CodeGeneratorModule<SCGraphs, SCGraph> {
+abstract class SCChartsCodeGeneratorModule extends CodeGeneratorModule<SCCharts, State> {
     
-    def SCGraphs getSCGraphs() {
+    def SCCharts getSCCharts() {
         return rootObject
     }
     
-    def SCGraph getScg() {
+    def State getRootState() {
         return moduleObject
     } 
     

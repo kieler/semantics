@@ -1,0 +1,18 @@
+system de.cau.cs.kieler.sccharts.statebased
+	version 1 
+	label "State-based Compilation (C)"
+    input SCCharts
+    
+de.cau.cs.kieler.sccharts.processors.triggerEffect
+pre set de.cau.cs.kieler.sccharts.processors.surfaceDepth.DTO false
+de.cau.cs.kieler.sccharts.processors.surfaceDepth
+de.cau.cs.kieler.sccharts.scg.processors.SCG
+de.cau.cs.kieler.scg.processors.dependency
+de.cau.cs.kieler.scg.processors.priorities
+de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC
+de.cau.cs.kieler.sccharts.processors.deConditionalize
+de.cau.cs.kieler.sccharts.processors.deSurfaceDepth
+de.cau.cs.kieler.sccharts.processors.deImmediateDelay
+pre set de.cau.cs.kieler.sccharts.processors.deTriggerEffect.mergeOnSameAnnotationName optPrioIDs
+de.cau.cs.kieler.sccharts.processors.deTriggerEffect
+de.cau.cs.kieler.sccharts.processors.codegen.statebased
