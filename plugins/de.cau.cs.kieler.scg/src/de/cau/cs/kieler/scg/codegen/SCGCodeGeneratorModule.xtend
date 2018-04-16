@@ -12,13 +12,9 @@
  */
 package de.cau.cs.kieler.scg.codegen
 
-import de.cau.cs.kieler.scg.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
-import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.SCGraph
-import java.util.Map
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 
 /**
  * The SCGCodeGeneratorModule allows specific configuration for SCG code generators
@@ -28,45 +24,14 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
-abstract class SCGCodeGeneratorModule extends CodeGeneratorModule {
+abstract class SCGCodeGeneratorModule extends CodeGeneratorModule<SCGraphs, SCGraph> {
     
-    @Accessors var SCGraphs sCGraphs
-    @Accessors var SCGraph scg
-    @Accessors var Processor<SCGraphs, CodeContainer> processorInstance
-    @Accessors var Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap
-    @Accessors var String codeFilename
-    @Accessors var SCGCodeGeneratorModule parent
-    
-    def configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        this.baseName = baseName
-        this.sCGraphs = sCGraphs
-        this.scg = scg
-        this.processorInstance = processorInstance
-        this.codeGeneratorModuleMap = codeGeneratorModuleMap
-        this.codeFilename = codeFilename 
-        this.parent = parent
-        return this
+    def SCGraphs getSCGraphs() {
+        return rootObject
     }
     
-    /**
-     * This method is invoked when the code generation is invoked.
-     * All init methods of all generator modules are invoked before the mail generate methods are called.
-     */
-    abstract def void generateInit()
-    
-    /**
-     * The main generate method. Its purpose depends on the job of the generator module. 
-     */
-    abstract def void generate()
-    
-    /** The done methods are called after all generator modules finish there main generator module. */
-    abstract def void generateDone()
-    
-    
-    def void generateWrite(CodeContainer codeContainer) {
-        codeContainer.add(codeFilename, code.toString)
-    }
+    def SCGraph getScg() {
+        return moduleObject
+    } 
     
 }

@@ -12,12 +12,7 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraph
-import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
@@ -26,7 +21,6 @@ import de.cau.cs.kieler.scg.Conditional
 import java.util.List
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.scg.ControlFlow
 import java.util.Deque
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -71,18 +65,11 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     /** Conditional Stack that keeps track of the nesting depth of conditionals */
     protected val conditionalStack = <Conditional> newLinkedList
     
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
         reset = (parent as CCodeGeneratorModule).reset as CCodeGeneratorResetModule
         tick = (parent as CCodeGeneratorModule).tick as CCodeGeneratorTickModule
-        
-        return this
     }
-
     
     def getName() {
         LOGIC_NAME + baseName + suffix

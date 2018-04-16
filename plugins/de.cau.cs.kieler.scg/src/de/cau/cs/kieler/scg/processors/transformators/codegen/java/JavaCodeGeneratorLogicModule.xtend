@@ -14,13 +14,7 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorLogicModule
-import java.util.Map
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
 
 /**
@@ -41,19 +35,13 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     var JavaCodeGeneratorResetModule reset
     var JavaCodeGeneratorTickModule tick 
 
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
         reset = (parent as JavaCodeGeneratorModule).reset as JavaCodeGeneratorResetModule
         tick = (parent as JavaCodeGeneratorModule).tick as JavaCodeGeneratorTickModule
         
         indentationModifier = 1
         serializer = javaSerializer
-        
-        return this
     }
 
     override generateInit() {

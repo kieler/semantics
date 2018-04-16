@@ -12,11 +12,7 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.scg.SCGraph
-import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Injector
@@ -52,22 +48,16 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Accessors var SCGCodeGeneratorModule tick
     @Accessors var SCGCodeGeneratorModule logic
     
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         struct = injector.getInstance(CCodeGeneratorStructModule)
         reset = injector.getInstance(CCodeGeneratorResetModule)
         tick = injector.getInstance(CCodeGeneratorTickModule)
         logic = injector.getInstance(CCodeGeneratorLogicModule)
             
-        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + H_EXTENSION, this)
-        reset.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-        tick.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-        logic.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-            
-        return this
+        struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + H_EXTENSION, this)
+        reset.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
+        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
+        logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
     }
     
     override generateInit() {

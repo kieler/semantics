@@ -16,13 +16,8 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorModule
-import java.util.Map
 
 /**
  * Root C Code Generator Module
@@ -43,22 +38,16 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     
     public static val JAVA_EXTENSION = ".java"
     
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         struct = injector.getInstance(JavaCodeGeneratorStructModule)
         reset = injector.getInstance(JavaCodeGeneratorResetModule)
         tick = injector.getInstance(JavaCodeGeneratorTickModule)
         logic = injector.getInstance(JavaCodeGeneratorLogicModule)
             
-        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-        reset.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-        tick.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-        logic.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-            
-        return this
+        struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
+        reset.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
+        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
+        logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
     }
     
     override generateWrite(CodeContainer codeContainer) {

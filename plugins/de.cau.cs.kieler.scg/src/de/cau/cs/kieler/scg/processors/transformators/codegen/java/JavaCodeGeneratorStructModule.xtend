@@ -15,14 +15,8 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorStructModule
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.compilation.Processor
-import java.util.Map
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -46,15 +40,9 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     var hasArrays = false
     
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         className = codeFilename.substring(0, codeFilename.length - 5)
         serializer = javaSerializer
-        
-        return this
     }     
     
     override getName() {

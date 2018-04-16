@@ -12,17 +12,16 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
+import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
+import java.util.Map
 
 /**
  * C Code Processor
@@ -32,7 +31,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
-class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
+class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
     @Inject extension AnnotationsExtensions
     @Inject Injector injector
@@ -48,60 +47,22 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         "C Code"
     }
     
-    override getType() {
-        ProcessorType.EXOGENOUS_TRANSFORMATOR
-    }
-        
-    override process() {
-        val graphs = getModel
-        val result = new CodeContainer
-        if (graphs.hasPragma("debug")) {
-            environment.setProperty(DEBUG_COMMENTS, true)
-        }
-        
-        // Create a c code generator module for each SCG.
-        val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
-        for (scg : graphs.scgs) {
-            val generatorModule = createCodeGenetatorModule.configure("", graphs, scg, this, scgModuleMap, scg.name, null)
-            scgModuleMap.put(scg, generatorModule)
+    override createModuleMap(SCGraphs rootModel, Map<SCGraph, CodeGeneratorModule<SCGraphs, SCGraph>> moduleMap) {
+        for (scg : rootModel.scgs) {
+            val generatorModule = createCodeGenetatorModule.configure("", rootModel, scg, this, moduleMap, scg.name, null)
+            moduleMap.put(scg, generatorModule)
             generatorModule.suffix = hostcodeSafeName(scg.name)
         }
-        
-        for (scg : graphs.scgs) {
-            scgModuleMap.get(scg) => [
-                generateInit
-            ]
-        }
-        for (scg : graphs.scgs) {
-            scgModuleMap.get(scg) => [
-                generate
-            ]
-        }
-        for (scg : graphs.scgs) {
-            scgModuleMap.get(scg) => [
-                generateDone
-            ]
-        }
-        for (scg : graphs.scgs) {
-            scgModuleMap.get(scg) => [
-                generateWrite(result)
-            ]
-        }
-        
-        setModel(result)
     }
     
-    /**
-     * Creates a generator module via the injector. 
-     * Override this if you need to create specialized generator modules of a certain type.
-     */
-    protected def SCGCodeGeneratorModule createCodeGenetatorModule() {
-        return injector.getInstance(CCodeGeneratorModule)
+    override preProcess(SCGraphs rootModel) {
+        if (rootModel.hasPragma("debug")) {
+            environment.setProperty(DEBUG_COMMENTS, true)
+        }
     }
-
-    protected def hostcodeSafeName(String string) {
-        if (string === null) return ""
-        string.replaceAll("[\\s-]","_")
+    
+    override def createCodeGenetatorModule() {
+        return injector.getInstance(CCodeGeneratorModule)
     }
 
 }

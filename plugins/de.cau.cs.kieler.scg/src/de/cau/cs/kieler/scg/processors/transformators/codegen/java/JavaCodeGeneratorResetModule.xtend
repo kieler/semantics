@@ -12,15 +12,9 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardTransformation
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import java.util.Map
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorResetModule
 
 /**
@@ -37,14 +31,8 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
     
     @Inject JavaCodeGeneratorStructModule struct
     
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
-        
-        return this
     }    
     
     override generateInit() {

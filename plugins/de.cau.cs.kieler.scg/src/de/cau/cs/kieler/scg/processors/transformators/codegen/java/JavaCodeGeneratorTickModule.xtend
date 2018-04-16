@@ -12,12 +12,6 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraph
-import java.util.Map
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorTickModule
 
@@ -36,15 +30,9 @@ class JavaCodeGeneratorTickModule extends CCodeGeneratorTickModule {
     var JavaCodeGeneratorStructModule struct
     var JavaCodeGeneratorLogicModule logic
     
-    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
-    ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
-        
+    override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
         logic = (parent as JavaCodeGeneratorModule).logic as JavaCodeGeneratorLogicModule
-        
-        return this
     }
     
     override generateInit() {

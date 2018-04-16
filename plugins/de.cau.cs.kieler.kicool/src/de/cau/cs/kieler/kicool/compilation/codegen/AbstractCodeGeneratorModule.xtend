@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.codegen
+package de.cau.cs.kieler.kicool.compilation.codegen
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.inject.Inject
@@ -25,7 +25,7 @@ import com.google.inject.Injector
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
-abstract class CodeGeneratorModule {
+abstract class AbstractCodeGeneratorModule {
     
     @Inject protected Injector injector
         
