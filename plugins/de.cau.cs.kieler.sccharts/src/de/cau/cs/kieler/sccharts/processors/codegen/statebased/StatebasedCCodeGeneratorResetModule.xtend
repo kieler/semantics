@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.sccharts.processors.codegen.statebased
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /**
  * C Code Generator Reset Module
@@ -25,6 +27,8 @@ import com.google.inject.Inject
  * 
  */
 class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
+    
+    @Inject extension SCChartsStateExtensions
     
     static val RESET_NAME = "reset"
     
@@ -41,24 +45,62 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     override generateInit() {
         code.append("void ").append(getName)
         code.append("(")
-        code.append(struct.getName).append("* ").append(struct.getVariableName)
+        code.append(struct.getName).append(" *").append(struct.getVariableName)
         code.append(")")
         
         struct.forwardDeclarations.append(code).append(";\n")
         
         code.append(" {\n")
         
-        indent 
+//        indent 
 //        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
-        indent
+//        indent
 //        code.append(struct.getVariableName).append("->").append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = 0;\n")
     }
     
     override generate() {
+        for (cfr : struct.rootRegions) {
+            var prefix = StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME
+            prefix += "->"
+            prefix += struct.getRegionName(cfr)
+            prefix += "."
+             
+            setInterface(prefix, cfr)
+            
+            code.append("  ")
+            code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
+            code.append("->")
+            code.append(struct.getRegionName(cfr))
+            code.append(".")
+            code.append(StatebasedCCodeGeneratorStructModule.REGION_ACTIVE_STATE)
+            code.append(" = ")
+            code.append(struct.getStateName(cfr.states.filter[ initial ].head))
+            code.append(";\n")
+        }
     }
     
     override generateDone() {
         code.append("}\n")
     }
+    
+    protected def void setInterface(String prefix, ControlflowRegion cfr) {
+        code.append("  ")
+        code.append(prefix)
+        code.append(StatebasedCCodeGeneratorStructModule.REGION_INTERFACE_NAME)
+        code.append(" = &(")
+        code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
+        code.append("->")
+        code.append(StatebasedCCodeGeneratorStructModule.REGION_INTERFACE_NAME)
+        code.append(");\n")
+        
+        val hierarchicalStates = cfr.states.filter[ isHierarchical ]
+        for (cfr2 : hierarchicalStates.map[ regions ].flatten.filter(ControlflowRegion)) {
+            var prefix2 = prefix
+            prefix2 += struct.getRegionName(cfr2) 
+            prefix2 += "."
+            setInterface(prefix2, cfr2)
+        }
+    }
+    
     
 }

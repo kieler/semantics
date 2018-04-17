@@ -39,9 +39,10 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     @Inject extension SCChartsStateExtensions
     @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
     
-    public static val STRUCT_NAME = "Interface"
-    public static val STRUCT_VARIABLE_NAME = "interface"
+    public static val STRUCT_NAME = "TickData"
+    public static val STRUCT_VARIABLE_NAME = "tickData"
     public static val STRUCT_PRE_PREFIX = "_p"
+    public static val STRUCT_INTERFACE_NAME = "Interface"
     
     public static val ENUM_STATES_SUFFIX = "States"
     public static val ENUM_STATES_NONE = "NONE"
@@ -53,15 +54,26 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val THREAD_STATUS_DISPATCHED = "DISPATCHED"
     public static val THREAD_STATUS_PAUSED = "PAUSED"
     
-    public static val REGION_DATA_NAME = "data"
+    public static val REGION_DATA_NAME = "regionData"
+    public static val REGION_INTERFACE_NAME = "interface"
+    public static val REGION_ROOT_THREADSTATUS = "threadStatus"
+    public static val REGION_DATA_TYPE_SUFFIX = "Data"
+    public static val REGION_ACTIVE_STATE = "activeState"
+    public static val REGION_TICK_START_STATE = "tickStartState"
     
+    @Accessors StringBuilder tickData = new StringBuilder
     @Accessors StringBuilder forwardDeclarations = new StringBuilder
+    @Accessors StringBuilder forwardDeclarationsLogic = new StringBuilder
+    @Accessors StringBuilder stateData = new StringBuilder
     @Accessors StringBuilder threadData = new StringBuilder
     
-    @Accessors Map<ControlflowRegion, String> regionNames = <ControlflowRegion, String> newHashMap
+    @Accessors List<ControlflowRegion> rootRegions = <ControlflowRegion> newLinkedList
     
-    private var regionCounter = 0
-  
+    @Accessors Map<ControlflowRegion, String> regionNames = <ControlflowRegion, String> newHashMap
+    @Accessors Map<ControlflowRegion, String> noneState = <ControlflowRegion, String> newHashMap
+    
+    var noneCounter = 0
+    
     def getName() {
         STRUCT_NAME + baseName + suffix
     }
@@ -75,8 +87,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }    
     
     override generateInit() {
-        code.append("typedef enum ")
-        code.append(THREAD_STATUS_ENUM)
+        code.append("typedef enum")
         code.append(" {\n  ")
         code.append(THREAD_STATUS_EMPTY)
         code.append(", ")
@@ -85,9 +96,14 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         code.append(THREAD_STATUS_DISPATCHED)
         code.append(", ")
         code.append(THREAD_STATUS_PAUSED)
-        code.append("\n};\n\n")
+        code.append("\n} ")
+        code.append(THREAD_STATUS_ENUM)
+        code.append(";\n\n")
         
         code.append("typedef struct {\n")
+        tickData.append("typedef struct {\n")
+//        stateData.append("typedef enum {\n")
+//        stateData.append("  ").append(ENUM_STATES_NONE)
     }
     
     override generate() {
@@ -102,28 +118,59 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
                     val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
                         declaration.type.serializeHR
                         else declaration.hostType
-                    code.append(indentation + declarationType)
-                    code.append(" ")
-                    code.append(valuedObject.name)
+                    var s = "";                        
+                        
+                    s += indentation + declarationType
+                    s += " "
+                    s += valuedObject.name
                     if (valuedObject.isArray) {
                         for (cardinality : valuedObject.cardinalities) {
-                            code.append("[" + cardinality.serializeHR + "]")
+                            s += "[" + cardinality.serializeHR + "]"
                         }
                     }
-                    code.append(";\n")
+                    s += ";\n"
+                    
+                    code.append(s)
+                    tickData.append(s)
                 }
             }
         }
     }
     
     override generateDone() {
-        code.append("} ").append(getName).append(";\n")
+        tickData.append("\n")
+        tickData.append("  ")
+        tickData.append(STRUCT_INTERFACE_NAME)
+        tickData.append(" ")
+        tickData.append(REGION_INTERFACE_NAME)
+        tickData.append(";\n\n")
+        tickData.append("  ThreadStatus ")
+        tickData.append(REGION_ROOT_THREADSTATUS)
+        tickData.append(";\n")
+        
+        for (cfr : rootRegions) {
+            tickData.append("  ")
+            tickData.append(getRegionName(cfr) + REGION_DATA_TYPE_SUFFIX)
+            tickData.append(" ")
+            tickData.append(getRegionName(cfr))
+            tickData.append(";\n")
+        }
+        
+        tickData.append("} ").append(getName).append(";\n")
+        
+        code.append("} ").append(STRUCT_INTERFACE_NAME).append(";\n")
         
         if (threadData.length > 0) code.append("\n")
         code.append(threadData)
         
+        code.append(tickData)
+        
         if (forwardDeclarations.length > 0) code.append("\n")
         code.append(forwardDeclarations)
+        
+        if (forwardDeclarationsLogic.length > 0) code.append("\n")
+        code.append(forwardDeclarationsLogic)
+        
     }
     
     def getRegionName(ControlflowRegion cfr) {
@@ -140,11 +187,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     def generateThreadData(ControlflowRegion cfr, List<ControlflowRegion> children) {
         val name = cfr.regionName
+        val noneStateName = ENUM_STATES_NONE + noneCounter++
         
-        threadData.append("typedef enum ");
-        threadData.append(name + ENUM_STATES_SUFFIX) 
+        threadData.append("typedef enum");
         threadData.append(" {\n  ")
-        threadData.append(ENUM_STATES_NONE + ", ")
+        threadData.append(noneStateName + ", ")
         for (state : cfr.states.indexed) {
             val stateName = state.value.stateName
             threadData.append(stateName)
@@ -153,25 +200,33 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             }
             if (state.key < cfr.states.size - 1) threadData.append(", ")
         }
-        threadData.append("\n};\n\n")
+        threadData.append("\n} ")
+        threadData.append(name + ENUM_STATES_SUFFIX)
+        threadData.append(";\n\n") 
         
         threadData.append("typedef struct {\n")
-        threadData.append(indentation + name + ENUM_STATES_SUFFIX + " activeState;\n")
-        threadData.append(indentation + name + ENUM_STATES_SUFFIX + " tickStartState;\n")
+        threadData.append(indentation + name + ENUM_STATES_SUFFIX + " " + REGION_ACTIVE_STATE + ";\n")
+        threadData.append(indentation + name + ENUM_STATES_SUFFIX + " " + REGION_TICK_START_STATE + ";\n")
         threadData.append(indentation + THREAD_STATUS_ENUM + " threadStatus;\n")
         threadData.append(indentation + "int activePriority;\n")
+        threadData.append(indentation + STRUCT_INTERFACE_NAME + "* interface;\n")
         
         if (children !== null && children.size > 0) {
             for (child : children) {
                 val childName = child.getRegionName
-                threadData.append(indentation + childName + " " + childName + ";\n")
+                threadData.append(indentation + childName + REGION_DATA_TYPE_SUFFIX + " " + childName + ";\n")
             }
         }
         
         threadData.append("} ")
-        threadData.append(name)
+        threadData.append(name + REGION_DATA_TYPE_SUFFIX)
         threadData.append(";\n\n")
         
         regionNames.put(cfr, name)
+        noneState.put(cfr, noneStateName)
+    }
+    
+    def getNoneStateName(ControlflowRegion cfr) {
+        noneState.get(cfr)
     }
 }

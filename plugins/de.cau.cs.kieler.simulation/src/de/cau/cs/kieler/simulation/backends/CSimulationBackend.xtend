@@ -45,7 +45,8 @@ class CSimulationBackend extends OriginBasedSimulationBackend {
      * {@inheritDoc}
      */
     override getSupportedProcessors() {
-        return #["de.cau.cs.kieler.scg.processors.codegen.c"]
+        return #["de.cau.cs.kieler.scg.processors.codegen.c", 
+                 "de.cau.cs.kieler.sccharts.processors.codegen.statebased"]
     }
     
     /**

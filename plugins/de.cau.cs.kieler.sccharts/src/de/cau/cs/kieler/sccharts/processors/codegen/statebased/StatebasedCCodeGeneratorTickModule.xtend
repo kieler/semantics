@@ -12,6 +12,10 @@
  */
 package de.cau.cs.kieler.sccharts.processors.codegen.statebased
 
+import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+
 /**
  * C Code Generator Tick Module
  * 
@@ -28,6 +32,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     
     var StatebasedCCodeGeneratorStructModule struct
     var StatebasedCCodeGeneratorLogicModule logic
+    @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
     
     override configure() {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
@@ -41,14 +46,58 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     override generateInit() {
         code.append("void ").append(getName)
         code.append("(")
-        code.append(struct.getName).append("* ").append(struct.getVariableName)
+        code.append(struct.getName).append(" *").append(struct.getVariableName)
         code.append(")")
         
         struct.forwardDeclarations.append(code).append(";\n")
         
         code.append(" {\n")
+        
+        generateInitSetInputs(serializer)
+
         code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
-        code.append("\n")
+
+        generateInitSetOutputs(serializer)
+    }
+    
+    protected def void generateInitSetInputs(extension StatebasedCCodeSerializeHRExtensions serializer) {
+        for (declaration : rootState.declarations.filter(VariableDeclaration).filter[ input ]) {
+            for (valuedObject : declaration.valuedObjects) {
+                code.append(indentation)
+                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
+                code.append("->")
+                code.append(StatebasedCCodeGeneratorStructModule.REGION_INTERFACE_NAME)
+                code.append(".")
+                code.append(valuedObject.name)
+                code.append(" = ")
+                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
+                code.append("->")
+                code.append(valuedObject.name)
+                code.append(";\n")
+            }
+        }
+        
+        if (rootState.declarations.filter(VariableDeclaration).exists[ input ]) code.append("\n")
+    }
+
+    protected def void generateInitSetOutputs(extension StatebasedCCodeSerializeHRExtensions serializer) {
+        if (rootState.declarations.filter(VariableDeclaration).exists[ output ]) code.append("\n")
+        
+        for (declaration : rootState.declarations.filter(VariableDeclaration).filter[ output ]) {
+            for (valuedObject : declaration.valuedObjects) {
+                code.append(indentation)
+                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
+                code.append("->")
+                code.append(valuedObject.name)
+                code.append(" = ")
+                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
+                code.append("->")
+                code.append(StatebasedCCodeGeneratorStructModule.REGION_INTERFACE_NAME)
+                code.append(".")
+                code.append(valuedObject.name)
+                code.append(";\n")
+            }
+        }
     }
     
     override generate() {
@@ -56,7 +105,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateDone() {
-        indent 
+//        indent 
 //        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
         code.append("}\n")
     }
