@@ -23,6 +23,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+
 /**
  * C Code Generator Logic Module
  * 
@@ -34,7 +37,8 @@ import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.
  * 
  */
 class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
-    
+
+    @Inject extension AnnotationsExtensions    
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
@@ -192,15 +196,29 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                     function.append(REGION_DATA_NAME)
                     function.append("->")
                     function.append(cfgName)
-                    function.append(".activeState = ")
+                    function.append(".")
+                    function.append(REGION_ACTIVE_STATE)
+                    function.append(" = ")
                     function.append(initialStateName) 
+                    function.append(";\n")
+                    
+                    function.append("  ");
+                    function.append(REGION_DATA_NAME)
+                    function.append("->")
+                    function.append(cfgName)
+                    function.append(".")
+                    function.append(REGION_ACTIVE_PRIORITY)
+                    function.append(" = ") 
+                    function.append(initialState.getStatePriority)
                     function.append(";\n")
 
                     function.append("  ");
                     function.append(regionDataName)
                     function.append("->")
                     function.append(cfgName)
-                    function.append(".threadStatus = ")
+                    function.append(".")
+                    function.append(REGION_ROOT_THREADSTATUS)
+                    function.append(" = ")
                     function.append(THREAD_STATUS_RUNNING) 
                     function.append(";\n")
                 }
@@ -251,19 +269,63 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             
             function.append("\n")
             
-            if (regionCount > 1) {
+            val multiThreaded = regionCount > 1
+            function.append("  ")
+            function.append("do {\n")
+            indentation2 += "  "
+            if (multiThreaded) {
                 
-                function.append("  ")
-                function.append("do {\n")
-                indentation2 += "  "
+                function.append("    ")
+                function.append("int activePriority = 0;\n")
+                for (cfr : state.regions.filter(ControlflowRegion)) {
+                    val cfrName = struct.getRegionName(cfr)
+                    
+                    function.append("    ")
+                    function.append("if (")
+                    function.append(regionDataName)
+                    function.append("->" + cfrName)
+                    function.append(".")
+                    function.append(REGION_ROOT_THREADSTATUS)
+                    function.append(" == ");
+                    function.append(THREAD_STATUS_RUNNING)
+                    function.append(" &&\n")
+                    function.append("      ")
+                    function.append(regionDataName)
+                    function.append("->" + cfrName)
+                    function.append(".")
+                    function.append(REGION_ACTIVE_PRIORITY)
+                    function.append(" > activePriority")
+                    function.append(") {\n")
+                    function.append("      ")
+                    function.append("activePriority = ")
+                    function.append(regionDataName)
+                    function.append("->" + cfrName)
+                    function.append(".")
+                    function.append(REGION_ACTIVE_PRIORITY)
+                    function.append(";\n    }\n\n")
+                }
             }
+            
+            
 
-            val dispatchBuilder = new StringBuilder
+//            val dispatchBuilder = new StringBuilder
             val conditionalBuilder = new StringBuilder
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 cfr.value.generateControlflowRegion
                 
                 val cfrName = struct.getRegionName(cfr.value)
+                
+                if (multiThreaded) {
+                    function.append("    ")
+                    function.append("if (")
+                    function.append(regionDataName)
+                    function.append("->" + cfrName)
+                    function.append(".")
+                    function.append(REGION_ACTIVE_PRIORITY)
+                    function.append(" == activePriority) {\n")
+                    indentation2 += "  "
+                }
+                
                 function.append("  " + indentation2)
                 function.append(cfrName)
                 function.append("(&")
@@ -271,19 +333,23 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 function.append("->" + cfrName)
                 function.append(");\n")
                 
-                dispatchBuilder.append("  " + indentation2)
-                dispatchBuilder.append("if (")
-                dispatchBuilder.append(regionDataName)
-                dispatchBuilder.append("->" + cfrName)
-                dispatchBuilder.append(".threadStatus == ");
-                dispatchBuilder.append(THREAD_STATUS_DISPATCHED)
-                dispatchBuilder.append(") {\n")
-                dispatchBuilder.append("    " + indentation2)
-                dispatchBuilder.append(regionDataName)
-                dispatchBuilder.append("->" + cfrName)
-                dispatchBuilder.append(".threadStatus == ");
-                dispatchBuilder.append(THREAD_STATUS_RUNNING)
-                dispatchBuilder.append(";\n  " + indentation2 + "}\n")
+                function.append("  " + indentation2)
+                function.append("if (")
+                function.append(regionDataName)
+                function.append("->" + cfrName)
+                function.append(".threadStatus == ");
+                function.append(THREAD_STATUS_DISPATCHED)
+                function.append(") {\n")
+                function.append("    " + indentation2)
+                function.append(regionDataName)
+                function.append("->" + cfrName)
+                function.append(".threadStatus = ");
+                function.append(THREAD_STATUS_RUNNING)
+                function.append(";\n  " + indentation2 + "}\n")
+                
+                if (multiThreaded) {
+                    function.append("    }\n\n")    
+                }
                 
                 conditionalBuilder.append(regionDataName)
                 conditionalBuilder.append("->" + cfrName)
@@ -294,14 +360,14 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 }
             }
             
-            if (regionCount > 1) {
-                function.append("\n")
-                function.append(dispatchBuilder)
+//            if (regionCount > 1) {
+//                function.append("\n")
+//                function.append(dispatchBuilder)
                 function.append("  ")
                 function.append("} while(")
                 function.append(conditionalBuilder)
                 function.append(");\n");
-            }
+//            }
             function.append("\n")
         } 
         
@@ -367,11 +433,12 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         function.append(indentation)
         if (hasTrigger) {
             function.append("if ")
-            if (!isImmediate) function.append("(inDepth && ")
+            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.append("(")
+            if (!isImmediate) function.append("inDepth && ")
             valuedObjectPrefix = REGION_DATA_NAME + "->" + REGION_INTERFACE_NAME + "->" 
             function.append(transition.trigger.serialize)
             valuedObjectPrefix = ""
-            if (!isImmediate) function.append(")")
+            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.append(")")
             function.append(" {\n")
         } else if (!isImmediate) {
             function.append("if (inDepth) {\n")
@@ -446,12 +513,31 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 function.append(";\n")                
             }
             
-            function.append("  }\n")
+            val sourcePrio = transition.sourceState.statePriority
+            val targetPrio = transition.targetState.statePriority
+            
+            if (targetPrio != sourcePrio) {
+                function.append("    ");
+                function.append(REGION_DATA_NAME)
+                function.append("->")
+                function.append(REGION_ACTIVE_PRIORITY)
+                function.append(" = ") 
+                function.append(targetPrio)
+                function.append(";\n")
+                
+                if (targetPrio < sourcePrio) {
+                    function.append("    ")
+                    function.append(REGION_DATA_NAME)
+                    function.append("->threadStatus = DISPATCHED;\n");
+                }
+            } 
+            
+            if (hasTrigger || !isImmediate || index > 0) function.append("  }\n")
         }
         
         if (transition.isTermination) {
-//            function.append(indentation)
-//            function.append("}\n")
+            function.append(indentation)
+            function.append("}\n")
             function.append(indentation)
             function.append("else\n  {\n")
             function.append(indentation + "  ")
@@ -504,5 +590,14 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
     }
 
-    
+
+    private val ANNOTATION_PRIORITY = "optPrioIDs"
+
+    def int getStatePriority(State state) {
+        if (state.hasAnnotation(ANNOTATION_PRIORITY)) {
+            return state.getAnnotation(ANNOTATION_PRIORITY).asIntAnnotation.value
+        } else {
+            return 0
+        }
+    } 
 }

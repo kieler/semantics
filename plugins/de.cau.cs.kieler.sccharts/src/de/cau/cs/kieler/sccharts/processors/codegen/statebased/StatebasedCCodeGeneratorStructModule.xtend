@@ -60,6 +60,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val REGION_DATA_TYPE_SUFFIX = "Data"
     public static val REGION_ACTIVE_STATE = "activeState"
     public static val REGION_TICK_START_STATE = "tickStartState"
+    public static val REGION_ACTIVE_PRIORITY = "activePriority"
     
     @Accessors StringBuilder tickData = new StringBuilder
     @Accessors StringBuilder forwardDeclarations = new StringBuilder

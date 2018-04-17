@@ -48,11 +48,11 @@ class AnnotationsExtensions {
 	
 	def String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
-		if (annotation != null) 
+		if (annotation !== null) 
 			(annotation as StringAnnotation).values.head
 		else
 			""
-	}
+	}	
 
 	def Annotatable createStringAnnotation(Annotatable source, String name, String value) {
 		source => [ annotations += name.createStringAnnotation(value) ]
@@ -134,6 +134,10 @@ class AnnotationsExtensions {
     
     def asStringAnnotation(Annotation annotation) {
         annotation as StringAnnotation
+    }
+    
+    def asIntAnnotation(Annotation annotation) {
+        annotation as IntAnnotation
     }
     
     def asAnnotatable(EObject eObject) {
