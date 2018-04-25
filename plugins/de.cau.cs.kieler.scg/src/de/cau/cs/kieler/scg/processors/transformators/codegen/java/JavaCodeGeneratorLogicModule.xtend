@@ -31,10 +31,6 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     
     @Inject JavaCodeSerializeHRExtensions javaSerializer
     
-    var JavaCodeGeneratorStructModule struct 
-    var JavaCodeGeneratorResetModule reset
-    var JavaCodeGeneratorTickModule tick 
-
     override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
         reset = (parent as JavaCodeGeneratorModule).reset as JavaCodeGeneratorResetModule
@@ -60,6 +56,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         prePrefix = JavaCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         val name = operatorExpression.serializeHR 
         if (preVariables.contains(name)) return;
+        val struct = this.struct as JavaCodeGeneratorStructModule
     
         // Add the pre variable to the variables hashes to mark it handled.    
         preVariables += name.toString

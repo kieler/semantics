@@ -56,9 +56,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
     static val LOGIC_NAME = "logic"
     
-    var CCodeGeneratorStructModule struct 
-    var CCodeGeneratorResetModule reset
-    var CCodeGeneratorTickModule tick 
+    @Accessors var CCodeGeneratorStructModule struct 
+    @Accessors var CCodeGeneratorResetModule reset
+    @Accessors var CCodeGeneratorTickModule tick 
 
     /** Hash for already handles pre variables */    
     protected val preVariables = <String> newHashSet
