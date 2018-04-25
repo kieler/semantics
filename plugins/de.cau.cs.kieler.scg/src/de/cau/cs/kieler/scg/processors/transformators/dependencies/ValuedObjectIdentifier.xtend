@@ -20,6 +20,9 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import com.google.inject.Injector
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
+import com.google.inject.Guice
 
 /**
  * The ValuedObjectIdentifier is used to distinguish accesses to a valued object that are decidable at compile time from
@@ -115,4 +118,26 @@ class ValuedObjectIdentifier {
             return false
         }
     }
+    
+    
+    override String toString() {
+        val result = new StringBuffer("VOI");
+        result.append("(");
+        result.append(String.format("%08x", this.hashCode()));
+        result.append(")");
+        result.append(" ");
+        result.append(serializer.serialize(valuedObject).toString);
+        if (indices !== null) {
+            result.append(".")
+            for (index : indices) {
+                result.append("[")
+                result.append(serializer.serialize(index).toString)
+                result.append("]")
+            }
+        }
+        return result.toString();
+    }
+    
+    private static Injector injector = Guice.createInjector();
+    private static SCGSerializeHRExtensions serializer =  injector.getInstance(SCGSerializeHRExtensions);    
 }

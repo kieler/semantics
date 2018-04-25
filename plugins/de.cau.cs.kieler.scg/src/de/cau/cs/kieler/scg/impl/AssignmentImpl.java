@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;

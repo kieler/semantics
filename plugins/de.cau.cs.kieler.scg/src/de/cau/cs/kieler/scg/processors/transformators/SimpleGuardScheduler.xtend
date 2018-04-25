@@ -117,10 +117,6 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 	 */
 	protected def void topologicalScheduling(Node node, Set<Node> nodesToSchedule, Set<Node> schedule, Set<Node> unscheduableNodes) {
 		// Remove this node from the set and hence mark it as visited.
-		println(node)
-		if (node.toString.contains("g9 = ")) {
-		    println("stop")
-		}
 		nodesToSchedule -= node
 		val dependencies = node.getSchedulingDependencies.toList
 		

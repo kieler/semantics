@@ -123,7 +123,9 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             switch(node) {
                 Assignment: {
                     node.processAssignment(forkStack, valuedObjectAccessors)
-                    if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next?.target.addAndMark(nodes, visited)
+                    if (node.next !== null) {
+                        if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next?.target.addAndMark(nodes, visited)
+                    }
                 }
                 Conditional: {
                     node.processConditional(forkStack, valuedObjectAccessors)
@@ -202,7 +204,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                 priority = sched.priority    
             }
             
-            val writeAccess = new ValuedObjectAccess(assignment, schedule, scheduleObject, priority, forkStack)
+            val writeAccess = new ValuedObjectAccess(assignment, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
             valuedObjectAccessors.addAccess(writeVOI, writeAccess)
         }
     }
@@ -227,7 +229,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                     priority = sched.priority    
                 }
                 
-                val readAccess = new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack)
+                val readAccess = new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
                 valuedObjectAccessors.addAccess(readVOI, readAccess)
             } 
         }
@@ -243,33 +245,33 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         // the same valued object. The ValuedObjectIdentifier can retrieve the corresponding generic identifier.        
         for (valuedObjectIdentifier : valuedObjects.filter[ isSpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
-            valuedObjectIdentifier.processDependencies(accesses)
+            valuedObjectIdentifier.processDependencies(accesses, true)
              
             additionalAccesses.putAll(valuedObjectIdentifier.genericIdentifier, accesses);
-        }      
+        }    
         
         for (valuedObjectIdentifier : valuedObjects.filter[ !isSpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
             val specificAccesses = additionalAccesses.get(valuedObjectIdentifier)
             specificAccesses.addAll(accesses)
-            valuedObjectIdentifier.processDependencies(specificAccesses)
+            valuedObjectIdentifier.processDependencies(specificAccesses, false)
         }   
     }
     
-    protected def void processDependencies(ValuedObjectIdentifier valuedObjectIdentifier, Set<ValuedObjectAccess> accesses) {
+    protected def void processDependencies(ValuedObjectIdentifier valuedObjectIdentifier, Set<ValuedObjectAccess> accesses, boolean isSpecific) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val schedules = accesses.map[ schedule ].filter[ it !== null ].filter(ScheduleDeclaration).toSet
         for (schedule : schedules) {
             for (vo : schedule.valuedObjects) {
                 val scheduledAccesses = accesses.filter[ it.schedule == schedule && it.scheduleObject == vo ].toSet
-                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null)
+                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null, isSpecific)
             }
         }
-        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed)
+        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific)
     }
     
     protected def Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> processDependencySet(ValuedObjectIdentifier valuedObjectIdentifier, 
-        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude
+        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific
     ) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val accessPair = accesses.sortAccessesAccordingToPriority
@@ -277,11 +279,12 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             val prioAccesses = accessPair.second.get(priority) 
             for (access : prioAccesses) {
                 for (compPriority : priority..accessPair.first) {
-                    val compAccesses = accessPair.second.get(compPriority) {
-                        for (compAccess : compAccesses) {
-                            if (exclude === null || 
-                                !exclude.exists[ first.node == access.node && second.node == compAccess.node ] 
-                            ) {
+                    val compAccesses = accessPair.second.get(compPriority) 
+                    for (compAccess : compAccesses) {
+                        if (exclude === null || 
+                            !exclude.exists[ first.node == access.node && second.node == compAccess.node ] 
+                        ) {
+                            if (!access.isSpecific || !compAccess.isSpecific || isSpecific) {
                                 valuedObjectIdentifier.processDependency(access, compAccess)
                                 processed.add(new Pair<ValuedObjectAccess, ValuedObjectAccess>(access, compAccess))
                                 processed.add(new Pair<ValuedObjectAccess, ValuedObjectAccess>(compAccess, access))
@@ -348,7 +351,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                 if (sourceFork == targetFork) {
                      val sourceEntry = source.forkStack.getOwnThreadEntry(sourceFork)
                      val targetEntry = target.forkStack.getOwnThreadEntry(targetFork)
-                     if (sourceEntry != targetEntry) return true else return false
+                     return sourceEntry != targetEntry
                 }
             }
         }

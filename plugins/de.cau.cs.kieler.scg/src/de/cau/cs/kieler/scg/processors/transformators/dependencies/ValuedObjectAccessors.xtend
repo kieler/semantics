@@ -28,8 +28,10 @@ class ValuedObjectAccessors {
 
     protected val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> accesses = HashMultimap.create
     
-    def addAccess(ValuedObjectIdentifier VOI, Node node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack) {
-        accesses.put(VOI, new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack))
+    def addAccess(ValuedObjectIdentifier VOI, Node node, EObject schedule, ValuedObject scheduleObject, int priority, 
+        ForkStack forkStack, boolean isSpecific
+    ) {
+        accesses.put(VOI, new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack, isSpecific))
     }
     
     def addAccess(ValuedObjectIdentifier VOI, ValuedObjectAccess VOA) {

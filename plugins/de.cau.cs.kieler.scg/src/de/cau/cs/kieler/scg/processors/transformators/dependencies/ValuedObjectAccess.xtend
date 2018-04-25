@@ -16,6 +16,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import com.google.inject.Guice
+import com.google.inject.Injector
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 
 /**
  * A ValuedObjectAccess is a storage class for a particular access to an valued object.
@@ -39,12 +42,28 @@ class ValuedObjectAccess {
     @Accessors ValuedObject scheduleObject
     @Accessors int priority 
     @Accessors ForkStack forkStack
+    @Accessors boolean isSpecific
     
-    new(Node node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack) {
+    new(Node node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
         this.node = node
         this.schedule = schedule
         this.scheduleObject = scheduleObject
         this.priority = priority
         this.forkStack = new ForkStack(forkStack)
+        this.isSpecific = isSpecific
     }
+    
+    override String toString() {
+        val result = new StringBuffer("VOA");
+        result.append("(");
+        result.append(String.format("%08x", this.hashCode()));
+        result.append(")");
+        result.append(" ");
+        result.append(serializer.serialize(node).toString);
+        
+        return result.toString();
+    }
+    
+    private static Injector injector = Guice.createInjector();
+    private static SCGSerializeHRExtensions serializer =  injector.getInstance(SCGSerializeHRExtensions);    
 }
