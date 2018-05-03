@@ -47,7 +47,7 @@ class SimulationUtil {
      */
     public static def void restartLastSimulation() {
         if(lastFiles !== null || lastEObject !== null) {
-            PromPlugin.execInJob("Restaring Simulation", [SubMonitor childMonitor |
+            PromPlugin.execInJob("Restarting Simulation", [SubMonitor childMonitor |
                 if(!lastFiles.isNullOrEmpty) {
                     startSimulation(lastFiles, childMonitor)
                 } else if(lastEObject !== null) {
