@@ -112,6 +112,12 @@ class KExtDeclarationExtensions {
         return null
     }
     
+    def DeclarationScope getClosestDeclarationScope(EObject eObject) {
+        if (eObject === null) return null
+        if (eObject instanceof DeclarationScope) return eObject
+        return eObject.eContainer.getClosestDeclarationScope
+    }
+    
     def getValuedObject(DeclarationScope scope, int index) {
         scope.valuedObjects.get(index)
     }
