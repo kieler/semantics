@@ -4,12 +4,12 @@
 package de.cau.cs.kieler.scl.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
+import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.ExternString;
@@ -79,9 +79,6 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == AnnotationsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case AnnotationsPackage.ANNOTATION:
-				sequence_TagAnnotation(context, (Annotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
@@ -119,6 +116,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				else break;
 			case AnnotationsPackage.STRING_PRAGMA:
 				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
+			case AnnotationsPackage.TAG_ANNOTATION:
+				sequence_TagAnnotation(context, (TagAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()

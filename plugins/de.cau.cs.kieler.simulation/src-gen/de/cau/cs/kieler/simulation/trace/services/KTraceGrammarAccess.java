@@ -1483,6 +1483,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
 	//TextExpression:
+	//	annotations+=Annotation*
 	//	text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
@@ -1941,7 +1942,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation Annotation:
+	//TagAnnotation:
 	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();

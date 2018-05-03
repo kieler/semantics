@@ -7105,11 +7105,29 @@ ruleTextExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
+((
 (
+		{ 
+	        newCompositeNode(grammarAccess.getTextExpressionAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+	    }
+		lv_annotations_0_0=ruleAnnotation		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTextExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_0_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.Annotation");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
 (
-		lv_text_0_0=RULE_HOSTCODE
+		lv_text_1_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_text_0_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
+			newLeafNode(lv_text_1_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7118,12 +7136,12 @@ ruleTextExpression returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"text",
-        		lv_text_0_0, 
+        		lv_text_1_0, 
         		"de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
 	    }
 
 )
-)
+))
 ;
 
 

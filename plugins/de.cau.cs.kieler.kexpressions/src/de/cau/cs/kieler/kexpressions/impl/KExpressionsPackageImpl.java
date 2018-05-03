@@ -1153,6 +1153,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         ignoreValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(this.getExpression());
+        textExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         declarationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         variableDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         referenceDeclarationEClass.getESuperTypes().add(this.getDeclaration());

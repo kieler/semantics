@@ -604,13 +604,22 @@ public interface KExpressionsPackage extends EPackage {
     int TEXT_EXPRESSION__SCHEDULE = EXPRESSION__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION__ANNOTATIONS = EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT_EXPRESSION__TEXT = EXPRESSION_FEATURE_COUNT + 0;
+    int TEXT_EXPRESSION__TEXT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Text Expression</em>' class.
@@ -619,7 +628,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+    int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.

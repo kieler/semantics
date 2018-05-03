@@ -2905,11 +2905,29 @@ ruleTextExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
+((
 (
+		{ 
+	        newCompositeNode(grammarAccess.getTextExpressionAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+	    }
+		lv_annotations_0_0=ruleAnnotation		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTextExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_0_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.Annotation");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
 (
-		lv_text_0_0=RULE_HOSTCODE
+		lv_text_1_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_text_0_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
+			newLeafNode(lv_text_1_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2918,12 +2936,12 @@ ruleTextExpression returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"text",
-        		lv_text_0_0, 
+        		lv_text_1_0, 
         		"de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
 	    }
 
 )
-)
+))
 ;
 
 
@@ -3249,6 +3267,76 @@ ruleIgnoreValue returns [EObject current=null]
 
 
 
+
+
+
+// Entry rule entryRuleAnnotation
+entryRuleAnnotation returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getAnnotationRule()); }
+	 iv_ruleAnnotation=ruleAnnotation 
+	 { $current=$iv_ruleAnnotation.current; } 
+	 EOF 
+;
+
+// Rule Annotation
+ruleAnnotation returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
+    }
+    this_CommentAnnotation_0=ruleCommentAnnotation
+    { 
+        $current = $this_CommentAnnotation_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
+    }
+    this_KeyStringValueAnnotation_1=ruleKeyStringValueAnnotation
+    { 
+        $current = $this_KeyStringValueAnnotation_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
+    }
+    this_TypedKeyStringValueAnnotation_2=ruleTypedKeyStringValueAnnotation
+    { 
+        $current = $this_TypedKeyStringValueAnnotation_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_3()); 
+    }
+    this_TagAnnotation_3=ruleTagAnnotation
+    { 
+        $current = $this_TagAnnotation_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
 
 
 

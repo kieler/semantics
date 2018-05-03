@@ -4,12 +4,12 @@
 package de.cau.cs.kieler.annotations.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
+import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
 import java.util.Set;
@@ -37,9 +37,6 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == AnnotationsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case AnnotationsPackage.ANNOTATION:
-				sequence_TagAnnotation(context, (Annotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
@@ -77,6 +74,9 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 				else break;
 			case AnnotationsPackage.STRING_PRAGMA:
 				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
+			case AnnotationsPackage.TAG_ANNOTATION:
+				sequence_TagAnnotation(context, (TagAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
@@ -229,15 +229,15 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Contexts:
-	 *     Annotation returns Annotation
-	 *     RestrictedTypeAnnotation returns Annotation
-	 *     QuotedStringAnnotation returns Annotation
-	 *     TagAnnotation returns Annotation
+	 *     Annotation returns TagAnnotation
+	 *     RestrictedTypeAnnotation returns TagAnnotation
+	 *     QuotedStringAnnotation returns TagAnnotation
+	 *     TagAnnotation returns TagAnnotation
 	 *
 	 * Constraint:
 	 *     name=ExtendedID
 	 */
-	protected void sequence_TagAnnotation(ISerializationContext context, Annotation semanticObject) {
+	protected void sequence_TagAnnotation(ISerializationContext context, TagAnnotation semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));

@@ -234,6 +234,7 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0_2(), "rule__FunctionCall__Group_2_0_2__0");
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
+					put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
 					put(grammarAccess.getVectorValueAccess().getGroup(), "rule__VectorValue__Group__0");
 					put(grammarAccess.getVectorValueAccess().getGroup_2(), "rule__VectorValue__Group_2__0");
 					put(grammarAccess.getIgnoreValueAccess().getGroup(), "rule__IgnoreValue__Group__0");
@@ -450,7 +451,8 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
 					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
 					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
-					put(grammarAccess.getTextExpressionAccess().getTextAssignment(), "rule__TextExpression__TextAssignment");
+					put(grammarAccess.getTextExpressionAccess().getAnnotationsAssignment_0(), "rule__TextExpression__AnnotationsAssignment_0");
+					put(grammarAccess.getTextExpressionAccess().getTextAssignment_1(), "rule__TextExpression__TextAssignment_1");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 					put(grammarAccess.getBoolValueAccess().getValueAssignment(), "rule__BoolValue__ValueAssignment");

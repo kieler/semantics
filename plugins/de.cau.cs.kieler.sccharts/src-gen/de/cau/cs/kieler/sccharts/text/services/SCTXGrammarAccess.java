@@ -667,7 +667,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
 		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
-		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label' label=STRING)?
+		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label'
+		//label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Transition}
@@ -3059,8 +3060,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-	//	'()');
+	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -3406,8 +3407,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
-	//	subExpressions+=DivExpression)*)?;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+	//	('*' subExpressions+=DivExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -3643,6 +3644,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
 	//TextExpression:
+	//	annotations+=Annotation*
 	//	text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
@@ -4101,7 +4103,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation Annotation:
+	//TagAnnotation:
 	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
