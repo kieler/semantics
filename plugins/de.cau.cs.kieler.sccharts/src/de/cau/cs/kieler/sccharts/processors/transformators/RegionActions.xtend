@@ -72,9 +72,10 @@ class RegionActions extends SCChartsProcessor implements Traceable {
     def void transform(State rootState) {
         for (region : rootState.allContainedControlflowRegions.filter[!actions.empty].toList) {
             val newState = createInitialState(region.name)
-            newState.label = region.label
+            newState.label = ""
             val newRegion = newState.createControlflowRegion(region.name)
             newRegion.label = region.label
+            region.label = ""
             
             // move content     
             newRegion.states.addAll(region.states)

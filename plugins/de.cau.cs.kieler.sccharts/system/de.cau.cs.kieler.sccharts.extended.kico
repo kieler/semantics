@@ -7,7 +7,8 @@ de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
 de.cau.cs.kieler.sccharts.processors.const
-de.cau.cs.kieler.sccharts.processors.timers
+pre process de.cau.cs.kieler.sccharts.processors.period
+de.cau.cs.kieler.sccharts.processors.timedautomata
 de.cau.cs.kieler.sccharts.processors.fby
 de.cau.cs.kieler.sccharts.processors.history
 [ label "SyncCharts"	

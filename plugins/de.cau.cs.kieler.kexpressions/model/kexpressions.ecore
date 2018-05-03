@@ -183,6 +183,7 @@
     <eLiterals name="REFERENCE" value="8" literal="reference"/>
     <eLiterals name="SCHEDULE" value="9"/>
     <eLiterals name="UNKNOWN" value="10" literal="UNKNOWN"/>
+    <eLiterals name="CLOCK" value="11" literal="CLOCK"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

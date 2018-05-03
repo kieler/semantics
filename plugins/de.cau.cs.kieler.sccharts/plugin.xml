@@ -139,7 +139,10 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.FinalRegion">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Timers">
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Period">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.TimedAutomata">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActions">

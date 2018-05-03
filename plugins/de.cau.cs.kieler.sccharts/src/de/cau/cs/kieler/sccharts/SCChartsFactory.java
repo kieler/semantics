@@ -148,13 +148,13 @@ public interface SCChartsFactory extends EFactory {
     SucceedingAction createSucceedingAction();
 
     /**
-     * Returns a new object of class '<em>Timer Action</em>'.
+     * Returns a new object of class '<em>Period Action</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Timer Action</em>'.
+     * @return a new object of class '<em>Period Action</em>'.
      * @generated
      */
-    TimerAction createTimerAction();
+    PeriodAction createPeriodAction();
 
     /**
      * Returns the package supported by this factory.

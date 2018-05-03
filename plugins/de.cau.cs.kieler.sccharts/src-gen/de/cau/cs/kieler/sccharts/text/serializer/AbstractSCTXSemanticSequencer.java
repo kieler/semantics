@@ -4,12 +4,12 @@
 package de.cau.cs.kieler.sccharts.text.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
+import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.ExternString;
@@ -50,6 +50,7 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -57,7 +58,6 @@ import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
-import de.cau.cs.kieler.sccharts.TimerAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess;
 import java.util.Set;
@@ -84,9 +84,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == AnnotationsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case AnnotationsPackage.ANNOTATION:
-				sequence_TagAnnotation(context, (Annotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
@@ -124,6 +121,9 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else break;
 			case AnnotationsPackage.STRING_PRAGMA:
 				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
+			case AnnotationsPackage.TAG_ANNOTATION:
+				sequence_TagAnnotation(context, (TagAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
@@ -916,6 +916,9 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
+			case SCChartsPackage.PERIOD_ACTION:
+				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
+				return; 
 			case SCChartsPackage.PRECEDING_ACTION:
 				sequence_PrecedingAction(context, (PrecedingAction) semanticObject); 
 				return; 
@@ -944,9 +947,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				return; 
 			case SCChartsPackage.SUSPEND_ACTION:
 				sequence_SuspendAction(context, (SuspendAction) semanticObject); 
-				return; 
-			case SCChartsPackage.TIMER_ACTION:
-				sequence_TimerAction(context, (TimerAction) semanticObject); 
 				return; 
 			case SCChartsPackage.TRANSITION:
 				sequence_Transition(context, (Transition) semanticObject); 
@@ -1307,6 +1307,19 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     LocalAction returns PeriodAction
+	 *     PeriodAction returns PeriodAction
+	 *
+	 * Constraint:
+	 *     (annotations+=RestrictedTypeAnnotation* delay=DelayType? trigger=ValuedExpression label=STRING?)
+	 */
+	protected void sequence_PeriodAction(ISerializationContext context, PeriodAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LocalAction returns PrecedingAction
 	 *     PrecedingAction returns PrecedingAction
 	 *
@@ -1425,19 +1438,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=Double?)? label=STRING?)
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     LocalAction returns TimerAction
-	 *     TimerAction returns TimerAction
-	 *
-	 * Constraint:
-	 *     (delay=DelayType? trigger=ValuedExpression label=STRING?)
-	 */
-	protected void sequence_TimerAction(ISerializationContext context, TimerAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

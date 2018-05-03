@@ -2285,11 +2285,11 @@ ruleLocalAction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getLocalActionAccess().getTimerActionParserRuleCall_6()); 
+        newCompositeNode(grammarAccess.getLocalActionAccess().getPeriodActionParserRuleCall_6()); 
     }
-    this_TimerAction_6=ruleTimerAction
+    this_PeriodAction_6=rulePeriodAction
     { 
-        $current = $this_TimerAction_6.current; 
+        $current = $this_PeriodAction_6.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -3206,17 +3206,17 @@ ruleSucceedingAction returns [EObject current=null]
 
 
 
-// Entry rule entryRuleTimerAction
-entryRuleTimerAction returns [EObject current=null] 
+// Entry rule entryRulePeriodAction
+entryRulePeriodAction returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getTimerActionRule()); }
-	 iv_ruleTimerAction=ruleTimerAction 
-	 { $current=$iv_ruleTimerAction.current; } 
+	{ newCompositeNode(grammarAccess.getPeriodActionRule()); }
+	 iv_rulePeriodAction=rulePeriodAction 
+	 { $current=$iv_rulePeriodAction.current; } 
 	 EOF 
 ;
 
-// Rule TimerAction
-ruleTimerAction returns [EObject current=null] 
+// Rule PeriodAction
+rulePeriodAction returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -3226,67 +3226,85 @@ ruleTimerAction returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getTimerActionAccess().getTimerActionAction_0(),
+            grammarAccess.getPeriodActionAccess().getPeriodActionAction_0(),
             $current);
     }
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTimerActionAccess().getDelayDelayTypeEnumRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getPeriodActionAccess().getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0()); 
 	    }
-		lv_delay_1_0=ruleDelayType		{
+		lv_annotations_1_0=ruleRestrictedTypeAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTimerActionRule());
+	            $current = createModelElementForParent(grammarAccess.getPeriodActionRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_1_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.RestrictedTypeAnnotation");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPeriodActionAccess().getDelayDelayTypeEnumRuleCall_2_0()); 
+	    }
+		lv_delay_2_0=ruleDelayType		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPeriodActionRule());
 	        }
        		set(
        			$current, 
        			"delay",
-        		lv_delay_1_0, 
+        		lv_delay_2_0, 
         		"de.cau.cs.kieler.sccharts.text.SCTX.DelayType");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?	otherlv_2='period' 
+)?	otherlv_3='period' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getTimerActionAccess().getPeriodKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getPeriodActionAccess().getPeriodKeyword_3());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTimerActionAccess().getTriggerValuedExpressionParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getPeriodActionAccess().getTriggerValuedExpressionParserRuleCall_4_0()); 
 	    }
-		lv_trigger_3_0=ruleValuedExpression		{
+		lv_trigger_4_0=ruleValuedExpression		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTimerActionRule());
+	            $current = createModelElementForParent(grammarAccess.getPeriodActionRule());
 	        }
        		set(
        			$current, 
        			"trigger",
-        		lv_trigger_3_0, 
+        		lv_trigger_4_0, 
         		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_4='label' 
+)(	otherlv_5='label' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getTimerActionAccess().getLabelKeyword_4_0());
+    	newLeafNode(otherlv_5, grammarAccess.getPeriodActionAccess().getLabelKeyword_5_0());
     }
 (
 (
-		lv_label_5_0=RULE_STRING
+		lv_label_6_0=RULE_STRING
 		{
-			newLeafNode(lv_label_5_0, grammarAccess.getTimerActionAccess().getLabelSTRINGTerminalRuleCall_4_1_0()); 
+			newLeafNode(lv_label_6_0, grammarAccess.getPeriodActionAccess().getLabelSTRINGTerminalRuleCall_5_1_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTimerActionRule());
+	            $current = createModelElement(grammarAccess.getPeriodActionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
        			"label",
-        		lv_label_5_0, 
+        		lv_label_6_0, 
         		"de.cau.cs.kieler.annotations.Annotations.STRING");
 	    }
 
@@ -3861,7 +3879,7 @@ ruleVariableDeclaration returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_6_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
+        		"de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4108,7 +4126,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_6_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
+        		"de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10782,6 +10800,55 @@ ruleHistoryType returns [Enumerator current=null]
 
 
 
+// Rule ValueType
+ruleValueType returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+((	enumLiteral_0='pure' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0()); 
+    }
+)
+    |(	enumLiteral_1='bool' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); 
+    }
+)
+    |(	enumLiteral_2='unsigned' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2()); 
+    }
+)
+    |(	enumLiteral_3='int' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_3, grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); 
+    }
+)
+    |(	enumLiteral_4='float' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_4, grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4()); 
+    }
+)
+    |(	enumLiteral_5='string' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_5, grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_5()); 
+    }
+)
+    |(	enumLiteral_6='clock' 
+	{
+        $current = grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_6, grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_6()); 
+    }
+));
+
+
+
 // Rule PriorityProtocol
 rulePriorityProtocol returns [Enumerator current=null] 
     @init { enterRule(); }
@@ -11202,49 +11269,6 @@ ruleFBYOperator returns [Enumerator current=null]
         newLeafNode(enumLiteral_0, grammarAccess.getFBYOperatorAccess().getFBYEnumLiteralDeclaration()); 
     }
 );
-
-
-
-// Rule ValueType
-ruleValueType returns [Enumerator current=null] 
-    @init { enterRule(); }
-    @after { leaveRule(); }:
-((	enumLiteral_0='pure' 
-	{
-        $current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_0, grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0()); 
-    }
-)
-    |(	enumLiteral_1='bool' 
-	{
-        $current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_1, grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); 
-    }
-)
-    |(	enumLiteral_2='unsigned' 
-	{
-        $current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_2, grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2()); 
-    }
-)
-    |(	enumLiteral_3='int' 
-	{
-        $current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_3, grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); 
-    }
-)
-    |(	enumLiteral_4='float' 
-	{
-        $current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_4, grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4()); 
-    }
-)
-    |(	enumLiteral_5='string' 
-	{
-        $current = grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_5, grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_5()); 
-    }
-));
 
 
 

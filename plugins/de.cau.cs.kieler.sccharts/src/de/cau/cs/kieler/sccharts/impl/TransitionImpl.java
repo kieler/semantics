@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.PreemptionType;

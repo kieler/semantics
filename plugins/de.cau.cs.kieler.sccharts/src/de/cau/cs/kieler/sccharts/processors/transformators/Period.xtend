@@ -24,7 +24,6 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TimerAction
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
@@ -32,25 +31,30 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.sccharts.PeriodAction
+import de.cau.cs.kieler.kexpressions.ValueType
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import org.eclipse.emf.ecore.EObject
 
 /**
- * SCCharts Timers Transformation.
+ * SCCharts Period Transformation.
  * 
  * @author als
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Timers extends SCChartsProcessor implements Traceable {
+class Period extends SCChartsProcessor implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.timers"
+        "de.cau.cs.kieler.sccharts.processors.period"
     }
 
     override getName() {
-        "Timers"
+        "Period"
     }
 
     override process() {
@@ -70,8 +74,114 @@ class Timers extends SCChartsProcessor implements Traceable {
     @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = ""
+    static public final String CLOCK_VAR_NAME = GENERATED_PREFIX + "c"
+    static public final String TICK_GUARD_VAR_NAME = GENERATED_PREFIX + "tick"
+    static public final String PERIOD_REGION_NAME = GENERATED_PREFIX + "Period"
+    
+    // Annotaion switches
+    public static val SOFT_RESET_DEFAULT = false
+    public static val SOFT_RESET_NAME = "SoftReset"
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [rootStates.forEach[transform]]
+    }
+    
+    def void transform(State rootState) {
+        if (rootState.allStates.exists[!actions.filter(PeriodAction).empty]) {
+            // Handle period
+            for (state : rootState.allStates.filter[!actions.filter(PeriodAction).empty].toList) {
+                val periods = state.actions.filter(PeriodAction).toList
+                state.actions.removeAll(periods)
+                
+                var clash = false
+                var EObject container = state
+                do {
+                    if (container instanceof State) {
+                        clash = clash || 
+                            !container.actions.filter(PeriodAction).empty || 
+                            container.declarations.exists[valuedObjects.exists[CLOCK_VAR_NAME.equals(name) || TICK_GUARD_VAR_NAME.equals(name)]]
+                    }
+                    container = container.eContainer
+                } while (container !== null && !clash)
+                
+                // Create clock
+                val clocks = newArrayList
+                var idx = 0
+                for (p : periods) {
+                    val vo = createValuedObject(if (periods.size > 1) CLOCK_VAR_NAME + idx++ else CLOCK_VAR_NAME)
+                    if (clash) vo.uniqueName
+                    clocks += vo
+                }
+                state.declarations += createDeclaration => [
+                    type = ValueType.CLOCK
+                    valuedObjects += clocks
+                ]
+                
+                // Create tick guards
+                val ticks = newArrayList
+                idx = 0
+                for (p : periods) {
+                    val vo = createValuedObject(if (periods.size > 1) TICK_GUARD_VAR_NAME + idx++ else TICK_GUARD_VAR_NAME)
+                    if (clash) vo.uniqueName
+                    vo.initialValue = createBoolValue(p.immediate)
+                    ticks += vo
+                }
+                state.declarations += createBoolDeclaration => [
+                    valuedObjects += ticks
+                ]
+                
+                // Guard regions
+                for (tick : ticks) {
+                    for(s : state.allStates.toIterable) {
+                        for(a : s.actions.filter[!(it instanceof PeriodAction)]) {
+                            if (a.trigger === null) {
+                                a.trigger = tick.reference
+                            } else {
+                                a.trigger = createLogicalAndExpression(tick.reference, a.trigger)
+                            }
+                        }
+                        for(t : s.outgoingTransitions) {
+                            if (t.trigger === null) {
+                                t.trigger = tick.reference
+                            } else {
+                                t.trigger = createLogicalAndExpression(tick.reference, t.trigger)
+                            }
+                        }
+                    }
+                }
+                
+                // Generate clock region
+                for (pi : periods.indexed) {
+                    val period = pi.value
+                    val clock = clocks.get(pi.key)
+                    val tick = ticks.get(pi.key)
+                    val softReset = if (period.hasAnnotation(SOFT_RESET_NAME)) true else SOFT_RESET_DEFAULT
+                    
+                    state.createControlflowRegion(if (pi.key > 0) PERIOD_REGION_NAME + pi.key else PERIOD_REGION_NAME) => [
+                        val s = it.createInitialState("_s") => [name = ""]
+                        val threshold = period.trigger
+                        s.createTransitionTo(s) => [
+                            trigger = createGEQExpression(clock.reference, threshold)
+                            if (softReset) {
+                                it.createAssignment(clock, threshold.copy) => [operator = AssignOperator.ASSIGNSUB]
+                            } else {
+                                it.createAssignment(clock, createIntValue(0))
+                            }
+                            it.createAssignment(tick, createBoolValue(true))
+                        ]
+                        s.createTransitionTo(s) => [
+                            it.createAssignment(tick, createBoolValue(false))
+                        ]
+                    ]
+                }
+            }
+        }
+
+    }
+    
+    // -- LEGACY --
+    
     public static val DEFAULT_WAKE = Integer.MAX_VALUE
     // Global var names
     public static val EXT_WAKE_VAR = "_wakeT"
@@ -91,19 +201,15 @@ class Timers extends SCChartsProcessor implements Traceable {
     public var catch_up = CATCH_UP
     public var simulated_time = SIMULATED_TIME
     public var absolute_time_input = ABSOLUTE_TIME_INPUT    
-    public var absolute_wake_output = ABSOLUTE_WAKE_OUTPUT    
+    public var absolute_wake_output = ABSOLUTE_WAKE_OUTPUT   
 
-    def SCCharts transform(SCCharts sccharts) {
-        sccharts => [rootStates.forEach[transform]]
-    }
-
-    def void transform(State rootState) {
+    def void transformDirect(State rootState) {
         catch_up = if (rootState.hasAnnotation("NoCatchUp")) false else CATCH_UP
         simulated_time = if (rootState.hasAnnotation("SimulateTime")) true else SIMULATED_TIME
         absolute_time_input = if (rootState.hasAnnotation("AbsTimeInput")) true else ABSOLUTE_TIME_INPUT
         absolute_wake_output = if (rootState.hasAnnotation("AbsWakeOutput")) true else ABSOLUTE_WAKE_OUTPUT
         
-        if (rootState.allStates.exists[!actions.filter(TimerAction).empty]) {
+        if (rootState.allStates.exists[!actions.filter(PeriodAction).empty]) {
             // Create VOs
             val absTime = if (absolute_time_input) {
                 val time = createValuedObject(EXT_ABS_T_VAR).uniqueName
@@ -146,8 +252,8 @@ class Timers extends SCChartsProcessor implements Traceable {
 //            ]
 
             // Handle period
-            for (state : rootState.allStates.filter[!actions.filter(TimerAction).empty].toList) {
-                val periods = state.actions.filter(TimerAction).toList
+            for (state : rootState.allStates.filter[!actions.filter(PeriodAction).empty].toList) {
+                val periods = state.actions.filter(PeriodAction).toList
                 state.actions.removeAll(periods)
                 
                 // Create clock
@@ -165,7 +271,7 @@ class Timers extends SCChartsProcessor implements Traceable {
                 // Guard regions
                 for (clock : clocks) {
                     for(s : state.allStates.toIterable) {
-                        for(a : s.actions.filter[!(it instanceof TimerAction)]) {
+                        for(a : s.actions.filter[!(it instanceof PeriodAction)]) {
                             if (a.trigger === null) {
                                 a.trigger = clock.reference
                             } else {

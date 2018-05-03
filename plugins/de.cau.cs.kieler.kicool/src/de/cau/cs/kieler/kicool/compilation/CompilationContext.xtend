@@ -44,6 +44,7 @@ import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
+import de.cau.cs.kieler.kicool.environments.UniqueClonableNameCache
 
 /**
  * A compilation context is the central compilation unit. Once you prepared a context, you can
@@ -93,6 +94,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
         startEnvironment.setProperty(ORIGINAL_MODEL, null)
         startEnvironment.setProperty(UNIQUE_NAME_CACHE_ENABLED, true)
+        startEnvironment.setProperty(UNIQUE_NAME_CACHE, new UniqueClonableNameCache)
         
         result = null
     }

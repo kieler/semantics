@@ -13,19 +13,19 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.TimerAction;
 
 import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Timer Action</b></em>'.
+ * An implementation of the model object '<em><b>Period Action</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class TimerActionImpl extends LocalActionImpl implements TimerAction {
+public class PeriodActionImpl extends LocalActionImpl implements PeriodAction {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -38,7 +38,7 @@ public class TimerActionImpl extends LocalActionImpl implements TimerAction {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TimerActionImpl() {
+    protected PeriodActionImpl() {
         super();
     }
 
@@ -49,7 +49,7 @@ public class TimerActionImpl extends LocalActionImpl implements TimerAction {
      */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.TIMER_ACTION;
+        return SCChartsPackage.Literals.PERIOD_ACTION;
     }
 
-} //TimerActionImpl
+} //PeriodActionImpl

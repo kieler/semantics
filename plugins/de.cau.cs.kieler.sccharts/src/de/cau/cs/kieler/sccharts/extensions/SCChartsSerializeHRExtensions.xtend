@@ -13,33 +13,33 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
+import com.google.common.base.Function
 import com.google.common.base.Joiner
+import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.PeriodAction
+import de.cau.cs.kieler.sccharts.PrecedingAction
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import com.google.common.base.Function
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.sccharts.DelayType
-import de.cau.cs.kieler.sccharts.SucceedingAction
-import de.cau.cs.kieler.sccharts.PrecedingAction
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import de.cau.cs.kieler.annotations.NamedObject
-import de.cau.cs.kieler.sccharts.TimerAction
 
 /**
  * @author ssm
@@ -112,7 +112,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             SuspendAction: "suspend"
             PrecedingAction: "preceding"
             SucceedingAction: "succeeding"
-            TimerAction: "period"
+            PeriodAction: "period"
             default: ""
         })
 
@@ -175,6 +175,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 // Nothing - indicated by signal keyword
             } else if (type == ValueType.HOST) {
                 components.addKeyword(declaration.hostType)
+            } else if (type == ValueType.CLOCK) {
+                components.addKeyword("clock")
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
@@ -292,6 +294,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             // Nothing - indicated by signal keyword
         } else if (type == ValueType.HOST) {
             keywords += declaration.hostType
+        } else if (type == ValueType.CLOCK) {
+            keywords += "clock"
         } else {
             if (hr) {
                 keywords += type.serializeHR as String
