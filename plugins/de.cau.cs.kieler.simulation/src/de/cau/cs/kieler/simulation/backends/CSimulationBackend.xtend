@@ -45,7 +45,10 @@ class CSimulationBackend extends OriginBasedSimulationBackend {
      * {@inheritDoc}
      */
     override getSupportedProcessors() {
-        return #["de.cau.cs.kieler.scg.processors.codegen.c", 
+        return #["de.cau.cs.kieler.scg.processors.codegen.c",
+// The prio backend cannot be added now due to the deprecated prio c codegen.
+// Add this backend as soon as the prio codegen is refactored to the new version.
+//                 "de.cau.cs.kieler.scg.processors.sclp", 
                  "de.cau.cs.kieler.sccharts.processors.codegen.statebased"]
     }
     
