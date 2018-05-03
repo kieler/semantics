@@ -78,23 +78,23 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
 
     static val String REGION_CANNOT_TERMINATE = "All or none concurrent regions should have final states."
-    static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
-    static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
-    static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
-    static val String STATE_NOT_REACHABLE = "The state is not reachable";
-    static val String NO_REGION = "A state with a termination transition must have inner behaviour";
-    static val String DUPLICATE_REGION = "There are multiple regions with the same name";
+    static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state.";
+    static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state.";
+    static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition.";
+    static val String STATE_NOT_REACHABLE = "The state is not reachable.";
+    static val String NO_REGION = "A state with a termination transition must have inner behaviour.";
+    static val String DUPLICATE_REGION = "There are multiple regions with the same name.";
     
-    static val String NON_SIGNAL_EMISSION = "Non-signals sould be used in an emission";
-    static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
-    static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized";
+    static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
+    static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
+    static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
     //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
-    static val String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function";
-    static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported";
+    static val String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function.";
+    static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
     static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
     static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem!\nStrong abort transitions must have a higher priority than weak abort or termination transitions.";
-    static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger";
+    static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger.";
     
     static val String MISSING_BINDING_FOR = "Missing binding for variable: ";
 
@@ -114,11 +114,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String BROKEN_IMPORT = "Broken Import: There is no SCCharts model with the given name."
     static val String BROKEN_FOLDER_IMPORT = "Broken Import: There are no SCCharts models in the given directory."
 
-    static val String COUNT_DELAY_OF_0 = "A count delay of 0 is not allowed on a trigger"
+    static val String COUNT_DELAY_OF_0 = "A count delay of 0 is not allowed on a trigger."
     
     static val String LAYOUT_ANNOTATION_ID = "Invalid layout option id.\nThere is no layout option with the given id or the given suffix is not unique.\nSee https://www.eclipse.org/elk/reference/options.html for all available layout options."
     static val String LAYOUT_ANNOTATION_VALUE = "Invalid layout option value.\nThe given value can not be parsed into a valid value for the given layout option."
-    static val String LAYOUT_ANNOTATION_FORMAT = "Layout annotation must have the format '@layout[id] value'"
+    static val String LAYOUT_ANNOTATION_FORMAT = "Layout annotations must have the format '@layout[id] value'"
     
     static val String REGION_ACTION_EXPERIMENTAL = "Actions in regions are highly experimental and may not produce the expected results."    
 
