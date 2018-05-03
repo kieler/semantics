@@ -148,17 +148,29 @@ class Dataflow extends SCChartsProcessor {
                 val rdInstance = eq.value.reference.valuedObject
                 
                 var idx = 0
-                for (declaration : rdInstance.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input ]) {
-                    for (valuedObject : declaration.valuedObjects) {
-                        if (vectorValues.size > 0) {
-                            // Remember: The expression will be removed from it's containment.
-                            // Remove it afterwards.
-                            val value = vectorValues.head
-                            if (!(value instanceof IgnoreValue)) {
-                                val newAssignment = createAssignment(rdInstance, valuedObject, value)
-                                val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
-                                processedEquations += newEq
+                if (rdInstance.isModelReference) {
+                    for (declaration : rdInstance.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input ]) {
+                        for (valuedObject : declaration.valuedObjects) {
+                            if (vectorValues.size > 0) {
+                                // Remember: The expression will be removed from it's containment.
+                                // Remove it afterwards.
+                                val value = vectorValues.head
+                                if (!(value instanceof IgnoreValue)) {
+                                    val newAssignment = createAssignment(rdInstance, valuedObject, value)
+                                    val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
+                                    processedEquations += newEq
+                                }
                             }
+                            idx++
+                        }
+                    }
+                } else if (rdInstance.isArray) {
+                    for (value : vectorValues.immutableCopy) {
+                        if (!(value instanceof IgnoreValue)) {
+                            val newAssignment = createAssignment(rdInstance, value)
+                            newAssignment.indices += createIntValue(idx)
+                            val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
+                            processedEquations += newEq
                         }
                         idx++
                     }

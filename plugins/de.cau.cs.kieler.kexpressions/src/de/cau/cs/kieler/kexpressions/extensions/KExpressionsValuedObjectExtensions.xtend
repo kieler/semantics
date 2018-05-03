@@ -165,7 +165,7 @@ class KExpressionsValuedObjectExtensions {
             }
         }    
     }
-
+    
     def boolean isSignal(ValuedObject valuedObject) {
         if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isSignal
