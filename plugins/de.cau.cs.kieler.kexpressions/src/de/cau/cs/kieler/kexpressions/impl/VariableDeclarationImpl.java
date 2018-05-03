@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isExtern <em>Extern</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isGlobal <em>Global</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#getHostType <em>Host Type</em>}</li>
  * </ul>
  *
@@ -193,6 +194,26 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * @ordered
      */
     protected boolean volatile_ = VOLATILE_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isGlobal() <em>Global</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isGlobal()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean GLOBAL_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isGlobal() <em>Global</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isGlobal()
+     * @generated
+     * @ordered
+     */
+    protected boolean global = GLOBAL_EDEFAULT;
 
     /**
      * The default value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
@@ -406,6 +427,27 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isGlobal() {
+        return global;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setGlobal(boolean newGlobal) {
+        boolean oldGlobal = global;
+        global = newGlobal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL, oldGlobal, global));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getHostType() {
         return hostType;
     }
@@ -446,6 +488,8 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
                 return isExtern();
             case KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE:
                 return isVolatile();
+            case KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL:
+                return isGlobal();
             case KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE:
                 return getHostType();
         }
@@ -483,6 +527,9 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
                 return;
             case KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE:
                 setVolatile((Boolean)newValue);
+                return;
+            case KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL:
+                setGlobal((Boolean)newValue);
                 return;
             case KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE:
                 setHostType((String)newValue);
@@ -523,6 +570,9 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
             case KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE:
                 setVolatile(VOLATILE_EDEFAULT);
                 return;
+            case KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL:
+                setGlobal(GLOBAL_EDEFAULT);
+                return;
             case KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE:
                 setHostType(HOST_TYPE_EDEFAULT);
                 return;
@@ -554,6 +604,8 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
                 return extern != EXTERN_EDEFAULT;
             case KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE:
                 return volatile_ != VOLATILE_EDEFAULT;
+            case KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL:
+                return global != GLOBAL_EDEFAULT;
             case KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE:
                 return HOST_TYPE_EDEFAULT == null ? hostType != null : !HOST_TYPE_EDEFAULT.equals(hostType);
         }
@@ -586,6 +638,8 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
         result.append(extern);
         result.append(", volatile: ");
         result.append(volatile_);
+        result.append(", global: ");
+        result.append(global);
         result.append(", hostType: ");
         result.append(hostType);
         result.append(')');

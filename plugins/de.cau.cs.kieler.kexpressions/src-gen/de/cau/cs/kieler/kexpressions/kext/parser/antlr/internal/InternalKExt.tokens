@@ -14,7 +14,7 @@
 '+'=51
 '++'=78
 '+='=65
-','=26
+','=27
 '-'=52
 '--'=79
 '-='=66
@@ -22,8 +22,8 @@
 '.'=57
 '/'=54
 '/='=68
-':'=28
-';'=27
+':'=29
+';'=28
 '<'=81
 '<<'=48
 '<<='=73
@@ -51,9 +51,9 @@
 'confluent'=64
 'const'=21
 'expression'=20
-'extern'=30
+'extern'=31
 'float'=95
-'global'=32
+'global'=24
 'host'=97
 'input'=22
 'int'=94
@@ -68,11 +68,11 @@
 'pure'=91
 'random'=58
 'randomize'=42
-'ref'=29
-'schedule'=31
+'ref'=30
+'schedule'=32
 'scope'=17
-'signal'=25
-'static'=24
+'signal'=26
+'static'=25
 'string'=96
 'unsigned'=93
 'val'=88

@@ -150,8 +150,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (declaration.isExtern) {
                 components.addKeyword("extern")
             }
+            if (declaration.isGlobal) {
+                components.addKeyword("global")
+            }
             if (declaration.isStatic) {
-                components.addKeyword("static ")
+                components.addKeyword("static")
             }
             if (declaration.isConst) {
                 components.addKeyword("const")
@@ -267,8 +270,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         if (declaration.isExtern) {
             keywords += "extern";
         }
+        if (declaration.isGlobal) {
+            keywords += "global";
+        }
         if (declaration.isStatic) {
-            keywords += "static ";
+            keywords += "static";
         }
         if (declaration.isConst) {
             keywords += "const";

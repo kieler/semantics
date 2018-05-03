@@ -9198,6 +9198,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
+	//	global?='global'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=super::STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -9214,6 +9215,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
+	//	global?='global'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=super::STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;

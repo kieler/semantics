@@ -15,7 +15,7 @@
 '+'=59
 '++'=84
 '+='=71
-','=37
+','=38
 '-'=60
 '--'=85
 '-='=72
@@ -55,9 +55,9 @@
 'confluent'=70
 'const'=32
 'expression'=31
-'extern'=39
+'extern'=40
 'float'=101
-'global'=41
+'global'=35
 'host'=103
 'input'=33
 'int'=100
@@ -73,12 +73,12 @@
 'pure'=97
 'random'=65
 'randomize'=50
-'ref'=38
+'ref'=39
 'reset'=18
-'schedule'=40
+'schedule'=41
 'scope'=28
-'signal'=36
-'static'=35
+'signal'=37
+'static'=36
 'string'=102
 'unsigned'=99
 'val'=94

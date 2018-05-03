@@ -79,6 +79,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
         var vo = valuedObjectPrefix + valuedObjectReference.valuedObject.name
         if (valuedObjectReference.valuedObject.isExternalReference) {
+//            vo = valuedObjectReference.valuedObject.getReferenceDeclaration.extern.head.code
             vo = valuedObjectReference.valuedObject.name
         }
         for (index : valuedObjectReference.indices) {

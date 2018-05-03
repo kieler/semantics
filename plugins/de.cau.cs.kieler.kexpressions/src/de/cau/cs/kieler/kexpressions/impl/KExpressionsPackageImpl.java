@@ -633,8 +633,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getVariableDeclaration_HostType() {
+    public EAttribute getVariableDeclaration_Global() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getVariableDeclaration_HostType() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -1057,6 +1066,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__CONST);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__EXTERN);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__VOLATILE);
+        createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__GLOBAL);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__HOST_TYPE);
 
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
@@ -1219,6 +1229,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getVariableDeclaration_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariableDeclaration_Extern(), ecorePackage.getEBoolean(), "extern", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariableDeclaration_Volatile(), ecorePackage.getEBoolean(), "volatile", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getVariableDeclaration_Global(), ecorePackage.getEBoolean(), "global", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariableDeclaration_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

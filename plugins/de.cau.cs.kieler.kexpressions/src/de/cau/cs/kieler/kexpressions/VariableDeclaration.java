@@ -20,6 +20,7 @@ package de.cau.cs.kieler.kexpressions;
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isExtern <em>Extern</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isGlobal <em>Global</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#getHostType <em>Host Type</em>}</li>
  * </ul>
  *
@@ -238,6 +239,32 @@ public interface VariableDeclaration extends Declaration {
      * @generated
      */
     void setVolatile(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Global</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Global</em>' attribute.
+     * @see #setGlobal(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getVariableDeclaration_Global()
+     * @model required="true"
+     * @generated
+     */
+    boolean isGlobal();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isGlobal <em>Global</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Global</em>' attribute.
+     * @see #isGlobal()
+     * @generated
+     */
+    void setGlobal(boolean value);
 
     /**
      * Returns the value of the '<em><b>Host Type</b></em>' attribute.

@@ -13,31 +13,30 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Static Transformation.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
+ * 
+ * ssm, 03.05.18: added global 
  */
 class Static extends SCChartsProcessor implements Traceable {
 
-    // -------------------------------------------------------------------------
-    // --                 K I C O      C O N F I G U R A T I O N              --
-    // -------------------------------------------------------------------------
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.static"
     }
@@ -63,14 +62,13 @@ class Static extends SCChartsProcessor implements Traceable {
 //        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
 //    }
 
-    // -------------------------------------------------------------------------
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsScopeExtensions
-    @Inject extension KExpressionsDeclarationExtensions    
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension ValuedObjectRise
     
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static val String GENERATED_PREFIX = "_"
 
     // -------------------------------------------------------------------------
     // --                          S T A T I C                                --
@@ -86,13 +84,13 @@ class Static extends SCChartsProcessor implements Traceable {
         
         // Traverse all states
         for (targetTransition : rootState.getAllStates.toList) {
-            targetTransition.transformStatic(rootState);
+            targetTransition.transformStatic(rootState)
         }
         rootState
     }
 
     def void transformStatic(State state, State targetRootState) {
-        val staticDeclarations = state.variableDeclarations.filter[isStatic]
+        val staticDeclarations = state.variableDeclarations.filter[ isStatic ]
         for (staticDeclaration : staticDeclarations.toList) {
             for (staticValuedObject : staticDeclaration.valuedObjects) {
                 staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX +
@@ -100,6 +98,33 @@ class Static extends SCChartsProcessor implements Traceable {
             }
             staticDeclaration.static = false
             targetRootState.declarations += staticDeclaration
+        }
+        
+        val globalDeclarations = state.variableDeclarations.filter[ isGlobal ]
+        if (!globalDeclarations.empty) {
+            
+            for (globalDeclaration : globalDeclarations.toList) {
+                for (valuedObject : globalDeclaration.valuedObjects.immutableCopy) {
+                    val existing = targetRootState.declarations.map[ valuedObjects ].flatten.findFirst[ name == valuedObject.name ]
+                    if (existing === null) {
+                        targetRootState.declarations += createVariableDeclaration(globalDeclaration) => [
+                            global = false
+                            valuedObjects += valuedObject
+                        ]
+                    } else {
+                        val references = state.eAllContents.filter(ValuedObjectReference).filter[ it.valuedObject === valuedObject ].toList
+                        for (reference : references) {
+                            reference.valuedObject = existing
+                        }
+                        valuedObject.remove
+                    }
+                }
+                
+                if (globalDeclaration.valuedObjects.nullOrEmpty) {
+                    globalDeclaration.remove
+                }
+            }
+               
         }
     }
     
