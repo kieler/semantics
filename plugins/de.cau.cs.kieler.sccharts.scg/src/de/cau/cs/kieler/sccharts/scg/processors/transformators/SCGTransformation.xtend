@@ -817,6 +817,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
         val textExpression = createTextExpression.trace(expression)
         textExpression.setText(expression.text)
+        expression.copyAnnotations(textExpression)
         textExpression
     }
 

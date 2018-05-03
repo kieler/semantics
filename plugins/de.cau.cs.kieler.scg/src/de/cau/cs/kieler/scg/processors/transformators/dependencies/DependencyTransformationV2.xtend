@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2013 by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -50,9 +50,8 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -79,6 +78,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
     @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
+    @Inject extension KExpressionsCompareExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     
@@ -385,6 +385,10 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             if (target.node instanceof Assignment) {
                 if (source.node.asAssignment.operator == AssignOperator.ASSIGN && target.node.asAssignment.operator == AssignOperator.ASSIGN) {
                     if (source.node.asAssignment.expression.isSameValue(target.node.asAssignment.expression)) {
+                        // It's the same value.
+                        return true
+                    } if (source.node.asAssignment.expression.equals2(target.node.asAssignment.expression)) {
+                        // Semantically, it's the same expression.
                         return true
                     } else {
                         // To be downward-compatible, check for operator expression with same value.

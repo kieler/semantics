@@ -86,7 +86,7 @@ class KExpressionsValueExtensions {
 	
     def List<Value> getAllValues(Expression expression) {
         <Value> newArrayList => [
-            if (expression == null) {
+            if (expression === null) {
             } else if (expression instanceof Value) { 
                 it += expression
             } else { 
