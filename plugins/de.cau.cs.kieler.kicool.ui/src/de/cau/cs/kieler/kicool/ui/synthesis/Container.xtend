@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 /**
- * 
  * @author ssm
  * @kieler.design 2016-10-20 proposed 
  * @kieler.rating 2016-10-20 proposed yellow

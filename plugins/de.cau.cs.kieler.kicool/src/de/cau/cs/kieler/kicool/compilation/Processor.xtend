@@ -108,7 +108,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     }
     
     /**
-     * Protected convenient method to trigger an update notifiaction.
+     * Protected convenient method to trigger an update notification.
      */
     protected def void updateProgress(double progress) {
         // Set the actual pTime before triggering the notification.

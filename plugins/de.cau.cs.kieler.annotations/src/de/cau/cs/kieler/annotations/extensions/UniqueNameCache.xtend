@@ -15,7 +15,7 @@ package de.cau.cs.kieler.annotations.extensions
 import java.util.HashSet
 
 /**
- * @author ssm,aas
+ * @author ssm aas
  * @kieler.design 2017-06-28 proposed 
  * @kieler.rating 2017-06-28 proposed yellow 
  *

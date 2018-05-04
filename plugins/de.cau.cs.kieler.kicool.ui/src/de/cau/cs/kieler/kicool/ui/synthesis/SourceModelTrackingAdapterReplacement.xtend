@@ -39,7 +39,7 @@ import de.cau.cs.kieler.klighd.kgraph.impl.IPropertyToObjectMapImpl
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.util.KlighdPredicates
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties 
 
 /**
  * A specialized {@link EContentAdapter} realizing efficient source target element tracking by means
