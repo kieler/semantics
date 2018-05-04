@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -26,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -38,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#isOnce <em>Once</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,6 +64,26 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     protected EList<Assignment> equations;
 
 				/**
+     * The default value of the '{@link #isOnce() <em>Once</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isOnce()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean ONCE_EDEFAULT = false;
+
+                /**
+     * The cached value of the '{@link #isOnce() <em>Once</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isOnce()
+     * @generated
+     * @ordered
+     */
+    protected boolean once = ONCE_EDEFAULT;
+
+                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -96,6 +119,27 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isOnce() {
+        return once;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setOnce(boolean newOnce) {
+        boolean oldOnce = once;
+        once = newOnce;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.DATAFLOW_REGION__ONCE, oldOnce, once));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -115,6 +159,8 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 return getEquations();
+            case SCChartsPackage.DATAFLOW_REGION__ONCE:
+                return isOnce();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -132,6 +178,9 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
                 getEquations().clear();
                 getEquations().addAll((Collection<? extends Assignment>)newValue);
                 return;
+            case SCChartsPackage.DATAFLOW_REGION__ONCE:
+                setOnce((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -147,6 +196,9 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 getEquations().clear();
                 return;
+            case SCChartsPackage.DATAFLOW_REGION__ONCE:
+                setOnce(ONCE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -161,8 +213,26 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 return equations != null && !equations.isEmpty();
+            case SCChartsPackage.DATAFLOW_REGION__ONCE:
+                return once != ONCE_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (once: ");
+        result.append(once);
+        result.append(')');
+        return result.toString();
     }
 
 } //DataflowRegionImpl

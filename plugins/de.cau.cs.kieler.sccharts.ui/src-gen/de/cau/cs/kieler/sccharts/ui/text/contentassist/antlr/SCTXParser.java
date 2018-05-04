@@ -424,8 +424,9 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDataflowRegionAccess().getForStartAssignment_5_3(), "rule__DataflowRegion__ForStartAssignment_5_3");
 					put(grammarAccess.getDataflowRegionAccess().getForEndAssignment_5_4_1(), "rule__DataflowRegion__ForEndAssignment_5_4_1");
 					put(grammarAccess.getDataflowRegionAccess().getScheduleAssignment_6_1(), "rule__DataflowRegion__ScheduleAssignment_6_1");
-					put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_8(), "rule__DataflowRegion__DeclarationsAssignment_8");
-					put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9(), "rule__DataflowRegion__EquationsAssignment_9");
+					put(grammarAccess.getDataflowRegionAccess().getOnceAssignment_7(), "rule__DataflowRegion__OnceAssignment_7");
+					put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_9(), "rule__DataflowRegion__DeclarationsAssignment_9");
+					put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_10(), "rule__DataflowRegion__EquationsAssignment_10");
 					put(grammarAccess.getCounterVariableAccess().getNameAssignment(), "rule__CounterVariable__NameAssignment");
 					put(grammarAccess.getEntryActionAccess().getTriggerAssignment_2_1(), "rule__EntryAction__TriggerAssignment_2_1");
 					put(grammarAccess.getEntryActionAccess().getTriggerProbabilityAssignment_2_2_1(), "rule__EntryAction__TriggerProbabilityAssignment_2_2_1");

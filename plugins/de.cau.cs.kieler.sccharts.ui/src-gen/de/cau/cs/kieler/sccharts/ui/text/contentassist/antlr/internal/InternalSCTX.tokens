@@ -57,7 +57,7 @@
 'conflict'=52
 'confluent'=53
 'connector'=132
-'const'=136
+'const'=137
 'dataflow'=106
 'deferred'=133
 'delayed'=46
@@ -77,7 +77,7 @@
 'if'=97
 'immediate'=47
 'initial'=129
-'input'=137
+'input'=138
 'int'=79
 'is'=89
 'join to'=41
@@ -89,7 +89,8 @@
 'nondeterministic'=134
 'none'=82
 'o->'=43
-'output'=138
+'once'=135
+'output'=139
 'period'=114
 'pre'=17
 'preceding'=112
@@ -104,9 +105,9 @@
 'schedule'=90
 'scope'=115
 'shallow history'=50
-'signal'=140
+'signal'=141
 'state'=88
-'static'=139
+'static'=140
 'string'=81
 'succeeding'=113
 'suspend'=111
@@ -115,7 +116,7 @@
 'unsigned'=78
 'val'=28
 'violation'=131
-'weak'=135
+'weak'=136
 '{'=86
 '|'=20
 '|='=61
@@ -176,6 +177,7 @@ T__137=137
 T__138=138
 T__139=139
 T__140=140
+T__141=141
 T__17=17
 T__18=18
 T__19=19

@@ -2056,23 +2056,38 @@ ruleDataflowRegion returns [EObject current=null]
 	    }
 
 )
-)+)?	otherlv_13=':' 
+)+)?(
+(
+		lv_once_13_0=	'once' 
     {
-    	newLeafNode(otherlv_13, grammarAccess.getDataflowRegionAccess().getColonKeyword_7());
+        newLeafNode(lv_once_13_0, grammarAccess.getDataflowRegionAccess().getOnceOnceKeyword_7_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getDataflowRegionRule());
+	        }
+       		setWithLastConsumed($current, "once", true, "once");
+	    }
+
+)
+)?	otherlv_14=':' 
+    {
+    	newLeafNode(otherlv_14, grammarAccess.getDataflowRegionAccess().getColonKeyword_8());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_9_0()); 
 	    }
-		lv_declarations_14_0=ruleDeclarationWOSemicolon		{
+		lv_declarations_15_0=ruleDeclarationWOSemicolon		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
        			"declarations",
-        		lv_declarations_14_0, 
+        		lv_declarations_15_0, 
         		"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2081,16 +2096,16 @@ ruleDataflowRegion returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_10_0()); 
 	    }
-		lv_equations_15_0=ruleAssignment		{
+		lv_equations_16_0=ruleAssignment		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
        			"equations",
-        		lv_equations_15_0, 
+        		lv_equations_16_0, 
         		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 	        afterParserOrEnumRuleCall();
 	    }

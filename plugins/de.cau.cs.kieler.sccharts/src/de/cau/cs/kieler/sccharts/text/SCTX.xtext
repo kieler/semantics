@@ -146,6 +146,7 @@ DataflowRegion returns sccharts::DataflowRegion:
     'dataflow' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
     ('schedule' schedule+=ScheduleObjectReference+)?
+    once?='once'?
     ':'
     declarations+=DeclarationWOSemicolon*
     equations+=Assignment*;
