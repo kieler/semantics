@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.processors.codegen.statebased
 import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
 
 /**
  * C Code Generator Tick Module
@@ -44,18 +45,21 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateInit() {
-        code.append("void ").append(getName)
-        code.append("(")
-        code.append(struct.getName).append(" *").append(struct.getVariableName)
-        code.append(")")
+        code.add(
+            "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
+        )
         
         struct.forwardDeclarations.append(code).append(";\n")
         
-        code.append(" {\n")
+        code.add(
+            " {", NL
+        )
         
         generateInitSetInputs(serializer)
 
-        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
+        code.add(
+            indentation, logic.getName, "(", struct.getVariableName, ");", NL
+        )
 
         generateInitSetOutputs(serializer)
     }
@@ -63,17 +67,19 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     protected def void generateInitSetInputs(extension StatebasedCCodeSerializeHRExtensions serializer) {
         for (declaration : rootState.declarations.filter(VariableDeclaration).filter[ input ]) {
             for (valuedObject : declaration.valuedObjects) {
-                code.append(indentation)
-                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
-                code.append("->")
-                code.append(StatebasedCCodeGeneratorStructModule.REGION_INTERFACE_NAME)
-                code.append(".")
-                code.append(valuedObject.name)
-                code.append(" = ")
-                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
-                code.append("->")
-                code.append(valuedObject.name)
-                code.append(";\n")
+                code.add(
+                    indentation, 
+                    STRUCT_VARIABLE_NAME,
+                    "->", 
+                    REGION_INTERFACE_NAME,
+                    ".",
+                    valuedObject.name,
+                    " = ",
+                    STRUCT_VARIABLE_NAME,
+                    "->",
+                    valuedObject.name,
+                    ";", NL
+                )
             }
         }
         
@@ -85,17 +91,19 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         
         for (declaration : rootState.declarations.filter(VariableDeclaration).filter[ output ]) {
             for (valuedObject : declaration.valuedObjects) {
-                code.append(indentation)
-                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
-                code.append("->")
-                code.append(valuedObject.name)
-                code.append(" = ")
-                code.append(StatebasedCCodeGeneratorStructModule.STRUCT_VARIABLE_NAME)
-                code.append("->")
-                code.append(StatebasedCCodeGeneratorStructModule.REGION_INTERFACE_NAME)
-                code.append(".")
-                code.append(valuedObject.name)
-                code.append(";\n")
+                code.add(
+                    indentation,
+                    STRUCT_VARIABLE_NAME,
+                    "->",
+                    valuedObject.name,
+                    " = ",
+                    STRUCT_VARIABLE_NAME,
+                    "->",
+                    REGION_INTERFACE_NAME,
+                    ".",
+                    valuedObject.name,
+                    ";", NL
+                )
             }
         }
     }
@@ -105,9 +113,9 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateDone() {
-//        indent 
-//        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
-        code.append("}\n")
+        code.add(
+            "}", NL
+        ) 
     }
     
 }

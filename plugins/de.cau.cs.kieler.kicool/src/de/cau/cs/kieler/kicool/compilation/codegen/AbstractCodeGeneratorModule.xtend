@@ -57,4 +57,35 @@ abstract class AbstractCodeGeneratorModule {
             code.append(indentation)
         }
     }
+    
+    
+    
+    
+    // Convenient StringBuilder methods
+    
+    protected static def add(StringBuilder sb, Object ... args) {
+        for (s : args.filter(String)) {
+            sb.append(s)
+        }
+    }
+    
+    protected static def a(StringBuilder sb, String s) {
+        sb.append(s)
+    }
+    
+    protected static def ws(StringBuilder sb) {
+        sb.append(" ")
+    }
+    
+    protected static def nl(StringBuilder sb) {
+        sb.append("\n")
+    }
+    
+    protected static def NL() {
+        "\n"
+    }
+    
+    protected static def WS() {
+        " "
+    }
 }
