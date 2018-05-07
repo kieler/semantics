@@ -25,7 +25,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -101,7 +100,6 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
-    @Inject extension KExpressionsDeclarationExtensions
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     @Inject extension IOPreserverExtensions
@@ -235,7 +233,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
             for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME handle input
                 for (vo : d.valuedObjects) {
                     scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
-                        annotations += createAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
+                        annotations += createTagAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
                         markInputPreserver
@@ -418,12 +416,12 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // Find exit join phis
         val exitPhis = newHashMap
         val exitDecl = scg.declarations.findFirst[hasAnnotation("exit")]
-        if (exitDecl != null) {
+        if (exitDecl !== null) {
             val joinVOs = exitDecl.valuedObjects.filter[name.startsWith("join")].toSet
             val joinAsm = scg.nodes.filter(Assignment).filter[joinVOs.contains(valuedObject)]    
             for (join : joinAsm) {
                 var Node prev = join
-                while (prev != null) {
+                while (prev !== null) {
                     if (prev.allPrevious.size == 1) {
                         prev = prev.allPreviousHead.eContainer as Node
                         if (prev.isSSA(PHI)) {
@@ -453,7 +451,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         // Conditional Merge
         val newBBs = <BasicBlock, BasicBlock>newHashMap
         var phiNode = phiNodes.findFirst[incoming.size > 1]
-        while (phiNode != null) {
+        while (phiNode !== null) {
             val node = phiNode
             val versions = (phiNode.expression as FunctionCall).parameters.toMap[
                 bbVersion.get(it)
@@ -463,7 +461,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                     val prev = (in.eContainer as Node)
                     var attachPoint = prev
                     var cf = in
-                    while (attachPoint != null && (attachPoint.isSSA || attachPoint.hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION))) {
+                    while (attachPoint !== null && (attachPoint.isSSA || attachPoint.hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION))) {
                         cf = attachPoint.incoming.filter(ControlFlow).head
                         attachPoint = cf.eContainer as Node
                     }
@@ -481,7 +479,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                         name = ATTACH_ANNOTATION
                         object = attach
                     ]
-                    if (branch != null) {
+                    if (branch !== null) {
                         annotations += createStringAnnotation(BRANCH_ANNOTATION, branch)
                     }
                     val bb = prev.basicBlock
@@ -550,7 +548,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                     val ref = n.expression as ValuedObjectReference
                     val bb = n.basicBlock
                     val refDef = defs.get(ref.valuedObject).immutableCopy
-                    if (bb != null && refDef.exists[bb == it.basicBlock]) {
+                    if (bb !== null && refDef.exists[bb == it.basicBlock]) {
                         val asm = refDef.findFirst[bb == it.basicBlock]
                         asm.valuedObject = n.valuedObject
                         defs.remove(ref.valuedObject, asm)
@@ -592,12 +590,12 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         
         // Process each predecessor basic block.
             // Create a new predecessor object and set its basic block.
-            if (bb != null) {
+            if (bb !== null) {
                 val predecessor = ScgFactory::eINSTANCE.createPredecessor => [ basicBlock = bb ]
             
                 // Additionally, check the last node of the predecessor block.
                 val lastNode = bb.schedulingBlocks.last.nodes.last
-                if (lastNode != null && lastNode instanceof Conditional) {
+                if (lastNode !== null && lastNode instanceof Conditional) {
                    /**
                     * If it is a conditional, we want to mark this block appropriately and store a reference
                     * to the condition of the conditional. The scheduler can use this information without extra 
@@ -628,7 +626,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 var kill = if (cond.value) c.then else c.^else
                 while (kill.target.incoming.filter(ControlFlow).size == 1) {
                     val t = kill.target
-                    t.annotations += createAnnotation => [name = "dead"]
+                    t.annotations += createTagAnnotation => [name = "dead"]
 //                    scg.nodes.remove(t)
 //                    kill.target = null
                     if (t instanceof Surface) {

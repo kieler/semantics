@@ -83,7 +83,7 @@ class SSACoreExtensions {
     
     def <T extends Annotatable> T markSSA(T anno) {
         anno.unmarkSSA
-        anno.annotations += createAnnotation => [
+        anno.annotations += createTagAnnotation => [
             name = SSA
         ]
         return anno

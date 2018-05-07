@@ -17,7 +17,6 @@ import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -95,7 +94,7 @@ class IOPreserverExtensions {
             val use = scg.uses
             for (decl : ssaDecl.entrySet.filter[it.key.variableDeclaration.output == false].map[value]) {
                 decl.valuedObjects.removeIf[isRegister && use.get(it).empty]
-                preserveAsm.values.removeIf[valuedObject.eContainer == null]
+                preserveAsm.values.removeIf[valuedObject.eContainer === null]
             }
             // In any register exists
             if (ssaDecl.values.exists[valuedObjects.exists[isRegister]]) {
@@ -145,7 +144,7 @@ class IOPreserverExtensions {
                 var Assignment prev = null
                 // Preserving Assignments
                 for (asm : preserveAsm.values) {
-                    if (prev == null) {
+                    if (prev === null) {
                         cEntry.createControlFlow.target = asm
                     } else {
                         prev.createControlFlow.target = asm
@@ -312,7 +311,7 @@ class IOPreserverExtensions {
     }
     
     def markInputPreserver(Assignment asm) {
-        asm.annotations += createAnnotation => [
+        asm.annotations += createTagAnnotation => [
             name = INPUT_PRESERVER
         ]
     }
@@ -322,7 +321,7 @@ class IOPreserverExtensions {
     }
     
     def markOutputPreserver(Assignment asm) {
-        asm.annotations += createAnnotation => [
+        asm.annotations += createTagAnnotation => [
             name = OUTPUT_PRESERVER
         ]
     }
@@ -332,7 +331,7 @@ class IOPreserverExtensions {
     }
     
     def markRegister(ValuedObject vo) {
-        vo.annotations += createAnnotation => [
+        vo.annotations += createTagAnnotation => [
             name = REGISTER
         ]
     }
@@ -342,7 +341,7 @@ class IOPreserverExtensions {
     }
     
     def markTerm(ValuedObject vo) {
-        vo.annotations += createAnnotation => [
+        vo.annotations += createTagAnnotation => [
             name = TERM
         ]
     }

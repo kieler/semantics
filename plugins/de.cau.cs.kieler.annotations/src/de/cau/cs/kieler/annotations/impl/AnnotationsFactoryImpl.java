@@ -68,7 +68,6 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case AnnotationsPackage.NAMED_OBJECT: return createNamedObject();
-            case AnnotationsPackage.ANNOTATION: return createAnnotation();
             case AnnotationsPackage.STRING_ANNOTATION: return createStringAnnotation();
             case AnnotationsPackage.REFERENCE_ANNOTATION: return createReferenceAnnotation();
             case AnnotationsPackage.BOOLEAN_ANNOTATION: return createBooleanAnnotation();
@@ -94,16 +93,6 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
     public NamedObject createNamedObject() {
         NamedObjectImpl namedObject = new NamedObjectImpl();
         return namedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Annotation createAnnotation() {
-        AnnotationImpl annotation = new AnnotationImpl();
-        return annotation;
     }
 
     /**

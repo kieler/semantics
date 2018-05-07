@@ -129,7 +129,7 @@ class SCChartsLegacyConverter {
             val state = referenceState.semanticElement as de.cau.cs.kieler.sccharts.legacy.sccharts.State
             var String referencedState = null
             var INode bindingStartNode = null
-            for (var nextNode = referenceState.nextSibling; nextNode != null && nextNode.semanticElement == state; nextNode = nextNode.nextSibling) {
+            for (var nextNode = referenceState.nextSibling; nextNode !== null && nextNode.semanticElement == state; nextNode = nextNode.nextSibling) {
                 if (nextNode.grammarElement instanceof CrossReference) {
                     referencedState = nextNode.text
                 }
@@ -140,9 +140,9 @@ class SCChartsLegacyConverter {
             references.put(state, referencedState)
             
             // Bindings
-            if (bindingStartNode != null) {
+            if (bindingStartNode !== null) {
                 val binds = newLinkedList
-                for (var nextNode = bindingStartNode.nextSibling; nextNode != null && (nextNode.semanticElement instanceof Binding || nextNode.semanticElement == state); nextNode = nextNode.nextSibling) {
+                for (var nextNode = bindingStartNode.nextSibling; nextNode !== null && (nextNode.semanticElement instanceof Binding || nextNode.semanticElement == state); nextNode = nextNode.nextSibling) {
                     if (nextNode.semanticElement instanceof Binding && nextNode instanceof CompositeNodeWithSemanticElement) {
                         val bind = nextNode.semanticElement as Binding
                         val node = nextNode as CompositeNodeWithSemanticElement
@@ -241,7 +241,7 @@ class SCChartsLegacyConverter {
                 if (bindings.containsKey(entry.key)) {
                     for (bind : bindings.get(entry.key)) {
                         parameters += createParameter => [
-                            if (bind.key.value != null) {
+                            if (bind.key.value !== null) {
                                 expression = bind.key.value.convert as de.cau.cs.kieler.kexpressions.Value
                             } else {
                                 expression = createValuedObjectReference => [
@@ -420,7 +420,7 @@ class SCChartsLegacyConverter {
                 annotations.addAll(vo.annotations.map[convert as Annotation])
             
                 name = vo.name
-                if (vo.combineOperator != null) combineOperator = CombineOperator.getByName(vo.combineOperator.getName)
+                if (vo.combineOperator !== null) combineOperator = CombineOperator.getByName(vo.combineOperator.getName)
                 initialValue = vo.initialValue?.convert as Expression
                 cardinalities.addAll(vo.cardinalities.map[convert as Expression])
             ]
@@ -535,7 +535,7 @@ class SCChartsLegacyConverter {
         return createCommentAnnotation => [
             name = anno.name
             values.addAll(anno.values)
-        ]
+        ] 
     }
     
     def dispatch convert(TypedStringAnnotation anno) {
@@ -551,7 +551,7 @@ class SCChartsLegacyConverter {
     }
     
     def dispatch convert(de.cau.cs.kieler.sccharts.legacy.annotations.Annotation anno) {
-        return createAnnotation => [
+        return createTagAnnotation => [
             name = anno.name
         ]
     }      

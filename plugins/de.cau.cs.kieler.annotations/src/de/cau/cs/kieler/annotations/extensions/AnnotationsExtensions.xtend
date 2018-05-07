@@ -30,7 +30,7 @@ class AnnotationsExtensions {
 
     def Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
         annotatable.annotations?.filter[ 
-            it.name != null && it.name.equals(name)
+            it.name !== null && it.name.equals(name)
         ]
     } 
     
@@ -74,7 +74,7 @@ class AnnotationsExtensions {
     }
     
     def Annotation createTagAnnotation(String name) {
-        AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+        AnnotationsFactory::eINSTANCE.createTagAnnotation => [
             it.name = name
         ]
     }
