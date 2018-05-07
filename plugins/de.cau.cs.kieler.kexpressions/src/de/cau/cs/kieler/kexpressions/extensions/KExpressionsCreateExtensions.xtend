@@ -91,7 +91,7 @@ class KExpressionsCreateExtensions {
     }
 
     def OperatorExpression createLEExpression() {
-        createOperatorExpression(OperatorType::LEQ) 
+        createOperatorExpression(OperatorType::LT) 
     }
 
     def OperatorExpression createLEExpression(Expression firstSubExpression, Expression secondSubExpression) {
