@@ -145,16 +145,19 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActions">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.DeSurfaceDepth">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.DeConditionalize">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.DeConditionalize">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.DeImmediateDelay">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.DeImmediateDelay">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.DeTriggerEffect">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.DeTriggerEffect">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.statebased.SuperfluousSuperstateRemover">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGenerator">

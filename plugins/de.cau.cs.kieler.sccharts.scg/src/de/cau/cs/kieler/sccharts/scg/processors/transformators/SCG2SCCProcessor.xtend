@@ -45,6 +45,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 import java.util.List
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * @author ssm
@@ -91,7 +92,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
     
-    protected var counter = 0
+    protected var nameCounter = 0
     protected val finalStates = <ControlflowRegion, State> newHashMap
     protected val finalIncoming = <Exit, List<Transition>> newHashMap
     protected val visited = <Node> newHashSet
@@ -129,7 +130,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         val parentState = scopeStack.peek as State
         
         // Entry nodes introduce a thread which corresponds to a region.
-        val newRegion = parentState.createControlflowRegion("region" + counter++)
+        val newRegion = parentState.createControlflowRegionWithoutLabel(entry.adoptName("region"))
         scopeStack.push(newRegion)
         
         // Queue the exit node to make sure that the exit node is the last node in this thread.
@@ -149,13 +150,13 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             return;
         }
 
-        // Now, the last node in the acutal thread is processed. 
+        // Now, the last node in the actual thread is processed. 
         // Connect all stored paths to the final node and pop the scope from the stack.
         if (finalIncoming.keySet.contains(exit)) { 
             val parentRegion = scopeStack.peek as ControlflowRegion
             val finalState = if (finalStates.get(parentRegion) !== null) 
                 finalStates.get(parentRegion) else  
-                parentRegion.createFinalState("state" + counter++)
+                parentRegion.createFinalState(exit.adoptName("finalState"))
                 
             if (environment.getProperty(COPY_ANNOTATIONS)) {
                 exit.copyAnnotations(finalState)
@@ -177,7 +178,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         
         // Create a super state for the fork.
         val parentRegion = scopeStack.peek as ControlflowRegion
-        val newState = parentRegion.createState("state" + counter++)       
+        val newState = parentRegion.createState(fork.adoptName("superState"))       
 
         if (environment.getProperty(COPY_ANNOTATIONS)) {
             fork.copyAnnotations(newState)
@@ -219,7 +220,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     protected def dispatch void transformNode(Conditional conditional, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         visited += conditional
         val parentRegion = scopeStack.peek as ControlflowRegion
-        val newState = parentRegion.createState("state" + counter++)       
+        val newState = parentRegion.createState(conditional.adoptName("state"))       
         
         if (incoming !== null) {
             incoming.targetState = newState
@@ -249,7 +250,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     protected def dispatch void transformNode(Assignment assignment, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         visited += assignment
         val parentRegion = scopeStack.peek as ControlflowRegion
-        val newState = parentRegion.createState("state" + counter++)       
+        val newState = parentRegion.createState(assignment.adoptName("state"))       
         
         if (environment.getProperty(COPY_ANNOTATIONS)) {
             assignment.copyAnnotations(newState)
@@ -274,7 +275,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     protected def dispatch void transformNode(Surface surface, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
         visited += surface
         val parentRegion = scopeStack.peek as ControlflowRegion
-        val newState = parentRegion.createState("state" + counter++)
+        val newState = parentRegion.createState(surface.adoptName("state"))
 
         if (environment.getProperty(COPY_ANNOTATIONS)) {
             surface.copyAnnotations(newState)
@@ -300,5 +301,12 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         visited += depth
     }
 
+    
+    private def String adoptName(NamedObject namedObject, String defaultPrefix) {
+        if (namedObject.name.nullOrEmpty) 
+            return defaultPrefix + nameCounter++
+        else 
+            return namedObject.name
+    }
     
 }

@@ -12,6 +12,7 @@ de.cau.cs.kieler.scg.processors.priorities
 de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC
 de.cau.cs.kieler.sccharts.processors.deConditionalize
 de.cau.cs.kieler.sccharts.processors.deSurfaceDepth
+post process de.cau.cs.kieler.sccharts.processors.superfluousSuperstateRemover 
 de.cau.cs.kieler.sccharts.processors.deImmediateDelay
 pre set de.cau.cs.kieler.sccharts.processors.deTriggerEffect.mergeOnSameAnnotationName optPrioIDs
 de.cau.cs.kieler.sccharts.processors.deTriggerEffect

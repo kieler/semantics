@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizer
 
-import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
@@ -40,17 +39,13 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SuperfluousForkRemover extends AbstractOptimizer {
 
-    @Inject
-    extension SCGControlFlowExtensions
-
-    @Inject
-    extension SCGThreadExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
 
     override optimize(SCGraph scg) {
 
         // Retrieve all forks with only one outgoing control flow.
-        val singleRegionForks = ImmutableList::copyOf(
-            scg.nodes.filter(typeof(Fork)).filter[!next.nullOrEmpty && next.size == 1])
+        val singleRegionForks = scg.nodes.filter(Fork).filter[ !next.nullOrEmpty && next.size == 1 ].toList
 
         // Initialize a cache for control flows that must be removed afterwards.
         val removeControlFlows = <ControlFlow>newArrayList
@@ -59,12 +54,12 @@ class SuperfluousForkRemover extends AbstractOptimizer {
             val ancestorEntry = fork.threadEntry
 
             // Entry node of the fork
-            val entry = fork.getAllNext.head.target as Entry
+            val entry = fork.next.head.target as Entry
 
             // Re-route all control flows to the fork node to the target of the entry node's next flow.
             val forkPreviousControlflows = fork.allPrevious.toList
             for (flows : forkPreviousControlflows) {
-                if (entry.next == null) {
+                if (entry.next === null) {
                     throw new UnsupportedSCGException(
                         "Cannot re-route entry flows without next target. The SCG seems to be broken.")
                 } else {
@@ -75,7 +70,7 @@ class SuperfluousForkRemover extends AbstractOptimizer {
             // Re-route all control flows of to the exit node to the target of the join node's next flow.
             val exitPreviousControlflows = entry.exit.allPrevious.toList
             for (flows : exitPreviousControlflows) {
-                if (fork.join.next == null) {
+                if (fork.join.next === null) {
                     throw new UnsupportedSCGException(
                         "Cannot re-route join flows without next target. The SCG seems to be broken.")
                 } else {
@@ -97,6 +92,10 @@ class SuperfluousForkRemover extends AbstractOptimizer {
             removeControlFlows += entry.exit.next
             removeControlFlows += entry.next
             removeControlFlows += fork.next
+            
+            // Test entry name.
+            if (entry.name !== null && ancestorEntry.name === null) 
+                ancestorEntry.name = entry.name
 
             // Remove the nodes.
             entry.exit.remove

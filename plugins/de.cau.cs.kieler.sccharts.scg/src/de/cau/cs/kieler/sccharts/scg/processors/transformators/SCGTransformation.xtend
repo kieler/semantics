@@ -57,8 +57,8 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 import java.util.HashMap
 import java.util.Set
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -141,7 +141,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsFixExtensions
-    @Inject extension SCGThreadExtensions
 
     private static val Injector i = SCTXStandaloneSetup::doSetup();
     private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
@@ -332,7 +331,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         // Remove superfluous fork constructs 
         // ssm, 04.05.2014
-        val scg = if (true) { // (context?.getProperty(ENABLE_SFR)) {
+        val scg = if (environment.getProperty(ENABLE_SFR)) { 
                 val SuperfluousThreadRemover superfluousThreadRemover = Guice.createInjector().
                     getInstance(typeof(SuperfluousThreadRemover))
                 val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().
@@ -517,6 +516,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         region.map(entry)
         entry.setExit(exit)
         exit.map(region)
+        
+        entry.name = region.name
+        
         for (state : region.states) {
             state.transformSCGGenerateNodes(sCGraph)
         }
@@ -538,12 +540,16 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             surface.setDepth(depth)
             surface.map(state)
             state.map(surface)
+            
+            surface.name = state.name
         } else if (stateTypeCache.get(state).contains(PatternType::ASSIGNMENT)) {
             val assignment = sCGraph.addAssignment
             state.map(assignment)
             val transition = state.outgoingTransitions.get(0)
             assignment.trace(state, transition)
             transition.setDefaultTrace
+            
+            assignment.name = state.name
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
@@ -587,6 +593,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             state.map(conditional)
             val transition = state.outgoingTransitions.get(0)
             conditional.trace(state, transition)
+            
+            conditional.name = state.name
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
@@ -596,6 +604,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             fork.setJoin(join)
             state.map(fork)
             join.map(state)
+            
+            fork.name = state.name
 
             // Do recursion for all regions
             for (region : state.regions.filter(ControlflowRegion)) {
@@ -604,6 +614,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         } else if (stateTypeCache.get(state).contains(PatternType::EXIT)) {
             val exit = sCGraph.addExit
             state.map(exit)
+            
+            exit.name = state.name
         }
         clearDefaultTrace;
     }

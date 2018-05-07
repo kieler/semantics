@@ -3,14 +3,14 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.transformators
+package de.cau.cs.kieler.sccharts.processors.statebased
 
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.StatebasedUtil.*
 
 /**
  * @author ssm
@@ -129,6 +130,8 @@ class DeSurfaceDepth extends SCChartsProcessor implements Traceable {
                 oT.remove
                 
                 tS.initial = tS.initial || state.initial 
+                tS.adaptName(state)
+                
                 state.remove
                 snapshot
             }
