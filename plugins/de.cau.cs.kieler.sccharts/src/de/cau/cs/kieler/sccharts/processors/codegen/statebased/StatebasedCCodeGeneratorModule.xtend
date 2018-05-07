@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -26,8 +26,8 @@ import de.cau.cs.kieler.annotations.StringPragma
  * Initializes necessary modules and invokes them in correct order.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2018-04-16 proposed 
+ * @kieler.rating 2018-04-16 proposed yellow 
  * 
  */
 class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
