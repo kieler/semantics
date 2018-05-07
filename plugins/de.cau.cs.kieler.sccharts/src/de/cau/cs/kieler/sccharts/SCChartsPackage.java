@@ -952,13 +952,22 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__EQUATIONS = REGION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Once</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__ONCE = REGION_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Dataflow Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 1;
+    int DATAFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -2170,6 +2179,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getDataflowRegion_Equations();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.DataflowRegion#isOnce <em>Once</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Once</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowRegion#isOnce()
+     * @see #getDataflowRegion()
+     * @generated
+     */
+    EAttribute getDataflowRegion_Once();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2683,6 +2703,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference DATAFLOW_REGION__EQUATIONS = eINSTANCE.getDataflowRegion_Equations();
+
+        /**
+         * The meta object literal for the '<em><b>Once</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATAFLOW_REGION__ONCE = eINSTANCE.getDataflowRegion_Once();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

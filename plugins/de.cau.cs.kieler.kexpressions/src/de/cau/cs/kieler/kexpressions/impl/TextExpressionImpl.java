@@ -6,6 +6,9 @@
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,6 +35,7 @@ import java.util.Collection;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl#getText <em>Text</em>}</li>
  * </ul>
  *
@@ -47,6 +51,16 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> annotations;
 
     /**
      * The default value of the '{@link #getText() <em>Text</em>}' attribute.
@@ -104,6 +118,18 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Annotation> getAnnotations() {
+        if (annotations == null) {
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS);
+        }
+        return annotations;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getText() {
         return text;
     }
@@ -130,6 +156,8 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
         switch (featureID) {
             case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS:
+                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -144,6 +172,8 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
         switch (featureID) {
             case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
                 return getSchedule();
+            case KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS:
+                return getAnnotations();
             case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
                 return getText();
         }
@@ -163,6 +193,10 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
+            case KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS:
+                getAnnotations().clear();
+                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
             case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
                 setText((String)newValue);
                 return;
@@ -181,6 +215,9 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
             case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS:
+                getAnnotations().clear();
+                return;
             case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
                 setText(TEXT_EDEFAULT);
                 return;
@@ -198,10 +235,44 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
         switch (featureID) {
             case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS:
+                return annotations != null && !annotations.isEmpty();
             case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
                 return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Annotatable.class) {
+            switch (derivedFeatureID) {
+                case KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Annotatable.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**

@@ -6,6 +6,8 @@
  */
 package de.cau.cs.kieler.kexpressions;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +31,7 @@ package de.cau.cs.kieler.kexpressions;
  * @model
  * @generated
  */
-public interface TextExpression extends Expression {
+public interface TextExpression extends Expression, Annotatable {
 
     /**
      * Returns the value of the '<em><b>Text</b></em>' attribute.

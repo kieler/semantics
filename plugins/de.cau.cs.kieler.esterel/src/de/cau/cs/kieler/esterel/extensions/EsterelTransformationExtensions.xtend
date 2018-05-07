@@ -13,10 +13,8 @@
 package de.cau.cs.kieler.esterel.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Constant
@@ -25,12 +23,10 @@ import de.cau.cs.kieler.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.ElsIf
-import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.Function
 import de.cau.cs.kieler.esterel.FunctionDeclaration
 import de.cau.cs.kieler.esterel.FunctionRenaming
@@ -39,10 +35,8 @@ import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Procedure
 import de.cau.cs.kieler.esterel.ProcedureDeclaration
 import de.cau.cs.kieler.esterel.ProcedureRenaming
-import de.cau.cs.kieler.esterel.Repeat
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Sensor
-import de.cau.cs.kieler.esterel.Set
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.SignalDeclaration
 import de.cau.cs.kieler.esterel.SignalReference
@@ -57,7 +51,6 @@ import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.esterel.TypeDefinition
 import de.cau.cs.kieler.esterel.TypeIdentifier
 import de.cau.cs.kieler.esterel.TypeRenaming
-import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
@@ -85,7 +78,6 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.esterel.PresentCase
 import de.cau.cs.kieler.esterel.TickReference
 
@@ -1170,7 +1162,7 @@ class EsterelTransformationExtensions {
      * @return The newly created Annotation
      */
     def createAnnotation(String name) {
-        AnnotationsFactory::eINSTANCE.createAnnotation => [
+        AnnotationsFactory::eINSTANCE.createTagAnnotation => [
             it.name = name
         ]
     }
@@ -1181,7 +1173,7 @@ class EsterelTransformationExtensions {
      * @return The newly created Annotation
      */
     def createModuleAnnotation() {
-        AnnotationsFactory::eINSTANCE.createAnnotation => [
+        AnnotationsFactory::eINSTANCE.createTagAnnotation => [
             it.name = generatedModule
         ]
     }

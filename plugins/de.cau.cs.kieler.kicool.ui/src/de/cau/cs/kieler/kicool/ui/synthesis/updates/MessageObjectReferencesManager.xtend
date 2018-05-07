@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -25,14 +24,10 @@ import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
-import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
-import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import de.cau.cs.kieler.kicool.classes.IColorSystem
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
-import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.kicool.environments.MessageObjectList
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.kgraph.KLabel
@@ -69,7 +64,7 @@ class MessageObjectReferencesManager {
         val morElements = node.eAllContents.filter(IPropertyHolder).filter[ getProperty(MESSAGE_OBJECT_REFERENCE) !== null ].toList
         
         for(reference : references) {
-            if (reference.object != null) {
+            if (reference.object !== null) {
                 val nodes = trackingAdapter.getTargetElements(reference.object)
                 if (nodes.empty) {
                     val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem)
@@ -132,7 +127,7 @@ class MessageObjectReferencesManager {
         node.addCommentFigure(colorSystem)
         node.addCommentText(text)
         
-        if (relatedNode != null) {
+        if (relatedNode !== null) {
             val edge = association.createEdge
             edge.source = relatedNode
             edge.target = node
@@ -168,7 +163,7 @@ class MessageObjectReferencesManager {
     static def fillUndefinedColors(MessageObjectList mol, ColorSystem colorSystem) {
         val newReferences = new MessageObjectList
         for(ml : mol) {
-            val IColorSystem cs = if (ml.colorSystem != null) ml.colorSystem else colorSystem
+            val IColorSystem cs = if (ml.colorSystem !== null) ml.colorSystem else colorSystem
             newReferences.add(new MessageObjectLink(ml.message, ml.object, ml.annotate, cs, null, ml.payload))
         }
         newReferences

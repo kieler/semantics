@@ -17,7 +17,6 @@ import de.cau.cs.kieler.kicool.classes.IColorSystem
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -32,7 +31,7 @@ class MessageObjectList extends LinkedList<MessageObjectLink> implements IKiCool
     override isVolatile() { true }
     
     override resolveCopiedObjects(Copier copier) {
-        for(reference : listIterator.toIterable.filter[ object != null && object instanceof EObject ]) {
+        for(reference : listIterator.toIterable.filter[ object !== null && object instanceof EObject ]) {
             if (copier.containsKey(reference.object)) {
                 reference.object = copier.get(reference.object)
             }

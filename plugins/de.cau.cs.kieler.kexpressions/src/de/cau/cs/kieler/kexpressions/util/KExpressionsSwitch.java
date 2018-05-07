@@ -172,6 +172,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 TextExpression textExpression = (TextExpression)theEObject;
                 T result = caseTextExpression(textExpression);
                 if (result == null) result = caseExpression(textExpression);
+                if (result == null) result = caseAnnotatable(textExpression);
                 if (result == null) result = caseSchedulable(textExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;

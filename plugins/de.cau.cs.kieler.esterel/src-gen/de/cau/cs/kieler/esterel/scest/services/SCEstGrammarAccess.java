@@ -2319,7 +2319,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getGotoAccess().getRule();
 	}
 
-	//Assignment:
+	//@ Override Assignment:
 	//	annotations+=Annotation*
 	//	reference=ValuedObjectReference
 	//	operator=AssignOperator
@@ -2562,6 +2562,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
+	//	global?='global'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=super::STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -2578,6 +2579,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
+	//	global?='global'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=super::STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -3149,6 +3151,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
 	//TextExpression:
+	//	annotations+=Annotation*
 	//	text=super::HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
@@ -3601,7 +3604,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation Annotation:
+	//TagAnnotation:
 	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();

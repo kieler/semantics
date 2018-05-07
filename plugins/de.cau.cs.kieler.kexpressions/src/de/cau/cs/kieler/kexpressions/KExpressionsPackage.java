@@ -604,13 +604,22 @@ public interface KExpressionsPackage extends EPackage {
     int TEXT_EXPRESSION__SCHEDULE = EXPRESSION__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION__ANNOTATIONS = EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT_EXPRESSION__TEXT = EXPRESSION_FEATURE_COUNT + 0;
+    int TEXT_EXPRESSION__TEXT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Text Expression</em>' class.
@@ -619,7 +628,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+    int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -739,13 +748,22 @@ public interface KExpressionsPackage extends EPackage {
    int VARIABLE_DECLARATION__VOLATILE = DECLARATION_FEATURE_COUNT + 7;
 
     /**
+     * The feature id for the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_DECLARATION__GLOBAL = DECLARATION_FEATURE_COUNT + 8;
+
+    /**
      * The feature id for the '<em><b>Host Type</b></em>' attribute.
      * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-   int VARIABLE_DECLARATION__HOST_TYPE = DECLARATION_FEATURE_COUNT + 8;
+   int VARIABLE_DECLARATION__HOST_TYPE = DECLARATION_FEATURE_COUNT + 9;
 
     /**
      * The number of structural features of the '<em>Variable Declaration</em>' class.
@@ -754,7 +772,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-   int VARIABLE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 9;
+   int VARIABLE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 10;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1669,6 +1687,17 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getVariableDeclaration_Volatile();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isGlobal <em>Global</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Global</em>'.
+     * @see de.cau.cs.kieler.kexpressions.VariableDeclaration#isGlobal()
+     * @see #getVariableDeclaration()
+     * @generated
+     */
+    EAttribute getVariableDeclaration_Global();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#getHostType <em>Host Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2376,6 +2405,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute VARIABLE_DECLARATION__VOLATILE = eINSTANCE.getVariableDeclaration_Volatile();
+
+        /**
+         * The meta object literal for the '<em><b>Global</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VARIABLE_DECLARATION__GLOBAL = eINSTANCE.getVariableDeclaration_Global();
 
         /**
          * The meta object literal for the '<em><b>Host Type</b></em>' attribute feature.

@@ -176,18 +176,18 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
         // Special Decl
         suspendDecl = createVariableDeclaration(ValueType.PURE) => [
-            annotations += createAnnotation => [
+            annotations += createTagAnnotation => [
                 name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
-            annotations += createAnnotation => [
+            annotations += createTagAnnotation => [
                 name = "suspend"
             ]
         ]
         exitDecl = createVariableDeclaration(ValueType.PURE) => [
-            annotations += createAnnotation => [
+            annotations += createTagAnnotation => [
                 name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
-            annotations += createAnnotation => [
+            annotations += createTagAnnotation => [
                 name = "exit"
             ]
         ]
@@ -217,7 +217,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             val endTrap = exit.key.target
             val threadHierarchy = <Thread>newLinkedList
             var parent = exit.key.eContainer
-            while (parent != null) {
+            while (parent !== null) {
                 if (parent instanceof Thread) {
                     if (parent.eAllContents.exists[it == endTrap]) {
                         parent = null
@@ -237,7 +237,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                         exitDecl.valuedObjects += it
                     ]
                     expression = createBoolValue(true)
-                    annotations += createAnnotation => [name = ARTIFICIAL_JOIN]
+                    annotations += createTagAnnotation => [name = ARTIFICIAL_JOIN]
                 ]
                 val join_label = createLabel.trace(exit.key) => [
                     name = "join_" + exit.value.valuedObject.name.substring(5)
@@ -256,7 +256,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                             expression = exit.value.valuedObject.reference
                             statements += createGoto => [
                                 target = join_label
-                                annotations += createAnnotation => [
+                                annotations += createTagAnnotation => [
                                     name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                                 ]
                             ]
@@ -270,7 +270,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                             expression = exit.value.valuedObject.reference
                             statements += createGoto => [
                                 target = join_label
-                                annotations += createAnnotation => [
+                                annotations += createTagAnnotation => [
                                     name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                                 ]
                             ]
@@ -283,7 +283,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                         expression = exit.value.valuedObject.reference
                         statements += createGoto => [
                             target = join_label
-                            annotations += createAnnotation => [
+                            annotations += createTagAnnotation => [
                                 name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                             ]
                         ]
@@ -483,7 +483,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         ]
         val goto = createGoto.trace(exit) => [
             target = trapLabel.get(exit.trap)
-            annotations += createAnnotation => [
+            annotations += createTagAnnotation => [
                 name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
             ]
         ]

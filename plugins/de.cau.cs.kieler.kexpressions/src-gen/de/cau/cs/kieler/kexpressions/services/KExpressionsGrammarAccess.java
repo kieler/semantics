@@ -1831,21 +1831,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class TextExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.TextExpression");
-		private final Assignment cTextAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cTextHOSTCODETerminalRuleCall_0 = (RuleCall)cTextAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cTextAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTextHOSTCODETerminalRuleCall_1_0 = (RuleCall)cTextAssignment_1.eContents().get(0);
 		
 		//// Text Expression Rule
 		//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 		//// Example: 'printf(...)'
 		//TextExpression:
+		//	annotations+=Annotation*
 		//	text=HOSTCODE;
 		@Override public ParserRule getRule() { return rule; }
 
+		//annotations+=Annotation* text=HOSTCODE
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
 		//text=HOSTCODE
-		public Assignment getTextAssignment() { return cTextAssignment; }
+		public Assignment getTextAssignment_1() { return cTextAssignment_1; }
 
 		//HOSTCODE
-		public RuleCall getTextHOSTCODETerminalRuleCall_0() { return cTextHOSTCODETerminalRuleCall_0; }
+		public RuleCall getTextHOSTCODETerminalRuleCall_1_0() { return cTextHOSTCODETerminalRuleCall_1_0; }
 	}
 
 	public class IntValueElements extends AbstractParserRuleElementFinder {
@@ -3316,6 +3329,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
 	//TextExpression:
+	//	annotations+=Annotation*
 	//	text=HOSTCODE;
 	public TextExpressionElements getTextExpressionAccess() {
 		return pTextExpression;
@@ -3774,7 +3788,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation Annotation:
+	//TagAnnotation:
 	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();

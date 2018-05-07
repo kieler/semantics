@@ -3,7 +3,7 @@ package de.cau.cs.kieler.scg.codegen
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * @author ssm
@@ -14,7 +14,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
  */
 class CodeGeneratorSerializeHRExtensions extends SCGSerializeHRExtensions {
     
-    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
 
     override dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
         val declaration = referenceCall.valuedObject.referenceDeclaration

@@ -35,6 +35,8 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author ssm
@@ -60,6 +62,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     @Inject extension DataflowRegionStyles
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension EquationSynthesis 
+    @Inject extension AnnotationsExtensions
+    @Inject extension CommentSynthesis
     
     override getDisplayedSynthesisOptions() {
         return newArrayList(CIRCUIT, AUTOMATIC_INLINE)
@@ -73,7 +77,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100)
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
-        node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
+        node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, true)
         node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
         
         if (CIRCUIT.booleanValue) {
@@ -137,6 +141,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
         
+        if (SHOW_COMMENTS.booleanValue) {
+            region.getCommentAnnotations.forEach[
+                node.children += it.transform                
+            ]
+        }           
 
         // translate all direct dataflow equations
         node.children += region.equations.performTranformation

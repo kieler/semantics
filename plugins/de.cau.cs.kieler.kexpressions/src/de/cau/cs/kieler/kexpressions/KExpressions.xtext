@@ -344,6 +344,7 @@ Parameter returns Parameter:
 // The text expression rule returns a text expression. Most times text expressions are used for host code.
 // Example: 'printf(...)'
 TextExpression returns TextExpression:
+    (annotations += Annotation)*
 	text=HOSTCODE;
 
 IntValue returns IntValue:

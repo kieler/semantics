@@ -212,7 +212,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// TagAnnotation
 		//// e.g.: @HVlayout
-		//TagAnnotation Annotation:
+		//TagAnnotation:
 		//	'@' name=ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -1089,7 +1089,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation Annotation:
+	//TagAnnotation:
 	//	'@' name=ExtendedID;
 	public TagAnnotationElements getTagAnnotationAccess() {
 		return pTagAnnotation;

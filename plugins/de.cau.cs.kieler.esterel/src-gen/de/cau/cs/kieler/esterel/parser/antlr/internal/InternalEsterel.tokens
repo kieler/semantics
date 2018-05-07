@@ -69,11 +69,11 @@
 'exec'=74
 'exit'=73
 'expression'=109
-'extern'=113
+'extern'=114
 'float'=131
 'fork'=102
 'function'=28
-'global'=114
+'global'=111
 'goto'=98
 'halt'=46
 'handle'=72
@@ -107,7 +107,7 @@
 'procedure'=32
 'pure'=127
 'randomize'=116
-'ref'=112
+'ref'=113
 'relation'=40
 'repeat'=62
 'return'=37
@@ -116,7 +116,7 @@
 'scope'=108
 'sensor'=39
 'signal'=75
-'static'=111
+'static'=112
 'string'=133
 'suspend'=69
 'sustain'=50

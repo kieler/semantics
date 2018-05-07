@@ -1679,11 +1679,6 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             if ( (LA14_0==25) ) {
                 switch ( input.LA(2) ) {
-                case 26:
-                    {
-                    alt14=1;
-                    }
-                    break;
                 case 27:
                     {
                     alt14=3;
@@ -1692,6 +1687,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                 case 24:
                     {
                     alt14=2;
+                    }
+                    break;
+                case 26:
+                    {
+                    alt14=1;
                     }
                     break;
                 default:
@@ -2896,11 +2896,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                 {
                 int LA24_2 = input.LA(2);
 
-                if ( (LA24_2==RULE_INT) ) {
-                    alt24=2;
-                }
-                else if ( (LA24_2==RULE_FLOAT) ) {
+                if ( (LA24_2==RULE_FLOAT) ) {
                     alt24=3;
+                }
+                else if ( (LA24_2==RULE_INT) ) {
+                    alt24=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -2915,11 +2915,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                 {
                 int LA24_3 = input.LA(2);
 
-                if ( (LA24_3==RULE_FLOAT) ) {
-                    alt24=3;
-                }
-                else if ( (LA24_3==RULE_INT) ) {
+                if ( (LA24_3==RULE_INT) ) {
                     alt24=2;
+                }
+                else if ( (LA24_3==RULE_FLOAT) ) {
+                    alt24=3;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -5836,7 +5836,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( (LA41_0==64) ) {
                 alt41=1;
             }
-            else if ( (LA41_0==RULE_ID||(LA41_0>=RULE_HOSTCODE && LA41_0<=RULE_BOOLEAN)||LA41_0==45||(LA41_0>=50 && LA41_0<=52)||LA41_0==63||LA41_0==65) ) {
+            else if ( (LA41_0==RULE_ID||(LA41_0>=RULE_HOSTCODE && LA41_0<=RULE_BOOLEAN)||LA41_0==RULE_COMMENT_ANNOTATION||LA41_0==45||(LA41_0>=50 && LA41_0<=52)||LA41_0==55||LA41_0==63||LA41_0==65) ) {
                 alt41=2;
             }
             else {
@@ -6061,7 +6061,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( (LA42_0==53) ) {
                 alt42=1;
             }
-            else if ( (LA42_0==RULE_ID||(LA42_0>=RULE_HOSTCODE && LA42_0<=RULE_BOOLEAN)||LA42_0==45||(LA42_0>=50 && LA42_0<=52)||(LA42_0>=63 && LA42_0<=65)) ) {
+            else if ( (LA42_0==RULE_ID||(LA42_0>=RULE_HOSTCODE && LA42_0<=RULE_BOOLEAN)||LA42_0==RULE_COMMENT_ANNOTATION||LA42_0==45||(LA42_0>=50 && LA42_0<=52)||LA42_0==55||(LA42_0>=63 && LA42_0<=65)) ) {
                 alt42=2;
             }
             else {
@@ -8644,7 +8644,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( (LA59_0==41) ) {
                 alt59=1;
             }
-            else if ( ((LA59_0>=RULE_ID && LA59_0<=RULE_STRING)||LA59_0==18||LA59_0==45||(LA59_0>=50 && LA59_0<=52)||LA59_0==63||LA59_0==65) ) {
+            else if ( ((LA59_0>=RULE_ID && LA59_0<=RULE_COMMENT_ANNOTATION)||LA59_0==18||LA59_0==45||(LA59_0>=50 && LA59_0<=52)||LA59_0==55||LA59_0==63||LA59_0==65) ) {
                 alt59=2;
             }
             else {
@@ -11673,28 +11673,86 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTextExpression"
-    // InternalKiSim.g:4142:1: ruleTextExpression returns [EObject current=null] : ( (lv_text_0_0= RULE_HOSTCODE ) ) ;
+    // InternalKiSim.g:4142:1: ruleTextExpression returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) ) ;
     public final EObject ruleTextExpression() throws RecognitionException {
         EObject current = null;
 
-        Token lv_text_0_0=null;
+        Token lv_text_1_0=null;
+        EObject lv_annotations_0_0 = null;
+
 
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4145:28: ( ( (lv_text_0_0= RULE_HOSTCODE ) ) )
-            // InternalKiSim.g:4146:1: ( (lv_text_0_0= RULE_HOSTCODE ) )
+            // InternalKiSim.g:4145:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) ) )
+            // InternalKiSim.g:4146:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) )
             {
-            // InternalKiSim.g:4146:1: ( (lv_text_0_0= RULE_HOSTCODE ) )
-            // InternalKiSim.g:4147:1: (lv_text_0_0= RULE_HOSTCODE )
+            // InternalKiSim.g:4146:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) )
+            // InternalKiSim.g:4146:2: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) )
             {
-            // InternalKiSim.g:4147:1: (lv_text_0_0= RULE_HOSTCODE )
-            // InternalKiSim.g:4148:3: lv_text_0_0= RULE_HOSTCODE
+            // InternalKiSim.g:4146:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            loop77:
+            do {
+                int alt77=2;
+                int LA77_0 = input.LA(1);
+
+                if ( (LA77_0==RULE_COMMENT_ANNOTATION||LA77_0==55) ) {
+                    alt77=1;
+                }
+
+
+                switch (alt77) {
+            	case 1 :
+            	    // InternalKiSim.g:4147:1: (lv_annotations_0_0= ruleAnnotation )
+            	    {
+            	    // InternalKiSim.g:4147:1: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalKiSim.g:4148:3: lv_annotations_0_0= ruleAnnotation
+            	    {
+            	    if ( state.backtracking==0 ) {
+            	       
+            	      	        newCompositeNode(grammarAccess.getTextExpressionAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+            	      	    
+            	    }
+            	    pushFollow(FollowSets000.FOLLOW_56);
+            	    lv_annotations_0_0=ruleAnnotation();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElementForParent(grammarAccess.getTextExpressionRule());
+            	      	        }
+            	             		add(
+            	             			current, 
+            	             			"annotations",
+            	              		lv_annotations_0_0, 
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
+            	      	        afterParserOrEnumRuleCall();
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop77;
+                }
+            } while (true);
+
+            // InternalKiSim.g:4164:3: ( (lv_text_1_0= RULE_HOSTCODE ) )
+            // InternalKiSim.g:4165:1: (lv_text_1_0= RULE_HOSTCODE )
             {
-            lv_text_0_0=(Token)match(input,RULE_HOSTCODE,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            // InternalKiSim.g:4165:1: (lv_text_1_0= RULE_HOSTCODE )
+            // InternalKiSim.g:4166:3: lv_text_1_0= RULE_HOSTCODE
+            {
+            lv_text_1_0=(Token)match(input,RULE_HOSTCODE,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_text_0_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
+              			newLeafNode(lv_text_1_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -11705,10 +11763,13 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                      		setWithLastConsumed(
                      			current, 
                      			"text",
-                      		lv_text_0_0, 
+                      		lv_text_1_0, 
                       		"de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
               	    
             }
+
+            }
+
 
             }
 
@@ -11735,7 +11796,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntValue"
-    // InternalKiSim.g:4172:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
+    // InternalKiSim.g:4190:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
     public final EObject entryRuleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -11743,8 +11804,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4173:2: (iv_ruleIntValue= ruleIntValue EOF )
-            // InternalKiSim.g:4174:2: iv_ruleIntValue= ruleIntValue EOF
+            // InternalKiSim.g:4191:2: (iv_ruleIntValue= ruleIntValue EOF )
+            // InternalKiSim.g:4192:2: iv_ruleIntValue= ruleIntValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntValueRule()); 
@@ -11775,7 +11836,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntValue"
-    // InternalKiSim.g:4181:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    // InternalKiSim.g:4199:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
     public final EObject ruleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -11784,14 +11845,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4184:28: ( ( (lv_value_0_0= RULE_INT ) ) )
-            // InternalKiSim.g:4185:1: ( (lv_value_0_0= RULE_INT ) )
+            // InternalKiSim.g:4202:28: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // InternalKiSim.g:4203:1: ( (lv_value_0_0= RULE_INT ) )
             {
-            // InternalKiSim.g:4185:1: ( (lv_value_0_0= RULE_INT ) )
-            // InternalKiSim.g:4186:1: (lv_value_0_0= RULE_INT )
+            // InternalKiSim.g:4203:1: ( (lv_value_0_0= RULE_INT ) )
+            // InternalKiSim.g:4204:1: (lv_value_0_0= RULE_INT )
             {
-            // InternalKiSim.g:4186:1: (lv_value_0_0= RULE_INT )
-            // InternalKiSim.g:4187:3: lv_value_0_0= RULE_INT
+            // InternalKiSim.g:4204:1: (lv_value_0_0= RULE_INT )
+            // InternalKiSim.g:4205:3: lv_value_0_0= RULE_INT
             {
             lv_value_0_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11837,7 +11898,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloatValue"
-    // InternalKiSim.g:4211:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
+    // InternalKiSim.g:4229:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
     public final EObject entryRuleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -11845,8 +11906,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4212:2: (iv_ruleFloatValue= ruleFloatValue EOF )
-            // InternalKiSim.g:4213:2: iv_ruleFloatValue= ruleFloatValue EOF
+            // InternalKiSim.g:4230:2: (iv_ruleFloatValue= ruleFloatValue EOF )
+            // InternalKiSim.g:4231:2: iv_ruleFloatValue= ruleFloatValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloatValueRule()); 
@@ -11877,7 +11938,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloatValue"
-    // InternalKiSim.g:4220:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
+    // InternalKiSim.g:4238:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
     public final EObject ruleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -11886,14 +11947,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4223:28: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
-            // InternalKiSim.g:4224:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalKiSim.g:4241:28: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
+            // InternalKiSim.g:4242:1: ( (lv_value_0_0= RULE_FLOAT ) )
             {
-            // InternalKiSim.g:4224:1: ( (lv_value_0_0= RULE_FLOAT ) )
-            // InternalKiSim.g:4225:1: (lv_value_0_0= RULE_FLOAT )
+            // InternalKiSim.g:4242:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalKiSim.g:4243:1: (lv_value_0_0= RULE_FLOAT )
             {
-            // InternalKiSim.g:4225:1: (lv_value_0_0= RULE_FLOAT )
-            // InternalKiSim.g:4226:3: lv_value_0_0= RULE_FLOAT
+            // InternalKiSim.g:4243:1: (lv_value_0_0= RULE_FLOAT )
+            // InternalKiSim.g:4244:3: lv_value_0_0= RULE_FLOAT
             {
             lv_value_0_0=(Token)match(input,RULE_FLOAT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11939,7 +12000,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolValue"
-    // InternalKiSim.g:4250:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
+    // InternalKiSim.g:4268:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
     public final EObject entryRuleBoolValue() throws RecognitionException {
         EObject current = null;
 
@@ -11947,8 +12008,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4251:2: (iv_ruleBoolValue= ruleBoolValue EOF )
-            // InternalKiSim.g:4252:2: iv_ruleBoolValue= ruleBoolValue EOF
+            // InternalKiSim.g:4269:2: (iv_ruleBoolValue= ruleBoolValue EOF )
+            // InternalKiSim.g:4270:2: iv_ruleBoolValue= ruleBoolValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBoolValueRule()); 
@@ -11979,7 +12040,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolValue"
-    // InternalKiSim.g:4259:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // InternalKiSim.g:4277:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleBoolValue() throws RecognitionException {
         EObject current = null;
 
@@ -11988,14 +12049,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4262:28: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // InternalKiSim.g:4263:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalKiSim.g:4280:28: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // InternalKiSim.g:4281:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // InternalKiSim.g:4263:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // InternalKiSim.g:4264:1: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalKiSim.g:4281:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalKiSim.g:4282:1: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // InternalKiSim.g:4264:1: (lv_value_0_0= RULE_BOOLEAN )
-            // InternalKiSim.g:4265:3: lv_value_0_0= RULE_BOOLEAN
+            // InternalKiSim.g:4282:1: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalKiSim.g:4283:3: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -12041,7 +12102,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringValue"
-    // InternalKiSim.g:4289:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
+    // InternalKiSim.g:4307:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
     public final EObject entryRuleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -12049,8 +12110,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4290:2: (iv_ruleStringValue= ruleStringValue EOF )
-            // InternalKiSim.g:4291:2: iv_ruleStringValue= ruleStringValue EOF
+            // InternalKiSim.g:4308:2: (iv_ruleStringValue= ruleStringValue EOF )
+            // InternalKiSim.g:4309:2: iv_ruleStringValue= ruleStringValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringValueRule()); 
@@ -12081,7 +12142,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringValue"
-    // InternalKiSim.g:4298:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // InternalKiSim.g:4316:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -12090,14 +12151,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4301:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // InternalKiSim.g:4302:1: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalKiSim.g:4319:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // InternalKiSim.g:4320:1: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // InternalKiSim.g:4302:1: ( (lv_value_0_0= RULE_STRING ) )
-            // InternalKiSim.g:4303:1: (lv_value_0_0= RULE_STRING )
+            // InternalKiSim.g:4320:1: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalKiSim.g:4321:1: (lv_value_0_0= RULE_STRING )
             {
-            // InternalKiSim.g:4303:1: (lv_value_0_0= RULE_STRING )
-            // InternalKiSim.g:4304:3: lv_value_0_0= RULE_STRING
+            // InternalKiSim.g:4321:1: (lv_value_0_0= RULE_STRING )
+            // InternalKiSim.g:4322:3: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -12143,7 +12204,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVectorValue"
-    // InternalKiSim.g:4328:1: entryRuleVectorValue returns [EObject current=null] : iv_ruleVectorValue= ruleVectorValue EOF ;
+    // InternalKiSim.g:4346:1: entryRuleVectorValue returns [EObject current=null] : iv_ruleVectorValue= ruleVectorValue EOF ;
     public final EObject entryRuleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -12151,8 +12212,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4329:2: (iv_ruleVectorValue= ruleVectorValue EOF )
-            // InternalKiSim.g:4330:2: iv_ruleVectorValue= ruleVectorValue EOF
+            // InternalKiSim.g:4347:2: (iv_ruleVectorValue= ruleVectorValue EOF )
+            // InternalKiSim.g:4348:2: iv_ruleVectorValue= ruleVectorValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVectorValueRule()); 
@@ -12183,7 +12244,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValue"
-    // InternalKiSim.g:4337:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
+    // InternalKiSim.g:4355:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
     public final EObject ruleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -12198,30 +12259,30 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4340:28: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
-            // InternalKiSim.g:4341:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalKiSim.g:4358:28: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
+            // InternalKiSim.g:4359:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             {
-            // InternalKiSim.g:4341:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
-            // InternalKiSim.g:4341:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
+            // InternalKiSim.g:4359:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalKiSim.g:4359:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,18,FollowSets000.FOLLOW_56); if (state.failed) return current;
+            otherlv_0=(Token)match(input,18,FollowSets000.FOLLOW_57); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
                   
             }
-            // InternalKiSim.g:4345:1: ( (lv_values_1_0= ruleVectorValueMember ) )
-            // InternalKiSim.g:4346:1: (lv_values_1_0= ruleVectorValueMember )
+            // InternalKiSim.g:4363:1: ( (lv_values_1_0= ruleVectorValueMember ) )
+            // InternalKiSim.g:4364:1: (lv_values_1_0= ruleVectorValueMember )
             {
-            // InternalKiSim.g:4346:1: (lv_values_1_0= ruleVectorValueMember )
-            // InternalKiSim.g:4347:3: lv_values_1_0= ruleVectorValueMember
+            // InternalKiSim.g:4364:1: (lv_values_1_0= ruleVectorValueMember )
+            // InternalKiSim.g:4365:3: lv_values_1_0= ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_57);
+            pushFollow(FollowSets000.FOLLOW_58);
             lv_values_1_0=ruleVectorValueMember();
 
             state._fsp--;
@@ -12245,39 +12306,39 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:4363:2: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
-            loop77:
+            // InternalKiSim.g:4381:2: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
+            loop78:
             do {
-                int alt77=2;
-                int LA77_0 = input.LA(1);
+                int alt78=2;
+                int LA78_0 = input.LA(1);
 
-                if ( (LA77_0==29) ) {
-                    alt77=1;
+                if ( (LA78_0==29) ) {
+                    alt78=1;
                 }
 
 
-                switch (alt77) {
+                switch (alt78) {
             	case 1 :
-            	    // InternalKiSim.g:4363:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
+            	    // InternalKiSim.g:4381:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
-            	    otherlv_2=(Token)match(input,29,FollowSets000.FOLLOW_56); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,29,FollowSets000.FOLLOW_57); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_2_0());
             	          
             	    }
-            	    // InternalKiSim.g:4367:1: ( (lv_values_3_0= ruleVectorValueMember ) )
-            	    // InternalKiSim.g:4368:1: (lv_values_3_0= ruleVectorValueMember )
+            	    // InternalKiSim.g:4385:1: ( (lv_values_3_0= ruleVectorValueMember ) )
+            	    // InternalKiSim.g:4386:1: (lv_values_3_0= ruleVectorValueMember )
             	    {
-            	    // InternalKiSim.g:4368:1: (lv_values_3_0= ruleVectorValueMember )
-            	    // InternalKiSim.g:4369:3: lv_values_3_0= ruleVectorValueMember
+            	    // InternalKiSim.g:4386:1: (lv_values_3_0= ruleVectorValueMember )
+            	    // InternalKiSim.g:4387:3: lv_values_3_0= ruleVectorValueMember
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_57);
+            	    pushFollow(FollowSets000.FOLLOW_58);
             	    lv_values_3_0=ruleVectorValueMember();
 
             	    state._fsp--;
@@ -12306,7 +12367,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop77;
+            	    break loop78;
                 }
             } while (true);
 
@@ -12339,7 +12400,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVectorValueMember"
-    // InternalKiSim.g:4397:1: entryRuleVectorValueMember returns [EObject current=null] : iv_ruleVectorValueMember= ruleVectorValueMember EOF ;
+    // InternalKiSim.g:4415:1: entryRuleVectorValueMember returns [EObject current=null] : iv_ruleVectorValueMember= ruleVectorValueMember EOF ;
     public final EObject entryRuleVectorValueMember() throws RecognitionException {
         EObject current = null;
 
@@ -12347,8 +12408,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4398:2: (iv_ruleVectorValueMember= ruleVectorValueMember EOF )
-            // InternalKiSim.g:4399:2: iv_ruleVectorValueMember= ruleVectorValueMember EOF
+            // InternalKiSim.g:4416:2: (iv_ruleVectorValueMember= ruleVectorValueMember EOF )
+            // InternalKiSim.g:4417:2: iv_ruleVectorValueMember= ruleVectorValueMember EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVectorValueMemberRule()); 
@@ -12379,7 +12440,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValueMember"
-    // InternalKiSim.g:4406:1: ruleVectorValueMember returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) ;
+    // InternalKiSim.g:4424:1: ruleVectorValueMember returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) ;
     public final EObject ruleVectorValueMember() throws RecognitionException {
         EObject current = null;
 
@@ -12393,15 +12454,15 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4409:28: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) )
-            // InternalKiSim.g:4410:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
+            // InternalKiSim.g:4427:28: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) )
+            // InternalKiSim.g:4428:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             {
-            // InternalKiSim.g:4410:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
-            int alt78=3;
-            alt78 = dfa78.predict(input);
-            switch (alt78) {
+            // InternalKiSim.g:4428:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
+            int alt79=3;
+            alt79 = dfa79.predict(input);
+            switch (alt79) {
                 case 1 :
-                    // InternalKiSim.g:4411:2: this_BoolExpression_0= ruleBoolExpression
+                    // InternalKiSim.g:4429:2: this_BoolExpression_0= ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12428,7 +12489,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiSim.g:4424:2: this_ValuedExpression_1= ruleValuedExpression
+                    // InternalKiSim.g:4442:2: this_ValuedExpression_1= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12455,7 +12516,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalKiSim.g:4437:2: this_IgnoreValue_2= ruleIgnoreValue
+                    // InternalKiSim.g:4455:2: this_IgnoreValue_2= ruleIgnoreValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12504,7 +12565,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIgnoreValue"
-    // InternalKiSim.g:4456:1: entryRuleIgnoreValue returns [EObject current=null] : iv_ruleIgnoreValue= ruleIgnoreValue EOF ;
+    // InternalKiSim.g:4474:1: entryRuleIgnoreValue returns [EObject current=null] : iv_ruleIgnoreValue= ruleIgnoreValue EOF ;
     public final EObject entryRuleIgnoreValue() throws RecognitionException {
         EObject current = null;
 
@@ -12512,8 +12573,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4457:2: (iv_ruleIgnoreValue= ruleIgnoreValue EOF )
-            // InternalKiSim.g:4458:2: iv_ruleIgnoreValue= ruleIgnoreValue EOF
+            // InternalKiSim.g:4475:2: (iv_ruleIgnoreValue= ruleIgnoreValue EOF )
+            // InternalKiSim.g:4476:2: iv_ruleIgnoreValue= ruleIgnoreValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIgnoreValueRule()); 
@@ -12544,7 +12605,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIgnoreValue"
-    // InternalKiSim.g:4465:1: ruleIgnoreValue returns [EObject current=null] : ( () otherlv_1= '_' ) ;
+    // InternalKiSim.g:4483:1: ruleIgnoreValue returns [EObject current=null] : ( () otherlv_1= '_' ) ;
     public final EObject ruleIgnoreValue() throws RecognitionException {
         EObject current = null;
 
@@ -12553,14 +12614,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4468:28: ( ( () otherlv_1= '_' ) )
-            // InternalKiSim.g:4469:1: ( () otherlv_1= '_' )
+            // InternalKiSim.g:4486:28: ( ( () otherlv_1= '_' ) )
+            // InternalKiSim.g:4487:1: ( () otherlv_1= '_' )
             {
-            // InternalKiSim.g:4469:1: ( () otherlv_1= '_' )
-            // InternalKiSim.g:4469:2: () otherlv_1= '_'
+            // InternalKiSim.g:4487:1: ( () otherlv_1= '_' )
+            // InternalKiSim.g:4487:2: () otherlv_1= '_'
             {
-            // InternalKiSim.g:4469:2: ()
-            // InternalKiSim.g:4470:2: 
+            // InternalKiSim.g:4487:2: ()
+            // InternalKiSim.g:4488:2: 
             {
             if ( state.backtracking==0 ) {
                
@@ -12606,7 +12667,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnyValue"
-    // InternalKiSim.g:4492:1: entryRuleAnyValue returns [EObject current=null] : iv_ruleAnyValue= ruleAnyValue EOF ;
+    // InternalKiSim.g:4510:1: entryRuleAnyValue returns [EObject current=null] : iv_ruleAnyValue= ruleAnyValue EOF ;
     public final EObject entryRuleAnyValue() throws RecognitionException {
         EObject current = null;
 
@@ -12614,8 +12675,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4493:2: (iv_ruleAnyValue= ruleAnyValue EOF )
-            // InternalKiSim.g:4494:2: iv_ruleAnyValue= ruleAnyValue EOF
+            // InternalKiSim.g:4511:2: (iv_ruleAnyValue= ruleAnyValue EOF )
+            // InternalKiSim.g:4512:2: iv_ruleAnyValue= ruleAnyValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnyValueRule()); 
@@ -12646,7 +12707,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnyValue"
-    // InternalKiSim.g:4501:1: ruleAnyValue returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) ;
+    // InternalKiSim.g:4519:1: ruleAnyValue returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) ;
     public final EObject ruleAnyValue() throws RecognitionException {
         EObject current = null;
 
@@ -12662,43 +12723,43 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4504:28: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) )
-            // InternalKiSim.g:4505:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
+            // InternalKiSim.g:4522:28: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) )
+            // InternalKiSim.g:4523:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             {
-            // InternalKiSim.g:4505:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
-            int alt79=4;
+            // InternalKiSim.g:4523:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
+            int alt80=4;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
-                alt79=1;
+                alt80=1;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt79=2;
+                alt80=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt79=3;
+                alt80=3;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt79=4;
+                alt80=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 79, 0, input);
+                    new NoViableAltException("", 80, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt79) {
+            switch (alt80) {
                 case 1 :
-                    // InternalKiSim.g:4506:2: this_IntValue_0= ruleIntValue
+                    // InternalKiSim.g:4524:2: this_IntValue_0= ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12725,7 +12786,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiSim.g:4519:2: this_FloatValue_1= ruleFloatValue
+                    // InternalKiSim.g:4537:2: this_FloatValue_1= ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12752,7 +12813,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalKiSim.g:4532:2: this_BoolValue_2= ruleBoolValue
+                    // InternalKiSim.g:4550:2: this_BoolValue_2= ruleBoolValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12779,7 +12840,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalKiSim.g:4545:2: this_StringValue_3= ruleStringValue
+                    // InternalKiSim.g:4563:2: this_StringValue_3= ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12827,8 +12888,202 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleAnyValue"
 
 
+    // $ANTLR start "entryRuleAnnotation"
+    // InternalKiSim.g:4582:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
+    public final EObject entryRuleAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAnnotation = null;
+
+
+        try {
+            // InternalKiSim.g:4583:2: (iv_ruleAnnotation= ruleAnnotation EOF )
+            // InternalKiSim.g:4584:2: iv_ruleAnnotation= ruleAnnotation EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAnnotationRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleAnnotation=ruleAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAnnotation; 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAnnotation"
+
+
+    // $ANTLR start "ruleAnnotation"
+    // InternalKiSim.g:4591:1: ruleAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
+    public final EObject ruleAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject this_CommentAnnotation_0 = null;
+
+        EObject this_KeyStringValueAnnotation_1 = null;
+
+        EObject this_TypedKeyStringValueAnnotation_2 = null;
+
+        EObject this_TagAnnotation_3 = null;
+
+
+         enterRule(); 
+            
+        try {
+            // InternalKiSim.g:4594:28: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
+            // InternalKiSim.g:4595:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            {
+            // InternalKiSim.g:4595:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            int alt81=4;
+            alt81 = dfa81.predict(input);
+            switch (alt81) {
+                case 1 :
+                    // InternalKiSim.g:4596:2: this_CommentAnnotation_0= ruleCommentAnnotation
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	  /* */ 
+                      	
+                    }
+                    if ( state.backtracking==0 ) {
+                       
+                              newCompositeNode(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
+                          
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_CommentAnnotation_0=ruleCommentAnnotation();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+                       
+                              current = this_CommentAnnotation_0; 
+                              afterParserOrEnumRuleCall();
+                          
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // InternalKiSim.g:4609:2: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	  /* */ 
+                      	
+                    }
+                    if ( state.backtracking==0 ) {
+                       
+                              newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
+                          
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_KeyStringValueAnnotation_1=ruleKeyStringValueAnnotation();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+                       
+                              current = this_KeyStringValueAnnotation_1; 
+                              afterParserOrEnumRuleCall();
+                          
+                    }
+
+                    }
+                    break;
+                case 3 :
+                    // InternalKiSim.g:4622:2: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	  /* */ 
+                      	
+                    }
+                    if ( state.backtracking==0 ) {
+                       
+                              newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
+                          
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_TypedKeyStringValueAnnotation_2=ruleTypedKeyStringValueAnnotation();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+                       
+                              current = this_TypedKeyStringValueAnnotation_2; 
+                              afterParserOrEnumRuleCall();
+                          
+                    }
+
+                    }
+                    break;
+                case 4 :
+                    // InternalKiSim.g:4635:2: this_TagAnnotation_3= ruleTagAnnotation
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	  /* */ 
+                      	
+                    }
+                    if ( state.backtracking==0 ) {
+                       
+                              newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_3()); 
+                          
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_TagAnnotation_3=ruleTagAnnotation();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+                       
+                              current = this_TagAnnotation_3; 
+                              afterParserOrEnumRuleCall();
+                          
+                    }
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule(); 
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAnnotation"
+
+
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalKiSim.g:4574:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
+    // InternalKiSim.g:4662:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
     public final EObject entryRuleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -12836,8 +13091,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4575:2: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
-            // InternalKiSim.g:4576:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
+            // InternalKiSim.g:4663:2: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
+            // InternalKiSim.g:4664:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCommentAnnotationRule()); 
@@ -12868,7 +13123,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalKiSim.g:4583:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
+    // InternalKiSim.g:4671:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -12877,14 +13132,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4586:28: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
-            // InternalKiSim.g:4587:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalKiSim.g:4674:28: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
+            // InternalKiSim.g:4675:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
             {
-            // InternalKiSim.g:4587:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
-            // InternalKiSim.g:4588:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalKiSim.g:4675:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalKiSim.g:4676:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
             {
-            // InternalKiSim.g:4588:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
-            // InternalKiSim.g:4589:3: lv_values_0_0= RULE_COMMENT_ANNOTATION
+            // InternalKiSim.g:4676:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalKiSim.g:4677:3: lv_values_0_0= RULE_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -12930,7 +13185,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalKiSim.g:4615:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
+    // InternalKiSim.g:4703:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
     public final EObject entryRuleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -12938,8 +13193,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4616:2: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
-            // InternalKiSim.g:4617:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
+            // InternalKiSim.g:4704:2: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
+            // InternalKiSim.g:4705:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTagAnnotationRule()); 
@@ -12970,7 +13225,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalKiSim.g:4624:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalKiSim.g:4712:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject ruleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -12981,11 +13236,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4627:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalKiSim.g:4628:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalKiSim.g:4715:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalKiSim.g:4716:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalKiSim.g:4628:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalKiSim.g:4628:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4716:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalKiSim.g:4716:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
             otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -12993,11 +13248,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalKiSim.g:4632:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:4633:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4720:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4721:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:4633:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:4634:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:4721:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4722:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13051,7 +13306,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePragmaTag"
-    // InternalKiSim.g:4658:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
+    // InternalKiSim.g:4746:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
     public final EObject entryRulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -13059,8 +13314,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4659:2: (iv_rulePragmaTag= rulePragmaTag EOF )
-            // InternalKiSim.g:4660:2: iv_rulePragmaTag= rulePragmaTag EOF
+            // InternalKiSim.g:4747:2: (iv_rulePragmaTag= rulePragmaTag EOF )
+            // InternalKiSim.g:4748:2: iv_rulePragmaTag= rulePragmaTag EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPragmaTagRule()); 
@@ -13091,7 +13346,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePragmaTag"
-    // InternalKiSim.g:4667:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalKiSim.g:4755:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject rulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -13102,11 +13357,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4670:28: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalKiSim.g:4671:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalKiSim.g:4758:28: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalKiSim.g:4759:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalKiSim.g:4671:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalKiSim.g:4671:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4759:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalKiSim.g:4759:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
             {
             otherlv_0=(Token)match(input,56,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -13114,11 +13369,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
                   
             }
-            // InternalKiSim.g:4675:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:4676:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4763:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4764:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:4676:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:4677:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:4764:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4765:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13172,7 +13427,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalKiSim.g:4701:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
+    // InternalKiSim.g:4789:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
     public final EObject entryRuleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -13180,8 +13435,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:4702:2: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
-            // InternalKiSim.g:4703:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
+            // InternalKiSim.g:4790:2: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
+            // InternalKiSim.g:4791:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyStringValueAnnotationRule()); 
@@ -13212,7 +13467,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalKiSim.g:4710:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalKiSim.g:4798:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -13228,11 +13483,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4713:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalKiSim.g:4714:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalKiSim.g:4801:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalKiSim.g:4802:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalKiSim.g:4714:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalKiSim.g:4714:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalKiSim.g:4802:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalKiSim.g:4802:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -13240,18 +13495,18 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalKiSim.g:4718:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:4719:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4806:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4807:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:4719:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:4720:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:4807:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4808:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_59);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -13275,11 +13530,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:4736:2: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalKiSim.g:4737:1: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalKiSim.g:4824:2: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalKiSim.g:4825:1: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalKiSim.g:4737:1: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalKiSim.g:4738:3: lv_values_2_0= ruleEStringAllTypes
+            // InternalKiSim.g:4825:1: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalKiSim.g:4826:3: lv_values_2_0= ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                
@@ -13310,32 +13565,32 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:4754:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop80:
+            // InternalKiSim.g:4842:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            loop82:
             do {
-                int alt80=2;
-                int LA80_0 = input.LA(1);
+                int alt82=2;
+                int LA82_0 = input.LA(1);
 
-                if ( (LA80_0==29) ) {
-                    alt80=1;
+                if ( (LA82_0==29) ) {
+                    alt82=1;
                 }
 
 
-                switch (alt80) {
+                switch (alt82) {
             	case 1 :
-            	    // InternalKiSim.g:4754:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalKiSim.g:4842:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_58); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_59); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalKiSim.g:4758:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalKiSim.g:4759:1: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalKiSim.g:4846:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalKiSim.g:4847:1: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalKiSim.g:4759:1: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalKiSim.g:4760:3: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalKiSim.g:4847:1: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalKiSim.g:4848:3: lv_values_4_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -13351,458 +13606,6 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
-            	      	        }
-            	             		add(
-            	             			current, 
-            	             			"values",
-            	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	      	        afterParserOrEnumRuleCall();
-            	      	    
-            	    }
-
-            	    }
-
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop80;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-               leaveRule(); 
-            }
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleKeyStringValueAnnotation"
-
-
-    // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
-    // InternalKiSim.g:4784:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleRestrictedKeyStringValueAnnotation = null;
-
-
-        try {
-            // InternalKiSim.g:4785:2: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
-            // InternalKiSim.g:4786:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleRestrictedKeyStringValueAnnotation=ruleRestrictedKeyStringValueAnnotation();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleRestrictedKeyStringValueAnnotation; 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
-
-            }
-
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleRestrictedKeyStringValueAnnotation"
-
-
-    // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
-    // InternalKiSim.g:4793:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
-    public final EObject ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_0=null;
-        Token otherlv_3=null;
-        AntlrDatatypeRuleToken lv_name_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_2_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_4_0 = null;
-
-
-         enterRule(); 
-            
-        try {
-            // InternalKiSim.g:4796:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
-            // InternalKiSim.g:4797:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
-            {
-            // InternalKiSim.g:4797:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
-            // InternalKiSim.g:4797:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
-            {
-            otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                  
-            }
-            // InternalKiSim.g:4801:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:4802:1: (lv_name_1_0= ruleExtendedID )
-            {
-            // InternalKiSim.g:4802:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:4803:3: lv_name_1_0= ruleExtendedID
-            {
-            if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-              	    
-            }
-            pushFollow(FollowSets000.FOLLOW_59);
-            lv_name_1_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
-              	        }
-                     		set(
-                     			current, 
-                     			"name",
-                      		lv_name_1_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              	        afterParserOrEnumRuleCall();
-              	    
-            }
-
-            }
-
-
-            }
-
-            // InternalKiSim.g:4819:2: ( (lv_values_2_0= ruleEStringBoolean ) )
-            // InternalKiSim.g:4820:1: (lv_values_2_0= ruleEStringBoolean )
-            {
-            // InternalKiSim.g:4820:1: (lv_values_2_0= ruleEStringBoolean )
-            // InternalKiSim.g:4821:3: lv_values_2_0= ruleEStringBoolean
-            {
-            if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
-              	    
-            }
-            pushFollow(FollowSets000.FOLLOW_22);
-            lv_values_2_0=ruleEStringBoolean();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
-              	        }
-                     		add(
-                     			current, 
-                     			"values",
-                      		lv_values_2_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-              	        afterParserOrEnumRuleCall();
-              	    
-            }
-
-            }
-
-
-            }
-
-            // InternalKiSim.g:4837:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
-            loop81:
-            do {
-                int alt81=2;
-                int LA81_0 = input.LA(1);
-
-                if ( (LA81_0==29) ) {
-                    alt81=1;
-                }
-
-
-                switch (alt81) {
-            	case 1 :
-            	    // InternalKiSim.g:4837:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
-            	    {
-            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_59); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	          	newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
-            	          
-            	    }
-            	    // InternalKiSim.g:4841:1: ( (lv_values_4_0= ruleEStringBoolean ) )
-            	    // InternalKiSim.g:4842:1: (lv_values_4_0= ruleEStringBoolean )
-            	    {
-            	    // InternalKiSim.g:4842:1: (lv_values_4_0= ruleEStringBoolean )
-            	    // InternalKiSim.g:4843:3: lv_values_4_0= ruleEStringBoolean
-            	    {
-            	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
-            	      	    
-            	    }
-            	    pushFollow(FollowSets000.FOLLOW_22);
-            	    lv_values_4_0=ruleEStringBoolean();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
-            	      	        }
-            	             		add(
-            	             			current, 
-            	             			"values",
-            	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-            	      	        afterParserOrEnumRuleCall();
-            	      	    
-            	    }
-
-            	    }
-
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop81;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-               leaveRule(); 
-            }
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
-
-
-    // $ANTLR start "entryRuleStringPragma"
-    // InternalKiSim.g:4867:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
-    public final EObject entryRuleStringPragma() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleStringPragma = null;
-
-
-        try {
-            // InternalKiSim.g:4868:2: (iv_ruleStringPragma= ruleStringPragma EOF )
-            // InternalKiSim.g:4869:2: iv_ruleStringPragma= ruleStringPragma EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getStringPragmaRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleStringPragma=ruleStringPragma();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleStringPragma; 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
-
-            }
-
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleStringPragma"
-
-
-    // $ANTLR start "ruleStringPragma"
-    // InternalKiSim.g:4876:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
-    public final EObject ruleStringPragma() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_0=null;
-        Token otherlv_3=null;
-        AntlrDatatypeRuleToken lv_name_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_2_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_4_0 = null;
-
-
-         enterRule(); 
-            
-        try {
-            // InternalKiSim.g:4879:28: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalKiSim.g:4880:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            {
-            // InternalKiSim.g:4880:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalKiSim.g:4880:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            {
-            otherlv_0=(Token)match(input,56,FollowSets000.FOLLOW_6); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
-                  
-            }
-            // InternalKiSim.g:4884:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:4885:1: (lv_name_1_0= ruleExtendedID )
-            {
-            // InternalKiSim.g:4885:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:4886:3: lv_name_1_0= ruleExtendedID
-            {
-            if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
-              	    
-            }
-            pushFollow(FollowSets000.FOLLOW_58);
-            lv_name_1_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
-              	        }
-                     		set(
-                     			current, 
-                     			"name",
-                      		lv_name_1_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              	        afterParserOrEnumRuleCall();
-              	    
-            }
-
-            }
-
-
-            }
-
-            // InternalKiSim.g:4902:2: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalKiSim.g:4903:1: (lv_values_2_0= ruleEStringAllTypes )
-            {
-            // InternalKiSim.g:4903:1: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalKiSim.g:4904:3: lv_values_2_0= ruleEStringAllTypes
-            {
-            if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
-              	    
-            }
-            pushFollow(FollowSets000.FOLLOW_22);
-            lv_values_2_0=ruleEStringAllTypes();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
-              	        }
-                     		add(
-                     			current, 
-                     			"values",
-                      		lv_values_2_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-              	        afterParserOrEnumRuleCall();
-              	    
-            }
-
-            }
-
-
-            }
-
-            // InternalKiSim.g:4920:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop82:
-            do {
-                int alt82=2;
-                int LA82_0 = input.LA(1);
-
-                if ( (LA82_0==29) ) {
-                    alt82=1;
-                }
-
-
-                switch (alt82) {
-            	case 1 :
-            	    // InternalKiSim.g:4920:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    {
-            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_58); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	          	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
-            	          
-            	    }
-            	    // InternalKiSim.g:4924:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalKiSim.g:4925:1: (lv_values_4_0= ruleEStringAllTypes )
-            	    {
-            	    // InternalKiSim.g:4925:1: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalKiSim.g:4926:3: lv_values_4_0= ruleEStringAllTypes
-            	    {
-            	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
-            	      	    
-            	    }
-            	    pushFollow(FollowSets000.FOLLOW_22);
-            	    lv_values_4_0=ruleEStringAllTypes();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -13846,31 +13649,31 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleStringPragma"
+    // $ANTLR end "ruleKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalKiSim.g:4950:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
+    // InternalKiSim.g:4872:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleTypedKeyStringValueAnnotation = null;
+        EObject iv_ruleRestrictedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalKiSim.g:4951:2: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
-            // InternalKiSim.g:4952:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
+            // InternalKiSim.g:4873:2: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
+            // InternalKiSim.g:4874:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleTypedKeyStringValueAnnotation=ruleTypedKeyStringValueAnnotation();
+            iv_ruleRestrictedKeyStringValueAnnotation=ruleRestrictedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTypedKeyStringValueAnnotation; 
+               current =iv_ruleRestrictedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -13886,51 +13689,47 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleTypedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleRestrictedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalKiSim.g:4959:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
-    public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
+    // InternalKiSim.g:4881:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
+    public final EObject ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
+        Token otherlv_3=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_type_3_0 = null;
+        AntlrDatatypeRuleToken lv_values_2_0 = null;
 
-        AntlrDatatypeRuleToken lv_values_5_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_7_0 = null;
+        AntlrDatatypeRuleToken lv_values_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalKiSim.g:4962:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalKiSim.g:4963:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalKiSim.g:4884:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
+            // InternalKiSim.g:4885:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalKiSim.g:4963:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
-            // InternalKiSim.g:4963:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalKiSim.g:4885:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalKiSim.g:4885:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             {
             otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalKiSim.g:4967:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:4968:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4889:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4890:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:4968:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:4969:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:4890:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4891:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+              	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_60);
@@ -13941,7 +13740,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
               	        }
                      		set(
                      			current, 
@@ -13957,79 +13756,32 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,30,FollowSets000.FOLLOW_6); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-                  
-            }
-            // InternalKiSim.g:4989:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalKiSim.g:4990:1: (lv_type_3_0= ruleExtendedID )
+            // InternalKiSim.g:4907:2: ( (lv_values_2_0= ruleEStringBoolean ) )
+            // InternalKiSim.g:4908:1: (lv_values_2_0= ruleEStringBoolean )
             {
-            // InternalKiSim.g:4990:1: (lv_type_3_0= ruleExtendedID )
-            // InternalKiSim.g:4991:3: lv_type_3_0= ruleExtendedID
+            // InternalKiSim.g:4908:1: (lv_values_2_0= ruleEStringBoolean )
+            // InternalKiSim.g:4909:3: lv_values_2_0= ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
-              	    
-            }
-            pushFollow(FollowSets000.FOLLOW_25);
-            lv_type_3_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
-              	        }
-                     		set(
-                     			current, 
-                     			"type",
-                      		lv_type_3_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              	        afterParserOrEnumRuleCall();
-              	    
-            }
-
-            }
-
-
-            }
-
-            otherlv_4=(Token)match(input,31,FollowSets000.FOLLOW_58); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-                  
-            }
-            // InternalKiSim.g:5011:1: ( (lv_values_5_0= ruleEStringAllTypes ) )
-            // InternalKiSim.g:5012:1: (lv_values_5_0= ruleEStringAllTypes )
-            {
-            // InternalKiSim.g:5012:1: (lv_values_5_0= ruleEStringAllTypes )
-            // InternalKiSim.g:5013:3: lv_values_5_0= ruleEStringAllTypes
-            {
-            if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
+              	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_22);
-            lv_values_5_0=ruleEStringAllTypes();
+            lv_values_2_0=ruleEStringBoolean();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
               	        }
                      		add(
                      			current, 
                      			"values",
-                      		lv_values_5_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+                      		lv_values_2_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -14039,7 +13791,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:5029:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalKiSim.g:4925:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             loop83:
             do {
                 int alt83=2;
@@ -14052,40 +13804,40 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
                 switch (alt83) {
             	case 1 :
-            	    // InternalKiSim.g:5029:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalKiSim.g:4925:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_58); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_60); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	          	newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalKiSim.g:5033:1: ( (lv_values_7_0= ruleEStringAllTypes ) )
-            	    // InternalKiSim.g:5034:1: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalKiSim.g:4929:1: ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalKiSim.g:4930:1: (lv_values_4_0= ruleEStringBoolean )
             	    {
-            	    // InternalKiSim.g:5034:1: (lv_values_7_0= ruleEStringAllTypes )
-            	    // InternalKiSim.g:5035:3: lv_values_7_0= ruleEStringAllTypes
+            	    // InternalKiSim.g:4930:1: (lv_values_4_0= ruleEStringBoolean )
+            	    // InternalKiSim.g:4931:3: lv_values_4_0= ruleEStringBoolean
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_22);
-            	    lv_values_7_0=ruleEStringAllTypes();
+            	    lv_values_4_0=ruleEStringBoolean();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+            	      	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
             	      	        }
             	             		add(
             	             			current, 
             	             			"values",
-            	              		lv_values_7_0, 
-            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	              		lv_values_4_0, 
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -14123,31 +13875,31 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleTypedKeyStringValueAnnotation"
+    // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
-    // InternalKiSim.g:5059:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleStringPragma"
+    // InternalKiSim.g:4955:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
+    public final EObject entryRuleStringPragma() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleRestrictedTypedKeyStringValueAnnotation = null;
+        EObject iv_ruleStringPragma = null;
 
 
         try {
-            // InternalKiSim.g:5060:2: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
-            // InternalKiSim.g:5061:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
+            // InternalKiSim.g:4956:2: (iv_ruleStringPragma= ruleStringPragma EOF )
+            // InternalKiSim.g:4957:2: iv_ruleStringPragma= ruleStringPragma EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getStringPragmaRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleRestrictedTypedKeyStringValueAnnotation=ruleRestrictedTypedKeyStringValueAnnotation();
+            iv_ruleStringPragma=ruleStringPragma();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleRestrictedTypedKeyStringValueAnnotation; 
+               current =iv_ruleStringPragma; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -14163,54 +13915,50 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleRestrictedTypedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleStringPragma"
 
 
-    // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
-    // InternalKiSim.g:5068:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
-    public final EObject ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleStringPragma"
+    // InternalKiSim.g:4964:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    public final EObject ruleStringPragma() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
+        Token otherlv_3=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_type_3_0 = null;
+        AntlrDatatypeRuleToken lv_values_2_0 = null;
 
-        AntlrDatatypeRuleToken lv_values_5_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_7_0 = null;
+        AntlrDatatypeRuleToken lv_values_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5071:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
-            // InternalKiSim.g:5072:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalKiSim.g:4967:28: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalKiSim.g:4968:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalKiSim.g:5072:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
-            // InternalKiSim.g:5072:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalKiSim.g:4968:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalKiSim.g:4968:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
+            otherlv_0=(Token)match(input,56,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
                   
             }
-            // InternalKiSim.g:5076:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:5077:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4972:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:4973:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:5077:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:5078:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:4973:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:4974:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+              	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_60);
+            pushFollow(FollowSets000.FOLLOW_59);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -14218,7 +13966,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
               	        }
                      		set(
                      			current, 
@@ -14234,79 +13982,32 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,30,FollowSets000.FOLLOW_6); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-                  
-            }
-            // InternalKiSim.g:5098:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalKiSim.g:5099:1: (lv_type_3_0= ruleExtendedID )
+            // InternalKiSim.g:4990:2: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalKiSim.g:4991:1: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalKiSim.g:5099:1: (lv_type_3_0= ruleExtendedID )
-            // InternalKiSim.g:5100:3: lv_type_3_0= ruleExtendedID
+            // InternalKiSim.g:4991:1: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalKiSim.g:4992:3: lv_values_2_0= ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
-              	    
-            }
-            pushFollow(FollowSets000.FOLLOW_25);
-            lv_type_3_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
-              	        }
-                     		set(
-                     			current, 
-                     			"type",
-                      		lv_type_3_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              	        afterParserOrEnumRuleCall();
-              	    
-            }
-
-            }
-
-
-            }
-
-            otherlv_4=(Token)match(input,31,FollowSets000.FOLLOW_59); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-                  
-            }
-            // InternalKiSim.g:5120:1: ( (lv_values_5_0= ruleEStringBoolean ) )
-            // InternalKiSim.g:5121:1: (lv_values_5_0= ruleEStringBoolean )
-            {
-            // InternalKiSim.g:5121:1: (lv_values_5_0= ruleEStringBoolean )
-            // InternalKiSim.g:5122:3: lv_values_5_0= ruleEStringBoolean
-            {
-            if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
+              	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_22);
-            lv_values_5_0=ruleEStringBoolean();
+            lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
               	        }
                      		add(
                      			current, 
                      			"values",
-                      		lv_values_5_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+                      		lv_values_2_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -14316,7 +14017,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:5138:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalKiSim.g:5008:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             loop84:
             do {
                 int alt84=2;
@@ -14329,40 +14030,40 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
                 switch (alt84) {
             	case 1 :
-            	    // InternalKiSim.g:5138:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalKiSim.g:5008:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_59); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_59); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	          	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalKiSim.g:5142:1: ( (lv_values_7_0= ruleEStringBoolean ) )
-            	    // InternalKiSim.g:5143:1: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalKiSim.g:5012:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalKiSim.g:5013:1: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalKiSim.g:5143:1: (lv_values_7_0= ruleEStringBoolean )
-            	    // InternalKiSim.g:5144:3: lv_values_7_0= ruleEStringBoolean
+            	    // InternalKiSim.g:5013:1: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalKiSim.g:5014:3: lv_values_4_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_22);
-            	    lv_values_7_0=ruleEStringBoolean();
+            	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+            	      	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
             	      	        }
             	             		add(
             	             			current, 
             	             			"values",
-            	              		lv_values_7_0, 
-            	              		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            	              		lv_values_4_0, 
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -14400,31 +14101,31 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleRestrictedTypedKeyStringValueAnnotation"
+    // $ANTLR end "ruleStringPragma"
 
 
-    // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalKiSim.g:5168:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
+    // InternalKiSim.g:5038:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleQuotedKeyStringValueAnnotation = null;
+        EObject iv_ruleTypedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalKiSim.g:5169:2: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalKiSim.g:5170:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
+            // InternalKiSim.g:5039:2: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
+            // InternalKiSim.g:5040:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleQuotedKeyStringValueAnnotation=ruleQuotedKeyStringValueAnnotation();
+            iv_ruleTypedKeyStringValueAnnotation=ruleTypedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleQuotedKeyStringValueAnnotation; 
+               current =iv_ruleTypedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -14440,45 +14141,51 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleQuotedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalKiSim.g:5177:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
-    public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleTypedKeyStringValueAnnotation"
+    // InternalKiSim.g:5047:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
+    public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token lv_values_2_0=null;
-        Token otherlv_3=null;
-        Token lv_values_4_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        Token otherlv_6=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
+
+        AntlrDatatypeRuleToken lv_type_3_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_5_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5180:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
-            // InternalKiSim.g:5181:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalKiSim.g:5050:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalKiSim.g:5051:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalKiSim.g:5181:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
-            // InternalKiSim.g:5181:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            // InternalKiSim.g:5051:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalKiSim.g:5051:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalKiSim.g:5185:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:5186:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:5055:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:5056:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:5186:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:5187:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:5056:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:5057:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+              	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_61);
@@ -14489,7 +14196,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
               	        }
                      		set(
                      			current, 
@@ -14505,28 +14212,39 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:5203:2: ( (lv_values_2_0= RULE_STRING ) )
-            // InternalKiSim.g:5204:1: (lv_values_2_0= RULE_STRING )
-            {
-            // InternalKiSim.g:5204:1: (lv_values_2_0= RULE_STRING )
-            // InternalKiSim.g:5205:3: lv_values_2_0= RULE_STRING
-            {
-            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
+            otherlv_2=(Token)match(input,30,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()); 
-              		
+                  	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+                  
             }
+            // InternalKiSim.g:5077:1: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalKiSim.g:5078:1: (lv_type_3_0= ruleExtendedID )
+            {
+            // InternalKiSim.g:5078:1: (lv_type_3_0= ruleExtendedID )
+            // InternalKiSim.g:5079:3: lv_type_3_0= ruleExtendedID
+            {
+            if ( state.backtracking==0 ) {
+               
+              	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
+              	    
+            }
+            pushFollow(FollowSets000.FOLLOW_25);
+            lv_type_3_0=ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
               	        }
-                     		addWithLastConsumed(
+                     		set(
                      			current, 
-                     			"values",
-                      		lv_values_2_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
+                     			"type",
+                      		lv_type_3_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+              	        afterParserOrEnumRuleCall();
               	    
             }
 
@@ -14535,7 +14253,48 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:5221:2: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            otherlv_4=(Token)match(input,31,FollowSets000.FOLLOW_59); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                  	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+                  
+            }
+            // InternalKiSim.g:5099:1: ( (lv_values_5_0= ruleEStringAllTypes ) )
+            // InternalKiSim.g:5100:1: (lv_values_5_0= ruleEStringAllTypes )
+            {
+            // InternalKiSim.g:5100:1: (lv_values_5_0= ruleEStringAllTypes )
+            // InternalKiSim.g:5101:3: lv_values_5_0= ruleEStringAllTypes
+            {
+            if ( state.backtracking==0 ) {
+               
+              	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
+              	    
+            }
+            pushFollow(FollowSets000.FOLLOW_22);
+            lv_values_5_0=ruleEStringAllTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+              	        }
+                     		add(
+                     			current, 
+                     			"values",
+                      		lv_values_5_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+              	        afterParserOrEnumRuleCall();
+              	    
+            }
+
+            }
+
+
+            }
+
+            // InternalKiSim.g:5117:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             loop85:
             do {
                 int alt85=2;
@@ -14548,36 +14307,41 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
                 switch (alt85) {
             	case 1 :
-            	    // InternalKiSim.g:5221:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalKiSim.g:5117:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_61); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_59); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	          	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	          
             	    }
-            	    // InternalKiSim.g:5225:1: ( (lv_values_4_0= RULE_STRING ) )
-            	    // InternalKiSim.g:5226:1: (lv_values_4_0= RULE_STRING )
+            	    // InternalKiSim.g:5121:1: ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalKiSim.g:5122:1: (lv_values_7_0= ruleEStringAllTypes )
             	    {
-            	    // InternalKiSim.g:5226:1: (lv_values_4_0= RULE_STRING )
-            	    // InternalKiSim.g:5227:3: lv_values_4_0= RULE_STRING
+            	    // InternalKiSim.g:5122:1: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalKiSim.g:5123:3: lv_values_7_0= ruleEStringAllTypes
             	    {
-            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
-
-            	      			newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()); 
-            	      		
+            	       
+            	      	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
+            	      	    
             	    }
+            	    pushFollow(FollowSets000.FOLLOW_22);
+            	    lv_values_7_0=ruleEStringAllTypes();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+            	      	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
             	      	        }
-            	             		addWithLastConsumed(
+            	             		add(
             	             			current, 
             	             			"values",
-            	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.annotations.Annotations.STRING");
+            	              		lv_values_7_0, 
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
 
@@ -14614,31 +14378,31 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleQuotedKeyStringValueAnnotation"
+    // $ANTLR end "ruleTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalKiSim.g:5251:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
+    // InternalKiSim.g:5147:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleQuotedTypedKeyStringValueAnnotation = null;
+        EObject iv_ruleRestrictedTypedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalKiSim.g:5252:2: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalKiSim.g:5253:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
+            // InternalKiSim.g:5148:2: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
+            // InternalKiSim.g:5149:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleQuotedTypedKeyStringValueAnnotation=ruleQuotedTypedKeyStringValueAnnotation();
+            iv_ruleRestrictedTypedKeyStringValueAnnotation=ruleRestrictedTypedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleQuotedTypedKeyStringValueAnnotation; 
+               current =iv_ruleRestrictedTypedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -14654,52 +14418,54 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleQuotedTypedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleRestrictedTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalKiSim.g:5260:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
-    public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
+    // InternalKiSim.g:5156:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
+    public final EObject ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
-        Token lv_values_5_0=null;
         Token otherlv_6=null;
-        Token lv_values_7_0=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
         AntlrDatatypeRuleToken lv_type_3_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_5_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5263:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
-            // InternalKiSim.g:5264:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalKiSim.g:5159:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
+            // InternalKiSim.g:5160:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalKiSim.g:5264:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
-            // InternalKiSim.g:5264:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalKiSim.g:5160:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalKiSim.g:5160:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             {
             otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalKiSim.g:5268:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalKiSim.g:5269:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:5164:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:5165:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalKiSim.g:5269:1: (lv_name_1_0= ruleExtendedID )
-            // InternalKiSim.g:5270:3: lv_name_1_0= ruleExtendedID
+            // InternalKiSim.g:5165:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:5166:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+              	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_60);
+            pushFollow(FollowSets000.FOLLOW_61);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -14707,7 +14473,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
               	        }
                      		set(
                      			current, 
@@ -14726,18 +14492,18 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             otherlv_2=(Token)match(input,30,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+                  	newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
                   
             }
-            // InternalKiSim.g:5290:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalKiSim.g:5291:1: (lv_type_3_0= ruleExtendedID )
+            // InternalKiSim.g:5186:1: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalKiSim.g:5187:1: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalKiSim.g:5291:1: (lv_type_3_0= ruleExtendedID )
-            // InternalKiSim.g:5292:3: lv_type_3_0= ruleExtendedID
+            // InternalKiSim.g:5187:1: (lv_type_3_0= ruleExtendedID )
+            // InternalKiSim.g:5188:3: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_25);
@@ -14748,7 +14514,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
               	        }
                      		set(
                      			current, 
@@ -14764,34 +14530,39 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,31,FollowSets000.FOLLOW_61); if (state.failed) return current;
+            otherlv_4=(Token)match(input,31,FollowSets000.FOLLOW_60); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+                  	newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
                   
             }
-            // InternalKiSim.g:5312:1: ( (lv_values_5_0= RULE_STRING ) )
-            // InternalKiSim.g:5313:1: (lv_values_5_0= RULE_STRING )
+            // InternalKiSim.g:5208:1: ( (lv_values_5_0= ruleEStringBoolean ) )
+            // InternalKiSim.g:5209:1: (lv_values_5_0= ruleEStringBoolean )
             {
-            // InternalKiSim.g:5313:1: (lv_values_5_0= RULE_STRING )
-            // InternalKiSim.g:5314:3: lv_values_5_0= RULE_STRING
+            // InternalKiSim.g:5209:1: (lv_values_5_0= ruleEStringBoolean )
+            // InternalKiSim.g:5210:3: lv_values_5_0= ruleEStringBoolean
             {
-            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
             if ( state.backtracking==0 ) {
-
-              			newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0()); 
-              		
+               
+              	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
+              	    
             }
+            pushFollow(FollowSets000.FOLLOW_22);
+            lv_values_5_0=ruleEStringBoolean();
+
+            state._fsp--;
+            if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+              	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
               	        }
-                     		addWithLastConsumed(
+                     		add(
                      			current, 
                      			"values",
                       		lv_values_5_0, 
-                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+              	        afterParserOrEnumRuleCall();
               	    
             }
 
@@ -14800,7 +14571,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiSim.g:5330:2: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalKiSim.g:5226:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             loop86:
             do {
                 int alt86=2;
@@ -14813,36 +14584,41 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
                 switch (alt86) {
             	case 1 :
-            	    // InternalKiSim.g:5330:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalKiSim.g:5226:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_61); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_60); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	          	newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	          
             	    }
-            	    // InternalKiSim.g:5334:1: ( (lv_values_7_0= RULE_STRING ) )
-            	    // InternalKiSim.g:5335:1: (lv_values_7_0= RULE_STRING )
+            	    // InternalKiSim.g:5230:1: ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalKiSim.g:5231:1: (lv_values_7_0= ruleEStringBoolean )
             	    {
-            	    // InternalKiSim.g:5335:1: (lv_values_7_0= RULE_STRING )
-            	    // InternalKiSim.g:5336:3: lv_values_7_0= RULE_STRING
+            	    // InternalKiSim.g:5231:1: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalKiSim.g:5232:3: lv_values_7_0= ruleEStringBoolean
             	    {
-            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
-
-            	      			newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0()); 
-            	      		
+            	       
+            	      	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
+            	      	    
             	    }
+            	    pushFollow(FollowSets000.FOLLOW_22);
+            	    lv_values_7_0=ruleEStringBoolean();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+            	      	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
             	      	        }
-            	             		addWithLastConsumed(
+            	             		add(
             	             			current, 
             	             			"values",
             	              		lv_values_7_0, 
-            	              		"de.cau.cs.kieler.annotations.Annotations.STRING");
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
 
@@ -14879,11 +14655,490 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
+    // $ANTLR end "ruleRestrictedTypedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
+    // InternalKiSim.g:5256:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleQuotedKeyStringValueAnnotation = null;
+
+
+        try {
+            // InternalKiSim.g:5257:2: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalKiSim.g:5258:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleQuotedKeyStringValueAnnotation=ruleQuotedKeyStringValueAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleQuotedKeyStringValueAnnotation; 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleQuotedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
+    // InternalKiSim.g:5265:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
+    public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token lv_values_2_0=null;
+        Token otherlv_3=null;
+        Token lv_values_4_0=null;
+        AntlrDatatypeRuleToken lv_name_1_0 = null;
+
+
+         enterRule(); 
+            
+        try {
+            // InternalKiSim.g:5268:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
+            // InternalKiSim.g:5269:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            {
+            // InternalKiSim.g:5269:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalKiSim.g:5269:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            {
+            otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                  	newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+                  
+            }
+            // InternalKiSim.g:5273:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:5274:1: (lv_name_1_0= ruleExtendedID )
+            {
+            // InternalKiSim.g:5274:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:5275:3: lv_name_1_0= ruleExtendedID
+            {
+            if ( state.backtracking==0 ) {
+               
+              	        newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+              	    
+            }
+            pushFollow(FollowSets000.FOLLOW_62);
+            lv_name_1_0=ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElementForParent(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+              	        }
+                     		set(
+                     			current, 
+                     			"name",
+                      		lv_name_1_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+              	        afterParserOrEnumRuleCall();
+              	    
+            }
+
+            }
+
+
+            }
+
+            // InternalKiSim.g:5291:2: ( (lv_values_2_0= RULE_STRING ) )
+            // InternalKiSim.g:5292:1: (lv_values_2_0= RULE_STRING )
+            {
+            // InternalKiSim.g:5292:1: (lv_values_2_0= RULE_STRING )
+            // InternalKiSim.g:5293:3: lv_values_2_0= RULE_STRING
+            {
+            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()); 
+              		
+            }
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+              	        }
+                     		addWithLastConsumed(
+                     			current, 
+                     			"values",
+                      		lv_values_2_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
+              	    
+            }
+
+            }
+
+
+            }
+
+            // InternalKiSim.g:5309:2: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            loop87:
+            do {
+                int alt87=2;
+                int LA87_0 = input.LA(1);
+
+                if ( (LA87_0==29) ) {
+                    alt87=1;
+                }
+
+
+                switch (alt87) {
+            	case 1 :
+            	    // InternalKiSim.g:5309:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
+            	    {
+            	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_62); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	          	newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	          
+            	    }
+            	    // InternalKiSim.g:5313:1: ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalKiSim.g:5314:1: (lv_values_4_0= RULE_STRING )
+            	    {
+            	    // InternalKiSim.g:5314:1: (lv_values_4_0= RULE_STRING )
+            	    // InternalKiSim.g:5315:3: lv_values_4_0= RULE_STRING
+            	    {
+            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      			newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()); 
+            	      		
+            	    }
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+            	      	        }
+            	             		addWithLastConsumed(
+            	             			current, 
+            	             			"values",
+            	              		lv_values_4_0, 
+            	              		"de.cau.cs.kieler.annotations.Annotations.STRING");
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop87;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule(); 
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleQuotedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
+    // InternalKiSim.g:5339:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleQuotedTypedKeyStringValueAnnotation = null;
+
+
+        try {
+            // InternalKiSim.g:5340:2: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalKiSim.g:5341:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleQuotedTypedKeyStringValueAnnotation=ruleQuotedTypedKeyStringValueAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleQuotedTypedKeyStringValueAnnotation; 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleQuotedTypedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
+    // InternalKiSim.g:5348:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
+    public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        Token lv_values_5_0=null;
+        Token otherlv_6=null;
+        Token lv_values_7_0=null;
+        AntlrDatatypeRuleToken lv_name_1_0 = null;
+
+        AntlrDatatypeRuleToken lv_type_3_0 = null;
+
+
+         enterRule(); 
+            
+        try {
+            // InternalKiSim.g:5351:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
+            // InternalKiSim.g:5352:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            {
+            // InternalKiSim.g:5352:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalKiSim.g:5352:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            {
+            otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_6); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                  	newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+                  
+            }
+            // InternalKiSim.g:5356:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalKiSim.g:5357:1: (lv_name_1_0= ruleExtendedID )
+            {
+            // InternalKiSim.g:5357:1: (lv_name_1_0= ruleExtendedID )
+            // InternalKiSim.g:5358:3: lv_name_1_0= ruleExtendedID
+            {
+            if ( state.backtracking==0 ) {
+               
+              	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+              	    
+            }
+            pushFollow(FollowSets000.FOLLOW_61);
+            lv_name_1_0=ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+              	        }
+                     		set(
+                     			current, 
+                     			"name",
+                      		lv_name_1_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+              	        afterParserOrEnumRuleCall();
+              	    
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,30,FollowSets000.FOLLOW_6); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                  	newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+                  
+            }
+            // InternalKiSim.g:5378:1: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalKiSim.g:5379:1: (lv_type_3_0= ruleExtendedID )
+            {
+            // InternalKiSim.g:5379:1: (lv_type_3_0= ruleExtendedID )
+            // InternalKiSim.g:5380:3: lv_type_3_0= ruleExtendedID
+            {
+            if ( state.backtracking==0 ) {
+               
+              	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
+              	    
+            }
+            pushFollow(FollowSets000.FOLLOW_25);
+            lv_type_3_0=ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+              	        }
+                     		set(
+                     			current, 
+                     			"type",
+                      		lv_type_3_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+              	        afterParserOrEnumRuleCall();
+              	    
+            }
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,31,FollowSets000.FOLLOW_62); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                  	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+                  
+            }
+            // InternalKiSim.g:5400:1: ( (lv_values_5_0= RULE_STRING ) )
+            // InternalKiSim.g:5401:1: (lv_values_5_0= RULE_STRING )
+            {
+            // InternalKiSim.g:5401:1: (lv_values_5_0= RULE_STRING )
+            // InternalKiSim.g:5402:3: lv_values_5_0= RULE_STRING
+            {
+            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0()); 
+              		
+            }
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+              	        }
+                     		addWithLastConsumed(
+                     			current, 
+                     			"values",
+                      		lv_values_5_0, 
+                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
+              	    
+            }
+
+            }
+
+
+            }
+
+            // InternalKiSim.g:5418:2: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            loop88:
+            do {
+                int alt88=2;
+                int LA88_0 = input.LA(1);
+
+                if ( (LA88_0==29) ) {
+                    alt88=1;
+                }
+
+
+                switch (alt88) {
+            	case 1 :
+            	    // InternalKiSim.g:5418:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
+            	    {
+            	    otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_62); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	          	newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	          
+            	    }
+            	    // InternalKiSim.g:5422:1: ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalKiSim.g:5423:1: (lv_values_7_0= RULE_STRING )
+            	    {
+            	    // InternalKiSim.g:5423:1: (lv_values_7_0= RULE_STRING )
+            	    // InternalKiSim.g:5424:3: lv_values_7_0= RULE_STRING
+            	    {
+            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_22); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      			newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0()); 
+            	      		
+            	    }
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+            	      	        }
+            	             		addWithLastConsumed(
+            	             			current, 
+            	             			"values",
+            	              		lv_values_7_0, 
+            	              		"de.cau.cs.kieler.annotations.Annotations.STRING");
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop88;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule(); 
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
     // $ANTLR end "ruleQuotedTypedKeyStringValueAnnotation"
 
 
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalKiSim.g:5362:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
+    // InternalKiSim.g:5450:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
     public final String entryRuleEStringBoolean() throws RecognitionException {
         String current = null;
 
@@ -14891,8 +15146,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:5363:2: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
-            // InternalKiSim.g:5364:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
+            // InternalKiSim.g:5451:2: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
+            // InternalKiSim.g:5452:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringBooleanRule()); 
@@ -14923,7 +15178,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalKiSim.g:5371:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
+    // InternalKiSim.g:5459:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
     public final AntlrDatatypeRuleToken ruleEStringBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -14935,38 +15190,38 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5374:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
-            // InternalKiSim.g:5375:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalKiSim.g:5462:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
+            // InternalKiSim.g:5463:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
-            // InternalKiSim.g:5375:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
-            int alt87=3;
+            // InternalKiSim.g:5463:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            int alt89=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt87=1;
+                alt89=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt87=2;
+                alt89=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt87=3;
+                alt89=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 87, 0, input);
+                    new NoViableAltException("", 89, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt87) {
+            switch (alt89) {
                 case 1 :
-                    // InternalKiSim.g:5375:6: this_STRING_0= RULE_STRING
+                    // InternalKiSim.g:5463:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14983,7 +15238,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiSim.g:5384:5: this_ExtendedID_1= ruleExtendedID
+                    // InternalKiSim.g:5472:5: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -15009,7 +15264,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalKiSim.g:5395:10: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalKiSim.g:5483:10: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15048,7 +15303,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEStringAllTypes"
-    // InternalKiSim.g:5410:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
+    // InternalKiSim.g:5498:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
     public final String entryRuleEStringAllTypes() throws RecognitionException {
         String current = null;
 
@@ -15056,8 +15311,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:5411:2: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
-            // InternalKiSim.g:5412:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
+            // InternalKiSim.g:5499:2: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
+            // InternalKiSim.g:5500:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringAllTypesRule()); 
@@ -15088,7 +15343,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringAllTypes"
-    // InternalKiSim.g:5419:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
+    // InternalKiSim.g:5507:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
     public final AntlrDatatypeRuleToken ruleEStringAllTypes() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15104,41 +15359,41 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5422:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
-            // InternalKiSim.g:5423:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            // InternalKiSim.g:5510:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
+            // InternalKiSim.g:5511:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
-            // InternalKiSim.g:5423:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
-            int alt88=5;
+            // InternalKiSim.g:5511:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            int alt90=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt88=1;
+                alt90=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt88=2;
+                alt90=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt88=3;
+                alt90=3;
                 }
                 break;
             case 41:
                 {
-                int LA88_4 = input.LA(2);
+                int LA90_4 = input.LA(2);
 
-                if ( (LA88_4==RULE_FLOAT) ) {
-                    alt88=5;
+                if ( (LA90_4==RULE_INT) ) {
+                    alt90=4;
                 }
-                else if ( (LA88_4==RULE_INT) ) {
-                    alt88=4;
+                else if ( (LA90_4==RULE_FLOAT) ) {
+                    alt90=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 88, 4, input);
+                        new NoViableAltException("", 90, 4, input);
 
                     throw nvae;
                 }
@@ -15146,25 +15401,25 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_INT:
                 {
-                alt88=4;
+                alt90=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt88=5;
+                alt90=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 88, 0, input);
+                    new NoViableAltException("", 90, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt88) {
+            switch (alt90) {
                 case 1 :
-                    // InternalKiSim.g:5423:6: this_STRING_0= RULE_STRING
+                    // InternalKiSim.g:5511:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15181,7 +15436,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiSim.g:5432:5: this_ExtendedID_1= ruleExtendedID
+                    // InternalKiSim.g:5520:5: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -15207,7 +15462,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalKiSim.g:5443:10: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalKiSim.g:5531:10: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15224,7 +15479,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalKiSim.g:5452:5: this_Integer_3= ruleInteger
+                    // InternalKiSim.g:5540:5: this_Integer_3= ruleInteger
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -15250,7 +15505,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalKiSim.g:5464:5: this_Floateger_4= ruleFloateger
+                    // InternalKiSim.g:5552:5: this_Floateger_4= ruleFloateger
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -15298,7 +15553,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExtendedID"
-    // InternalKiSim.g:5482:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
+    // InternalKiSim.g:5570:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
     public final String entryRuleExtendedID() throws RecognitionException {
         String current = null;
 
@@ -15306,8 +15561,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:5483:2: (iv_ruleExtendedID= ruleExtendedID EOF )
-            // InternalKiSim.g:5484:2: iv_ruleExtendedID= ruleExtendedID EOF
+            // InternalKiSim.g:5571:2: (iv_ruleExtendedID= ruleExtendedID EOF )
+            // InternalKiSim.g:5572:2: iv_ruleExtendedID= ruleExtendedID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExtendedIDRule()); 
@@ -15338,7 +15593,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalKiSim.g:5491:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalKiSim.g:5579:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15350,13 +15605,13 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5494:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalKiSim.g:5495:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKiSim.g:5582:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalKiSim.g:5583:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalKiSim.g:5495:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalKiSim.g:5495:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalKiSim.g:5583:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKiSim.g:5583:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_62); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_63); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               		current.merge(this_ID_0);
@@ -15367,50 +15622,50 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalKiSim.g:5502:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
-            loop90:
+            // InternalKiSim.g:5590:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop92:
             do {
-                int alt90=2;
-                int LA90_0 = input.LA(1);
+                int alt92=2;
+                int LA92_0 = input.LA(1);
 
-                if ( (LA90_0==41) ) {
-                    int LA90_2 = input.LA(2);
+                if ( (LA92_0==41) ) {
+                    int LA92_2 = input.LA(2);
 
-                    if ( (LA90_2==RULE_ID) ) {
-                        alt90=1;
+                    if ( (LA92_2==RULE_ID) ) {
+                        alt92=1;
                     }
 
 
                 }
-                else if ( (LA90_0==48) ) {
-                    alt90=1;
+                else if ( (LA92_0==48) ) {
+                    alt92=1;
                 }
 
 
-                switch (alt90) {
+                switch (alt92) {
             	case 1 :
-            	    // InternalKiSim.g:5502:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
+            	    // InternalKiSim.g:5590:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    // InternalKiSim.g:5502:2: (kw= '.' | kw= '-' )
-            	    int alt89=2;
-            	    int LA89_0 = input.LA(1);
+            	    // InternalKiSim.g:5590:2: (kw= '.' | kw= '-' )
+            	    int alt91=2;
+            	    int LA91_0 = input.LA(1);
 
-            	    if ( (LA89_0==48) ) {
-            	        alt89=1;
+            	    if ( (LA91_0==48) ) {
+            	        alt91=1;
             	    }
-            	    else if ( (LA89_0==41) ) {
-            	        alt89=2;
+            	    else if ( (LA91_0==41) ) {
+            	        alt91=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 89, 0, input);
+            	            new NoViableAltException("", 91, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt89) {
+            	    switch (alt91) {
             	        case 1 :
-            	            // InternalKiSim.g:5503:2: kw= '.'
+            	            // InternalKiSim.g:5591:2: kw= '.'
             	            {
             	            kw=(Token)match(input,48,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -15423,7 +15678,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalKiSim.g:5510:2: kw= '-'
+            	            // InternalKiSim.g:5598:2: kw= '-'
             	            {
             	            kw=(Token)match(input,41,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -15438,7 +15693,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_62); if (state.failed) return current;
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_63); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      		current.merge(this_ID_3);
@@ -15454,20 +15709,20 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop90;
+            	    break loop92;
                 }
             } while (true);
 
-            // InternalKiSim.g:5522:3: (kw= '#' this_INT_5= RULE_INT )?
-            int alt91=2;
-            int LA91_0 = input.LA(1);
+            // InternalKiSim.g:5610:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt93=2;
+            int LA93_0 = input.LA(1);
 
-            if ( (LA91_0==56) ) {
-                alt91=1;
+            if ( (LA93_0==56) ) {
+                alt93=1;
             }
-            switch (alt91) {
+            switch (alt93) {
                 case 1 :
-                    // InternalKiSim.g:5523:2: kw= '#' this_INT_5= RULE_INT
+                    // InternalKiSim.g:5611:2: kw= '#' this_INT_5= RULE_INT
                     {
                     kw=(Token)match(input,56,FollowSets000.FOLLOW_24); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15516,7 +15771,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalKiSim.g:5545:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalKiSim.g:5633:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
 
@@ -15524,8 +15779,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:5546:2: (iv_ruleInteger= ruleInteger EOF )
-            // InternalKiSim.g:5547:2: iv_ruleInteger= ruleInteger EOF
+            // InternalKiSim.g:5634:2: (iv_ruleInteger= ruleInteger EOF )
+            // InternalKiSim.g:5635:2: iv_ruleInteger= ruleInteger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntegerRule()); 
@@ -15556,7 +15811,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalKiSim.g:5554:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalKiSim.g:5642:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15566,22 +15821,22 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5557:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalKiSim.g:5558:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalKiSim.g:5645:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalKiSim.g:5646:1: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalKiSim.g:5558:1: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalKiSim.g:5558:2: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalKiSim.g:5646:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalKiSim.g:5646:2: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalKiSim.g:5558:2: (kw= '-' )?
-            int alt92=2;
-            int LA92_0 = input.LA(1);
+            // InternalKiSim.g:5646:2: (kw= '-' )?
+            int alt94=2;
+            int LA94_0 = input.LA(1);
 
-            if ( (LA92_0==41) ) {
-                alt92=1;
+            if ( (LA94_0==41) ) {
+                alt94=1;
             }
-            switch (alt92) {
+            switch (alt94) {
                 case 1 :
-                    // InternalKiSim.g:5559:2: kw= '-'
+                    // InternalKiSim.g:5647:2: kw= '-'
                     {
                     kw=(Token)match(input,41,FollowSets000.FOLLOW_24); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15630,7 +15885,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalKiSim.g:5579:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalKiSim.g:5667:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
 
@@ -15638,8 +15893,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiSim.g:5580:2: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalKiSim.g:5581:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalKiSim.g:5668:2: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalKiSim.g:5669:2: iv_ruleFloateger= ruleFloateger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloategerRule()); 
@@ -15670,7 +15925,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalKiSim.g:5588:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalKiSim.g:5676:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15680,22 +15935,22 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiSim.g:5591:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalKiSim.g:5592:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalKiSim.g:5679:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalKiSim.g:5680:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalKiSim.g:5592:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalKiSim.g:5592:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalKiSim.g:5680:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalKiSim.g:5680:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalKiSim.g:5592:2: (kw= '-' )?
-            int alt93=2;
-            int LA93_0 = input.LA(1);
+            // InternalKiSim.g:5680:2: (kw= '-' )?
+            int alt95=2;
+            int LA95_0 = input.LA(1);
 
-            if ( (LA93_0==41) ) {
-                alt93=1;
+            if ( (LA95_0==41) ) {
+                alt95=1;
             }
-            switch (alt93) {
+            switch (alt95) {
                 case 1 :
-                    // InternalKiSim.g:5593:2: kw= '-'
+                    // InternalKiSim.g:5681:2: kw= '-'
                     {
                     kw=(Token)match(input,41,FollowSets000.FOLLOW_26); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15744,7 +15999,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSign"
-    // InternalKiSim.g:5617:1: ruleSign returns [Enumerator current=null] : ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) ;
+    // InternalKiSim.g:5705:1: ruleSign returns [Enumerator current=null] : ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) ;
     public final Enumerator ruleSign() throws RecognitionException {
         Enumerator current = null;
 
@@ -15753,32 +16008,32 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5619:28: ( ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) )
-            // InternalKiSim.g:5620:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
+            // InternalKiSim.g:5707:28: ( ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) )
+            // InternalKiSim.g:5708:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
             {
-            // InternalKiSim.g:5620:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
-            int alt94=2;
-            int LA94_0 = input.LA(1);
+            // InternalKiSim.g:5708:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
+            int alt96=2;
+            int LA96_0 = input.LA(1);
 
-            if ( (LA94_0==40) ) {
-                alt94=1;
+            if ( (LA96_0==40) ) {
+                alt96=1;
             }
-            else if ( (LA94_0==41) ) {
-                alt94=2;
+            else if ( (LA96_0==41) ) {
+                alt96=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 94, 0, input);
+                    new NoViableAltException("", 96, 0, input);
 
                 throw nvae;
             }
-            switch (alt94) {
+            switch (alt96) {
                 case 1 :
-                    // InternalKiSim.g:5620:2: (enumLiteral_0= '+' )
+                    // InternalKiSim.g:5708:2: (enumLiteral_0= '+' )
                     {
-                    // InternalKiSim.g:5620:2: (enumLiteral_0= '+' )
-                    // InternalKiSim.g:5620:4: enumLiteral_0= '+'
+                    // InternalKiSim.g:5708:2: (enumLiteral_0= '+' )
+                    // InternalKiSim.g:5708:4: enumLiteral_0= '+'
                     {
                     enumLiteral_0=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15794,10 +16049,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiSim.g:5626:6: (enumLiteral_1= '-' )
+                    // InternalKiSim.g:5714:6: (enumLiteral_1= '-' )
                     {
-                    // InternalKiSim.g:5626:6: (enumLiteral_1= '-' )
-                    // InternalKiSim.g:5626:8: enumLiteral_1= '-'
+                    // InternalKiSim.g:5714:6: (enumLiteral_1= '-' )
+                    // InternalKiSim.g:5714:8: enumLiteral_1= '-'
                     {
                     enumLiteral_1=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15835,7 +16090,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperator"
-    // InternalKiSim.g:5636:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) ;
+    // InternalKiSim.g:5724:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -15848,56 +16103,56 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5638:28: ( ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) )
-            // InternalKiSim.g:5639:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
+            // InternalKiSim.g:5726:28: ( ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) )
+            // InternalKiSim.g:5727:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             {
-            // InternalKiSim.g:5639:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
-            int alt95=6;
+            // InternalKiSim.g:5727:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
+            int alt97=6;
             switch ( input.LA(1) ) {
             case 57:
                 {
-                alt95=1;
+                alt97=1;
                 }
                 break;
             case 58:
                 {
-                alt95=2;
+                alt97=2;
                 }
                 break;
             case 59:
                 {
-                alt95=3;
+                alt97=3;
                 }
                 break;
             case 60:
                 {
-                alt95=4;
+                alt97=4;
                 }
                 break;
             case 61:
                 {
-                alt95=5;
+                alt97=5;
                 }
                 break;
             case 62:
                 {
-                alt95=6;
+                alt97=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 95, 0, input);
+                    new NoViableAltException("", 97, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt95) {
+            switch (alt97) {
                 case 1 :
-                    // InternalKiSim.g:5639:2: (enumLiteral_0= '==' )
+                    // InternalKiSim.g:5727:2: (enumLiteral_0= '==' )
                     {
-                    // InternalKiSim.g:5639:2: (enumLiteral_0= '==' )
-                    // InternalKiSim.g:5639:4: enumLiteral_0= '=='
+                    // InternalKiSim.g:5727:2: (enumLiteral_0= '==' )
+                    // InternalKiSim.g:5727:4: enumLiteral_0= '=='
                     {
                     enumLiteral_0=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15913,10 +16168,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiSim.g:5645:6: (enumLiteral_1= '<' )
+                    // InternalKiSim.g:5733:6: (enumLiteral_1= '<' )
                     {
-                    // InternalKiSim.g:5645:6: (enumLiteral_1= '<' )
-                    // InternalKiSim.g:5645:8: enumLiteral_1= '<'
+                    // InternalKiSim.g:5733:6: (enumLiteral_1= '<' )
+                    // InternalKiSim.g:5733:8: enumLiteral_1= '<'
                     {
                     enumLiteral_1=(Token)match(input,58,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15932,10 +16187,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalKiSim.g:5651:6: (enumLiteral_2= '<=' )
+                    // InternalKiSim.g:5739:6: (enumLiteral_2= '<=' )
                     {
-                    // InternalKiSim.g:5651:6: (enumLiteral_2= '<=' )
-                    // InternalKiSim.g:5651:8: enumLiteral_2= '<='
+                    // InternalKiSim.g:5739:6: (enumLiteral_2= '<=' )
+                    // InternalKiSim.g:5739:8: enumLiteral_2= '<='
                     {
                     enumLiteral_2=(Token)match(input,59,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15951,10 +16206,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalKiSim.g:5657:6: (enumLiteral_3= '>' )
+                    // InternalKiSim.g:5745:6: (enumLiteral_3= '>' )
                     {
-                    // InternalKiSim.g:5657:6: (enumLiteral_3= '>' )
-                    // InternalKiSim.g:5657:8: enumLiteral_3= '>'
+                    // InternalKiSim.g:5745:6: (enumLiteral_3= '>' )
+                    // InternalKiSim.g:5745:8: enumLiteral_3= '>'
                     {
                     enumLiteral_3=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15970,10 +16225,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalKiSim.g:5663:6: (enumLiteral_4= '>=' )
+                    // InternalKiSim.g:5751:6: (enumLiteral_4= '>=' )
                     {
-                    // InternalKiSim.g:5663:6: (enumLiteral_4= '>=' )
-                    // InternalKiSim.g:5663:8: enumLiteral_4= '>='
+                    // InternalKiSim.g:5751:6: (enumLiteral_4= '>=' )
+                    // InternalKiSim.g:5751:8: enumLiteral_4= '>='
                     {
                     enumLiteral_4=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15989,10 +16244,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalKiSim.g:5669:6: (enumLiteral_5= '!=' )
+                    // InternalKiSim.g:5757:6: (enumLiteral_5= '!=' )
                     {
-                    // InternalKiSim.g:5669:6: (enumLiteral_5= '!=' )
-                    // InternalKiSim.g:5669:8: enumLiteral_5= '!='
+                    // InternalKiSim.g:5757:6: (enumLiteral_5= '!=' )
+                    // InternalKiSim.g:5757:8: enumLiteral_5= '!='
                     {
                     enumLiteral_5=(Token)match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -16030,7 +16285,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePreOperator"
-    // InternalKiSim.g:5679:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
+    // InternalKiSim.g:5767:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
     public final Enumerator rulePreOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16038,11 +16293,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5681:28: ( (enumLiteral_0= 'pre' ) )
-            // InternalKiSim.g:5682:1: (enumLiteral_0= 'pre' )
+            // InternalKiSim.g:5769:28: ( (enumLiteral_0= 'pre' ) )
+            // InternalKiSim.g:5770:1: (enumLiteral_0= 'pre' )
             {
-            // InternalKiSim.g:5682:1: (enumLiteral_0= 'pre' )
-            // InternalKiSim.g:5682:3: enumLiteral_0= 'pre'
+            // InternalKiSim.g:5770:1: (enumLiteral_0= 'pre' )
+            // InternalKiSim.g:5770:3: enumLiteral_0= 'pre'
             {
             enumLiteral_0=(Token)match(input,63,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16074,7 +16329,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseNotOperator"
-    // InternalKiSim.g:5692:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
+    // InternalKiSim.g:5780:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
     public final Enumerator ruleBitwiseNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16082,11 +16337,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5694:28: ( (enumLiteral_0= '~' ) )
-            // InternalKiSim.g:5695:1: (enumLiteral_0= '~' )
+            // InternalKiSim.g:5782:28: ( (enumLiteral_0= '~' ) )
+            // InternalKiSim.g:5783:1: (enumLiteral_0= '~' )
             {
-            // InternalKiSim.g:5695:1: (enumLiteral_0= '~' )
-            // InternalKiSim.g:5695:3: enumLiteral_0= '~'
+            // InternalKiSim.g:5783:1: (enumLiteral_0= '~' )
+            // InternalKiSim.g:5783:3: enumLiteral_0= '~'
             {
             enumLiteral_0=(Token)match(input,64,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16118,7 +16373,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXOrOperator"
-    // InternalKiSim.g:5705:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
+    // InternalKiSim.g:5793:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
     public final Enumerator ruleBitwiseXOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16126,11 +16381,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5707:28: ( (enumLiteral_0= '^' ) )
-            // InternalKiSim.g:5708:1: (enumLiteral_0= '^' )
+            // InternalKiSim.g:5795:28: ( (enumLiteral_0= '^' ) )
+            // InternalKiSim.g:5796:1: (enumLiteral_0= '^' )
             {
-            // InternalKiSim.g:5708:1: (enumLiteral_0= '^' )
-            // InternalKiSim.g:5708:3: enumLiteral_0= '^'
+            // InternalKiSim.g:5796:1: (enumLiteral_0= '^' )
+            // InternalKiSim.g:5796:3: enumLiteral_0= '^'
             {
             enumLiteral_0=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16162,7 +16417,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalKiSim.g:5718:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalKiSim.g:5806:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16170,11 +16425,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5720:28: ( (enumLiteral_0= '|' ) )
-            // InternalKiSim.g:5721:1: (enumLiteral_0= '|' )
+            // InternalKiSim.g:5808:28: ( (enumLiteral_0= '|' ) )
+            // InternalKiSim.g:5809:1: (enumLiteral_0= '|' )
             {
-            // InternalKiSim.g:5721:1: (enumLiteral_0= '|' )
-            // InternalKiSim.g:5721:3: enumLiteral_0= '|'
+            // InternalKiSim.g:5809:1: (enumLiteral_0= '|' )
+            // InternalKiSim.g:5809:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16206,7 +16461,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalKiSim.g:5731:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalKiSim.g:5819:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16214,11 +16469,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5733:28: ( (enumLiteral_0= '&' ) )
-            // InternalKiSim.g:5734:1: (enumLiteral_0= '&' )
+            // InternalKiSim.g:5821:28: ( (enumLiteral_0= '&' ) )
+            // InternalKiSim.g:5822:1: (enumLiteral_0= '&' )
             {
-            // InternalKiSim.g:5734:1: (enumLiteral_0= '&' )
-            // InternalKiSim.g:5734:3: enumLiteral_0= '&'
+            // InternalKiSim.g:5822:1: (enumLiteral_0= '&' )
+            // InternalKiSim.g:5822:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16250,7 +16505,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalKiSim.g:5744:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
+    // InternalKiSim.g:5832:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16258,11 +16513,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5746:28: ( (enumLiteral_0= '!' ) )
-            // InternalKiSim.g:5747:1: (enumLiteral_0= '!' )
+            // InternalKiSim.g:5834:28: ( (enumLiteral_0= '!' ) )
+            // InternalKiSim.g:5835:1: (enumLiteral_0= '!' )
             {
-            // InternalKiSim.g:5747:1: (enumLiteral_0= '!' )
-            // InternalKiSim.g:5747:3: enumLiteral_0= '!'
+            // InternalKiSim.g:5835:1: (enumLiteral_0= '!' )
+            // InternalKiSim.g:5835:3: enumLiteral_0= '!'
             {
             enumLiteral_0=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16294,7 +16549,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalKiSim.g:5757:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalKiSim.g:5845:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16302,11 +16557,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5759:28: ( (enumLiteral_0= '+' ) )
-            // InternalKiSim.g:5760:1: (enumLiteral_0= '+' )
+            // InternalKiSim.g:5847:28: ( (enumLiteral_0= '+' ) )
+            // InternalKiSim.g:5848:1: (enumLiteral_0= '+' )
             {
-            // InternalKiSim.g:5760:1: (enumLiteral_0= '+' )
-            // InternalKiSim.g:5760:3: enumLiteral_0= '+'
+            // InternalKiSim.g:5848:1: (enumLiteral_0= '+' )
+            // InternalKiSim.g:5848:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16338,7 +16593,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalKiSim.g:5770:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalKiSim.g:5858:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16346,11 +16601,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5772:28: ( (enumLiteral_0= '-' ) )
-            // InternalKiSim.g:5773:1: (enumLiteral_0= '-' )
+            // InternalKiSim.g:5860:28: ( (enumLiteral_0= '-' ) )
+            // InternalKiSim.g:5861:1: (enumLiteral_0= '-' )
             {
-            // InternalKiSim.g:5773:1: (enumLiteral_0= '-' )
-            // InternalKiSim.g:5773:3: enumLiteral_0= '-'
+            // InternalKiSim.g:5861:1: (enumLiteral_0= '-' )
+            // InternalKiSim.g:5861:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16382,7 +16637,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalKiSim.g:5783:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalKiSim.g:5871:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16390,11 +16645,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5785:28: ( (enumLiteral_0= '*' ) )
-            // InternalKiSim.g:5786:1: (enumLiteral_0= '*' )
+            // InternalKiSim.g:5873:28: ( (enumLiteral_0= '*' ) )
+            // InternalKiSim.g:5874:1: (enumLiteral_0= '*' )
             {
-            // InternalKiSim.g:5786:1: (enumLiteral_0= '*' )
-            // InternalKiSim.g:5786:3: enumLiteral_0= '*'
+            // InternalKiSim.g:5874:1: (enumLiteral_0= '*' )
+            // InternalKiSim.g:5874:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16426,7 +16681,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalKiSim.g:5796:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
+    // InternalKiSim.g:5884:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16434,11 +16689,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5798:28: ( (enumLiteral_0= '%' ) )
-            // InternalKiSim.g:5799:1: (enumLiteral_0= '%' )
+            // InternalKiSim.g:5886:28: ( (enumLiteral_0= '%' ) )
+            // InternalKiSim.g:5887:1: (enumLiteral_0= '%' )
             {
-            // InternalKiSim.g:5799:1: (enumLiteral_0= '%' )
-            // InternalKiSim.g:5799:3: enumLiteral_0= '%'
+            // InternalKiSim.g:5887:1: (enumLiteral_0= '%' )
+            // InternalKiSim.g:5887:3: enumLiteral_0= '%'
             {
             enumLiteral_0=(Token)match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16470,7 +16725,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalKiSim.g:5809:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalKiSim.g:5897:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16478,11 +16733,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5811:28: ( (enumLiteral_0= '/' ) )
-            // InternalKiSim.g:5812:1: (enumLiteral_0= '/' )
+            // InternalKiSim.g:5899:28: ( (enumLiteral_0= '/' ) )
+            // InternalKiSim.g:5900:1: (enumLiteral_0= '/' )
             {
-            // InternalKiSim.g:5812:1: (enumLiteral_0= '/' )
-            // InternalKiSim.g:5812:3: enumLiteral_0= '/'
+            // InternalKiSim.g:5900:1: (enumLiteral_0= '/' )
+            // InternalKiSim.g:5900:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16514,7 +16769,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalKiSim.g:5822:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalKiSim.g:5910:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16522,11 +16777,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5824:28: ( (enumLiteral_0= 'val' ) )
-            // InternalKiSim.g:5825:1: (enumLiteral_0= 'val' )
+            // InternalKiSim.g:5912:28: ( (enumLiteral_0= 'val' ) )
+            // InternalKiSim.g:5913:1: (enumLiteral_0= 'val' )
             {
-            // InternalKiSim.g:5825:1: (enumLiteral_0= 'val' )
-            // InternalKiSim.g:5825:3: enumLiteral_0= 'val'
+            // InternalKiSim.g:5913:1: (enumLiteral_0= 'val' )
+            // InternalKiSim.g:5913:3: enumLiteral_0= 'val'
             {
             enumLiteral_0=(Token)match(input,65,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16558,7 +16813,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalKiSim.g:5835:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
+    // InternalKiSim.g:5923:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16566,11 +16821,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5837:28: ( (enumLiteral_0= '||' ) )
-            // InternalKiSim.g:5838:1: (enumLiteral_0= '||' )
+            // InternalKiSim.g:5925:28: ( (enumLiteral_0= '||' ) )
+            // InternalKiSim.g:5926:1: (enumLiteral_0= '||' )
             {
-            // InternalKiSim.g:5838:1: (enumLiteral_0= '||' )
-            // InternalKiSim.g:5838:3: enumLiteral_0= '||'
+            // InternalKiSim.g:5926:1: (enumLiteral_0= '||' )
+            // InternalKiSim.g:5926:3: enumLiteral_0= '||'
             {
             enumLiteral_0=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16602,7 +16857,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalKiSim.g:5848:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
+    // InternalKiSim.g:5936:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16610,11 +16865,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5850:28: ( (enumLiteral_0= '&&' ) )
-            // InternalKiSim.g:5851:1: (enumLiteral_0= '&&' )
+            // InternalKiSim.g:5938:28: ( (enumLiteral_0= '&&' ) )
+            // InternalKiSim.g:5939:1: (enumLiteral_0= '&&' )
             {
-            // InternalKiSim.g:5851:1: (enumLiteral_0= '&&' )
-            // InternalKiSim.g:5851:3: enumLiteral_0= '&&'
+            // InternalKiSim.g:5939:1: (enumLiteral_0= '&&' )
+            // InternalKiSim.g:5939:3: enumLiteral_0= '&&'
             {
             enumLiteral_0=(Token)match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16646,7 +16901,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftLeftOperator"
-    // InternalKiSim.g:5861:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
+    // InternalKiSim.g:5949:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
     public final Enumerator ruleShiftLeftOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16654,11 +16909,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5863:28: ( (enumLiteral_0= '<<' ) )
-            // InternalKiSim.g:5864:1: (enumLiteral_0= '<<' )
+            // InternalKiSim.g:5951:28: ( (enumLiteral_0= '<<' ) )
+            // InternalKiSim.g:5952:1: (enumLiteral_0= '<<' )
             {
-            // InternalKiSim.g:5864:1: (enumLiteral_0= '<<' )
-            // InternalKiSim.g:5864:3: enumLiteral_0= '<<'
+            // InternalKiSim.g:5952:1: (enumLiteral_0= '<<' )
+            // InternalKiSim.g:5952:3: enumLiteral_0= '<<'
             {
             enumLiteral_0=(Token)match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16690,7 +16945,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightOperator"
-    // InternalKiSim.g:5874:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
+    // InternalKiSim.g:5962:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
     public final Enumerator ruleShiftRightOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16698,11 +16953,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5876:28: ( (enumLiteral_0= '>>' ) )
-            // InternalKiSim.g:5877:1: (enumLiteral_0= '>>' )
+            // InternalKiSim.g:5964:28: ( (enumLiteral_0= '>>' ) )
+            // InternalKiSim.g:5965:1: (enumLiteral_0= '>>' )
             {
-            // InternalKiSim.g:5877:1: (enumLiteral_0= '>>' )
-            // InternalKiSim.g:5877:3: enumLiteral_0= '>>'
+            // InternalKiSim.g:5965:1: (enumLiteral_0= '>>' )
+            // InternalKiSim.g:5965:3: enumLiteral_0= '>>'
             {
             enumLiteral_0=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16734,7 +16989,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightUnsignedOperator"
-    // InternalKiSim.g:5887:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
+    // InternalKiSim.g:5975:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
     public final Enumerator ruleShiftRightUnsignedOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16742,11 +16997,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5889:28: ( (enumLiteral_0= '>>>' ) )
-            // InternalKiSim.g:5890:1: (enumLiteral_0= '>>>' )
+            // InternalKiSim.g:5977:28: ( (enumLiteral_0= '>>>' ) )
+            // InternalKiSim.g:5978:1: (enumLiteral_0= '>>>' )
             {
-            // InternalKiSim.g:5890:1: (enumLiteral_0= '>>>' )
-            // InternalKiSim.g:5890:3: enumLiteral_0= '>>>'
+            // InternalKiSim.g:5978:1: (enumLiteral_0= '>>>' )
+            // InternalKiSim.g:5978:3: enumLiteral_0= '>>>'
             {
             enumLiteral_0=(Token)match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16778,7 +17033,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalOperator"
-    // InternalKiSim.g:5904:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
+    // InternalKiSim.g:5992:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
     public final Enumerator ruleConditionalOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16786,11 +17041,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5906:28: ( (enumLiteral_0= '?' ) )
-            // InternalKiSim.g:5907:1: (enumLiteral_0= '?' )
+            // InternalKiSim.g:5994:28: ( (enumLiteral_0= '?' ) )
+            // InternalKiSim.g:5995:1: (enumLiteral_0= '?' )
             {
-            // InternalKiSim.g:5907:1: (enumLiteral_0= '?' )
-            // InternalKiSim.g:5907:3: enumLiteral_0= '?'
+            // InternalKiSim.g:5995:1: (enumLiteral_0= '?' )
+            // InternalKiSim.g:5995:3: enumLiteral_0= '?'
             {
             enumLiteral_0=(Token)match(input,66,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16822,7 +17077,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFBYOperator"
-    // InternalKiSim.g:5917:1: ruleFBYOperator returns [Enumerator current=null] : (enumLiteral_0= '->' ) ;
+    // InternalKiSim.g:6005:1: ruleFBYOperator returns [Enumerator current=null] : (enumLiteral_0= '->' ) ;
     public final Enumerator ruleFBYOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -16830,11 +17085,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5919:28: ( (enumLiteral_0= '->' ) )
-            // InternalKiSim.g:5920:1: (enumLiteral_0= '->' )
+            // InternalKiSim.g:6007:28: ( (enumLiteral_0= '->' ) )
+            // InternalKiSim.g:6008:1: (enumLiteral_0= '->' )
             {
-            // InternalKiSim.g:5920:1: (enumLiteral_0= '->' )
-            // InternalKiSim.g:5920:3: enumLiteral_0= '->'
+            // InternalKiSim.g:6008:1: (enumLiteral_0= '->' )
+            // InternalKiSim.g:6008:3: enumLiteral_0= '->'
             {
             enumLiteral_0=(Token)match(input,67,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -17272,13 +17527,13 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred77_InternalKiSim
 
-    // $ANTLR start synpred92_InternalKiSim
-    public final void synpred92_InternalKiSim_fragment() throws RecognitionException {   
+    // $ANTLR start synpred93_InternalKiSim
+    public final void synpred93_InternalKiSim_fragment() throws RecognitionException {   
         EObject this_BoolExpression_0 = null;
 
 
-        // InternalKiSim.g:4411:2: (this_BoolExpression_0= ruleBoolExpression )
-        // InternalKiSim.g:4411:2: this_BoolExpression_0= ruleBoolExpression
+        // InternalKiSim.g:4429:2: (this_BoolExpression_0= ruleBoolExpression )
+        // InternalKiSim.g:4429:2: this_BoolExpression_0= ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
            
@@ -17293,15 +17548,15 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred92_InternalKiSim
+    // $ANTLR end synpred93_InternalKiSim
 
-    // $ANTLR start synpred93_InternalKiSim
-    public final void synpred93_InternalKiSim_fragment() throws RecognitionException {   
+    // $ANTLR start synpred94_InternalKiSim
+    public final void synpred94_InternalKiSim_fragment() throws RecognitionException {   
         EObject this_ValuedExpression_1 = null;
 
 
-        // InternalKiSim.g:4424:2: (this_ValuedExpression_1= ruleValuedExpression )
-        // InternalKiSim.g:4424:2: this_ValuedExpression_1= ruleValuedExpression
+        // InternalKiSim.g:4442:2: (this_ValuedExpression_1= ruleValuedExpression )
+        // InternalKiSim.g:4442:2: this_ValuedExpression_1= ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
            
@@ -17316,7 +17571,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred93_InternalKiSim
+    // $ANTLR end synpred94_InternalKiSim
 
     // Delegated rules
 
@@ -17367,6 +17622,20 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred64_InternalKiSim_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred94_InternalKiSim() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred94_InternalKiSim_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -17460,20 +17729,6 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred92_InternalKiSim() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred92_InternalKiSim_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
 
 
     protected DFA22 dfa22 = new DFA22(this);
@@ -17483,7 +17738,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
     protected DFA61 dfa61 = new DFA61(this);
     protected DFA62 dfa62 = new DFA62(this);
     protected DFA63 dfa63 = new DFA63(this);
-    protected DFA78 dfa78 = new DFA78(this);
+    protected DFA79 dfa79 = new DFA79(this);
+    protected DFA81 dfa81 = new DFA81(this);
     static final String dfa_1s = "\21\uffff";
     static final String dfa_2s = "\3\uffff\1\13\2\uffff\4\13\3\uffff\2\13\1\uffff\1\13";
     static final String dfa_3s = "\1\22\1\4\1\uffff\1\4\2\5\4\4\1\5\2\uffff\2\4\1\37\1\4";
@@ -17495,8 +17751,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             "\1\3\1\6\1\7\1\uffff\1\10\1\11\10\uffff\1\2\25\uffff\1\4\1\5",
             "",
             "\1\13\14\uffff\1\13\1\uffff\3\13\3\uffff\1\13\3\uffff\1\14\1\12",
-            "\1\16\1\15",
-            "\1\16\1\15",
+            "\1\15\1\16",
+            "\1\15\1\16",
             "\1\13\14\uffff\1\13\1\uffff\3\13\3\uffff\1\13\3\uffff\1\14",
             "\1\13\14\uffff\1\13\1\uffff\3\13\3\uffff\1\13\3\uffff\1\14",
             "\1\13\14\uffff\1\13\1\uffff\3\13\3\uffff\1\13\3\uffff\1\14",
@@ -17535,13 +17791,15 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             return "923:3: ( (otherlv_2= ':' ( (lv_value_3_0= ruleLiteral ) ) ) | (otherlv_4= ':' ( (lv_values_5_0= ruleLiteral ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleLiteral ) ) )+ ) | ( (otherlv_8= ':' )? otherlv_9= '{' ( (lv_attributes_10_0= ruleAttributeMapping ) )+ otherlv_11= '}' ) )";
         }
     }
-    static final String dfa_8s = "\22\uffff";
-    static final String dfa_9s = "\1\4\16\0\3\uffff";
-    static final String dfa_10s = "\1\101\16\0\3\uffff";
-    static final String dfa_11s = "\17\uffff\1\1\1\uffff\1\2";
-    static final String dfa_12s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\3\uffff}>";
+    static final String dfa_8s = "\24\uffff";
+    static final String dfa_9s = "\1\4\20\0\3\uffff";
+    static final String dfa_10s = "\1\101\20\0\3\uffff";
+    static final String dfa_11s = "\21\uffff\1\1\1\uffff\1\2";
+    static final String dfa_12s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\3\uffff}>";
     static final String[] dfa_13s = {
-            "\1\12\1\2\1\3\1\16\1\7\1\4\10\uffff\1\5\26\uffff\1\1\3\uffff\1\6\4\uffff\1\14\1\15\1\13\1\17\11\uffff\1\10\1\17\1\11",
+            "\1\12\1\2\1\3\1\20\1\7\1\4\1\16\7\uffff\1\5\26\uffff\1\1\3\uffff\1\6\4\uffff\1\14\1\15\1\13\1\21\1\uffff\1\17\7\uffff\1\10\1\21\1\11",
+            "\1\uffff",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17595,9 +17853,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_1);
@@ -17610,9 +17868,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_2);
@@ -17625,9 +17883,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_3);
@@ -17640,9 +17898,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_4);
@@ -17655,9 +17913,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_5);
@@ -17670,9 +17928,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_6);
@@ -17685,9 +17943,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_7);
@@ -17700,9 +17958,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_8);
@@ -17715,9 +17973,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_9);
@@ -17730,9 +17988,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_10);
@@ -17745,9 +18003,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_11);
@@ -17760,9 +18018,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_12);
@@ -17775,9 +18033,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_13);
@@ -17790,12 +18048,42 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index28_14 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred32_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (true) ) {s = 17;}
+                        else if ( (true) ) {s = 19;}
 
                          
                         input.seek(index28_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 14 : 
+                        int LA28_15 = input.LA(1);
+
+                         
+                        int index28_15 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
+
+                        else if ( (true) ) {s = 19;}
+
+                         
+                        input.seek(index28_15);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 15 : 
+                        int LA28_16 = input.LA(1);
+
+                         
+                        int index28_16 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred32_InternalKiSim()) ) {s = 17;}
+
+                        else if ( (true) ) {s = 19;}
+
+                         
+                        input.seek(index28_16);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -17806,17 +18094,20 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_14s = "\1\4\5\uffff\11\0\2\uffff";
-    static final String dfa_15s = "\1\101\5\uffff\11\0\2\uffff";
-    static final String dfa_16s = "\1\uffff\1\1\15\uffff\1\2\1\uffff";
-    static final String dfa_17s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
-    static final String[] dfa_18s = {
-            "\1\12\2\1\1\16\1\7\1\1\10\uffff\1\1\26\uffff\1\1\3\uffff\1\6\4\uffff\1\14\1\15\1\13\1\17\11\uffff\1\10\1\17\1\11",
+    static final String dfa_14s = "\23\uffff";
+    static final String dfa_15s = "\1\4\5\uffff\13\0\2\uffff";
+    static final String dfa_16s = "\1\101\5\uffff\13\0\2\uffff";
+    static final String dfa_17s = "\1\uffff\1\1\17\uffff\1\2\1\uffff";
+    static final String dfa_18s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
+    static final String[] dfa_19s = {
+            "\1\12\2\1\1\20\1\7\1\1\1\16\7\uffff\1\1\26\uffff\1\1\3\uffff\1\6\4\uffff\1\14\1\15\1\13\1\21\1\uffff\1\17\7\uffff\1\10\1\21\1\11",
             "",
             "",
             "",
             "",
             "",
+            "\1\uffff",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17829,24 +18120,26 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final char[] dfa_14 = DFA.unpackEncodedStringToUnsignedChars(dfa_14s);
+
+    static final short[] dfa_14 = DFA.unpackEncodedString(dfa_14s);
     static final char[] dfa_15 = DFA.unpackEncodedStringToUnsignedChars(dfa_15s);
-    static final short[] dfa_16 = DFA.unpackEncodedString(dfa_16s);
+    static final char[] dfa_16 = DFA.unpackEncodedStringToUnsignedChars(dfa_16s);
     static final short[] dfa_17 = DFA.unpackEncodedString(dfa_17s);
-    static final short[][] dfa_18 = unpackEncodedStringArray(dfa_18s);
+    static final short[] dfa_18 = DFA.unpackEncodedString(dfa_18s);
+    static final short[][] dfa_19 = unpackEncodedStringArray(dfa_19s);
 
     class DFA40 extends DFA {
 
         public DFA40(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 40;
-            this.eot = dfa_1;
-            this.eof = dfa_1;
-            this.min = dfa_14;
-            this.max = dfa_15;
-            this.accept = dfa_16;
-            this.special = dfa_17;
-            this.transition = dfa_18;
+            this.eot = dfa_14;
+            this.eof = dfa_14;
+            this.min = dfa_15;
+            this.max = dfa_16;
+            this.accept = dfa_17;
+            this.special = dfa_18;
+            this.transition = dfa_19;
         }
         public String getDescription() {
             return "2015:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )";
@@ -17864,7 +18157,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_6);
@@ -17879,7 +18172,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_7);
@@ -17894,7 +18187,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_8);
@@ -17909,7 +18202,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_9);
@@ -17924,7 +18217,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_10);
@@ -17939,7 +18232,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_11);
@@ -17954,7 +18247,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_12);
@@ -17969,7 +18262,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_13);
@@ -17984,10 +18277,40 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred44_InternalKiSim()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index40_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 9 : 
+                        int LA40_15 = input.LA(1);
+
+                         
+                        int index40_15 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred44_InternalKiSim()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index40_15);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 10 : 
+                        int LA40_16 = input.LA(1);
+
+                         
+                        int index40_16 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred44_InternalKiSim()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index40_16);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -17998,13 +18321,15 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_19s = "\20\uffff";
-    static final String dfa_20s = "\1\4\15\0\2\uffff";
-    static final String dfa_21s = "\1\101\15\0\2\uffff";
-    static final String dfa_22s = "\16\uffff\1\1\1\2";
-    static final String dfa_23s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
-    static final String[] dfa_24s = {
-            "\1\11\1\1\1\2\1\15\1\6\1\3\10\uffff\1\4\32\uffff\1\5\4\uffff\1\13\1\14\1\12\12\uffff\1\7\1\uffff\1\10",
+    static final String dfa_20s = "\22\uffff";
+    static final String dfa_21s = "\1\4\17\0\2\uffff";
+    static final String dfa_22s = "\1\101\17\0\2\uffff";
+    static final String dfa_23s = "\20\uffff\1\1\1\2";
+    static final String dfa_24s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\2\uffff}>";
+    static final String[] dfa_25s = {
+            "\1\11\1\1\1\2\1\17\1\6\1\3\1\15\7\uffff\1\4\32\uffff\1\5\4\uffff\1\13\1\14\1\12\2\uffff\1\16\7\uffff\1\7\1\uffff\1\10",
+            "\1\uffff",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -18022,25 +18347,25 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_19 = DFA.unpackEncodedString(dfa_19s);
-    static final char[] dfa_20 = DFA.unpackEncodedStringToUnsignedChars(dfa_20s);
+    static final short[] dfa_20 = DFA.unpackEncodedString(dfa_20s);
     static final char[] dfa_21 = DFA.unpackEncodedStringToUnsignedChars(dfa_21s);
-    static final short[] dfa_22 = DFA.unpackEncodedString(dfa_22s);
+    static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
     static final short[] dfa_23 = DFA.unpackEncodedString(dfa_23s);
-    static final short[][] dfa_24 = unpackEncodedStringArray(dfa_24s);
+    static final short[] dfa_24 = DFA.unpackEncodedString(dfa_24s);
+    static final short[][] dfa_25 = unpackEncodedStringArray(dfa_25s);
 
     class DFA60 extends DFA {
 
         public DFA60(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 60;
-            this.eot = dfa_19;
-            this.eof = dfa_19;
-            this.min = dfa_20;
-            this.max = dfa_21;
-            this.accept = dfa_22;
-            this.special = dfa_23;
-            this.transition = dfa_24;
+            this.eot = dfa_20;
+            this.eof = dfa_20;
+            this.min = dfa_21;
+            this.max = dfa_22;
+            this.accept = dfa_23;
+            this.special = dfa_24;
+            this.transition = dfa_25;
         }
         public String getDescription() {
             return "3131:1: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) ) | this_FBYExpression_6= ruleFBYExpression )";
@@ -18056,9 +18381,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_1);
@@ -18071,9 +18396,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_2);
@@ -18086,9 +18411,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_3);
@@ -18101,9 +18426,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_4);
@@ -18116,9 +18441,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_5);
@@ -18131,9 +18456,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_6);
@@ -18146,9 +18471,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_7);
@@ -18161,9 +18486,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_8);
@@ -18176,9 +18501,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_9);
@@ -18191,9 +18516,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_10);
@@ -18206,9 +18531,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_11);
@@ -18221,9 +18546,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_12);
@@ -18236,12 +18561,42 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index60_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index60_13);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 13 : 
+                        int LA60_14 = input.LA(1);
+
+                         
+                        int index60_14 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index60_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 14 : 
+                        int LA60_15 = input.LA(1);
+
+                         
+                        int index60_15 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred64_InternalKiSim()) ) {s = 16;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index60_15);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -18258,13 +18613,13 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         public DFA61(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 61;
-            this.eot = dfa_19;
-            this.eof = dfa_19;
-            this.min = dfa_20;
-            this.max = dfa_21;
-            this.accept = dfa_22;
-            this.special = dfa_23;
-            this.transition = dfa_24;
+            this.eot = dfa_20;
+            this.eof = dfa_20;
+            this.min = dfa_21;
+            this.max = dfa_22;
+            this.accept = dfa_23;
+            this.special = dfa_24;
+            this.transition = dfa_25;
         }
         public String getDescription() {
             return "3250:1: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleFBYOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) | this_AtomicValuedExpression_4= ruleAtomicValuedExpression )";
@@ -18280,9 +18635,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_1);
@@ -18295,9 +18650,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_2);
@@ -18310,9 +18665,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_3);
@@ -18325,9 +18680,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_4);
@@ -18340,9 +18695,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_5);
@@ -18355,9 +18710,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_6);
@@ -18370,9 +18725,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_7);
@@ -18385,9 +18740,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_8);
@@ -18400,9 +18755,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_9);
@@ -18415,9 +18770,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_10);
@@ -18430,9 +18785,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_11);
@@ -18445,9 +18800,9 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_12);
@@ -18460,12 +18815,42 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index61_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred65_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
 
-                        else if ( (true) ) {s = 15;}
+                        else if ( (true) ) {s = 17;}
 
                          
                         input.seek(index61_13);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 13 : 
+                        int LA61_14 = input.LA(1);
+
+                         
+                        int index61_14 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index61_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 14 : 
+                        int LA61_15 = input.LA(1);
+
+                         
+                        int index61_15 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred65_InternalKiSim()) ) {s = 16;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index61_15);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -18476,14 +18861,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_25s = "\13\uffff";
-    static final String dfa_26s = "\3\uffff\1\2\5\uffff\1\2\1\uffff";
-    static final String dfa_27s = "\1\4\2\uffff\1\23\5\uffff\1\23\1\uffff";
-    static final String dfa_28s = "\1\101\2\uffff\1\103\5\uffff\1\103\1\uffff";
-    static final String dfa_29s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\7\1\10\1\uffff\1\4";
-    static final String dfa_30s = "\13\uffff}>";
-    static final String[] dfa_31s = {
-            "\1\3\2\uffff\1\10\1\1\44\uffff\1\4\4\uffff\1\6\1\7\1\5\12\uffff\1\2\1\uffff\1\2",
+    static final String dfa_26s = "\13\uffff";
+    static final String dfa_27s = "\3\uffff\1\2\5\uffff\1\2\1\uffff";
+    static final String dfa_28s = "\1\4\2\uffff\1\23\5\uffff\1\23\1\uffff";
+    static final String dfa_29s = "\1\101\2\uffff\1\103\5\uffff\1\103\1\uffff";
+    static final String dfa_30s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\7\1\10\1\uffff\1\4";
+    static final String dfa_31s = "\13\uffff}>";
+    static final String[] dfa_32s = {
+            "\1\3\2\uffff\1\10\1\1\1\uffff\1\10\42\uffff\1\4\4\uffff\1\6\1\7\1\5\2\uffff\1\10\7\uffff\1\2\1\uffff\1\2",
             "",
             "",
             "\1\2\10\uffff\21\2\1\12\1\2\1\11\1\2\1\12\7\uffff\6\2\3\uffff\2\2",
@@ -18496,38 +18881,37 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_25 = DFA.unpackEncodedString(dfa_25s);
     static final short[] dfa_26 = DFA.unpackEncodedString(dfa_26s);
-    static final char[] dfa_27 = DFA.unpackEncodedStringToUnsignedChars(dfa_27s);
+    static final short[] dfa_27 = DFA.unpackEncodedString(dfa_27s);
     static final char[] dfa_28 = DFA.unpackEncodedStringToUnsignedChars(dfa_28s);
-    static final short[] dfa_29 = DFA.unpackEncodedString(dfa_29s);
+    static final char[] dfa_29 = DFA.unpackEncodedStringToUnsignedChars(dfa_29s);
     static final short[] dfa_30 = DFA.unpackEncodedString(dfa_30s);
-    static final short[][] dfa_31 = unpackEncodedStringArray(dfa_31s);
+    static final short[] dfa_31 = DFA.unpackEncodedString(dfa_31s);
+    static final short[][] dfa_32 = unpackEncodedStringArray(dfa_32s);
 
     class DFA62 extends DFA {
 
         public DFA62(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 62;
-            this.eot = dfa_25;
-            this.eof = dfa_26;
-            this.min = dfa_27;
-            this.max = dfa_28;
-            this.accept = dfa_29;
-            this.special = dfa_30;
-            this.transition = dfa_31;
+            this.eot = dfa_26;
+            this.eof = dfa_27;
+            this.min = dfa_28;
+            this.max = dfa_29;
+            this.accept = dfa_30;
+            this.special = dfa_31;
+            this.transition = dfa_32;
         }
         public String getDescription() {
             return "3347:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_FunctionCall_6= ruleFunctionCall | this_RandomCall_7= ruleRandomCall | this_RandomizeCall_8= ruleRandomizeCall | this_TextExpression_9= ruleTextExpression )";
         }
     }
-    static final String dfa_32s = "\17\uffff";
-    static final String dfa_33s = "\1\4\4\uffff\1\0\11\uffff";
-    static final String dfa_34s = "\1\101\4\uffff\1\0\11\uffff";
-    static final String dfa_35s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\7\uffff\1\5";
-    static final String dfa_36s = "\5\uffff\1\0\11\uffff}>";
+    static final String dfa_33s = "\1\4\4\uffff\1\0\13\uffff";
+    static final String dfa_34s = "\1\101\4\uffff\1\0\13\uffff";
+    static final String dfa_35s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\11\uffff\1\5";
+    static final String dfa_36s = "\5\uffff\1\0\13\uffff}>";
     static final String[] dfa_37s = {
-            "\1\6\1\1\1\2\2\6\1\3\10\uffff\1\4\32\uffff\1\5\4\uffff\3\6\12\uffff\1\6\1\uffff\1\6",
+            "\1\6\1\1\1\2\2\6\1\3\1\6\7\uffff\1\4\32\uffff\1\5\4\uffff\3\6\2\uffff\1\6\7\uffff\1\6\1\uffff\1\6",
             "",
             "",
             "",
@@ -18541,10 +18925,10 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
+            "",
+            "",
             ""
     };
-
-    static final short[] dfa_32 = DFA.unpackEncodedString(dfa_32s);
     static final char[] dfa_33 = DFA.unpackEncodedStringToUnsignedChars(dfa_33s);
     static final char[] dfa_34 = DFA.unpackEncodedStringToUnsignedChars(dfa_34s);
     static final short[] dfa_35 = DFA.unpackEncodedString(dfa_35s);
@@ -18556,8 +18940,8 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         public DFA63(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 63;
-            this.eot = dfa_32;
-            this.eof = dfa_32;
+            this.eot = dfa_1;
+            this.eof = dfa_1;
             this.min = dfa_33;
             this.max = dfa_34;
             this.accept = dfa_35;
@@ -18578,7 +18962,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
                         int index63_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred77_InternalKiSim()) ) {s = 14;}
+                        if ( (synpred77_InternalKiSim()) ) {s = 16;}
 
                         else if ( (true) ) {s = 6;}
 
@@ -18594,13 +18978,15 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_38s = "\23\uffff";
-    static final String dfa_39s = "\1\4\16\0\4\uffff";
-    static final String dfa_40s = "\1\101\16\0\4\uffff";
-    static final String dfa_41s = "\17\uffff\1\1\1\uffff\1\3\1\2";
-    static final String dfa_42s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\4\uffff}>";
+    static final String dfa_38s = "\25\uffff";
+    static final String dfa_39s = "\1\4\20\0\4\uffff";
+    static final String dfa_40s = "\1\101\20\0\4\uffff";
+    static final String dfa_41s = "\21\uffff\1\1\1\uffff\1\3\1\2";
+    static final String dfa_42s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\4\uffff}>";
     static final String[] dfa_43s = {
-            "\1\12\1\2\1\3\1\16\1\7\1\4\10\uffff\1\5\26\uffff\1\1\3\uffff\1\6\4\uffff\1\14\1\15\1\13\1\17\1\21\10\uffff\1\10\1\17\1\11",
+            "\1\12\1\2\1\3\1\20\1\7\1\4\1\16\7\uffff\1\5\26\uffff\1\1\3\uffff\1\6\4\uffff\1\14\1\15\1\13\1\21\1\23\1\17\7\uffff\1\10\1\21\1\11",
+            "\1\uffff",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -18628,11 +19014,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
     static final short[] dfa_42 = DFA.unpackEncodedString(dfa_42s);
     static final short[][] dfa_43 = unpackEncodedStringArray(dfa_43s);
 
-    class DFA78 extends DFA {
+    class DFA79 extends DFA {
 
-        public DFA78(BaseRecognizer recognizer) {
+        public DFA79(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 78;
+            this.decisionNumber = 79;
             this.eot = dfa_38;
             this.eof = dfa_38;
             this.min = dfa_39;
@@ -18642,228 +19028,304 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
             this.transition = dfa_43;
         }
         public String getDescription() {
-            return "4410:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
+            return "4428:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA78_1 = input.LA(1);
+                        int LA79_1 = input.LA(1);
 
                          
-                        int index78_1 = input.index();
+                        int index79_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_1);
+                        input.seek(index79_1);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA78_2 = input.LA(1);
+                        int LA79_2 = input.LA(1);
 
                          
-                        int index78_2 = input.index();
+                        int index79_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_2);
+                        input.seek(index79_2);
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA78_3 = input.LA(1);
+                        int LA79_3 = input.LA(1);
 
                          
-                        int index78_3 = input.index();
+                        int index79_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_3);
+                        input.seek(index79_3);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA78_4 = input.LA(1);
+                        int LA79_4 = input.LA(1);
 
                          
-                        int index78_4 = input.index();
+                        int index79_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_4);
+                        input.seek(index79_4);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA78_5 = input.LA(1);
+                        int LA79_5 = input.LA(1);
 
                          
-                        int index78_5 = input.index();
+                        int index79_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_5);
+                        input.seek(index79_5);
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA78_6 = input.LA(1);
+                        int LA79_6 = input.LA(1);
 
                          
-                        int index78_6 = input.index();
+                        int index79_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_6);
+                        input.seek(index79_6);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA78_7 = input.LA(1);
+                        int LA79_7 = input.LA(1);
 
                          
-                        int index78_7 = input.index();
+                        int index79_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_7);
+                        input.seek(index79_7);
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA78_8 = input.LA(1);
+                        int LA79_8 = input.LA(1);
 
                          
-                        int index78_8 = input.index();
+                        int index79_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_8);
+                        input.seek(index79_8);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
-                        int LA78_9 = input.LA(1);
+                        int LA79_9 = input.LA(1);
 
                          
-                        int index78_9 = input.index();
+                        int index79_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_9);
+                        input.seek(index79_9);
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA78_10 = input.LA(1);
+                        int LA79_10 = input.LA(1);
 
                          
-                        int index78_10 = input.index();
+                        int index79_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_10);
+                        input.seek(index79_10);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA78_11 = input.LA(1);
+                        int LA79_11 = input.LA(1);
 
                          
-                        int index78_11 = input.index();
+                        int index79_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_11);
+                        input.seek(index79_11);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA78_12 = input.LA(1);
+                        int LA79_12 = input.LA(1);
 
                          
-                        int index78_12 = input.index();
+                        int index79_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_12);
+                        input.seek(index79_12);
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA78_13 = input.LA(1);
+                        int LA79_13 = input.LA(1);
 
                          
-                        int index78_13 = input.index();
+                        int index79_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_13);
+                        input.seek(index79_13);
                         if ( s>=0 ) return s;
                         break;
                     case 13 : 
-                        int LA78_14 = input.LA(1);
+                        int LA79_14 = input.LA(1);
 
                          
-                        int index78_14 = input.index();
+                        int index79_14 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred92_InternalKiSim()) ) {s = 15;}
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
 
-                        else if ( (synpred93_InternalKiSim()) ) {s = 18;}
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
 
                          
-                        input.seek(index78_14);
+                        input.seek(index79_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 14 : 
+                        int LA79_15 = input.LA(1);
+
+                         
+                        int index79_15 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
+
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
+
+                         
+                        input.seek(index79_15);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 15 : 
+                        int LA79_16 = input.LA(1);
+
+                         
+                        int index79_16 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred93_InternalKiSim()) ) {s = 17;}
+
+                        else if ( (synpred94_InternalKiSim()) ) {s = 20;}
+
+                         
+                        input.seek(index79_16);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 78, _s, input);
+                new NoViableAltException(getDescription(), 79, _s, input);
             error(nvae);
             throw nvae;
+        }
+    }
+    static final String dfa_44s = "\14\uffff";
+    static final String dfa_45s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_46s = "\1\12\1\uffff\4\4\1\5\3\uffff\2\4";
+    static final String dfa_47s = "\1\67\1\uffff\1\4\1\70\1\4\1\6\1\5\3\uffff\1\70\1\67";
+    static final String dfa_48s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_49s = "\14\uffff}>";
+    static final String[] dfa_50s = {
+            "\1\1\54\uffff\1\2",
+            "",
+            "\1\3",
+            "\3\11\1\7\2\11\1\7\23\uffff\1\10\12\uffff\1\5\6\uffff\1\4\6\uffff\1\7\1\6",
+            "\1\12",
+            "\1\12\2\11",
+            "\1\13",
+            "",
+            "",
+            "",
+            "\3\11\1\7\2\11\1\7\23\uffff\1\10\12\uffff\1\5\6\uffff\1\4\6\uffff\1\7\1\6",
+            "\3\11\1\7\2\11\1\7\23\uffff\1\10\12\uffff\1\11\15\uffff\1\7"
+    };
+
+    static final short[] dfa_44 = DFA.unpackEncodedString(dfa_44s);
+    static final short[] dfa_45 = DFA.unpackEncodedString(dfa_45s);
+    static final char[] dfa_46 = DFA.unpackEncodedStringToUnsignedChars(dfa_46s);
+    static final char[] dfa_47 = DFA.unpackEncodedStringToUnsignedChars(dfa_47s);
+    static final short[] dfa_48 = DFA.unpackEncodedString(dfa_48s);
+    static final short[] dfa_49 = DFA.unpackEncodedString(dfa_49s);
+    static final short[][] dfa_50 = unpackEncodedStringArray(dfa_50s);
+
+    class DFA81 extends DFA {
+
+        public DFA81(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 81;
+            this.eot = dfa_44;
+            this.eof = dfa_45;
+            this.min = dfa_46;
+            this.max = dfa_47;
+            this.accept = dfa_48;
+            this.special = dfa_49;
+            this.transition = dfa_50;
+        }
+        public String getDescription() {
+            return "4595:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
     }
  
@@ -18897,14 +19359,14 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000080000000L});
         public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000100000002L});
-        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x803C2300000403F0L,0x0000000000000003L});
+        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x80BC2300000407F0L,0x0000000000000003L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000200000002L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000400000002L});
         public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000800000002L});
         public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000001000000002L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x7E00000000000002L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000002000000002L});
-        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x801C2300000403F0L,0x0000000000000002L});
+        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x809C2300000407F0L,0x0000000000000002L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000004000000002L});
         public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000008000000002L});
         public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000010000000002L});
@@ -18921,17 +19383,18 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000800000000002L});
         public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0001000040000002L});
         public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0002200000000000L});
-        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x803C2310000403F0L,0x0000000000000003L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x80BC2310000407F0L,0x0000000000000003L});
         public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000400020000000L});
         public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0002000000000002L});
         public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000001000000000L});
-        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x807C2300000403F0L,0x0000000000000003L});
-        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000020080000L});
-        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000020000000370L});
-        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000000310L});
-        public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000040000000L});
-        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0101020000000002L});
+        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0080000000000480L});
+        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x80FC2300000407F0L,0x0000000000000003L});
+        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000020080000L});
+        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000020000000370L});
+        public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000000310L});
+        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000040000000L});
+        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0101020000000002L});
     }
 
 

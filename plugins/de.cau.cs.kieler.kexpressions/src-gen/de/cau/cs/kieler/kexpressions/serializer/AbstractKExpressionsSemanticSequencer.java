@@ -4,12 +4,12 @@
 package de.cau.cs.kieler.kexpressions.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
+import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.kexpressions.BoolValue;
@@ -52,9 +52,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == AnnotationsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case AnnotationsPackage.ANNOTATION:
-				sequence_TagAnnotation(context, (Annotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
@@ -92,6 +89,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case AnnotationsPackage.STRING_PRAGMA:
 				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
+			case AnnotationsPackage.TAG_ANNOTATION:
+				sequence_TagAnnotation(context, (TagAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
@@ -878,16 +878,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     VectorValueMember returns TextExpression
 	 *
 	 * Constraint:
-	 *     text=HOSTCODE
+	 *     (annotations+=Annotation* text=HOSTCODE)
 	 */
 	protected void sequence_TextExpression(ISerializationContext context, TextExpression semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0(), semanticObject.getText());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

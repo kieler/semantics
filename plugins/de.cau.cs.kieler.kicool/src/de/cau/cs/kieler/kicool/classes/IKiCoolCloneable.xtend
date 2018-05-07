@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 interface IKiCoolCloneable {
     
     /**
-     * The class is mutable. If not, the clones object may be the original object and 
+     * The class is mutable. If not, the cloned object may be the original object and 
      * you are not allowed to change it in the environment. 
      */
     def boolean isMutable()

@@ -33,7 +33,7 @@ package de.cau.cs.kieler.annotations;
  *
  *
  * @see de.cau.cs.kieler.annotations.AnnotationsPackage#getAnnotation()
- * @model
+ * @model abstract="true"
  * @generated
  */
 public interface Annotation extends NamedObject {

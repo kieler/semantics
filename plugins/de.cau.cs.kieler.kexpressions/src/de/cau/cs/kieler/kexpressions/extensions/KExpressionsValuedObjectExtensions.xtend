@@ -46,17 +46,24 @@ class KExpressionsValuedObjectExtensions {
     
     def Declaration getDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
-            valuedObject.eContainer as Declaration
+            return valuedObject.eContainer as Declaration
         else
-            null
+            return null
     }
     
     def VariableDeclaration getVariableDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof VariableDeclaration)
-            valuedObject.eContainer as VariableDeclaration
+            return valuedObject.eContainer as VariableDeclaration
         else
-            null
+            return null
     }     
+    
+    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof ReferenceDeclaration) 
+            return valuedObject.eContainer as ReferenceDeclaration
+        else
+            return null        
+    }
     
     def asVariableDeclaration(EObject eObject) {
         eObject as VariableDeclaration
@@ -165,7 +172,7 @@ class KExpressionsValuedObjectExtensions {
             }
         }    
     }
-
+    
     def boolean isSignal(ValuedObject valuedObject) {
         if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isSignal

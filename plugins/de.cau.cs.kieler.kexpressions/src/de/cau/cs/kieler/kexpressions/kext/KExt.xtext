@@ -85,6 +85,7 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
 	const?='const'?
     input?='input'? 
     output?='output'?
+    global?='global'?
     static?='static'?
     ((signal?='signal'? type = ValueType) | 
         signal?='signal' |
@@ -98,6 +99,7 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 	const?='const'?
     input?='input'? 
     output?='output'?
+    global?='global'?
     static?='static'?
     ((signal?='signal'? type = ValueType) | 
         signal?='signal' |

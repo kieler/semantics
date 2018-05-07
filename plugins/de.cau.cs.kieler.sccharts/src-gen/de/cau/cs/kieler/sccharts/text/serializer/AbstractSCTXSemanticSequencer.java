@@ -1143,7 +1143,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     BoolScheduleExpression returns TextExpression
 	 *
 	 * Constraint:
-	 *     (text=HOSTCODE schedule+=ScheduleObjectReference?)
+	 *     (annotations+=Annotation* text=HOSTCODE schedule+=ScheduleObjectReference?)
 	 */
 	protected void sequence_BoolScheduleExpression_TextExpression(ISerializationContext context, TextExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1228,6 +1228,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
+	 *         once?='once'? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         equations+=Assignment*
 	 *     )

@@ -27,7 +27,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
-import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -39,7 +38,6 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.processors.transformators.For
-import org.eclipse.elk.core.options.EdgeLabelPlacement
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import de.cau.cs.kieler.kexpressions.ValuedObject
 
@@ -81,6 +79,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
         // Direction is set by the {@link LayoutHook}
         
         // Do not set! This is handled by the ExpandCollapseHook

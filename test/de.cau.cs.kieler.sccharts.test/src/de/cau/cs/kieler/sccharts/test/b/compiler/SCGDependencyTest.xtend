@@ -63,6 +63,7 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
         return modelData.modelProperties.contains("sccharts")
         && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
         && !modelData.modelProperties.contains("must-fail")
+        && !modelData.modelProperties.contains("less-v2-dependencies")
     }
     
     @Test(timeout=10000)

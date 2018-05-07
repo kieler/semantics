@@ -22,7 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 
 /**
- * C Code Processor
+ * Abstract Code Generation Processor
  * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 

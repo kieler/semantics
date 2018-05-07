@@ -38,6 +38,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.DataflowRegion#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.DataflowRegion#isOnce <em>Once</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflowRegion()
@@ -67,5 +68,31 @@ public interface DataflowRegion extends Region {
      * @generated
      */
     EList<Assignment> getEquations();
+
+    /**
+     * Returns the value of the '<em><b>Once</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Once</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Once</em>' attribute.
+     * @see #setOnce(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflowRegion_Once()
+     * @model required="true"
+     * @generated
+     */
+    boolean isOnce();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.DataflowRegion#isOnce <em>Once</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Once</em>' attribute.
+     * @see #isOnce()
+     * @generated
+     */
+    void setOnce(boolean value);
 
 } // DataflowRegion

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AnnotationImpl extends NamedObjectImpl implements Annotation {
+public abstract class AnnotationImpl extends NamedObjectImpl implements Annotation {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -38,6 +38,10 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 
 /**
  * @author ssm
@@ -49,10 +53,13 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     public static val INCLUDES = "includes"
     protected var CODE_ANNOTATION = "C"
     
+    static val HOSTCODE_EVAL = AnnotationsRegistry.register("eval", AnnotationsType.USER, StringAnnotation,  TextExpression, 
+        "Annotation that tells the hostcode text expression which parts should be evaluation to valued objects")
+    
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions    
-    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExtDeclarationExtensions
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
@@ -79,6 +86,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
         var vo = valuedObjectPrefix + valuedObjectReference.valuedObject.name
         if (valuedObjectReference.valuedObject.isExternalReference) {
+//            vo = valuedObjectReference.valuedObject.getReferenceDeclaration.extern.head.code
             vo = valuedObjectReference.valuedObject.name
         }
         for (index : valuedObjectReference.indices) {
@@ -142,7 +150,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
                 valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
             }
             if (assignment.expression instanceof TextExpression) {
-                assignmentText = (assignment.expression as TextExpression).text
+                assignmentText = (assignment.expression as TextExpression).serializeHR
             }
             var String assignmentStr
             if (assignment.operator == AssignOperator::ASSIGNMIN) {
@@ -185,7 +193,20 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }
     
     override dispatch CharSequence serialize(TextExpression textExp) {
-        return textExp.text
+        var hostcode = textExp.text
+        if (textExp.hasAnnotation(HOSTCODE_EVAL)) {
+            val CDS = textExp.getClosestDeclarationScope // ClosestDeclarationScope
+            if (CDS !== null) {
+                for (eval : textExp.getAnnotation(HOSTCODE_EVAL).asStringAnnotation.values) {
+                    val vo = CDS.findValuedObjectByName(eval)
+                    if (vo !== null) {
+                        val voText = vo.serialize
+                        hostcode = hostcode.replaceAll(eval, voText.toString)
+                    } 
+                }
+            }
+        }
+        return hostcode
     }  
     
     override dispatch CharSequence serialize(RandomCall randomCall) {
