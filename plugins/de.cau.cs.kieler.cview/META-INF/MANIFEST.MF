@@ -22,7 +22,7 @@ Require-Bundle: de.cau.cs.kieler.klighd;bundle-version="[0.42.0,0.44.0)",
  org.eclipse.ui.console,
  org.eclipse.ui,
  org.eclipse.equinox.ds,
- org.eclipse.elk.alg.force;bundle-version="0.2.2",
+ org.eclipse.elk.alg.force;resolution:=optional,
  de.cau.cs.kieler.klighd.krendering
 Bundle-Activator: de.cau.cs.kieler.cview.CViewPlugin
 Bundle-ActivationPolicy: lazy

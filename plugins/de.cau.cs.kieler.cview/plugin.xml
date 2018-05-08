@@ -161,7 +161,8 @@
               icon="icon/refresh.gif"
               id="de.cau.cs.kieler.cview.command.refresh"
               label="Refresh  C View"
-              style="push">
+              style="push"
+              tooltip="Refresh the current analysis model and apply all selected analyzers.">
         </command>
         <separator name="filterandselectadditions" visible="true">
         </separator>
@@ -170,19 +171,22 @@
               icon="icon/filter.gif"
               id="de.cau.cs.kieler.cview.command.filter"
               label="Configure Filter..."
-              style="push">
+              style="push"
+              tooltip="Configure a filter on the current analysis model (since last refresh).">
         </command>
         <command
               commandId="de.cau.cs.kieler.cview.command.select"
               icon="icon/select.gif"
               id="de.cau.cs.kieler.cview.command.select"
               label="Select Analysis..."
-              style="push">
+              style="push"
+              tooltip="Select one or more analysis to apply for next refresh.">
         </command>
         <separator name="saveadditions" visible="true">
         </separator>
         <command
               commandId="de.cau.cs.kieler.cview.command.export"
+              helpContextId="Export the current analysis model (since last refresh)."
               icon="icon/saveas.gif"
               id="de.cau.cs.kieler.cview.command.export"
               label="Export Analysis Results..."
@@ -194,20 +198,26 @@
         </separator>
         <command
               commandId="de.cau.cs.kieler.cview.command.manualDiagramSynthesis"
+              icon="icon/manual.gif"
               id="de.cau.cs.kieler.cview.command.manualDiagramSynthesis"
               label="Manual Diagram Synthesis"
-              style="toggle">
+              style="toggle"
+              tooltip="No automatic diagram synthesis on option change. You must trigger a refresh manually.">
         </command>
         <command
               commandId="de.cau.cs.kieler.cview.command.warning"
+              icon="icon/warning.gif"
               id="de.cau.cs.kieler.cview.command.warning"
               label="Huge Analysis Warning"
-              style="toggle">
+              style="toggle"
+              tooltip="Warn about large selections which could result in non-interactive tooling.">
         </command>
         <command
               commandId="de.cau.cs.kieler.cview.command.deactivateView"
-              label="Deactivate View"
-              style="toggle">
+              icon="icon/novis.gif"
+              label="Deactivate Graphical View"
+              style="toggle"
+              tooltip="Select this if you only want to export an anlaysis and don&apos;t want to care about the visual diagram and skip its synthesis.">
         </command>
         <separator
               name="VisualisationAdditions"
@@ -215,8 +225,10 @@
         </separator>
         <command
               commandId="de.cau.cs.kieler.cview.command.highlightSelection"
+              icon="icon/highlightselection.gif"
               label="Highlight Selection"
-              style="toggle">
+              style="toggle"
+              tooltip="Each selected component will be high-lighted in contrast to other, non-selected components.">
         </command>
      </menuContribution>
   </extension>
