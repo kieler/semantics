@@ -163,7 +163,7 @@ public abstract class AbstractKLighDController {
     			Object[] ret = {obj};
     			return ret;
     		}
-    		if(obj instanceof ICElement) {
+    		else if(obj instanceof ICElement) {
     			ICElement objElement = (ICElement) obj;
     			ICElement parent = objElement.getParent();
     			boolean contained = false;
@@ -176,6 +176,9 @@ public abstract class AbstractKLighDController {
     			if(!contained) {
     				selectedNoChildrenList.add(obj);
     			}
+    		}
+    		else {
+    		    selectedNoChildrenList.add(obj);
     		}
     	}
     	
