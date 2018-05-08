@@ -31,10 +31,10 @@
   <feature url="features/de.cau.cs.kieler.ehelp.feature.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.ehelp.feature.source" version="0.1.0.qualifier">
     <category name="kieler-sccharts-src"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.cview.feature_0.1.0.qualifier.jar" id="de.cau.cs.kieler.cview.feature" version="0.1.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.cview.feature_0.1.1.qualifier.jar" id="de.cau.cs.kieler.cview.feature" version="0.1.1.qualifier">
     <category name="kieler-sccharts"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.cview.feature.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.cview.feature.source" version="0.1.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.cview.feature.source_0.1.1.qualifier.jar" id="de.cau.cs.kieler.cview.feature.source" version="0.1.1.qualifier">
     <category name="kieler-sccharts-src"/>
   </feature>
   <!-- Repository references to associated sites -->
