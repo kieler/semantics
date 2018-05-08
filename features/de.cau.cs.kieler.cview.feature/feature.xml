@@ -218,7 +218,7 @@ litigation.
       <update label="KIELER PHT SCCharts Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/"/>
       <discovery label="KIELER KLighD 2017-02-01 Release" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/"/>
       <discovery label="CDT" url="http://download.eclipse.org/tools/cdt/releases/9.2"/>
-      <discovery label="ELK" url="http://download.eclipse.org/elk/updates/releases/0.2.1/"/>
+      <discovery label="ELK" url="http://download.eclipse.org/elk/updates/releases/0.3.0/"/>
    </url>
 
    <requires>
@@ -228,10 +228,10 @@ litigation.
       <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.freehep.feature" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.elk.feature"    version="0.1.0.201607121925"/>
-      <import feature="org.eclipse.elk.ui.feature" version="0.1.0.201607121925"/>
-      <import feature="org.eclipse.elk.graphviz.feature" version="0.1.0.201607121925"/>
-      <import feature="org.eclipse.elk.algorithms.feature"  version="0.1.0.201607121925"/>
+      <import feature="org.eclipse.elk.feature"    version="0.1.0.201607121925" match="greaterOrEqual"/>
+      <import feature="org.eclipse.elk.ui.feature" version="0.1.0.201607121925" match="greaterOrEqual"/>
+      <import feature="org.eclipse.elk.graphviz.feature" version="0.1.0.201607121925" match="greaterOrEqual"/>
+      <import feature="org.eclipse.elk.algorithms.feature"  version="0.1.0.201607121925" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.view.feature" version="0.3.1.201610170203"/>
    </requires>
 
