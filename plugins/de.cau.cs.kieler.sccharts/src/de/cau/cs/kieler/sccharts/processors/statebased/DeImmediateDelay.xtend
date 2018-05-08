@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.StatebasedUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
@@ -121,6 +121,7 @@ class DeImmediateDelay extends SCChartsProcessor implements Traceable {
             }
             
             tS.initial = tS.initial || state.initial
+            tS.adaptName(state)
             
             state.remove
         }
