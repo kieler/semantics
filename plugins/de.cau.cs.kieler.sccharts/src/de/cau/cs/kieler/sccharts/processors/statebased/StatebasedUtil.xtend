@@ -19,18 +19,18 @@ import de.cau.cs.kieler.annotations.NamedObject
  * @kieler.design 2018-05-07 proposed 
  * @kieler.rating 2018-05-07 proposed yellow
  * 
- * Utility methods for the state-based pattern.
+ * Utility methods for the state-based pattern
  *
  */
 class StatebasedUtil {
     
-    private static val generatePrefix = "__"
+    private static val GENERATE_PREFIX = "__"
     
     static def void adaptName(NamedObject target, NamedObject from) {
         if (!target.name.nullOrEmpty
             && !from.name.nullOrEmpty
-            && target.name.startsWith(generatePrefix) 
-            && !from.name.startsWith(generatePrefix)
+            && target.name.startsWith(GENERATE_PREFIX) 
+            && !from.name.startsWith(GENERATE_PREFIX)
         ) {
             target.name = from.name  
         }
