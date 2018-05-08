@@ -46,10 +46,22 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     
     override generateInit() {
         code.add(
+            MLC("The surrounding application should call " + getName + "() once per clock tick.",
+                "The interface inside the TickData struct should be used to communicate with the logic.",
+                "Set the inputs before you call " + getName + "() and read out the outputs afterwards.",
+                "",
+                "Invocation of the " + getName + "() includes the following steps:",
+                "  - Communication with the simulation interface for the inputs",
+                "  - Call of the logic function of the programm ",
+                "  - Communication with the simulation interface for the outputs",
+                "  - Additional tasks, such as register saves, if necessary"
+            ),
+            
+            
             "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
         )
         
-        struct.forwardDeclarations.append(code).append(";\n")
+        struct.forwardDeclarations.append(code).append(";\n\n")
         
         code.add(
             " {", NL

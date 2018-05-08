@@ -45,10 +45,21 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     
     override generateInit() {
         code.add(
+            MLC(getName + "() sets the program to its initial state.", 
+                "You should call " + getName + "() at least once at the start of the application.",
+                "Additionally, you can always reset the actual status to the initial configuration ",
+                "to restart the application.",
+                "",
+                "This includes the following steps:", 
+                " - the active states of the root level regions are set to their initial states",
+                " - the root level thread is set to RUNNING", 
+                " - all region interface pointers are set to the interface of the program"
+            ),
+            
             "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
         )
         
-        struct.forwardDeclarations.append(code).append(";\n")
+        struct.forwardDeclarations.append(code).append(";\n\n")
         
         code.add(
             " {", NL

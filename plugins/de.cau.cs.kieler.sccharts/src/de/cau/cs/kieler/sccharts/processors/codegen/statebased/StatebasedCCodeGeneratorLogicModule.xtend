@@ -67,10 +67,16 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         init(serializer)
         indent(0)
         code.add(
+            MLC(getName + "() contains the logic of the modelled statechart without additional tasks",
+                "such as communication with the simulation interface or register saves.",
+                "It takes the actual interface together with current state of the state machine and",
+                "calculates exactly one macro step of the system."
+            ),
+            
             "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
         )
         
-        struct.forwardDeclarations.append(code).append(";\n")
+        struct.forwardDeclarations.append(code).append(";\n\n")
         
         code.add(
             " {", NL
@@ -217,7 +223,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 val cfrName = struct.getRegionName(cfr.value)
                 function.add(
                     "  ", "if (", regionDataName, "->", cfrName, ".threadStatus == ",
-                        THREAD_STATUS_PAUSED, ") {", NL
+                        THREAD_STATUS_PAUSING, ") {", NL
                 )
                 
                 function.add(
@@ -283,7 +289,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 
                 function.add(
                     "  ", indentation2, "if (", regionDataName, "->", cfrName, ".threadStatus == ", 
-                        THREAD_STATUS_DISPATCHED, ") {", NL,
+                        THREAD_STATUS_WAITING, ") {", NL,
                     "    ", indentation2, regionDataName, "->", cfrName, ".threadStatus = ",
                         THREAD_STATUS_RUNNING, ";", NL, 
                     "  ", indentation2, "}", NL 
@@ -316,12 +322,16 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val hasDelayed = state.outgoingTransitions.exists[ !immediate ]
         if (hasDelayed) {
             function.add(
-                "  char inDepth = ", regionDataName, "->tickStartState == ", stateName, ";", NL 
+                SLC(2, "inDepth indicates if this state was already active at the beginning of this tick instance."), 
+                
+                "  char inDepth = ", regionDataName, "->tickStartState == ", stateName, ";", NL, NL
             )
         }
+        val allDelayed = if (!hasDelayed) false else
+            state.outgoingTransitions.forall[ !immediate ]
         
         for (transition : state.outgoingTransitions.indexed) {
-            transition.value.generateTransition(transition.key, function, "  ", serializer)
+            transition.value.generateTransition(transition.key, function, allDelayed, "  ", serializer)
         }
         
         val handleImplicitTransitions =
@@ -329,21 +339,29 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             (state.outgoingTransitions.forall[ !immediate ])
             
         if (handleImplicitTransitions) {
-            if (state.outgoingTransitions.size > 0) { 
-                function.add(
-                    "  else", NL, 
-                    "  {", NL, 
-                    "    ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSED, ";", NL,
-                    "  }", NL
-                )
+            if (state.outgoingTransitions.size > 0) {
+                if (allDelayed) {
+                    function.add(NL, 
+                        SLC(2, "The thread will enter a pause after this state is done."),  
+                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
+                    )
+                } else {
+                    function.add(
+                        "  else", NL, 
+                        "  {", NL,
+                        SLC(4, "Implicitly wait one tick if no transition was taken."),  
+                        "    ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
+                        "  }", NL
+                    )
+                }
             } else {
                 if (state.final) {
                     function.add(
-                        "  ", regionDataName, "->threadStatus = EMPTY;", NL
+                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_INACTIVE, ";", NL
                     )                    
                 } else {
                     function.add(
-                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSED, ";", NL
+                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
                     )
                 }
             }
@@ -357,16 +375,21 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     }
     
     def void generateTransition(Transition transition, int index,
-        StringBuilder function, String indentation, extension StatebasedCCodeSerializeHRExtensions serializer
+        StringBuilder function, boolean allDelayed, String indentation, extension StatebasedCCodeSerializeHRExtensions serializer
     ) {
         val isImmediate = transition.immediate
         val hasTrigger = transition.trigger !== null
         
         if (index > 0) {
             function.add(
-                "} else {", NL
+                "} else {", NL, 
+                "  " // for the comment
             )
         }
+        
+        function.add(
+            SLC(indentation.length, "Start of transition " + index + " code (" + transition.serializeHR + ")")
+        )
         
         function.add(indentation)
         if (hasTrigger) {
@@ -392,7 +415,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 
             for (effect : transition.effects) {
                 function.add(
-                    indentation, "  ", effect.serialize, ";", NL
+                    indentation, "  ", effect.serializeHR, ";", NL
                 )
             }
             
@@ -408,7 +431,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 val cfrName = struct.getRegionName(cfr.value)
                                
                 conditionalBuilder.add(
-                    REGION_DATA_NAME, "->", cfrName, ".threadStatus == ", THREAD_STATUS_EMPTY
+                    REGION_DATA_NAME, "->", cfrName, ".threadStatus == ", THREAD_STATUS_INACTIVE
                 )
                 if (cfr.key < regionCount - 1) {
                     conditionalBuilder.add(
@@ -430,10 +453,16 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
         if (transition.targetState == transition.sourceState) {
             if (!transition.immediate) {
-                function.add(
-                    "  ", REGION_DATA_NAME, "->threadStatus = PAUSED;", NL,
-                    "  }", NL
-                )
+                if (allDelayed) {
+                    function.add(
+                        "}", NL
+                    )
+                } else {
+                    function.add(
+                        "  ", REGION_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
+                        "  }", NL
+                    )
+                }
             }
         } else {
             if (hasTrigger || !isImmediate) function.add("  ")
@@ -461,7 +490,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 
                 if (targetPrio < sourcePrio) {
                     function.add(
-                        "    ", REGION_DATA_NAME, "->threadStatus = DISPATCHED;", NL
+                        "    ", REGION_DATA_NAME, "->threadStatus = ", THREAD_STATUS_WAITING, ";", NL
                     )
                 }
             } 
@@ -474,10 +503,15 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 indentation, "}", NL,
                 indentation, "else", NL, 
                 "  {", NL,
-                indentation, "  ", REGION_DATA_NAME, "->", REGION_ROOT_THREADSTATUS, " = ", THREAD_STATUS_PAUSED, ";", NL, 
+                indentation, "  ", REGION_DATA_NAME, "->", REGION_ROOT_THREADSTATUS, " = ", THREAD_STATUS_PAUSING, ";", NL, 
                 "  }", NL
             )
         }
+        
+//        function.add(
+//            SLC(2, "End of transition " + index + " code (" + transition.serialize + ")")
+//        )
+        
     }
     
     def void generateControlflowRegion(ControlflowRegion cfr) {
@@ -485,7 +519,11 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val function = new StringBuilder => [ functions += it ]
         
         function.add(
+            SLC("Logic function for the " + cfrName + " region"), 
+            
             "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ") {", NL,
+            
+            SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
             "  while(", REGION_DATA_NAME, "->threadStatus == RUNNING) {", NL,
             "    switch(", REGION_DATA_NAME, "->activeState) {", NL
         )
