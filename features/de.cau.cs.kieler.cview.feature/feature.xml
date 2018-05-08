@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.cview.feature"
       label="KIELER CView"
-      version="0.1.0.qualifier"
+      version="0.1.1.qualifier"
       provider-name="Kiel University"
       plugin="de.cau.cs.kieler.cview">
 
