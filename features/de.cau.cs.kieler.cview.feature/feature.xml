@@ -231,6 +231,7 @@ litigation.
       <import feature="org.eclipse.elk.feature" version="0.1.0.201607121925"/>
       <import feature="org.eclipse.elk.ui.feature" version="0.1.0.201607121925"/>
       <import feature="org.eclipse.elk.graphviz.feature" version="0.1.0.201607121925"/>
+      <import feature="org.eclipse.elk.algorithms.feature" version="0.0.0.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.view.feature" version="0.3.1.201610170203"/>
    </requires>
 
