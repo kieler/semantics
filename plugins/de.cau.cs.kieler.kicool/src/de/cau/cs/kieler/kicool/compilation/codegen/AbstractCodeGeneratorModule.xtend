@@ -62,8 +62,8 @@ abstract class AbstractCodeGeneratorModule {
     
     
     // Convenient StringBuilder methods
-    private static val MAGIC_PREFIX = "$$$"
-    private static val NL_MAGIC = "$$$NL"
+    private static val MAGIC_PREFIX = "$ulf$"
+    private static val NL_MAGIC = MAGIC_PREFIX + "NL"
     private static val DEFAULT_CODE_LINE_LENGTH = 40
     private static val AUTO_CODE_LINE_LENGTH_SPACING = 4
     
@@ -160,17 +160,27 @@ abstract class AbstractCodeGeneratorModule {
         return StaticWhitespace.getSpace(spaces) + "// " + comment + "\n"
     }
     
-    //
+    // Multi-Line Comment
     protected def String MLC(Object ... args) {
+        MLCi(0, args)
+    }
+    
+    // Multi-Line Comment
+    protected def String MLCi(int spaces, Object ... args) {
         val sb = new StringBuilder
+        sb.append(StaticWhitespace.getSpace(spaces))
         sb.append("/* ")
         var first = true
         for (s : args) {
-            if (!first) sb.append(" * ")
+            if (!first) {
+                sb.append(StaticWhitespace.getSpace(spaces))
+                sb.append(" * ")
+            }
             sb.append(s)
             sb.append("\n")
             first = false                    
         }
+        sb.append(StaticWhitespace.getSpace(spaces))        
         sb.append(" */\n")
         return sb.toString
     }

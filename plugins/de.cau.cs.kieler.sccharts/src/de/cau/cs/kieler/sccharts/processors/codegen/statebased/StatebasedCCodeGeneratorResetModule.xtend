@@ -52,7 +52,7 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
                 "",
                 "This includes the following steps:", 
                 " - the active states of the root level regions are set to their initial states",
-                " - the root level thread is set to RUNNING", 
+                " - the root level thread is set to WAITING", 
                 " - all region interface pointers are set to the interface of the program"
             ),
             
