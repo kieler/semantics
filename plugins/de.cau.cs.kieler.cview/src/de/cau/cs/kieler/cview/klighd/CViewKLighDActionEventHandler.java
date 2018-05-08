@@ -48,7 +48,8 @@ import de.cau.cs.kieler.klighd.KlighdPlugin;
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ZoomStyle;
-import de.cau.cs.kieler.klighd.internal.IKlighdTrigger;
+//cmot: other solution (lpe)
+//import de.cau.cs.kieler.klighd.internal.IKlighdTrigger;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KAction;
@@ -291,7 +292,9 @@ public class CViewKLighDActionEventHandler implements PInputEventListener {
             }
         });
 
-        KlighdPlugin.getTrigger().triggerStatus(IKlighdTrigger.Status.UPDATE, viewer.getViewContext());
+
+        //cmot: other solution (lpe)
+        //KlighdPlugin.getTrigger().triggerStatus(IKlighdTrigger.Status.UPDATE, viewer.getViewContext());
     }
 
     private boolean guardsMatch(final KAction action, final KlighdMouseEvent event) {

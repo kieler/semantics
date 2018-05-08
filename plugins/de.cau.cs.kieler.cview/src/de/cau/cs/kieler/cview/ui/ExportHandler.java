@@ -45,7 +45,8 @@ public class ExportHandler {
                     (new RunnableWithProgress() {
                         public void run(IProgressMonitor monitor) {
                             SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
-                            monitor.beginTask("Processing " + workTotal + " files...", workTotal);
+                            // TODO @cmot: Changed to files and folders to better mirror actual process
+                            monitor.beginTask("Processing " + workTotal + " files and folders...", workTotal);
                             subMonitor.worked(1);
                             
                             // Call the private export method

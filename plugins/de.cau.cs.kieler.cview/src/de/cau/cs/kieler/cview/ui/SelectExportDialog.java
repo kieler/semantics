@@ -42,6 +42,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import de.cau.cs.kieler.cview.CViewPlugin;
 
 /**
+ * Dialog to select a single exporter that the user wants to run.
  * 
  * @author cmot
  * 

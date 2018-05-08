@@ -48,11 +48,22 @@ import org.eclipse.swt.widgets.Display
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.core.options.HierarchyHandling
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.properties.GreedySwitchType
-import org.eclipse.elk.alg.layered.properties.LayeredMetaDataProvider
-import org.eclipse.elk.alg.layered.p3order.CrossingMinimizationStrategy
+//import org.eclipse.elk.alg.layered.properties.LayeredMetaDataProvider
+//import org.eclipse.elk.alg.layered.p3order.CrossingMinimizationStrategy
+//import org.eclipse.elk.alg.force.properties.StressOptions
 import java.util.ArrayList
+import org.eclipse.elk.core.data.LayoutAlgorithmData
+import de.cau.cs.kieler.klighd.IViewChangeListener.ViewChange
+import org.eclipse.elk.alg.force.options.ForceOptions
+//newer: import org.eclipse.elk.alg.force.properties.ForceOptions
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+//newer: import org.eclipse.elk.alg.layered.properties.LayeredOptions
+
+import org.eclipse.elk.alg.force.options.ForceModelStrategy
+import org.eclipse.elk.alg.layered.options.GreedySwitchType
+//newer: import org.eclipse.elk.alg.layered.properties.GreedySwitchType
+
+//newer: import org.eclipse.elk.alg.force.model.ForceModelStrategy
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -72,7 +83,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static boolean parseFiles = false;
     public static boolean parseFilesOld = false;
-    public static int reparsingHashOld = 0;
+    public static int reparsingHashOld = -1;
     public static boolean skipFileContent = false;
 
     public static DiagramSynthesis instance = null;
@@ -98,9 +109,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     /** Option for enabling adaptive zoom */
     public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers",
-        MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE + 1, DEFAULT_EXPANDED_VALUE);
+        MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE + 1, 1, DEFAULT_EXPANDED_VALUE);
     public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
 
+	// Flatten Hierarchy is by default chosen as true, so the force directed layout is actually drawn
     public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
         "Flatten Hierarchy", false);
 
@@ -116,13 +128,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption HIDE_CONNECTIONS = SynthesisOption.createCheckOption("Hide Connections", false);
 
     public static final SynthesisOption COMBINE_CONNECTIONS = SynthesisOption.createCheckOption("Combine Connections",
+        true);
+        
+    public static final SynthesisOption DEV_MODE = SynthesisOption.createCheckOption("Developer Mode",
         false);
 
-    public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
+    public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", true);
 
     public static final SynthesisOption SHOW_HIDDEN = SynthesisOption.createCheckOption("Show Hidden", false);
 
     public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
+    
+    public static final SynthesisOption SHOW_HIERARCHY_IN_CONNECTIONS = SynthesisOption.createCheckOption("Show Hierarchy in Connections", false)
+    
+    // Adds the layout algorithm option. By default, force directed is chosen.
+    public static final SynthesisOption LAYOUT_ALGORITHM = SynthesisOption.createChoiceOption("Layout Algorithm", #["Layer Based", "Force Directed", "Stress Based"], "Layer Based")
 
     public static final float LINEWIDTH = 1.8f
     public static final float ROUNDRECT1 = 4
@@ -135,6 +155,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     static final String COLOR_GRAYEDOUT = "#E0E0E0"
 
+	
     val HashSet<Component> connectedComponents = new HashSet
     val HashSet<Component> connectedComponentsAdditional = new HashSet // thru hierarchy
     // needed for regarding combining of simple connections
@@ -152,190 +173,264 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     //
     override KNode transform(CViewModel model) {
         printlnConsole("INFO: Started diagram synthesis")
-
-        // Update synthesis
-        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
-            if (language instanceof AbstractCViewLanguage) {
-                language.setLastViewContext(this.getUsedContext())
-            }
-        }
-
-        val reparsingHashNew = reparsingHash
-        var reparsingHashChanged = false
-        if (reparsingHashOld != reparsingHashNew) {
-            reparsingHashOld = reparsingHashNew
-            reparsingHashChanged = true
-        }
-        parseFiles = reparsingRequired
-        if (parseFiles != parseFilesOld || reparsingHashChanged) {
-            parseFilesOld = parseFiles
-            if (CViewPlugin.monitorCanceled || reparsingHashChanged) {
-                CViewPlugin.rebuildModelAndrefreshCView(CViewPlugin.monitorCanceled)
-                return null;
-            } else {
-                CViewPlugin.refreshCView(false)
-            }
-        }
-
-        if (skipFileContent != SKIP_FILE_CONTENT.booleanValue) {
-            skipFileContent = SKIP_FILE_CONTENT.booleanValue
-            CViewPlugin.rebuildModelAndrefreshCView(true)
-            return null;
-        }
-
-        instance = this
-
-        if (selectedExpandLevel != EXPANDED_SLIDER.intValue) {
-            selectedExpandLevel = EXPANDED_SLIDER.intValue
-            if (!FLATTEN_HIERARCHY.booleanValue) {
-                Display.getDefault().asyncExec(new Runnable() {
-                    override run() {
-                        lastThread++
-                        val threadId = lastThread
-                        Thread.sleep(150);
-                        if (threadId == lastThread) {
-                            // If this is still the last thread, then do
-                            // refresh again. Otherwise the last thread will
-                            // do this
-                            CViewPlugin.refreshCView(true)
-                        }
-                    }
-                });
-            // return null;            
-            }
-        }
-
-        connectedComponents.clear
-        simpleConnections.clear
-
-        // Ensure filter values are set
-        FilterDialog.loadValues
-        // Clear filter cache
-        allowedByFilterCache.clear
-
-        if (ANONYMIZE.booleanValue) {
-            printlnConsole("INFO: - Anonymization")
-            // anonymize the model
-            for (component : model.components) {
-                component.name = component.name.possiblyAnonymize(true)
-                component.location = component.location.possiblyAnonymize(true)
-                component.tooltip = component.tooltip.possiblyAnonymize(false)
-                component.rawdata = component.rawdata.possiblyAnonymize(false)
-            }
-            for (connection : model.connections) {
-                connection.label = connection.label.possiblyAnonymize(true)
-                connection.tooltip = connection.tooltip.possiblyAnonymize(false)
-            }
-        }
-
-        val root = model.createNode().associateWith(model);
-        if (HIERARCHY_HANDLING.booleanValue) {
-            root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-            // root.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_STRATEGY, LayeredMetaDataProvider.CROSSING_MINIMIZATION_HIERARCHICAL_SWEEPINESS)
-            // root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_STRATEGY, CrossingMinimizationStrategy.INTERACTIVE);
-            root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType.OFF);
-
-        // root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-        }
-        val depth = 1;
-
-        printlnConsole("INFO: - Apply filter")
-        if (FilterDialog.valueTextFilter.nullOrEmpty || FilterDialog.valueCheckDisabled || ANONYMIZE.booleanValue) {
-            // DO NOT apply filter if (1) empty filter text, (2) disabled, (3) anonymized is on 
-            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
-            model.removeFilter
+        if(CViewPlugin.refreshPressed || CViewPlugin.isDiagramSynthesisActive) {
+        	CViewPlugin.refreshPressed = false;
+	        // Update synthesis
+	        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+	            if (language instanceof AbstractCViewLanguage) {
+	                language.setLastViewContext(this.getUsedContext())
+	            }
+	        }
+			
+			
+			if(CViewPlugin.isDiagramSynthesisActive && !CViewPlugin.deactivateVisualization) {
+		        val reparsingHashNew = reparsingHash
+		        var reparsingHashChanged = false
+		        // TODO @cmot: Do not reparse on the first run
+		        if(reparsingHashOld == -1) {
+		        	reparsingHashOld = reparsingHashNew
+		        }
+		        
+		        if (reparsingHashOld != reparsingHashNew) {
+		            reparsingHashOld = reparsingHashNew
+		            reparsingHashChanged = true
+		        }
+		        parseFiles = reparsingRequired
+		        if (parseFiles != parseFilesOld || reparsingHashChanged) {
+		            parseFilesOld = parseFiles
+		            if (CViewPlugin.monitorCanceled || reparsingHashChanged) {
+		            	if(CViewPlugin.isDiagramSynthesisActive) {
+			                CViewPlugin.rebuildModelAndrefreshCView(CViewPlugin.monitorCanceled)            		
+		            	}
+		                return null;
+		            } else {
+		                CViewPlugin.refreshCView(false)
+		            }
+		        }
+			}
+	
+	        if (skipFileContent != SKIP_FILE_CONTENT.booleanValue) {
+	            skipFileContent = SKIP_FILE_CONTENT.booleanValue
+	            if(CViewPlugin.isDiagramSynthesisActive) {
+	            	CViewPlugin.rebuildModelAndrefreshCView(true)            	
+	            }
+	            return null;
+	        }
+	
+	        instance = this
+			
+	        if (selectedExpandLevel != EXPANDED_SLIDER.intValue && !CViewPlugin.deactivateVisualization) {
+	            selectedExpandLevel = EXPANDED_SLIDER.intValue
+	            
+	            // TODO @cmot: Incorporating new options and required options
+	            if (!FLATTEN_HIERARCHY.booleanValue && !CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+	            		&& !(LAYOUT_ALGORITHM.objectValue == "Force Directed") && !(LAYOUT_ALGORITHM.objectValue == "Stress Based")) {
+	                Display.getDefault().asyncExec(new Runnable() {
+	                    override run() {
+	                        lastThread++
+	                        val threadId = lastThread
+	                        Thread.sleep(150);
+	                        if (threadId == lastThread) {
+	                            // If this is still the last thread, then do
+	                            // refresh again. Otherwise the last thread will
+	                            // do this
+	                            CViewPlugin.refreshCView(true)
+	                        }
+	                    }
+	                });
+	            // return null;            
+	            }
+	        }
+	
+	        connectedComponents.clear
+	        simpleConnections.clear
+	
+	        // Ensure filter values are set
+	        FilterDialog.loadValues
+	        // Clear filter cache
+	        allowedByFilterCache.clear
+	
+	        if (ANONYMIZE.booleanValue) {
+	            printlnConsole("INFO: - Anonymization")
+	            // anonymize the model
+	            for (component : model.components) {
+	                component.name = component.name.possiblyAnonymize(true)
+	                component.location = component.location.possiblyAnonymize(true)
+	                component.tooltip = component.tooltip.possiblyAnonymize(false)
+	                component.rawdata = component.rawdata.possiblyAnonymize(false)
+	            }
+	            for (connection : model.connections) {
+	                connection.label = connection.label.possiblyAnonymize(true)
+	                connection.tooltip = connection.tooltip.possiblyAnonymize(false)
+	            }
+	        }
+	
+	        val root = model.createNode().associateWith(model);
+	        
+	        // TODO @cmot: If the force directed layout algorithm is chosen, apply force directed options to the graph
+	        if(LAYOUT_ALGORITHM.objectValue == "Force Directed") {
+		        root.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.force")
+		        root.addLayoutParam(ForceOptions::MODEL, ForceModelStrategy.FRUCHTERMAN_REINGOLD)
+		        root.addLayoutParam(ForceOptions::TEMPERATURE, 0.01)
+		        root.addLayoutParam(ForceOptions::ITERATIONS, 1000)
+		        root.addLayoutParam(ForceOptions::SPACING_NODE_NODE, 200.0)
+	        }
+	        // TODO @cmot: If the layer based layout algorithm is chosen, apply layer based options to the graph
+	        if(LAYOUT_ALGORITHM.objectValue == "Layer Based") {
+		        if (HIERARCHY_HANDLING.booleanValue) {
+		            root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+		            // root.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_STRATEGY, LayeredMetaDataProvider.CROSSING_MINIMIZATION_HIERARCHICAL_SWEEPINESS)
+		            // root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_STRATEGY, CrossingMinimizationStrategy.INTERACTIVE);
+		            root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType.OFF);
+		
+		        // root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+		        }
+	        }
+	        
+	        // TODO @cmot: If the stress based layout algorithm is chosen, apply stress based options to the graph
+	        if(LAYOUT_ALGORITHM.objectValue == "Stress Based") {
+	        	// TODO Currently, stress based options cannot be adapted (due to cast-errors)
+	    		root.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.stress")
+	        }
+	        
+	        val depth = 1;
+	        // TODO @cmot: Draws edges first to layer them below nodes and labels. Does not currently work
+	        // TODO: KNOWN ISSUE!
+			usedContext.setProperty(KlighdProperties.EDGES_FIRST, true)
+			
+	        printlnConsole("INFO: - Apply filter")
+	        if (FilterDialog.valueTextFilter.nullOrEmpty || FilterDialog.valueCheckDisabled || ANONYMIZE.booleanValue) {
+	            // DO NOT apply filter if (1) empty filter text, (2) disabled, (3) anonymized is on 
+	            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
+	            model.removeFilter
+	        } else {
+	            model.applyFilter
+	            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
+	        }
+	
+	        // FLATTEN HIERARCHY: 
+	        // Add components's KNodes to the root KNode as children
+	        printlnConsole("INFO: - Drawing components")
+	        for (item : model.components) {
+	        	// TODO @cmot: Incorporating new options and required options
+	            if (item.parent == null || FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+	            			|| LAYOUT_ALGORITHM.objectValue == "Force Directed" || LAYOUT_ALGORITHM.objectValue == "Stress Based") {
+	                var skip = false;
+	                if (FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+	                			|| LAYOUT_ALGORITHM.objectValue == "Force Directed" || LAYOUT_ALGORITHM.objectValue == "Stress Based") {
+	                    if (EXPANDED_SLIDER.intValue < MAX_EXPANDED_VALUE && item.depth > EXPANDED_SLIDER.intValue) {
+	                        skip = true
+	                    }
+	                }
+	                if (!skip) {
+	                    if (item.visibleInView) {
+	                        val additionalItem = item.transformItem(depth)
+	                        if (additionalItem != null) {
+	                            root.children.add(additionalItem)
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	        
+	        // TODO @cmot: In stress based algorithm, add hierarchical edges before creating connections so that
+	        // components will not be considered unconnected by the "consider connected" option
+	        if(LAYOUT_ALGORITHM.objectValue == "Stress Based") {
+				addHierarchicalEdges(model)
+			}
+	
+	        // Create connections (added by extensions)
+	        if (!HIDE_CONNECTIONS.booleanValue) {
+	            printlnConsole("INFO: - Drawing connections")
+	            // Reset both hashmaps jere
+	            sourceDest2Number.clear
+	            sourceDest2Edge.clear
+	            masterConnectionMap.clear
+	            sourceDest2MasterConnection.clear
+	            portCache.clear
+	            for (connection : model.connections) {
+	                // Reset size for each pass
+	                connection.size = 0
+	            }
+	            for (connection : model.connections) {
+	                if (connection.visibleInView) {
+	                    var connectionColor = "Black".color
+	                    if (connection.color != null) {
+	                        connectionColor = connection.color.color
+	                    }
+	                    connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
+	                }
+	            }
+	
+	            // Update (combined) line widths
+	            for (simpleConnection : simpleConnections) {
+	                simpleConnection.updateSimpleConnection
+	            }
+	            simpleConnections.updateCombinedLineWithMeasuredMax
+	            for (simpleConnection : simpleConnections) {
+	                simpleConnection.updateSimpleConnectionLineWith
+	            }
+	        }
+	
+	        if (HIDE_UNCONNECTED.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_HIDE_UNCONNECTED) || LAYOUT_ALGORITHM.objectValue == "Stress Based") {
+	            printlnConsole("INFO: - Removing unconnected")
+	            if (!INTERLEVEL_CONNECTIONS.booleanValue || (!FLATTEN_HIERARCHY.booleanValue && !CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+	            																			&& !(LAYOUT_ALGORITHM.objectValue == "Force Directed")
+	            																			&& !(LAYOUT_ALGORITHM.objectValue == "Stress Based"))) {
+	                // Consider connected and their parents
+	                for (item : model.components) {
+	                    if (!connectedComponents.contains(item) && !connectedComponentsAdditional.contains(item)) {
+	                        item.node.remove
+	                    }
+	                }
+	            } else {
+	                // Only consider connected if interlevel + flattened
+	                for (item : model.components) {
+	                    if (!connectedComponents.contains(item)) {
+	                        item.node.remove
+	                    }
+	                }
+	            }
+	        }
+	
+	        printlnConsole("INFO: Done diagram synthesis")
+			
+			// TODO @cmot: Add Hierarchical edges
+			if(SHOW_HIERARCHY_IN_CONNECTIONS.booleanValue && (FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+																	|| LAYOUT_ALGORITHM.objectValue == "Force Directed")) {
+				addHierarchicalEdges(model)
+			}
+			
+	        if (root == null || root.children.size < 1) {
+	            if (model.components.size > 0) {
+	                root.children.add(transformInfoMessage("Everything Filtered Away", "GRAY"))
+	                printlnConsole("INFO: Everything filtered away")
+	            } else {
+	            	if(CViewPlugin.deactivateVisualization) {
+	            		root.children.add(transformInfoMessage("View Deactivated", "#FA8072"))
+	            		printlnConsole("INFO: Visualization deactivated")
+	            	} else {
+		                root.children.add(transformInfoMessage("No Components", "GRAY"))
+		                printlnConsole("INFO: No components")	            		
+	            	}
+	            }
+	        }
+	        
+	        // TODO @cmot: Add am invisible "clickable" canvas that deselects highlighting
+	        root.addInvisibleContainerRendering.addSingleClickAction(DeselectHighlightingAction.ID)
+	        
+	
+	        return root;
+        	
         } else {
-            model.applyFilter
-            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
-        }
-
-        // FLATTEN HIERARCHY: 
-        // Add components's KNodes to the root KNode as children
-        printlnConsole("INFO: - Drawing components")
-        for (item : model.components) {
-            if (item.parent == null || FLATTEN_HIERARCHY.booleanValue) {
-                var skip = false;
-                if (FLATTEN_HIERARCHY.booleanValue) {
-                    if (EXPANDED_SLIDER.intValue < MAX_EXPANDED_VALUE && item.depth > EXPANDED_SLIDER.intValue) {
-                        skip = true
-                    }
-                }
-                if (!skip) {
-                    if (item.visibleInView) {
-                        val additionalItem = item.transformItem(depth)
-                        if (additionalItem != null) {
-                            root.children.add(additionalItem)
-                        }
-                    }
-                }
-            }
-        }
-
-        // Create connections (added by extensions)
-        if (!HIDE_CONNECTIONS.booleanValue) {
-            printlnConsole("INFO: - Drawing connections")
-            // Reset both hashmaps jere
-            sourceDest2Number.clear
-            sourceDest2Edge.clear
-            masterConnectionMap.clear
-            sourceDest2MasterConnection.clear
-            portCache.clear
-            for (connection : model.connections) {
-                // Reset size for each pass
-                connection.size = 0
-            }
-            for (connection : model.connections) {
-                if (connection.visibleInView) {
-                    var connectionColor = "Black".color
-                    if (connection.color != null) {
-                        connectionColor = connection.color.color
-                    }
-                    connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
-                }
-            }
-
-            // Update (combined) line widths
-            for (simpleConnection : simpleConnections) {
-                simpleConnection.updateSimpleConnection
-            }
-            simpleConnections.updateCombinedLineWithMeasuredMax
-            for (simpleConnection : simpleConnections) {
-                simpleConnection.updateSimpleConnectionLineWith
-            }
-        }
-
-        if (HIDE_UNCONNECTED.booleanValue) {
-            printlnConsole("INFO: - Removing unconnected")
-            if (!INTERLEVEL_CONNECTIONS.booleanValue || !FLATTEN_HIERARCHY.booleanValue) {
-                // Consider connected and their parents
-                for (item : model.components) {
-                    if (!connectedComponents.contains(item) && !connectedComponentsAdditional.contains(item)) {
-                        item.node.remove
-                    }
-                }
-            } else {
-                // Only consider connected if interlevel + flattened
-                for (item : model.components) {
-                    if (!connectedComponents.contains(item)) {
-                        item.node.remove
-                    }
-                }
-            }
-        }
-
-        printlnConsole("INFO: Done diagram synthesis")
-
-        if (root == null || root.children.size < 1) {
-            if (model.components.size > 0) {
-                root.children.add(transformInfoMessage("Everything Filtered Away"))
-                printlnConsole("INFO: Everything filtered away")
-            } else {
-                root.children.add(transformInfoMessage("No Components"))
-                printlnConsole("INFO: No components")
-            }
-        }
-
-        return root;
+        	
+        	val elements = usedContext.getTargetElements(model)
+        	if(elements.empty) {
+        		return model.createNode().associateWith(model)
+        	} else {
+	        	return elements.get(0) as KNode        		
+        	}
+    	}
     }
 
     // ================================================================= //
@@ -389,16 +484,24 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         String toolTip
     ) {
         val childNodeOuter = item.createNode().associateWith(item);
-
         val rectCol = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
         rectCol.background = itemColor.color
         rectCol.selectionBackground = itemColor.color
+        // TODO @cmot: Add new Actions
+        rectCol.addSingleClickAction(EditorLinkageAction.ID);
+        rectCol.addSingleClickAction(HighlightEdgesAction.ID)
         rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
         if (opensInEditor) {
             rectCol.addDoubleClickAction(OpenEditorAction.ID);
+            // TODO @cmot: Add new Actions
+            rectCol.addSingleClickAction(EditorLinkageAction.ID)
+            rectCol.addSingleClickAction(HighlightEdgesAction.ID)
             rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
         } else {
             if (hierarchical) {
+            	// TODO @cmot: Add new Actions
+            	rectCol.addSingleClickAction(EditorLinkageAction.ID)
+            	rectCol.addSingleClickAction(HighlightEdgesAction.ID)
                 rectCol.addDoubleClickAction(CollapseExpandNoDragAction.ID);
             }
         }
@@ -407,8 +510,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectExp.background = itemColor.color
         rectExp.selectionBackground = itemColor.color
         rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+        // TODO @cmot: Add new Actions
+        rectExp.addSingleClickAction(EditorLinkageAction.ID)
+        rectExp.addSingleClickAction(HighlightEdgesAction.ID)
         if (opensInEditor) {
             rectExp.addDoubleClickAction(OpenEditorAction.ID);
+            // TODO @cmot: Add new Actions
+            rectExp.addSingleClickAction(EditorLinkageAction.ID)
+            rectExp.addSingleClickAction(HighlightEdgesAction.ID)
             rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
         } else {
             if (hierarchical) {
@@ -424,7 +533,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
         label.firstText.selectionBackground = itemColor.color
-
         if (toolTip != null) {
             rectCol.setProperty(KlighdProperties::TOOLTIP, toolTip);
             rectExp.setProperty(KlighdProperties::TOOLTIP, toolTip);
@@ -434,8 +542,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.firstText.addDoubleClickAction(OpenEditorAction.ID);
             label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
         }
+        // TODO @cmot: Add new Actions
+        label.firstText.addSingleClickAction(EditorLinkageAction.ID)
+        label.firstText.addSingleClickAction(HighlightEdgesAction.ID)
 
-        if (hierarchical && !FLATTEN_HIERARCHY.booleanValue) {
+        if (hierarchical && !(FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+        													|| LAYOUT_ALGORITHM.objectValue == "Force Directed"
+        													|| LAYOUT_ALGORITHM.objectValue == "Stress Based")) {
             // Hierarchical case
             label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             val childArea = item.children.createNode().associateWith(item)
@@ -452,7 +565,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
 
-            if (!FLATTEN_HIERARCHY.booleanValue) {
+            if (!FLATTEN_HIERARCHY.booleanValue && !CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+            									&& !(LAYOUT_ALGORITHM.objectValue == "Force Directed")
+            									&& !(LAYOUT_ALGORITHM.objectValue == "Stress Based")) {
                 for (child : item.children) {
                     if (child.visibleInView) {
                         val additionalItem = child.transformItem(depth + 1);
@@ -476,6 +591,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectCol.background = FOLDERCOLOR1.color;
         rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
         rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+        // TODO @cmot: Add new Actions
+        rectCol.addSingleClickAction(EditorLinkageAction.ID)
+        rectCol.addSingleClickAction(HighlightEdgesAction.ID)
         rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         val rectExp = childNodeOuter.addRoundedRectangle(3, 3, LINEWIDTH);
         rectExp.background = FOLDERCOLOR1.color;
@@ -483,6 +601,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectExp.selectionBackground = FOLDERCOLOR1.color;
         rectExp.selectionForeground = "black".color;
         rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+        // TODO @cmot: Add new Actions
+        rectExp.addSingleClickAction(EditorLinkageAction.ID)
+        rectExp.addSingleClickAction(HighlightEdgesAction.ID)
         rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -492,8 +613,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
         label.firstText.selectionBackground = FOLDERCOLOR1.color;
+        // TODO @cmot: Add new Actions
+        label.firstText.addSingleClickAction(EditorLinkageAction.ID)
+        label.firstText.addSingleClickAction(HighlightEdgesAction.ID)
 
-        if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+        if (item.hieararchical && !(FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+        															|| LAYOUT_ALGORITHM.objectValue == "Force Directed"
+        															|| LAYOUT_ALGORITHM.objectValue == "Stress Based")) {
             // Hierarchical case
             label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -510,8 +636,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
 
             childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
-
-            if (!FLATTEN_HIERARCHY.booleanValue) {
+            
+			// TODO @cmot: Incorporating new options and required options
+            if (!FLATTEN_HIERARCHY.booleanValue && !CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
+            									&& !(LAYOUT_ALGORITHM.objectValue == "Force Directed")
+            									&& !(LAYOUT_ALGORITHM.objectValue == "Stress Based")) {
                 for (child : item.children) {
                     if (child.visibleInView) {
                         val additionalItem = child.transformItem(depth + 1);
@@ -660,7 +789,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     def void addSimpleConnectionPossiblyCombined(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
         KColor color, boolean addLabel) {
 
-        if (!COMBINE_CONNECTIONS.booleanValue) {
+        if (!COMBINE_CONNECTIONS.booleanValue && !CViewPlugin.isOptionRequired(CViewPlugin.OPTION_COMBINE_CONNECTIONS)) {
             addSimpleConnection(connection, srcNode, dstNode, usePorts, color, addLabel)
         } else {
             // Key regarding type, src, dst    
@@ -690,8 +819,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     // Calculate the relative (actual) line with linearly to the maximal number
     // and respecting the maximal line with measured.   
     def int getActualLineWidth(int relativeLineWith) {
+    	// Corrected calculation TODO @cmot
         var returnLineWidth = (((relativeLineWith + 1) * COMBINED_LINE_WIDTH_GAIN) *
-            combinedLineWidthMeasuredMax) / COMBINED_LINE_WIDTH_MAX
+            COMBINED_LINE_WIDTH_MAX) / combinedLineWidthMeasuredMax
         println(relativeLineWith + " >>> " + returnLineWidth)
         if (returnLineWidth < COMBINED_LINE_WIDTH_MIN) {
             return COMBINED_LINE_WIDTH_MIN
@@ -742,7 +872,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         var tooltipText = simpleConnection.connection.tooltip
         if (currentNumber > 0) {
             // Show connection size (combined)
-            tooltipText = (currentNumber + 1) + " connections of type " + simpleConnection.connection.type + " combined"
+            var connectionName = ""
+            if(DEV_MODE.booleanValue) {
+            	connectionName = simpleConnection.connection.type
+            } else {
+            	if(simpleConnection.connection.type != null) {
+	            	val conHelper = simpleConnection.connection.type.split("\\.")
+	            	connectionName = conHelper.last            		
+            	} else {
+            		if(DEV_MODE.booleanValue) {
+            			connectionName = "#NO TYPE ID SPECIFIED#"
+            		}
+            		connectionName = "unknown"
+            	}
+            }
+            tooltipText = (currentNumber + 1) + " connections of type " + connectionName + " combined"
         }
         simpleConnection.edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
         if (simpleConnection.edge.labels.size > 0) {
@@ -780,13 +924,18 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val connectionObject = (connection.hashCode + srcNode.hashCode)
         val edge = connectionObject.createEdge()
         val key = connection.getKey(srcNode, dstNode)
+        edge.hashCode
         sourceDest2Edge.put(key, edge)
-        val arrowRendering = edge.addPolyline(2).addHeadArrowDecorator();
+        val edgePolyline = edge.addPolyline(2)
+        val arrowRendering = edgePolyline.addHeadArrowDecorator();
         arrowRendering.background = color.copy
         arrowRendering.foreground = color.copy
         edge.source = srcNode
         edge.target = dstNode
         edge.line.foreground = color.copy
+        edgePolyline.addDoubleClickAction(OpenEditorForConnectionAction.ID)
+        // TODO @cmot: Associate edge also with connection
+        edge.associateWith(connection);
         if (addLabel) {
             // Add Label only if top-most layer for this connection
             edge.addLabel(connection.label).associateWith(connection);
@@ -805,7 +954,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             // Add the connection
             var portId = connection.hashCode.toString
 //            var portSideDest = PortSide::WEST
-            if (COMBINE_CONNECTIONS.booleanValue) {
+            if (COMBINE_CONNECTIONS.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_COMBINE_CONNECTIONS)) {
 //                val srcDstKey = connection.getKey(srcNode, dstNode)
 //                val currentNumber = connection.getSrcDstNumber(srcNode, dstNode)
 //                println("GET("+srcDstKey+") "  + currentNumber + " : " + srcNode.toString + " --> " + dstNode.toString)
@@ -836,7 +985,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             var insideToOutside = false
             var outsideToInside = false
             var DIR = "FLAT ->"
-            if (COMBINE_CONNECTIONS.booleanValue) {
+            if (COMBINE_CONNECTIONS.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_COMBINE_CONNECTIONS)) {
                 insideToOutside = dstNode.isAnyParentFrom(srcNode)
                 outsideToInside = srcNode.isAnyParentFrom(dstNode)
                 if (insideToOutside) {
@@ -872,6 +1021,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             edge.line.foreground.propagateToChildren = true;
             edge.line.background.propagateToChildren = true;
         }
+    		
     }
 
     // ---------------------------------------------------------------------
@@ -879,7 +1029,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     def KPort retrievePort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
         KColor color, boolean dst) {
-        if (!COMBINE_CONNECTIONS.booleanValue) {
+        if (!COMBINE_CONNECTIONS.booleanValue && !CViewPlugin.isOptionRequired(CViewPlugin.OPTION_COMBINE_CONNECTIONS)) {
             return node.addPort(connection, mapping, x, y, size, side, color)
         } else {
             var portId = node.hashCode.toString + connection.dst.toString + side.hashCode + dst.hashCode
@@ -933,6 +1083,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             component.parent.addConnectedParents
         }
     }
+    
+    // ---------------------------------------------------------------------
+    // TODO @cmot: Add hierarchical edges
+    def void addHierarchicalEdges(CViewModel model) {
+    	for(item : model.components) {
+			val parent = item.parent
+			if(parent != null) {
+				val connection = item.connectTo(parent)
+				connection.type = "de.cau.cs.kieler.cview.hierarchicalChild"
+				connection.color = "#f0f0f0"
+				connection.tooltip = "CHILD OF"
+				addConnection(connection, false, connection.color.color)
+			}
+		}
+    }
 
     // ================================================================= //
     // ==                    HELPER CONNECTION                        == //
@@ -985,7 +1150,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     // ==                        INFO MESSAGE                         == //
     // ================================================================= //
     //
-    def KNode transformInfoMessage(String messageText) {
+    def KNode transformInfoMessage(String messageText, String color) {
         val childNode = messageText.createNode()
         val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH)
         val label = childNode.addInsideCenteredNodeLabel(messageText, KlighdConstants.DEFAULT_FONT_SIZE,
@@ -994,9 +1159,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
         childRect.background = "WHITE".color
         childRect.selectionBackground = "WHITE".color
-        childRect.foreground = "GRAY".color
+        childRect.foreground = color.color
         label.firstText.selectionBackground = "WHITE".color
-        label.firstText.foreground = "GRAY".color
+        label.firstText.foreground = color.color
         return childNode
     }
 
@@ -1005,12 +1170,24 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     // ================================================================= //
     //
     // Speed up filtering
-    val HashMap<EObject, Boolean> allowedByFilterCache = new HashMap
+    val HashMap<EObject, Boolean> allowedByFilterCache 	= newHashMap
+	val HashSet<Component> visited						= newHashSet
 
     // ---------------------------------------------------------------------
     def void applyFilter(CViewModel model) {
+    	visited.clear
         for (component : model.components) {
-            component.filtered = !component.allowedByFilterComponent
+            component.allowedByFilterComponentSearch(false)
+        }
+        
+        // TODO @cmot: Only check for filtered out components after all components were checked. This way, 
+        // all components will be considered after they were "updated" by neighbors.
+        for(component : model.components) {
+        	component.filtered = !(allowedByFilterCache.containsKey(component) && allowedByFilterCache.get(component))
+        	// Also draw all parents, otherwise, a component will not be drawn.
+        	if(!component.filtered) {
+        		component.allowAlsoParent
+        	}
         }
     }
 
@@ -1019,29 +1196,50 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             component.filtered = false
         }
     }
-
-    // ---------------------------------------------------------------------
-    def boolean allowedByFilterComponent(Component component) {
-        if (FilterDialog.valueCheckDisabled) {
-            return true
-        }
-        if (FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
+    
+    def void allowAlsoParent(Component component) {
+    	var parent = component.parent
+    	while(parent != null) {
+    		parent.filtered = false
+    		parent = parent.parent
+    	}
+    }
+	
+	
+	
+	def boolean allowedByFilterComponentSearch(Component component, boolean allowedByNeighbor) {
+		if(visited.contains(component)) {
+			if(allowedByFilterCache.containsKey(component)) {
+				allowedByFilterCache.replace(component, allowedByFilterCache.get(component) || allowedByNeighbor)
+			} else {
+				allowedByFilterCache.put(component, allowedByNeighbor)				
+			}
+			return allowedByFilterCache.get(component)
+		}
+		visited.add(component)
+		
+		
+		if(FilterDialog.valueCheckDisabled) {
+			allowedByFilterCache.put(component, true)
+			return true
+		}
+		
+		if (FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
             // If connection-filter, then return here, allow all components
+            allowedByFilterCache.put(component, true)
             return true
         }
-        if (allowedByFilterCache.containsKey(component)) {
-            return allowedByFilterCache.get(component)
-        }
+        
         var allowed = false
         val level = component.depth - 1
-        if (level < FilterDialog.valueLayerStart || (level > FilterDialog.valueLayerEnd &&
-            FilterDialog.valueLayerEnd < DiagramSynthesis.MAX_EXPANDED_VALUE)) {
-            // If hierarchy level is not to consider, then return
-            allowed = true
-        }
-
-        if (!allowed) {
-            var filter = FilterDialog.valueTextFilter
+        if(level < FilterDialog.valueLayerStart || (level > FilterDialog.valueLayerEnd &&
+        											FilterDialog.valueLayerEnd < DiagramSynthesis.MAX_EXPANDED_VALUE)) {
+    		// If hierarchy level is not to consider, then return
+        	allowed = true
+    	}
+		
+		if(!allowed) {
+			var filter = FilterDialog.valueTextFilter
             var matching = false
             var whatToCheck = component.name
             if (!FilterDialog.valueCheckCaseSensitive) {
@@ -1060,29 +1258,93 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 // matching items are filtered away (negate options): matching ==> false (not allowed)
                 allowed = !matching
             }
-        }
-        // if consider connected
-        if (allowed && FilterDialog.valueCheckConnected) {
-            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, false,
-                null)
-            connectedComponents.addAll(
-                component.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null))
-            // => allow also all connected
-            for (connectedComponent : connectedComponents) {
-                allowedByFilterCache.put(connectedComponent, true)
-            }
-        }
-
-        if (!allowed && FilterDialog.valueCheckChilds) {
+            // if consider connected
+	        if (allowed && FilterDialog.valueCheckConnected) {
+//	            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, false,
+//	                null)
+//	            connectedComponents.addAll(
+//	                component.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null))
+	            // => allow also all connected
+	            val connectedComponents = component.getAllImmediateConnections(true, true)
+	            for (connectedComponent : connectedComponents) {
+	                allowedByFilterComponentSearch(connectedComponent, true)
+	            }
+	        }
+		}
+		
+		if (!allowed && FilterDialog.valueCheckChilds) {
             // Check if any child is allowed => allow this parent
             if (component.allowedByFilterAnyChild) {
                 allowed = true
             }
         }
         // println("FILTER '" + component.name + "' --> " + allowed)
-        allowedByFilterCache.put(component, allowed)
-        return allowed;
-    }
+        allowedByFilterCache.put(component, allowed || allowedByNeighbor)
+        return allowed || allowedByNeighbor;
+	}
+	
+    // ---------------------------------------------------------------------
+//    def boolean allowedByFilterComponent(Component component) {
+//        if (FilterDialog.valueCheckDisabled) {
+//            return true
+//        }
+//        if (FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
+//            // If connection-filter, then return here, allow all components
+//            return true
+//        }
+//        if (allowedByFilterCache.containsKey(component)) {
+//            return allowedByFilterCache.get(component)
+//        }
+//        var allowed = false
+//        val level = component.depth - 1
+//        if (level < FilterDialog.valueLayerStart || (level > FilterDialog.valueLayerEnd &&
+//            FilterDialog.valueLayerEnd < DiagramSynthesis.MAX_EXPANDED_VALUE)) {
+//            // If hierarchy level is not to consider, then return
+//            allowed = true
+//        }
+//        if (!allowed) {
+//            var filter = FilterDialog.valueTextFilter
+//            var matching = false
+//            var whatToCheck = component.name
+//            if (!FilterDialog.valueCheckCaseSensitive) {
+//                whatToCheck = whatToCheck.toLowerCase
+//                filter = filter.toLowerCase
+//            }
+//            if (FilterDialog.valueCheckRegExp) {
+//                matching = whatToCheck.matches(filter);
+//            } else {
+//                matching = whatToCheck.contains(filter);
+//            }
+//            if (!FilterDialog.valueCheckNegative) {
+//                // non-matching items are filtered away: non-matching ==> false (not allowed)
+//                allowed = matching
+//            } else {
+//                // matching items are filtered away (negate options): matching ==> false (not allowed)
+//                allowed = !matching
+//            }
+//        }
+//        // if consider connected
+//        if (allowed && FilterDialog.valueCheckConnected) {
+//            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, false,
+//                null)
+//            connectedComponents.addAll(
+//                component.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null))
+//            // => allow also all connected
+//            for (connectedComponent : connectedComponents) {
+//                allowedByFilterCache.put(connectedComponent, true)
+//            }
+//        }
+//
+//        if (!allowed && FilterDialog.valueCheckChilds) {
+//            // Check if any child is allowed => allow this parent
+//            if (component.allowedByFilterAnyChild) {
+//                allowed = true
+//            }
+//        }
+//        // println("FILTER '" + component.name + "' --> " + allowed)
+//        allowedByFilterCache.put(component, allowed)
+//        return allowed;
+//    }
 
     // ---------------------------------------------------------------------
     def boolean allowedByFilterAnyChild(Component component) {
@@ -1095,7 +1357,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     // ---------------------------------------------------------------------
     def boolean allowedByFilterAnyChildHelper(Component component) {
-        if (component.allowedByFilterComponent) {
+        if (component.allowedByFilterComponentSearch(false)) {
             return true
         }
         for (childComponent : component.children) {
@@ -1220,8 +1482,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         override getDisplayedSynthesisOptions() {
             val options = new LinkedHashSet();
             // Add general options
+            options.addAll(DEV_MODE);
             options.addAll(EXPANDED_SLIDER);
+            // Added layout algorithm option TODO @cmot
+            options.addAll(LAYOUT_ALGORITHM);
             options.addAll(FLATTEN_HIERARCHY);
+            options.addAll(SHOW_HIERARCHY_IN_CONNECTIONS);
             options.addAll(INTERLEVEL_CONNECTIONS);
             options.addAll(HIERARCHY_HANDLING)
             options.addAll(SKIP_FILE_CONTENT);
@@ -1313,5 +1579,44 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
     // ---------------------------------------------------------------------
+	
+	// TODO @cmot: Gets all children and childrens children
+	def List<Component> getAllChildren(Component component) {
+		val children = newArrayList
+		
+		for(child : component.children) {
+			children.add(child)
+			children.addAll(getAllChildren(child))
+		}
+		
+		return children
+	}
+	
+	// TODO @cmot: Returns all immediate connections of a component as well as all its parents (and parent's parents) and children
+	// (and children's children) if desired
+	def List<Component> getAllImmediateConnections(Component component, boolean considerChildren, boolean considerParent) {
+    	val connections = newArrayList
+    	for(con : component.outgoingConnections) {
+    		connections.add(con.dst)
+    	}
+    	for(con : component.incomingConnections) {
+    		connections.add(con.src)
+    	}
+    	
+    	if(considerChildren) {
+    		connections.addAll(component.getAllChildren)
+    	}
+    	
+    	if(considerParent) {
+    		var parent = component.parent
+    		while(parent != null) {
+    			connections.add(parent)
+    			parent = parent.parent
+    		}
+    	}
+    	
+    	return connections
     }
+    
+}
     

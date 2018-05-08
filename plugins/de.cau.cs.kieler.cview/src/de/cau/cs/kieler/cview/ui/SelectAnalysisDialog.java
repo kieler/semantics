@@ -42,6 +42,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import de.cau.cs.kieler.cview.CViewPlugin;
 
 /**
+ * Dialog to select all analysis that the user wants to run.
  * 
  * @author cmot
  * 

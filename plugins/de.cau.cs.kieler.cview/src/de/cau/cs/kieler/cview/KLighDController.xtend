@@ -14,6 +14,7 @@ package de.cau.cs.kieler.cview
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
+import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
 import de.cau.cs.kieler.cview.klighd.DiagramSynthesis
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
@@ -21,10 +22,13 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import java.io.File
 import java.util.HashMap
+import org.eclipse.core.resources.IWorkspace
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.IProgressMonitor
-import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
-import org.eclipse.core.runtime.SubMonitor
-import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Path
+
+import static de.cau.cs.kieler.cview.CViewPlugin.*
 
 /**
  * The concrete KLighDController building the CViewModel and updating
@@ -48,31 +52,32 @@ class KLighDController extends AbstractKLighDController {
     // ------------------------------------------------------------------------
 
     def int countModel(CViewModel model, Object element) {
-        var i = 1;
-        var filePath = getFilePath(element);
-        var folderPath = getDirPath(element);
-        val projectPath = getProjectPath(element);
-        if (element instanceof File) {
-            if (!element.isDirectory) {
-                filePath = element.absolutePath
-            } else {
-                folderPath = element.absolutePath
-            }
-        }
-        if (!projectPath.nullOrEmpty) {
-            // Project
-            for (e : listFiles(projectPath, "*")) {
-                i = i + model.countModel(e)
-            }
-        } else if (!folderPath.nullOrEmpty) {
-            // Folder   
-            for (e : listFiles(folderPath, "*")) {
-                i = i + model.countModel(e)
-            }
-        } else if (!filePath.nullOrEmpty) {
-            // File
-        }
-        return i;
+    	// TODO @cmot: Updated due to change in calculating number of files
+//        var i = 1;
+//        var filePath = getFilePath(element);
+//        var folderPath = getDirPath(element);
+//        val projectPath = getProjectPath(element);
+//        if (element instanceof File) {
+//            if (!element.isDirectory) {
+//                filePath = element.absolutePath
+//            } else {
+//                folderPath = element.absolutePath
+//            }
+//        }
+//        if (!projectPath.nullOrEmpty) {
+//            // Project
+//            for (e : listFiles(projectPath, "*")) {
+//                i = i + model.countModel(e)
+//            }
+//        } else if (!folderPath.nullOrEmpty) {
+//            // Folder   
+//            for (e : listFiles(folderPath, "*")) {
+//                i = i + model.countModel(e)
+//            }
+//        } else if (!filePath.nullOrEmpty) {
+//            // File
+//        }
+        return KLighDController.selectionCount;
     }
 
     // ------------------------------------------------------------------------
@@ -88,6 +93,9 @@ class KLighDController extends AbstractKLighDController {
         var folderPath = getDirPath(element);
         val projectPath = getProjectPath(element);
         
+        var filePathWS = ""
+        var folderPathWS = ""
+        
         if (monitor.canceled) {
             return null;
         }
@@ -97,8 +105,14 @@ class KLighDController extends AbstractKLighDController {
         if (element instanceof File) {
             if (!element.isDirectory) {
                 filePath = element.absolutePath
+                val workspace = ResourcesPlugin.getWorkspace();
+        		val loc = Path.fromOSString(filePath);
+        		filePathWS = workspace.getRoot().getFileForLocation(loc).getFullPath().toString;
             } else {
                 folderPath = element.absolutePath
+                val workspace = ResourcesPlugin.getWorkspace();
+        		val loc = Path.fromOSString(folderPath);
+        		folderPathWS = workspace.getRoot().getFileForLocation(loc).getFullPath().toString;
             }
         }
 
@@ -106,6 +120,7 @@ class KLighDController extends AbstractKLighDController {
             // Project
             val dir = cViewModelExtensions.createDir
             dir.location = projectPath;
+            dir.workspaceLocation = projectPath
             dir.name = element.toString.componentName
             // dir.project = true
             model.components.add(dir)
@@ -122,6 +137,7 @@ class KLighDController extends AbstractKLighDController {
             // Folder   
             val dir = cViewModelExtensions.createDir
             dir.location = folderPath;
+            dir.setWorkspaceLocation = folderPathWS
             dir.name = element.toString.componentName
             model.components.add(dir)
             if (parent != null) {
@@ -138,6 +154,7 @@ class KLighDController extends AbstractKLighDController {
             val file = cViewModelExtensions.createFile; // CViewModelFactory.eINSTANCE.createFile;
             model.components.add(file);
             file.location = filePath;
+            file.workspaceLocation = filePathWS
             file.name = element.toString.componentName
 
             // Add all functions to the file
@@ -186,11 +203,13 @@ class KLighDController extends AbstractKLighDController {
     // ------------------------------------------------------------------------
 
     override preCalculateModel(Object[] allselections) {
-        var i = 0;
-        for (Object element : allselections) {
-            i = i + model.countModel(element)
-        }
-        return i;
+//        var i = 0;
+//        for (Object element : allselections) {
+//            i = i + model.countModel(element)
+//        }
+//        return i;
+		// TODO @cmot Changed this due to change in counting files/folders
+		return KLighDController.selectionCount;
     }
 
     // ------------------------------------------------------------------------

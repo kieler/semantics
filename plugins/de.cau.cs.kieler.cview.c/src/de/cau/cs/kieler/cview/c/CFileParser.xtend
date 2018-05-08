@@ -33,6 +33,11 @@ import org.eclipse.core.runtime.Path
 import de.cau.cs.kieler.cview.CViewPlugin
 
 /**
+ * CDT parser to be run for C code. There are two options: The backup mechanism tries to
+ * parse each file in isolation which should be possible for any c file. This can be enforced using the
+ * CLanguage.OPATION_PARSE_ISOLATED option. The other option, the default, is to try to use the prebuild
+ * index which can be configured for the CDT in the appropriate preference pages. 
+ * 
  * @author cmot
  * 
  */

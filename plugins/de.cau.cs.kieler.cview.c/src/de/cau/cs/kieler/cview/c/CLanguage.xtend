@@ -25,6 +25,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
+import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
@@ -32,24 +33,24 @@ import java.util.Set
 import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
 import org.eclipse.cdt.core.dom.ast.ASTVisitor
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTName
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
 import org.eclipse.cdt.core.dom.ast.IFunction
 import org.eclipse.cdt.core.dom.ast.ITypedef
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPClassType
-import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.cdt.core.dom.ast.IScope
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator
-import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator
-import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition
-import java.util.HashMap
-import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.IProgressMonitor
 
 /**
+ * This is the default implementation for the C language and its specialties that are
+ * build-in into the C view. Other languages can be supported similarly.
+ * 
  * @author cmot
  * 
  */
@@ -298,7 +299,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
                                     fileComponent.children.add(typeTypedefComponent)
                                     typeTypedefComponent.parent = fileComponent
                                 }
-                                if (binding instanceof CPPClassType) {
+                                if (binding instanceof CPPClassType) { 
                                     val parent = name.parent
                                     if (parent instanceof CPPASTCompositeTypeSpecifier) {
                                         val typeSpec = parent as CPPASTCompositeTypeSpecifier
@@ -425,11 +426,19 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
                     // Func Ref
                     connection.color = FUNCTIONCOLORTRANS
                     connection.tooltip = component.reference.name + "  from  " + component.reference.parent.name
+                    
+                    // TODO @cmot: Decide whether the connections should be shown depending on the "show references" option
+                    if(!SHOW_REFERENCES_FUNC.booleanValue) {
+                    	connection.hide = true
+                    } else {
+                    	connection.hide = false
+                    }
+                    
                     returnSet.add(connection)
                 }
             }
             if (SHOW_REFERENCES_TYPE.getBooleanValue ||
-                de.cau.cs.kieler.cview.c.CLanguage.OPTION_CONNECTION_TYPE.isOptionRequired) {
+                CLanguage.OPTION_CONNECTION_TYPE.isOptionRequired) {
                 // Add more (default-)connections that represent the references here
                 for (component : model.components.filter[e|e.reference != null]) {
                     if (monitor.canceled) {
@@ -459,6 +468,8 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
                                     val connection = component.connectTo(includedComponent)
                                     connection.color = "#00D200"
                                     connection.tooltip = include.name.toString
+                                    // TODO @cmot: Added inclusion type to connection
+                                    connection.type = CONNECTION_TYPE_INCLUSION
                                     returnSet.add(connection)
                                 }
                                 printlnConsole("INFO: Inclusion '" + include.name + "'")

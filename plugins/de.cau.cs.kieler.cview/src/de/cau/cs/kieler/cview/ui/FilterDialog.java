@@ -377,9 +377,9 @@ public class FilterDialog extends Dialog {
 
 
         btnCheckTransitions = new Button(compositeInnerChecks, SWT.CHECK);
-        btnCheckTransitions.setText("Apply to transitions");
+        btnCheckTransitions.setText("Apply to connection labels");
         btnCheckTransitions.setToolTipText(
-                "Apply filter to transitions. Without selecting this option, the filter is applied to components.");
+                "Apply filter to the labels of connections. Without selecting this option, the filter is applied to components.");
 
         SelectionListener btnListener = new SelectionListener() {
             @Override

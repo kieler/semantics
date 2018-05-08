@@ -22,7 +22,7 @@ import java.util.ArrayList
 import java.util.HashSet
 import java.util.List
 import java.util.Set
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import java.util.HashMap
 
 /**
  * Basic commonly usable analysis functionality, e.g., (struct) type dependencies.
@@ -203,6 +203,41 @@ class CViewAnalysisExtensions {
             }
         }
         return returnList
+    }
+    
+    //TODO @cmot: FindByName implementation using a HashMap.
+    private HashMap<String, Component> nameSet
+    
+    /** 
+     * Clears the nameSet
+     */
+    def clearSet() {
+    	if(nameSet != null) {
+	    	nameSet.clear		
+    	}
+    	return
+    }
+    
+    /** 
+     * 	TODO @cmot:
+     *  Finds a component with the given name using a hashmap implementation.
+     * 		@param model The given model
+     * 		@param searchString the name of the component to search for
+     * 
+     * 		@return A set containing all Components with the provided name
+     */
+    def Set<Component> findByName2(CViewModel model, String searchString) {
+    	if(nameSet == null || nameSet.empty) {
+    		nameSet = newHashMap
+    		for(component : model.components) {
+    			nameSet.put(component.name, component)
+    		}
+    	}
+    	val x = newHashSet
+    	if(nameSet.containsKey(searchString)) {
+	    	x.add(nameSet.get(searchString))    		
+    	}
+    	return x
     }
 
 

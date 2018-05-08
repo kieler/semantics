@@ -58,7 +58,9 @@ import de.cau.cs.kieler.cview.hooks.ICViewAnalysis;
 import de.cau.cs.kieler.cview.hooks.ICViewExport;
 import de.cau.cs.kieler.cview.hooks.ICViewLanguage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.model.cViewModel.Connection;
 import de.cau.cs.kieler.cview.ui.SelectAnalysisDialog;
+import de.cau.cs.kieler.klighd.kgraph.KEdge;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import org.eclipse.core.runtime.Status;
@@ -87,6 +89,15 @@ public class CViewPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
     public static final String PLUGIN_ID = "de.cau.cs.kieler.cview"; //$NON-NLS-1$
+    
+    // TODO @cmot: Options for requiring
+    public static String OPTION_COMBINE_CONNECTIONS = "de.cau.cs.kieler.cview.options.combineconnections";
+	public static String OPTION_HIDE_UNCONNECTED = "de.cau.cs.kieler.cview.options.hideunconnected";
+	public static String OPTION_FLATTEN_HIERARCHY = "de.cau.cs.kieler.cview.options.flattenhierarchy";
+	
+	// TODO @cmot: Threshold for when an analysis counts as "huge"
+	// TODO: In preference page!
+	public static int hugeAnalysis = 200;
 
     static ArrayList<ICViewAnalysis> analysisHooks = null;
     static ArrayList<ICViewExport> exportHooks = null;
@@ -100,7 +111,20 @@ public class CViewPlugin extends AbstractUIPlugin {
 
     // True if monitor was canceled, enforces complete rebuild
     static public boolean monitorCanceled = false;
+    
+    // TODO @cmot: Option for showing a warning
+    static public boolean showWarning = false;
+    
+    // TODO @cmot: Option for manual synthesis
+    static public boolean isDiagramSynthesisActive = true;
+    static public boolean refreshPressed = false;
 
+    // TODO @cmot: Option for highlighting selection in CView
+    static public boolean highlightSelection = false;
+    
+    // TODO @cmot: Option for deactivating the visualization
+    static public boolean deactivateVisualization = false;
+    
     static private CViewPlugin instance = null;
     
     // -------------------------------------------------------------------------
@@ -377,6 +401,16 @@ public class CViewPlugin extends AbstractUIPlugin {
 
     public static void refreshCView(boolean forceRebuid) {
         AbstractKLighDController.controller.refreshCView(forceRebuid);
+    }
+    
+    public static void deleteCView() {
+    	AbstractKLighDController.controller.setNoCView();
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    public static void rebuildModelNoRefresh(boolean forceRebuild) {
+    	AbstractKLighDController.controller.rebuildModelNoRefresh(forceRebuild);
     }
 
     // -------------------------------------------------------------------------

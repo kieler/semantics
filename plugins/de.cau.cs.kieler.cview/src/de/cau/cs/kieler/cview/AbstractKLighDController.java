@@ -1,57 +1,35 @@
 package de.cau.cs.kieler.cview;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-import org.eclipse.core.internal.resources.File;
-import org.eclipse.core.internal.resources.Folder;
+import org.eclipse.cdt.core.model.ICElement;
+import org.eclipse.cdt.internal.core.model.Parent;
 import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.elk.graph.properties.IProperty;
-import org.eclipse.elk.graph.properties.Property;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageLayout;
-import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
@@ -59,24 +37,14 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.Perspective;
-import org.eclipse.ui.internal.Workbench;
-
-import com.google.common.primitives.Bytes;
 
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
-import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.kgraph.KNode;
-import de.cau.cs.kieler.klighd.piccolo.internal.controller.DiagramController;
-import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KNodeAbstractNode;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
-import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
-import de.cau.cs.kieler.klighd.util.RenderingContextData;
 
 /**
  * Abstract controller for general behavior used for updating the model and initiating the CView
@@ -92,10 +60,16 @@ public abstract class AbstractKLighDController {
             "de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart";
     public static String CVIEW_KLIGHD_TITLE = "C View";
     public static String CVIEW_KLIGHD_TITLE_FILTERED = "C View  (FILTERED)";
+    
+    // TODO @cmot: an invalid number of files in the selection
+    public static int COUNT_INVALID = -1;
 
     static CViewModel model = null;
     static AbstractKLighDController controller = null;
     static Object[] allSelections;
+    
+    // TODO @cmot: the count of all files
+    private static int fileCount = -1;
     
     // Initially, force a complete re-build (no refresh) for the (existing) KLighD view
     static boolean viewInitialized = false;
@@ -117,8 +91,20 @@ public abstract class AbstractKLighDController {
     public static CViewModel getModel() {
         return model;
     }
-
+    
+    
+    public static int getSelectionCount() {
+    	if(fileCount == COUNT_INVALID) {
+    		controller.updateCount();
+    	}
+    	return fileCount;
+    }
+    
     // -------------------------------------------------------------------------
+    
+    public static AbstractKLighDController getController() {
+    	return controller;
+    }
 
     public List<java.io.File> listFiles(String dirPath) {
         return listFiles(dirPath, "*.{c,h}");
@@ -153,7 +139,10 @@ public abstract class AbstractKLighDController {
                 ISelectionListener selectionListener = new ISelectionListener() {
                     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
                         // Save selection in ANY case (for later usage)
-                        allSelections = ((IStructuredSelection) selection).toArray();
+//                        allSelections = ((IStructuredSelection) selection).toArray();
+                    	allSelections = removeChildren((IStructuredSelection) selection);
+                    	// TODO @cmot: Resets count
+                    	resetCount();
                     }
                 };
                 selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
@@ -161,7 +150,98 @@ public abstract class AbstractKLighDController {
             }
         });
     }
-
+    
+    private Object[] removeChildren(IStructuredSelection selection) {
+    	Object[] selected = selection.toArray();
+    	HashSet<Object> selectedSet = new HashSet<Object>();
+    	List<Object> selectedNoChildrenList = new ArrayList<Object>();
+    	for(Object obj : selected) {
+    		selectedSet.add(obj);
+    	}
+    	for(Object obj : selected) {
+    		if(obj instanceof Project) {
+    			Object[] ret = {obj};
+    			return ret;
+    		}
+    		if(obj instanceof ICElement) {
+    			ICElement objElement = (ICElement) obj;
+    			ICElement parent = objElement.getParent();
+    			boolean contained = false;
+    			while(parent != null && !contained) {
+    				if(selectedSet.contains(parent)) {
+    					contained = true;
+    				}
+    				parent = parent.getParent();
+    			}
+    			if(!contained) {
+    				selectedNoChildrenList.add(obj);
+    			}
+    		}
+    	}
+    	
+    	return selectedNoChildrenList.toArray();
+    }
+    
+    
+    /** TODO @cmot
+     * Resets count. Count must be recalculated before the next query.
+     */
+    private void resetCount() {
+    	fileCount = COUNT_INVALID;
+    }
+    
+    
+    /** TODO @cmot
+     * Updates the count. Takes all selected elements and counts its files and folders.
+     * Writes the result to the static integer fileCount.
+     */
+    private void updateCount() {
+    	HashSet<File> files = new HashSet<File>();
+    	
+    	for(Object selectedObject : allSelections) {
+    		File file = null;
+    		
+    		if(selectedObject instanceof File) {
+    			file = (File) selectedObject;
+    		} else {
+    			String filePath = getFilePath(selectedObject);
+    			String folderPath = getDirPath(selectedObject);
+    			String projectPath = getProjectPath(selectedObject);
+    			
+    			if(filePath != null && !filePath.isEmpty()) {
+    				file = new File(filePath);
+    			} else if (folderPath != null && !folderPath.isEmpty()) {
+    				file = new File(folderPath);
+    			} else if (projectPath != null && !projectPath.isEmpty()) {
+    				file = new File(projectPath);
+    			}
+    			
+    		}
+    		
+    		addAllFilesToHashSet(file, files);
+    	}
+    	
+    	fileCount = files.size();
+    }
+    
+    /** TODO @cmot
+     * Adds all child files, the files themselves and the folders themselves 
+     * to the provided Set.
+     * 
+     * @param element The element to examine
+     * @param files The set
+     */
+    private void addAllFilesToHashSet(File element, HashSet<File> files) {
+    	if(element.isFile()) {
+    		files.add(element);
+    	} else if(element.isDirectory()) {
+    		files.add(element);
+    		for(File child : element.listFiles()) {
+    			addAllFilesToHashSet(child, files);
+    		}
+    	}
+    }
+    
     // -------------------------------------------------------------------------
 
     public static void findAndCloseOldViews() {
@@ -246,10 +326,41 @@ public abstract class AbstractKLighDController {
             }
         });
     }
+    
+    public void setNoCView() {
+    	Display.getDefault().asyncExec(new Runnable() {
+    		public void run() {
+    			DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+    			CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+    			if(view == null) {
+    				KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
+                            properties);
+    			} else {
+    				DiagramViewManager.updateView(view.getViewContext(), nullModel);
+    			}
+    		}
+    	});
+    }
 
     // -------------------------------------------------------------------------
 
     public void rebuildModelAndrefreshCView(boolean forceRebuild) {
+        rebuildModel(forceRebuild, true);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    
+    public void rebuildModelNoRefresh(boolean forceRebuild) {
+    	rebuildModel(forceRebuild, false);
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    
+    
+    private void rebuildModel(boolean forceRebuild, boolean refreshCView) {
         if (allSelections != null) {
             int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
             try {
@@ -257,12 +368,16 @@ public abstract class AbstractKLighDController {
                         (new RunnableWithProgress() {
                             public void run(IProgressMonitor monitor) {
                                 SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
-                                monitor.beginTask("Processing " + workTotal + " files...", workTotal);
+                                // TODO @cmot: Changed to files and folders to better mirror actual process
+                                monitor.beginTask("Processing " + workTotal + " files and folders...", workTotal);
                                 subMonitor.worked(1);
                                 model = calculateModel(allSelections, subMonitor); // , IProgressMonitor
                                                                                    // monitor));
-
-                                refreshCView(forceRebuild);
+                                if(refreshCView) {
+                                	refreshCView(forceRebuild);                                	
+                                } else {
+                                	setNoCView();
+                                }
                             }
                         }));
             } catch (InvocationTargetException e) {
@@ -270,18 +385,21 @@ public abstract class AbstractKLighDController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }    	
     }
-
-    // -------------------------------------------------------------------------
     
     
     public String getFilePath(Object object) {
         IFile file = null;
         if (object instanceof IFile) {
             file = (IFile) object;
+        } else  if (object instanceof File){
+        	IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        	IPath loc = Path.fromOSString(((File)object).getAbsolutePath());
+        	file = workspace.getRoot().getFileForLocation(loc);
         } else {
             try {
+
                 // The FILE type
                 PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
                 Class fieldType = po.getClass();
@@ -307,6 +425,10 @@ public abstract class AbstractKLighDController {
         IFolder folder = null;
         if (object instanceof IFolder) {
             folder = ((IFolder) object);
+        } else if (object instanceof File){
+        	IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        	IPath loc = Path.fromOSString(((File)object).getAbsolutePath());
+        	folder = workspace.getRoot().getFolder(loc);
         } else {
             try {
                 PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;

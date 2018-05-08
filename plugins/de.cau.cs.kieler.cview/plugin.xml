@@ -55,6 +55,26 @@
             id="de.cau.cs.kieler.cview.command.select"
             name="C View Select Analysis Command">
       </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.manualDiagramSynthesis"
+            name="C View Manual Synthesis">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.warning"
+            name="C View Show Huge Warning">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.highlightSelection"
+            name="C View Highlight Selection">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.deactivateView"
+            name="C View Deactivate Visualization">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -77,6 +97,22 @@
       <handler
             class="de.cau.cs.kieler.cview.ui.CommandHandler"
             commandId="de.cau.cs.kieler.cview.command.export">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
+            commandId="de.cau.cs.kieler.cview.command.manualDiagramSynthesis">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
+            commandId="de.cau.cs.kieler.cview.command.warning">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
+            commandId="de.cau.cs.kieler.cview.command.highlightSelection">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
+            commandId="de.cau.cs.kieler.cview.command.deactivateView">
       </handler>
    </extension>
    <extension
@@ -101,6 +137,10 @@
       <action
             class="de.cau.cs.kieler.cview.klighd.OpenEditorAction"
             id="de.cau.cs.kieler.cview.OpenEditorAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.cview.klighd.OpenEditorForConnectionAction"
+            id="de.cau.cs.kieler.cview.OpenEditorForConnectionAction">
       </action>
    </extension>
    <extension
@@ -148,6 +188,36 @@
               label="Export Analysis Results..."
               style="push">
         </command>
+        <separator
+              name="synthesisadditions"
+              visible="true">
+        </separator>
+        <command
+              commandId="de.cau.cs.kieler.cview.command.manualDiagramSynthesis"
+              id="de.cau.cs.kieler.cview.command.manualDiagramSynthesis"
+              label="Manual Diagram Synthesis"
+              style="toggle">
+        </command>
+        <command
+              commandId="de.cau.cs.kieler.cview.command.warning"
+              id="de.cau.cs.kieler.cview.command.warning"
+              label="Huge Analysis Warning"
+              style="toggle">
+        </command>
+        <command
+              commandId="de.cau.cs.kieler.cview.command.deactivateView"
+              label="Deactivate View"
+              style="toggle">
+        </command>
+        <separator
+              name="VisualisationAdditions"
+              visible="true">
+        </separator>
+        <command
+              commandId="de.cau.cs.kieler.cview.command.highlightSelection"
+              label="Highlight Selection"
+              style="toggle">
+        </command>
      </menuContribution>
   </extension>
      <extension
@@ -182,5 +252,26 @@
               schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
               sequence="ALT+E">
         </key>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.klighd.extensions">
+        <action
+              class="de.cau.cs.kieler.cview.klighd.EditorLinkageAction"
+              id="de.cau.cs.kieler.cview.EditorLinkageAction">
+        </action>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.klighd.extensions">
+        <action
+              class="de.cau.cs.kieler.cview.klighd.HighlightEdgesAction"
+              id="de.cau.cs.kieler.cview.HighlightEdgesAction">
+        </action>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.klighd.extensions">
+        <action
+              class="de.cau.cs.kieler.cview.klighd.DeselectHighlightingAction"
+              id="de.cau.cs.kieler.cview.DeselectHighlightingAction">
+        </action>
      </extension>
 </plugin>

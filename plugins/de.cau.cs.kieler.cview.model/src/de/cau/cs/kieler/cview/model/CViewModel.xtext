@@ -21,11 +21,13 @@ Component:
 //           ('referenceFile' '=' referenceFile=[File])?
 //           'projectName' '=' projectName=STRING
            'location' '=' location=STRING
+           'workspaceLocation' '=' workspaceLocation=STRING
            ('referenceLine' '=' referenceLine=INT)?
            ('children' '=' children+=([Component])*)?
            'tooltip' tooltip=STRING
            'rawdata' rawdata=STRING
            (filtered?='filtered')?
+           (calculateOnly?='calculateOnly')?
            (hide?='hide')?
 ;
 	
@@ -36,6 +38,8 @@ Connection:
     'typeID' type=STRING
     'color' color=STRING
     'tooltip' tooltip=STRING
+    'location' '=' location=STRING
+    ('referenceLine' '=' referenceLine=INT)?
     'size' size=INT
     'weight' weight=INT
     (hide?='hide')?
