@@ -19,6 +19,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 
 /**
  * Root C Code Generator Module
@@ -47,6 +48,8 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     @Accessors var SCChartsCodeGeneratorModule logic
     
     override configure() {
+        commentsEnabled = processorInstance.environment.getProperty(AbstractCodeGenerator.COMMENTS_ENABLED)
+        
         struct = injector.getInstance(StatebasedCCodeGeneratorStructModule)
         reset = injector.getInstance(StatebasedCCodeGeneratorResetModule)
         tick = injector.getInstance(StatebasedCCodeGeneratorTickModule)

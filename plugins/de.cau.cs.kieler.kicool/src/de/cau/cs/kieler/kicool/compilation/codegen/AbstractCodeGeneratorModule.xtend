@@ -35,6 +35,7 @@ abstract class AbstractCodeGeneratorModule {
     @Accessors var String suffix = ""
     @Accessors var String indentation = "  "
     @Accessors var int indentationModifier = 0
+    @Accessors var boolean commentsEnabled = true
     
     new() {
         
@@ -135,6 +136,7 @@ abstract class AbstractCodeGeneratorModule {
     
     // Line Ending Comment
     protected def String LEC(String comment) {
+        if (!commentsEnabled) return ""
         val key = MAGIC_PREFIX + comment.hashCode
         lecStore.put(key, comment)
         return key
@@ -153,10 +155,12 @@ abstract class AbstractCodeGeneratorModule {
     
     // Single Line Comment
     protected def String SLC(String comment) {
+        if (!commentsEnabled) return ""
         return "// " + comment + "\n"
     }
 
     protected def String SLC(int spaces, String comment) {
+        if (!commentsEnabled) return ""
         return StaticWhitespace.getSpace(spaces) + "// " + comment + "\n"
     }
     
@@ -167,6 +171,7 @@ abstract class AbstractCodeGeneratorModule {
     
     // Multi-Line Comment
     protected def String MLCi(int spaces, Object ... args) {
+        if (!commentsEnabled) return ""
         val sb = new StringBuilder
         sb.append(StaticWhitespace.getSpace(spaces))
         sb.append("/* ")
