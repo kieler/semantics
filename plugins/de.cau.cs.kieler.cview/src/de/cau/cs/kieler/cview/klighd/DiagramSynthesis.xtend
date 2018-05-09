@@ -59,12 +59,12 @@ import org.eclipse.elk.alg.force.properties.ForceOptions
 //newer since 3.0: import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 
-import org.eclipse.elk.alg.force.options.ForceModelStrategy
 
 //newer since 3.0 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 
-//newer: import org.eclipse.elk.alg.force.model.ForceModelStrategy
+//newer since 3.0: import org.eclipse.elk.alg.force.options.ForceModelStrategy
+import org.eclipse.elk.alg.force.model.ForceModelStrategy
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
