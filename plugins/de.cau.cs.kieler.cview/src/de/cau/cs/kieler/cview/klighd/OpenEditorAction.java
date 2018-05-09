@@ -49,7 +49,7 @@ import de.cau.cs.kieler.klighd.IAction;
  * 
  */
 public class OpenEditorAction implements IAction {
-
+ 
     /** The action ID. */
     public static final String ID = "de.cau.cs.kieler.cview.OpenEditorAction";
 

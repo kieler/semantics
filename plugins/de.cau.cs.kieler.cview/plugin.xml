@@ -264,7 +264,19 @@
               schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
               sequence="ALT+E">
         </key>
-     </extension>
+        <key
+              commandId="de.cau.cs.kieler.cview.command.highlightSelection"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="ALT+H">
+        </key>
+        <key
+              commandId="de.cau.cs.kieler.cview.command.deactivateView"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="ALT+D">
+        </key>        
+       </extension>
      <extension
            point="de.cau.cs.kieler.klighd.extensions">
         <action
@@ -275,8 +287,8 @@
      <extension
            point="de.cau.cs.kieler.klighd.extensions">
         <action
-              class="de.cau.cs.kieler.cview.klighd.HighlightEdgesAction"
-              id="de.cau.cs.kieler.cview.HighlightEdgesAction">
+              class="de.cau.cs.kieler.cview.klighd.HighlightElementAction"
+              id="de.cau.cs.kieler.cview.HighlightElementAction">
         </action>
      </extension>
      <extension

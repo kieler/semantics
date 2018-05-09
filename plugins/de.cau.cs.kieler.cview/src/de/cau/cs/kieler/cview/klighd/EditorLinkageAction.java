@@ -10,8 +10,12 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
@@ -28,6 +32,9 @@ public class EditorLinkageAction implements IAction {
 	
 	/** The action ID. */
     public static final String ID = "de.cau.cs.kieler.cview.EditorLinkageAction";
+    
+
+
 
     // Shorten the file
 	private String shortenFile(String pathString) {
@@ -96,6 +103,18 @@ public class EditorLinkageAction implements IAction {
 	
 	@Override
 	public ActionResult execute(ActionContext context) {
+	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	    //IViewPart view = page.findView("org.eclipse.jdt.ui.ProjectsView");
+	    for (IViewPart view : page.getViews()) {
+	        if (view instanceof CommonNavigator) {
+	            boolean linkingEnabled = ((CommonNavigator) view).isLinkingEnabled();    
+	            if (!linkingEnabled) {
+	                return ActionResult.createResult(false);
+	            }
+	          }
+	    }
+	    
+	    
 		// Get the selected KNode and its corresponding component
         Object domainElement = context.getDomainElement(context.getKNode());
         if(domainElement instanceof Component) {

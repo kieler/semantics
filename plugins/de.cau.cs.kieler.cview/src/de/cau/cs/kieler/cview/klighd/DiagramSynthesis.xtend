@@ -134,7 +134,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption DEV_MODE = SynthesisOption.createCheckOption("Developer Mode",
         false);
 
-    public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", true);
+    public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
     public static final SynthesisOption SHOW_HIDDEN = SynthesisOption.createCheckOption("Show Hidden", false);
 
@@ -490,19 +490,19 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectCol.selectionBackground = itemColor.color
         // TODO @cmot: Add new Actions
         rectCol.addSingleClickAction(EditorLinkageAction.ID);
-        rectCol.addSingleClickAction(HighlightEdgesAction.ID)
+        rectCol.addSingleClickAction(HighlightElementAction.ID)
         rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
         if (opensInEditor) {
             rectCol.addDoubleClickAction(OpenEditorAction.ID);
             // TODO @cmot: Add new Actions
             rectCol.addSingleClickAction(EditorLinkageAction.ID)
-            rectCol.addSingleClickAction(HighlightEdgesAction.ID)
+            rectCol.addSingleClickAction(HighlightElementAction.ID)
             rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
         } else {
             if (hierarchical) {
             	// TODO @cmot: Add new Actions
             	rectCol.addSingleClickAction(EditorLinkageAction.ID)
-            	rectCol.addSingleClickAction(HighlightEdgesAction.ID)
+            	rectCol.addSingleClickAction(HighlightElementAction.ID)
                 rectCol.addDoubleClickAction(CollapseExpandNoDragAction.ID);
             }
         }
@@ -513,12 +513,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
         // TODO @cmot: Add new Actions
         rectExp.addSingleClickAction(EditorLinkageAction.ID)
-        rectExp.addSingleClickAction(HighlightEdgesAction.ID)
+        rectExp.addSingleClickAction(HighlightElementAction.ID)
         if (opensInEditor) {
             rectExp.addDoubleClickAction(OpenEditorAction.ID);
             // TODO @cmot: Add new Actions
             rectExp.addSingleClickAction(EditorLinkageAction.ID)
-            rectExp.addSingleClickAction(HighlightEdgesAction.ID)
+            rectExp.addSingleClickAction(HighlightElementAction.ID)
             rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
         } else {
             if (hierarchical) {
@@ -545,7 +545,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         // TODO @cmot: Add new Actions
         label.firstText.addSingleClickAction(EditorLinkageAction.ID)
-        label.firstText.addSingleClickAction(HighlightEdgesAction.ID)
+        label.firstText.addSingleClickAction(HighlightElementAction.ID)
 
         if (hierarchical && !(FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
         													|| LAYOUT_ALGORITHM.objectValue == "Force Directed"
@@ -594,7 +594,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
         // TODO @cmot: Add new Actions
         rectCol.addSingleClickAction(EditorLinkageAction.ID)
-        rectCol.addSingleClickAction(HighlightEdgesAction.ID)
+        rectCol.addSingleClickAction(HighlightElementAction.ID)
         rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         val rectExp = childNodeOuter.addRoundedRectangle(3, 3, LINEWIDTH);
         rectExp.background = FOLDERCOLOR1.color;
@@ -604,7 +604,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
         // TODO @cmot: Add new Actions
         rectExp.addSingleClickAction(EditorLinkageAction.ID)
-        rectExp.addSingleClickAction(HighlightEdgesAction.ID)
+        rectExp.addSingleClickAction(HighlightElementAction.ID)
         rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -616,7 +616,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         label.firstText.selectionBackground = FOLDERCOLOR1.color;
         // TODO @cmot: Add new Actions
         label.firstText.addSingleClickAction(EditorLinkageAction.ID)
-        label.firstText.addSingleClickAction(HighlightEdgesAction.ID)
+        label.firstText.addSingleClickAction(HighlightElementAction.ID)
 
         if (item.hieararchical && !(FLATTEN_HIERARCHY.booleanValue || CViewPlugin.isOptionRequired(CViewPlugin.OPTION_FLATTEN_HIERARCHY) 
         															|| LAYOUT_ALGORITHM.objectValue == "Force Directed"

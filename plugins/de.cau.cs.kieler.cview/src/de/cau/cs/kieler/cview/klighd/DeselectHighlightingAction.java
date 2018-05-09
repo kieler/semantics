@@ -19,50 +19,50 @@ import de.cau.cs.kieler.klighd.krendering.KStyle;
  * @author cmot
  *
  */
-public class DeselectHighlightingAction implements IAction {
+public class DeselectHighlightingAction extends HighlightElementAction {
 	
 	/** The action ID. */
     public static final String ID = "de.cau.cs.kieler.cview.DeselectHighlightingAction";
 	
-    
-    /** 
-	 * Sets the alpha of an element to the desired value
-	 * @param elem The graph element to change the alpha value
-	 * @param alpha The alpha value
-	 * @param considerChildren whether children should be considered when changing the alpha value
-	 */
-	private void setAlpha(KGraphElement elem, int alpha, boolean considerChildren) {
-		KRendering kRendering = elem.getData(KRendering.class);
-		setRenderingAlpha(kRendering, alpha);
-		if(considerChildren) {
-			if(kRendering instanceof KContainerRendering) {
-				for(KRendering child : ((KContainerRendering) kRendering).getChildren()) {
-					setRenderingAlpha(child, alpha);
-				}
-			}
-		}
-	}
-	
-	/** 
-	 * Sets the alpha of a rendering element
-	 * @param kRendering The rendering to change the alpha value
-	 * @param alpha The alpha value
-	 */
-	private void setRenderingAlpha(KRendering kRendering, int alpha) {
-		for(KStyle style : kRendering.getStyles()) {
-			if(style instanceof KForeground) {
-				KForeground foreground = (KForeground) style;
-				foreground.setAlpha(alpha);
-				foreground.setTargetAlpha(alpha);
-			}
-			if(style instanceof KBackground) {
-				KBackground background = (KBackground) style;
-				background.setAlpha(alpha);
-				background.setTargetAlpha(alpha);
-			}
-		}
-	}
-    
+//    
+//    /** 
+//	 * Sets the alpha of an element to the desired value
+//	 * @param elem The graph element to change the alpha value
+//	 * @param alpha The alpha value
+//	 * @param considerChildren whether children should be considered when changing the alpha value
+//	 */
+//	private void setAlpha(KGraphElement elem, int alpha, boolean considerChildren) {
+//		KRendering kRendering = elem.getData(KRendering.class);
+//		setRenderingAlpha(kRendering, alpha);
+//		if(considerChildren) {
+//			if(kRendering instanceof KContainerRendering) {
+//				for(KRendering child : ((KContainerRendering) kRendering).getChildren()) {
+//					setRenderingAlpha(child, alpha);
+//				}
+//			}
+//		}
+//	}
+////	
+//	/** 
+//	 * Sets the alpha of a rendering element
+//	 * @param kRendering The rendering to change the alpha value
+//	 * @param alpha The alpha value
+//	 */
+//	private void setRenderingAlpha(KRendering kRendering, int alpha) {
+//		for(KStyle style : kRendering.getStyles()) {
+//			if(style instanceof KForeground) {
+//				KForeground foreground = (KForeground) style;
+//				foreground.setAlpha(alpha);
+//				foreground.setTargetAlpha(alpha);
+//			}
+//			if(style instanceof KBackground) {
+//				KBackground background = (KBackground) style;
+//				background.setAlpha(alpha);
+//				background.setTargetAlpha(alpha);
+//			}
+//		}
+//	}
+//    
     
 	@Override
 	public ActionResult execute(ActionContext context) {
