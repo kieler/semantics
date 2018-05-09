@@ -54,14 +54,15 @@ import org.eclipse.elk.core.options.HierarchyHandling
 import java.util.ArrayList
 import org.eclipse.elk.core.data.LayoutAlgorithmData
 import de.cau.cs.kieler.klighd.IViewChangeListener.ViewChange
-import org.eclipse.elk.alg.force.options.ForceOptions
-//newer: import org.eclipse.elk.alg.force.properties.ForceOptions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-//newer: import org.eclipse.elk.alg.layered.properties.LayeredOptions
+//newer since 3.0: import org.eclipse.elk.alg.force.options.ForceOptions
+import org.eclipse.elk.alg.force.properties.ForceOptions
+//newer since 3.0: import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
 
 import org.eclipse.elk.alg.force.options.ForceModelStrategy
-import org.eclipse.elk.alg.layered.options.GreedySwitchType
-//newer: import org.eclipse.elk.alg.layered.properties.GreedySwitchType
+
+//newer since 3.0 import org.eclipse.elk.alg.layered.options.GreedySwitchType
+import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 
 //newer: import org.eclipse.elk.alg.force.model.ForceModelStrategy
 
