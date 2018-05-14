@@ -143,19 +143,19 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             switch(sourceNode) {
                 Entry,
                 Depth:  {
-                            iter = sourceNode.allNext.map[ target ];
+                            iter = sourceNode.allNext.map[ targetNode ];
                             localDepth = 1
                         }
                 Exit,
                 Surface:{ 
-                            iter = sourceNode.incoming.map[ eContainer ].filter(Node)
+                            iter = sourceNode.incomingLinks.map[ eContainer ].filter(Node)
                             localDepth = 1
                         } 
             }       
         } else {
-            iter = sourceNode.incoming.map[ eContainer ].filter(Node) +
-                   sourceNode.allNext.map[ target ] + 
-                   sourceNode.dependencies.map[ target ]
+            iter = sourceNode.incomingLinks.map[ eContainer ].filter(Node) +
+                   sourceNode.allNext.map[ targetNode ] + 
+                   sourceNode.dependencies.map[ targetNode ]
         }
         if (localDepth > 1) {
             val nList = <Node> newLinkedList            

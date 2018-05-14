@@ -91,6 +91,22 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationScopeAdapter();
             }
             @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
+            }
+            @Override
+            public Adapter caseLink(Link object) {
+                return createLinkAdapter();
+            }
+            @Override
+            public Adapter caseDependency(Dependency object) {
+                return createDependencyAdapter();
+            }
+            @Override
+            public Adapter caseDataDependency(DataDependency object) {
+                return createDataDependencyAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -189,6 +205,62 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationScopeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.Linkable
+     * @generated
+     */
+    public Adapter createLinkableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.Link <em>Link</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.Link
+     * @generated
+     */
+    public Adapter createLinkAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.Dependency <em>Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.Dependency
+     * @generated
+     */
+    public Adapter createDependencyAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.DataDependency <em>Data Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.DataDependency
+     * @generated
+     */
+    public Adapter createDataDependencyAdapter() {
         return null;
     }
 

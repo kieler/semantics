@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.processors.optimizer
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -23,7 +22,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
 import de.cau.cs.kieler.scg.ControlFlow
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -41,7 +39,6 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 class ConditionalMerger extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExtDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
     
     override getId() {
@@ -69,9 +66,9 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
             val node = nextNodes.pop
 
             if (node instanceof Conditional) {
-                nextNodes.add(node.^else.target)
+                nextNodes.add(node.^else.targetNode)
             } else {
-                val newNodes = node.allNext.map[ target ].filter[ it !== null ].toList
+                val newNodes = node.allNext.map[ targetNode ].filter[ it !== null ].toList
                 if (!newNodes.empty && newNodes.head !== nextNodes.peek) {
                     nextNodes.addAll(newNodes)
                 } 
@@ -86,9 +83,9 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                         val domConditional = conditions.get(vo)
                         
                         if (preceedingNodes.contains(domConditional)) {
-                            var tail = domConditional.^else.target.allPrevious.filter[ eContainer !== domConditional ].head
+                            var tail = domConditional.^else.targetNode.allPrevious.filter[ eContainer !== domConditional ].head
                             
-                            val thenNodes = <Node> newLinkedList(node.^then.target)
+                            val thenNodes = <Node> newLinkedList(node.^then.targetNode)
                             while (!thenNodes.empty) {
                                 val thenNode = thenNodes.pop
                                 
@@ -98,7 +95,7 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                                     environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
                                 }
                                 
-                                thenNodes += thenNode.allNext.filter[ target !== node.^else.target ].map[ target ] 
+                                thenNodes += thenNode.allNext.filter[ target !== node.^else.targetNode ].map[ targetNode ] 
                             }
                             tail.target = domConditional.^else.target
                             

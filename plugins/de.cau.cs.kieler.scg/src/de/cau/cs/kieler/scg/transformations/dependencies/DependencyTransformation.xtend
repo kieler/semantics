@@ -28,10 +28,8 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
@@ -45,19 +43,8 @@ import java.util.Map
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.annotations.TypedStringAnnotation
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import com.google.inject.Injector
-import de.cau.cs.kieler.kexpressions.keffects.util.ValuedObjectContainer
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -155,7 +142,7 @@ class DependencyTransformation extends InplaceProcessor<SCGraphs> {
 	) {
 		for(node : nodeMapping.keySet.filter[ it instanceof Assignment || it instanceof Conditional ]) {
 			if (node instanceof Assignment) {
-				if (node.valuedObject != null) {
+				if (node.valuedObject !== null) {
 					assignments += node
 					
 					val VOC = injector.getInstance(ValuedObjectNodeContainer) => [ it.set(node, node) ]

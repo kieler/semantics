@@ -48,9 +48,6 @@ import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.DataDependencyType
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -107,6 +104,9 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.kext.Dependency
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -446,7 +446,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 arranger.invoke(instance, it)
                             ]
                         ]
-                        node.incoming.filter(Dependency).map[viewContext.getTargetElements(it)].forEach[
+                        node.incomingLinks.filter(Dependency).map[viewContext.getTargetElements(it)].forEach[
                             it.filter(KEdge).forEach[
                                 viewer.show(it)
                                 arranger.invoke(instance, it)
@@ -769,7 +769,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             if (SHOW_HIERARCHY.booleanValue) {
                 scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
-                	val allNodes = it.dependencies.filter(GuardDependency).map[ target ].toList
+                	val allNodes = it.dependencies.filter(GuardDependency).map[ targetNode ].toList
                 	val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
                 	for(edge : kContainer.outgoingEdges.immutableCopy) {
                 		edge.targetPort.remove
@@ -1504,7 +1504,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the KEdge. 
 	 */
     private def KEdge synthesizeControlFlow(ControlFlow controlFlow, String outgoingPortId) {
-        if(controlFlow.target == null || controlFlow.eContainer === null) return null;
+        if(controlFlow.target === null || controlFlow.eContainer === null) return null;
 
         return controlFlow.createNewEdge().associateWith(controlFlow) => [ edge |
             // Get and set source and target information.
@@ -1582,7 +1582,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
             }
             
-            if (controlFlow.target.schizophrenic) {
+            if (controlFlow.targetNode.schizophrenic) {
                 edge.KRendering.foreground = SCHIZO_COLOR.copy
             }
             
@@ -2024,16 +2024,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         val schedules = <List<Node>> newArrayList
 
-        for (node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
+        for (node : scg.nodes.filter[ incomingLinks.filter(ScheduleDependency).empty && incomingLinks.filter(GuardDependency).empty ]) {
             val newSchedule = <Node> newArrayList => [ s | 
                 s += node
-                node.dependencies.filter(GuardDependency).forEach[ s += it.target ]
+                node.dependencies.filter(GuardDependency).forEach[ s += it.targetNode ]
             ]
-            var next = node.dependencies.filter(ScheduleDependency).head?.target
+            var next = node.dependencies.filter(ScheduleDependency).head?.targetNode
             while (next !== null) {
                 newSchedule += next
-                next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.target ]
-                next = next.dependencies.filter(ScheduleDependency).head?.target
+                next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.targetNode ]
+                next = next.dependencies.filter(ScheduleDependency).head?.targetNode
             }            
             
             schedules += newSchedule

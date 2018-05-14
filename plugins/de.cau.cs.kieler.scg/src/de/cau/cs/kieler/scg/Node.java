@@ -17,6 +17,8 @@ import org.eclipse.emf.common.util.EList;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.kexpressions.kext.Dependency;
+import de.cau.cs.kieler.kexpressions.kext.Linkable;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +29,6 @@ import de.cau.cs.kieler.annotations.NamedObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scg.Node#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#isSchizophrenic <em>Schizophrenic</em>}</li>
@@ -37,25 +38,7 @@ import de.cau.cs.kieler.annotations.NamedObject;
  * @model
  * @generated
  */
-public interface Node extends Annotatable, NamedObject {
-    /**
-     * Returns the value of the '<em><b>Incoming</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Link}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Link#getTarget <em>Target</em>}'.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Incoming</em>' reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Incoming</em>' reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_Incoming()
-     * @see de.cau.cs.kieler.scg.Link#getTarget
-     * @model opposite="target"
-     * @generated
-     */
-    EList<Link> getIncoming();
-
+public interface Node extends Annotatable, NamedObject, Linkable {
     /**
      * Returns the value of the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -84,7 +67,7 @@ public interface Node extends Annotatable, NamedObject {
 
     /**
      * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Dependency}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.kext.Dependency}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Dependencies</em>' containment reference list isn't clear,

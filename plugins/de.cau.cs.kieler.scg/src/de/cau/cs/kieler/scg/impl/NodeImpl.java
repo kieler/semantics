@@ -16,8 +16,8 @@ package de.cau.cs.kieler.scg.impl;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-import de.cau.cs.kieler.scg.Dependency;
-import de.cau.cs.kieler.scg.Link;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.Linkable;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.ScgPackage;
 
@@ -46,7 +46,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
@@ -76,14 +77,24 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getIncoming()
+     * @see #getOutgoingLinks()
      * @generated
      * @ordered
      */
-    protected EList<Link> incoming;
+    protected EList<de.cau.cs.kieler.kexpressions.kext.Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<de.cau.cs.kieler.kexpressions.kext.Link> incomingLinks;
 
     /**
      * The default value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
@@ -113,7 +124,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @generated
      * @ordered
      */
-    protected EList<Dependency> dependencies;
+    protected EList<de.cau.cs.kieler.kexpressions.kext.Dependency> dependencies;
 
     /**
      * The default value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
@@ -180,11 +191,23 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Link> getIncoming() {
-        if (incoming == null) {
-            incoming = new EObjectWithInverseResolvingEList<Link>(Link.class, this, ScgPackage.NODE__INCOMING, ScgPackage.LINK__TARGET);
+    public EList<de.cau.cs.kieler.kexpressions.kext.Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<de.cau.cs.kieler.kexpressions.kext.Link>(de.cau.cs.kieler.kexpressions.kext.Link.class, this, ScgPackage.NODE__OUTGOING_LINKS);
         }
-        return incoming;
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<de.cau.cs.kieler.kexpressions.kext.Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<de.cau.cs.kieler.kexpressions.kext.Link>(de.cau.cs.kieler.kexpressions.kext.Link.class, this, ScgPackage.NODE__INCOMING_LINKS, KExtPackage.LINK__TARGET);
+        }
+        return incomingLinks;
     }
 
     /**
@@ -213,9 +236,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Dependency> getDependencies() {
+    public EList<de.cau.cs.kieler.kexpressions.kext.Dependency> getDependencies() {
         if (dependencies == null) {
-            dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.NODE__DEPENDENCIES);
+            dependencies = new EObjectContainmentEList<de.cau.cs.kieler.kexpressions.kext.Dependency>(de.cau.cs.kieler.kexpressions.kext.Dependency.class, this, ScgPackage.NODE__DEPENDENCIES);
         }
         return dependencies;
     }
@@ -250,8 +273,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgPackage.NODE__INCOMING:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncoming()).basicAdd(otherEnd, msgs);
+            case ScgPackage.NODE__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -264,8 +287,10 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgPackage.NODE__INCOMING:
-                return ((InternalEList<?>)getIncoming()).basicRemove(otherEnd, msgs);
+            case ScgPackage.NODE__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case ScgPackage.NODE__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case ScgPackage.NODE__DEPENDENCIES:
                 return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
         }
@@ -282,8 +307,10 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         switch (featureID) {
             case ScgPackage.NODE__NAME:
                 return getName();
-            case ScgPackage.NODE__INCOMING:
-                return getIncoming();
+            case ScgPackage.NODE__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case ScgPackage.NODE__INCOMING_LINKS:
+                return getIncomingLinks();
             case ScgPackage.NODE__IS_INITIAL:
                 return isIsInitial();
             case ScgPackage.NODE__DEPENDENCIES:
@@ -306,16 +333,20 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case ScgPackage.NODE__NAME:
                 setName((String)newValue);
                 return;
-            case ScgPackage.NODE__INCOMING:
-                getIncoming().clear();
-                getIncoming().addAll((Collection<? extends Link>)newValue);
+            case ScgPackage.NODE__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends de.cau.cs.kieler.kexpressions.kext.Link>)newValue);
+                return;
+            case ScgPackage.NODE__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends de.cau.cs.kieler.kexpressions.kext.Link>)newValue);
                 return;
             case ScgPackage.NODE__IS_INITIAL:
                 setIsInitial((Boolean)newValue);
                 return;
             case ScgPackage.NODE__DEPENDENCIES:
                 getDependencies().clear();
-                getDependencies().addAll((Collection<? extends Dependency>)newValue);
+                getDependencies().addAll((Collection<? extends de.cau.cs.kieler.kexpressions.kext.Dependency>)newValue);
                 return;
             case ScgPackage.NODE__SCHIZOPHRENIC:
                 setSchizophrenic((Boolean)newValue);
@@ -335,8 +366,11 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case ScgPackage.NODE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case ScgPackage.NODE__INCOMING:
-                getIncoming().clear();
+            case ScgPackage.NODE__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case ScgPackage.NODE__INCOMING_LINKS:
+                getIncomingLinks().clear();
                 return;
             case ScgPackage.NODE__IS_INITIAL:
                 setIsInitial(IS_INITIAL_EDEFAULT);
@@ -361,8 +395,10 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         switch (featureID) {
             case ScgPackage.NODE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case ScgPackage.NODE__INCOMING:
-                return incoming != null && !incoming.isEmpty();
+            case ScgPackage.NODE__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case ScgPackage.NODE__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case ScgPackage.NODE__IS_INITIAL:
                 return isInitial != IS_INITIAL_EDEFAULT;
             case ScgPackage.NODE__DEPENDENCIES:
@@ -386,6 +422,13 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 default: return -1;
             }
         }
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case ScgPackage.NODE__OUTGOING_LINKS: return KExtPackage.LINKABLE__OUTGOING_LINKS;
+                case ScgPackage.NODE__INCOMING_LINKS: return KExtPackage.LINKABLE__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
@@ -399,6 +442,13 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return ScgPackage.NODE__NAME;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KExtPackage.LINKABLE__OUTGOING_LINKS: return ScgPackage.NODE__OUTGOING_LINKS;
+                case KExtPackage.LINKABLE__INCOMING_LINKS: return ScgPackage.NODE__INCOMING_LINKS;
                 default: return -1;
             }
         }

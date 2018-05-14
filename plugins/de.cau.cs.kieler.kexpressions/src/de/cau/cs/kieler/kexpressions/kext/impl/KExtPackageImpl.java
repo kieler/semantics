@@ -8,14 +8,21 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.DataDependency;
+import de.cau.cs.kieler.kexpressions.kext.DataDependencyType;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
+import de.cau.cs.kieler.kexpressions.kext.Dependency;
 import de.cau.cs.kieler.kexpressions.kext.KExtFactory;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.Link;
+import de.cau.cs.kieler.kexpressions.kext.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -62,6 +69,41 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * @generated
      */
     private EClass declarationScopeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass linkableEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass linkEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dependencyEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataDependencyEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum dataDependencyTypeEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -233,6 +275,105 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getLinkable() {
+        return linkableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLinkable_OutgoingLinks() {
+        return (EReference)linkableEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLinkable_IncomingLinks() {
+        return (EReference)linkableEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getLink() {
+        return linkEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLink_Target() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDependency() {
+        return dependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDataDependency() {
+        return dataDependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDataDependency_Type() {
+        return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDataDependency_Concurrent() {
+        return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDataDependency_Confluent() {
+        return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EEnum getDataDependencyType() {
+        return dataDependencyTypeEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public KExtFactory getKExtFactory() {
         return (KExtFactory)getEFactoryInstance();
     }
@@ -271,6 +412,23 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         declarationScopeEClass = createEClass(DECLARATION_SCOPE);
         createEReference(declarationScopeEClass, DECLARATION_SCOPE__DECLARATIONS);
+
+        linkableEClass = createEClass(LINKABLE);
+        createEReference(linkableEClass, LINKABLE__OUTGOING_LINKS);
+        createEReference(linkableEClass, LINKABLE__INCOMING_LINKS);
+
+        linkEClass = createEClass(LINK);
+        createEReference(linkEClass, LINK__TARGET);
+
+        dependencyEClass = createEClass(DEPENDENCY);
+
+        dataDependencyEClass = createEClass(DATA_DEPENDENCY);
+        createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__TYPE);
+        createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__CONCURRENT);
+        createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__CONFLUENT);
+
+        // Create enums
+        dataDependencyTypeEEnum = createEEnum(DATA_DEPENDENCY_TYPE);
     }
 
     /**
@@ -312,6 +470,9 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         kExtScopeEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceable());
         kExtScopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        linkEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        dependencyEClass.getESuperTypes().add(this.getLink());
+        dataDependencyEClass.getESuperTypes().add(this.getDependency());
 
         // Initialize classes and features; add operations and parameters
         initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -329,6 +490,28 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         initEClass(declarationScopeEClass, DeclarationScope.class, "DeclarationScope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeclarationScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, DeclarationScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(linkableEClass, Linkable.class, "Linkable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getLinkable_OutgoingLinks(), this.getLink(), null, "outgoingLinks", null, 0, -1, Linkable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLinkable_IncomingLinks(), this.getLink(), this.getLink_Target(), "incomingLinks", null, 0, -1, Linkable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(linkEClass, Link.class, "Link", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getLink_Target(), this.getLinkable(), this.getLinkable_IncomingLinks(), "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(dependencyEClass, Dependency.class, "Dependency", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(dataDependencyEClass, DataDependency.class, "DataDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataDependency_Type(), this.getDataDependencyType(), "type", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataDependency_Concurrent(), ecorePackage.getEBoolean(), "concurrent", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataDependency_Confluent(), ecorePackage.getEBoolean(), "confluent", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        // Initialize enums and add enum literals
+        initEEnum(dataDependencyTypeEEnum, DataDependencyType.class, "DataDependencyType");
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.IGNORE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.UNKNOWN);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_WRITE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_RELATIVEWRITE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_READ);
 
         // Create resource
         createResource(eNS_URI);

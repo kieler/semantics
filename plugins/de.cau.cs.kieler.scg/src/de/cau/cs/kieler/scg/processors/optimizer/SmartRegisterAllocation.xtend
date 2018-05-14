@@ -31,7 +31,6 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import java.util.Set
 import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
 
@@ -94,9 +93,9 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             }
             
             if (node instanceof Conditional) {
-                nextNodes.add(node.^else.target)
+                nextNodes.add(node.^else.targetNode)
             } else {
-                val newNodes = node.allNext.map[ target ].filter[ it !== null ].toList
+                val newNodes = node.allNext.map[ targetNode ].filter[ it !== null ].toList
                 if (!newNodes.empty && newNodes.head !== nextNodes.peek) {
                     nextNodes.addAll(newNodes)
                 } 
@@ -151,9 +150,9 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             }
             
             if (node instanceof Conditional) {
-                nextNodes.add(node.^else.target)
+                nextNodes.add(node.^else.targetNode)
             } else {
-                val newNodes = node.allNext.map[ target ].filter[ it !== null ].toList
+                val newNodes = node.allNext.map[ targetNode ].filter[ it !== null ].toList
                 if (!newNodes.empty && newNodes.head !== nextNodes.peek) {
                     nextNodes.addAll(newNodes)
                 } 

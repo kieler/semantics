@@ -22,4 +22,27 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass kexpressions.ecore#//Declaration" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingLinks" upperBound="-1"
+        eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
+        eType="#//Link" eOpposite="#//Link/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Link" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Linkable" eOpposite="#//Linkable/incomingLinks"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dependency" abstract="true" eSuperTypes="#//Link"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataDependencyType">
+    <eLiterals name="IGNORE" value="-2" literal="IGNORE"/>
+    <eLiterals name="UNKNOWN" value="-1" literal="UNKNOWN"/>
+    <eLiterals name="WRITE_WRITE" literal="WRITE_WRITE"/>
+    <eLiterals name="WRITE_RELATIVEWRITE" value="1"/>
+    <eLiterals name="WRITE_READ" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataDependency" eSuperTypes="#//Dependency">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataDependencyType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="concurrent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="confluent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -34,6 +34,7 @@ import java.util.LinkedList
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * @author fry
@@ -68,6 +69,7 @@ class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation
 	
 	@Inject extension KEffectsSerializeExtensions
 	@Inject extension KEffectsExtensions
+	@Inject extension SCGControlFlowExtensions
 
 	@Inject
 	LinkCreator linkCreator
@@ -139,8 +141,8 @@ class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation
 		val entry = scg.nodes.filter(Entry).head
 
         // If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
-        val firstAssignment = if (entry == null)  
-          scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+        val firstAssignment = if (entry === null)  
+          scg.nodes.filter(Assignment).filter[ it.incomingLinks.filter(ControlFlow).empty ].head
           else (entry.next.target as Assignment)
 		
 		transformNodesToActors(firstAssignment, logicRegion)
@@ -167,14 +169,14 @@ class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation
 	 *   transformNodesToActors if the control flow is unique again
 	 */
 	def void transformNodesToActors(Node n, Actor logic) {
-	    if (n == null) return;
+	    if (n === null) return;
 	    
 		if (!(n instanceof Exit)) {
 			if (n instanceof Assignment) {
 				transformAssignment(n, logic)
-				transformNodesToActors(n.next?.target, logic)
+				transformNodesToActors(n.next?.targetNode, logic)
 			} else if (n instanceof Conditional) {
-				transformNodesToActors(transformConditionalNodes(n, n.then.target, n.^else.target, logic), logic)
+				transformNodesToActors(transformConditionalNodes(n, n.then.targetNode, n.^else.targetNode, logic), logic)
 			}
 		}
 	}
@@ -194,8 +196,8 @@ class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation
 			if (thenNode instanceof Conditional) {
 
 				transformConditionalNodes(source,
-					transformConditionalNodes(thenNode, thenNode.then.target, thenNode.^else.target, logic),
-					elseNode.next.target, logic)
+					transformConditionalNodes(thenNode, thenNode.then.targetNode, thenNode.^else.targetNode, logic),
+					elseNode.next.targetNode, logic)
 			} else if (thenNode instanceof Assignment) {
 				
 
@@ -257,9 +259,9 @@ class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation
 				
 				// call this method again if the target of then- and else-branch is not the same
 				if (!(thenNode.next.target == elseNode.next.target)) {
-					transformConditionalNodes(source, thenNode.next.target, elseNode.next.target, logic)
+					transformConditionalNodes(source, thenNode.next.targetNode, elseNode.next.targetNode, logic)
 				} else {
-					return thenNode.next.target
+					return thenNode.next.targetNode
 				}
 
 			}

@@ -18,8 +18,6 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.ExpressionDependency
@@ -36,6 +34,9 @@ import java.util.LinkedHashSet
 import java.util.Set
 import java.util.logging.Level
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.Dependency
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -89,6 +90,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGCoreExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGControlFlowExtensions
 
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -102,7 +104,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
     	 */
-    	val nodesToSchedule = scg.nodes.filter[ incoming.filter(GuardDependency).empty].toSet
+    	val nodesToSchedule = scg.nodes.filter[ incomingLinks.filter(GuardDependency).empty].toSet
     	val estimatedScheduleSize = nodesToSchedule.size 	
     	
     	/**
@@ -164,7 +166,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
 				SCGPlugin.logError("Cant schedule node " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
-					" to " + dependency.target.asAssignment.valuedObject.name, Level.FINE)
+					" to " + dependency.targetNode.asAssignment.valuedObject.name, Level.FINE)
 				return
 			}
 		}
@@ -182,7 +184,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 	 * @return Returns an {@link Iterable} that contains the relevant dependencies.
 	 */	
 	protected def Iterable<Dependency> getSchedulingDependencies(Node node) {
-		node.incoming.filter(Dependency).filter[ d |
+		node.incomingLinks.filter(Dependency).filter[ d |
 			d instanceof ExpressionDependency ||
 			d instanceof ControlDependency ||
 			(d instanceof DataDependency && ((d as DataDependency).concurrent && !(d as DataDependency).confluent))

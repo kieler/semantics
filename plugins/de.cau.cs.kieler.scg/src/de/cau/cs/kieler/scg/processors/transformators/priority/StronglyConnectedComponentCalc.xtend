@@ -15,8 +15,6 @@ package de.cau.cs.kieler.scg.processors.transformators.priority
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
@@ -26,6 +24,8 @@ import java.util.LinkedList
 import java.util.Stack
 import de.cau.cs.kieler.scg.extensions.SCCExtensions
 import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
 
 /**
  * A class to determine the Strongly Connected Components of an SCG. Also determines schedulability of the SCG.

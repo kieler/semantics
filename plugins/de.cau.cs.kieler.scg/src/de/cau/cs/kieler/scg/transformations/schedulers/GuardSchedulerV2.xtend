@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
@@ -38,6 +37,8 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -101,19 +102,12 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCGCoreExtensions
-
-    @Inject
-    extension SCGCacheExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGCacheExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGControlFlowExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -183,7 +177,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
                 }
             }
 
-            if (schedulingBlock != null) {
+            if (schedulingBlock !== null) {
                 val dependencies = schedulingBlock.getAllDataDependencies(scg)
                 if (!dependencies.empty) {
                     debug(indent + "Scheduling block" + schedulingBlock.label + " has dependencies: ", false)
@@ -191,7 +185,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
                         if (dependency.concurrent && !dependency.confluent) {
                             val sb = schedulingBlockCache.get(dependency.eContainer)
                             debug(sb.label + " (" + sb.guards.head.valuedObject.name + ")", false)
-                            neededNodes += dependency.target
+                            neededNodes += dependency.targetNode
 
                             // TODO: VERIFY!
                             //			                if (guard.schizophrenic) {
@@ -233,7 +227,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
 
                     //					val tpGuard = guardCache.get(ref)
                     val vorSBList = schedulingBlockVOCache.get(ref)
-                    if (vorSBList != null) {
+                    if (vorSBList !== null) {
                         for (sb : schedulingBlockVOCache.get(ref)) {
                             sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
                         }
@@ -247,9 +241,9 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
                         // Add the guarded scheduling blocks to the list of needed scheduling blocks
                         guard.expression.getAllReferences.forEach[
                             if (!it.valuedObject.name.equals(AbstractGuardExpressions.GO_GUARD_NAME)) {
-                                if (it.valuedObject != null) {
+                                if (it.valuedObject !== null) {
                                     val sb = schedulingBlockVOCache.get(it.valuedObject)
-                                    if (sb != null) {
+                                    if (sb !== null) {
                                         SBs += sb
                                     }
                                 }
@@ -290,7 +284,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
             }
 
             if (!(schedulingBlock.nodes.head instanceof Join)) {
-                neededNodes += schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow)).map[eContainer as Node]
+                neededNodes += schedulingBlock.nodes.head.incomingLinks.filter(typeof(ControlFlow)).map[eContainer as Node]
                 for (node : neededNodes) {
                     var prevSB = schedulingBlockCache.get(node)
                     if (!topologicalSortVisited.contains(prevSB)) {
@@ -446,7 +440,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
 
 //        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
 
-        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
+        for(dependency : schedulingBlock.dependencies.filter(DataDependency)) {
             val node = dependency.eContainer as Node
             val sb = schedulingBlockCache.get(node)
             if (!sb.basicBlock.deadBlock) returnSet += dependency

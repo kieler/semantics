@@ -27,8 +27,8 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.scg.SCGraphs
 
 import static org.junit.Assert.*
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
 
 /**
  * Tests if the new dependency analysis is as good as the old one.

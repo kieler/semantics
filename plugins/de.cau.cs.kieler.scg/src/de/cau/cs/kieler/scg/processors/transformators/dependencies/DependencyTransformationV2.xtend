@@ -41,7 +41,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import java.util.Deque
 import java.util.Set
 
-import static de.cau.cs.kieler.scg.DataDependencyType.*
+import static de.cau.cs.kieler.kexpressions.kext.DataDependencyType.*
 import static de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
 
@@ -52,6 +52,7 @@ import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -76,6 +77,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
     @Inject extension KExpressionsCompareExtensions
@@ -115,7 +117,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         
         val entry = scg.nodes.head as Entry
         val forkStack = new ForkStack
-        val nodes = <Node> newLinkedList(entry.next.target)
+        val nodes = <Node> newLinkedList(entry.next.targetNode)
         val visited = <Node> newHashSet
         
         while(!nodes.empty && nodes.peek !== null) {
@@ -124,20 +126,20 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                 Assignment: {
                     node.processAssignment(forkStack, valuedObjectAccessors)
                     if (node.next !== null) {
-                        if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next?.target.addAndMark(nodes, visited)
+                        if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next?.targetNode.addAndMark(nodes, visited)
                     }
                 }
                 Conditional: {
                     node.processConditional(forkStack, valuedObjectAccessors)
-                    if (!node.^else.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.^else.target.addAndMark(nodes, visited)
-                    if (!node.then.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.then.target.addAndMark(nodes, visited)
+                    if (!node.^else.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.^else.targetNode.addAndMark(nodes, visited)
+                    if (!node.then.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.then.targetNode.addAndMark(nodes, visited)
                 }
                 Fork: {
                     forkStack.push(node)
                     
                     node.join.addAndMark(nodes, visited)
                     for (next : node.next) {
-                        next.target.addAndMark(nodes, visited)
+                        next.targetNode.addAndMark(nodes, visited)
                     }                    
                 }
                 Join: {
@@ -153,12 +155,12 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                         throw new UnsupportedOperationException("The join node joins a wrong fork on the stack. This should not happen.")
                     }
                     
-                    node.next.target.addAndMark(nodes, visited)
+                    node.next.targetNode.addAndMark(nodes, visited)
                 }
                 Entry: {
                     forkStack.push(node)
                     
-                    node.next.target.addAndMark(nodes, visited)
+                    node.next.targetNode.addAndMark(nodes, visited)
                 }
                 Exit: {
                     // Don't do anything. 
@@ -169,7 +171,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
                     node.depth.addAndMark(nodes, visited)
                 }
                 Depth: {
-                    node.next.target.addAndMark(nodes, visited)    
+                    node.next.targetNode.addAndMark(nodes, visited)    
                 }
             }
         }        

@@ -443,7 +443,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val superfluousExitNodes = exitNodes.filter(e|e.next !== null && e.next.target instanceof Exit).toList
         for (exitNode : superfluousExitNodes.immutableCopy) {
             val links = <ControlFlow>newArrayList
-            links.addAll(exitNode.incoming.filter(typeof(ControlFlow)))
+            links.addAll(exitNode.incomingLinks.filter(typeof(ControlFlow)))
             for (link : links) {
                 link.setTarget(exitNode.next.target)
             }
@@ -455,7 +455,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             exitNode.next.target.trace(exitNode)
 
             // The removal of the EOpposite relation is necessary
-            link.target.incoming.remove(link)
+            link.target.incomingLinks.remove(link)
 
             // Remove superfluous exit node
             sCGraph.nodes.remove(exitNode)
@@ -475,7 +475,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         ).toList
         for (conditionalNode : superfluousConditionalNodes.immutableCopy) {
             val links = <ControlFlow>newArrayList
-            conditionalNode.incoming.filter(typeof(ControlFlow)).forEach[links += it]
+            conditionalNode.incomingLinks.filter(typeof(ControlFlow)).forEach[links += it]
 
             // val links = sCGraph.eAllContents.filter(typeof(ControlFlow))
             // .filter( e | e.target == conditionalNode).toList
@@ -488,8 +488,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 val linkElse = conditionalNode.getElse
 
                 // The removal of the EOpposite relation is necessary
-                linkThen.target.incoming.remove(linkThen)
-                linkElse.target.incoming.remove(linkElse)
+                linkThen.target.incomingLinks.remove(linkThen)
+                linkElse.target.incomingLinks.remove(linkElse)
 
                 // KITT redirect tracing origins
                 links.trace(linkThen, linkElse)

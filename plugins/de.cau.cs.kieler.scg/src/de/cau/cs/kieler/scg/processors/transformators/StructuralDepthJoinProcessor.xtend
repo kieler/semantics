@@ -37,8 +37,8 @@ import de.cau.cs.kieler.scg.processors.analyzer.ThreadData
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.DataDependency
 import java.util.Collection
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
 
 /**
  * @author ssm
@@ -150,13 +150,13 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                     // If there is an dependency that is pointing to a node inside a depth of the loop, 
                     // remove it.
                     for (dependency : sNode.dependencies.filter(DataDependency).filter[ concurrent ].toList) {
-                        if (!dependency.target.isInSurface(threadData.forkMap.get(fork))) {
+                        if (!dependency.targetNode.isInSurface(threadData.forkMap.get(fork))) {
                             dependency.remove
                             dependency.target = null
                         }
                     }
                     // Also, if the schizo node is the target of a dependency from the depth.
-                    for (dependency : sNode.incoming.filter(DataDependency).filter[ concurrent ].toList) {
+                    for (dependency : sNode.incomingLinks.filter(DataDependency).filter[ concurrent ].toList) {
                         if (!dependency.eContainer.asNode.isInSurface(threadData.forkMap.get(fork))) {
                             dependency.remove
                             dependency.target = null
@@ -166,7 +166,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                 
                 for (sNode : schizoNodes) {
                     // If the node is not reachable by the control flow, clean up all traces of it.
-                    if (sNode.incoming.filter(ControlFlow).empty) {
+                    if (sNode.incomingLinks.filter(ControlFlow).empty) {
                         sNode.dependencies.immutableCopy.forEach[ it.target = null it.remove ]
                         sNode.eContents.filter(ControlFlow).toList.forEach[ it.target = null it.remove]
                         sNode.remove
@@ -271,7 +271,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
             }
             
             visited += head
-            val nextNodes = head.allNext?.map[ target ].
+            val nextNodes = head.allNext?.map[ targetNode ].
                 filter[ !(it instanceof Join) && !(it instanceof Surface) && !(it instanceof Exit) ].
                 filter[ !visited.contains(it) ].toList
             if (nextNodes !== null && nextNodes.contains(null)) {

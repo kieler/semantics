@@ -37,6 +37,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * @author fry
@@ -72,6 +73,7 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 	@Inject	extension KExpressionsDeclarationExtensions
 	@Inject	extension KExpressionsValuedObjectExtensions
 	@Inject extension KEffectsExtensions
+	@Inject extension SCGControlFlowExtensions
 	
 	
 	// -------------------------------------------------------------------------
@@ -117,8 +119,8 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 		val entry = scg.nodes.filter(Entry).head
 		
 		// If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
-		val firstAssignment = if (entry == null)  
-		  scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+		val firstAssignment = if (entry === null)  
+		  scg.nodes.filter(Assignment).filter[ it.incomingLinks.filter(ControlFlow).empty ].head
 		  else (entry.next.target as Assignment)
 
 		// Search for all assignments which have to be replaced by SSA variables and fill all lists.
@@ -148,16 +150,16 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 	 *     remember the target of the "else"-branch (conditionalEndNodes) and call createSSAs with this node.
 	 */
 	def void createSSAs(Node n, SCGraph scg) {
-        if (n == null) return;
+        if (n === null) return;
         
 		if (!(n instanceof Exit)) {
 
 			if (n instanceof Assignment) {
 				transformAssignmentNodes(n, scg)
-				createSSAs(n.next?.target, scg)
+				createSSAs(n.next?.targetNode, scg)
 			} else if (n instanceof Conditional) {
-				val target = n.^else.target
-				transformConditionalNodes(n, n, n, n.^else.target, scg)
+				val target = n.^else.targetNode
+				transformConditionalNodes(n, n, n, n.^else.targetNode, scg)
 				createSSAs(target, scg)
 			}
 
@@ -178,13 +180,13 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 		var Node thisNode
 
 		if (predecessorNodeThen instanceof Conditional) {
-			thisNode = predecessorNodeThen.then.target
+			thisNode = predecessorNodeThen.then.targetNode
 		}
 		if (predecessorNodeThen instanceof Assignment) {
-			thisNode = predecessorNodeThen.next.target
+			thisNode = predecessorNodeThen.next.targetNode
 		}
 		if (thisNode instanceof Conditional) {
-			transformConditionalNodes(thisNode, thisNode, thisNode, thisNode.^else.target, scg)
+			transformConditionalNodes(thisNode, thisNode, thisNode, thisNode.^else.targetNode, scg)
 		} else if (thisNode instanceof Assignment) {
 
 			val name = thisNode.valuedObject.name
@@ -265,7 +267,7 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 			// don't create more valuedObjects than necessary.. 
 			// if this is the last time an output is target of an assignment, 
 			// the original output variable shall remain as the target.
-			if ((outputOccurenceCounter.get(name) == null) ||
+			if ((outputOccurenceCounter.get(name) === null) ||
 				!(ssaMap.get(name) >= (outputOccurenceCounter.get(name)))) {
 
 				val vo = createValuedObject(name + "_" + ssaMap.get(name))
@@ -346,7 +348,7 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 			try {
 			     guardNumber = Integer.parseInt(guardName);
 			} catch(Exception e){}
-			val isGuard = (name != null) && (name.length > 0) && (guardNumber >= 0);
+			val isGuard = (name !== null) && (name.length > 0) && (guardNumber >= 0);
 			//if (!(name.startsWith("g") || (name.startsWith("_cond")))) {
 			
 			

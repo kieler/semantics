@@ -19,8 +19,6 @@ import de.cau.cs.kieler.scg.Node
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * The SCG Extensions are a collection of common methods for SCG manipulation.
@@ -33,7 +31,6 @@ class SCGManipulationExtensions {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
-    extension ScgFactory = ScgFactory::eINSTANCE
     
     def void removeNode(Node node, boolean rerouteCF) {
         val prev = newArrayList
@@ -61,7 +58,7 @@ class SCGManipulationExtensions {
         node.allNext.forEach[target = null]
         node.dependencies.forEach[target = null]
         node.eContents.immutableCopy.forEach[remove]
-        node.incoming.immutableCopy.forEach[target = null; remove]
+        node.incomingLinks.immutableCopy.forEach[target = null; remove]
         
         val sb = node.schedulingBlock
         if (sb !== null) {

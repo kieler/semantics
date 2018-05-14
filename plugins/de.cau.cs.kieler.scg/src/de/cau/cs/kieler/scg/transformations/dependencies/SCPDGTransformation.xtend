@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
@@ -103,19 +102,19 @@ class SCPDGTransformation {//extends AbstractProductionTransformation implements
         scg
     }
     
-    private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg) {
+    private def dispatch Node transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg) {
     	controlFlows += entry.allNext
     	entry.next = null
     	val exitNode = entry.exit
     	
     	while(!controlFlows.empty) {
     		val cf = controlFlows.head
-    		val node = cf.target
+    		val node = cf.targetNode
     		controlFlows.remove(cf)
     		
     		val cdTarget = node.transformSCPDG(controlFlows, scg)
     		
-    		if ((cdTarget != null) && !(cdTarget instanceof Exit)) {
+    		if ((cdTarget !== null) && !(cdTarget instanceof Exit)) {
 				ScgFactory::eINSTANCE.createControlDependency => [
 					target = cdTarget as Node
 					entry.dependencies += it
@@ -146,7 +145,7 @@ class SCPDGTransformation {//extends AbstractProductionTransformation implements
     }
 
     private def dispatch Node transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg) {
-    	fork.allNext.map[target].forEach[controlFlows += allNext]
+    	fork.allNext.map[targetNode].forEach[controlFlows += allNext]
     	fork.allNext.map[target].forEach[ e |
     		(e as Entry).next = null
     		scg.nodes.remove(e)

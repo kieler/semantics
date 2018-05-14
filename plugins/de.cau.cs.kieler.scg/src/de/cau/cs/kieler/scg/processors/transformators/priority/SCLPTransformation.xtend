@@ -41,6 +41,7 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -49,10 +50,11 @@ import de.cau.cs.kieler.scg.common.SCGAnnotations
  */
 class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     
-     @Inject extension AnnotationsExtensions
-     @Inject extension SCG2CSerializeHRExtensions
-     @Inject extension SCGThreadExtensions
-     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCG2CSerializeHRExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SCGControlFlowExtensions
      
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
      
@@ -321,7 +323,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
             } else {
                 if(!labeledNodes.containsKey(node)) {
                     // If a node has multiple incoming control flows, create a goto label
-                    val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+                    val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
                     if(incomingControlFlows.size > 1) {
                         val newLabel = "label_" + labelNr++
                         labeledNodes.put(node, newLabel)
@@ -370,7 +372,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         sb.append(ass.serializeHR)
         sb.append(";\n")
         
-        sb.transformNode(ass.next.target)
+        sb.transformNode(ass.next.targetNode)
         
     }
     
@@ -390,7 +392,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         sb.appendInd("if(" + cond.condition.serializeHR + "){\n")
         currentIndentation += DEFAULT_INDENTATION
         
-        sb.transformNode(cond.then.target)
+        sb.transformNode(cond.then.targetNode)
         
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("} ")
@@ -398,7 +400,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         // ELSE-Case
         sb.append("else {\n")
         currentIndentation += DEFAULT_INDENTATION
-        sb.transformNode(cond.^else.target)
+        sb.transformNode(cond.^else.targetNode)
         
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("}\n")
@@ -470,7 +472,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         
         // Find threads with maximal entry priority and minimal exit priority
         for(child : children) {
-            val entry = child.target
+            val entry = child.targetNode
             val exit = (entry as Entry).exit
             val entryPrio = (entry.getAnnotation("optPrioIDs") as IntAnnotation).value
             val exitPrio = (exit.getAnnotation("optPrioIDs") as IntAnnotation).value
@@ -486,11 +488,11 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         val minx = min
         // Translate the nodes and create labels
         for(child : children) {
-            child.target.annotations += createIntAnnotation => [
+            child.targetNode.annotations += createIntAnnotation => [
                 name = "exitPrio"
                 value = minx
             ]
-            var node = child.target
+            var node = child.targetNode
             if(!node.equals(minNode)) {
                 joinPrioList.add(((node as Entry).exit.getAnnotation("optPrioIDs") as IntAnnotation).value)
                 val regionName = node.getStringAnnotationValue("regionName").replaceAll(" ","")
@@ -617,7 +619,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      *              The Join node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Join join) {
-        sb.transformNode(join.next.target)
+        sb.transformNode(join.next.targetNode)
         
     }
     
@@ -636,7 +638,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         if(entry.hasAnnotation("optPrioIDs")) {
             var prio = (entry.getAnnotation("optPrioIDs") as IntAnnotation).value
             
-            if(entry.incoming.empty) {
+            if(entry.incomingLinks.empty) {
                 sb.appendInd("tickstart(" + prio + ");\n")                
             } else {
                 if(entry.hasAnnotation("exitPrio")) {
@@ -649,7 +651,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
             threadPriorities.put(entry, threadPrios)
         }
         
-        sb.transformNode(entry.next.target)
+        sb.transformNode(entry.next.targetNode)
         
     }
     
@@ -666,12 +668,12 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         // Does absolutely nothing
         // Cannot have more than one incoming edge and cannot lower the priority.
         sb.appendInd("\n")
-        if(exit.next != null) {
+        if(exit.next !== null) {
             val entry = exit.threadEntry
             val prio = (exit.getAnnotation("optPrioIDs") as IntAnnotation).value
             threadPriorities.get(entry).add(prio)
-            threadPriorities.get(exit.next.target.threadEntry).addAll(threadPriorities.get(entry))
-            sb.transformNode(exit.next.target)
+            threadPriorities.get(exit.next.targetNode.threadEntry).addAll(threadPriorities.get(entry))
+            sb.transformNode(exit.next.targetNode)
         }
     }
     
@@ -718,7 +720,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     private def void transformNode(StringBuilder sb, Depth dep) {
         
         
-        sb.transformNode(dep.next.target)
+        sb.transformNode(dep.next.targetNode)
     }
     
  // ----------------------------------------------------------------------------------------------------------------    

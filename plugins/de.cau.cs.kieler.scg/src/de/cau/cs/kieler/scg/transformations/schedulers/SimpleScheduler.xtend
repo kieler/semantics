@@ -18,17 +18,14 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import java.util.Map
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 

@@ -27,6 +27,8 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import org.eclipse.emf.ecore.EObject
+import com.google.inject.Inject
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * Removes conditional nodes holding a constant (true/false)
@@ -37,6 +39,8 @@ import org.eclipse.emf.ecore.EObject
  *
  */
 class ConstantConditionals implements Traceable {
+    
+    @Inject extension SCGControlFlowExtensions
 
     private val processedNodes = <Node>newLinkedList
     private val deleteNodes = <Conditional>newLinkedList
@@ -51,7 +55,7 @@ class ConstantConditionals implements Traceable {
 
         // Remove crossreferences        
         for (node : scg.nodes) {
-            deleteNodes.forEach[ node.incoming.remove(it.then); node.incoming.remove(it.^else) ]
+            deleteNodes.forEach[ node.incomingLinks.remove(it.then); node.incomingLinks.remove(it.^else) ]
         }
         // Remove nodes
         scg.nodes.removeAll(deleteNodes)
@@ -62,13 +66,13 @@ class ConstantConditionals implements Traceable {
     def dispatch SCGraph transformCond(Entry entry, SCGraph scg) {
         if (entry.marked)
             return scg
-        transformCond(entry.next.target.removeCond(entry.next), scg)
+        transformCond(entry.next.targetNode.removeCond(entry.next), scg)
     }
 
     def dispatch SCGraph transformCond(Exit exit, SCGraph scg) {
-        if (exit.marked || exit.next == null)
+        if (exit.marked || exit.next === null)
             return scg
-        transformCond(exit.next.target.removeCond(exit.next), scg)
+        transformCond(exit.next.targetNode.removeCond(exit.next), scg)
     }
 
     def dispatch SCGraph transformCond(Surface surface, SCGraph scg) {
@@ -78,30 +82,30 @@ class ConstantConditionals implements Traceable {
 
     def dispatch SCGraph transformCond(Depth depth, SCGraph scg) {
         if(depth.marked) return scg
-        transformCond(depth.next.target.removeCond(depth.next), scg)
+        transformCond(depth.next.targetNode.removeCond(depth.next), scg)
     }
 
     def dispatch SCGraph transformCond(Assignment assignment, SCGraph scg) {
         if(assignment.marked) return scg
-        transformCond(assignment.next.target.removeCond(assignment.next), scg)
+        transformCond(assignment.next.targetNode.removeCond(assignment.next), scg)
     }
 
     def dispatch SCGraph transformCond(Fork fork, SCGraph scg) {
         if(fork.marked) return scg
-        fork.next.forEach[transformCond(it.target.removeCond(it), scg)]
+        fork.next.forEach[transformCond(it.targetNode.removeCond(it), scg)]
         transformCond(fork.join, scg)
     }
 
     def dispatch SCGraph transformCond(Join join, SCGraph scg) {
         if(join.marked) return scg
-        transformCond(join.next.target.removeCond(join.next), scg)
+        transformCond(join.next.targetNode.removeCond(join.next), scg)
     }
 
     def dispatch SCGraph transformCond(Conditional cond, SCGraph scg) {
         if(cond.marked) return scg
 
-        transformCond(cond.then.target.removeCond(cond.then), scg)
-        transformCond(cond.^else.target.removeCond(cond.^else), scg)
+        transformCond(cond.then.targetNode.removeCond(cond.then), scg)
+        transformCond(cond.^else.targetNode.removeCond(cond.^else), scg)
     }
 
     /*
@@ -115,11 +119,11 @@ class ConstantConditionals implements Traceable {
             if (cond.condition instanceof BoolValue) {
                 deleteNodes.add(cond)
                 if ((cond.condition as BoolValue).value == true) {
-                    val thenTarget = cond.then.target
+                    val thenTarget = cond.then.targetNode
                     cf.target = thenTarget
                     return thenTarget
                 } else {
-                    val elseTarget = cond.^else.target
+                    val elseTarget = cond.^else.targetNode
                     cf.target = elseTarget
                     return elseTarget
                 }

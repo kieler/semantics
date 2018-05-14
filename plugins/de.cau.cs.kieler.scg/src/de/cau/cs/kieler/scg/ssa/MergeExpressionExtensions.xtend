@@ -49,10 +49,6 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import com.google.common.base.Predicates
-import de.cau.cs.kieler.scg.ScheduleDependency
-import de.cau.cs.kieler.scg.GuardDependency
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -113,7 +109,7 @@ class MergeExpressionExtension {
             val voCopy = copier.get(vo)
             val independentNodes = copy.nodes.filter(Assignment).filter[valuedObject != voCopy && !eAllContents.filter(ValuedObjectReference).exists[valuedObject == voCopy]].toList
             for (in : independentNodes) {
-                in.incoming.immutableCopy.forEach[ target = in.next.target]
+                in.incomingLinks.immutableCopy.forEach[ target = in.next.targetNode ]
                 in.next.target = null
             }
             copy.nodes.removeAll(independentNodes)
@@ -210,7 +206,7 @@ class MergeExpressionExtension {
                     if (pred instanceof Assignment) {
                         if (pred.valuedObject == vo) {
                             val dom = dt.isDominator(pred.basicBlock, readingNode.basicBlock)
-                            if (dom && idom == null) {
+                            if (dom && idom === null) {
                                 idom = pred
                                 reachinDefinitions.add(pred)
                             } else if (!dom) {
@@ -318,11 +314,11 @@ class MergeExpressionExtension {
                             parameters += createParameter => [
                                 refs.put(node, it)
                             ]
-                            node.allNext.filter[!marks.contains(it)].head?.target?.createSeqConcExpression(vo, refs, marks, dt).addTo(parameters)
+                            node.allNext.filter[!marks.contains(it)].head?.targetNode?.createSeqConcExpression(vo, refs, marks, dt).addTo(parameters)
                         ]
                     ]
                 } else {
-                    return node.allNext.filter[!marks.contains(it)].head?.target?.createSeqConcExpression(vo, refs, marks, dt)
+                    return node.allNext.filter[!marks.contains(it)].head?.targetNode?.createSeqConcExpression(vo, refs, marks, dt)
                 }
             }
             Fork: {
@@ -330,20 +326,20 @@ class MergeExpressionExtension {
                     expression = SEQ.createFunction => [
                         parameters += createParameter => [
                             expression = CONC.createFunction => [
-                                node.allNext.map[target].map [
+                                node.allNext.map[targetNode].map [
                                     createSeqConcExpression(vo, refs, marks, dt)
                                 ].addTo(parameters)
                             ]
                         ]
-                        (node as Fork).join.next?.target?.createSeqConcExpression(vo, refs, marks, dt).addTo(parameters)
+                        (node as Fork).join.next?.targetNode?.createSeqConcExpression(vo, refs, marks, dt).addTo(parameters)
                     ]
                 ]
             }
             Conditional: {
                 val cond = (node as Conditional)
-                val thenBranch = cond.then?.target
-                val elseBranch = cond.^else?.target
-                if (thenBranch == null || elseBranch == null) {
+                val thenBranch = cond.then?.targetNode
+                val elseBranch = cond.^else?.targetNode
+                if (thenBranch === null || elseBranch === null) {
                     throw new IllegalArgumentException("SCG contains malformed conditional node. No then or else branch present.")
                 }
                 if (marks.contains(thenBranch) && marks.contains(elseBranch)) {
@@ -410,9 +406,9 @@ class MergeExpressionExtension {
             Join:
                 return null
             Surface:
-                return node.depth.allNext.head?.target?.createSeqConcExpression(vo, refs, marks, dt)
+                return node.depth.allNext.head?.targetNode?.createSeqConcExpression(vo, refs, marks, dt)
             default:
-                return node.allNext.filter[!marks.contains(it)].head?.target?.createSeqConcExpression(vo, refs, marks, dt)
+                return node.allNext.filter[!marks.contains(it)].head?.targetNode?.createSeqConcExpression(vo, refs, marks, dt)
         }
     }
     
@@ -447,7 +443,7 @@ class MergeExpressionExtension {
     def Expression createScheduledExpression(LinkedList<Assignment> assignments, HashMultimap<Assignment, Parameter> ssaReferences) {
         val head = assignments.pop
         if (assignments.empty) {
-            if (head.valuedObject == null) {
+            if (head.valuedObject === null) {
                 return SEQ.createFunction => [
                     parameters += createParameter => [
                         expression = head.expression
@@ -543,7 +539,7 @@ class MergeExpressionExtension {
                         }
                     }
                 }
-                changed = fcalls.removeIf[eContainer == null]
+                changed = fcalls.removeIf[eContainer === null]
             }
             // reduce nesting
             for (fc : fcalls) {
@@ -637,7 +633,7 @@ class MergeExpressionExtension {
     }
 
     private def void addTo(Parameter parameter, EList<Parameter> list) {
-        if (parameter != null) {
+        if (parameter !== null) {
             list.add(parameter)
         }
     }

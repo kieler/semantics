@@ -217,12 +217,12 @@ class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
     }
     
     def void createJump(Scope scope, ControlFlow cf) {
-        val statement = createGoto => [ it.target = cf.target.label ]
+        val statement = createGoto => [ it.target = cf.targetNode.label ]
         scope.statements.add(statement)
     }
 
     def void createJump(List<Statement> scope, ControlFlow cf) {
-        val statement = createGoto => [ it.target = cf.target.label ]
+        val statement = createGoto => [ it.target = cf.targetNode.label ]
         scope.add(statement)
     }
 

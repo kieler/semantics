@@ -53,9 +53,6 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.DataDependencyType
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.SCGraphs
 import java.util.HashMap
 import org.eclipse.core.runtime.IProgressMonitor
@@ -71,6 +68,9 @@ import org.eclipse.ui.progress.UIJob
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.kext.Dependency
+import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
 
 /**
  * Adds the SCG dependencies into the SCChart.

@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.scg;
 
+import de.cau.cs.kieler.kexpressions.kext.Dependency;
+
 
 /**
  * <!-- begin-user-doc -->

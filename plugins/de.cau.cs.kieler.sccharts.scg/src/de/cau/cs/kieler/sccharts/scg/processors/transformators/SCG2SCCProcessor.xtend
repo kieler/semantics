@@ -46,6 +46,7 @@ import java.util.List
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * @author ssm
@@ -91,6 +92,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCGControlFlowExtensions
     
     protected var nameCounter = 0
     protected val finalStates = <ControlflowRegion, State> newHashMap
@@ -135,7 +137,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         
         // Queue the exit node to make sure that the exit node is the last node in this thread.
         if (entry.next.target != entry.exit) nodeList.push(new Pair<Node, Transition>(entry.exit, null))
-        nodeList.push(new Pair<Node, Transition>(entry.next.target, null))
+        nodeList.push(new Pair<Node, Transition>(entry.next.targetNode, null))
     }
     
     protected def dispatch void transformNode(Exit exit, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
@@ -195,7 +197,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         // Push the state scope onto the scope stack and queue the entry nodes of the threads. 
         // Make sure to push the join node beforehand, so that the control flow continues afterwards. 
         scopeStack.push(newState)
-        val forkTargets = fork.next.map[ target ].toList
+        val forkTargets = fork.next.map[ targetNode ].toList
         
         nodeList.push(new Pair<Node, Transition>(fork.join, null))
         for (target : forkTargets) {
@@ -214,7 +216,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             nodeStateMapping.get(join.fork).outgoingTransitions.add(it)
         ]
         
-        nodeList.push(new Pair<Node, Transition>(join.next.target, newTransition))        
+        nodeList.push(new Pair<Node, Transition>(join.next.targetNode, newTransition))        
     }
 
     protected def dispatch void transformNode(Conditional conditional, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
@@ -243,8 +245,8 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             conditional.copyAnnotations(newState)
         }
         
-        nodeList.push(new Pair<Node, Transition>(conditional.getElse.target, newTransitionElse))
-        nodeList.push(new Pair<Node, Transition>(conditional.then.target, newTransitionThen))        
+        nodeList.push(new Pair<Node, Transition>(conditional.getElse.targetNode, newTransitionElse))
+        nodeList.push(new Pair<Node, Transition>(conditional.then.targetNode, newTransitionThen))        
     }
 
     protected def dispatch void transformNode(Assignment assignment, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
@@ -269,7 +271,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             effects += assignment.copyAssignment(map)
         ]
         
-        nodeList.push(new Pair<Node, Transition>(assignment.next.target, newTransition))
+        nodeList.push(new Pair<Node, Transition>(assignment.next.targetNode, newTransition))
     }
 
     protected def dispatch void transformNode(Surface surface, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {
@@ -294,7 +296,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             newState.outgoingTransitions.add(it)
         ]
         
-        nodeList.push(new Pair<Node, Transition>(surface.depth.next.target, newTransition))
+        nodeList.push(new Pair<Node, Transition>(surface.depth.next.targetNode, newTransition))
     }
 
     protected def dispatch void transformNode(Depth depth, Transition incoming, SCGraph scg, Deque<Pair<Node, Transition>> nodeList, Deque<Scope> scopeStack, ValuedObjectMapping map) {

@@ -135,13 +135,13 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             	scheduleDependencies += node.dependencies.filter(ScheduleDependency)
             }
             
-            if (exitNode == null) {
+            if (exitNode === null) {
                 exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it name = entry.name + "_exit" ]                
             }
             
             // Add a new schedule dependency to cover the last guarded assignments.
-            if (scheduleDependencies != null && !scheduleDependencies.empty) {
-                scheduleDependencies += scheduleDependencies.last.target.createScheduleDependency(null)
+            if (scheduleDependencies !== null && !scheduleDependencies.empty) {
+                scheduleDependencies += scheduleDependencies.last.targetNode.createScheduleDependency(null)
             } 
             
             // Connect assignments
@@ -149,7 +149,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
                 val originalAssignment = schedule.eContainer as Node
             	val sourceAssignment = AAMap.get(originalAssignment)
                 var targetAssignment = AAMap.get(schedule.target)
-                if (targetAssignment == null) targetAssignment = exitNode 
+                if (targetAssignment === null) targetAssignment = exitNode 
             	
             	// Check for guarded assignments
             	val guardDependencies = originalAssignment.dependencies.filter(GuardDependency)
@@ -167,32 +167,32 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
                             newSCG.nodes += it
                             AAMap.put(gd.target as Assignment, it)
                             
-                            it.trace(gd.target.asAssignment)
+                            it.trace(gd.targetNode.asAssignment)
                         ]                    
-                        if (gd.target.asAssignment.incoming.filter(ControlDependency).empty) {
+                        if (gd.targetNode.asAssignment.incomingLinks.filter(ControlDependency).empty) {
                             nextAssignment = gd.target as Assignment
                         }
                     }
                     
-                    if (nextAssignment == null) {
+                    if (nextAssignment === null) {
                         throw new NullPointerException("Next assignment must not be null! Maybe your control dependencies are wrong?");
                     }
                     guardConditional.createControlFlow.target = AAMap.get(nextAssignment)
                     
                     var next = nextAssignment
-                    while (next != null) {
-                        next = nextAssignment.dependencies.filter(ControlDependency).head?.target?.asAssignment
-                        if (next != null) {
+                    while (next !== null) {
+                        next = nextAssignment.dependencies.filter(ControlDependency).head?.targetNode?.asAssignment
+                        if (next !== null) {
                             AAMap.get(nextAssignment).createControlFlow.target = AAMap.get(next)
                             nextAssignment = next
                         }
                     }
-                    if (targetAssignment != null) {
+                    if (targetAssignment !== null) {
                         AAMap.get(nextAssignment).createControlFlow.target = targetAssignment 
                         guardConditional.createControlFlow.target = targetAssignment
                     }         	    
             	} else {
-                    if (targetAssignment != null) {
+                    if (targetAssignment !== null) {
                     	sourceAssignment.createControlFlow.target = targetAssignment
                    	}
                	} 
@@ -208,9 +208,9 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     private def getSchedule(Node node) {
     	<Node> newArrayList => [ list |
     		var nextNode = node
-    		while (nextNode != null) {
+    		while (nextNode !== null) {
  				list += nextNode
- 				nextNode = nextNode.dependencies.filter(ScheduleDependency)?.head?.target 			
+ 				nextNode = nextNode.dependencies.filter(ScheduleDependency)?.head?.targetNode 			
     		}
     	]
     }

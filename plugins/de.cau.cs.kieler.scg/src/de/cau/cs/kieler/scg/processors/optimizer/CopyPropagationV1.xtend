@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg.processors.optimizer
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -25,6 +24,8 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.List
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.Dependency
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * @author ssm
@@ -35,6 +36,7 @@ class CopyPropagationV1 extends AbstractOptimizer {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject extension KEffectsExtensions
     
     static final boolean DEBUG = false;
@@ -93,7 +95,7 @@ class CopyPropagationV1 extends AbstractOptimizer {
         ]
         for(sb : schedulingBlocks) {
             for(dependency : sb.dependencies) {
-                val targetSB = dependency.target.schedulingBlock(schedulingBlocks) 
+                val targetSB = dependency.targetNode.schedulingBlock(schedulingBlocks) 
                 val dependencyList = reverseDependencyMap.get(targetSB)
                 dependencyList += dependency
             }
@@ -175,7 +177,7 @@ class CopyPropagationV1 extends AbstractOptimizer {
     		relinkVisited += guard
 	    	val vo = (guard.expression as ValuedObjectReference).valuedObject
         	var Guard newGuard = reverseGuardMap.get(vo)
-        	if (newGuard == null) {
+        	if (newGuard === null) {
         	    newGuard = goGuard
         	}
         	if (deleteList.contains(newGuard)) {

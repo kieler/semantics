@@ -15,6 +15,7 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -404,7 +405,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     def dispatch CharSequence serializeHR(IgnoreValue expression) {
         "_"
     }
-        
+    
+    def dispatch CharSequence serializeHR(NamedObject namedObject) {
+        "NamedObject \"" + namedObject.name + "\""
+    }
     
     dispatch def CharSequence serializeHR(Expression expression) {
         expression.serialize.humanReadable

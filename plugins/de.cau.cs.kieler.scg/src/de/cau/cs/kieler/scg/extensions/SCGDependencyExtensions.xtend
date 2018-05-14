@@ -20,8 +20,6 @@ import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.DataDependencyType
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import java.util.List
@@ -35,6 +33,9 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.EnumSet
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
+import de.cau.cs.kieler.kexpressions.kext.KExtFactory
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -62,8 +63,8 @@ class SCGDependencyExtensions {
 	@Inject extension KExpressionsValueExtensions
 	@Inject extension KEffectsExtensions
 	
-	 def DataDependency createDataDependency(DataDependencyType type) {
-	 	ScgFactory::eINSTANCE.createDataDependency => [ 
+    def DataDependency createDataDependency(DataDependencyType type) {
+	 	KExtFactory::eINSTANCE.createDataDependency => [ 
 	 		it.type = type
 	 	]
 	 }
@@ -149,7 +150,7 @@ class SCGDependencyExtensions {
                                 // Assume there is only one VO and one literal per OE.
                                 val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
                                 val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
-                                if (sourceRelativeVOR != null && targetRelativeVOR != null) {
+                                if (sourceRelativeVOR !== null && targetRelativeVOR !== null) {
                                     if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
                                         targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
                                         val sourceValue = sourceExpression.subExpressions.filter(Value).head
@@ -188,12 +189,12 @@ class SCGDependencyExtensions {
     		var Fork sourceFork = null
     		val sourcePredecessor = sourceEntry.getAllPreviousHeadNode
     		if (sourcePredecessor instanceof Fork) sourceFork = sourcePredecessor as Fork
-    		if (sourceFork != null) {
+    		if (sourceFork !== null) {
     			for(targetEntry : targetThreads) {
     				var Fork targetFork = null
     				val targetPredecessor = targetEntry.getAllPreviousHeadNode
     				if (targetPredecessor instanceof Fork) targetFork = targetPredecessor as Fork
-   					if (targetFork != null && sourceFork == targetFork && sourceEntry != targetEntry) {
+   					if (targetFork !== null && sourceFork == targetFork && sourceEntry != targetEntry) {
    						dependency.concurrent = true;
    						return dependency
    					}

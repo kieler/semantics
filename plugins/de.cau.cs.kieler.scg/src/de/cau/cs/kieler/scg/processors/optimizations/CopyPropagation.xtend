@@ -36,7 +36,6 @@ import de.cau.cs.kieler.scg.impl.ConditionalImpl
 import de.cau.cs.kieler.scg.Node
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Link
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.kexpressions.Declaration
@@ -44,6 +43,7 @@ import java.util.HashMap
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.Link
 
 class CopyPropagation {
     // Inject from SCGDeclarations
@@ -154,9 +154,9 @@ class CopyPropagation {
         /* REMOVE UNUSED ASSIGNMENTS */
         if(endCheckAssignments.size > 0) {
             var tmp = endCheckAssignments.get(0)
-            while(tmp != null) {
+            while(tmp !== null) {
                 val nextItem = tmp.next
-                val prevItems = tmp.incoming
+                val prevItems = tmp.incomingLinks
                 val changes = new ArrayList<Pair<Link, ControlFlow>>()
                 prevItems.forEach[
                     changes.add(new Pair(it, nextItem))

@@ -21,6 +21,7 @@ import java.util.LinkedList
 import java.util.List
 import javax.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCCExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * Calculates the Thread Segment IDs of the nodes in an SCG
@@ -30,6 +31,7 @@ import de.cau.cs.kieler.scg.extensions.SCCExtensions
 class ThreadSegmentIDs {
 
     @Inject extension SCCExtensions
+    @Inject extension SCGControlFlowExtensions
     
     /** The thread segment ID for each node */
     private HashMap<Node, Integer> threadSegmentIDs
@@ -78,7 +80,7 @@ class ThreadSegmentIDs {
         for(node : forkNodes) {
             val fork = node as Fork
             for(link : fork.next) {
-                entryToThreadNodes.add(link.target)
+                entryToThreadNodes.add(link.targetNode)
             }
         }
         nThreadSegmentIDs = entryToThreadNodes.length

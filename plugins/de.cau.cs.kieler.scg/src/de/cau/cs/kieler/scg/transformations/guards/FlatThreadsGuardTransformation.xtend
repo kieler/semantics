@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
@@ -30,6 +29,7 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.inject.Injector
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.Dependency
 
 /** 
  * @author ssm
@@ -103,7 +103,7 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
      		}
      		
      		node.dependencies.removeAll
-     		val incomingDependencies = node.incoming.filter(Dependency).toList
+     		val incomingDependencies = node.incomingLinks.filter(Dependency).toList
      		for(id : incomingDependencies) {
      			id.remove
      		}

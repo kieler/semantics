@@ -15,6 +15,7 @@ import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * @author ssm
@@ -51,6 +52,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     @Inject extension SCGDependencyExtensions	
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGControlFlowExtensions
     
 	/**
 	 * {@inherited}
@@ -62,7 +64,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
     	 */
-    	val nodesToSchedule = scg.nodes.filter[ incoming.filter(GuardDependency).empty ].toSet
+    	val nodesToSchedule = scg.nodes.filter[ incomingLinks.filter(GuardDependency).empty ].toSet
     	val estimatedScheduleSize = nodesToSchedule.size 	
 
 		val schedules = <Set<Node>> newArrayList
@@ -72,16 +74,16 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	while(!nodesToSchedule.empty) {
   	    	val schedule = new LinkedHashSet<Node>
   	    	SCGPlugin.log("*** NEW SCHEDULE ***", Level.FINE)
-  	    	var startingNode = nodesToSchedule.filter[ incoming.filter(GuardDependency).empty ].head
+  	    	var startingNode = nodesToSchedule.filter[ incomingLinks.filter(GuardDependency).empty ].head
     		var Boolean newSchedule 
   	    	do {
   	    		newSchedule = true
 	    		topologicalScheduling(startingNode, nodesToSchedule, schedule)
 	    		for(node : schedule) {
 	    			for(dep : node.dependencies) {
-	    				if (dep.target.incoming.filter(GuardDependency).empty && nodesToSchedule.contains(dep.target)) {
+	    				if (dep.target.incomingLinks.filter(GuardDependency).empty && nodesToSchedule.contains(dep.target)) {
 	    					newSchedule = false
-	    					startingNode = dep.target
+	    					startingNode = dep.targetNode
     					}
 	    			}
 	    		}

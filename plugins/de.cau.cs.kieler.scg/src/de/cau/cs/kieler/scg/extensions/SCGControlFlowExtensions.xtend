@@ -26,6 +26,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import java.util.List
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.kext.Link
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -97,6 +98,10 @@ class SCGControlFlowExtensions {
     // -- Control flow queries
     // -------------------------------------------------------------------------
    
+    def Node targetNode(Link cf) {
+        cf.target as Node
+    }
+   
     /**
      * Retrieves a list of control flows originating at the given node.
      * 
@@ -116,15 +121,15 @@ class SCGControlFlowExtensions {
 	 * @return Returns a list of control flows.
 	 */   
     def Iterable<ControlFlow> getAllPrevious(Node node) {
-        node.incoming.filter(ControlFlow)
+        node.incomingLinks.filter(ControlFlow)
     }
     
     def ControlFlow getAllPreviousHead(Node node) {
-    	node.incoming.filter(ControlFlow)?.head	
+    	node.incomingLinks.filter(ControlFlow)?.head	
     }
     
     def Node getAllPreviousHeadNode(Node node) {
-    	node.incoming.filter(ControlFlow)?.head?.eContainer as Node	
+    	node.incomingLinks.filter(ControlFlow)?.head?.eContainer as Node	
     }
    
 	/** 
@@ -159,7 +164,7 @@ class SCGControlFlowExtensions {
     private def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> localFlow, 
         List<List<ControlFlow>> listOfFlows, Node target, boolean includeTickEdges, boolean excludeSingleIncoming 
     ) {
-        if (excludeSingleIncoming && next.target.incoming.size<2) return;
+        if (excludeSingleIncoming && next.target.incomingLinks.size<2) return;
         
     	// Already in the local flow list: loop! Abort.
         if (localFlow.contains(next)) return;
@@ -176,7 +181,7 @@ class SCGControlFlowExtensions {
         
         // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
         localFlow.add(next)
-        next.target.allNext.forEach[
+        next.targetNode.allNext.forEach[
             val newFlow = <ControlFlow> newArrayList(localFlow)       	    
             accumulateIndirectControlFlow(newFlow, listOfFlows, target, includeTickEdges, false)
         ]
@@ -320,7 +325,7 @@ class SCGControlFlowExtensions {
             if (node instanceof Surface && includePause) {
                 nodeList += node.asSurface.depth.allNext.map[target].filter[ !visited.contains(it) ]
             } else {
-                nodeList += node.allNext.map[it.target].filter[ !visited.contains(it) ]
+                nodeList += node.allNext.map[it.targetNode].filter[ !visited.contains(it) ]
             }
         }
         

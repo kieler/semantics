@@ -41,7 +41,6 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import java.util.Set
 import de.cau.cs.kieler.scg.BranchType
@@ -258,7 +257,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 				schizoDeclaration.valuedObjects += surfGuard.valuedObject
 
 				// fit schizo control flow into normal control flow
-				val nonSchizoSuccessors = it.allNext.map[target].filter [
+				val nonSchizoSuccessors = it.allNext.map[targetNode].filter [
 					!(schizoNodes.contains(it)) && !(it instanceof Exit)
 				]
 				nonSchizoSuccessors.forEach[ot|enhanceNonSchizoNodes(surfGuard, it.basicBlock, ot, scg)]
@@ -329,7 +328,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 		val reachableNodes = <Node>newHashSet()
 		depths.forEach [
 			it.getIndirectControlFlowsBeyondTickBoundaries(entry.exit).forEach [
-				it.forEach[reachableNodes.add(it.target)]
+				it.forEach[reachableNodes.add(it.targetNode)]
 			]
 		]
 		return reachableNodes.filter[pilData.contains(it)].filter[!(it instanceof Exit)].toSet
@@ -375,7 +374,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 
 			// Get the guard expression and unfold it
 			val guardExp = scg.guards.filter[it.valuedObject.name == exp.valuedObject.name].head.expression
-			if (guardExp == null) {
+			if (guardExp === null) {
 				newVOR.valuedObject = exp.valuedObject
 				return newVOR
 			} else {
