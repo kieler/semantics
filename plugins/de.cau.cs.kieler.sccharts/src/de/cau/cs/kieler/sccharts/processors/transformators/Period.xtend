@@ -159,7 +159,7 @@ class Period extends SCChartsProcessor implements Traceable {
                     val softReset = if (period.hasAnnotation(SOFT_RESET_NAME)) true else SOFT_RESET_DEFAULT
                     
                     state.createControlflowRegion(if (pi.key > 0) PERIOD_REGION_NAME + pi.key else PERIOD_REGION_NAME) => [
-                        val s = it.createInitialState("_s") => [name = ""]
+                        val s = it.createInitialState("_s") => [label = ""]
                         val threshold = period.trigger
                         s.createTransitionTo(s) => [
                             trigger = createGEQExpression(clock.reference, threshold)
