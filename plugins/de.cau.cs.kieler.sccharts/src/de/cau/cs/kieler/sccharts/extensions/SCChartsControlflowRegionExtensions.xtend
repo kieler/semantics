@@ -72,8 +72,19 @@ class SCChartsControlflowRegionExtensions {
         region
     }
 
+    /** Use createControlflowRegionWithoutLabel if you want an null label! */
     def createControlflowRegion(State state, String id) {
         createControlflowRegion(state, id, "")
+    }
+    
+    /**
+     * Historically transformations used createControlflowRegion with generation IDs, but also with empty labels.
+     * Hence, ID only controlflow regions without explicit label that only show their ID cannot be created via 
+     * createControlflowRegion. Use createControlflowRegionWithoutLabel for this. 
+     * However, this kind of feels like a design flaw. Maybe this should be revised at some point in time. 
+     */
+    def createControlflowRegionWithoutLabel(State state, String id) {
+        createControlflowRegion(state, id, null)
     }
     
     // was empty

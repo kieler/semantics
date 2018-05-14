@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -32,8 +32,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
  * Handles the creation of the tick logic function.
  * 
  * @author ssm
- * @kieler.design 2017-07-24 proposed 
- * @kieler.rating 2017-07-24 proposed yellow 
+ * @kieler.design 2018-04-16 proposed 
+ * @kieler.rating 2018-04-16 proposed yellow 
  * 
  */
 class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
@@ -66,14 +66,21 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     override generateInit() {
         init(serializer)
         indent(0)
-        code.append("void ").append(getName)
-        code.append("(")
-        code.append(struct.getName).append(" *").append(struct.getVariableName)
-        code.append(")")
+        code.add(
+            MLC(getName + "() contains the logic of the modelled statechart without additional tasks",
+                "such as communication with the simulation interface or register saves.",
+                "It takes the actual interface together with current state of the state machine and",
+                "calculates exactly one macro step of the system."
+            ),
+            
+            "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
+        )
         
-        struct.forwardDeclarations.append(code).append(";\n")
+        struct.forwardDeclarations.append(code).append(";\n\n")
         
-        code.append(" {\n")
+        code.add(
+            " {", NL
+        )
     }
     
     override generate() {
@@ -86,12 +93,15 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     
     override generateDone() {
         indent(0)
-        code.append("}\n\n")
+        code.add(
+            "}", NL, NL 
+        )
         
         for (function : functions) {
             code.append(function)
         }
     }
+    
     
     def void init(extension StatebasedCCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = ""
@@ -115,13 +125,10 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             if (!(state.eContainer instanceof ControlflowRegion)) {
                 struct.rootRegions += cfr
                 
-                reset.code.append("  ")
-                reset.code.append(STRUCT_VARIABLE_NAME)
-                reset.code.append("->")
-                reset.code.append(struct.getRegionName(cfr))
-                reset.code.append(".threadStatus = ")
-                reset.code.append(THREAD_STATUS_RUNNING)
-                reset.code.append(";\n")
+                reset.code.add(
+                    "  ", STRUCT_VARIABLE_NAME, "->", struct.getRegionName(cfr), ".threadStatus = ", 
+                        THREAD_STATUS_PAUSING, ";", NL
+                )
             }      
         }
     }
@@ -138,98 +145,70 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
         val stateName = struct.getStateName(state)
         
-        if (state.eContainer instanceof ControlflowRegion) {
+        if (isNested) {
             val parentCfr = state.eContainer as ControlflowRegion
             val functionName = struct.getStateName(state, parentCfr)
             val parentCfrName = struct.getRegionName(parentCfr)
             
-            parentFunction.append(indentation)
-            parentFunction.append(functionName)
-            parentFunction.append("(");
-            parentFunction.append(regionDataName)
-//            parentFunction.append("->" + parentCfrName
-            parentFunction.append(")");
-            parentFunction.append(";\n")
+            parentFunction.add(
+                indentation, functionName, "(", regionDataName, ");", NL 
+            )
             
             if (state.isHierarchical) {
-                parentFunction.append("\n")
-                parentFunction.append("      case ")
-                parentFunction.append(stateName + ENUM_STATES_RUNNING)
-                parentFunction.append(":\n")
-                parentFunction.append(indentation)
-                parentFunction.append(functionName + ENUM_STATES_RUNNING.toLowerCase)
-                parentFunction.append("(");
-                parentFunction.append(regionDataName)
-                parentFunction.append(")");
-                parentFunction.append(";\n")
+                parentFunction.add(
+                    NL, "      ", "case ", 
+                    stateName, ENUM_STATES_RUNNING, 
+                    ":", NL,
+                    indentation, functionName, ENUM_STATES_RUNNING.toLowerCase, "(", regionDataName, ");", NL
+                )
                 
-                struct.forwardDeclarationsLogic.append("void ").append(functionName).append(ENUM_STATES_RUNNING.toLowerCase).
-                    append("(" + parentCfrName + REGION_DATA_TYPE_SUFFIX + " *").
-                    append(regionDataName).append(");\n") 
+                struct.forwardDeclarationsLogic.add(
+                    "void ", functionName, ENUM_STATES_RUNNING.toLowerCase, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX,
+                     " *", regionDataName, ");", NL
+                 ) 
                 
             }             
             
-            function.append("void "); 
-            function.append("" + functionName)
-            function.append("(" + parentCfrName + REGION_DATA_TYPE_SUFFIX + " *");
-            function.append(regionDataName)
-            function.append(") {\n")
+            function.add(
+                "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ") {", NL
+            )
             
-            struct.forwardDeclarationsLogic.append("void ").append(functionName).
-                append("(" + parentCfrName + REGION_DATA_TYPE_SUFFIX + " *").
-                append(regionDataName).append(");\n") 
+            struct.forwardDeclarationsLogic.add(
+                "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ");", NL
+            ) 
 
             if (state.isHierarchical) {
                 val runningName = functionName + ENUM_STATES_RUNNING.toLowerCase
                 
-                function.append("  ")
-                function.append(REGION_DATA_NAME)
-                function.append("->activeState = ")
-                function.append(struct.getStateName(state) + StatebasedCCodeGeneratorStructModule.ENUM_STATES_RUNNING + ";\n")
+                function.add(
+                    "  ", REGION_DATA_NAME, "->activeState = ", struct.getStateName(state), ENUM_STATES_RUNNING, ";", NL
+                )
                 
-                for (cfg : state.regions.filter(ControlflowRegion)) {
-                    val cfgName = struct.getRegionName(cfg)
-                    val initialState = cfg.states.filter[ initial ].head
+                for (cfr : state.regions.filter(ControlflowRegion)) {
+                    val cfrName = struct.getRegionName(cfr)
+                    val initialState = cfr.states.filter[ initial ].head
                     val initialStateName = struct.getStateName(initialState)
+                    val noneStateName = struct.getNoneStateName(cfr)
                     
-                    function.append("  ");
-                    function.append(REGION_DATA_NAME)
-                    function.append("->")
-                    function.append(cfgName)
-                    function.append(".")
-                    function.append(REGION_ACTIVE_STATE)
-                    function.append(" = ")
-                    function.append(initialStateName) 
-                    function.append(";\n")
-                    
-                    function.append("  ");
-                    function.append(REGION_DATA_NAME)
-                    function.append("->")
-                    function.append(cfgName)
-                    function.append(".")
-                    function.append(REGION_ACTIVE_PRIORITY)
-                    function.append(" = ") 
-                    function.append(initialState.getStatePriority)
-                    function.append(";\n")
-
-                    function.append("  ");
-                    function.append(regionDataName)
-                    function.append("->")
-                    function.append(cfgName)
-                    function.append(".")
-                    function.append(REGION_ROOT_THREADSTATUS)
-                    function.append(" = ")
-                    function.append(THREAD_STATUS_RUNNING) 
-                    function.append(";\n")
+                    function.add(
+                        "  ", REGION_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ", 
+                            initialStateName, ";", NL,
+                        "  ", REGION_DATA_NAME, "->", cfrName, ".", REGION_TICK_START_STATE, " = ", 
+                            noneStateName, ";", NL,
+                        "  ", REGION_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
+                            initialState.getStatePriority, ";", NL,
+                        "  ", regionDataName, "->", cfrName, ".", REGION_ROOT_THREADSTATUS,  " = ",
+                            THREAD_STATUS_WAITING, ";", NL
+                    )
                 }
                 
-                function.append("}\n\n")
+                function.add(
+                    "}", NL, NL 
+                )
                 
-                function.append("void "); 
-                function.append(runningName)
-                function.append("(" + parentCfrName + REGION_DATA_TYPE_SUFFIX + " *");
-                function.append(regionDataName)
-                function.append(") {\n")
+                function.add(
+                    "void ", runningName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ") {", NL
+                )
             }
         }
         
@@ -237,78 +216,71 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             val regionCount = state.regions.filter(ControlflowRegion).size
             var indentation2 = ""
             
+            function.add(
+                MLCi(2, "Set the tick start state of all contained paused threads and", 
+                    "set the thread status to waiting for the upcomiong tick."
+                )
+            )
+            
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 val cfrName = struct.getRegionName(cfr.value)
-                function.append("  ")
-                function.append("if (")
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(".threadStatus == ");
-                function.append(THREAD_STATUS_PAUSED)
-                function.append(") {\n")
+                function.add(
+                    "  ", "if (", regionDataName, "->", cfrName, ".threadStatus == ",
+                        THREAD_STATUS_PAUSING, ") {", NL
+                )
                 
-                function.append("    " + indentation2)
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(".");
-                function.append(REGION_TICK_START_STATE)
-                function.append(" = ");
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(".");
-                function.append(REGION_ACTIVE_STATE)
-                function.append(";\n")
+                function.add(
+                    "    ", indentation2, regionDataName, "->", cfrName, ".", REGION_TICK_START_STATE, " = ",
+                        regionDataName, "->", cfrName, ".", REGION_ACTIVE_STATE, ";", NL
+                )
                 
-                function.append("    " + indentation2)
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(".threadStatus = ");
-                function.append(THREAD_STATUS_RUNNING)
-                function.append(";\n  " + indentation2 + "}\n")
+                function.add(
+                    "    ", indentation2, regionDataName, "->", cfrName, ".threadStatus = ", 
+                        THREAD_STATUS_WAITING, ";", NL, "  ", indentation2, "}", NL
+                )
             }
             
-            function.append("\n")
+            function.add(
+                NL
+            )
             
             val multiThreaded = regionCount > 1
-            function.append("  ")
-            function.append("do {\n")
+            function.add(
+                SLC(2, "Loop as long as at least one thread is still waiting to execute."), 
+                
+                "  ", "do {", NL
+            )
             indentation2 += "  "
             if (multiThreaded) {
                 
-                function.append("    ")
-                function.append("int activePriority = 0;\n")
+                function.add(
+                    MLCi(4, "Calculate the highest active priority.", 
+                        "Therefore, look at every thread that is waiting and compare the priorities.",
+                        "Afterwards, all threads with an active priority equal to the highest priority are", 
+                        "eligible to run."
+                    ),
+                    
+                    "    ",
+                    "int activePriority = 0;", 
+                    NL
+                )
                 for (cfr : state.regions.filter(ControlflowRegion)) {
                     val cfrName = struct.getRegionName(cfr)
                     
-                    function.append("    ")
-                    function.append("if (")
-                    function.append(regionDataName)
-                    function.append("->" + cfrName)
-                    function.append(".")
-                    function.append(REGION_ROOT_THREADSTATUS)
-                    function.append(" == ");
-                    function.append(THREAD_STATUS_RUNNING)
-                    function.append(" &&\n")
-                    function.append("      ")
-                    function.append(regionDataName)
-                    function.append("->" + cfrName)
-                    function.append(".")
-                    function.append(REGION_ACTIVE_PRIORITY)
-                    function.append(" > activePriority")
-                    function.append(") {\n")
-                    function.append("      ")
-                    function.append("activePriority = ")
-                    function.append(regionDataName)
-                    function.append("->" + cfrName)
-                    function.append(".")
-                    function.append(REGION_ACTIVE_PRIORITY)
-                    function.append(";\n    }\n\n")
+                    function.add(
+                        "    ", "if (", regionDataName, "->", cfrName, ".", REGION_ROOT_THREADSTATUS, " == ",
+                            THREAD_STATUS_WAITING, " &&", NL,
+                        "      ", regionDataName, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
+                            "activePriority", ") {", NL, 
+                            "      ", "activePriority = ", 
+                                regionDataName, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL, 
+                            "    }", NL, NL 
+                    )
                 }
             }
             
             
 
-//            val dispatchBuilder = new StringBuilder
             val conditionalBuilder = new StringBuilder
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 cfr.value.generateControlflowRegion
@@ -316,151 +288,157 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 val cfrName = struct.getRegionName(cfr.value)
                 
                 if (multiThreaded) {
-                    function.append("    ")
-                    function.append("if (")
-                    function.append(regionDataName)
-                    function.append("->" + cfrName)
-                    function.append(".")
-                    function.append(REGION_ACTIVE_PRIORITY)
-                    function.append(" == activePriority) {\n")
+                    function.add(
+                        "    ", "if (", regionDataName, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " == ",
+                            "activePriority) {", NL
+                    )
                     indentation2 += "  "
                 }
+
+                function.add(
+                    "  ", indentation2, "if (", regionDataName, "->", cfrName, ".threadStatus == ", 
+                        THREAD_STATUS_WAITING, ") {", NL,
+                    "    ", indentation2, regionDataName, "->", cfrName, ".threadStatus = ",
+                        THREAD_STATUS_RUNNING, ";", NL, 
+                    "  ", indentation2, "}", NL 
+                )
                 
-                function.append("  " + indentation2)
-                function.append(cfrName)
-                function.append("(&")
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(");\n")
-                
-                function.append("  " + indentation2)
-                function.append("if (")
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(".threadStatus == ");
-                function.append(THREAD_STATUS_DISPATCHED)
-                function.append(") {\n")
-                function.append("    " + indentation2)
-                function.append(regionDataName)
-                function.append("->" + cfrName)
-                function.append(".threadStatus = ");
-                function.append(THREAD_STATUS_RUNNING)
-                function.append(";\n  " + indentation2 + "}\n")
+                function.add(NL, 
+                    SLC(2 + indentation2.length, "Call the logic code of thread " + cfrName + "."), 
+                    
+                    "  ", indentation2, cfrName, "(&", regionDataName, "->", cfrName, ");", NL
+                )
                 
                 if (multiThreaded) {
-                    function.append("    }\n\n")    
+                    function.add(
+                        "    }", NL, NL 
+                    )    
                 }
                 
-                conditionalBuilder.append(regionDataName)
-                conditionalBuilder.append("->" + cfrName)
-                conditionalBuilder.append(".threadStatus == ");
-                conditionalBuilder.append(THREAD_STATUS_RUNNING)
+                conditionalBuilder.add(
+                    regionDataName, "->", cfrName, ".threadStatus == ", THREAD_STATUS_WAITING
+                )
                 if (cfr.key < regionCount - 1) {
-                    conditionalBuilder.append(" ||\n    ")
+                    conditionalBuilder.add(
+                        " ||", NL, 
+                        "    "
+                    )
                 }
             }
             
-//            if (regionCount > 1) {
-//                function.append("\n")
-//                function.append(dispatchBuilder)
-                function.append("  ")
-                function.append("} while(")
-                function.append(conditionalBuilder)
-                function.append(");\n");
-//            }
-            function.append("\n")
+            function.add(
+                "  ", "} while(", conditionalBuilder, ");", NL,
+                NL 
+            )
         } 
         
         // Transitions
         val hasDelayed = state.outgoingTransitions.exists[ !immediate ]
         if (hasDelayed) {
-            function.append("  char inDepth = ")
-            function.append(regionDataName)
-            function.append("->tickStartState == ")
-            function.append(stateName)
-            function.append(";\n")
+            function.add(
+                SLC(2, "inDepth becomes true if this state was already active at the beginning of the actual tick instance."), 
+                
+                "  char inDepth = ", regionDataName, "->tickStartState == ", stateName, ";", NL, NL
+            )
         }
+        val allDelayed = if (!hasDelayed) false else
+            state.outgoingTransitions.forall[ !immediate && sourceState == targetState ] 
         
         for (transition : state.outgoingTransitions.indexed) {
-            transition.value.generateTransition(transition.key, function, "  ", serializer)
+            transition.value.generateTransition(transition.key, function, allDelayed, "  ", serializer)
         }
         
-//        val transitionCount = state.outgoingTransitions.size
         val handleImplicitTransitions =
             (state.outgoingTransitions.forall[trigger !== null]) || 
             (state.outgoingTransitions.forall[ !immediate ])
             
         if (handleImplicitTransitions) {
-            if (state.outgoingTransitions.size > 0) { 
-                function.append("  else\n")
-                function.append("  {\n")
-                function.append("    ")
-                function.append(regionDataName)
-                function.append("->threadStatus = ")
-                function.append(THREAD_STATUS_PAUSED)
-                function.append(";\n")
-                function.append("  }\n")
+            if (state.outgoingTransitions.size > 0) {
+                if (allDelayed) {
+                    function.add(NL, 
+                        SLC(2, "The thread will enter a pause after this state is done."),  
+                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
+                    )
+                } else {
+                    function.add(
+                        "  else", NL, 
+                        "  {", NL,
+                        SLC(4, "Implicitly wait one tick if no transition was taken."),  
+                        "    ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
+                        "  }", NL
+                    )
+                }
             } else {
                 if (state.final) {
-//                    function.append("  ")
-//                    function.append(regionDataName)
-//                    function.append("->activeState = NONE;\n")                    
-                    function.append("  ")
-                    function.append(regionDataName)
-                    function.append("->threadStatus = EMPTY;\n")                    
+                    function.add(
+                        SLC(2, "The thread becomes inactive after this state is done."),
+                        
+                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_INACTIVE, ";", NL
+                    )                    
                 } else {
-                    function.append("  ")
-                    function.append(regionDataName)
-                    function.append("->threadStatus = ")
-                    function.append(THREAD_STATUS_PAUSED)
-                    function.append(";\n")
+                    function.add(
+                        SLC(2, "The thread pauses after this state is done."),
+                        
+                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
+                    )
                 }
             }
         } 
         
         if (state.eContainer instanceof ControlflowRegion) {
-            function.append("}\n\n")
+            function.add(
+                "}", NL, NL 
+            )
         }         
     }
     
     def void generateTransition(Transition transition, int index,
-        StringBuilder function, String indentation, extension StatebasedCCodeSerializeHRExtensions serializer
+        StringBuilder function, boolean allDelayed, String indentation, extension StatebasedCCodeSerializeHRExtensions serializer
     ) {
         val isImmediate = transition.immediate
         val hasTrigger = transition.trigger !== null
         
-        if (index > 0) function.append("} else {\n")
-        function.append(indentation)
-        if (hasTrigger) {
-            function.append("if ")
-            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.append("(")
-            if (!isImmediate) function.append("inDepth && ")
-            valuedObjectPrefix = REGION_DATA_NAME + "->" + REGION_INTERFACE_NAME + "->" 
-            function.append(transition.trigger.serialize)
-            valuedObjectPrefix = ""
-            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.append(")")
-            function.append(" {\n")
-        } else if (!isImmediate) {
-            function.append("if (inDepth) {\n")
+        if (index > 0) {
+            function.add(
+                "} else {", NL, 
+                "  " // for the comment
+            )
         }
         
-//        if (index > 0 || hasTrigger) function.append("{\n") 
+        function.add(
+            SLC(indentation.length, "Start of transition " + index + " code (" + transition.serializeHR + ")")
+        )
         
+        function.add(indentation)
+        if (hasTrigger) {
+            function.add("if ")
+            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.add("(")
+            if (!isImmediate) function.add("inDepth && ")
+            valuedObjectPrefix = REGION_DATA_NAME + "->" + REGION_INTERFACE_NAME + "->" 
+            function.add(transition.trigger.serialize)
+            valuedObjectPrefix = ""
+            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.add(")")
+            function.add(
+                " {", NL
+            )
+        } else if (!isImmediate) {
+            function.add(
+                "if (inDepth) {", NL
+            )
+        }
         
         if (transition.effects.size > 0) {
             valuedObjectPrefix = REGION_DATA_NAME + "->" + 
                 REGION_INTERFACE_NAME + "->"
                 
             for (effect : transition.effects) {
-                function.append(indentation + "  ")
-                function.append(effect.serialize)
-                function.append(";\n")
+                function.add(
+                    indentation, "  ", effect.serializeHR, ";", NL
+                )
             }
             
             valuedObjectPrefix = ""
         }
-        
-//        function.append(indentation)
         
         if (transition.isTermination) {
             val state = transition.sourceState
@@ -470,124 +448,125 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 val cfrName = struct.getRegionName(cfr.value)
                                
-                conditionalBuilder.append(REGION_DATA_NAME)
-                conditionalBuilder.append("->" + cfrName)
-                conditionalBuilder.append(".threadStatus == ");
-                conditionalBuilder.append(THREAD_STATUS_EMPTY)
+                conditionalBuilder.add(
+                    REGION_DATA_NAME, "->", cfrName, ".threadStatus == ", THREAD_STATUS_INACTIVE
+                )
                 if (cfr.key < regionCount - 1) {
-                    conditionalBuilder.append(" &&\n    ")
+                    conditionalBuilder.add(
+                        " &&", NL, 
+                        "    "
+                    )
                 }
             }
             
-            function.append("if (")
-            function.append(conditionalBuilder)
-            function.append(") {\n")
-            function.append("  ")
+            function.add(
+                "if (", conditionalBuilder.toString, ") {", NL, 
+                "  "
+            )
         }
 
-        function.append(indentation)
+        function.add(
+            indentation
+        )
         
         if (transition.targetState == transition.sourceState) {
             if (!transition.immediate) {
-                function.append("  ")
-                function.append(REGION_DATA_NAME)
-                function.append("->threadStatus = PAUSED;\n");
-                function.append("  }\n")
+                if (allDelayed) {
+                    function.add(
+                        "}", NL
+                    )
+                } else {
+                    function.add(
+                        "  ", REGION_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
+                        "  }", NL
+                    )
+                }
             }
         } else {
-            if (hasTrigger || !isImmediate) function.append("  ")
-            function.append(REGION_DATA_NAME)
-            function.append("->activeState = ")
-            function.append(struct.getStateName(transition.targetState))
-            function.append(";\n")
+            if (hasTrigger || !isImmediate) function.add("  ")
+            function.add(
+                REGION_DATA_NAME, "->activeState = ", struct.getStateName(transition.targetState), ";", NL
+            )
             
             if (!isImmediate) {
                 val parentCfr = transition.sourceState.parentRegion
                 
-                function.append("    ")
-                function.append(REGION_DATA_NAME)
-                function.append("->")
-                function.append(REGION_TICK_START_STATE)
-                function.append(" = ")
-                function.append(struct.getNoneStateName(parentCfr))
-                function.append(";\n")                
+                function.add(
+                    "    ", REGION_DATA_NAME, "->", REGION_TICK_START_STATE, " = ", 
+                        struct.getNoneStateName(parentCfr), ";", NL
+                )                
             }
             
             val sourcePrio = transition.sourceState.statePriority
             val targetPrio = transition.targetState.statePriority
             
             if (targetPrio != sourcePrio) {
-                function.append("    ");
-                function.append(REGION_DATA_NAME)
-                function.append("->")
-                function.append(REGION_ACTIVE_PRIORITY)
-                function.append(" = ") 
-                function.append(targetPrio)
-                function.append(";\n")
+                function.add(
+                    "    ", REGION_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", 
+                        targetPrio, ";", NL
+                )
                 
                 if (targetPrio < sourcePrio) {
-                    function.append("    ")
-                    function.append(REGION_DATA_NAME)
-                    function.append("->threadStatus = DISPATCHED;\n");
+                    function.add(
+                        "    ", REGION_DATA_NAME, "->threadStatus = ", THREAD_STATUS_WAITING, ";", NL
+                    )
                 }
             } 
             
-            if (hasTrigger || !isImmediate || index > 0) function.append("  }\n")
+            if (hasTrigger || !isImmediate || index > 0) function.add("  }\n")
         }
         
         if (transition.isTermination) {
-            function.append(indentation)
-            function.append("}\n")
-            function.append(indentation)
-            function.append("else\n  {\n")
-            function.append(indentation + "  ")
-            function.append(REGION_DATA_NAME)
-            function.append("->")
-            function.append(REGION_ROOT_THREADSTATUS)
-            function.append(" = ")
-            function.append(THREAD_STATUS_PAUSED)
-            function.append(";\n")
-            function.append("  }\n")
+            function.add(
+                indentation, "}", NL,
+                indentation, "else", NL, 
+                "  {", NL,
+                indentation, "  ", REGION_DATA_NAME, "->", REGION_ROOT_THREADSTATUS, " = ", THREAD_STATUS_PAUSING, ";", NL, 
+                "  }", NL
+            )
         }
         
-//        if (index > 0 || hasTrigger) function.append(indentation + "}\n")
+//        function.add(
+//            SLC(2, "End of transition " + index + " code (" + transition.serialize + ")")
+//        )
+        
     }
     
     def void generateControlflowRegion(ControlflowRegion cfr) {
         val cfrName = struct.getRegionName(cfr)
         val function = new StringBuilder => [ functions += it ]
         
-        function.append("void "); 
-        function.append("" + cfrName)
-        function.append("(" + cfrName + REGION_DATA_TYPE_SUFFIX + " *");
-        function.append(REGION_DATA_NAME)
-        function.append(") {\n")
-//        function.append("  while(data->activeState != NONE || !paused) {\n")
-        function.append("  while(")
-        function.append(REGION_DATA_NAME)
-        function.append("->threadStatus == RUNNING) {\n")
-        function.append("    switch(")
-        function.append(REGION_DATA_NAME)
-        function.append("->activeState) {\n")
+        function.add(
+            SLC("Logic function for the " + cfrName + " region"), 
+            
+            "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ") {", NL,
+            
+            SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
+            "  while(", REGION_DATA_NAME, "->threadStatus == RUNNING) {", NL,
+            "    switch(", REGION_DATA_NAME, "->activeState) {", NL
+        )
         for (state : cfr.states) {
             val stateName = struct.getStateName(state)
             
-            function.append("      case ")
-            function.append(stateName)
-            function.append(":\n")
+            function.add(
+                "      case ", stateName, ":", NL
+            )
             
             state.generateState(function, "        ")
             
-            function.append("        break;\n\n")    
+            function.add(
+                "        break;", NL, NL
+            )    
         }
-        function.append("    }\n")
-        function.append("  }\n")
-        function.append("}\n\n")
+        function.add(
+            "    }", NL,
+            "  }", NL,
+            "}", NL, NL
+        )
         
-        struct.forwardDeclarationsLogic.append("void ").append(cfrName).
-            append("(" + cfrName + REGION_DATA_TYPE_SUFFIX + " *").
-            append(REGION_DATA_NAME).append(");\n") 
-        
+        struct.forwardDeclarationsLogic.add(
+            "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ");", NL
+        ) 
     }
 
 

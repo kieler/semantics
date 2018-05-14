@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -29,8 +29,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
  * Handles the creation of the data struct.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2018-04-16 proposed 
+ * @kieler.rating 2018-04-16 proposed yellow 
  * 
  */
 class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
@@ -49,10 +49,10 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val ENUM_STATES_RUNNING = "RUNNING"
     
     public static val THREAD_STATUS_ENUM = "ThreadStatus"
-    public static val THREAD_STATUS_EMPTY = "EMPTY"
+    public static val THREAD_STATUS_INACTIVE = "INACTIVE"       // was EMPTY
     public static val THREAD_STATUS_RUNNING = "RUNNING"
-    public static val THREAD_STATUS_DISPATCHED = "DISPATCHED"
-    public static val THREAD_STATUS_PAUSED = "PAUSED"
+    public static val THREAD_STATUS_WAITING = "WAITING"         // was DISPATCHED
+    public static val THREAD_STATUS_PAUSING = "PAUSING"
     
     public static val REGION_DATA_NAME = "regionData"
     public static val REGION_INTERFACE_NAME = "interface"
@@ -88,23 +88,45 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }    
     
     override generateInit() {
-        code.append("typedef enum")
-        code.append(" {\n  ")
-        code.append(THREAD_STATUS_EMPTY)
-        code.append(", ")
-        code.append(THREAD_STATUS_RUNNING)
-        code.append(", ")
-        code.append(THREAD_STATUS_DISPATCHED)
-        code.append(", ")
-        code.append(THREAD_STATUS_PAUSED)
-        code.append("\n} ")
-        code.append(THREAD_STATUS_ENUM)
-        code.append(";\n\n")
+        code.addCLL(
+            SLC("The chosen scheduling regime uses four states to maintain the status of threads."),
+            
+            "typedef enum {", NL,
+            "  ",
+            THREAD_STATUS_INACTIVE, 
+            ", ",
+            LEC("thread is deactivated until activated again (e.g. fork)"), NL,
+            
+            "  ",
+            THREAD_STATUS_RUNNING,
+            ", ",
+            LEC("thread is running"), NL,
+            
+            "  ", 
+            THREAD_STATUS_WAITING,
+            ", ",
+            LEC("thread is waiting to be select as running"), NL, 
+            
+            "  ", 
+            THREAD_STATUS_PAUSING, 
+            LEC("thread is paused for this tick instance"), NL,
+            
+            "} ",
+            THREAD_STATUS_ENUM,
+            ";", NL, NL
+        )
         
-        code.append("typedef struct {\n")
-        tickData.append("typedef struct {\n")
-//        stateData.append("typedef enum {\n")
-//        stateData.append("  ").append(ENUM_STATES_NONE)
+        code.add(
+            SLC("The interface of the program is used to communicate with the surrounding environment."),
+            
+            "typedef struct {", NL
+        )
+        
+        tickData.add(
+            SLC("Root level data of the program"),
+            
+            "typedef struct {", NL
+        )
     }
     
     override generate() {
@@ -131,46 +153,67 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
                     }
                     s += ";\n"
                     
-                    code.append(s)
-                    tickData.append(s)
+                    code.add(s)
+                    tickData.add(s)
                 }
             }
         }
     }
     
     override generateDone() {
-        tickData.append("\n")
-        tickData.append("  ")
-        tickData.append(STRUCT_INTERFACE_NAME)
-        tickData.append(" ")
-        tickData.append(REGION_INTERFACE_NAME)
-        tickData.append(";\n\n")
-        tickData.append("  ThreadStatus ")
-        tickData.append(REGION_ROOT_THREADSTATUS)
-        tickData.append(";\n")
+        tickData.add(
+            NL, "  ", 
+            STRUCT_INTERFACE_NAME,
+            " ",
+            REGION_INTERFACE_NAME,
+            ";", NL, NL,
+            "  ThreadStatus ",
+            REGION_ROOT_THREADSTATUS,
+            ";", NL
+        )
         
         for (cfr : rootRegions) {
-            tickData.append("  ")
-            tickData.append(getRegionName(cfr) + REGION_DATA_TYPE_SUFFIX)
-            tickData.append(" ")
-            tickData.append(getRegionName(cfr))
-            tickData.append(";\n")
+            tickData.add(
+                "  ",
+                getRegionName(cfr) + REGION_DATA_TYPE_SUFFIX,
+                " ",
+                getRegionName(cfr),
+                ";", NL
+            )
         }
         
-        tickData.append("} ").append(getName).append(";\n")
+        tickData.add(
+            "} ",
+            getName,
+            ";", NL
+        )
         
-        code.append("} ").append(STRUCT_INTERFACE_NAME).append(";\n")
+        code.add(
+            "} ",
+            STRUCT_INTERFACE_NAME,
+            ";", NL
+        )
         
-        if (threadData.length > 0) code.append("\n")
+        if (threadData.length > 0) code.nl
         code.append(threadData)
         
         code.append(tickData)
         
-        if (forwardDeclarations.length > 0) code.append("\n")
-        code.append(forwardDeclarations)
+        if (forwardDeclarations.length > 0) {
+            code.add(
+                NL, NL,
+                SLC("Forward declarations of the root level functions"), NL
+            )
+            code.append(forwardDeclarations)
+        }
         
-        if (forwardDeclarationsLogic.length > 0) code.append("\n")
-        code.append(forwardDeclarationsLogic)
+        if (forwardDeclarationsLogic.length > 0) {
+           code.add(
+                NL, 
+                SLC("Forward declarations of the program structure functions")
+            )
+            code.append(forwardDeclarationsLogic)
+        }
         
     }
     
@@ -190,38 +233,68 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         val name = cfr.regionName
         val noneStateName = ENUM_STATES_NONE + noneCounter++
         
-        threadData.append("typedef enum");
-        threadData.append(" {\n  ")
-        threadData.append(noneStateName + ", ")
+        threadData.add(
+            SLC("This enum contains all states of the " + name + " region."), 
+            SLC(noneStateName + " indicated that no state in this region is active."), 
+            
+            "typedef enum {", NL,
+            "  ",
+            noneStateName,
+            ", "
+        )
+        
         for (state : cfr.states.indexed) {
             val stateName = state.value.stateName
             threadData.append(stateName)
             if (state.value.isHierarchical) {
-                threadData.append(", " + stateName + ENUM_STATES_RUNNING)
+                threadData.add(
+                    ", ", 
+                    stateName + ENUM_STATES_RUNNING
+                )
             }
-            if (state.key < cfr.states.size - 1) threadData.append(", ")
+            if (state.key < cfr.states.size - 1) threadData.add(", ")
         }
-        threadData.append("\n} ")
-        threadData.append(name + ENUM_STATES_SUFFIX)
-        threadData.append(";\n\n") 
         
-        threadData.append("typedef struct {\n")
-        threadData.append(indentation + name + ENUM_STATES_SUFFIX + " " + REGION_ACTIVE_STATE + ";\n")
-        threadData.append(indentation + name + ENUM_STATES_SUFFIX + " " + REGION_TICK_START_STATE + ";\n")
-        threadData.append(indentation + THREAD_STATUS_ENUM + " threadStatus;\n")
-        threadData.append(indentation + "int activePriority;\n")
-        threadData.append(indentation + STRUCT_INTERFACE_NAME + "* interface;\n")
+        threadData.add(
+            NL, "} ",
+            name + ENUM_STATES_SUFFIX,
+            ";", NL, NL
+        ) 
+        
+        threadData.addCLL(
+            SLC("The thread data of " + name),
+            
+            "typedef struct {", NL,
+            indentation, name, ENUM_STATES_SUFFIX, " ", REGION_ACTIVE_STATE, ";", 
+            LEC("the active state"), NL,
+            
+            indentation, name, ENUM_STATES_SUFFIX, " ", REGION_TICK_START_STATE, ";", 
+            LEC("active state at the beginning of the tick"), NL,
+            
+            indentation, THREAD_STATUS_ENUM, " threadStatus;", 
+            LEC("status of the thread (see ThreadStatus enum)"), NL,
+            
+            indentation, "int activePriority;", 
+            LEC("active priority of the thread for scheduling"), NL,
+            
+            indentation, STRUCT_INTERFACE_NAME, "* interface;", 
+            LEC("pointer to the program interface for communication"), NL
+        )
         
         if (children !== null && children.size > 0) {
             for (child : children) {
                 val childName = child.getRegionName
-                threadData.append(indentation + childName + REGION_DATA_TYPE_SUFFIX + " " + childName + ";\n")
+                threadData.add(
+                    indentation, childName, REGION_DATA_TYPE_SUFFIX, " ", childName, ";", NL
+                )
             }
         }
         
-        threadData.append("} ")
-        threadData.append(name + REGION_DATA_TYPE_SUFFIX)
-        threadData.append(";\n\n")
+        threadData.add(
+            "} ",
+            name, REGION_DATA_TYPE_SUFFIX,
+            ";", NL, NL
+        )
         
         regionNames.put(cfr, name)
         noneState.put(cfr, noneStateName)

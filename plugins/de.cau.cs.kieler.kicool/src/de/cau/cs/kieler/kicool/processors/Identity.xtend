@@ -38,7 +38,7 @@ class Identity extends Processor<Object, Object> {
     }
     
     override process() {
-        println("TEST")
+        println("Identity: TEST")
     }
     
 }

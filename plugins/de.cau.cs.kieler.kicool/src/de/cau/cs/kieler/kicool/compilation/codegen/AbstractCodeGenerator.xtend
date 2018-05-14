@@ -20,6 +20,9 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+
 
 /**
  * Abstract Code Generation Processor
@@ -32,6 +35,10 @@ import java.util.Map
 abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
     
     @Inject protected Injector injector
+    
+    public static val IProperty<Boolean> COMMENTS_ENABLED = 
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.comments.enabled", true)
+    
     
     @Accessors(PUBLIC_GETTER) val moduleMap = <E, CodeGeneratorModule<T, E>> newHashMap
     
@@ -51,6 +58,7 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
         
         preProcess(rootModel);
         createModuleMap(rootModel, moduleMap)
+        val commentsEnabled = environment.getProperty(COMMENTS_ENABLED)
         
         for (moduleObject : moduleMap.keySet) {
             moduleMap.get(moduleObject) => [

@@ -47,6 +47,9 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
         this.codeGeneratorModuleMap = codeGeneratorModuleMap
         this.codeFilename = codeFilename 
         this.parent = parent
+        if (parent !== null) {
+            this.commentsEnabled = parent.commentsEnabled
+        }
         
         configure
         

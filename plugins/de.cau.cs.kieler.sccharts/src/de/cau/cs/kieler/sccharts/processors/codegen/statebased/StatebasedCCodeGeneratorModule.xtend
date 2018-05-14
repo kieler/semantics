@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,6 +19,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 
 /**
  * Root C Code Generator Module
@@ -26,8 +27,8 @@ import de.cau.cs.kieler.annotations.StringPragma
  * Initializes necessary modules and invokes them in correct order.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2018-04-16 proposed 
+ * @kieler.rating 2018-04-16 proposed yellow 
  * 
  */
 class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
@@ -47,6 +48,8 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     @Accessors var SCChartsCodeGeneratorModule logic
     
     override configure() {
+        commentsEnabled = processorInstance.environment.getProperty(AbstractCodeGenerator.COMMENTS_ENABLED)
+        
         struct = injector.getInstance(StatebasedCCodeGeneratorStructModule)
         reset = injector.getInstance(StatebasedCCodeGeneratorResetModule)
         tick = injector.getInstance(StatebasedCCodeGeneratorTickModule)

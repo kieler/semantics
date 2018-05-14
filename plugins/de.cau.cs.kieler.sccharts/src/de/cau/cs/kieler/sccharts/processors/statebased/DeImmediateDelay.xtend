@@ -3,14 +3,14 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.transformators
+package de.cau.cs.kieler.sccharts.processors.statebased
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.StatebasedUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
@@ -121,6 +121,7 @@ class DeImmediateDelay extends SCChartsProcessor implements Traceable {
             }
             
             tS.initial = tS.initial || state.initial
+            tS.adaptName(state)
             
             state.remove
         }
