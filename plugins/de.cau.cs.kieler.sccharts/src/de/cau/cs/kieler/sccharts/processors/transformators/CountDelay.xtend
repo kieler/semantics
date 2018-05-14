@@ -39,6 +39,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.DelayType
 
 /**
  * SCCharts CountDelay Transformation.
@@ -162,6 +163,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     
     def void transformCountDelayStructurally(Transition transition, State targetRootState) {
         val createdTransitions = <Transition> newHashSet => [ it += transition ]
+        val immediate = transition.implicitlyImmediate
         val priority = transition.priority
         val int count = transition.triggerDelay
         val source = transition.sourceState
@@ -182,6 +184,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
                 triggerDelay = 1
                 effects.immutableCopy.forEach[ it.remove ]
                 setSpecificPriority(priority)
+                delay = DelayType.DELAYED
                 
                 createdTransitions += it
             ]
@@ -190,7 +193,11 @@ class CountDelay extends SCChartsProcessor implements Traceable {
         
         transition.sourceState = lastState
         transition.triggerDelay = 1
+        transition.delay = DelayType.DELAYED
         transition.setSpecificPriority(priority)
+        
+        // Immediate count delay
+        source.outgoingTransitions.findFirst[createdTransitions.contains(it)].immediate = immediate
     }
 
     // This will encode count delays in transitions.
