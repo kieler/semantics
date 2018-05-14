@@ -164,7 +164,7 @@ CounterVariable returns kexpressions::ValuedObject:
 // -------------- //
 	
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | TimerAction;    
+    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | PeriodAction;    
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
@@ -196,8 +196,9 @@ SucceedingAction returns sccharts::SucceedingAction:
 	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
-TimerAction returns sccharts::TimerAction:
-    {sccharts::TimerAction}
+PeriodAction returns sccharts::PeriodAction:
+    {sccharts::PeriodAction}
+    annotations+=RestrictedTypeAnnotation*
     delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
     
@@ -216,6 +217,13 @@ enum DelayType returns sccharts::DelayType:
 
 enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
+
+@Override  
+enum ValueType returns kexpressions::ValueType:
+    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
+    INT="int" | FLOAT="float" |
+    STRING="string" |
+    CLOCK="clock"; // als: added clock for timed automata
 	
 // -------------- //
 //  Helper Rules  // 

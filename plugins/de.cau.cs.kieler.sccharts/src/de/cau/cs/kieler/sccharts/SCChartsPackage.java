@@ -1670,14 +1670,14 @@ public interface SCChartsPackage extends EPackage {
     int SUCCEEDING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TimerActionImpl <em>Timer Action</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PeriodActionImpl <em>Period Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TimerActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTimerAction()
+     * @see de.cau.cs.kieler.sccharts.impl.PeriodActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPeriodAction()
      * @generated
      */
-    int TIMER_ACTION = 16;
+    int PERIOD_ACTION = 16;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1686,7 +1686,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+    int PERIOD_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1695,7 +1695,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+    int PERIOD_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
 
     /**
      * The feature id for the '<em><b>Trigger</b></em>' containment reference.
@@ -1704,7 +1704,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+    int PERIOD_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
 
     /**
      * The feature id for the '<em><b>Trigger Delay</b></em>' attribute.
@@ -1713,7 +1713,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
+    int PERIOD_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
 
     /**
      * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
@@ -1722,7 +1722,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+    int PERIOD_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1731,7 +1731,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__LABEL = LOCAL_ACTION__LABEL;
+    int PERIOD_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
      * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -1740,7 +1740,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__DELAY = LOCAL_ACTION__DELAY;
+    int PERIOD_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
      * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
@@ -1749,16 +1749,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TIMER_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
+    int PERIOD_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
-     * The number of structural features of the '<em>Timer Action</em>' class.
+     * The number of structural features of the '<em>Period Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TIMER_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+    int PERIOD_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
@@ -2337,14 +2337,14 @@ public interface SCChartsPackage extends EPackage {
     EClass getSucceedingAction();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TimerAction <em>Timer Action</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PeriodAction <em>Period Action</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Timer Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.TimerAction
+     * @return the meta object for class '<em>Period Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.PeriodAction
      * @generated
      */
-    EClass getTimerAction();
+    EClass getPeriodAction();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
@@ -2839,14 +2839,14 @@ public interface SCChartsPackage extends EPackage {
         EClass SUCCEEDING_ACTION = eINSTANCE.getSucceedingAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TimerActionImpl <em>Timer Action</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PeriodActionImpl <em>Period Action</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.TimerActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTimerAction()
+         * @see de.cau.cs.kieler.sccharts.impl.PeriodActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPeriodAction()
          * @generated
          */
-        EClass TIMER_ACTION = eINSTANCE.getTimerAction();
+        EClass PERIOD_ACTION = eINSTANCE.getPeriodAction();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

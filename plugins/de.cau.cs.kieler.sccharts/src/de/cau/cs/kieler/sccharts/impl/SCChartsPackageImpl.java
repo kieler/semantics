@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.Region;
@@ -37,7 +38,6 @@ import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
-import de.cau.cs.kieler.sccharts.TimerAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -171,7 +171,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass timerActionEClass = null;
+    private EClass periodActionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -714,8 +714,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getTimerAction() {
-        return timerActionEClass;
+    public EClass getPeriodAction() {
+        return periodActionEClass;
     }
 
     /**
@@ -858,7 +858,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         succeedingActionEClass = createEClass(SUCCEEDING_ACTION);
 
-        timerActionEClass = createEClass(TIMER_ACTION);
+        periodActionEClass = createEClass(PERIOD_ACTION);
 
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
@@ -919,7 +919,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         suspendActionEClass.getESuperTypes().add(this.getLocalAction());
         precedingActionEClass.getESuperTypes().add(this.getLocalAction());
         succeedingActionEClass.getESuperTypes().add(this.getLocalAction());
-        timerActionEClass.getESuperTypes().add(this.getLocalAction());
+        periodActionEClass.getESuperTypes().add(this.getLocalAction());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -989,7 +989,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(succeedingActionEClass, SucceedingAction.class, "SucceedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(timerActionEClass, TimerAction.class, "TimerAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(periodActionEClass, PeriodAction.class, "PeriodAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

@@ -238,12 +238,12 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.TIMER_ACTION: {
-                TimerAction timerAction = (TimerAction)theEObject;
-                T result = caseTimerAction(timerAction);
-                if (result == null) result = caseLocalAction(timerAction);
-                if (result == null) result = caseAction(timerAction);
-                if (result == null) result = caseAnnotatable(timerAction);
+            case SCChartsPackage.PERIOD_ACTION: {
+                PeriodAction periodAction = (PeriodAction)theEObject;
+                T result = casePeriodAction(periodAction);
+                if (result == null) result = caseLocalAction(periodAction);
+                if (result == null) result = caseAction(periodAction);
+                if (result == null) result = caseAnnotatable(periodAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -477,17 +477,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Timer Action</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Period Action</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Timer Action</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Period Action</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTimerAction(TimerAction object) {
+    public T casePeriodAction(PeriodAction object) {
         return null;
     }
 

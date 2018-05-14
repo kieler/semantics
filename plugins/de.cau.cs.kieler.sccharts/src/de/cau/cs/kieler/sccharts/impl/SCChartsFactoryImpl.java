@@ -87,7 +87,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
             case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
             case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
-            case SCChartsPackage.TIMER_ACTION: return createTimerAction();
+            case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -236,9 +236,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public TimerAction createTimerAction() {
-        TimerActionImpl timerAction = new TimerActionImpl();
-        return timerAction;
+    public PeriodAction createPeriodAction() {
+        PeriodActionImpl periodAction = new PeriodActionImpl();
+        return periodAction;
     }
 
     /**

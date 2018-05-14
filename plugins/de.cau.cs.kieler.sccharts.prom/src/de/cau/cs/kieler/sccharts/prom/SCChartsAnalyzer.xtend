@@ -21,6 +21,9 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author aas
@@ -59,8 +62,15 @@ class SCChartsAnalyzer extends DeclarationAnalyzer {
     override getDeclarations(EObject model) {
         if(model instanceof SCCharts) {
             val rootState = model.rootStates.get(0)
-            if(rootState != null) {
-                return rootState.declarations
+            if(rootState !== null) {
+                return rootState.declarations.filter[
+                    if (it instanceof VariableDeclaration) {
+                        const == false &&
+                        extern == false &&
+                        hostType.nullOrEmpty &&
+                        type != ValueType.CLOCK
+                    } else {false}
+                ]
             }
         }
     }

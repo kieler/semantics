@@ -77,16 +77,31 @@ class AsynchronousSimulationJob extends Job {
                                       + "You can clear this setting in the context menu of the data pool view (right click).")
                 }
             }
+            if(!SimulationManager.deltaTimeVariable.isNullOrEmpty) {
+                val variable = pool.getVariable(SimulationManager.deltaTimeVariable)
+                if(variable !== null) {
+                    variable.value = System.currentTimeMillis.intValue
+                        
+                } else {
+                    throw new Exception("Current time variable '"+SimulationManager.currentTimeVariable+"' was not found in the data pool. "
+                                      + "You can clear this setting in the context menu of the data pool view (right click).")
+                }
+            }
             // Perform actions on this new state
             val nextActionIndex = sim.applyMacroTickActions(pool)
             // Save new state
             sim.setNewState(pool, nextActionIndex)
             
             // Set absolute time for next tick (possibly from a variable in the data pool)
-            if(!SimulationManager.nextTickTimeVariable.isNullOrEmpty) {
+            if(!SimulationManager.nextTickTimeVariable.isNullOrEmpty &&
+                ( !SimulationManager.currentTimeVariable.isNullOrEmpty || !SimulationManager.deltaTimeVariable.isNullOrEmpty )) {
                 val variable = sim.currentPool.getVariable(SimulationManager.nextTickTimeVariable)
                 if(variable !== null) {
-                    nextTickTime = variable.value.doubleValue.intValue    
+                    if (!SimulationManager.currentTimeVariable.isNullOrEmpty) {
+                        nextTickTime = variable.value.doubleValue.intValue   
+                    } else if(!SimulationManager.deltaTimeVariable.isNullOrEmpty) {
+                        nextTickTime = timeBeforeTick + variable.value.doubleValue.intValue   
+                    }
                 } else {
                     throw new Exception("Next tick time variable '"+SimulationManager.nextTickTimeVariable+"' was not found in the data pool. "
                                       + "You can clear this setting in the context menu of the data pool view (right click).")
