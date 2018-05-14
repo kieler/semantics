@@ -673,24 +673,45 @@ class DataPoolView extends ViewPart {
         // Create menu items
         
         // Next tick time variable
-        val setNextTickTimeText = "Receive from variable the next tick time (ms)"
-        val unsetNextTickTimeText = "Clear next tick time variable"
-        val setNextTickTimeMenu = new MenuItem(menuTable, SWT.NONE);
-        setNextTickTimeMenu.setText(setNextTickTimeText);
-        setNextTickTimeMenu.addSelectionListener(new SelectionAdapter() {
+        val setSleepTimeText = "Receive from variable the sleep time (ms)"
+        val unsetSleepTimeText = "Clear sleep time variable"
+        val setSleepTimeMenu = new MenuItem(menuTable, SWT.NONE);
+        setSleepTimeMenu.setText(setSleepTimeText);
+        setSleepTimeMenu.addSelectionListener(new SelectionAdapter() {
             override widgetSelected(SelectionEvent e) {
                 if(SimulationManager.nextTickTimeVariable.isNullOrEmpty) {
                     val selVarVars = getSelectedVariables
                     if(!selVarVars.isNullOrEmpty) {
                         val selVar = selVarVars.get(0)
                         SimulationManager.nextTickTimeVariable = selVar.name
-                        setNextTickTimeMenu.setText(unsetNextTickTimeText)
+                        setSleepTimeMenu.setText(unsetSleepTimeText)
                         simulationDelayContribution.spinner.enabled = false
                     }
                 } else {
                     SimulationManager.nextTickTimeVariable = null
-                    setNextTickTimeMenu.setText(setNextTickTimeText)
+                    setSleepTimeMenu.setText(setSleepTimeText)
                     simulationDelayContribution.spinner.enabled = true
+                }
+            }
+        })
+
+        // Current time variable
+        val setDeltaTimeText = "Send selected variable the delta time (ms) [passed time between ticks]"
+        val unsetDeltaTimeText = "Clear delta time variable"
+        val setDeltaTimeMenu = new MenuItem(menuTable, SWT.NONE);
+        setDeltaTimeMenu.setText(setDeltaTimeText);
+        setDeltaTimeMenu.addSelectionListener(new SelectionAdapter() {
+            override widgetSelected(SelectionEvent e) {
+                if(SimulationManager.deltaTimeVariable.isNullOrEmpty) {
+                    val selVarVars = getSelectedVariables
+                    if(!selVarVars.isNullOrEmpty) {
+                        val selVar = selVarVars.get(0)
+                        SimulationManager.deltaTimeVariable = selVar.name
+                        setDeltaTimeMenu.setText(unsetDeltaTimeText);
+                    }    
+                } else {
+                    SimulationManager.deltaTimeVariable = null
+                    setDeltaTimeMenu.setText(setDeltaTimeText);
                 }
             }
         })
