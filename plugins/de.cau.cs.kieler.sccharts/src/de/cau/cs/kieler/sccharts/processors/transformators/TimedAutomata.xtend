@@ -156,13 +156,18 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     
                     var region = state.controlflowRegions.head
                     if (state.controlflowRegions.size > 1) {
-                        val regionsUsingClock = state.controlflowRegions.filter[
-                            states.exists[
+                        val regionsUsingClock = newLinkedList
+                        for (r : state.controlflowRegions) {
+                            var testRegion = r
+                            while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
+                                testRegion = testRegion.states.head.controlflowRegions.head
+                            }
+                            if (testRegion.states.exists[
                                 outgoingTransitions.filter[trigger !== null].exists[
                                     eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
                                 ]
-                            ]
-                        ]
+                            ]) {regionsUsingClock += testRegion}
+                        }
                         region = regionsUsingClock.head
                         if (regionsUsingClock.size > 1) {
                             environment.errors.add("Cannot concurrent timed automata using the same clock.", state)
