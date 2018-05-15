@@ -226,6 +226,9 @@ litigation.
       <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
    </requires>
+   
+   <!-- ONLY for testing -->
+   <plugin id="de.cau.cs.kieler.language.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
