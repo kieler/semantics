@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kexpressions.kext.dependencies
+package de.cau.cs.kieler.kexpressions.keffects.dependencies
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.xtend.lib.annotations.Accessors

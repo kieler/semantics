@@ -13,12 +13,9 @@
  */
 package de.cau.cs.kieler.scg;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
-import de.cau.cs.kieler.kexpressions.kext.Dependency;
-import de.cau.cs.kieler.kexpressions.kext.Linkable;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +27,6 @@ import de.cau.cs.kieler.kexpressions.kext.Linkable;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Node#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#isSchizophrenic <em>Schizophrenic</em>}</li>
  * </ul>
  *
@@ -64,22 +60,6 @@ public interface Node extends Annotatable, NamedObject, Linkable {
      * @generated
      */
     void setIsInitial(boolean value);
-
-    /**
-     * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.kext.Dependency}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Dependencies</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Dependencies</em>' containment reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_Dependencies()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Dependency> getDependencies();
 
     /**
      * Returns the value of the '<em><b>Schizophrenic</b></em>' attribute.

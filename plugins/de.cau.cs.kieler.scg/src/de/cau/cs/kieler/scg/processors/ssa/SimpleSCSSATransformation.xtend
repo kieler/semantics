@@ -40,13 +40,13 @@ import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
 
 import static com.google.common.collect.Maps.*
-import static de.cau.cs.kieler.kexpressions.kext.DataDependencyType.*
+import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The SSA transformation for SCGs with simplified SC semantics.

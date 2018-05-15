@@ -37,7 +37,7 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 

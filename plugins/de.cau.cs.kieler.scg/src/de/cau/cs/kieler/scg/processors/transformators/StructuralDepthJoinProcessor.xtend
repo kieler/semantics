@@ -38,7 +38,8 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import de.cau.cs.kieler.scg.Surface
 import java.util.Collection
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /**
  * @author ssm
@@ -52,6 +53,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions    
+    @Inject extension SCGDependencyExtensions
     
     val curedForks = <Fork> newHashSet
     

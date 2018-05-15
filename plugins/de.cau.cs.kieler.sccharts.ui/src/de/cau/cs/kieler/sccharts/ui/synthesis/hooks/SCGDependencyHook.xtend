@@ -68,9 +68,9 @@ import org.eclipse.ui.progress.UIJob
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
-import de.cau.cs.kieler.kexpressions.kext.Dependency
-import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -334,7 +334,7 @@ class SCGDependencyHook extends SynthesisHook {
 							equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).toList);
 						list;
 					];
-					for (dep : asgn.dependencies.filter(DataDependency)) {
+					for (dep : asgn.outgoingLinks.filter(DataDependency)) {
 						if (!dep.confluent && dep.concurrent) {
 							val targets = mapping.get(dep.target).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
 								list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));

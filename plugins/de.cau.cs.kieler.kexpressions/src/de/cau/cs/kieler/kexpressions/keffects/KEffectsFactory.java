@@ -85,6 +85,15 @@ public interface KEffectsFactory extends EFactory {
     RandomizeCallEffect createRandomizeCallEffect();
 
     /**
+     * Returns a new object of class '<em>Data Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Dependency</em>'.
+     * @generated
+     */
+    DataDependency createDataDependency();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

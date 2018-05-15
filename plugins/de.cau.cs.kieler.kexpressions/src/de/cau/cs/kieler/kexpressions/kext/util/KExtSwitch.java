@@ -5,6 +5,7 @@ package de.cau.cs.kieler.kexpressions.kext.util;
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Referenceable;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -109,36 +110,6 @@ public class KExtSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExtPackage.LINKABLE: {
-                Linkable linkable = (Linkable)theEObject;
-                T result = caseLinkable(linkable);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KExtPackage.LINK: {
-                Link link = (Link)theEObject;
-                T result = caseLink(link);
-                if (result == null) result = caseAnnotatable(link);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KExtPackage.DEPENDENCY: {
-                Dependency dependency = (Dependency)theEObject;
-                T result = caseDependency(dependency);
-                if (result == null) result = caseLink(dependency);
-                if (result == null) result = caseAnnotatable(dependency);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KExtPackage.DATA_DEPENDENCY: {
-                DataDependency dataDependency = (DataDependency)theEObject;
-                T result = caseDataDependency(dataDependency);
-                if (result == null) result = caseDependency(dataDependency);
-                if (result == null) result = caseLink(dataDependency);
-                if (result == null) result = caseAnnotatable(dataDependency);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             default: return defaultCase(theEObject);
         }
     }
@@ -215,66 +186,6 @@ public class KExtSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclarationScope(DeclarationScope object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseLinkable(Linkable object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Link</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Link</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseLink(Link object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDependency(Dependency object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDataDependency(DataDependency object) {
         return null;
     }
 

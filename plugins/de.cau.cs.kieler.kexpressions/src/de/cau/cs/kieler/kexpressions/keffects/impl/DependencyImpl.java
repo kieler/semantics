@@ -1,9 +1,9 @@
 /**
  */
-package de.cau.cs.kieler.kexpressions.kext.impl;
+package de.cau.cs.kieler.kexpressions.keffects.impl;
 
-import de.cau.cs.kieler.kexpressions.kext.Dependency;
-import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -31,7 +31,7 @@ public abstract class DependencyImpl extends LinkImpl implements Dependency {
      */
     @Override
     protected EClass eStaticClass() {
-        return KExtPackage.Literals.DEPENDENCY;
+        return KEffectsPackage.Literals.DEPENDENCY;
     }
 
 } //DependencyImpl

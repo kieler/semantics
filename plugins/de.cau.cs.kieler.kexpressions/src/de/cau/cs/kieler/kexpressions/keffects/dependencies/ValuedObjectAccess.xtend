@@ -10,15 +10,15 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.dependencies
+package de.cau.cs.kieler.kexpressions.keffects.dependencies
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
 
 /**
  * A ValuedObjectAccess is a storage class for a particular access to an valued object.
@@ -37,14 +37,14 @@ class ValuedObjectAccess {
     public static val GLOBAL_RELATIVE_WRITE = 1
     public static val GLOBAL_READ = 2
     
-    @Accessors Node node
+    @Accessors Linkable node
     @Accessors EObject schedule
     @Accessors ValuedObject scheduleObject
     @Accessors int priority 
     @Accessors ForkStack forkStack
     @Accessors boolean isSpecific
     
-    new(Node node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
+    new(Linkable node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
         this.node = node
         this.schedule = schedule
         this.scheduleObject = scheduleObject
@@ -65,5 +65,5 @@ class ValuedObjectAccess {
     }
     
     private static Injector injector = Guice.createInjector();
-    private static SCGSerializeHRExtensions serializer =  injector.getInstance(SCGSerializeHRExtensions);    
+    private static KEffectsSerializeHRExtensions serializer =  injector.getInstance(KEffectsSerializeHRExtensions);    
 }

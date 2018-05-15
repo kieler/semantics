@@ -35,7 +35,6 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.List
@@ -44,7 +43,8 @@ import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 

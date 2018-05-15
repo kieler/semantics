@@ -351,20 +351,11 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EReference getNode_Dependencies() {
-        return (EReference)nodeEClass.getEStructuralFeatures().get(1);
-    }
-
-	/**
-     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getNode_Schizophrenic() {
-        return (EAttribute)nodeEClass.getEStructuralFeatures().get(2);
+        return (EAttribute)nodeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -874,7 +865,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         nodeEClass = createEClass(NODE);
         createEAttribute(nodeEClass, NODE__IS_INITIAL);
-        createEReference(nodeEClass, NODE__DEPENDENCIES);
         createEAttribute(nodeEClass, NODE__SCHIZOPHRENIC);
 
         conditionalEClass = createEClass(CONDITIONAL);
@@ -975,8 +965,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Obtain other dependent packages
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
         KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
-        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
+        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
         // Create type parameters
 
@@ -989,7 +979,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         scGraphEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
-        nodeEClass.getESuperTypes().add(theKExtPackage.getLinkable());
+        nodeEClass.getESuperTypes().add(theKEffectsPackage.getLinkable());
         conditionalEClass.getESuperTypes().add(this.getNode());
         surfaceEClass.getESuperTypes().add(this.getNode());
         depthEClass.getESuperTypes().add(this.getNode());
@@ -1001,11 +991,11 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         exitEClass.getESuperTypes().add(this.getNode());
         guardEClass.getESuperTypes().add(this.getNode());
         guardEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
-        controlFlowEClass.getESuperTypes().add(theKExtPackage.getLink());
-        controlDependencyEClass.getESuperTypes().add(theKExtPackage.getDependency());
-        expressionDependencyEClass.getESuperTypes().add(theKExtPackage.getDependency());
-        guardDependencyEClass.getESuperTypes().add(theKExtPackage.getDependency());
-        scheduleDependencyEClass.getESuperTypes().add(theKExtPackage.getDependency());
+        controlFlowEClass.getESuperTypes().add(theKEffectsPackage.getLink());
+        controlDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
+        expressionDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
+        guardDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
+        scheduleDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scGraphsEClass, SCGraphs.class, "SCGraphs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1019,7 +1009,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNode_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getNode_Dependencies(), theKExtPackage.getDependency(), null, "dependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getNode_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1069,7 +1058,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedulingBlock_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSchedulingBlock_Dependencies(), theKExtPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSchedulingBlock_Dependencies(), theKEffectsPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSchedulingBlock_Guards(), this.getGuard(), null, "guards", null, 1, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSchedulingBlock_Label(), ecorePackage.getEString(), "label", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -23,83 +23,62 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import java.util.Deque
 import java.util.Set
-
-import static de.cau.cs.kieler.scg.DataDependencyType.*
-import static de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
-import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
+import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+
+import static de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess.*
+import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import java.util.List
 
 /** 
- * This class is part of the SCG transformation chain. The chain is used to gather information 
- * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
- * version of SCGs, there is only one SCG meta-model. In each step the gathered data will be added to 
- * the model. 
- * You can either call the transformation manually or use KiCo to perform a series of transformations.
- * <pre>
- * SCG 
- *   |-- Dependency Analysis 	 					<== YOU ARE HERE
- *   |-- Basic Block Analysis
- *   |-- Scheduler
- *   |-- Sequentialization (new SCG)
- * </pre>
- * 
  * @author ssm
  * @kieler.design 2017-08-18 proposed 
  * @kieler.rating 2017-08-18 proposed yellow
+ * 
+ * Generics are
+ *   P root model type (e.g. SCGraphs)
+ *   S sub model type (e.g. SCGraph)
  */
 
-class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements Traceable {
+abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject> 
+    extends InplaceProcessor<P> implements Traceable {
     
-    @Inject extension SCGCoreExtensions
-    @Inject extension SCGDependencyExtensions
+    public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
+    
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
     @Inject extension KExpressionsCompareExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsDependencyExtensions
     
-    /** Only save conflicting dependencies in the model. */
-    public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.dependency.saveOnlyConflictingDependencies", false)
-    
-    override getId() {
-        "de.cau.cs.kieler.scg.processors.dependency"
-    }
-    
-    override getName() {
-        "Dependency V2"
-    }
-    
+    /** You should use {@link processSubModel} to perform a dependency analysis on a sub model instance. */
     override process() {
-        for (scg : getModel.scgs) {
-            val valuedObjectAccessors = new ValuedObjectAccessors
-            scg.searchDependencies(valuedObjectAccessors)          
-            scg.addDependencies(valuedObjectAccessors)                     
-        }      
+        for (subModul : getModel.getSubModels) {
+            subModul.processSubModel
+        }
+    } 
+    
+    abstract def List<S> getSubModels(P rootModel) 
+    
+    /** Perform a dependency analysis on a concrete sub model instance. */
+    def processSubModel(S subModel) {
+        val valuedObjectAccessors = new ValuedObjectAccessors
+        subModel.searchDependencies(valuedObjectAccessors)          
+        subModel.addDependencies(valuedObjectAccessors)                     
     }
 
     /** 
@@ -108,73 +87,9 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
      * To avoid recursive calls, the search is done iteratively with a node stack. New nodes are pushed onto the stack
      * and are resolved first.
      */
-    protected def searchDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
-        
-        if (!(scg.nodes.head instanceof Entry)) 
-            throw new UnsupportedOperationException("The first node of an SCG should be an entry node.")
-        
-        val entry = scg.nodes.head as Entry
-        val forkStack = new ForkStack
-        val nodes = <Node> newLinkedList(entry.next.target)
-        val visited = <Node> newHashSet
-        
-        while(!nodes.empty && nodes.peek !== null) {
-            val node = nodes.pop
-            switch(node) {
-                Assignment: {
-                    node.processAssignment(forkStack, valuedObjectAccessors)
-                    if (node.next !== null) {
-                        if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next?.target.addAndMark(nodes, visited)
-                    }
-                }
-                Conditional: {
-                    node.processConditional(forkStack, valuedObjectAccessors)
-                    if (!node.^else.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.^else.target.addAndMark(nodes, visited)
-                    if (!node.then.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.then.target.addAndMark(nodes, visited)
-                }
-                Fork: {
-                    forkStack.push(node)
-                    
-                    node.join.addAndMark(nodes, visited)
-                    for (next : node.next) {
-                        next.target.addAndMark(nodes, visited)
-                    }                    
-                }
-                Join: {
-                    var fork = forkStack.pop
-                    // Cleanup entry nodes.
-                    while (fork instanceof Entry) {
-                        fork = forkStack.pop
-                    }
-                    
-                    if (fork != node.fork) {
-                        environment.errors.add("The join node joins a wrong fork on the stack. This should not happen.",
-                            node, true)
-                        throw new UnsupportedOperationException("The join node joins a wrong fork on the stack. This should not happen.")
-                    }
-                    
-                    node.next.target.addAndMark(nodes, visited)
-                }
-                Entry: {
-                    forkStack.push(node)
-                    
-                    node.next.target.addAndMark(nodes, visited)
-                }
-                Exit: {
-                    // Don't do anything. 
-                    // This is necessary, because there may be different paths to the exit node.
-                    // Let the fork clean up the stack.
-                }
-                Surface: {
-                    node.depth.addAndMark(nodes, visited)
-                }
-                Depth: {
-                    node.next.target.addAndMark(nodes, visited)    
-                }
-            }
-        }        
-    }
+    abstract protected def void searchDependencies(S subModel, ValuedObjectAccessors valuedObjectAccessors) 
     
+    /** Protected prototype method for keffects assignments. */
     protected def void processAssignment(Assignment assignment, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
         val readVOIs = assignment.processExpressionReader(assignment.expression, forkStack, valuedObjectAccessors)
 
@@ -209,11 +124,8 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         }
     }
     
-    protected def void processConditional(Conditional conditional, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        conditional.processExpressionReader(conditional.condition, forkStack, valuedObjectAccessors)        
-    }
-    
-    protected def processExpressionReader(Node node, Expression expression, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
+    /** Finds all readers inside an expression of and stores them together with their associated node. */
+    protected def processExpressionReader(Linkable node, Expression expression, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
         val readVOIs = <ValuedObjectIdentifier> newArrayList => [ readVOIs | 
             expression.allReferences.forEach [ readVOIs += new ValuedObjectIdentifier(it) ]
         ]
@@ -237,7 +149,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         return readVOIs
     }
     
-    protected def void addDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
+    protected def void addDependencies(S subModel, ValuedObjectAccessors valuedObjectAccessors) {
         val valuedObjects = valuedObjectAccessors.map.keySet
         val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> additionalAccesses = HashMultimap.create
 
@@ -345,9 +257,11 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         return UNKNOWN
     }
     
+    abstract protected def Function1<? super EObject, Boolean> getConcurrentForkFilter()
+    
     protected def boolean isConcurrentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
-        for (sourceFork : source.forkStack.filter(Fork)) {
-            for (targetFork : target.forkStack.filter(Fork)) {
+        for (sourceFork : source.forkStack.filter(getConcurrentForkFilter)) {
+            for (targetFork : target.forkStack.filter(getConcurrentForkFilter)) {
                 if (sourceFork == targetFork) {
                      val sourceEntry = source.forkStack.getOwnThreadEntry(sourceFork)
                      val targetEntry = target.forkStack.getOwnThreadEntry(targetFork)
@@ -358,19 +272,21 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         return false
     }
     
-    private def getOwnThreadEntry(ForkStack forkStack, Fork fork) {
+    abstract protected def Class<?> getThreadEntryClass() 
+    
+    protected def getOwnThreadEntry(ForkStack forkStack, EObject fork) {
         val forkIndex = forkStack.indexOf(fork)
         if (forkIndex == 0) {
             throw new IllegalArgumentException("The given fork stack is corrupt. The Fork node must no be the head element of the stack.")
         }
-        var Entry entry = null
+        var EObject entry = null
         // It is possible that a fork-thread has more than one entry node on the stack
         // because the exit node was not reached. This is not a problem, because the 
         // join will clean the stack. However, you have to use the entry that was pushed
         // last on the stack in relation to the fork.
         for (i : 1..forkIndex) {
             val node = forkStack.get(forkIndex - i)
-            if (node instanceof Entry) {
+            if (getThreadEntryClass.isInstance(node)) {
                 entry = node
             } else {
                 return entry
@@ -412,10 +328,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         new Pair<Integer, HashMultimap<Integer, ValuedObjectAccess>>(maxPriority, sortedAccesses)                
     }
     
-    private def addAndMark(Node node, Deque<Node> nodes, Set<Node> visited) {
-        if (visited.contains(node)) return;
-        visited += node
-        nodes.push(node)
+    private def Assignment asAssignment(EObject eObject) {
+        eObject as Assignment
     }
-    
 }

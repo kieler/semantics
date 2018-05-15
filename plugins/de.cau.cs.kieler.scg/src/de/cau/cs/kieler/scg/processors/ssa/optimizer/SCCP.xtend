@@ -55,12 +55,12 @@ import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Map
 import javax.inject.Inject
 
-import static de.cau.cs.kieler.kexpressions.kext.DataDependencyType.*
+import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The Sparse Conditional Constant Propagation for SCGs.

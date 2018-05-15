@@ -63,7 +63,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The SSA transformation for SCGs

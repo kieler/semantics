@@ -61,39 +61,8 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
             case KExtPackage.KEXT_SCOPE: return createKExtScope();
             case KExtPackage.TEST_ENTITY: return createTestEntity();
             case KExtPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
-            case KExtPackage.DATA_DEPENDENCY: return createDataDependency();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object createFromString(EDataType eDataType, String initialValue) {
-        switch (eDataType.getClassifierID()) {
-            case KExtPackage.DATA_DEPENDENCY_TYPE:
-                return createDataDependencyTypeFromString(eDataType, initialValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-        }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String convertToString(EDataType eDataType, Object instanceValue) {
-        switch (eDataType.getClassifierID()) {
-            case KExtPackage.DATA_DEPENDENCY_TYPE:
-                return convertDataDependencyTypeToString(eDataType, instanceValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
@@ -135,36 +104,6 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
     public AnnotatedExpression createAnnotatedExpression() {
         AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
         return annotatedExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DataDependency createDataDependency() {
-        DataDependencyImpl dataDependency = new DataDependencyImpl();
-        return dataDependency;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DataDependencyType createDataDependencyTypeFromString(EDataType eDataType, String initialValue) {
-        DataDependencyType result = DataDependencyType.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertDataDependencyTypeToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
     }
 
     /**

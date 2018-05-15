@@ -43,7 +43,7 @@ import java.util.HashMap
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.Link
+import de.cau.cs.kieler.kexpressions.keffects.Link
 
 class CopyPropagation {
     // Inject from SCGDeclarations

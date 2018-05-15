@@ -26,6 +26,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * @author ssm
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.scg.Depth
 class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
+	@Inject extension SCGDependencyExtensions
 	@Inject extension TarjanSCC
 	
 	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 

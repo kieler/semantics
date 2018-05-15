@@ -26,7 +26,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import java.util.List
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.kext.Link
+import de.cau.cs.kieler.kexpressions.keffects.Link
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.scg.Surface
 import java.util.HashMap
 import java.util.LinkedList
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * A class with extensions for the calculation of Strongly Connected Components
@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kexpressions.kext.DataDependency
 class SCCExtensions {
     
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGDependencyExtensions
     
     /**
      * Creates a HashMap to find the SCC a node belongs to

@@ -10,10 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kexpressions.kext.dependencies
+package de.cau.cs.kieler.kexpressions.keffects.dependencies
 
 import java.util.LinkedList
-import de.cau.cs.kieler.annotations.NamedObject
+import org.eclipse.emf.ecore.EObject
 
 /**
  * The ForkStack keeps track of the fork and corresponding entry nodes. 
@@ -23,13 +23,13 @@ import de.cau.cs.kieler.annotations.NamedObject
  * @kieler.design 2017-08-21 proposed 
  * @kieler.rating 2017-08-21 proposed yellow
  */
-class ForkStack<T extends NamedObject> extends LinkedList<T> {
+class ForkStack extends LinkedList<EObject> {
     
     new() {
         super()
     }
     
-    new(ForkStack<T> forkStack) {
+    new(ForkStack forkStack) {
         super(forkStack)
     }
     

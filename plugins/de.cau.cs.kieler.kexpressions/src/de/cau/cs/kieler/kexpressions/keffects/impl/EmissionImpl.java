@@ -11,6 +11,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,6 +23,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -32,6 +35,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getNewValue <em>New Value</em>}</li>
  * </ul>
@@ -48,6 +53,26 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
 
     /**
      * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
@@ -98,6 +123,30 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.EMISSION__SCHEDULE);
         }
         return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.EMISSION__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.EMISSION__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
     }
 
     /**
@@ -191,11 +240,30 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KEffectsPackage.EMISSION__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.EMISSION__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.EMISSION__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.EMISSION__REFERENCE:
                 return basicSetReference(null, msgs);
             case KEffectsPackage.EMISSION__NEW_VALUE:
@@ -214,6 +282,10 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
         switch (featureID) {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 return getSchedule();
+            case KEffectsPackage.EMISSION__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case KEffectsPackage.EMISSION__INCOMING_LINKS:
+                return getIncomingLinks();
             case KEffectsPackage.EMISSION__REFERENCE:
                 return getReference();
             case KEffectsPackage.EMISSION__NEW_VALUE:
@@ -234,6 +306,14 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case KEffectsPackage.EMISSION__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case KEffectsPackage.EMISSION__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
             case KEffectsPackage.EMISSION__REFERENCE:
                 setReference((ValuedObjectReference)newValue);
@@ -256,6 +336,12 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KEffectsPackage.EMISSION__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case KEffectsPackage.EMISSION__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case KEffectsPackage.EMISSION__REFERENCE:
                 setReference((ValuedObjectReference)null);
                 return;
@@ -276,6 +362,10 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
         switch (featureID) {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KEffectsPackage.EMISSION__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case KEffectsPackage.EMISSION__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case KEffectsPackage.EMISSION__REFERENCE:
                 return reference != null;
             case KEffectsPackage.EMISSION__NEW_VALUE:
@@ -297,6 +387,13 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
                 default: return -1;
             }
         }
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.EMISSION__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case KEffectsPackage.EMISSION__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
@@ -310,6 +407,13 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
         if (baseClass == Schedulable.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.EMISSION__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return KEffectsPackage.EMISSION__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return KEffectsPackage.EMISSION__INCOMING_LINKS;
                 default: return -1;
             }
         }

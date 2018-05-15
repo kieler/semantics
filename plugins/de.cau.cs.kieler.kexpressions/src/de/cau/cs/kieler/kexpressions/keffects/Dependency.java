@@ -1,6 +1,6 @@
 /**
  */
-package de.cau.cs.kieler.kexpressions.kext;
+package de.cau.cs.kieler.kexpressions.keffects;
 
 
 /**
@@ -9,7 +9,7 @@ package de.cau.cs.kieler.kexpressions.kext;
  * <!-- end-user-doc -->
  *
  *
- * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getDependency()
+ * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getDependency()
  * @model abstract="true"
  * @generated
  */

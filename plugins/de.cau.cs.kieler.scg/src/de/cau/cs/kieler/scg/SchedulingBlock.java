@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.kexpressions.kext.Dependency;
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -55,7 +55,7 @@ public interface SchedulingBlock extends EObject {
 
     /**
      * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.kext.Dependency}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Dependency}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Dependencies</em>' reference list isn't clear,

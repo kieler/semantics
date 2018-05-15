@@ -8,6 +8,9 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency;
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType;
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
@@ -15,6 +18,8 @@ import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
@@ -94,7 +99,42 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass linkableEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass linkEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dependencyEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataDependencyEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum assignOperatorEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum dataDependencyTypeEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -292,8 +332,107 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getLinkable() {
+        return linkableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLinkable_OutgoingLinks() {
+        return (EReference)linkableEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLinkable_IncomingLinks() {
+        return (EReference)linkableEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getLink() {
+        return linkEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLink_Target() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDependency() {
+        return dependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDataDependency() {
+        return dataDependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDataDependency_Type() {
+        return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDataDependency_Concurrent() {
+        return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDataDependency_Confluent() {
+        return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getAssignOperator() {
         return assignOperatorEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EEnum getDataDependencyType() {
+        return dataDependencyTypeEEnum;
     }
 
     /**
@@ -346,8 +485,23 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         randomizeCallEffectEClass = createEClass(RANDOMIZE_CALL_EFFECT);
 
+        linkableEClass = createEClass(LINKABLE);
+        createEReference(linkableEClass, LINKABLE__OUTGOING_LINKS);
+        createEReference(linkableEClass, LINKABLE__INCOMING_LINKS);
+
+        linkEClass = createEClass(LINK);
+        createEReference(linkEClass, LINK__TARGET);
+
+        dependencyEClass = createEClass(DEPENDENCY);
+
+        dataDependencyEClass = createEClass(DATA_DEPENDENCY);
+        createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__TYPE);
+        createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__CONCURRENT);
+        createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__CONFLUENT);
+
         // Create enums
         assignOperatorEEnum = createEEnum(ASSIGN_OPERATOR);
+        dataDependencyTypeEEnum = createEEnum(DATA_DEPENDENCY_TYPE);
     }
 
     /**
@@ -384,6 +538,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         // Add supertypes to classes
         effectEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         effectEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
+        effectEClass.getESuperTypes().add(this.getLinkable());
         assignmentEClass.getESuperTypes().add(this.getEffect());
         emissionEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(this.getEffect());
@@ -396,6 +551,9 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         printCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getPrintCall());
         randomizeCallEffectEClass.getESuperTypes().add(this.getEffect());
         randomizeCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getRandomizeCall());
+        linkEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        dependencyEClass.getESuperTypes().add(this.getLink());
+        dataDependencyEClass.getESuperTypes().add(this.getDependency());
 
         // Initialize classes and features; add operations and parameters
         initEClass(effectEClass, Effect.class, "Effect", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -420,6 +578,20 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         initEClass(randomizeCallEffectEClass, RandomizeCallEffect.class, "RandomizeCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(linkableEClass, Linkable.class, "Linkable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getLinkable_OutgoingLinks(), this.getLink(), null, "outgoingLinks", null, 0, -1, Linkable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLinkable_IncomingLinks(), this.getLink(), this.getLink_Target(), "incomingLinks", null, 0, -1, Linkable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(linkEClass, Link.class, "Link", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getLink_Target(), this.getLinkable(), this.getLinkable_IncomingLinks(), "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(dependencyEClass, Dependency.class, "Dependency", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(dataDependencyEClass, DataDependency.class, "DataDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataDependency_Type(), this.getDataDependencyType(), "type", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataDependency_Concurrent(), ecorePackage.getEBoolean(), "concurrent", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataDependency_Confluent(), ecorePackage.getEBoolean(), "confluent", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         // Initialize enums and add enum literals
         initEEnum(assignOperatorEEnum, AssignOperator.class, "AssignOperator");
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGN);
@@ -438,6 +610,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSHIFTLEFT);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSHIFTRIGHT);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSHIFTRIGHTUNSIGNED);
+
+        initEEnum(dataDependencyTypeEEnum, DataDependencyType.class, "DataDependencyType");
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.IGNORE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.UNKNOWN);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_WRITE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_RELATIVEWRITE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_READ);
 
         // Create resource
         createResource(eNS_URI);

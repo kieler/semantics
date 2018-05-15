@@ -1,11 +1,12 @@
 /**
  */
-package de.cau.cs.kieler.kexpressions.kext.impl;
+package de.cau.cs.kieler.kexpressions.keffects.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
-import de.cau.cs.kieler.kexpressions.kext.Link;
-import de.cau.cs.kieler.kexpressions.kext.Linkable;
+
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -14,7 +15,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.LinkImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getTarget <em>Target</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,6 +39,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * @ordered
      */
     protected Linkable target;
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -55,7 +56,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      */
     @Override
     protected EClass eStaticClass() {
-        return KExtPackage.Literals.LINK;
+        return KEffectsPackage.Literals.LINK;
     }
 
     /**
@@ -69,7 +70,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
             target = (Linkable)eResolveProxy(oldTarget);
             if (target != oldTarget) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExtPackage.LINK__TARGET, oldTarget, target));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KEffectsPackage.LINK__TARGET, oldTarget, target));
             }
         }
         return target;
@@ -93,7 +94,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
         Linkable oldTarget = target;
         target = newTarget;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExtPackage.LINK__TARGET, oldTarget, newTarget);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KEffectsPackage.LINK__TARGET, oldTarget, newTarget);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -108,14 +109,14 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
         if (newTarget != target) {
             NotificationChain msgs = null;
             if (target != null)
-                msgs = ((InternalEObject)target).eInverseRemove(this, KExtPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+                msgs = ((InternalEObject)target).eInverseRemove(this, KEffectsPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
             if (newTarget != null)
-                msgs = ((InternalEObject)newTarget).eInverseAdd(this, KExtPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+                msgs = ((InternalEObject)newTarget).eInverseAdd(this, KEffectsPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
             msgs = basicSetTarget(newTarget, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.LINK__TARGET, newTarget, newTarget));
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.LINK__TARGET, newTarget, newTarget));
     }
 
     /**
@@ -126,9 +127,9 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExtPackage.LINK__TARGET:
+            case KEffectsPackage.LINK__TARGET:
                 if (target != null)
-                    msgs = ((InternalEObject)target).eInverseRemove(this, KExtPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+                    msgs = ((InternalEObject)target).eInverseRemove(this, KEffectsPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
                 return basicSetTarget((Linkable)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -142,7 +143,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExtPackage.LINK__TARGET:
+            case KEffectsPackage.LINK__TARGET:
                 return basicSetTarget(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -156,7 +157,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExtPackage.LINK__TARGET:
+            case KEffectsPackage.LINK__TARGET:
                 if (resolve) return getTarget();
                 return basicGetTarget();
         }
@@ -171,7 +172,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExtPackage.LINK__TARGET:
+            case KEffectsPackage.LINK__TARGET:
                 setTarget((Linkable)newValue);
                 return;
         }
@@ -186,7 +187,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExtPackage.LINK__TARGET:
+            case KEffectsPackage.LINK__TARGET:
                 setTarget((Linkable)null);
                 return;
         }
@@ -201,7 +202,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExtPackage.LINK__TARGET:
+            case KEffectsPackage.LINK__TARGET:
                 return target != null;
         }
         return super.eIsSet(featureID);

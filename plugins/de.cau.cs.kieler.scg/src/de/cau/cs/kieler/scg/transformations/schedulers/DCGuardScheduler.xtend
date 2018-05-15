@@ -3,7 +3,6 @@ package de.cau.cs.kieler.scg.transformations.schedulers
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.GuardDependency
@@ -16,6 +15,7 @@ import java.util.logging.Level
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * @author ssm
@@ -49,7 +49,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     // -------------------------------------------------------------------------
     
     @Inject extension SCGCoreExtensions
-    @Inject extension SCGDependencyExtensions	
+    @Inject extension SCGDependencyExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGControlFlowExtensions

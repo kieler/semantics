@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -60,7 +61,7 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * @generated
      * @ordered
      */
-    protected EList<de.cau.cs.kieler.kexpressions.kext.Dependency> dependencies;
+    protected EList<Dependency> dependencies;
 
     /**
      * The cached value of the '{@link #getGuards() <em>Guards</em>}' reference list.
@@ -128,9 +129,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<de.cau.cs.kieler.kexpressions.kext.Dependency> getDependencies() {
+    public EList<Dependency> getDependencies() {
         if (dependencies == null) {
-            dependencies = new EObjectResolvingEList<de.cau.cs.kieler.kexpressions.kext.Dependency>(de.cau.cs.kieler.kexpressions.kext.Dependency.class, this, ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES);
+            dependencies = new EObjectResolvingEList<Dependency>(Dependency.class, this, ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES);
         }
         return dependencies;
     }
@@ -203,7 +204,7 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
                 return;
             case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
                 getDependencies().clear();
-                getDependencies().addAll((Collection<? extends de.cau.cs.kieler.kexpressions.kext.Dependency>)newValue);
+                getDependencies().addAll((Collection<? extends Dependency>)newValue);
                 return;
             case ScgPackage.SCHEDULING_BLOCK__GUARDS:
                 getGuards().clear();

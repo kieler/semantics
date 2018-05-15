@@ -1,10 +1,10 @@
 /**
  */
-package de.cau.cs.kieler.kexpressions.kext.impl;
+package de.cau.cs.kieler.kexpressions.keffects.impl;
 
-import de.cau.cs.kieler.kexpressions.kext.DataDependency;
-import de.cau.cs.kieler.kexpressions.kext.DataDependencyType;
-import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency;
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.DataDependencyImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.DataDependencyImpl#isConcurrent <em>Concurrent</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.DataDependencyImpl#isConfluent <em>Confluent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl#isConcurrent <em>Concurrent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl#isConfluent <em>Confluent</em>}</li>
  * </ul>
  *
  * @generated
@@ -104,7 +104,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      */
     @Override
     protected EClass eStaticClass() {
-        return KExtPackage.Literals.DATA_DEPENDENCY;
+        return KEffectsPackage.Literals.DATA_DEPENDENCY;
     }
 
     /**
@@ -125,7 +125,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
         DataDependencyType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.DATA_DEPENDENCY__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.DATA_DEPENDENCY__TYPE, oldType, type));
     }
 
     /**
@@ -146,7 +146,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
         boolean oldConcurrent = concurrent;
         concurrent = newConcurrent;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.DATA_DEPENDENCY__CONCURRENT, oldConcurrent, concurrent));
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.DATA_DEPENDENCY__CONCURRENT, oldConcurrent, concurrent));
     }
 
     /**
@@ -167,7 +167,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
         boolean oldConfluent = confluent;
         confluent = newConfluent;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.DATA_DEPENDENCY__CONFLUENT, oldConfluent, confluent));
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.DATA_DEPENDENCY__CONFLUENT, oldConfluent, confluent));
     }
 
     /**
@@ -178,11 +178,11 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExtPackage.DATA_DEPENDENCY__TYPE:
+            case KEffectsPackage.DATA_DEPENDENCY__TYPE:
                 return getType();
-            case KExtPackage.DATA_DEPENDENCY__CONCURRENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONCURRENT:
                 return isConcurrent();
-            case KExtPackage.DATA_DEPENDENCY__CONFLUENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONFLUENT:
                 return isConfluent();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -196,13 +196,13 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExtPackage.DATA_DEPENDENCY__TYPE:
+            case KEffectsPackage.DATA_DEPENDENCY__TYPE:
                 setType((DataDependencyType)newValue);
                 return;
-            case KExtPackage.DATA_DEPENDENCY__CONCURRENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONCURRENT:
                 setConcurrent((Boolean)newValue);
                 return;
-            case KExtPackage.DATA_DEPENDENCY__CONFLUENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONFLUENT:
                 setConfluent((Boolean)newValue);
                 return;
         }
@@ -217,13 +217,13 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExtPackage.DATA_DEPENDENCY__TYPE:
+            case KEffectsPackage.DATA_DEPENDENCY__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case KExtPackage.DATA_DEPENDENCY__CONCURRENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONCURRENT:
                 setConcurrent(CONCURRENT_EDEFAULT);
                 return;
-            case KExtPackage.DATA_DEPENDENCY__CONFLUENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONFLUENT:
                 setConfluent(CONFLUENT_EDEFAULT);
                 return;
         }
@@ -238,11 +238,11 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExtPackage.DATA_DEPENDENCY__TYPE:
+            case KEffectsPackage.DATA_DEPENDENCY__TYPE:
                 return type != TYPE_EDEFAULT;
-            case KExtPackage.DATA_DEPENDENCY__CONCURRENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONCURRENT:
                 return concurrent != CONCURRENT_EDEFAULT;
-            case KExtPackage.DATA_DEPENDENCY__CONFLUENT:
+            case KEffectsPackage.DATA_DEPENDENCY__CONFLUENT:
                 return confluent != CONFLUENT_EDEFAULT;
         }
         return super.eIsSet(featureID);

@@ -104,9 +104,10 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.Dependency
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
-import de.cau.cs.kieler.kexpressions.kext.DataDependencyType
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -133,6 +134,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension SCGThreadExtensions
     @Inject extension SCGSerializeHRExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGDependencyExtensions
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -440,7 +442,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val node = viewContext.getSourceElement(knode)
                     // Show edges
                     if (node instanceof Node) {
-                        node.dependencies.map[viewContext.getTargetElements(it)].forEach[
+                        node.outgoingLinks.filter(Dependency).map[viewContext.getTargetElements(it)].forEach[
                             it.filter(KEdge).forEach[
                                 viewer.show(it)
                                 arranger.invoke(instance, it)
@@ -714,7 +716,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
             if (SHOW_DEPENDENCIES.booleanValue && !(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)) {
                 scg.nodes.forEach[
-                    it.dependencies.forEach[ synthesizeDependency ]
+                    it.dependenciesView.forEach[ synthesizeDependency ]
                 ]
             }
             
@@ -739,7 +741,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     
                                 } 
                             }
-                            for(n2Dep : n.dependencies) {
+                            for(n2Dep : n.dependenciesView) {
                                 val n2 = n2Dep.target
                                 if(component.contains(n2)) {
                                     val edges = n2Dep.allEdges
@@ -1989,7 +1991,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
       		    val sourceKNode = node.node 
       			val targetNode = node.dependencies.filter(ScheduleDependency).head.target
        			val targetKNode = targetNode.node
-				val nonScheduleDependencies = node.dependencies.filter[ !(it instanceof ScheduleDependency) ].
+				val nonScheduleDependencies = node.dependenciesView.filter[ !(it instanceof ScheduleDependency) ].
 					filter[ target == targetNode ]
 		        		
                 if (!nonScheduleDependencies.empty) {

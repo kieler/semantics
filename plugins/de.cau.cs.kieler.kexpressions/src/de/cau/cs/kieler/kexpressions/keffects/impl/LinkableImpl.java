@@ -1,10 +1,10 @@
 /**
  */
-package de.cau.cs.kieler.kexpressions.kext.impl;
+package de.cau.cs.kieler.kexpressions.keffects.impl;
 
-import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
-import de.cau.cs.kieler.kexpressions.kext.Link;
-import de.cau.cs.kieler.kexpressions.kext.Linkable;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 import java.util.Collection;
 
@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.LinkableImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.LinkableImpl#getIncomingLinks <em>Incoming Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkableImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkableImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  * </ul>
  *
  * @generated
@@ -72,7 +72,7 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
      */
     @Override
     protected EClass eStaticClass() {
-        return KExtPackage.Literals.LINKABLE;
+        return KEffectsPackage.Literals.LINKABLE;
     }
 
     /**
@@ -82,7 +82,7 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
      */
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
-            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KExtPackage.LINKABLE__OUTGOING_LINKS);
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.LINKABLE__OUTGOING_LINKS);
         }
         return outgoingLinks;
     }
@@ -94,7 +94,7 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
      */
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
-            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KExtPackage.LINKABLE__INCOMING_LINKS, KExtPackage.LINK__TARGET);
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.LINKABLE__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
         }
         return incomingLinks;
     }
@@ -108,7 +108,7 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExtPackage.LINKABLE__INCOMING_LINKS:
+            case KEffectsPackage.LINKABLE__INCOMING_LINKS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -122,9 +122,9 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExtPackage.LINKABLE__OUTGOING_LINKS:
+            case KEffectsPackage.LINKABLE__OUTGOING_LINKS:
                 return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
-            case KExtPackage.LINKABLE__INCOMING_LINKS:
+            case KEffectsPackage.LINKABLE__INCOMING_LINKS:
                 return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -138,9 +138,9 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExtPackage.LINKABLE__OUTGOING_LINKS:
+            case KEffectsPackage.LINKABLE__OUTGOING_LINKS:
                 return getOutgoingLinks();
-            case KExtPackage.LINKABLE__INCOMING_LINKS:
+            case KEffectsPackage.LINKABLE__INCOMING_LINKS:
                 return getIncomingLinks();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -155,11 +155,11 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExtPackage.LINKABLE__OUTGOING_LINKS:
+            case KEffectsPackage.LINKABLE__OUTGOING_LINKS:
                 getOutgoingLinks().clear();
                 getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
-            case KExtPackage.LINKABLE__INCOMING_LINKS:
+            case KEffectsPackage.LINKABLE__INCOMING_LINKS:
                 getIncomingLinks().clear();
                 getIncomingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
@@ -175,10 +175,10 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExtPackage.LINKABLE__OUTGOING_LINKS:
+            case KEffectsPackage.LINKABLE__OUTGOING_LINKS:
                 getOutgoingLinks().clear();
                 return;
-            case KExtPackage.LINKABLE__INCOMING_LINKS:
+            case KEffectsPackage.LINKABLE__INCOMING_LINKS:
                 getIncomingLinks().clear();
                 return;
         }
@@ -193,9 +193,9 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExtPackage.LINKABLE__OUTGOING_LINKS:
+            case KEffectsPackage.LINKABLE__OUTGOING_LINKS:
                 return outgoingLinks != null && !outgoingLinks.isEmpty();
-            case KExtPackage.LINKABLE__INCOMING_LINKS:
+            case KEffectsPackage.LINKABLE__INCOMING_LINKS:
                 return incomingLinks != null && !incomingLinks.isEmpty();
         }
         return super.eIsSet(featureID);

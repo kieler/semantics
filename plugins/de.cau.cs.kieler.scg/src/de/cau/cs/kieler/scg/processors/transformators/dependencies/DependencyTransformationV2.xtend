@@ -13,18 +13,7 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.dependencies
 
-import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Depth
@@ -36,23 +25,16 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import java.util.Deque
 import java.util.Set
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 
-import static de.cau.cs.kieler.kexpressions.kext.DataDependencyType.*
-import static de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
 
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import de.cau.cs.kieler.kexpressions.PriorityProtocol
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -73,20 +55,10 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
  * @kieler.rating 2017-08-18 proposed yellow
  */
 
-class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements Traceable {
+class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SCGraph> {
     
-    @Inject extension SCGCoreExtensions
-    @Inject extension SCGDependencyExtensions
     @Inject extension SCGControlFlowExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsValueExtensions
-    @Inject extension KExpressionsCompareExtensions
-    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
-    
-    /** Only save conflicting dependencies in the model. */
-    public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.dependency.saveOnlyConflictingDependencies", false)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.dependency"
@@ -96,21 +68,18 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         "Dependency V2"
     }
     
-    override process() {
-        for (scg : getModel.scgs) {
-            val valuedObjectAccessors = new ValuedObjectAccessors
-            scg.searchDependencies(valuedObjectAccessors)          
-            scg.addDependencies(valuedObjectAccessors)                     
-        }      
+    override getSubModels(SCGraphs rootModel) {
+        return rootModel.scgs
     }
-
+    
+    
     /** 
      * searchDependencies traverses the SCG (dfs). It visits all reachable nodes once and stores all accesses to 
      * valued objects. While doing so, a fork stack keeps track of the threads for the concurrency test.
      * To avoid recursive calls, the search is done iteratively with a node stack. New nodes are pushed onto the stack
      * and are resolved first.
      */
-    protected def searchDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
+    protected override searchDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
         
         if (!(scg.nodes.head instanceof Entry)) 
             throw new UnsupportedOperationException("The first node of an SCG should be an entry node.")
@@ -177,241 +146,16 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         }        
     }
     
-    protected def void processAssignment(Assignment assignment, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val readVOIs = assignment.processExpressionReader(assignment.expression, forkStack, valuedObjectAccessors)
-
-        if (assignment.valuedObject === null) return;
-        
-        val writeVOI = new ValuedObjectIdentifier(assignment)
-        
-        for(index : assignment.indices) {
-            val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
-            if (indexReaderVOIs.contains(writeVOI)) {
-                environment.warnings.add("The index variable is written by the same assignment. However, the new assignment will only have effect afterwards.",
-                    assignment, true)
-            }
-        }
-
-        for(sched : newLinkedList(GLOBAL_SCHEDULE) + assignment.schedule) {
-            var schedule = GLOBAL_SCHEDULE
-            var ValuedObject scheduleObject = null       
-            var priority = GLOBAL_WRITE
-            
-            if (readVOIs.contains(writeVOI)) priority = GLOBAL_RELATIVE_WRITE
-            if (assignment.operator != AssignOperator.ASSIGN) priority = GLOBAL_RELATIVE_WRITE
-            
-            if (sched instanceof ScheduleObjectReference) {
-                schedule = sched.valuedObject.declaration as ScheduleDeclaration
-                scheduleObject = sched.valuedObject 
-                priority = sched.priority    
-            }
-            
-            val writeAccess = new ValuedObjectAccess(assignment, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
-            valuedObjectAccessors.addAccess(writeVOI, writeAccess)
-        }
-    }
-    
     protected def void processConditional(Conditional conditional, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
         conditional.processExpressionReader(conditional.condition, forkStack, valuedObjectAccessors)        
     }
     
-    protected def processExpressionReader(Node node, Expression expression, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val readVOIs = <ValuedObjectIdentifier> newArrayList => [ readVOIs | 
-            expression.allReferences.forEach [ readVOIs += new ValuedObjectIdentifier(it) ]
-        ]
-        for(readVOI : readVOIs) {
-            for(sched : newLinkedList(GLOBAL_SCHEDULE) + expression.schedule) {
-                var schedule = GLOBAL_SCHEDULE
-                var ValuedObject scheduleObject = null            
-                var priority = GLOBAL_READ
-                
-                if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.valuedObject
-                    priority = sched.priority    
-                }
-                
-                val readAccess = new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
-                valuedObjectAccessors.addAccess(readVOI, readAccess)
-            } 
-        }
-        
-        return readVOIs
+    override protected getConcurrentForkFilter() {
+        return [ Fork.isInstance(it) ]
     }
     
-    protected def void addDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
-        val valuedObjects = valuedObjectAccessors.map.keySet
-        val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> additionalAccesses = HashMultimap.create
-
-        // First, process the specific accesses, because they must also be checked against the generic accesses of 
-        // the same valued object. The ValuedObjectIdentifier can retrieve the corresponding generic identifier.        
-        for (valuedObjectIdentifier : valuedObjects.filter[ isSpecificIdentifier ]) {
-            val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
-            valuedObjectIdentifier.processDependencies(accesses, true)
-             
-            additionalAccesses.putAll(valuedObjectIdentifier.genericIdentifier, accesses);
-        }    
-        
-        for (valuedObjectIdentifier : valuedObjects.filter[ !isSpecificIdentifier ]) {
-            val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
-            val specificAccesses = additionalAccesses.get(valuedObjectIdentifier)
-            specificAccesses.addAll(accesses)
-            valuedObjectIdentifier.processDependencies(specificAccesses, false)
-        }   
-    }
-    
-    protected def void processDependencies(ValuedObjectIdentifier valuedObjectIdentifier, Set<ValuedObjectAccess> accesses, boolean isSpecific) {
-        val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
-        val schedules = accesses.map[ schedule ].filter[ it !== null ].filter(ScheduleDeclaration).toSet
-        for (schedule : schedules) {
-            for (vo : schedule.valuedObjects) {
-                val scheduledAccesses = accesses.filter[ it.schedule == schedule && it.scheduleObject == vo ].toSet
-                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null, isSpecific)
-            }
-        }
-        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific)
-    }
-    
-    protected def Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> processDependencySet(ValuedObjectIdentifier valuedObjectIdentifier, 
-        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific
-    ) {
-        val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
-        val accessPair = accesses.sortAccessesAccordingToPriority
-        for (priority : 0..accessPair.first) {
-            val prioAccesses = accessPair.second.get(priority) 
-            for (access : prioAccesses) {
-                for (compPriority : priority..accessPair.first) {
-                    val compAccesses = accessPair.second.get(compPriority) 
-                    for (compAccess : compAccesses) {
-                        if (exclude === null || 
-                            !exclude.exists[ first.node == access.node && second.node == compAccess.node ] 
-                        ) {
-                            if (!access.isSpecific || !compAccess.isSpecific || isSpecific) {
-                                valuedObjectIdentifier.processDependency(access, compAccess)
-                                processed.add(new Pair<ValuedObjectAccess, ValuedObjectAccess>(access, compAccess))
-                                processed.add(new Pair<ValuedObjectAccess, ValuedObjectAccess>(compAccess, access))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return processed
-    }
-    
-    protected def void processDependency(ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
-        if (source.node == target.node) return
-        val type = source.accessType(target)
-        if (type == IGNORE) return        
-        val saveOnlyConflicting = environment.getProperty(SAVE_ONLY_CONFLICTING_DEPENDENCIES)
-        val concurrent = source.isConcurrentTo(target)
-        if (!concurrent && saveOnlyConflicting) return
-        val confluent = (type == WRITE_WRITE && source.isConfluentTo(target))
-        if (confluent && saveOnlyConflicting) return
-
-        val dependency = source.node.createDataDependency(target.node, type) => [
-            it.concurrent = concurrent
-            it.confluent = confluent
-        ]
-        
-        dependency.trace(source.node)               
-    }
-    
-    protected def accessType(ValuedObjectAccess source, ValuedObjectAccess target) {
-        if (source.schedule == GLOBAL_SCHEDULE && target.schedule == GLOBAL_SCHEDULE) {
-            if (source.priority == GLOBAL_WRITE) {
-                if (target.priority == GLOBAL_WRITE) return WRITE_WRITE
-                if (target.priority == GLOBAL_RELATIVE_WRITE) return WRITE_RELATIVEWRITE
-                if (target.priority == GLOBAL_READ) return WRITE_READ
-            } else if (source.priority == GLOBAL_RELATIVE_WRITE) {
-                if (target.priority == GLOBAL_RELATIVE_WRITE) return IGNORE
-                if (target.priority == GLOBAL_READ) return WRITE_READ
-            }  else if (source.priority == GLOBAL_READ) {
-                if (target.priority == GLOBAL_READ) return IGNORE
-            } 
-        } else {
-            if (source.schedule instanceof ScheduleDeclaration) {
-                val scheduleDeclaration = source.schedule.asScheduleDeclaration
-                if (source.priority == target.priority) {
-                    if (scheduleDeclaration.priorities.size > source.priority) {
-                        val classification = scheduleDeclaration.priorities.get(source.priority)
-                        if (classification == PriorityProtocol.CONFLUENT) {
-                            return IGNORE
-                        }
-                    }    
-                } 
-            }
-            if (source.priority == target.priority) return WRITE_WRITE
-            return WRITE_READ 
-        }
-        return UNKNOWN
-    }
-    
-    protected def boolean isConcurrentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
-        for (sourceFork : source.forkStack.filter(Fork)) {
-            for (targetFork : target.forkStack.filter(Fork)) {
-                if (sourceFork == targetFork) {
-                     val sourceEntry = source.forkStack.getOwnThreadEntry(sourceFork)
-                     val targetEntry = target.forkStack.getOwnThreadEntry(targetFork)
-                     return sourceEntry != targetEntry
-                }
-            }
-        }
-        return false
-    }
-    
-    private def getOwnThreadEntry(ForkStack forkStack, Fork fork) {
-        val forkIndex = forkStack.indexOf(fork)
-        if (forkIndex == 0) {
-            throw new IllegalArgumentException("The given fork stack is corrupt. The Fork node must no be the head element of the stack.")
-        }
-        var Entry entry = null
-        // It is possible that a fork-thread has more than one entry node on the stack
-        // because the exit node was not reached. This is not a problem, because the 
-        // join will clean the stack. However, you have to use the entry that was pushed
-        // last on the stack in relation to the fork.
-        for (i : 1..forkIndex) {
-            val node = forkStack.get(forkIndex - i)
-            if (node instanceof Entry) {
-                entry = node
-            } else {
-                return entry
-            }
-        } 
-        
-        entry
-    }
-    
-    protected def boolean isConfluentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
-        if (source.node instanceof Assignment) {
-            if (target.node instanceof Assignment) {
-                if (source.node.asAssignment.operator == AssignOperator.ASSIGN && target.node.asAssignment.operator == AssignOperator.ASSIGN) {
-                    if (source.node.asAssignment.expression.isSameValue(target.node.asAssignment.expression)) {
-                        // It's the same value.
-                        return true
-                    } if (source.node.asAssignment.expression.equals2(target.node.asAssignment.expression)) {
-                        // Semantically, it's the same expression.
-                        return true
-                    } else {
-                        // To be downward-compatible, check for operator expression with same value.
-                        if (areOldConfluentSetter(source.node as Assignment, target.node as Assignment)) {
-                            return true
-                        }
-                    }
-                } 
-            }
-        }
-        return false
-    }
-    
-    protected def sortAccessesAccordingToPriority(Set<ValuedObjectAccess> accesses) {
-        val sortedAccesses = HashMultimap.create
-        var maxPriority = 0;
-        for (access : accesses) {
-            sortedAccesses.put(access.priority, access)
-            if (access.priority > maxPriority) maxPriority = access.priority
-        }
-        new Pair<Integer, HashMultimap<Integer, ValuedObjectAccess>>(maxPriority, sortedAccesses)                
+    override protected getThreadEntryClass() {
+        return typeof(Entry)
     }
     
     private def addAndMark(Node node, Deque<Node> nodes, Set<Node> visited) {
@@ -419,5 +163,6 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
         visited += node
         nodes.push(node)
     }
+        
     
 }

@@ -53,7 +53,8 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -85,6 +86,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions

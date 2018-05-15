@@ -31,6 +31,7 @@ class SCGManipulationExtensions {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGDependencyExtensions
     
     def void removeNode(Node node, boolean rerouteCF) {
         val prev = newArrayList

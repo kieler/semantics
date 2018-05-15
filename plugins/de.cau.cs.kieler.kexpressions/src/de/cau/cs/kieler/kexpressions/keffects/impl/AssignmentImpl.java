@@ -13,6 +13,8 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -37,6 +40,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
@@ -55,6 +60,26 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
 
     /**
      * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
@@ -135,6 +160,30 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.ASSIGNMENT__SCHEDULE);
         }
         return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.ASSIGNMENT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
     }
 
     /**
@@ -292,11 +341,30 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.ASSIGNMENT__REFERENCE:
                 return basicSetReference(null, msgs);
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
@@ -317,6 +385,10 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 return getSchedule();
+            case KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS:
+                return getIncomingLinks();
             case KEffectsPackage.ASSIGNMENT__REFERENCE:
                 return getReference();
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
@@ -341,6 +413,14 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
             case KEffectsPackage.ASSIGNMENT__REFERENCE:
                 setReference((ValuedObjectReference)newValue);
@@ -369,6 +449,12 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case KEffectsPackage.ASSIGNMENT__REFERENCE:
                 setReference((ValuedObjectReference)null);
                 return;
@@ -395,6 +481,10 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case KEffectsPackage.ASSIGNMENT__REFERENCE:
                 return reference != null;
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
@@ -420,6 +510,13 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
                 default: return -1;
             }
         }
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case KEffectsPackage.ASSIGNMENT__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
@@ -433,6 +530,13 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         if (baseClass == Schedulable.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.ASSIGNMENT__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return KEffectsPackage.ASSIGNMENT__INCOMING_LINKS;
                 default: return -1;
             }
         }

@@ -11,103 +11,69 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.extensions
+package de.cau.cs.kieler.kexpressions.keffects.extensions
 
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ExpressionDependency
-import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ScheduleDependency
-import de.cau.cs.kieler.scg.Node
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
-import java.util.List
-import de.cau.cs.kieler.scg.Entry
-import java.util.Map
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.OperatorType
-import java.util.EnumSet
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Linkable
-import de.cau.cs.kieler.kexpressions.keffects.Link
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Value
+import java.util.EnumSet
 
-/**
- * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
- * The class is separated in several categories. If a category growths too big, it may be 
- * desired to relocate its functions in a specialized extensions class. At the moment the class
- * contains functions for the following tasks.
- * <ul>
- *   <li>Valued object handling</li>
- *   <li>Control flow queries</li>
- *   <li>Thread management</li>
- *   <li>Basic block and scheduling block qeuries</li>
- *   <li>Scheduling problem management</li>
- *   <li>Expression helper</li>
- * </ul> 
- * SCG model copy functions and transformation helper are already relocated to their appropriate
- * extensions.
+/** 
+ * Adapted from SCGDependencyExtensions.
+ * SCGDependencyExtensions inherits the included methods. 
  * 
  * @author ssm
- * @kieler.design 2016-02-24 proposed 
- * @kieler.rating 2016-02-24 proposed yellow
+ * @kieler.design 2018-05-15 proposed 
+ * @kieler.rating 2018-05-15 proposed yellow
  */
-class SCGDependencyExtensions extends KEffectsDependencyExtensions { 
+class KEffectsDependencyExtensions { 
 	
-	@Inject extension SCGControlFlowExtensions
 	@Inject extension KExpressionsValueExtensions
 	@Inject extension KEffectsExtensions
 	
-	def List<Link> getDependencies(Linkable linkable) {
-	    return linkable.outgoingLinks
-	}
-	
-	def Iterable<Dependency> getDependenciesView(Linkable linkable) {
-	    return linkable.outgoingLinks.filter(Dependency)
-	}
-	
-    def DataDependency createDataDependency(Node source, Node target, DataDependencyType type) {
+    def DataDependency createDataDependency(DataDependencyType type) {
+	 	KEffectsFactory::eINSTANCE.createDataDependency => [ 
+	 		it.type = type
+	 	]
+	 }
+
+    def DataDependency createDataDependency(Linkable source, Linkable target, DataDependencyType type) {
     	type.createDataDependency => [ 
-    		source.dependencies += it
+    		source.outgoingLinks += it
     		it.target = target
     	]
     }
 
-    def ExpressionDependency createExpressionDependency(Node source, Node target) {
-    	ScgFactory::eINSTANCE.createExpressionDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
-    }
-
-    def GuardDependency createGuardDependency(Node source, Node target) {
-    	ScgFactory::eINSTANCE.createGuardDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
-    }
-    
-    def ControlDependency createControlDependency(Node source, Node target) {
-    	ScgFactory::eINSTANCE.createControlDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
-    }
-    
-    def ScheduleDependency createScheduleDependency(Node source, Node target) {
-    	ScgFactory::eINSTANCE.createScheduleDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
+    def DataDependency checkAndSetConfluence(DataDependency dependency) {
+        val sourceNode = dependency.eContainer as Linkable
+        val targetNode = dependency.target
+        dependency.confluent = false
+        if (sourceNode instanceof Assignment) {
+            if (targetNode instanceof Assignment) {
+                if (sourceNode.operator == AssignOperator.ASSIGN && targetNode.operator == AssignOperator.ASSIGN) {
+                    val sourceExpression = sourceNode.expression
+                    val targetExpression = targetNode.expression
+                    if (sourceExpression.isSameValue(targetExpression)) {
+                        dependency.confluent = true
+                    } else {
+                        // To be downward-compatible, check for operator expression with same value.
+                        if (areOldConfluentSetter(sourceNode, targetNode)) {
+                            dependency.confluent = true
+                        }
+                    }
+                }
+            }
+        }
+        dependency
     }
     
     def boolean areOldConfluentSetter(Assignment sourceAssignment, Assignment targetAssignment) {
@@ -161,31 +127,4 @@ class SCGDependencyExtensions extends KEffectsDependencyExtensions {
         return false
     } 
     
-    def DataDependency checkAndSetConcurrency(DataDependency dependency, Map<Node, List<Entry>> nodeMapping) {
-    	val sourceNode = dependency.eContainer as Node
-    	val targetNode = dependency.target
-    	dependency.concurrent = false
-    	
-    	val sourceThreads = nodeMapping.get(sourceNode)
-    	val targetThreads = nodeMapping.get(targetNode)
-    	for(sourceEntry : sourceThreads) {
-    		var Fork sourceFork = null
-    		val sourcePredecessor = sourceEntry.getAllPreviousHeadNode
-    		if (sourcePredecessor instanceof Fork) sourceFork = sourcePredecessor as Fork
-    		if (sourceFork !== null) {
-    			for(targetEntry : targetThreads) {
-    				var Fork targetFork = null
-    				val targetPredecessor = targetEntry.getAllPreviousHeadNode
-    				if (targetPredecessor instanceof Fork) targetFork = targetPredecessor as Fork
-   					if (targetFork !== null && sourceFork == targetFork && sourceEntry != targetEntry) {
-   						dependency.concurrent = true;
-   						return dependency
-   					}
-    			}
-    		}
-    	}
-    	
-		dependency		    	
-    }    
-	
 }

@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * 
@@ -43,6 +44,7 @@ class SCPDGTransformation {//extends AbstractProductionTransformation implements
     // -------------------------------------------------------------------------
        
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject extension AnnotationsExtensions    
 
     // -------------------------------------------------------------------------

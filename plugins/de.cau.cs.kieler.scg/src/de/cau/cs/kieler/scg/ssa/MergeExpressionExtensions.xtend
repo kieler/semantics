@@ -58,6 +58,7 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import java.io.StringWriter
 import java.io.PrintWriter
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /**
  * @author als
@@ -68,6 +69,7 @@ class MergeExpressionExtension {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsCreateExtensions

@@ -32,7 +32,6 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
@@ -46,6 +45,7 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * @author ssm
@@ -76,7 +76,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension SCGCacheExtensions	
-    @Inject extension SCGDependencyExtensions	    
+    @Inject extension SCGDependencyExtensions 
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
     @Inject extension AnnotationsExtensions

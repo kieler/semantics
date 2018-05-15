@@ -21,7 +21,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Surface
 import com.google.inject.Guice
-import de.cau.cs.kieler.kexpressions.kext.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
