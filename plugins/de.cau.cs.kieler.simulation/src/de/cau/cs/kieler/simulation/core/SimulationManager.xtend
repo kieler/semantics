@@ -109,6 +109,16 @@ class SimulationManager extends Configurable {
     
     /**
      * The name of a variable in the data pool,
+     * which should receive the delta time as value.
+     */
+    public static var String deltaTimeVariable
+    /**
+     * last reference point for delta time.
+     */
+    public static var String deltaTimeStamp
+    
+    /**
+     * The name of a variable in the data pool,
      * that determines the next time the tick function should be called.
      */
     public static var String nextTickTimeVariable

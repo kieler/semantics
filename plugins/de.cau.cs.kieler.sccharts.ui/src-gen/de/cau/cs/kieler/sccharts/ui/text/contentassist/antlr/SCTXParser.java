@@ -92,11 +92,11 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPreemptionTypeLegacyAccess().getAlternatives(), "rule__PreemptionTypeLegacy__Alternatives");
 					put(grammarAccess.getDelayTypeAccess().getAlternatives(), "rule__DelayType__Alternatives");
 					put(grammarAccess.getHistoryTypeAccess().getAlternatives(), "rule__HistoryType__Alternatives");
+					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getPriorityProtocolAccess().getAlternatives(), "rule__PriorityProtocol__Alternatives");
 					put(grammarAccess.getAssignOperatorAccess().getAlternatives(), "rule__AssignOperator__Alternatives");
 					put(grammarAccess.getPostfixOperatorAccess().getAlternatives(), "rule__PostfixOperator__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
-					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getSCChartsAccess().getGroup(), "rule__SCCharts__Group__0");
 					put(grammarAccess.getRootStateAccess().getGroup(), "rule__RootState__Group__0");
@@ -173,8 +173,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSucceedingActionAccess().getGroup_3(), "rule__SucceedingAction__Group_3__0");
 					put(grammarAccess.getSucceedingActionAccess().getGroup_3_2(), "rule__SucceedingAction__Group_3_2__0");
 					put(grammarAccess.getSucceedingActionAccess().getGroup_4(), "rule__SucceedingAction__Group_4__0");
-					put(grammarAccess.getTimerActionAccess().getGroup(), "rule__TimerAction__Group__0");
-					put(grammarAccess.getTimerActionAccess().getGroup_4(), "rule__TimerAction__Group_4__0");
+					put(grammarAccess.getPeriodActionAccess().getGroup(), "rule__PeriodAction__Group__0");
+					put(grammarAccess.getPeriodActionAccess().getGroup_5(), "rule__PeriodAction__Group_5__0");
 					put(grammarAccess.getRootScopeAccess().getGroup(), "rule__RootScope__Group__0");
 					put(grammarAccess.getRootScopeAccess().getGroup_3(), "rule__RootScope__Group_3__0");
 					put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
@@ -461,9 +461,10 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSucceedingActionAccess().getEffectsAssignment_3_1(), "rule__SucceedingAction__EffectsAssignment_3_1");
 					put(grammarAccess.getSucceedingActionAccess().getEffectsAssignment_3_2_1(), "rule__SucceedingAction__EffectsAssignment_3_2_1");
 					put(grammarAccess.getSucceedingActionAccess().getLabelAssignment_4_1(), "rule__SucceedingAction__LabelAssignment_4_1");
-					put(grammarAccess.getTimerActionAccess().getDelayAssignment_1(), "rule__TimerAction__DelayAssignment_1");
-					put(grammarAccess.getTimerActionAccess().getTriggerAssignment_3(), "rule__TimerAction__TriggerAssignment_3");
-					put(grammarAccess.getTimerActionAccess().getLabelAssignment_4_1(), "rule__TimerAction__LabelAssignment_4_1");
+					put(grammarAccess.getPeriodActionAccess().getAnnotationsAssignment_1(), "rule__PeriodAction__AnnotationsAssignment_1");
+					put(grammarAccess.getPeriodActionAccess().getDelayAssignment_2(), "rule__PeriodAction__DelayAssignment_2");
+					put(grammarAccess.getPeriodActionAccess().getTriggerAssignment_4(), "rule__PeriodAction__TriggerAssignment_4");
+					put(grammarAccess.getPeriodActionAccess().getLabelAssignment_5_1(), "rule__PeriodAction__LabelAssignment_5_1");
 					put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
 					put(grammarAccess.getRootScopeAccess().getDeclarationsAssignment_1(), "rule__RootScope__DeclarationsAssignment_1");
 					put(grammarAccess.getRootScopeAccess().getEntitiesAssignment_2(), "rule__RootScope__EntitiesAssignment_2");

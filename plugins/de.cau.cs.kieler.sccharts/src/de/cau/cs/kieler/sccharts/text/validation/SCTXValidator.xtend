@@ -127,7 +127,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkRegionActions(Action action) {
-        if (action.eContainer instanceof ControlflowRegion) {
+        if (action.eContainer instanceof ControlflowRegion && (action.eContainer as ControlflowRegion).states.exists[final]) {
             warning(REGION_ACTION_EXPERIMENTAL, action, null);
         }
     }

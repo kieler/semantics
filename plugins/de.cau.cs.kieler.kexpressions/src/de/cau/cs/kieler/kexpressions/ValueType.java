@@ -131,7 +131,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    UNKNOWN(10, "UNKNOWN", "UNKNOWN");
+    UNKNOWN(10, "UNKNOWN", "UNKNOWN"), /**
+     * The '<em><b>CLOCK</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CLOCK_VALUE
+     * @generated
+     * @ordered
+     */
+    CLOCK(11, "CLOCK", "CLOCK");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -301,6 +309,21 @@ public enum ValueType implements Enumerator {
     public static final int UNKNOWN_VALUE = 10;
 
     /**
+     * The '<em><b>CLOCK</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>CLOCK</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #CLOCK
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int CLOCK_VALUE = 11;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -319,6 +342,7 @@ public enum ValueType implements Enumerator {
             REFERENCE,
             SCHEDULE,
             UNKNOWN,
+            CLOCK,
         };
 
     /**
@@ -386,6 +410,7 @@ public enum ValueType implements Enumerator {
             case REFERENCE_VALUE: return REFERENCE;
             case SCHEDULE_VALUE: return SCHEDULE;
             case UNKNOWN_VALUE: return UNKNOWN;
+            case CLOCK_VALUE: return CLOCK;
         }
         return null;
     }
