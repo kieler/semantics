@@ -520,8 +520,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="244.77781"
-     inkscape:cy="432.86193"
+     inkscape:cx="513.2127"
+     inkscape:cy="351.41857"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1211,5 +1211,19 @@
        preserveAspectRatio="none"
        height="316.66666"
        width="1137.9235" />
+    <text
+       id="versionLabel-1"
+       y="685.10571"
+       x="-26.923569"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:LMSans10;-inkscape-font-specification:LMSans10;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#929292;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;enable-background:accumulate"
+       xml:space="preserve"
+       inkscape:export-filename="/home/cds/Development/Kieler/git/mainline/plugins/de.cau.cs.kieler.core.product/g3129.png"
+       inkscape:export-xdpi="32.651684"
+       inkscape:export-ydpi="32.651684"><tspan
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:43.88000107px;line-height:0;font-family:esint10;-inkscape-font-specification:'esint10, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#929292;fill-opacity:1"
+         y="685.10571"
+         x="-26.923569"
+         sodipodi:role="line"
+         id="tspan4169-8">Nightly Pragmatics Integration</tspan></text>
   </g>
 </svg>
