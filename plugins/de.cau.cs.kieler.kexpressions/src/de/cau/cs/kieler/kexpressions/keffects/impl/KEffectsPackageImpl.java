@@ -377,6 +377,24 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getLink_Tag() {
+        return (EAttribute)linkEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLink_Reference() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getDependency() {
         return dependencyEClass;
     }
@@ -491,6 +509,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         linkEClass = createEClass(LINK);
         createEReference(linkEClass, LINK__TARGET);
+        createEAttribute(linkEClass, LINK__TAG);
+        createEReference(linkEClass, LINK__REFERENCE);
 
         dependencyEClass = createEClass(DEPENDENCY);
 
@@ -584,6 +604,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         initEClass(linkEClass, Link.class, "Link", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getLink_Target(), this.getLinkable(), this.getLinkable_IncomingLinks(), "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getLink_Tag(), ecorePackage.getEString(), "tag", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLink_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dependencyEClass, Dependency.class, "Dependency", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -12,6 +12,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -25,6 +26,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getTag <em>Tag</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getReference <em>Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,6 +42,34 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * @ordered
      */
     protected Linkable target;
+
+    /**
+     * The default value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected static final String TAG_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected String tag = TAG_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReference()
+     * @generated
+     * @ordered
+     */
+    protected EObject reference;
 
     /**
      * <!-- begin-user-doc -->
@@ -124,6 +155,65 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getTag() {
+        return tag;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTag(String newTag) {
+        String oldTag = tag;
+        tag = newTag;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.LINK__TAG, oldTag, tag));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EObject getReference() {
+        if (reference != null && reference.eIsProxy()) {
+            InternalEObject oldReference = (InternalEObject)reference;
+            reference = eResolveProxy(oldReference);
+            if (reference != oldReference) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KEffectsPackage.LINK__REFERENCE, oldReference, reference));
+            }
+        }
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EObject basicGetReference() {
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setReference(EObject newReference) {
+        EObject oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.LINK__REFERENCE, oldReference, reference));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -160,6 +250,11 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
             case KEffectsPackage.LINK__TARGET:
                 if (resolve) return getTarget();
                 return basicGetTarget();
+            case KEffectsPackage.LINK__TAG:
+                return getTag();
+            case KEffectsPackage.LINK__REFERENCE:
+                if (resolve) return getReference();
+                return basicGetReference();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -174,6 +269,12 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
         switch (featureID) {
             case KEffectsPackage.LINK__TARGET:
                 setTarget((Linkable)newValue);
+                return;
+            case KEffectsPackage.LINK__TAG:
+                setTag((String)newValue);
+                return;
+            case KEffectsPackage.LINK__REFERENCE:
+                setReference((EObject)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -190,6 +291,12 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
             case KEffectsPackage.LINK__TARGET:
                 setTarget((Linkable)null);
                 return;
+            case KEffectsPackage.LINK__TAG:
+                setTag(TAG_EDEFAULT);
+                return;
+            case KEffectsPackage.LINK__REFERENCE:
+                setReference((EObject)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -204,8 +311,28 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
         switch (featureID) {
             case KEffectsPackage.LINK__TARGET:
                 return target != null;
+            case KEffectsPackage.LINK__TAG:
+                return TAG_EDEFAULT == null ? tag != null : !TAG_EDEFAULT.equals(tag);
+            case KEffectsPackage.LINK__REFERENCE:
+                return reference != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (tag: ");
+        result.append(tag);
+        result.append(')');
+        return result.toString();
     }
 
 } //LinkImpl

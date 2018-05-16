@@ -699,13 +699,31 @@ public interface KEffectsPackage extends EPackage {
     int LINK__TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__TAG = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Link</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl <em>Dependency</em>}' class.
@@ -734,6 +752,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int DEPENDENCY__TARGET = LINK__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__TAG = LINK__TAG;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__REFERENCE = LINK__REFERENCE;
 
     /**
      * The number of structural features of the '<em>Dependency</em>' class.
@@ -771,6 +807,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int DATA_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__TAG = DEPENDENCY__TAG;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__REFERENCE = DEPENDENCY__REFERENCE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1028,6 +1082,28 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EReference getLink_Target();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getTag <em>Tag</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tag</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getTag()
+     * @see #getLink()
+     * @generated
+     */
+    EAttribute getLink_Tag();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getReference <em>Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Reference</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getReference()
+     * @see #getLink()
+     * @generated
+     */
+    EReference getLink_Reference();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Dependency <em>Dependency</em>}'.
@@ -1295,6 +1371,22 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EReference LINK__TARGET = eINSTANCE.getLink_Target();
+
+        /**
+         * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LINK__TAG = eINSTANCE.getLink_Tag();
+
+        /**
+         * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINK__REFERENCE = eINSTANCE.getLink_Reference();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl <em>Dependency</em>}' class.

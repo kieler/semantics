@@ -38,6 +38,7 @@ class ValuedObjectAccess {
     public static val GLOBAL_READ = 2
     
     @Accessors Linkable node
+    @Accessors Linkable associatedNode
     @Accessors EObject schedule
     @Accessors ValuedObject scheduleObject
     @Accessors int priority 
@@ -46,12 +47,24 @@ class ValuedObjectAccess {
     
     new(Linkable node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
         this.node = node
+        this.associatedNode = node
         this.schedule = schedule
         this.scheduleObject = scheduleObject
         this.priority = priority
         this.forkStack = new ForkStack(forkStack)
         this.isSpecific = isSpecific
     }
+    
+    new(Linkable node, Linkable associatedNode, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
+        this.node = node
+        this.associatedNode = associatedNode
+        this.schedule = schedule
+        this.scheduleObject = scheduleObject
+        this.priority = priority
+        this.forkStack = new ForkStack(forkStack)
+        this.isSpecific = isSpecific
+    }
+    
     
     override String toString() {
         val result = new StringBuffer("VOA");

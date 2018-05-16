@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.KText
@@ -40,6 +39,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.force.options.StressOptions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -56,7 +56,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsCoreExtensions 
     @Inject extension SCChartsSerializeHRExtensions
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    

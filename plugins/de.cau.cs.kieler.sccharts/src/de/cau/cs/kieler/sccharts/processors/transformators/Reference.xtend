@@ -41,6 +41,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.Replacements
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
 
 /**
  * Give me a state, Vasili. One state only please.

@@ -46,6 +46,13 @@ class KEffectsDependencyExtensions {
 	 	]
 	 }
 
+    def DataDependency createDataDependency(Linkable source, Linkable target) {
+        KEffectsFactory::eINSTANCE.createDataDependency => [ 
+            source.outgoingLinks += it
+            it.target = target
+        ]
+    }
+    
     def DataDependency createDataDependency(Linkable source, Linkable target, DataDependencyType type) {
     	type.createDataDependency => [ 
     		source.outgoingLinks += it

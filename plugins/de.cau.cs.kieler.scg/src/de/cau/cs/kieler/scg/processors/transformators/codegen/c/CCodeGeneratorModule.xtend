@@ -17,10 +17,10 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Injector
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Root C Code Generator Module
@@ -34,7 +34,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
  */
 class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension CCodeSerializeHRExtensions
     
     @Inject Injector injector

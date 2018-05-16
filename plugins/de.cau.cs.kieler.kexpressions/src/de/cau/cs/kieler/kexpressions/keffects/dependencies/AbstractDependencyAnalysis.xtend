@@ -42,6 +42,7 @@ import static de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAc
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /** 
  * @author ssm
@@ -72,27 +73,48 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         }
     } 
     
+    /** Implement this method to tell the {@link process} method how to find the sub-models 
+     * (e.g. rootstates w.r.t. sccharts).
+     */
     abstract def List<S> getSubModels(P rootModel) 
     
-    /** Perform a dependency analysis on a concrete sub model instance. */
+    /** Perform a dependency analysis on a concrete sub model instance. 
+     *  Therefore, two steps are executed. In the first step, the instance searches for potential dependencies and
+     *  fills the {@class ValuedObjectAccessors} structure. Afterwards, the {@link addDependencies} method
+     *  creates dedicated dependency objects if user-defined filter match. */
     def processSubModel(S subModel) {
         val valuedObjectAccessors = new ValuedObjectAccessors
         subModel.searchDependencies(valuedObjectAccessors)          
-        subModel.addDependencies(valuedObjectAccessors)                     
+        subModel.addDependencies(valuedObjectAccessors)   
+        subModel.postProcessValuedObjectAccessors(valuedObjectAccessors)                  
+    }
+    
+    /** After a sub-model is done, this method gets called. You can put post-processing code here. */
+    protected def postProcessValuedObjectAccessors(S subModel, ValuedObjectAccessors valuedObjectAccessors) {
+        // Override this if you want to work with the valued object accessors afterwards.
     }
 
-    /** 
-     * searchDependencies traverses the SCG (dfs). It visits all reachable nodes once and stores all accesses to 
-     * valued objects. While doing so, a fork stack keeps track of the threads for the concurrency test.
-     * To avoid recursive calls, the search is done iteratively with a node stack. New nodes are pushed onto the stack
-     * and are resolved first.
+    /** Implement this method to traverse the model and find dependencies. E.g. the SCG analysis does this by dfs.
+     *  In particular, you can interpret everything as an dependency. However, if you are specifically looking for
+     *  kexpressions dependencies, you can call the following dedicated methods ({@link processAssignment}, 
+     *  {@link processExpressionReader}) to generalize the process.  
      */
     abstract protected def void searchDependencies(S subModel, ValuedObjectAccessors valuedObjectAccessors) 
     
-    /** Protected prototype method for keffects assignments. */
+    /** The dependency must not be associated with the concrete object that is responsible for the dependency. 
+     *  For example, even though an assignment may cause a particular dependency, the dependency object itself may be
+     *  associated with the enclosing control flow region. Override this method, if the object and the association differ.  
+     */
+    protected def Linkable association(EObject eObject) {
+        return if (eObject instanceof Linkable) eObject else null
+    } 
+    
+    /** Protected prototype method to find dependencies in keffects assignments. */
     protected def void processAssignment(Assignment assignment, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
+        // Find readers.
         val readVOIs = assignment.processExpressionReader(assignment.expression, forkStack, valuedObjectAccessors)
 
+        // Examine the object that this assignment writes to (including potential array indices).        
         if (assignment.valuedObject === null) return;
         
         val writeVOI = new ValuedObjectIdentifier(assignment)
@@ -105,6 +127,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             }
         }
 
+        // Respect user-defined schedules.
         for(sched : newLinkedList(GLOBAL_SCHEDULE) + assignment.schedule) {
             var schedule = GLOBAL_SCHEDULE
             var ValuedObject scheduleObject = null       
@@ -119,7 +142,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 priority = sched.priority    
             }
             
-            val writeAccess = new ValuedObjectAccess(assignment, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
+            val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
             valuedObjectAccessors.addAccess(writeVOI, writeAccess)
         }
     }
@@ -141,7 +164,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     priority = sched.priority    
                 }
                 
-                val readAccess = new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
+                val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
                 valuedObjectAccessors.addAccess(readVOI, readAccess)
             } 
         }
@@ -149,6 +172,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         return readVOIs
     }
     
+    /** Add the dependencies to the model. */
     protected def void addDependencies(S subModel, ValuedObjectAccessors valuedObjectAccessors) {
         val valuedObjects = valuedObjectAccessors.map.keySet
         val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> additionalAccesses = HashMultimap.create
@@ -170,6 +194,9 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         }   
     }
     
+    /** Create a set of related dependencies that will be considered inside the appropriate schedules.
+     *  First,  user-defined schedules are considered. Lastly, the default, IUR is checked.
+     */
     protected def void processDependencies(ValuedObjectIdentifier valuedObjectIdentifier, Set<ValuedObjectAccess> accesses, boolean isSpecific) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val schedules = accesses.map[ schedule ].filter[ it !== null ].filter(ScheduleDeclaration).toSet
@@ -182,6 +209,9 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific)
     }
     
+    /** Process the dependency set: Sort the dependencies according to priority and check if a dependency object
+     *  must be created. Afterwards, mark the dependency as processed.
+     */
     protected def Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> processDependencySet(ValuedObjectIdentifier valuedObjectIdentifier, 
         Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific
     ) {
@@ -209,8 +239,18 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         return processed
     }
     
+    /** Method for the creation of the concrete dependency instance. Override this if you want to specialize. */
+    protected def DataDependency createDependency(Linkable source, Linkable target) {
+        return source.createDataDependency(target)
+    }
+    
+    /** After a dependency was created, this method gets called so that the user is able to post-process the dependency creation. */
+    protected def void postProcessDependency(DataDependency dependency, ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
+        // override if necessary
+    }
+    
     protected def void processDependency(ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
-        if (source.node == target.node) return
+        if (source.associatedNode == target.associatedNode) return
         val type = source.accessType(target)
         if (type == IGNORE) return        
         val saveOnlyConflicting = environment.getProperty(SAVE_ONLY_CONFLICTING_DEPENDENCIES)
@@ -219,12 +259,15 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         val confluent = (type == WRITE_WRITE && source.isConfluentTo(target))
         if (confluent && saveOnlyConflicting) return
 
-        val dependency = source.node.createDataDependency(target.node, type) => [
+        val dependency = source.node.createDependency(target.node) => [
+            it.reference = valuedObjectIdentifier.valuedObject
+            it.type = type
             it.concurrent = concurrent
             it.confluent = confluent
         ]
         
-        dependency.trace(source.node)               
+        dependency.trace(source.node)       
+        dependency.postProcessDependency(valuedObjectIdentifier, source, target)             
     }
     
     protected def accessType(ValuedObjectAccess source, ValuedObjectAccess target) {
@@ -259,15 +302,24 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     abstract protected def Function1<? super EObject, Boolean> getConcurrentForkFilter()
     
+    protected def EObject getLeastCommonAncestorFork(ValuedObjectAccess source, ValuedObjectAccess target) {
+        return getGenericLeastCommonAncestorFork(source.forkStack, target.forkStack, getConcurrentForkFilter)
+    }
+    
+    protected def Pair<EObject, EObject> getLeastCommonAncestorEntries(ValuedObjectAccess source, ValuedObjectAccess target) {
+        val lcaf = getLeastCommonAncestorFork(source, target)
+        if (lcaf !== null) {
+            val sourceEntry = source.forkStack.getOwnThreadEntry(lcaf)
+            val targetEntry = target.forkStack.getOwnThreadEntry(lcaf)
+            return new Pair<EObject, EObject>(sourceEntry, targetEntry)
+        }
+        return null
+    }
+    
     protected def boolean isConcurrentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
-        for (sourceFork : source.forkStack.filter(getConcurrentForkFilter)) {
-            for (targetFork : target.forkStack.filter(getConcurrentForkFilter)) {
-                if (sourceFork == targetFork) {
-                     val sourceEntry = source.forkStack.getOwnThreadEntry(sourceFork)
-                     val targetEntry = target.forkStack.getOwnThreadEntry(targetFork)
-                     return sourceEntry != targetEntry
-                }
-            }
+        val entries = getLeastCommonAncestorEntries(source, target)
+        if (entries !== null) {
+            return entries.first != entries.second
         }
         return false
     }
@@ -331,4 +383,22 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     private def Assignment asAssignment(EObject eObject) {
         eObject as Assignment
     }
+    
+    
+    
+    
+    static def EObject getGenericLeastCommonAncestorFork(ForkStack sourceStack, 
+        ForkStack targetStack, Function1<? super EObject, Boolean> concurrentForkFilter
+    ) {
+        for (sourceFork : sourceStack.filter(concurrentForkFilter)) {
+            for (targetFork : targetStack.filter(concurrentForkFilter)) {
+                if (sourceFork == targetFork) {
+                    return sourceFork
+                }
+            }
+        }
+        return null
+    }
+    
+    
 }

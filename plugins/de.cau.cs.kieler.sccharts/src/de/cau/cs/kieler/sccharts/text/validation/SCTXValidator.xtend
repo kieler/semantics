@@ -8,7 +8,6 @@ import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsPackage
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
@@ -33,11 +32,9 @@ import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.BindingType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.transformators.For
@@ -49,7 +46,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
-import de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 //import org.eclipse.xtext.validation.Check
 
@@ -60,12 +57,10 @@ import de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl
  */
 class SCTXValidator extends AbstractSCTXValidator {
 
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsFixExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions

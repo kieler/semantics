@@ -35,7 +35,7 @@ class SCChartsCoreExtensions {
     
     def SCCharts getSCCharts(EObject eObject) {
         var EObject object = eObject
-        while (object.eContainer != null) {
+        while (object.eContainer !== null) {
             object = object.eContainer
         }
         if (object instanceof SCCharts) return object
@@ -51,7 +51,7 @@ class SCChartsCoreExtensions {
     }
      
     def EObject getRoot(EObject eObject) {
-        if (eObject.eContainer == null) eObject  else eObject.eContainer.root
+        if (eObject.eContainer === null) eObject else eObject.eContainer.root
     }         
     
     def int hash(EObject eObject) {
@@ -67,7 +67,7 @@ class SCChartsCoreExtensions {
     }
 
     def String removeSpecialCharacters(String string) {
-        if (string == null) {
+        if (string === null) {
             return null;
         }
         return string.replace("-", "").replace("_", "").replace(" ", "").replace("+", "").replace("#", "").
@@ -81,11 +81,11 @@ class SCChartsCoreExtensions {
     }
 
     def String getHierarchicalName(Scope scope, String decendingName) {
-        if (scope == null)
+        if (scope === null)
             return decendingName
         else {
             var scopeId = "";
-            if (scope.name != null) {
+            if (scope.name !== null) {
                 scopeId = scope.name
             } else {
                 if (scope.eContainer instanceof Scope) {

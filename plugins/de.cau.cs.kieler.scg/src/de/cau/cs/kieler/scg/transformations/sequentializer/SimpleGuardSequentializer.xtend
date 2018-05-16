@@ -38,6 +38,7 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /** 
  * @author ssm
@@ -55,6 +56,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGDependencyExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension PragmaExtensions
 
     private static val String ANNOTATION_HOSTCODE = "hostcode"
      
