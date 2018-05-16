@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Nightly Benchmark Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">
+  <description name="KIELER Semantics (Nightly Benchmark Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration/">
       Update site for the KIELER Semantics project nightly benchmark builds.
   </description>
 
@@ -14,5 +14,5 @@
     <category name="kieler-sem-benchmark"/>
   </feature>
 
-  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration/" enabled="true"/>
 </site>
