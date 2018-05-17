@@ -3,26 +3,33 @@
  */
 package de.cau.cs.kieler.esterel.scest.services;
 
-import com.google.inject.Singleton;
 import com.google.inject.Inject;
-
-import java.util.List;
-
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
-
-import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
-import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
-import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
-import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
-import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import com.google.inject.Singleton;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
+import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
+import java.util.List;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.EnumRule;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
 public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
-	
 	
 	public class EsterelProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.EsterelProgram");
@@ -36,23 +43,22 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	pragmas+=Pragma*
 		//	modules+=EsterelModule*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//pragmas+=Pragma* modules+=EsterelModule*
 		public Group getGroup() { return cGroup; }
-
+		
 		//pragmas+=Pragma*
 		public Assignment getPragmasAssignment_0() { return cPragmasAssignment_0; }
-
+		
 		//Pragma
 		public RuleCall getPragmasPragmaParserRuleCall_0_0() { return cPragmasPragmaParserRuleCall_0_0; }
-
+		
 		//modules+=EsterelModule*
 		public Assignment getModulesAssignment_1() { return cModulesAssignment_1; }
-
+		
 		//EsterelModule
 		public RuleCall getModulesEsterelModuleParserRuleCall_1_0() { return cModulesEsterelModuleParserRuleCall_1_0; }
 	}
-
 	public class EsterelModuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.EsterelModule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -80,66 +86,65 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	"module" name=ID ":" (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
 		//	statements+=EsterelParallel? ("end" "module" | ".");
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//annotations+=Annotation* "module" name=ID ":" (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
 		//statements+=EsterelParallel? ("end" "module" | ".")
 		public Group getGroup() { return cGroup; }
-
+		
 		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
+		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
-
+		
 		//"module"
 		public Keyword getModuleKeyword_1() { return cModuleKeyword_1; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-
+		
 		//":"
 		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
-
+		
 		//(declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
-
+		
 		//declarations+=VariableDeclaration
 		public Assignment getDeclarationsAssignment_4_0() { return cDeclarationsAssignment_4_0; }
-
+		
 		//VariableDeclaration
 		public RuleCall getDeclarationsVariableDeclarationParserRuleCall_4_0_0() { return cDeclarationsVariableDeclarationParserRuleCall_4_0_0; }
-
+		
 		//declarations+=EsterelDeclaration
 		public Assignment getDeclarationsAssignment_4_1() { return cDeclarationsAssignment_4_1; }
-
+		
 		//EsterelDeclaration
 		public RuleCall getDeclarationsEsterelDeclarationParserRuleCall_4_1_0() { return cDeclarationsEsterelDeclarationParserRuleCall_4_1_0; }
-
+		
 		//statements+=EsterelParallel?
 		public Assignment getStatementsAssignment_5() { return cStatementsAssignment_5; }
-
+		
 		//EsterelParallel
 		public RuleCall getStatementsEsterelParallelParserRuleCall_5_0() { return cStatementsEsterelParallelParserRuleCall_5_0; }
-
+		
 		//"end" "module" | "."
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
-
+		
 		//"end" "module"
 		public Group getGroup_6_0() { return cGroup_6_0; }
-
+		
 		//"end"
 		public Keyword getEndKeyword_6_0_0() { return cEndKeyword_6_0_0; }
-
+		
 		//"module"
 		public Keyword getModuleKeyword_6_0_1() { return cModuleKeyword_6_0_1; }
-
+		
 		//"."
 		public Keyword getFullStopKeyword_6_1() { return cFullStopKeyword_6_1; }
 	}
-
 	public class StatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Statement");
 		private final RuleCall cEsterelParallelParserRuleCall = (RuleCall)rule.eContents().get(1);
@@ -147,11 +152,10 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//@ Override Statement scl::Statement:
 		//	EsterelParallel;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//EsterelParallel
 		public RuleCall getEsterelParallelParserRuleCall() { return cEsterelParallelParserRuleCall; }
 	}
-
 	public class InstructionStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.InstructionStatement");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -164,21 +168,20 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	// + SCEst
 		//	| UnEmit | Set;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//super // + SCEst
 		//| UnEmit | Set
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//super
 		public RuleCall getInstructionStatementParserRuleCall_0() { return cInstructionStatementParserRuleCall_0; }
-
+		
 		//UnEmit
 		public RuleCall getUnEmitParserRuleCall_1() { return cUnEmitParserRuleCall_1; }
-
+		
 		//Set
 		public RuleCall getSetParserRuleCall_2() { return cSetParserRuleCall_2; }
 	}
-
 	public class SCLStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.SCLStatement");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -194,35 +197,34 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//SCLStatement scl::Statement:
 		//	Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//Assignment
 		public RuleCall getAssignmentParserRuleCall_0() { return cAssignmentParserRuleCall_0; }
-
+		
 		//Label
 		public RuleCall getLabelParserRuleCall_1() { return cLabelParserRuleCall_1; }
-
+		
 		//Conditional
 		public RuleCall getConditionalParserRuleCall_2() { return cConditionalParserRuleCall_2; }
-
+		
 		//LegacyConditional
 		public RuleCall getLegacyConditionalParserRuleCall_3() { return cLegacyConditionalParserRuleCall_3; }
-
+		
 		//Goto
 		public RuleCall getGotoParserRuleCall_4() { return cGotoParserRuleCall_4; }
-
+		
 		//Parallel
 		public RuleCall getParallelParserRuleCall_5() { return cParallelParserRuleCall_5; }
-
+		
 		//ModuleCall
 		public RuleCall getModuleCallParserRuleCall_6() { return cModuleCallParserRuleCall_6; }
-
+		
 		//ScopeStatement
 		public RuleCall getScopeStatementParserRuleCall_7() { return cScopeStatementParserRuleCall_7; }
 	}
-
 	public class EsterelThreadElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.EsterelThread");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -245,54 +247,53 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	InstructionStatement ({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))?
 		//	| SCLStatement ({EsterelThread.statements+=current} statements+=EsterelThread)?;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//InstructionStatement ({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))? | SCLStatement
 		//({EsterelThread.statements+=current} statements+=EsterelThread)?
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//InstructionStatement ({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))?
 		public Group getGroup_0() { return cGroup_0; }
-
+		
 		//InstructionStatement
 		public RuleCall getInstructionStatementParserRuleCall_0_0() { return cInstructionStatementParserRuleCall_0_0; }
-
+		
 		//({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))?
 		public Group getGroup_0_1() { return cGroup_0_1; }
-
+		
 		//{EsterelThread.statements+=current}
 		public Action getEsterelThreadStatementsAction_0_1_0() { return cEsterelThreadStatementsAction_0_1_0; }
-
+		
 		//=> ";" statements+=EsterelThread
 		public Group getGroup_0_1_1() { return cGroup_0_1_1; }
-
+		
 		//=> ";"
 		public Keyword getSemicolonKeyword_0_1_1_0() { return cSemicolonKeyword_0_1_1_0; }
-
+		
 		//statements+=EsterelThread
 		public Assignment getStatementsAssignment_0_1_1_1() { return cStatementsAssignment_0_1_1_1; }
-
+		
 		//EsterelThread
 		public RuleCall getStatementsEsterelThreadParserRuleCall_0_1_1_1_0() { return cStatementsEsterelThreadParserRuleCall_0_1_1_1_0; }
-
+		
 		//SCLStatement ({EsterelThread.statements+=current} statements+=EsterelThread)?
 		public Group getGroup_1() { return cGroup_1; }
-
+		
 		//SCLStatement
 		public RuleCall getSCLStatementParserRuleCall_1_0() { return cSCLStatementParserRuleCall_1_0; }
-
+		
 		//({EsterelThread.statements+=current} statements+=EsterelThread)?
 		public Group getGroup_1_1() { return cGroup_1_1; }
-
+		
 		//{EsterelThread.statements+=current}
 		public Action getEsterelThreadStatementsAction_1_1_0() { return cEsterelThreadStatementsAction_1_1_0; }
-
+		
 		//statements+=EsterelThread
 		public Assignment getStatementsAssignment_1_1_1() { return cStatementsAssignment_1_1_1; }
-
+		
 		//EsterelThread
 		public RuleCall getStatementsEsterelThreadParserRuleCall_1_1_1_0() { return cStatementsEsterelThreadParserRuleCall_1_1_1_0; }
 	}
-
 	public class EsterelAssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.EsterelAssignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -308,32 +309,31 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	annotations+=Annotation*
 		//	reference=VariableOrSignalReference ":=" expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//annotations+=Annotation* reference=VariableOrSignalReference ":=" expression=Expression
 		public Group getGroup() { return cGroup; }
-
+		
 		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
+		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
-
+		
 		//reference=VariableOrSignalReference
 		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
-
+		
 		//VariableOrSignalReference
 		public RuleCall getReferenceVariableOrSignalReferenceParserRuleCall_1_0() { return cReferenceVariableOrSignalReferenceParserRuleCall_1_0; }
-
+		
 		//":="
 		public Keyword getColonEqualsSignKeyword_2() { return cColonEqualsSignKeyword_2; }
-
+		
 		//expression=Expression
 		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
-
+		
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
 	}
-
 	public class VariableOrSignalReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.VariableOrSignalReference");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -346,20 +346,19 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	| SignalReferenceExpression
 		//	| VariableReference;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//ValuedObjectReference | SignalReferenceExpression | VariableReference
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//ValuedObjectReference
 		public RuleCall getValuedObjectReferenceParserRuleCall_0() { return cValuedObjectReferenceParserRuleCall_0; }
-
+		
 		//SignalReferenceExpression
 		public RuleCall getSignalReferenceExpressionParserRuleCall_1() { return cSignalReferenceExpressionParserRuleCall_1; }
-
+		
 		//VariableReference
 		public RuleCall getVariableReferenceParserRuleCall_2() { return cVariableReferenceParserRuleCall_2; }
 	}
-
 	public class UnEmitElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.UnEmit");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -380,29 +379,28 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	"unemit"
 		//	signal=[Signal];
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//annotations+=Annotation* "unemit" signal=[Signal]
 		public Group getGroup() { return cGroup; }
-
+		
 		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
+		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
-
+		
 		//"unemit"
 		public Keyword getUnemitKeyword_1() { return cUnemitKeyword_1; }
-
+		
 		//signal=[Signal]
 		public Assignment getSignalAssignment_2() { return cSignalAssignment_2; }
-
+		
 		//[Signal]
 		public CrossReference getSignalSignalCrossReference_2_0() { return cSignalSignalCrossReference_2_0; }
-
+		
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_2_0_1() { return cSignalSignalIDTerminalRuleCall_2_0_1; }
 	}
-
 	public class SetElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Set");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -425,44 +423,43 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	"set"
 		//	signal=[Signal] ("(" expression=Expression ")");
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//annotations+=Annotation* "set" signal=[Signal] ("(" expression=Expression ")")
 		public Group getGroup() { return cGroup; }
-
+		
 		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
+		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
-
+		
 		//"set"
 		public Keyword getSetKeyword_1() { return cSetKeyword_1; }
-
+		
 		//signal=[Signal]
 		public Assignment getSignalAssignment_2() { return cSignalAssignment_2; }
-
+		
 		//[Signal]
 		public CrossReference getSignalSignalCrossReference_2_0() { return cSignalSignalCrossReference_2_0; }
-
+		
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_2_0_1() { return cSignalSignalIDTerminalRuleCall_2_0_1; }
-
+		
 		//"(" expression=Expression ")"
 		public Group getGroup_3() { return cGroup_3; }
-
+		
 		//"("
 		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
+		
 		//expression=Expression
 		public Assignment getExpressionAssignment_3_1() { return cExpressionAssignment_3_1; }
-
+		
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_3_1_0() { return cExpressionExpressionParserRuleCall_3_1_0; }
-
+		
 		//")"
 		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
-
 	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.AtomicExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -490,48 +487,47 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	| FunctionCall
 		//	| SignalOrTickReferenceExpression;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//EsterelFunctionCall | TrapExpression | BoolValue | ValuedObjectPreExpression | TextExpression | '(' BooleanExpression
 		//')' | ConstantExpression | FunctionCall | SignalOrTickReferenceExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//EsterelFunctionCall
 		public RuleCall getEsterelFunctionCallParserRuleCall_0() { return cEsterelFunctionCallParserRuleCall_0; }
-
+		
 		//TrapExpression
 		public RuleCall getTrapExpressionParserRuleCall_1() { return cTrapExpressionParserRuleCall_1; }
-
+		
 		//BoolValue
 		public RuleCall getBoolValueParserRuleCall_2() { return cBoolValueParserRuleCall_2; }
-
+		
 		//ValuedObjectPreExpression
 		public RuleCall getValuedObjectPreExpressionParserRuleCall_3() { return cValuedObjectPreExpressionParserRuleCall_3; }
-
+		
 		//TextExpression
 		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
-
+		
 		//'(' BooleanExpression ')'
 		public Group getGroup_5() { return cGroup_5; }
-
+		
 		//'('
 		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
-
+		
 		//BooleanExpression
 		public RuleCall getBooleanExpressionParserRuleCall_5_1() { return cBooleanExpressionParserRuleCall_5_1; }
-
+		
 		//')'
 		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
-
+		
 		//ConstantExpression
 		public RuleCall getConstantExpressionParserRuleCall_6() { return cConstantExpressionParserRuleCall_6; }
-
+		
 		//FunctionCall
 		public RuleCall getFunctionCallParserRuleCall_7() { return cFunctionCallParserRuleCall_7; }
-
+		
 		//SignalOrTickReferenceExpression
 		public RuleCall getSignalOrTickReferenceExpressionParserRuleCall_8() { return cSignalOrTickReferenceExpressionParserRuleCall_8; }
 	}
-
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.AtomicValuedExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -551,31 +547,31 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//	| AtomicExpression
 		//	| StringValue;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//IntValue | FloatValue | '(' ValuedExpression ')' | AtomicExpression | StringValue
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//IntValue
 		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
-
+		
 		//FloatValue
 		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
-
+		
 		//'(' ValuedExpression ')'
 		public Group getGroup_2() { return cGroup_2; }
-
+		
 		//'('
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
-
+		
 		//ValuedExpression
 		public RuleCall getValuedExpressionParserRuleCall_2_1() { return cValuedExpressionParserRuleCall_2_1; }
-
+		
 		//')'
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
-
+		
 		//AtomicExpression
 		public RuleCall getAtomicExpressionParserRuleCall_3() { return cAtomicExpressionParserRuleCall_3; }
-
+		
 		//StringValue
 		public RuleCall getStringValueParserRuleCall_4() { return cStringValueParserRuleCall_4; }
 	}
@@ -597,30 +593,30 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	
 	private final Grammar grammar;
-
+	
 	private final EsterelGrammarAccess gaEsterel;
-
+	
 	private final SCLGrammarAccess gaSCL;
-
+	
 	private final KExtGrammarAccess gaKExt;
-
+	
 	private final KEffectsGrammarAccess gaKEffects;
-
+	
 	private final KExpressionsGrammarAccess gaKExpressions;
-
+	
 	private final AnnotationsGrammarAccess gaAnnotations;
-
+	
 	private final TerminalsGrammarAccess gaTerminals;
 
 	@Inject
 	public SCEstGrammarAccess(GrammarProvider grammarProvider,
-		EsterelGrammarAccess gaEsterel,
-		SCLGrammarAccess gaSCL,
-		KExtGrammarAccess gaKExt,
-		KEffectsGrammarAccess gaKEffects,
-		KExpressionsGrammarAccess gaKExpressions,
-		AnnotationsGrammarAccess gaAnnotations,
-		TerminalsGrammarAccess gaTerminals) {
+			EsterelGrammarAccess gaEsterel,
+			SCLGrammarAccess gaSCL,
+			KExtGrammarAccess gaKExt,
+			KEffectsGrammarAccess gaKEffects,
+			KExpressionsGrammarAccess gaKExpressions,
+			AnnotationsGrammarAccess gaAnnotations,
+			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaEsterel = gaEsterel;
 		this.gaSCL = gaSCL;
@@ -666,31 +662,31 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return grammar;
 	}
 	
-
+	
 	public EsterelGrammarAccess getEsterelGrammarAccess() {
 		return gaEsterel;
 	}
-
+	
 	public SCLGrammarAccess getSCLGrammarAccess() {
 		return gaSCL;
 	}
-
+	
 	public KExtGrammarAccess getKExtGrammarAccess() {
 		return gaKExt;
 	}
-
+	
 	public KEffectsGrammarAccess getKEffectsGrammarAccess() {
 		return gaKEffects;
 	}
-
+	
 	public KExpressionsGrammarAccess getKExpressionsGrammarAccess() {
 		return gaKExpressions;
 	}
-
+	
 	public AnnotationsGrammarAccess getAnnotationsGrammarAccess() {
 		return gaAnnotations;
 	}
-
+	
 	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
 		return gaTerminals;
 	}
@@ -706,7 +702,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelProgramRule() {
 		return getEsterelProgramAccess().getRule();
 	}
-
+	
 	//@ Override EsterelModule scl::Module:
 	//	annotations+=Annotation*
 	//	"module" name=ID ":" (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
@@ -718,7 +714,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelModuleRule() {
 		return getEsterelModuleAccess().getRule();
 	}
-
+	
 	//@ Override Statement scl::Statement:
 	//	EsterelParallel;
 	public StatementElements getStatementAccess() {
@@ -728,7 +724,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStatementRule() {
 		return getStatementAccess().getRule();
 	}
-
+	
 	//@ Override InstructionStatement scl::Statement:
 	//	super
 	//	// + SCEst
@@ -740,7 +736,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getInstructionStatementRule() {
 		return getInstructionStatementAccess().getRule();
 	}
-
+	
 	//SCLStatement scl::Statement:
 	//	Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement;
 	public SCLStatementElements getSCLStatementAccess() {
@@ -750,7 +746,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSCLStatementRule() {
 		return getSCLStatementAccess().getRule();
 	}
-
+	
 	//@ Override EsterelThread scl::Statement:
 	//	InstructionStatement ({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))?
 	//	| SCLStatement ({EsterelThread.statements+=current} statements+=EsterelThread)?;
@@ -761,7 +757,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelThreadRule() {
 		return getEsterelThreadAccess().getRule();
 	}
-
+	
 	//@ Override EsterelAssignment scl::Assignment:
 	//	annotations+=Annotation*
 	//	reference=VariableOrSignalReference ":=" expression=Expression;
@@ -772,7 +768,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelAssignmentRule() {
 		return getEsterelAssignmentAccess().getRule();
 	}
-
+	
 	//VariableOrSignalReference kexpressions::ValuedObjectReference:
 	//	ValuedObjectReference
 	//	| SignalReferenceExpression
@@ -784,7 +780,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableOrSignalReferenceRule() {
 		return getVariableOrSignalReferenceAccess().getRule();
 	}
-
+	
 	///* ###################################################
 	// * ###                   SCEst                     ###
 	// * ###################################################
@@ -801,7 +797,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getUnEmitRule() {
 		return getUnEmitAccess().getRule();
 	}
-
+	
 	//// ==> reset: Signal value reset (absolute write)
 	//// -------------------------------------
 	//Set:
@@ -815,19 +811,19 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSetRule() {
 		return getSetAccess().getRule();
 	}
-
+	
 	//@ Override terminal ML_COMMENT:
 	//	('%' '{')->('}' '%') | ('/*' !'*')->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
-	} 
-
+	}
+	
 	//@ Override terminal SL_COMMENT:
 	//	('//' | '%') !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
-	} 
-
+	}
+	
 	//@ Override AtomicExpression kexpressions::Expression:
 	//	EsterelFunctionCall
 	//	| TrapExpression
@@ -845,7 +841,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAtomicExpressionRule() {
 		return getAtomicExpressionAccess().getRule();
 	}
-
+	
 	//@ Override AtomicValuedExpression kexpressions::Expression:
 	//	IntValue
 	//	| FloatValue
@@ -859,7 +855,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
-
+	
 	///* ###################################################
 	// * ###        7.3 Interface Declaration            ###
 	// * ###################################################
@@ -882,7 +878,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelDeclarationRule() {
 		return getEsterelDeclarationAccess().getRule();
 	}
-
+	
 	//// = Interface Declaration
 	//// ----------------------------------------------
 	//// overwrite to allow type definitions in a specific module
@@ -897,7 +893,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypeIdentifierRule() {
 		return getTypeIdentifierAccess().getRule();
 	}
-
+	
 	//// = 7.3.1 Type Declarations
 	//// -------------------------------------
 	//TypeDeclaration:
@@ -912,7 +908,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypeDeclarationRule() {
 		return getTypeDeclarationAccess().getRule();
 	}
-
+	
 	//TypeDefinition:
 	//	name=ID;
 	public EsterelGrammarAccess.TypeDefinitionElements getTypeDefinitionAccess() {
@@ -922,7 +918,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypeDefinitionRule() {
 		return getTypeDefinitionAccess().getRule();
 	}
-
+	
 	//// = 7.3.2 Constant Declarations
 	//// -------------------------------------
 	//ConstantDeclaration:
@@ -937,7 +933,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getConstantDeclarationRule() {
 		return getConstantDeclarationAccess().getRule();
 	}
-
+	
 	//Constant:
 	//	name=ID ("=" initialValue=Expression)? ":" type=TypeIdentifier;
 	public EsterelGrammarAccess.ConstantElements getConstantAccess() {
@@ -947,7 +943,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getConstantRule() {
 		return getConstantAccess().getRule();
 	}
-
+	
 	//// = 7.3.3 Function Declaration
 	//// -------------------------------------
 	//FunctionDeclaration:
@@ -962,7 +958,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionDeclarationRule() {
 		return getFunctionDeclarationAccess().getRule();
 	}
-
+	
 	//Function:
 	//	name=ID ("(" (parameterTypes+=TypeIdentifier ("," parameterTypes+=TypeIdentifier)*)? ")" | '()')
 	//	":" returnType=TypeIdentifier;
@@ -973,7 +969,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionRule() {
 		return getFunctionAccess().getRule();
 	}
-
+	
 	//// = 7.3.4 Procedure Declaration
 	//// -------------------------------------
 	//ProcedureDeclaration:
@@ -987,7 +983,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getProcedureDeclarationRule() {
 		return getProcedureDeclarationAccess().getRule();
 	}
-
+	
 	//Procedure:
 	//	name=ID ("(" (referenceArguments+=TypeIdentifier ("," referenceArguments+=TypeIdentifier)*)? ")" | '()') ("("
 	//	(valueArguments+=TypeIdentifier ("," valueArguments+=TypeIdentifier)*)? ")" | '()');
@@ -998,7 +994,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getProcedureRule() {
 		return getProcedureAccess().getRule();
 	}
-
+	
 	//// = 7.3.5 Task Declaration
 	//// -------------------------------------
 	//TaskDeclaration:
@@ -1012,7 +1008,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTaskDeclarationRule() {
 		return getTaskDeclarationAccess().getRule();
 	}
-
+	
 	//Task:
 	//	name=ID ("(" (referenceArguments+=TypeIdentifier ("," referenceArguments+=TypeIdentifier)*)? ")" | '()') ("("
 	//	(valueArguments+=TypeIdentifier ("," valueArguments+=TypeIdentifier)*)? ")" | '()');
@@ -1023,7 +1019,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTaskRule() {
 		return getTaskAccess().getRule();
 	}
-
+	
 	//// = 7.3.6 Signal Declaration
 	//// -------------------------------------
 	//InputDeclaration:
@@ -1038,7 +1034,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getInputDeclarationRule() {
 		return getInputDeclarationAccess().getRule();
 	}
-
+	
 	//OutputDeclaration:
 	//	annotations+=Annotation*
 	//	"output"
@@ -1051,7 +1047,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getOutputDeclarationRule() {
 		return getOutputDeclarationAccess().getRule();
 	}
-
+	
 	//InputOutputDeclaration:
 	//	annotations+=Annotation*
 	//	"inputoutput"
@@ -1064,7 +1060,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getInputOutputDeclarationRule() {
 		return getInputOutputDeclarationAccess().getRule();
 	}
-
+	
 	//ReturnDeclaration:
 	//	annotations+=Annotation*
 	//	"return"
@@ -1077,7 +1073,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReturnDeclarationRule() {
 		return getReturnDeclarationAccess().getRule();
 	}
-
+	
 	//// example 1:   A : combine boolean with or
 	//// example 2:   A (combine boolean with or) // NO longer supported
 	//// example 3:   A := 0 : combine integer with '+'
@@ -1099,7 +1095,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalRule() {
 		return getSignalAccess().getRule();
 	}
-
+	
 	//// = 7.3.7 Sensor Declaration
 	//// -------------------------------------
 	//SensorDeclaration:
@@ -1114,7 +1110,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSensorDeclarationRule() {
 		return getSensorDeclarationAccess().getRule();
 	}
-
+	
 	//Sensor:
 	//	name=ID (":" type=TypeIdentifier | "(" type=TypeIdentifier ")")?;
 	public EsterelGrammarAccess.SensorElements getSensorAccess() {
@@ -1124,7 +1120,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSensorRule() {
 		return getSensorAccess().getRule();
 	}
-
+	
 	//// = 7.3.8 Input Relation Declaration
 	//// -------------------------------------
 	//RelationDeclaration:
@@ -1139,7 +1135,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRelationDeclarationRule() {
 		return getRelationDeclarationAccess().getRule();
 	}
-
+	
 	//Relation:
 	//	RelationImplication | RelationIncompatibility;
 	public EsterelGrammarAccess.RelationElements getRelationAccess() {
@@ -1149,7 +1145,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRelationRule() {
 		return getRelationAccess().getRule();
 	}
-
+	
 	//RelationImplication:
 	//	first=[Signal] type="=>" second=[Signal];
 	public EsterelGrammarAccess.RelationImplicationElements getRelationImplicationAccess() {
@@ -1159,7 +1155,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRelationImplicationRule() {
 		return getRelationImplicationAccess().getRule();
 	}
-
+	
 	//RelationIncompatibility:
 	//	incomp+=[Signal] type="#" incomp+=[Signal] ("#" incomp+=[Signal])*;
 	public EsterelGrammarAccess.RelationIncompatibilityElements getRelationIncompatibilityAccess() {
@@ -1169,7 +1165,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRelationIncompatibilityRule() {
 		return getRelationIncompatibilityAccess().getRule();
 	}
-
+	
 	///* ###################################################
 	// * ###               7.5 Statements                ###
 	// * ###################################################
@@ -1184,7 +1180,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelInstructionStatementRule() {
 		return getEsterelInstructionStatementAccess().getRule();
 	}
-
+	
 	//// = Parallel: at least two threads
 	//// -------------------------------------
 	////EsterelParallel returns EsterelParallel:
@@ -1200,7 +1196,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelParallelRule() {
 		return getEsterelParallelAccess().getRule();
 	}
-
+	
 	//// = Nothing
 	//// -------------------------------------
 	//Nothing:
@@ -1213,7 +1209,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNothingRule() {
 		return getNothingAccess().getRule();
 	}
-
+	
 	//// = Pause
 	//// -------------------------------------
 	//EsterelPause scl::Pause:
@@ -1226,7 +1222,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelPauseRule() {
 		return getEsterelPauseAccess().getRule();
 	}
-
+	
 	//// = Halt
 	//// -------------------------------------
 	//Halt:
@@ -1239,7 +1235,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getHaltRule() {
 		return getHaltAccess().getRule();
 	}
-
+	
 	//// = Block
 	//// -------------------------------------    
 	//Block:
@@ -1252,7 +1248,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBlockRule() {
 		return getBlockAccess().getRule();
 	}
-
+	
 	//// = 7.5.1 Signal Emission
 	//// -------------------------------------
 	//Emit:
@@ -1266,7 +1262,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEmitRule() {
 		return getEmitAccess().getRule();
 	}
-
+	
 	//// emit a signal indefinitely
 	//Sustain:
 	//	annotations+=Annotation*
@@ -1279,7 +1275,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSustainRule() {
 		return getSustainAccess().getRule();
 	}
-
+	
 	//VariableReference kexpressions::ValuedObjectReference:
 	//	{VariableReference} valuedObject=[Variable];
 	public EsterelGrammarAccess.VariableReferenceElements getVariableReferenceAccess() {
@@ -1289,7 +1285,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableReferenceRule() {
 		return getVariableReferenceAccess().getRule();
 	}
-
+	
 	//ProcedureCall:
 	//	annotations+=Annotation*
 	//	"call"
@@ -1303,7 +1299,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getProcedureCallRule() {
 		return getProcedureCallAccess().getRule();
 	}
-
+	
 	//// = 7.5.3 The present Signal Test
 	//// -------------------------------------
 	//Present:
@@ -1322,7 +1318,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPresentRule() {
 		return getPresentAccess().getRule();
 	}
-
+	
 	//PresentCase:
 	//	annotations+=Annotation*
 	//	"case" (expression=SignalExpression
@@ -1335,7 +1331,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPresentCaseRule() {
 		return getPresentCaseAccess().getRule();
 	}
-
+	
 	//// = 7.5.4 The if Data Test
 	//// -------------------------------------
 	//IfTest:
@@ -1354,7 +1350,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIfTestRule() {
 		return getIfTestAccess().getRule();
 	}
-
+	
 	//ElsIf:
 	//	annotations+=Annotation*
 	//	"elsif"
@@ -1367,7 +1363,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getElsIfRule() {
 		return getElsIfAccess().getRule();
 	}
-
+	
 	//// = 7.5.5 Looping & 7.5.9 Temporal Loops
 	//// -------------------------------------
 	//Loop:
@@ -1381,7 +1377,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLoopRule() {
 		return getLoopAccess().getRule();
 	}
-
+	
 	//// = 7.5.6 Repeat Looping
 	//// -------------------------------------
 	//Repeat:
@@ -1398,7 +1394,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRepeatRule() {
 		return getRepeatAccess().getRule();
 	}
-
+	
 	//// = 7.5.7 The abort Statements
 	//// -------------------------------------
 	//Abort:
@@ -1413,7 +1409,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAbortRule() {
 		return getAbortAccess().getRule();
 	}
-
+	
 	//Case:
 	//	annotations+=Annotation*
 	//	"case"
@@ -1426,7 +1422,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCaseRule() {
 		return getCaseAccess().getRule();
 	}
-
+	
 	//// = 7.5.8 The await Statement
 	//// -------------------------------------
 	//Await:
@@ -1442,7 +1438,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAwaitRule() {
 		return getAwaitAccess().getRule();
 	}
-
+	
 	//// = 7.5.9 Temporal Loops
 	//// -------------------------------------
 	//// for 'LoopEach' look at 7.5.5
@@ -1459,7 +1455,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEveryDoRule() {
 		return getEveryDoAccess().getRule();
 	}
-
+	
 	//// = 7.5.10 The suspend Statement
 	//// -------------------------------------
 	//Suspend:
@@ -1472,7 +1468,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSuspendRule() {
 		return getSuspendAccess().getRule();
 	}
-
+	
 	//// = 7.5.11 Traps
 	//// -------------------------------------
 	//Trap:
@@ -1489,7 +1485,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapRule() {
 		return getTrapAccess().getRule();
 	}
-
+	
 	//TrapSignal Signal:
 	//	{TrapSignal} name=ID (":=" initialValue=Expression
 	//	":" (type=EsterelValueType
@@ -1507,7 +1503,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapSignalRule() {
 		return getTrapSignalAccess().getRule();
 	}
-
+	
 	//TrapHandler:
 	//	annotations+=Annotation*
 	//	"handle"
@@ -1521,7 +1517,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapHandlerRule() {
 		return getTrapHandlerAccess().getRule();
 	}
-
+	
 	//Exit:
 	//	annotations+=Annotation*
 	//	"exit"
@@ -1533,7 +1529,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExitRule() {
 		return getExitAccess().getRule();
 	}
-
+	
 	//// = 7.5.12 The exec Task Execution Statement
 	//// -------------------------------------
 	//Exec:
@@ -1551,7 +1547,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExecRule() {
 		return getExecAccess().getRule();
 	}
-
+	
 	//ExecCase:
 	//	annotations+=Annotation*
 	//	"case" task=[Task] ("(" (referenceParameters+=[Variable] ("," referenceParameters+=[Variable])*)? ")" | '()') ("("
@@ -1565,7 +1561,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExecCaseRule() {
 		return getExecCaseAccess().getRule();
 	}
-
+	
 	//// = 7.5.13 Local Signal Declaration    
 	//// -------------------------------------
 	//LocalSignalDeclaration:
@@ -1579,7 +1575,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLocalSignalDeclarationRule() {
 		return getLocalSignalDeclarationAccess().getRule();
 	}
-
+	
 	//// = 7.5.14 Local Variable Declaration
 	//// ------------------------------------- 
 	//LocalVariableDeclaration:
@@ -1595,7 +1591,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLocalVariableDeclarationRule() {
 		return getLocalVariableDeclarationAccess().getRule();
 	}
-
+	
 	//EsterelVariableDeclaration:
 	//	valuedObjects+=Variable ("," valuedObjects+=Variable)* ":" type=TypeIdentifier;
 	public EsterelGrammarAccess.EsterelVariableDeclarationElements getEsterelVariableDeclarationAccess() {
@@ -1605,7 +1601,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelVariableDeclarationRule() {
 		return getEsterelVariableDeclarationAccess().getRule();
 	}
-
+	
 	//Variable:
 	//	name=ID (":=" initialValue=Expression)?;
 	public EsterelGrammarAccess.VariableElements getVariableAccess() {
@@ -1615,7 +1611,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableRule() {
 		return getVariableAccess().getRule();
 	}
-
+	
 	//// = 7.5.15 The run Module Instantiation Statement
 	//// -------------------------------------
 	//Run:
@@ -1630,7 +1626,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRunRule() {
 		return getRunAccess().getRule();
 	}
-
+	
 	//ModuleRenaming:
 	//	module=[scl::Module] | newName=ID "/" module=[scl::Module];
 	public EsterelGrammarAccess.ModuleRenamingElements getModuleRenamingAccess() {
@@ -1640,7 +1636,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModuleRenamingRule() {
 		return getModuleRenamingAccess().getRule();
 	}
-
+	
 	//Renamings:
 	//	annotations+=Annotation* ("type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)*
 	//	| "constant" renamings+=ConstantRenaming ("," renamings+=ConstantRenaming)*
@@ -1655,7 +1651,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRenamingsRule() {
 		return getRenamingsAccess().getRule();
 	}
-
+	
 	//TypeRenaming:
 	//	(newName=[TypeDefinition] | newType=EsterelValueType) "/" oldName=[TypeDefinition];
 	public EsterelGrammarAccess.TypeRenamingElements getTypeRenamingAccess() {
@@ -1665,7 +1661,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypeRenamingRule() {
 		return getTypeRenamingAccess().getRule();
 	}
-
+	
 	//ConstantRenaming:
 	//	(newName=[Constant] | newValue=AnyValue) "/" oldName=[Constant];
 	public EsterelGrammarAccess.ConstantRenamingElements getConstantRenamingAccess() {
@@ -1675,7 +1671,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getConstantRenamingRule() {
 		return getConstantRenamingAccess().getRule();
 	}
-
+	
 	//FunctionRenaming:
 	//	(newName=[Function] | newFunc=BuildInFunction) "/" oldName=[Function];
 	public EsterelGrammarAccess.FunctionRenamingElements getFunctionRenamingAccess() {
@@ -1685,7 +1681,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionRenamingRule() {
 		return getFunctionRenamingAccess().getRule();
 	}
-
+	
 	//ProcedureRenaming:
 	//	newName=[Procedure] "/" oldName=[Procedure];
 	public EsterelGrammarAccess.ProcedureRenamingElements getProcedureRenamingAccess() {
@@ -1695,7 +1691,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getProcedureRenamingRule() {
 		return getProcedureRenamingAccess().getRule();
 	}
-
+	
 	//TaskRenaming:
 	//	newName=[Task] "/" oldName=[Task];
 	public EsterelGrammarAccess.TaskRenamingElements getTaskRenamingAccess() {
@@ -1705,7 +1701,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTaskRenamingRule() {
 		return getTaskRenamingAccess().getRule();
 	}
-
+	
 	//SignalRenaming:
 	//	newName=SignalOrTickReferenceExpression "/" oldName=SignalOrTickReferenceExpression;
 	public EsterelGrammarAccess.SignalRenamingElements getSignalRenamingAccess() {
@@ -1715,7 +1711,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalRenamingRule() {
 		return getSignalRenamingAccess().getRule();
 	}
-
+	
 	//// renaming can also rename build in types and functions
 	//BuildInFunction:
 	//	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
@@ -1726,7 +1722,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBuildInFunctionRule() {
 		return getBuildInFunctionAccess().getRule();
 	}
-
+	
 	///* ###################################################
 	// * ###               7.6 Old Syntax                ###
 	// * ###################################################
@@ -1747,7 +1743,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLegacyDoRule() {
 		return getLegacyDoAccess().getRule();
 	}
-
+	
 	//enum EsterelCompareOperator returns kexpressions::OperatorType:
 	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public EsterelGrammarAccess.EsterelCompareOperatorElements getEsterelCompareOperatorAccess() {
@@ -1757,7 +1753,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelCompareOperatorRule() {
 		return getEsterelCompareOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelPreOperator returns kexpressions::OperatorType:
 	//	PRE="pre";
 	public EsterelGrammarAccess.EsterelPreOperatorElements getEsterelPreOperatorAccess() {
@@ -1767,7 +1763,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelPreOperatorRule() {
 		return getEsterelPreOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelOrOperator returns kexpressions::OperatorType:
 	//	LOGICAL_OR="or";
 	public EsterelGrammarAccess.EsterelOrOperatorElements getEsterelOrOperatorAccess() {
@@ -1777,7 +1773,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelOrOperatorRule() {
 		return getEsterelOrOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelAndOperator returns kexpressions::OperatorType:
 	//	LOGICAL_AND="and";
 	public EsterelGrammarAccess.EsterelAndOperatorElements getEsterelAndOperatorAccess() {
@@ -1787,7 +1783,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelAndOperatorRule() {
 		return getEsterelAndOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelNotOperator returns kexpressions::OperatorType:
 	//	NOT="not";
 	public EsterelGrammarAccess.EsterelNotOperatorElements getEsterelNotOperatorAccess() {
@@ -1797,7 +1793,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelNotOperatorRule() {
 		return getEsterelNotOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelAddOperator returns kexpressions::OperatorType:
 	//	ADD="+";
 	public EsterelGrammarAccess.EsterelAddOperatorElements getEsterelAddOperatorAccess() {
@@ -1807,7 +1803,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelAddOperatorRule() {
 		return getEsterelAddOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelSubOperator returns kexpressions::OperatorType:
 	//	SUB="-";
 	public EsterelGrammarAccess.EsterelSubOperatorElements getEsterelSubOperatorAccess() {
@@ -1817,7 +1813,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelSubOperatorRule() {
 		return getEsterelSubOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelMultOperator returns kexpressions::OperatorType:
 	//	MULT="*";
 	public EsterelGrammarAccess.EsterelMultOperatorElements getEsterelMultOperatorAccess() {
@@ -1827,7 +1823,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelMultOperatorRule() {
 		return getEsterelMultOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelModOperator returns kexpressions::OperatorType:
 	//	MOD="mod";
 	public EsterelGrammarAccess.EsterelModOperatorElements getEsterelModOperatorAccess() {
@@ -1837,7 +1833,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelModOperatorRule() {
 		return getEsterelModOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelDivOperator returns kexpressions::OperatorType:
 	//	DIV="/";
 	public EsterelGrammarAccess.EsterelDivOperatorElements getEsterelDivOperatorAccess() {
@@ -1847,7 +1843,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelDivOperatorRule() {
 		return getEsterelDivOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelValueTestOperator returns kexpressions::OperatorType:
 	//	VAL="?";
 	public EsterelGrammarAccess.EsterelValueTestOperatorElements getEsterelValueTestOperatorAccess() {
@@ -1857,7 +1853,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelValueTestOperatorRule() {
 		return getEsterelValueTestOperatorAccess().getRule();
 	}
-
+	
 	//enum EsterelValueType returns kexpressions::ValueType:
 	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" |
 	//	INT="integer" | FLOAT="float" | DOUBLE="double" |
@@ -1869,7 +1865,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelValueTypeRule() {
 		return getEsterelValueTypeAccess().getRule();
 	}
-
+	
 	//enum EsterelCombineOperator returns kexpressions::CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="or" | AND="and" | HOST="host";
@@ -1880,19 +1876,19 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getEsterelCombineOperatorRule() {
 		return getEsterelCombineOperatorAccess().getRule();
 	}
-
+	
 	//@ Override terminal STRING:
 	//	'"' (!'"' | '"' '"')* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaEsterel.getSTRINGRule();
-	} 
-
+	}
+	
 	//@ Override terminal HOSTCODE:
 	//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
 	public TerminalRule getHOSTCODERule() {
 		return gaEsterel.getHOSTCODERule();
-	} 
-
+	}
+	
 	//TrapExpression kexpressions::Expression:
 	//	{TrapExpression} "??" trap=[TrapSignal];
 	public EsterelGrammarAccess.TrapExpressionElements getTrapExpressionAccess() {
@@ -1902,7 +1898,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapExpressionRule() {
 		return getTrapExpressionAccess().getRule();
 	}
-
+	
 	//EsterelFunctionCall:
 	//	function=[Function] ("(" (parameter+=Expression ("," parameter+=Expression)*)? ")" | '()');
 	public EsterelGrammarAccess.EsterelFunctionCallElements getEsterelFunctionCallAccess() {
@@ -1912,7 +1908,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEsterelFunctionCallRule() {
 		return getEsterelFunctionCallAccess().getRule();
 	}
-
+	
 	//ConstantExpression kexpressions::Expression:
 	//	{ConstantExpression} (constant=[Constant] | value=AnyValue);
 	public EsterelGrammarAccess.ConstantExpressionElements getConstantExpressionAccess() {
@@ -1922,7 +1918,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getConstantExpressionRule() {
 		return getConstantExpressionAccess().getRule();
 	}
-
+	
 	//// --> B.3.5 Trap Expressions <--
 	//// -------------------------------------
 	//// The warning can be ignored since the operator will only override itself in this loop.
@@ -1936,7 +1932,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapExprRule() {
 		return getTrapExprAccess().getRule();
 	}
-
+	
 	//// The warning can be ignored since the operator will only override itself in this loop.
 	//TrapAndExpression kexpressions::Expression:
 	//	TrapNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=EsterelAndOperator
@@ -1948,7 +1944,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapAndExpressionRule() {
 		return getTrapAndExpressionAccess().getRule();
 	}
-
+	
 	//// The warning can be ignored since the operator will only override itself in this loop.
 	//TrapNotExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelNotOperator
@@ -1961,7 +1957,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapNotExpressionRule() {
 		return getTrapNotExpressionAccess().getRule();
 	}
-
+	
 	//TrapAtomicExpression kexpressions::Expression:
 	//	TrapReferenceExpr
 	//	| "(" TrapExpression ")";
@@ -1972,7 +1968,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapAtomicExpressionRule() {
 		return getTrapAtomicExpressionAccess().getRule();
 	}
-
+	
 	//TrapReferenceExpr kexpressions::ValuedObjectReference:
 	//	{TrapReference} valuedObject=[TrapSignal];
 	public EsterelGrammarAccess.TrapReferenceExprElements getTrapReferenceExprAccess() {
@@ -1982,7 +1978,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTrapReferenceExprRule() {
 		return getTrapReferenceExprAccess().getRule();
 	}
-
+	
 	//// --> B.3.3 Signal Expressions <--
 	//// -------------------------------------
 	//// The warning can be ignored since the operator will only override itself in this loop.
@@ -1996,7 +1992,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalExpressionRule() {
 		return getSignalExpressionAccess().getRule();
 	}
-
+	
 	//// The warning can be ignored since the operator will only override itself in this loop.
 	//SignalAndExpression kexpressions::Expression:
 	//	SignalNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=EsterelAndOperator
@@ -2008,7 +2004,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalAndExpressionRule() {
 		return getSignalAndExpressionAccess().getRule();
 	}
-
+	
 	//// The warning can be ignored since the operator will only override itself in this loop.
 	//SignalNotExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelNotOperator
@@ -2021,7 +2017,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalNotExpressionRule() {
 		return getSignalNotExpressionAccess().getRule();
 	}
-
+	
 	//SignalAtomicExpression kexpressions::Expression:
 	//	"(" SignalExpression ")"
 	//	| SignalPreExpression
@@ -2033,7 +2029,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalAtomicExpressionRule() {
 		return getSignalAtomicExpressionAccess().getRule();
 	}
-
+	
 	//SignalOrTickReferenceExpression kexpressions::ValuedObjectReference:
 	//	SignalReferenceExpression | TickSignalExpression;
 	public EsterelGrammarAccess.SignalOrTickReferenceExpressionElements getSignalOrTickReferenceExpressionAccess() {
@@ -2043,7 +2039,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalOrTickReferenceExpressionRule() {
 		return getSignalOrTickReferenceExpressionAccess().getRule();
 	}
-
+	
 	//SignalReferenceExpression kexpressions::ValuedObjectReference:
 	//	{SignalReference} valuedObject=[Signal];
 	public EsterelGrammarAccess.SignalReferenceExpressionElements getSignalReferenceExpressionAccess() {
@@ -2053,7 +2049,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalReferenceExpressionRule() {
 		return getSignalReferenceExpressionAccess().getRule();
 	}
-
+	
 	//TickSignalExpression kexpressions::ValuedObjectReference:
 	//	{TickReference} 'tick';
 	public EsterelGrammarAccess.TickSignalExpressionElements getTickSignalExpressionAccess() {
@@ -2063,7 +2059,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTickSignalExpressionRule() {
 		return getTickSignalExpressionAccess().getRule();
 	}
-
+	
 	//SignalPreExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelPreOperator
 	//	'(' subExpressions+=SignalOrTickReferenceExpression ')';
@@ -2074,7 +2070,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignalPreExpressionRule() {
 		return getSignalPreExpressionAccess().getRule();
 	}
-
+	
 	//// --> B.3.4 Delay Expressions <--
 	//// -------------------------------------
 	//DelayExpression:
@@ -2090,7 +2086,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDelayExpressionRule() {
 		return getDelayExpressionAccess().getRule();
 	}
-
+	
 	//@ Override Expression kexpressions::Expression:
 	//	BooleanExpression
 	//	| ValuedExpression;
@@ -2101,7 +2097,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExpressionRule() {
 		return getExpressionAccess().getRule();
 	}
-
+	
 	//// Example: not D and C or ?E = 42 or not (A and (B or C))
 	//BooleanExpression kexpressions::Expression:
 	//	OrExpression;
@@ -2112,7 +2108,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBooleanExpressionRule() {
 		return getBooleanExpressionAccess().getRule();
 	}
-
+	
 	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
 	//// The warning can be ignored since the operator will only override itself in this loop.
 	//OrExpression kexpressions::Expression:
@@ -2125,7 +2121,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getOrExpressionRule() {
 		return getOrExpressionAccess().getRule();
 	}
-
+	
 	//// Example: A and B, not C and 42 <= ?D
 	//// The warning can be ignored since the operator will only override itself in this loop.
 	//AndExpression kexpressions::Expression:
@@ -2138,7 +2134,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAndExpressionRule() {
 		return getAndExpressionAccess().getRule();
 	}
-
+	
 	//@ Override CompareOperation kexpressions::Expression:
 	//	NotOrValuedExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=EsterelCompareOperator
 	//	subExpressions+=NotOrValuedExpression)?;
@@ -2149,7 +2145,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCompareOperationRule() {
 		return getCompareOperationAccess().getRule();
 	}
-
+	
 	//@ Override NotOrValuedExpression kexpressions::Expression:
 	//	ValuedExpression
 	//	| NotExpression;
@@ -2160,7 +2156,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNotOrValuedExpressionRule() {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
-
+	
 	//@ Override NotExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelNotOperator
 	//	subExpressions+=NotExpression | super::AtomicExpression;
@@ -2171,7 +2167,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNotExpressionRule() {
 		return getNotExpressionAccess().getRule();
 	}
-
+	
 	//@ Override ValuedExpression kexpressions::Expression:
 	//	AddExpression;
 	public EsterelGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
@@ -2181,7 +2177,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedExpressionRule() {
 		return getValuedExpressionAccess().getRule();
 	}
-
+	
 	//@ Override AddExpression kexpressions::Expression:
 	//	SubExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=EsterelAddOperator
 	//	subExpressions+=SubExpression)+)?;
@@ -2192,7 +2188,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAddExpressionRule() {
 		return getAddExpressionAccess().getRule();
 	}
-
+	
 	//@ Override SubExpression kexpressions::Expression:
 	//	MultExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=EsterelSubOperator
 	//	subExpressions+=MultExpression)+)?;
@@ -2203,7 +2199,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSubExpressionRule() {
 		return getSubExpressionAccess().getRule();
 	}
-
+	
 	//@ Override MultExpression kexpressions::Expression:
 	//	DivExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=EsterelMultOperator
 	//	subExpressions+=DivExpression)+)?;
@@ -2214,7 +2210,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getMultExpressionRule() {
 		return getMultExpressionAccess().getRule();
 	}
-
+	
 	//@ Override DivExpression kexpressions::Expression:
 	//	ModExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=EsterelDivOperator
 	//	subExpressions+=ModExpression)?;
@@ -2225,7 +2221,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDivExpressionRule() {
 		return getDivExpressionAccess().getRule();
 	}
-
+	
 	//@ Override ModExpression kexpressions::Expression:
 	//	NegExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=EsterelModOperator
 	//	subExpressions+=super::AtomicValuedExpression)?;
@@ -2236,7 +2232,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModExpressionRule() {
 		return getModExpressionAccess().getRule();
 	}
-
+	
 	//@ Override NegExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelSubOperator
 	//	subExpressions+=NegExpression | super::AtomicValuedExpression;
@@ -2247,7 +2243,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
 	}
-
+	
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 	//ValuedObjectPreExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelPreOperator '(' subExpressions+=ValuedObjectPreExpression ')'
@@ -2260,7 +2256,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectPreExpressionRule() {
 		return getValuedObjectPreExpressionAccess().getRule();
 	}
-
+	
 	//SCLProgram:
 	//	pragmas+=Pragma*
 	//	modules+=Module*;
@@ -2271,7 +2267,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSCLProgramRule() {
 		return getSCLProgramAccess().getRule();
 	}
-
+	
 	//Module:
 	//	annotations+=Annotation*
 	//	'module' name=ID ':'?
@@ -2284,7 +2280,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModuleRule() {
 		return getModuleAccess().getRule();
 	}
-
+	
 	//Pause:
 	//	{Pause} annotations+=Annotation*
 	//	'pause'
@@ -2296,7 +2292,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPauseRule() {
 		return getPauseAccess().getRule();
 	}
-
+	
 	//Label:
 	//	annotations+=Annotation*
 	//	name=ID ':';
@@ -2307,7 +2303,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLabelRule() {
 		return getLabelAccess().getRule();
 	}
-
+	
 	//Goto:
 	//	annotations+=Annotation*
 	//	'goto' target=[Label] semicolon?=';'?;
@@ -2318,7 +2314,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getGotoRule() {
 		return getGotoAccess().getRule();
 	}
-
+	
 	//@ Override Assignment:
 	//	annotations+=Annotation*
 	//	reference=ValuedObjectReference
@@ -2332,7 +2328,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
 	}
-
+	
 	//Conditional:
 	//	annotations+=Annotation*
 	//	'if' expression=BoolExpression
@@ -2347,7 +2343,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getConditionalRule() {
 		return getConditionalAccess().getRule();
 	}
-
+	
 	//ElseScope:
 	//	{ElseScope} annotations+=Annotation*
 	//	'else' '{'
@@ -2362,7 +2358,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getElseScopeRule() {
 		return getElseScopeAccess().getRule();
 	}
-
+	
 	//LegacyConditional Conditional:
 	//	annotations+=Annotation*
 	//	'if' expression=BoolExpression
@@ -2375,7 +2371,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLegacyConditionalRule() {
 		return getLegacyConditionalAccess().getRule();
 	}
-
+	
 	//LegacyElseScope ElseScope:
 	//	{ElseScope} annotations+=Annotation*
 	//	'else'
@@ -2389,7 +2385,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLegacyElseScopeRule() {
 		return getLegacyElseScopeAccess().getRule();
 	}
-
+	
 	//Thread:
 	//	{Thread} (annotations+=Annotation*
 	//	'{'
@@ -2404,7 +2400,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getThreadRule() {
 		return getThreadAccess().getRule();
 	}
-
+	
 	//Parallel:
 	//	'fork' (threads+=Thread ('par'
 	//	threads+=Thread)*)
@@ -2417,7 +2413,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getParallelRule() {
 		return getParallelAccess().getRule();
 	}
-
+	
 	//ScopeStatement:
 	//	{ScopeStatement} annotations+=Annotation*
 	//	'{'
@@ -2431,7 +2427,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScopeStatementRule() {
 		return getScopeStatementAccess().getRule();
 	}
-
+	
 	//ModuleCall:
 	//	annotations+=Annotation*
 	//	'run'
@@ -2444,7 +2440,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModuleCallRule() {
 		return getModuleCallAccess().getRule();
 	}
-
+	
 	//Parameter kexpressions::Parameter:
 	//	(pureOutput?='!'? callByReference?='&')?
 	//	expression=super::Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('['
@@ -2456,7 +2452,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getParameterRule() {
 		return getParameterAccess().getRule();
 	}
-
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-23 proposed 
@@ -2480,7 +2476,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getKextRule() {
 		return getKextAccess().getRule();
 	}
-
+	
 	//RootScope kext::KExtScope:
 	//	{kext::KExtScope} declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)*;
@@ -2491,7 +2487,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRootScopeRule() {
 		return getRootScopeAccess().getRule();
 	}
-
+	
 	//Scope kext::KExtScope:
 	//	{kext::KExtScope} name=ID? '{'
 	//	declarations+=Declaration*
@@ -2503,7 +2499,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScopeRule() {
 		return getScopeAccess().getRule();
 	}
-
+	
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
@@ -2515,7 +2511,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTestEntityRule() {
 		return getTestEntityAccess().getRule();
 	}
-
+	
 	//// Annotated Expression Rule
 	//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
 	//// of annotations. The expression itself follows the keyword.
@@ -2530,7 +2526,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnnotatedExpressionRule() {
 		return getAnnotatedExpressionAccess().getRule();
 	}
-
+	
 	//// Declaration Rule
 	//// A declaration follows the general KIELER pattern for variable declaration. More specific:
 	//// this centralized declaration rule should replace any other declaration in drived grammars.
@@ -2546,7 +2542,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
 	}
-
+	
 	//DeclarationWOSemicolon kexpressions::Declaration:
 	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
@@ -2556,7 +2552,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDeclarationWOSemicolonRule() {
 		return getDeclarationWOSemicolonAccess().getRule();
 	}
-
+	
 	//VariableDeclaration kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
 	//	const?='const'?
@@ -2573,7 +2569,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableDeclarationRule() {
 		return getVariableDeclarationAccess().getRule();
 	}
-
+	
 	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
 	//	const?='const'?
@@ -2590,7 +2586,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableDeclarationWOSemicolonRule() {
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
-
+	
 	//NamespaceID:
 	//	ExtendedID (':' PrimeID)*;
 	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
@@ -2600,7 +2596,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNamespaceIDRule() {
 		return getNamespaceIDAccess().getRule();
 	}
-
+	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
@@ -2613,7 +2609,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReferenceDeclarationRule() {
 		return getReferenceDeclarationAccess().getRule();
 	}
-
+	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
@@ -2626,7 +2622,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReferenceDeclarationWOSemicolonRule() {
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
-
+	
 	//ExternString kexpressions::ExternString:
 	//	annotations+=TagAnnotation*
 	//	code=super::STRING;
@@ -2637,7 +2633,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExternStringRule() {
 		return getExternStringAccess().getRule();
 	}
-
+	
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
@@ -2651,7 +2647,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScheduleDeclarationRule() {
 		return getScheduleDeclarationAccess().getRule();
 	}
-
+	
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
@@ -2665,7 +2661,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScheduleDeclarationWOSemicolonRule() {
 		return getScheduleDeclarationWOSemicolonAccess().getRule();
 	}
-
+	
 	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
 	//	CONFLICT="conflict" | CONFLUENT="confluent";
 	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
@@ -2675,7 +2671,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPriorityProtocolRule() {
 		return getPriorityProtocolAccess().getRule();
 	}
-
+	
 	//// Valued Object Rule
 	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
@@ -2691,7 +2687,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectRule() {
 		return getValuedObjectAccess().getRule();
 	}
-
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-23 proposed 
@@ -2716,7 +2712,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEffectRule() {
 		return getEffectAccess().getRule();
 	}
-
+	
 	//// Emission Rule
 	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
 	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
@@ -2735,7 +2731,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEmissionRule() {
 		return getEmissionAccess().getRule();
 	}
-
+	
 	////SubReferenceAssignment returns keffects::Assignment:
 	////    (annotations+=Annotation)*    
 	////    valuedObject=ValuedObjectReference
@@ -2756,7 +2752,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPostfixEffectRule() {
 		return getPostfixEffectAccess().getRule();
 	}
-
+	
 	//// Hostcode Effect Rule
 	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
 	//HostcodeEffect keffects::HostcodeEffect:
@@ -2769,7 +2765,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getHostcodeEffectRule() {
 		return getHostcodeEffectAccess().getRule();
 	}
-
+	
 	//// Reference Call Effect Rule
 	//// A reference call effect works similar to the reference call expression. Additionally, it may be
 	//// preceded by a list of annotations.
@@ -2784,7 +2780,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReferenceCallEffectRule() {
 		return getReferenceCallEffectAccess().getRule();
 	}
-
+	
 	//// Function Call Effect Rule
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
@@ -2799,7 +2795,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionCallEffectRule() {
 		return getFunctionCallEffectAccess().getRule();
 	}
-
+	
 	//// Print Call Effect Rule
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
@@ -2812,7 +2808,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPrintCallEffectRule() {
 		return getPrintCallEffectAccess().getRule();
 	}
-
+	
 	//RandomizeCallEffect keffects::RandomizeCallEffect:
 	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
 	//	'randomize' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
@@ -2824,7 +2820,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomizeCallEffectRule() {
 		return getRandomizeCallEffectAccess().getRule();
 	}
-
+	
 	//enum AssignOperator returns keffects::AssignOperator:
 	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
 	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
@@ -2837,7 +2833,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getAssignOperatorRule() {
 		return getAssignOperatorAccess().getRule();
 	}
-
+	
 	//enum PostfixOperator returns keffects::AssignOperator:
 	//	POSTFIXADD="++" | POSTFIXSUB="--";
 	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
@@ -2847,7 +2843,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixOperatorRule() {
 		return getPostfixOperatorAccess().getRule();
 	}
-
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
@@ -2898,7 +2894,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRootRule() {
 		return getRootAccess().getRule();
 	}
-
+	
 	//// Boolean Expression Rule
 	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
 	//// One could skip directly to the next rule.
@@ -2911,7 +2907,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBoolExpressionRule() {
 		return getBoolExpressionAccess().getRule();
 	}
-
+	
 	//// Logical Or Expression Rule
 	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -2925,7 +2921,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLogicalOrExpressionRule() {
 		return getLogicalOrExpressionAccess().getRule();
 	}
-
+	
 	//// Logical And Expression Rule
 	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -2939,7 +2935,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLogicalAndExpressionRule() {
 		return getLogicalAndExpressionAccess().getRule();
 	}
-
+	
 	//// Bitwiese Or Expression Rule
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -2953,7 +2949,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseOrExpressionRule() {
 		return getBitwiseOrExpressionAccess().getRule();
 	}
-
+	
 	//BitwiseXOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
 	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
@@ -2964,7 +2960,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseXOrExpressionRule() {
 		return getBitwiseXOrExpressionAccess().getRule();
 	}
-
+	
 	//// Bitwise And Expression Rule
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -2978,7 +2974,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
 	}
-
+	
 	//BitwiseNotExpression Expression:
 	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | super::AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
@@ -2988,7 +2984,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseNotExpressionRule() {
 		return getBitwiseNotExpressionAccess().getRule();
 	}
-
+	
 	//ShiftLeftExpression Expression:
 	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
 	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
@@ -2999,7 +2995,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftLeftExpressionRule() {
 		return getShiftLeftExpressionAccess().getRule();
 	}
-
+	
 	//ShiftRightExpression Expression:
 	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
 	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
@@ -3010,7 +3006,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftRightExpressionRule() {
 		return getShiftRightExpressionAccess().getRule();
 	}
-
+	
 	//ShiftRightUnsignedExpression Expression:
 	//	super::AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
 	//	subExpressions+=super::AddExpression) ('>>>' subExpressions+=super::AddExpression)*)?;
@@ -3021,7 +3017,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftRightUnsignedExpressionRule() {
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
-
+	
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=super::AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=super::AtomicValuedExpression ':' subExpressions+=super::AtomicValuedExpression
@@ -3033,7 +3029,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
 	}
-
+	
 	//FBYExpression Expression:
 	//	{OperatorExpression} subExpressions+=super::AtomicValuedExpression operator=FBYOperator
 	//	subExpressions+=super::AtomicValuedExpression
@@ -3045,7 +3041,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFBYExpressionRule() {
 		return getFBYExpressionAccess().getRule();
 	}
-
+	
 	//// Valued Object Test Expression Rule
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
@@ -3060,7 +3056,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectTestExpressionRule() {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
-
+	
 	//// ID with primes
 	//PrimeID:
 	//	ID "'"*;
@@ -3071,7 +3067,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPrimeIDRule() {
 		return getPrimeIDAccess().getRule();
 	}
-
+	
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
@@ -3084,7 +3080,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
 	}
-
+	
 	//ScheduleObjectReference:
 	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
@@ -3094,7 +3090,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScheduleObjectReferenceRule() {
 		return getScheduleObjectReferenceAccess().getRule();
 	}
-
+	
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
@@ -3107,7 +3103,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReferenceCallRule() {
 		return getReferenceCallAccess().getRule();
 	}
-
+	
 	//// Random Call Rule
 	//// Calls the random function. 
 	//RandomCall:
@@ -3120,7 +3116,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomCallRule() {
 		return getRandomCallAccess().getRule();
 	}
-
+	
 	//// Random Call Rule
 	//// Calls the random function. 
 	//RandomizeCall:
@@ -3133,7 +3129,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomizeCallRule() {
 		return getRandomizeCallAccess().getRule();
 	}
-
+	
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
@@ -3146,7 +3142,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
 	}
-
+	
 	//// Text Expression Rule
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
@@ -3160,7 +3156,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTextExpressionRule() {
 		return getTextExpressionAccess().getRule();
 	}
-
+	
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
@@ -3170,7 +3166,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntValueRule() {
 		return getIntValueAccess().getRule();
 	}
-
+	
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -3180,7 +3176,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloatValueRule() {
 		return getFloatValueAccess().getRule();
 	}
-
+	
 	//BoolValue:
 	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
@@ -3190,7 +3186,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
 	}
-
+	
 	//StringValue:
 	//	value=super::STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
@@ -3200,7 +3196,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
 	}
-
+	
 	//VectorValue:
 	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
@@ -3210,7 +3206,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVectorValueRule() {
 		return getVectorValueAccess().getRule();
 	}
-
+	
 	//VectorValueMember Expression:
 	//	BoolExpression | super::ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
@@ -3220,7 +3216,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVectorValueMemberRule() {
 		return getVectorValueMemberAccess().getRule();
 	}
-
+	
 	//IgnoreValue:
 	//	{IgnoreValue} '_';
 	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
@@ -3230,7 +3226,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIgnoreValueRule() {
 		return getIgnoreValueAccess().getRule();
 	}
-
+	
 	//// Any Type Rule
 	//// Data type rule allowing any kind of value to be accepted,
 	//// e.g. as initialValues of valued objects used in Kits.xtext. 
@@ -3243,7 +3239,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
 	}
-
+	
 	//AnyValue Value:
 	//	IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
@@ -3253,7 +3249,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnyValueRule() {
 		return getAnyValueAccess().getRule();
 	}
-
+	
 	//enum CompareOperator returns OperatorType:
 	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
@@ -3263,7 +3259,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getCompareOperatorRule() {
 		return getCompareOperatorAccess().getRule();
 	}
-
+	
 	//enum PreOperator returns OperatorType:
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
@@ -3273,7 +3269,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseNotOperator returns OperatorType:
 	//	BITWISE_NOT="~";
 	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
@@ -3283,7 +3279,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseNotOperatorRule() {
 		return getBitwiseNotOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseXOrOperator returns OperatorType:
 	//	BITWISE_XOR="^";
 	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
@@ -3293,7 +3289,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseXOrOperatorRule() {
 		return getBitwiseXOrOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseOrOperator returns OperatorType:
 	//	BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
@@ -3303,7 +3299,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseOrOperatorRule() {
 		return getBitwiseOrOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseAndOperator returns OperatorType:
 	//	BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
@@ -3313,7 +3309,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseAndOperatorRule() {
 		return getBitwiseAndOperatorAccess().getRule();
 	}
-
+	
 	//enum NotOperator returns OperatorType:
 	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
@@ -3323,7 +3319,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getNotOperatorRule() {
 		return getNotOperatorAccess().getRule();
 	}
-
+	
 	//enum AddOperator returns OperatorType:
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
@@ -3333,7 +3329,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getAddOperatorRule() {
 		return getAddOperatorAccess().getRule();
 	}
-
+	
 	//enum SubOperator returns OperatorType:
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
@@ -3343,7 +3339,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getSubOperatorRule() {
 		return getSubOperatorAccess().getRule();
 	}
-
+	
 	//enum MultOperator returns OperatorType:
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
@@ -3353,7 +3349,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getMultOperatorRule() {
 		return getMultOperatorAccess().getRule();
 	}
-
+	
 	//enum ModOperator returns OperatorType:
 	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
@@ -3363,7 +3359,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getModOperatorRule() {
 		return getModOperatorAccess().getRule();
 	}
-
+	
 	//enum DivOperator returns OperatorType:
 	//	DIV="/";
 	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
@@ -3373,7 +3369,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getDivOperatorRule() {
 		return getDivOperatorAccess().getRule();
 	}
-
+	
 	//enum ValOperator returns OperatorType:
 	//	VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
@@ -3383,7 +3379,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getValOperatorRule() {
 		return getValOperatorAccess().getRule();
 	}
-
+	
 	//enum LogicalOrOperator returns OperatorType:
 	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
@@ -3393,7 +3389,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getLogicalOrOperatorRule() {
 		return getLogicalOrOperatorAccess().getRule();
 	}
-
+	
 	//enum LogicalAndOperator returns OperatorType:
 	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
@@ -3403,7 +3399,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getLogicalAndOperatorRule() {
 		return getLogicalAndOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftLeftOperator returns OperatorType:
 	//	SHIFT_LEFT="<<";
 	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
@@ -3413,7 +3409,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftLeftOperatorRule() {
 		return getShiftLeftOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftRightOperator returns OperatorType:
 	//	SHIFT_RIGHT=">>";
 	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
@@ -3423,7 +3419,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftRightOperatorRule() {
 		return getShiftRightOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftRightUnsignedOperator returns OperatorType:
 	//	SHIFT_RIGHT_UNSIGNED=">>>";
 	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
@@ -3433,7 +3429,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftRightUnsignedOperatorRule() {
 		return getShiftRightUnsignedOperatorAccess().getRule();
 	}
-
+	
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
@@ -3443,7 +3439,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixAddRule() {
 		return getPostfixAddAccess().getRule();
 	}
-
+	
 	//enum PostfixSub returns OperatorType:
 	//	POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
@@ -3453,7 +3449,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
 	}
-
+	
 	//enum ConditionalOperator returns OperatorType:
 	//	CONDITIONAL="?";
 	public KExpressionsGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
@@ -3463,7 +3459,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getConditionalOperatorRule() {
 		return getConditionalOperatorAccess().getRule();
 	}
-
+	
 	//enum FBYOperator returns OperatorType:
 	//	FBY="->";
 	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
@@ -3473,7 +3469,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getFBYOperatorRule() {
 		return getFBYOperatorAccess().getRule();
 	}
-
+	
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
@@ -3485,7 +3481,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getValueTypeRule() {
 		return getValueTypeAccess().getRule();
 	}
-
+	
 	//enum HostType returns ValueType:
 	//	HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
@@ -3495,7 +3491,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getHostTypeRule() {
 		return getHostTypeAccess().getRule();
 	}
-
+	
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="|" | AND="&" | HOST="host";
@@ -3506,7 +3502,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
 	}
-
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
@@ -3525,7 +3521,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
 	}
-
+	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
@@ -3537,7 +3533,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaRule() {
 		return getPragmaAccess().getRule();
 	}
-
+	
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
@@ -3551,7 +3547,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedAnnotationRule() {
 		return getValuedAnnotationAccess().getRule();
 	}
-
+	
 	//// Restricted Type Annotation Rule
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
@@ -3564,7 +3560,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypeAnnotationRule() {
 		return getRestrictedTypeAnnotationAccess().getRule();
 	}
-
+	
 	//// Quoted String Annotation Rule
 	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
@@ -3579,7 +3575,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
 	}
-
+	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
@@ -3591,7 +3587,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotationRule() {
 		return getCommentAnnotationAccess().getRule();
 	}
-
+	
 	//CommentAnnotatonSL CommentAnnotation:
 	//	values+=SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
@@ -3601,7 +3597,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotatonSLRule() {
 		return getCommentAnnotatonSLAccess().getRule();
 	}
-
+	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation:
@@ -3613,7 +3609,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTagAnnotationRule() {
 		return getTagAnnotationAccess().getRule();
 	}
-
+	
 	//PragmaTag Pragma:
 	//	'#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
@@ -3623,7 +3619,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaTagRule() {
 		return getPragmaTagAccess().getRule();
 	}
-
+	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -3636,7 +3632,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getKeyStringValueAnnotationRule() {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
 	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
@@ -3646,7 +3642,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//StringPragma:
 	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
@@ -3656,7 +3652,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringPragmaRule() {
 		return getStringPragmaAccess().getRule();
 	}
-
+	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
@@ -3668,7 +3664,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
 	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
@@ -3678,7 +3674,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
 		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -3691,7 +3687,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedKeyStringValueAnnotationRule() {
 		return getQuotedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -3704,7 +3700,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -3717,7 +3713,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringRule() {
 		return getEStringAccess().getRule();
 	}
-
+	
 	//EStringBoolean:
 	//	super::STRING | ExtendedID | BOOLEAN;
 	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
@@ -3727,7 +3723,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringBooleanRule() {
 		return getEStringBooleanAccess().getRule();
 	}
-
+	
 	//EStringAllTypes:
 	//	super::STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
@@ -3737,7 +3733,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringAllTypesRule() {
 		return getEStringAllTypesAccess().getRule();
 	}
-
+	
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
@@ -3750,7 +3746,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
 	}
-
+	
 	//QualifiedID:
 	//	ID ("." ID)*;
 	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
@@ -3760,7 +3756,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQualifiedIDRule() {
 		return getQualifiedIDAccess().getRule();
 	}
-
+	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
@@ -3772,7 +3768,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntegerRule() {
 		return getIntegerAccess().getRule();
 	}
-
+	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
@@ -3784,7 +3780,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloategerRule() {
 		return getFloategerAccess().getRule();
 	}
-
+	
 	//Double ecore::EDouble:
 	//	FLOAT;
 	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
@@ -3794,7 +3790,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoubleRule() {
 		return getDoubleAccess().getRule();
 	}
-
+	
 	//Doubleger ecore::EDouble:
 	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
@@ -3804,58 +3800,58 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoublegerRule() {
 		return getDoublegerAccess().getRule();
 	}
-
+	
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
-	} 
-
+	}
+	
 	//terminal SL_COMMENT_ANNOTATION:
 	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
-	} 
-
+	}
+	
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return gaAnnotations.getNUMBERRule();
-	} 
-
+	}
+	
 	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
-	} 
-
+	}
+	
 	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();
-	} 
-
+	}
+	
 	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return gaAnnotations.getBOOLEANRule();
-	} 
-
+	}
+	
 	//@ Override terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();
-	} 
-
+	}
+	
 	//terminal WS:
 	//	' ' | '\t' | '\r' | '\n'+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
-	} 
-
+	}
+	
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
-	} 
+	}
 }

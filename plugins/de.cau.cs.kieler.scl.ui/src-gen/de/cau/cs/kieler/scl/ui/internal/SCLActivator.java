@@ -3,26 +3,26 @@
  */
 package de.cau.cs.kieler.scl.ui.internal;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import de.cau.cs.kieler.scl.SCLRuntimeModule;
+import de.cau.cs.kieler.scl.ui.SCLUiModule;
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class SCLActivator extends AbstractUIPlugin {
-	
+
 	public static final String DE_CAU_CS_KIELER_SCL_SCL = "de.cau.cs.kieler.scl.SCL";
 	
 	private static final Logger logger = Logger.getLogger(SCLActivator.class);
@@ -71,20 +71,18 @@ public class SCLActivator extends AbstractUIPlugin {
 			throw new RuntimeException("Failed to create injector for " + language, e);
 		}
 	}
-
+	
 	protected Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_SCL_SCL.equals(grammar)) {
-			return new de.cau.cs.kieler.scl.SCLRuntimeModule();
+			return new SCLRuntimeModule();
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_SCL_SCL.equals(grammar)) {
-			return new de.cau.cs.kieler.scl.ui.SCLUiModule(this);
+			return new SCLUiModule(this);
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	

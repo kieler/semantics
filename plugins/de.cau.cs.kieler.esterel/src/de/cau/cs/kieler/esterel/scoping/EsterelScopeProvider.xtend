@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.esterel.scoping
 
+import com.google.common.base.Predicate
 import de.cau.cs.kieler.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.Emit
@@ -27,14 +28,18 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scoping.SCLScopeProvider
+import java.lang.reflect.Method
 import java.util.ArrayList
+import java.util.Collections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
+import org.eclipse.xtext.util.PolymorphicDispatcher
 
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
+import org.eclipse.emf.ecore.EClass
 
 /**
  * This class contains custom scoping description.
@@ -244,5 +249,67 @@ class EsterelScopeProvider extends SCLScopeProvider {
         }
         return new SimpleScope(getAllModules(context));
     }
+    
+    // ------------------------------------------
+    // HELPER
+    // ------------------------------------------
+    
+    private val PolymorphicDispatcher.ErrorHandler<IScope> errorHandler = new PolymorphicDispatcher.NullErrorHandler<IScope>();
+    
+    protected def IScope polymorphicFindScopeForClassName(EObject context, EReference reference) {
+        var IScope scope = null;
+        var PolymorphicDispatcher<IScope> dispatcher = new PolymorphicDispatcher<IScope>(
+                Collections.singletonList(this), 
+                getPredicate(context, reference.getEReferenceType()),
+                errorHandler) {
+            override IScope handleNoSuchMethod(Object... params) {
+                if (PolymorphicDispatcher.NullErrorHandler.equals(errorHandler.getClass()))
+                    return null;
+                return super.handleNoSuchMethod(params);
+            }
+        };
+        var EObject current = context;
+        while (scope == null && current != null) {
+            scope = dispatcher.invoke(current, reference);
+            current = current.eContainer();
+        }
+        current = context;
+        while (scope == null && current != null) {
+            scope = dispatcher.invoke(current, reference.getEReferenceType());
+            current = current.eContainer();
+        }
+        return scope;
+    }
+
+    protected def IScope polymorphicFindScopeForReferenceName(EObject context, EReference reference) {
+        var Predicate<Method> predicate = getPredicate(context, reference);
+        var PolymorphicDispatcher<IScope> dispatcher = new PolymorphicDispatcher<IScope>(Collections
+                .singletonList(this), predicate, errorHandler) {
+            override IScope handleNoSuchMethod(Object... params) {
+                if (PolymorphicDispatcher.NullErrorHandler.equals(errorHandler.getClass()))
+                    return null;
+                return super.handleNoSuchMethod(params);
+            }
+        };
+        var EObject current = context;
+        var IScope scope = null;
+        while (scope == null && current != null) {
+            scope = dispatcher.invoke(current, reference);
+            current = current.eContainer();
+        }
+        return scope;
+    }
+    
+    protected def Predicate<Method> getPredicate(EObject context, EClass type) {
+        val String methodName = "scope_" + type.getName();
+        return PolymorphicDispatcher.Predicates.forName(methodName, 2);
+    }
+
+    protected def Predicate<Method> getPredicate(EObject context, EReference reference) {
+        val String methodName = "scope_" + reference.getEContainingClass().getName() + "_" + reference.getName();
+        return PolymorphicDispatcher.Predicates.forName(methodName, 2);
+    }
+    
+    
 
 }

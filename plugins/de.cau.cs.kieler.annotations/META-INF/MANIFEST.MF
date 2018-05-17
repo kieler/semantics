@@ -8,7 +8,7 @@ Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Export-Package: de.cau.cs.kieler.annotations,
  de.cau.cs.kieler.annotations.extensions,
- de.cau.cs.kieler.annotations.formatting,
+ de.cau.cs.kieler.annotations.converter,
  de.cau.cs.kieler.annotations.formatting2,
  de.cau.cs.kieler.annotations.impl,
  de.cau.cs.kieler.annotations.parser.antlr,
@@ -19,20 +19,18 @@ Export-Package: de.cau.cs.kieler.annotations,
  de.cau.cs.kieler.annotations.services,
  de.cau.cs.kieler.annotations.util,
  de.cau.cs.kieler.annotations.validation
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.xtend.lib,
+Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.12.0",
  com.google.guava,
- org.eclipse.xtext.xbase.lib,
  com.google.inject,
- org.eclipse.xtext;bundle-version="2.1.0",
  org.eclipse.xtext.ui;bundle-version="2.1.0",
- org.eclipse.xtext.common.types;bundle-version="2.1.0",
  org.eclipse.xtext.generator;bundle-version="2.1.0",
- org.eclipse.xtext.util;bundle-version="2.1.0",
- org.apache.commons.logging,
  org.eclipse.emf.mwe2.launch;bundle-version="2.0.0",
- org.antlr.runtime
+ org.apache.commons.logging;bundle-version="1.1.1",
+ org.eclipse.xtext.common.types,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.12.0",
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtext
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.apache.log4j;version="1.2.15"
+Import-Package: org.apache.log4j

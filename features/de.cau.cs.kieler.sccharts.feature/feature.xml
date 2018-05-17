@@ -231,6 +231,8 @@ litigation.
    <plugin id="de.cau.cs.kieler.language.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.annotations.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.annotations.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
@@ -247,18 +249,24 @@ litigation.
    <plugin id="de.cau.cs.kieler.esterel.examples" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.esterel.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kex" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kex.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kexpressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kexpressions.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kexpressions.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kicool" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kicool.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kicool.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kivis" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
@@ -267,6 +275,8 @@ litigation.
    <plugin id="de.cau.cs.kieler.lustre" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.lustre.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.lustre.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.prom" download-size="0" install-size="0" version="0.0.0"/>
    
@@ -285,6 +295,8 @@ litigation.
    <plugin id="de.cau.cs.kieler.sccharts.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.timing" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
@@ -297,6 +309,8 @@ litigation.
    <plugin id="de.cau.cs.kieler.scl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.scl.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scl.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.simulation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    

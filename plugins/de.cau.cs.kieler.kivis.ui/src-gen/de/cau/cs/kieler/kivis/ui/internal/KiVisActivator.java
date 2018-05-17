@@ -3,26 +3,26 @@
  */
 package de.cau.cs.kieler.kivis.ui.internal;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import de.cau.cs.kieler.kivis.KiVisRuntimeModule;
+import de.cau.cs.kieler.kivis.ui.KiVisUiModule;
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class KiVisActivator extends AbstractUIPlugin {
-	
+
 	public static final String DE_CAU_CS_KIELER_KIVIS_KIVIS = "de.cau.cs.kieler.kivis.KiVis";
 	
 	private static final Logger logger = Logger.getLogger(KiVisActivator.class);
@@ -71,20 +71,18 @@ public class KiVisActivator extends AbstractUIPlugin {
 			throw new RuntimeException("Failed to create injector for " + language, e);
 		}
 	}
-
+	
 	protected Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_KIVIS_KIVIS.equals(grammar)) {
-			return new de.cau.cs.kieler.kivis.KiVisRuntimeModule();
+			return new KiVisRuntimeModule();
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_KIVIS_KIVIS.equals(grammar)) {
-			return new de.cau.cs.kieler.kivis.ui.KiVisUiModule(this);
+			return new KiVisUiModule(this);
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	

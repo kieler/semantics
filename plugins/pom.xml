@@ -19,6 +19,7 @@
   <modules>
     <module>../build/de.cau.cs.kieler.semantics.targetplatform</module>
     <module>../test</module> 
+    <module>de.cau.cs.kieler.annotations.ide</module>
     <module>de.cau.cs.kieler.annotations.ui</module>
     <module>de.cau.cs.kieler.annotations</module>
     <module>de.cau.cs.kieler.circuit.klighd</module>
@@ -28,17 +29,21 @@
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.prom</module>
+    <module>de.cau.cs.kieler.esterel.ide</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kex</module>
+    <module>de.cau.cs.kieler.kexpressions.ide</module>
     <module>de.cau.cs.kieler.kexpressions.ui</module>
     <module>de.cau.cs.kieler.kexpressions</module>
+    <module>de.cau.cs.kieler.kicool.ide</module>
     <module>de.cau.cs.kieler.kicool.ui</module>
     <module>de.cau.cs.kieler.kicool</module>
     <module>de.cau.cs.kieler.kivis.ui</module>
     <module>de.cau.cs.kieler.kivis</module>
     <module>de.cau.cs.kieler.language.server</module>
+    <module>de.cau.cs.kieler.lustre.ide</module>
     <module>de.cau.cs.kieler.lustre.ui</module>
     <module>de.cau.cs.kieler.lustre</module>
     <module>de.cau.cs.kieler.prom.ui</module>
@@ -50,10 +55,12 @@
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.timing</module>
     <module>de.cau.cs.kieler.sccharts.ui</module>
+    <module>de.cau.cs.kieler.sccharts.ide</module>
     <module>de.cau.cs.kieler.sccharts</module>
     <module>de.cau.cs.kieler.scg.circuit</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg</module>
+    <module>de.cau.cs.kieler.scl.ide</module>
     <module>de.cau.cs.kieler.scl.ui</module>
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.simulation.ui</module>

@@ -3,19 +3,22 @@
  */
 package de.cau.cs.kieler.kexpressions.ui.contentassist;
 
+import de.cau.cs.kieler.annotations.ui.contentassist.AnnotationsProposalProvider;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 /**
- * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.annotations.ui.contentassist.AnnotationsProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link AnnotationsProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
-@SuppressWarnings("all")
-public class AbstractKExpressionsProposalProvider extends de.cau.cs.kieler.annotations.ui.contentassist.AnnotationsProposalProvider {
-		
+public abstract class AbstractKExpressionsProposalProvider extends AnnotationsProposalProvider {
+
 	public void completeLogicalOrExpression_Operator(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
@@ -194,7 +197,7 @@ public class AbstractKExpressionsProposalProvider extends de.cau.cs.kieler.annot
 	public void completeVectorValue_Values(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-    
+
 	public void complete_Root(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}

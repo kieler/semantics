@@ -3,26 +3,26 @@
  */
 package de.cau.cs.kieler.kexpressions.ui.internal;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import de.cau.cs.kieler.kexpressions.KExpressionsRuntimeModule;
+import de.cau.cs.kieler.kexpressions.ui.KExpressionsUiModule;
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class KExpressionsActivator extends AbstractUIPlugin {
-	
+
 	public static final String DE_CAU_CS_KIELER_KEXPRESSIONS_KEXPRESSIONS = "de.cau.cs.kieler.kexpressions.KExpressions";
 	
 	private static final Logger logger = Logger.getLogger(KExpressionsActivator.class);
@@ -71,20 +71,18 @@ public class KExpressionsActivator extends AbstractUIPlugin {
 			throw new RuntimeException("Failed to create injector for " + language, e);
 		}
 	}
-
+	
 	protected Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_KEXPRESSIONS_KEXPRESSIONS.equals(grammar)) {
-			return new de.cau.cs.kieler.kexpressions.KExpressionsRuntimeModule();
+			return new KExpressionsRuntimeModule();
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_KEXPRESSIONS_KEXPRESSIONS.equals(grammar)) {
-			return new de.cau.cs.kieler.kexpressions.ui.KExpressionsUiModule(this);
+			return new KExpressionsUiModule(this);
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	

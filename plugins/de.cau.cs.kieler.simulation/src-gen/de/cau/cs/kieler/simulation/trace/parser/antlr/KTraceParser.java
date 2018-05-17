@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.simulation.trace.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.simulation.trace.parser.antlr.internal.InternalKTraceParser;
 import de.cau.cs.kieler.simulation.trace.services.KTraceGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class KTraceParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class KTraceParser extends AbstractAntlrParser {
+
 	@Inject
 	private KTraceGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.simulation.trace.parser.antlr.internal.InternalKTraceParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.simulation.trace.parser.antlr.internal.InternalKTraceParser(stream, getGrammarAccess());
+	protected InternalKTraceParser createParser(XtextTokenStream stream) {
+		return new InternalKTraceParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "TraceFile";
 	}
-	
+
 	public KTraceGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(KTraceGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

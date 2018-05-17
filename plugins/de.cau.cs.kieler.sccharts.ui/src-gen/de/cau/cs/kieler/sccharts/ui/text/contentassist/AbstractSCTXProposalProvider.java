@@ -3,19 +3,22 @@
  */
 package de.cau.cs.kieler.sccharts.ui.text.contentassist;
 
+import de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 /**
- * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link KExtProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
-@SuppressWarnings("all")
-public class AbstractSCTXProposalProvider extends de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider {
-		
+public abstract class AbstractSCTXProposalProvider extends KExtProposalProvider {
+
 	public void completeSCCharts_Pragmas(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
@@ -308,7 +311,7 @@ public class AbstractSCTXProposalProvider extends de.cau.cs.kieler.kexpressions.
 	public void completePeriodAction_Label(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-    
+
 	public void complete_SCCharts(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}

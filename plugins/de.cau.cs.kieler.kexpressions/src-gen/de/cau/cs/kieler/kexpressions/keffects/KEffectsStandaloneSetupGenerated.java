@@ -3,22 +3,20 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects;
 
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.ISetup;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.ISetup;
+import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 
-/**
- * Generated from StandaloneSetup.xpt!
- */
 @SuppressWarnings("all")
 public class KEffectsStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		KExpressionsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -26,17 +24,14 @@ public class KEffectsStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.kexpressions.keffects.KEffectsRuntimeModule());
+		return Guice.createInjector(new KEffectsRuntimeModule());
 	}
 	
 	public void register(Injector injector) {
-
-		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("keffects", resourceFactory);
-		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("keffects", serviceProvider);
+		IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+		IResourceServiceProvider serviceProvider = injector.getInstance(IResourceServiceProvider.class);
 		
-
-
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("keffects", resourceFactory);
+		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("keffects", serviceProvider);
 	}
 }

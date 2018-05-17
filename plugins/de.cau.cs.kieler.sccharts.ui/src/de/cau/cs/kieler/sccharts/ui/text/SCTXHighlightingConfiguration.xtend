@@ -18,6 +18,6 @@ import de.cau.cs.kieler.kexpressions.ui.KExpressionsHighlightingConfiguration
  * @author ssm
  *
  */
-class SCTHighlightingConfiguration extends KExpressionsHighlightingConfiguration {
+class SCTXHighlightingConfiguration extends KExpressionsHighlightingConfiguration {
     
 }

@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.ui.ide;bundle-version="3.12.3",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib;resolution:=optional,
  org.eclipse.core.runtime,
  org.eclipse.xtend.lib.macro,
  org.eclipse.debug.core;bundle-version="3.10.100",
@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.prom,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kexpressions.ui,
- de.cau.cs.kieler.annotations.ui;bundle-version="0.12.0"
+ de.cau.cs.kieler.annotations.ui;bundle-version="0.12.0",
+ org.antlr.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University
@@ -34,6 +35,6 @@ Export-Package: de.cau.cs.kieler.prom.ui,
  de.cau.cs.kieler.prom.ui.wizards,
  de.cau.cs.kieler.prom.ui.contentassist,
  de.cau.cs.kieler.prom.ui.quickfix,
- de.cau.cs.kieler.prom.ui.contentassist.antlr,
- de.cau.cs.kieler.prom.ui.contentassist.antlr.internal
+ de.cau.cs.kieler.prom.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.prom.ide.contentassist.antlr
 Import-Package: org.apache.log4j

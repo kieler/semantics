@@ -7,10 +7,10 @@ import java.io.InputStream;
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class SCTXAntlrTokenFileProvider implements IAntlrTokenFileProvider {
-	
+
 	@Override
 	public InputStream getAntlrTokenFile() {
 		ClassLoader classLoader = getClass().getClassLoader();
-    	return classLoader.getResourceAsStream("de/cau/cs/kieler/sccharts/text/parser/antlr/internal/InternalSCTX.tokens");
+		return classLoader.getResourceAsStream("de/cau/cs/kieler/sccharts/text/parser/antlr/internal/InternalSCTX.tokens");
 	}
 }

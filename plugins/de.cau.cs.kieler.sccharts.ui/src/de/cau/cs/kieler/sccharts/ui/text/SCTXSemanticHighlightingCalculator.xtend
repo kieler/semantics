@@ -18,6 +18,6 @@ import de.cau.cs.kieler.kexpressions.ui.KExpressionsSemanticHighlightingCalculat
  * @author ssm
  *
  */
-class SCTSemanticHighlightingCalculator extends KExpressionsSemanticHighlightingCalculator {
+class SCTXSemanticHighlightingCalculator extends KExpressionsSemanticHighlightingCalculator {
     
 }

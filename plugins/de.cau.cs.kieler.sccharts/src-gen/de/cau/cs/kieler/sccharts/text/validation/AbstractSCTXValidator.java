@@ -3,21 +3,23 @@
  */
 package de.cau.cs.kieler.sccharts.text.validation;
 
+import de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.ecore.EPackage;
 
-public class AbstractSCTXValidator extends de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator {
-
+public abstract class AbstractSCTXValidator extends KExtValidator {
+	
 	@Override
 	protected List<EPackage> getEPackages() {
-	    List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/sccharts/0.3.0"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/0.1.0"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/2002/Ecore"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
+		List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/sccharts/0.3.0"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/0.1.0"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/2002/Ecore"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
+	
 }

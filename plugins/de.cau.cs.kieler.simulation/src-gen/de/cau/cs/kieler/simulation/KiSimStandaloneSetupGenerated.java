@@ -3,22 +3,22 @@
  */
 package de.cau.cs.kieler.simulation;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import de.cau.cs.kieler.prom.KiBuildStandaloneSetup;
+import de.cau.cs.kieler.simulation.kisim.KisimPackage;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.ISetup;
+import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-/**
- * Generated from StandaloneSetup.xpt!
- */
 @SuppressWarnings("all")
 public class KiSimStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.prom.KiBuildStandaloneSetup.doSetup();
+		KiBuildStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -26,20 +26,17 @@ public class KiSimStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.simulation.KiSimRuntimeModule());
+		return Guice.createInjector(new KiSimRuntimeModule());
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/simulation/KiSim")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/simulation/KiSim", de.cau.cs.kieler.simulation.kisim.KisimPackage.eINSTANCE);
-	}
-
-		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kisim", resourceFactory);
-		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("kisim", serviceProvider);
+		if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/simulation/KiSim")) {
+			EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/simulation/KiSim", KisimPackage.eINSTANCE);
+		}
+		IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+		IResourceServiceProvider serviceProvider = injector.getInstance(IResourceServiceProvider.class);
 		
-
-
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kisim", resourceFactory);
+		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("kisim", serviceProvider);
 	}
 }

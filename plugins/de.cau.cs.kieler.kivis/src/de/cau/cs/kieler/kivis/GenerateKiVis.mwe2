@@ -1,17 +1,31 @@
-module de.cau.cs.kieler.kivis.GenerateKiVis
+module de.cau.cs.kieler.kivis.KiVis
 
 import org.eclipse.emf.mwe.utils.*
-import org.eclipse.xtext.generator.*
-import org.eclipse.xtext.ui.generator.*
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/kivis/KiVis.xtext"
-var file.extensions = "kivis"
+// Project information
+var rootPath = ".."
 var projectName = "de.cau.cs.kieler.kivis"
-var runtimeProject = "../${projectName}"
+var grammar = "de.cau.cs.kieler.kivis.KiVis"
+var grammarURI = "classpath:/de/cau/cs/kieler/kivis/KiVis.xtext"
+// File extension
+var file.extensions = "kivis"
+// Parser backtracking
+var backtrack = true
+// Indicates languages that that contained in the same plugin as another language but do not influence major package naming.
+// This will prevent cleaning the src-gen folder and will adjust package names.
+// I.e.: KExt in KEpressions
+var secondaryGrammar = false
+// Cleans the src-gen folder (disable for secondary grammars)
+var clean = true
+
+// IMPORTANT: Uses ui plugin for ide classes
+// IMPORTANT: Generates EMF meta-model
 
 Workflow {
     bean = StandaloneSetup {
-        platformUri = "${runtimeProject}/.."
+        platformUri = "${rootPath}"
         registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"
         registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
@@ -19,90 +33,61 @@ Workflow {
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.genmodel"
     }
     
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}/src-gen"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}.ui/src-gen"
-    }
-    
-    component = Generator {
-        pathRtProject = runtimeProject
-        pathUiProject = "${runtimeProject}.ui"
-        projectNameRt = projectName
-        projectNameUi = "${projectName}.ui"
+    component = XtextGenerator {
+        configuration =  de.cau.cs.kieler.annotations.xtext.KielerGeneratorModule {
+            project = de.cau.cs.kieler.annotations.xtext.KielerProjectConfig {
+                projectRelatedPackageNames = secondaryGrammar
+                grammar = grammar
+                baseName = projectName
+                rootPath = rootPath
+                eclipsePlugin = {
+                    enabled = true
+                }
+                createEclipseMetaData = true
+                genericIde = {
+                    enabled = true
+                    name = "${projectName}.ui" // Use ui plugin!
+                }       
+            }
+            
+            code = {
+                encoding = "UTF-8"
+                preferXtendStubs = true
+            }
+        }
         
-        language = {
-            uri = grammarURI
+        cleaner = {
+            enabled = clean
+        }
+               
+        language = XtextGeneratorLanguage {
+            name = grammar
             fileExtensions = file.extensions
+            grammarUri = grammarURI
             
-            // Java API to access grammar elements (required by several other fragments)
-            fragment = grammarAccess.GrammarAccessFragment {}
-            
-            // generates Java API for the generated EPackages
-            fragment = ecore.EMFGeneratorFragment {}
-            
-            // the serialization component
-            fragment = serializer.SerializerFragment {
-                generateXtendStub = true
-            }
-            
-            // a custom ResourceFactory for use with EMF 
-            fragment = resourceFactory.ResourceFactoryFragment {
-                fileExtensions = file.extensions
-            }
-                
-            // the Antlr parser
-            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
+            fragment = grammarAccess.GrammarAccessFragment2 {}
+            // ONLY uncomment when EMF model should be generated from grammar
+            // ENABLED
+            fragment = ecore.EMFGeneratorFragment2 {}
+            fragment = serializer.SerializerFragment2 {}
+            fragment = resourceFactory.ResourceFactoryFragment2 {}
+            fragment = parser.antlr.XtextAntlrGeneratorFragment2 {
                 options = {
+                    backtrack = backtrack
                     classSplitting = true
-                    backtrack = true
                 }
             }
-
-            // java-based API for validation 
-            fragment = validation.ValidatorFragment {}
-            
-            // scoping and exporting API
-            fragment = scoping.ImportURIScopingFragment {}
-            
-            // scoping and exporting API 
-
-            // fragment = scoping.ImportNamespacesScopingFragment {}
-            // fragment = exporting.QualifiedNamesFragment {}
-
-            // formatter API 
-            fragment = ecore2xtext.FormatterFragment {}
-
-            // labeling API 
-            fragment = labeling.LabelProviderFragment {}
-
-            // outline API 
-            fragment = outline.OutlineTreeProviderFragment {}
-            fragment = outline.QuickOutlineFragment {}
-
-            // java-based API for content assistance 
-            fragment = contentAssist.ContentAssistFragment {}
-            
-            // antlr parser generator tailored for content assist 
-            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
-                options = {
-                    classSplitting = true
-                    backtrack = true
-                }
-            }
-
-            // fragment = builder.BuilderIntegrationFragment {}
-
-            // project wizard (optional) 
-            // fragment = projectWizard.SimpleProjectWizardFragment {
-            //  generatorProjectName = "${projectName}.generator" 
-            //  modelFileExtension = file.extensions
-            // }
-            
-            // quickfix API 
-            fragment = quickfix.QuickfixProviderFragment {}
+            fragment = validation.ValidatorFragment2 {}
+            fragment = scoping.ImportNamespacesScopingFragment2 {}
+            fragment = exporting.QualifiedNamesFragment2 {}
+            fragment = formatting.Formatter2Fragment2 {}
+            fragment = ui.labeling.LabelProviderFragment2 {}
+            fragment = ui.outline.QuickOutlineFragment2 {}
+            fragment = ui.outline.OutlineTreeProviderFragment2 {}
+            fragment = ui.quickfix.QuickfixProviderFragment2 {}
+            fragment = ui.contentAssist.ContentAssistFragment2 {}
+            fragment = ui.refactoring.RefactorElementNameFragment2 {}
+   
         }
     }
 }

@@ -7,10 +7,10 @@ import java.io.InputStream;
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class KiBuildAntlrTokenFileProvider implements IAntlrTokenFileProvider {
-	
+
 	@Override
 	public InputStream getAntlrTokenFile() {
 		ClassLoader classLoader = getClass().getClassLoader();
-    	return classLoader.getResourceAsStream("de/cau/cs/kieler/prom/parser/antlr/internal/InternalKiBuild.tokens");
+		return classLoader.getResourceAsStream("de/cau/cs/kieler/prom/parser/antlr/internal/InternalKiBuild.tokens");
 	}
 }

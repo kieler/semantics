@@ -20,15 +20,13 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.scl.ui;bundle-version="0.12.0",
  de.cau.cs.kieler.kexpressions;bundle-version="0.12.0",
  de.cau.cs.kieler.kexpressions.ui;bundle-version="0.12.0",
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib;resolution:=optional,
+ de.cau.cs.kieler.esterel.ide
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.cs.kieler.esterel.ui.contentassist.antlr,
- de.cau.cs.kieler.esterel.ui.contentassist,
+Export-Package: de.cau.cs.kieler.esterel.ui.contentassist,
  de.cau.cs.kieler.esterel.ui.quickfix,
- de.cau.cs.kieler.esterel.ui.contentassist.antlr.internal,
- de.cau.cs.kieler.esterel.scest.ui.contentassist,
- de.cau.cs.kieler.esterel.scest.ui.quickfix,
- de.cau.cs.kieler.esterel.scest.ui.contentassist.antlr,
- de.cau.cs.kieler.esterel.scest.ui.contentassist.antlr.internal
+ de.cau.cs.kieler.esterel.ui.scest.contentassist,
+ de.cau.cs.kieler.esterel.ui.scest.quickfix
 Bundle-Activator: de.cau.cs.kieler.esterel.ui.DelegateActivator
