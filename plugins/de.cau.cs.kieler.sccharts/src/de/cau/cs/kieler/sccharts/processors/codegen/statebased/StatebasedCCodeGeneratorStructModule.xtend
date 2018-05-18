@@ -136,6 +136,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }
     
     protected def generate(extension StatebasedCCodeSerializeHRExtensions serializer) {
+        
+        val codeList = <String> newLinkedList
         // Add the declarations of the model.
         for (declaration : rootState.declarations) {
             for (valuedObject : declaration.valuedObjects) {
@@ -153,13 +155,18 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
                             s += "[" + cardinality.serializeHR + "]"
                         }
                     }
-                    s += ";\n"
+                    s += ";"
                     
-                    code.add(s)
+                    codeList += s
+                    if (declaration.input) codeList += LEC("Input")
+                    if (declaration.output) codeList += LEC("Output") 
+                    codeList += NL
                     tickData.add(s)
                 }
             }
         }
+        
+        code.addCLL(codeList.toArray)
     }
     
     override generateDone() {

@@ -63,7 +63,7 @@ abstract class AbstractCodeGeneratorModule {
     
     
     // Convenient StringBuilder methods
-    private static val MAGIC_PREFIX = "$ulf$"
+    private static val MAGIC_PREFIX = "§ulf§"
     private static val NL_MAGIC = MAGIC_PREFIX + "NL"
     private static val DEFAULT_CODE_LINE_LENGTH = 40
     private static val AUTO_CODE_LINE_LENGTH_SPACING = 4
@@ -105,6 +105,7 @@ abstract class AbstractCodeGeneratorModule {
             }
         }
         codeLineLength = maxLength + AUTO_CODE_LINE_LENGTH_SPACING
+        actualLineLength = 0
         sb.add(args)
         codeLineLength = storedCodeLineLength
     }
@@ -132,6 +133,10 @@ abstract class AbstractCodeGeneratorModule {
     
     protected def WS() {
         return " "
+    }
+
+    protected def WS(int spaces) {
+        return StaticWhitespace.getSpace(spaces)
     }
     
     // Line Ending Comment
@@ -164,6 +169,10 @@ abstract class AbstractCodeGeneratorModule {
         return StaticWhitespace.getSpace(spaces) + "// " + comment + "\n"
     }
     
+    protected def String IFC(boolean condition, String comment) {
+        return if (!condition) "" else comment
+    }
+    
     // Multi-Line Comment
     protected def String MLC(Object ... args) {
         MLCi(0, args)
@@ -189,4 +198,30 @@ abstract class AbstractCodeGeneratorModule {
         sb.append(" */\n")
         return sb.toString
     }
+    
+    // Multi-Line Comment
+    protected def String MLCii(int spaces, int secondarySpaces, Object ... args) {
+        if (!commentsEnabled) return ""
+        val sb = new StringBuilder
+        sb.append(StaticWhitespace.getSpace(spaces))
+        sb.append("/* ")
+        var first = true
+        for (s2 : args) {
+            for (s : s2.toString.split(NL_MAGIC)) {
+                if (!(s instanceof String && (s as String).nullOrEmpty)) { 
+                    if (!first) {
+                        sb.append(StaticWhitespace.getSpace(spaces))
+                        sb.append(" * ")
+                        sb.append(StaticWhitespace.getSpace(secondarySpaces))
+                    }
+                    sb.append(s)
+                    sb.append("\n")
+                }
+                first = false         
+            }           
+        }
+        sb.append(StaticWhitespace.getSpace(spaces))        
+        sb.append(" */\n")
+        return sb.toString
+    }    
 }

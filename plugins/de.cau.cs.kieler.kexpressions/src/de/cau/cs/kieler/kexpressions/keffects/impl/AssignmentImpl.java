@@ -560,7 +560,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         result.append("@");
         result.append(String.format("%08x", this.hashCode()));
         result.append(" ");
-        result.append(serializer.serialize(this).toString());
+        result.append(serializer.serialize(this));
         return result.toString();
     }
     

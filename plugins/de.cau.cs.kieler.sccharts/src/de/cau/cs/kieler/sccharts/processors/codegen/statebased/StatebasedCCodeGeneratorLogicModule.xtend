@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * C Code Generator Logic Module
@@ -164,17 +165,27 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 
                 struct.forwardDeclarationsLogic.add(
                     "void ", functionName, ENUM_STATES_RUNNING.toLowerCase, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX,
-                     " *", regionDataName, ");", NL
+                     " *", regionDataName, ");",
+                     LEC("State " + state.name + " in region " + parentCfrName + " logic"), 
+                     NL
                  ) 
                 
             }             
             
             function.add(
+                SLC("Function of state " + state.name + " in region " + parentCfrName), 
+                IFC(state.isHierarchical, SLC("This is a superstate.") + 
+                    SLC("The function will initialize its children and ") +  
+                    SLC("commits control to its logic function " + functionName + ENUM_STATES_RUNNING.toLowerCase + " afterwards.")
+                ),
+                
                 "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ") {", NL
             )
             
             struct.forwardDeclarationsLogic.add(
-                "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ");", NL
+                "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ");",
+                LEC("State " + state.name + " in region " + parentCfrName),
+                NL
             ) 
 
             if (state.isHierarchical) {
@@ -207,6 +218,9 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 )
                 
                 function.add(
+                    SLC("Logic function of the superstate " + state.name + " in region " + parentCfrName),
+                    SLC("Function " + functionName + " will initialize its children and then, proceeds here."), 
+                    
                     "void ", runningName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ") {", NL
                 )
             }
@@ -397,16 +411,49 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     ) {
         val isImmediate = transition.immediate
         val hasTrigger = transition.trigger !== null
+        var indentationLength = indentation.length
         
         if (index > 0) {
             function.add(
-                "} else {", NL, 
-                "  " // for the comment
+                "} else {", NL 
+//                "  " // for the comment
             )
+            indentationLength += 2
         }
         
+        val triggerEffect = transition.serializeHR
+        val defaultTransition = transition.trigger === null || 
+            (transition.trigger instanceof BoolValue && (transition.trigger as BoolValue).value == true)  
+        val transitionTrigger = if (defaultTransition) "" else transition.trigger.serializeHR
+        val selfLoop = transition.sourceState == transition.targetState
+        var effects = ""
+        for (effect : transition.effects.indexed) {
+            effects += effect.value.serializeHR + NL
+            if (transition.effects.size > 1 && effect.key < transition.effects.size - 1) {
+                effects += WS(9)
+            } 
+        } 
         function.add(
-            SLC(indentation.length, "Start of transition " + index + " code (" + transition.serializeHR + ")")
+            MLCii(indentationLength, 2,
+                "Transition " + index + ": ",
+                IFC(selfLoop, "It is a self-loop back to " + transition.targetState.name + "."),
+                IFC(!selfLoop, "The target of this transition is state " + transition.targetState.name + "."),
+                IFC(!defaultTransition, "Trigger: " + transitionTrigger),
+                IFC(defaultTransition, "This is the default transition, the trigger is always true."),
+                IFC(!transition.effects.empty, "Effects: " + effects),
+                IFC(transition.immediate, "The transition is immediate.")
+            )
+        )
+        struct.forwardDeclarationsLogic.add(
+            MLCii(2, 2,
+                "Transition " + index + ": ",
+                IFC(selfLoop, "It is a self-loop back to " + transition.targetState.name + "."),
+                IFC(!selfLoop, "The target of this transition is state " + transition.targetState.name + "."),
+                IFC(!defaultTransition, "Trigger: " + transitionTrigger),
+                IFC(defaultTransition, "This is the default transition, the trigger is always true."),
+                IFC(!transition.effects.empty, "Effects: " + effects),
+                IFC(transition.immediate, "The transition is immediate.") 
+            ), NL
         )
         
         function.add(indentation)
@@ -537,7 +584,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val function = new StringBuilder => [ functions += it ]
         
         function.add(
-            SLC("Logic function for the " + cfrName + " region"), 
+            SLC("Function of region " + cfrName), 
             
             "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ") {", NL,
             
@@ -565,7 +612,9 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         )
         
         struct.forwardDeclarationsLogic.add(
-            "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ");", NL
+            "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ");",
+            LEC("Region " + cfrName), 
+            NL, NL
         ) 
     }
  
