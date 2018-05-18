@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * C Code Generator Reset Module
@@ -74,17 +75,14 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
             prefix += "."
              
             setInterface(prefix, cfr)
+            val cfrName = struct.getRegionName(cfr)
+            val initialState = cfr.states.filter[ initial ].head
             
             code.add(
-                "  ", 
-                STRUCT_VARIABLE_NAME,
-                "->",
-                struct.getRegionName(cfr),
-                ".",
-                REGION_ACTIVE_STATE,
-                " = ",
-                struct.getStateName(cfr.states.filter[ initial ].head),
-                ";", NL
+                "  ", STRUCT_VARIABLE_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ",
+                struct.getStateName(initialState), ";", NL, 
+                "  ", STRUCT_VARIABLE_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
+                initialState.getStatePriority, ";", NL
             )
         }
     }
@@ -116,5 +114,8 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
         }
     }
     
+    private def int getStatePriority(State state) {
+        return struct.getStatePriority(state)
+    }
     
 }

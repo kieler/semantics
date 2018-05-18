@@ -568,15 +568,8 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ");", NL
         ) 
     }
-
-
-    private val ANNOTATION_PRIORITY = "optPrioIDs"
-
-    def int getStatePriority(State state) {
-        if (state.hasAnnotation(ANNOTATION_PRIORITY)) {
-            return state.getAnnotation(ANNOTATION_PRIORITY).asIntAnnotation.value
-        } else {
-            return 0
-        }
-    } 
+ 
+    private def int getStatePriority(State state) {
+        return struct.getStatePriority(state)
+    }
 }
