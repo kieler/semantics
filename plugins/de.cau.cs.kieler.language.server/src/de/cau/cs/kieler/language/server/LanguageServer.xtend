@@ -14,6 +14,7 @@ package de.cau.cs.kieler.language.server
 
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
+import de.cau.cs.kieler.kexpressions.ide.RunSocketServer
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -29,6 +30,10 @@ class LanguageServer implements IApplication {
     
     override start(IApplicationContext context) throws Exception {
         // Start all language servers
+        print("Starting language server")
+        RunSocketServer.main()
+        print("Existed language server")
+        return EXIT_OK
     }
     
     override stop() {
