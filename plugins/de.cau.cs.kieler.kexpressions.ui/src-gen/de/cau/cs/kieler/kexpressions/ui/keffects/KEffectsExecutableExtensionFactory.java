@@ -3,12 +3,10 @@
  */
 package de.cau.cs.kieler.kexpressions.ui.keffects;
 
+import com.google.inject.Injector;
+import de.cau.cs.kieler.kexpressions.ui.internal.KEffectsActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-
-import com.google.inject.Injector;
-
-import de.cau.cs.kieler.kexpressions.ui.keffects.internal.KEffectsActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly

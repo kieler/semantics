@@ -1,18 +1,30 @@
-module de.cau.cs.kieler.simulation.trace.GenerateKTrace
+module de.cau.cs.kieler.simulation.trace.KTrace
 
 import org.eclipse.emf.mwe.utils.*
-import org.eclipse.xtext.generator.*
-import org.eclipse.xtext.ui.generator.*
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/simulation/trace/KTrace.xtext"
-var file.extensions = "ktrace,eso,esi"
+// Project information
+var rootPath = ".."
 var projectName = "de.cau.cs.kieler.simulation"
-var runtimeProject = "../${projectName}"
+var grammar = "de.cau.cs.kieler.simulation.trace.KTrace"
+var grammarURI = "classpath:/de/cau/cs/kieler/simulation/trace/KTrace.xtext"
+// File extension
+var file.extensions = "ktrace,eso,esi"
+// Parser backtracking
+var backtrack = true
+// Indicates languages that that contained in the same plugin as another language but do not influence major package naming.
+// This will prevent cleaning the src-gen folder and will adjust package names.
+// I.e.: KExt in KEpressions
+var secondaryGrammar = true
+// Cleans the src-gen folder (disable for secondary grammars)
+var clean = false
+
+// IMPORTANT: Uses ui plugin for ide classes
 
 Workflow {
     bean = StandaloneSetup {
-        scanClassPath = true
-        platformUri = "${runtimeProject}/.."
+        platformUri = "${rootPath}"
         registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"       
         registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"     
         registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
@@ -24,82 +36,61 @@ Workflow {
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kext.genmodel"
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.simulation/model/ktrace.genmodel"
     }
- 
-// DO NOT CLEAN because this will delete the generated KiSim code  
-//    component = DirectoryCleaner {
-//        directory = "${runtimeProject}/src-gen"
-//    }
-//    
-//    component = DirectoryCleaner {
-//        directory = "${runtimeProject}.ui/src-gen"
-//    }
     
-    component = Generator {
-        pathRtProject = runtimeProject
-        pathUiProject = "${runtimeProject}.ui"
-        projectNameRt = projectName
-        projectNameUi = "${projectName}.ui"
-        naming = GeneratorNaming {}
+    component = XtextGenerator {
+        configuration =  de.cau.cs.kieler.annotations.xtext.KielerGeneratorModule {
+            project = de.cau.cs.kieler.annotations.xtext.KielerProjectConfig {
+                projectRelatedPackageNames = secondaryGrammar
+                grammar = grammar
+                baseName = projectName
+                rootPath = rootPath
+                eclipsePlugin = {
+                    enabled = true
+                }
+                createEclipseMetaData = true
+                genericIde = {
+                    enabled = true
+                    name = "${projectName}.ui" // Use ui plugin!
+                }       
+            }
+            
+            code = {
+                encoding = "UTF-8"
+                preferXtendStubs = true
+            }
+        }
         
-        language = {
-            uri = grammarURI
+        cleaner = {
+            enabled = clean
+        }
+               
+        language = XtextGeneratorLanguage {
+            name = grammar
             fileExtensions = file.extensions
+            grammarUri = grammarURI
             
-            // Java API to access grammar elements (required by several other fragments)
-            fragment = grammarAccess.GrammarAccessFragment {}
-            
-            // generates Java API for the generated EPackages
-            fragment = ecore.EMFGeneratorFragment {}
-            
-            // the serialization component
-            fragment = serializer.SerializerFragment {
-                generateXtendStub = true
-            }
-            
-            // a custom ResourceFactory for use with EMF 
-            fragment = resourceFactory.ResourceFactoryFragment {
-                fileExtensions = file.extensions
-            }
-                
-            // the Antlr parser
-            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
+            fragment = grammarAccess.GrammarAccessFragment2 {}
+            // ONLY uncomment when EMF model should be generated from grammar
+            // fragment = ecore.EMFGeneratorFragment2 {}
+            fragment = serializer.SerializerFragment2 {}
+            fragment = resourceFactory.ResourceFactoryFragment2 {}
+            fragment = parser.antlr.XtextAntlrGeneratorFragment2 {
                 options = {
+                    backtrack = backtrack
                     classSplitting = true
-                    backtrack = true
                 }
             }
-            
-            // scoping and exporting API
-            fragment = scoping.ImportNamespacesScopingFragment {
-                generateXtendStub = true
-            }
-
-            // java-based API for validation 
-            fragment = validation.ValidatorFragment {}
-            
-            // formatter API 
-            fragment = formatting2.Formatter2Fragment auto-inject {}
-
-            // labeling API 
-            fragment = labeling.LabelProviderFragment {}
-
-            // outline API 
-            fragment = outline.OutlineTreeProviderFragment {}
-            fragment = outline.QuickOutlineFragment {}
-
-            // java-based API for content assistance 
-            fragment = contentAssist.ContentAssistFragment {}
-            
-            // antlr parser generator tailored for content assist 
-            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
-                options = {
-                    classSplitting = true
-                    backtrack = true
-                }
-            }
-            
-            // quickfix API 
-            fragment = quickfix.QuickfixProviderFragment {}
+            fragment = validation.ValidatorFragment2 {}
+            fragment = scoping.ImportNamespacesScopingFragment2 {}
+            fragment = exporting.QualifiedNamesFragment2 {}
+            fragment = formatting.Formatter2Fragment2 {}
+            fragment = ui.labeling.LabelProviderFragment2 {}
+            fragment = ui.outline.QuickOutlineFragment2 {}
+            fragment = ui.outline.OutlineTreeProviderFragment2 {}
+            fragment = ui.quickfix.QuickfixProviderFragment2 {}
+            fragment = ui.contentAssist.ContentAssistFragment2 {}
+            fragment = ui.refactoring.RefactorElementNameFragment2 {}
+   
         }
     }
 }

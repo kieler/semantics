@@ -7,10 +7,10 @@ import java.io.InputStream;
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class SCEstAntlrTokenFileProvider implements IAntlrTokenFileProvider {
-	
+
 	@Override
 	public InputStream getAntlrTokenFile() {
 		ClassLoader classLoader = getClass().getClassLoader();
-    	return classLoader.getResourceAsStream("de/cau/cs/kieler/esterel/scest/parser/antlr/internal/InternalSCEst.tokens");
+		return classLoader.getResourceAsStream("de/cau/cs/kieler/esterel/scest/parser/antlr/internal/InternalSCEst.tokens");
 	}
 }

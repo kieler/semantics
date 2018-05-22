@@ -3,26 +3,26 @@
  */
 package de.cau.cs.kieler.annotations.ui.internal;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import de.cau.cs.kieler.annotations.AnnotationsRuntimeModule;
+import de.cau.cs.kieler.annotations.ui.AnnotationsUiModule;
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class AnnotationsActivator extends AbstractUIPlugin {
-	
+
 	public static final String DE_CAU_CS_KIELER_ANNOTATIONS_ANNOTATIONS = "de.cau.cs.kieler.annotations.Annotations";
 	
 	private static final Logger logger = Logger.getLogger(AnnotationsActivator.class);
@@ -71,20 +71,18 @@ public class AnnotationsActivator extends AbstractUIPlugin {
 			throw new RuntimeException("Failed to create injector for " + language, e);
 		}
 	}
-
+	
 	protected Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_ANNOTATIONS_ANNOTATIONS.equals(grammar)) {
-			return new de.cau.cs.kieler.annotations.AnnotationsRuntimeModule();
+			return new AnnotationsRuntimeModule();
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_ANNOTATIONS_ANNOTATIONS.equals(grammar)) {
-			return new de.cau.cs.kieler.annotations.ui.AnnotationsUiModule(this);
+			return new AnnotationsUiModule(this);
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	

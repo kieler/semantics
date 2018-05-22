@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.kexpressions.keffects.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.kexpressions.keffects.parser.antlr.internal.InternalKEffectsParser;
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class KEffectsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class KEffectsParser extends AbstractAntlrParser {
+
 	@Inject
 	private KEffectsGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.kexpressions.keffects.parser.antlr.internal.InternalKEffectsParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.kexpressions.keffects.parser.antlr.internal.InternalKEffectsParser(stream, getGrammarAccess());
+	protected InternalKEffectsParser createParser(XtextTokenStream stream) {
+		return new InternalKEffectsParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "Effect";
 	}
-	
+
 	public KEffectsGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(KEffectsGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

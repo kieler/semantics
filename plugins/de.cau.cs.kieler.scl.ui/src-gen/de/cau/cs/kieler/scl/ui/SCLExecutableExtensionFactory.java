@@ -3,12 +3,10 @@
  */
 package de.cau.cs.kieler.scl.ui;
 
+import com.google.inject.Injector;
+import de.cau.cs.kieler.scl.ui.internal.SCLActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-
-import com.google.inject.Injector;
-
-import de.cau.cs.kieler.scl.ui.internal.SCLActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly

@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.kexpressions.kext.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtParser;
 import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class KExtParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class KExtParser extends AbstractAntlrParser {
+
 	@Inject
 	private KExtGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtParser(stream, getGrammarAccess());
+	protected InternalKExtParser createParser(XtextTokenStream stream) {
+		return new InternalKExtParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "Kext";
 	}
-	
+
 	public KExtGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(KExtGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

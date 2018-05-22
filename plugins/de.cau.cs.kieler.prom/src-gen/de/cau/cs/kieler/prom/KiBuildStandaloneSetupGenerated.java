@@ -3,22 +3,22 @@
  */
 package de.cau.cs.kieler.prom;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup;
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.ISetup;
+import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-/**
- * Generated from StandaloneSetup.xpt!
- */
 @SuppressWarnings("all")
 public class KiBuildStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		KExpressionsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -26,20 +26,17 @@ public class KiBuildStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.prom.KiBuildRuntimeModule());
+		return Guice.createInjector(new KiBuildRuntimeModule());
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/prom/KiBuild")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/prom/KiBuild", de.cau.cs.kieler.prom.kibuild.KibuildPackage.eINSTANCE);
-	}
-
-		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kibuild", resourceFactory);
-		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("kibuild", serviceProvider);
+		if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/prom/KiBuild")) {
+			EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/prom/KiBuild", KibuildPackage.eINSTANCE);
+		}
+		IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+		IResourceServiceProvider serviceProvider = injector.getInstance(IResourceServiceProvider.class);
 		
-
-
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kibuild", resourceFactory);
+		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("kibuild", serviceProvider);
 	}
 }

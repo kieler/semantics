@@ -3,26 +3,26 @@
  */
 package de.cau.cs.kieler.prom.ui.internal;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import de.cau.cs.kieler.prom.KiBuildRuntimeModule;
+import de.cau.cs.kieler.prom.ui.KiBuildUiModule;
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class KiBuildActivator extends AbstractUIPlugin {
-	
+
 	public static final String DE_CAU_CS_KIELER_PROM_KIBUILD = "de.cau.cs.kieler.prom.KiBuild";
 	
 	private static final Logger logger = Logger.getLogger(KiBuildActivator.class);
@@ -71,20 +71,18 @@ public class KiBuildActivator extends AbstractUIPlugin {
 			throw new RuntimeException("Failed to create injector for " + language, e);
 		}
 	}
-
+	
 	protected Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_PROM_KIBUILD.equals(grammar)) {
-			return new de.cau.cs.kieler.prom.KiBuildRuntimeModule();
+			return new KiBuildRuntimeModule();
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_PROM_KIBUILD.equals(grammar)) {
-			return new de.cau.cs.kieler.prom.ui.KiBuildUiModule(this);
+			return new KiBuildUiModule(this);
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	

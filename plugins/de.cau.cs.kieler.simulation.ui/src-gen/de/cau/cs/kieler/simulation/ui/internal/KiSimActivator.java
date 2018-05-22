@@ -3,26 +3,26 @@
  */
 package de.cau.cs.kieler.simulation.ui.internal;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import de.cau.cs.kieler.simulation.KiSimRuntimeModule;
+import de.cau.cs.kieler.simulation.ui.KiSimUiModule;
 import java.util.Collections;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class KiSimActivator extends AbstractUIPlugin {
-	
+
 	public static final String DE_CAU_CS_KIELER_SIMULATION_KISIM = "de.cau.cs.kieler.simulation.KiSim";
 	
 	private static final Logger logger = Logger.getLogger(KiSimActivator.class);
@@ -71,20 +71,18 @@ public class KiSimActivator extends AbstractUIPlugin {
 			throw new RuntimeException("Failed to create injector for " + language, e);
 		}
 	}
-
+	
 	protected Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_SIMULATION_KISIM.equals(grammar)) {
-			return new de.cau.cs.kieler.simulation.KiSimRuntimeModule();
+			return new KiSimRuntimeModule();
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_SIMULATION_KISIM.equals(grammar)) {
-			return new de.cau.cs.kieler.simulation.ui.KiSimUiModule(this);
+			return new KiSimUiModule(this);
 		}
-		
 		throw new IllegalArgumentException(grammar);
 	}
 	

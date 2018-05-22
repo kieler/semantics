@@ -20,11 +20,12 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
+import org.eclipse.xtext.util.CancelIndicator;
 
 import de.cau.cs.kieler.annotations.ui.AnnotationsSemanticHighlightingCalculator;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
@@ -36,7 +37,7 @@ import de.cau.cs.kieler.kexpressions.util.KExpressionsSwitch;
  */
 public class KExpressionsSemanticHighlightingCalculator extends AnnotationsSemanticHighlightingCalculator {
 
-    public void provideHighlightingFor( XtextResource resource, IHighlightedPositionAcceptor acceptor ) {
+    public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor, CancelIndicator cancelIndicator ) {
         if( resource == null ) {
             return;
         }
@@ -50,7 +51,7 @@ public class KExpressionsSemanticHighlightingCalculator extends AnnotationsSeman
             switcher.doSwitch( current );
         }
         
-        super.provideHighlightingFor(resource, acceptor);
+        super.provideHighlightingFor(resource, acceptor, cancelIndicator);
     }
 
     private class HighlightingSwitch extends KExpressionsSwitch<Void> {

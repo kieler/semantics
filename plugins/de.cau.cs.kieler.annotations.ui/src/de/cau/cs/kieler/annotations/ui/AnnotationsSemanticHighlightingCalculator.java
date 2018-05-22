@@ -14,10 +14,11 @@
 package de.cau.cs.kieler.annotations.ui;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.util.CancelIndicator;
 
 import com.google.inject.Inject;
 
@@ -37,8 +38,8 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
     /**
      * {@inheritDoc}
      */
-    public void provideHighlightingFor(final XtextResource resource,
-            final IHighlightedPositionAcceptor acceptor) {
+    public void provideHighlightingFor(XtextResource resource,
+            IHighlightedPositionAcceptor acceptor, CancelIndicator cancelIndicator) {
     	if (resource != null)
     		if (resource.getParseResult() != null)
     			if (resource.getParseResult().getRootNode() != null) {
@@ -97,4 +98,5 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
         
         // CHECKSTYLEON LineLength
     }
+
 }

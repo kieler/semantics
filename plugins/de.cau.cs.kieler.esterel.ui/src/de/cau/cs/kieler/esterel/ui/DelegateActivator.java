@@ -9,16 +9,14 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
-import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
 import com.google.common.collect.Maps;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
-import de.cau.cs.kieler.esterel.scest.ui.internal.SCEstActivator;
 import de.cau.cs.kieler.esterel.ui.internal.EsterelActivator;
+import de.cau.cs.kieler.esterel.ui.internal.SCEstActivator;
 
 /**
  * Delegate Activator for Esterel and SCEst.
@@ -82,7 +80,7 @@ public class DelegateActivator extends AbstractUIPlugin {
 			return new de.cau.cs.kieler.esterel.ui.EsterelUiModule(this);
 		}
 		if (SCEstActivator.DE_CAU_CS_KIELER_ESTEREL_SCEST_SCEST.equals(grammar)) {
-            return new de.cau.cs.kieler.esterel.scest.ui.SCEstUiModule(this);
+            return new de.cau.cs.kieler.esterel.ui.scest.SCEstUiModule(this);
         }
 		
 		throw new IllegalArgumentException(grammar);

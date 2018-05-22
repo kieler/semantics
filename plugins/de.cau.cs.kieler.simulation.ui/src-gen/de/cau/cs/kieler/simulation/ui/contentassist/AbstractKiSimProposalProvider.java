@@ -3,19 +3,20 @@
  */
 package de.cau.cs.kieler.simulation.ui.contentassist;
 
+import de.cau.cs.kieler.prom.ui.contentassist.KiBuildProposalProvider;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 /**
- * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.prom.ui.contentassist.KiBuildProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link KiBuildProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
-@SuppressWarnings("all")
-public class AbstractKiSimProposalProvider extends de.cau.cs.kieler.prom.ui.contentassist.KiBuildProposalProvider {
-		
+public abstract class AbstractKiSimProposalProvider extends KiBuildProposalProvider {
+
 	public void completeSimulationConfiguration_Attributes(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
@@ -52,7 +53,7 @@ public class AbstractKiSimProposalProvider extends de.cau.cs.kieler.prom.ui.cont
 	public void completeAction_Id(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-    
+
 	public void complete_SimulationConfiguration(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}

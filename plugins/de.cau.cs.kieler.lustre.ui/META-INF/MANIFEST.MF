@@ -16,13 +16,12 @@ Require-Bundle: de.cau.cs.kieler.lustre,
  org.eclipse.xtend.lib;resolution:=optional,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.kicool.ui
+ de.cau.cs.kieler.kicool.ui,
+ de.cau.cs.kieler.lustre.ide
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.lustre.ui.internal,
  de.cau.cs.kieler.lustre.ui.quickfix,
- de.cau.cs.kieler.lustre.ui.contentassist,
- de.cau.cs.kieler.lustre.ide.contentassist.antlr,
- de.cau.cs.kieler.lustre.ide.contentassist.antlr.internal
+ de.cau.cs.kieler.lustre.ui.contentassist
 Bundle-Activator: de.cau.cs.kieler.lustre.ui.internal.LustreActivator
 Bundle-ActivationPolicy: lazy

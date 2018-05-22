@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.esterel.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser;
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class EsterelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class EsterelParser extends AbstractAntlrParser {
+
 	@Inject
 	private EsterelGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser(stream, getGrammarAccess());
+	protected InternalEsterelParser createParser(XtextTokenStream stream) {
+		return new InternalEsterelParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "EsterelProgram";
 	}
-	
+
 	public EsterelGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(EsterelGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

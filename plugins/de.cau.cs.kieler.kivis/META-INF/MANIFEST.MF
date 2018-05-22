@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.kexpressions;bundle-version="0.12.0",
  de.cau.cs.kieler.prom,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kivis,
  de.cau.cs.kieler.kivis.animations,
@@ -32,5 +33,6 @@ Export-Package: de.cau.cs.kieler.kivis,
  de.cau.cs.kieler.kivis.scoping,
  de.cau.cs.kieler.kivis.serializer,
  de.cau.cs.kieler.kivis.services,
- de.cau.cs.kieler.kivis.validation
+ de.cau.cs.kieler.kivis.validation,
+ de.cau.cs.kieler.kivis.formatting2
 Import-Package: org.apache.log4j

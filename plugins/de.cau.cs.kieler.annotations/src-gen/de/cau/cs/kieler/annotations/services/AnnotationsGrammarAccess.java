@@ -3,20 +3,24 @@
  */
 package de.cau.cs.kieler.annotations.services;
 
-import com.google.inject.Singleton;
 import com.google.inject.Inject;
-
+import com.google.inject.Singleton;
 import java.util.List;
-
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
-
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
 public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
-	
 	
 	public class AnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Annotation");
@@ -38,23 +42,22 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation:
 		//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//CommentAnnotation
 		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
-
+		
 		//KeyStringValueAnnotation
 		public RuleCall getKeyStringValueAnnotationParserRuleCall_1() { return cKeyStringValueAnnotationParserRuleCall_1; }
-
+		
 		//TypedKeyStringValueAnnotation
 		public RuleCall getTypedKeyStringValueAnnotationParserRuleCall_2() { return cTypedKeyStringValueAnnotationParserRuleCall_2; }
-
+		
 		//TagAnnotation
 		public RuleCall getTagAnnotationParserRuleCall_3() { return cTagAnnotationParserRuleCall_3; }
 	}
-
 	public class PragmaElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Pragma");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -66,17 +69,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//Pragma:
 		//	StringPragma | PragmaTag;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//StringPragma | PragmaTag
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//StringPragma
 		public RuleCall getStringPragmaParserRuleCall_0() { return cStringPragmaParserRuleCall_0; }
-
+		
 		//PragmaTag
 		public RuleCall getPragmaTagParserRuleCall_1() { return cPragmaTagParserRuleCall_1; }
 	}
-
 	public class ValuedAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.ValuedAnnotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -91,20 +93,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedAnnotation Annotation:
 		//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//CommentAnnotation
 		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
-
+		
 		//KeyStringValueAnnotation
 		public RuleCall getKeyStringValueAnnotationParserRuleCall_1() { return cKeyStringValueAnnotationParserRuleCall_1; }
-
+		
 		//TypedKeyStringValueAnnotation
 		public RuleCall getTypedKeyStringValueAnnotationParserRuleCall_2() { return cTypedKeyStringValueAnnotationParserRuleCall_2; }
 	}
-
 	public class RestrictedTypeAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.RestrictedTypeAnnotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -119,23 +120,22 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//RestrictedTypeAnnotation Annotation:
 		//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//CommentAnnotation
 		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
-
+		
 		//RestrictedKeyStringValueAnnotation
 		public RuleCall getRestrictedKeyStringValueAnnotationParserRuleCall_1() { return cRestrictedKeyStringValueAnnotationParserRuleCall_1; }
-
+		
 		//RestrictedTypedKeyStringValueAnnotation
 		public RuleCall getRestrictedTypedKeyStringValueAnnotationParserRuleCall_2() { return cRestrictedTypedKeyStringValueAnnotationParserRuleCall_2; }
-
+		
 		//TagAnnotation
 		public RuleCall getTagAnnotationParserRuleCall_3() { return cTagAnnotationParserRuleCall_3; }
 	}
-
 	public class QuotedStringAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.QuotedStringAnnotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -152,23 +152,22 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//QuotedStringAnnotation Annotation:
 		//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//CommentAnnotation
 		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
-
+		
 		//QuotedKeyStringValueAnnotation
 		public RuleCall getQuotedKeyStringValueAnnotationParserRuleCall_1() { return cQuotedKeyStringValueAnnotationParserRuleCall_1; }
-
+		
 		//QuotedTypedKeyStringValueAnnotation
 		public RuleCall getQuotedTypedKeyStringValueAnnotationParserRuleCall_2() { return cQuotedTypedKeyStringValueAnnotationParserRuleCall_2; }
-
+		
 		//TagAnnotation
 		public RuleCall getTagAnnotationParserRuleCall_3() { return cTagAnnotationParserRuleCall_3; }
 	}
-
 	public class CommentAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.CommentAnnotation");
 		private final Assignment cValuesAssignment = (Assignment)rule.eContents().get(1);
@@ -179,14 +178,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//CommentAnnotation:
 		//	values+=COMMENT_ANNOTATION;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//values+=COMMENT_ANNOTATION
 		public Assignment getValuesAssignment() { return cValuesAssignment; }
-
+		
 		//COMMENT_ANNOTATION
 		public RuleCall getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0() { return cValuesCOMMENT_ANNOTATIONTerminalRuleCall_0; }
 	}
-
 	public class CommentAnnotatonSLElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.CommentAnnotatonSL");
 		private final Assignment cValuesAssignment = (Assignment)rule.eContents().get(1);
@@ -195,14 +193,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//CommentAnnotatonSL CommentAnnotation:
 		//	values+=SL_COMMENT_ANNOTATION;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//values+=SL_COMMENT_ANNOTATION
 		public Assignment getValuesAssignment() { return cValuesAssignment; }
-
+		
 		//SL_COMMENT_ANNOTATION
 		public RuleCall getValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0() { return cValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0; }
 	}
-
 	public class TagAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.TagAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -215,20 +212,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//TagAnnotation:
 		//	'@' name=ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 	}
-
 	public class PragmaTagElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.PragmaTag");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -239,20 +235,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//PragmaTag Pragma:
 		//	'#' name=ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'#' name=ExtendedID
 		public Group getGroup() { return cGroup; }
-
+		
 		//'#'
 		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 	}
-
 	public class KeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.KeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -272,38 +267,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//KeyStringValueAnnotation StringAnnotation:
 		//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//values+=EStringAllTypes
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
-
+		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
-
+		
 		//(',' values+=EStringAllTypes)*
 		public Group getGroup_3() { return cGroup_3; }
-
+		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
-
+		
 		//values+=EStringAllTypes
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
-
+		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_3_1_0() { return cValuesEStringAllTypesParserRuleCall_3_1_0; }
 	}
-
 	public class RestrictedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.RestrictedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -320,38 +314,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//RestrictedKeyStringValueAnnotation StringAnnotation:
 		//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//values+=EStringBoolean
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
-
+		
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_2_0() { return cValuesEStringBooleanParserRuleCall_2_0; }
-
+		
 		//(',' values+=EStringBoolean)*
 		public Group getGroup_3() { return cGroup_3; }
-
+		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
-
+		
 		//values+=EStringBoolean
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
-
+		
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_3_1_0() { return cValuesEStringBooleanParserRuleCall_3_1_0; }
 	}
-
 	public class StringPragmaElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.StringPragma");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -368,38 +361,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//StringPragma:
 		//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'#'
 		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//values+=EStringAllTypes
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
-
+		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
-
+		
 		//(',' values+=EStringAllTypes)*
 		public Group getGroup_3() { return cGroup_3; }
-
+		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
-
+		
 		//values+=EStringAllTypes
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
-
+		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_3_1_0() { return cValuesEStringAllTypesParserRuleCall_3_1_0; }
 	}
-
 	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.TypedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -422,50 +414,49 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedKeyStringValueAnnotation TypedStringAnnotation:
 		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
-
+		
 		//type=ExtendedID
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
-
+		
 		//ExtendedID
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
-
+		
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
-
+		
 		//values+=EStringAllTypes
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
-
+		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_5_0() { return cValuesEStringAllTypesParserRuleCall_5_0; }
-
+		
 		//(',' values+=EStringAllTypes)*
 		public Group getGroup_6() { return cGroup_6; }
-
+		
 		//','
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
-
+		
 		//values+=EStringAllTypes
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
-
+		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_6_1_0() { return cValuesEStringAllTypesParserRuleCall_6_1_0; }
 	}
-
 	public class RestrictedTypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.RestrictedTypedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -486,50 +477,49 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
 		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
-
+		
 		//type=ExtendedID
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
-
+		
 		//ExtendedID
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
-
+		
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
-
+		
 		//values+=EStringBoolean
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
-
+		
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_5_0() { return cValuesEStringBooleanParserRuleCall_5_0; }
-
+		
 		//(',' values+=EStringBoolean)*
 		public Group getGroup_6() { return cGroup_6; }
-
+		
 		//','
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
-
+		
 		//values+=EStringBoolean
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
-
+		
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_6_1_0() { return cValuesEStringBooleanParserRuleCall_6_1_0; }
 	}
-
 	public class QuotedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.QuotedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -549,38 +539,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//QuotedKeyStringValueAnnotation StringAnnotation:
 		//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID values+=STRING (',' values+=STRING)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//values+=STRING
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
-
+		
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_2_0() { return cValuesSTRINGTerminalRuleCall_2_0; }
-
+		
 		//(',' values+=STRING)*
 		public Group getGroup_3() { return cGroup_3; }
-
+		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
-
+		
 		//values+=STRING
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
-
+		
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_3_1_0() { return cValuesSTRINGTerminalRuleCall_3_1_0; }
 	}
-
 	public class QuotedTypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.QuotedTypedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -604,50 +593,49 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
 		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//'@'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
+		
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
+		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
-
+		
 		//type=ExtendedID
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
-
+		
 		//ExtendedID
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
-
+		
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
-
+		
 		//values+=STRING
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
-
+		
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_5_0() { return cValuesSTRINGTerminalRuleCall_5_0; }
-
+		
 		//(',' values+=STRING)*
 		public Group getGroup_6() { return cGroup_6; }
-
+		
 		//','
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
-
+		
 		//values+=STRING
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
-
+		
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_6_1_0() { return cValuesSTRINGTerminalRuleCall_6_1_0; }
 	}
-
 	public class EStringElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.EString");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -660,17 +648,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//EString:
 		//	STRING | ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//STRING | ExtendedID
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
-
+		
 		//ExtendedID
 		public RuleCall getExtendedIDParserRuleCall_1() { return cExtendedIDParserRuleCall_1; }
 	}
-
 	public class EStringBooleanElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -681,20 +668,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//EStringBoolean:
 		//	STRING | ExtendedID | BOOLEAN;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//STRING | ExtendedID | BOOLEAN
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
-
+		
 		//ExtendedID
 		public RuleCall getExtendedIDParserRuleCall_1() { return cExtendedIDParserRuleCall_1; }
-
+		
 		//BOOLEAN
 		public RuleCall getBOOLEANTerminalRuleCall_2() { return cBOOLEANTerminalRuleCall_2; }
 	}
-
 	public class EStringAllTypesElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -707,26 +693,25 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//EStringAllTypes:
 		//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//STRING | ExtendedID | BOOLEAN | Integer | Floateger
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
-
+		
 		//ExtendedID
 		public RuleCall getExtendedIDParserRuleCall_1() { return cExtendedIDParserRuleCall_1; }
-
+		
 		//BOOLEAN
 		public RuleCall getBOOLEANTerminalRuleCall_2() { return cBOOLEANTerminalRuleCall_2; }
-
+		
 		//Integer
 		public RuleCall getIntegerParserRuleCall_3() { return cIntegerParserRuleCall_3; }
-
+		
 		//Floateger
 		public RuleCall getFloategerParserRuleCall_4() { return cFloategerParserRuleCall_4; }
 	}
-
 	public class ExtendedIDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.ExtendedID");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -746,38 +731,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID:
 		//	ID (('.' | '-') ID)* ('#' INT)?;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//ID (('.' | '-') ID)* ('#' INT)?
 		public Group getGroup() { return cGroup; }
-
+		
 		//ID
 		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
-
+		
 		//(('.' | '-') ID)*
 		public Group getGroup_1() { return cGroup_1; }
-
+		
 		//'.' | '-'
 		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
-
+		
 		//'.'
 		public Keyword getFullStopKeyword_1_0_0() { return cFullStopKeyword_1_0_0; }
-
+		
 		//'-'
 		public Keyword getHyphenMinusKeyword_1_0_1() { return cHyphenMinusKeyword_1_0_1; }
-
+		
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
-
+		
 		//('#' INT)?
 		public Group getGroup_2() { return cGroup_2; }
-
+		
 		//'#'
 		public Keyword getNumberSignKeyword_2_0() { return cNumberSignKeyword_2_0; }
-
+		
 		//INT
 		public RuleCall getINTTerminalRuleCall_2_1() { return cINTTerminalRuleCall_2_1; }
 	}
-
 	public class QualifiedIDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.QualifiedID");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -789,23 +773,22 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedID:
 		//	ID ("." ID)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//ID ("." ID)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//ID
 		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
-
+		
 		//("." ID)*
 		public Group getGroup_1() { return cGroup_1; }
-
+		
 		//"."
 		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
-
+		
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
-
 	public class IntegerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Integer");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -817,17 +800,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//Integer ecore::EInt:
 		//	'-'? INT;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'-'? INT
 		public Group getGroup() { return cGroup; }
-
+		
 		//'-'?
 		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
-
+		
 		//INT
 		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
 	}
-
 	public class FloategerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Floateger");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -839,17 +821,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//Floateger ecore::EFloat:
 		//	'-'? FLOAT;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'-'? FLOAT
 		public Group getGroup() { return cGroup; }
-
+		
 		//'-'?
 		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
-
+		
 		//FLOAT
 		public RuleCall getFLOATTerminalRuleCall_1() { return cFLOATTerminalRuleCall_1; }
 	}
-
 	public class DoubleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Double");
 		private final RuleCall cFLOATTerminalRuleCall = (RuleCall)rule.eContents().get(1);
@@ -857,11 +838,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//Double ecore::EDouble:
 		//	FLOAT;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//FLOAT
 		public RuleCall getFLOATTerminalRuleCall() { return cFLOATTerminalRuleCall; }
 	}
-
 	public class DoublegerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Doubleger");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -871,13 +851,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//Doubleger ecore::EDouble:
 		//	'-'? FLOAT;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'-'? FLOAT
 		public Group getGroup() { return cGroup; }
-
+		
 		//'-'?
 		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
-
+		
 		//FLOAT
 		public RuleCall getFLOATTerminalRuleCall_1() { return cFLOATTerminalRuleCall_1; }
 	}
@@ -920,12 +900,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TerminalRule tID;
 	
 	private final Grammar grammar;
-
+	
 	private final TerminalsGrammarAccess gaTerminals;
 
 	@Inject
 	public AnnotationsGrammarAccess(GrammarProvider grammarProvider,
-		TerminalsGrammarAccess gaTerminals) {
+			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pAnnotation = new AnnotationElements();
@@ -986,7 +966,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return grammar;
 	}
 	
-
+	
 	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
 		return gaTerminals;
 	}
@@ -1010,7 +990,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
 	}
-
+	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
@@ -1022,7 +1002,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaRule() {
 		return getPragmaAccess().getRule();
 	}
-
+	
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
@@ -1036,7 +1016,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedAnnotationRule() {
 		return getValuedAnnotationAccess().getRule();
 	}
-
+	
 	//// Restricted Type Annotation Rule
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
@@ -1049,7 +1029,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypeAnnotationRule() {
 		return getRestrictedTypeAnnotationAccess().getRule();
 	}
-
+	
 	//// Quoted String Annotation Rule
 	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
@@ -1064,7 +1044,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
 	}
-
+	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
@@ -1076,7 +1056,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotationRule() {
 		return getCommentAnnotationAccess().getRule();
 	}
-
+	
 	//CommentAnnotatonSL CommentAnnotation:
 	//	values+=SL_COMMENT_ANNOTATION;
 	public CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
@@ -1086,7 +1066,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotatonSLRule() {
 		return getCommentAnnotatonSLAccess().getRule();
 	}
-
+	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation:
@@ -1098,7 +1078,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTagAnnotationRule() {
 		return getTagAnnotationAccess().getRule();
 	}
-
+	
 	//PragmaTag Pragma:
 	//	'#' name=ExtendedID;
 	public PragmaTagElements getPragmaTagAccess() {
@@ -1108,7 +1088,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaTagRule() {
 		return getPragmaTagAccess().getRule();
 	}
-
+	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -1121,7 +1101,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getKeyStringValueAnnotationRule() {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
 	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
@@ -1131,7 +1111,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//StringPragma:
 	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public StringPragmaElements getStringPragmaAccess() {
@@ -1141,7 +1121,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringPragmaRule() {
 		return getStringPragmaAccess().getRule();
 	}
-
+	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
@@ -1153,7 +1133,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
 	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
@@ -1163,7 +1143,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
 		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -1176,7 +1156,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedKeyStringValueAnnotationRule() {
 		return getQuotedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -1189,7 +1169,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -1202,7 +1182,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringRule() {
 		return getEStringAccess().getRule();
 	}
-
+	
 	//EStringBoolean:
 	//	STRING | ExtendedID | BOOLEAN;
 	public EStringBooleanElements getEStringBooleanAccess() {
@@ -1212,7 +1192,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringBooleanRule() {
 		return getEStringBooleanAccess().getRule();
 	}
-
+	
 	//EStringAllTypes:
 	//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 	public EStringAllTypesElements getEStringAllTypesAccess() {
@@ -1222,7 +1202,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringAllTypesRule() {
 		return getEStringAllTypesAccess().getRule();
 	}
-
+	
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
@@ -1235,7 +1215,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
 	}
-
+	
 	//QualifiedID:
 	//	ID ("." ID)*;
 	public QualifiedIDElements getQualifiedIDAccess() {
@@ -1245,7 +1225,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQualifiedIDRule() {
 		return getQualifiedIDAccess().getRule();
 	}
-
+	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
@@ -1257,7 +1237,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntegerRule() {
 		return getIntegerAccess().getRule();
 	}
-
+	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
@@ -1269,7 +1249,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloategerRule() {
 		return getFloategerAccess().getRule();
 	}
-
+	
 	//Double ecore::EDouble:
 	//	FLOAT;
 	public DoubleElements getDoubleAccess() {
@@ -1279,7 +1259,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoubleRule() {
 		return getDoubleAccess().getRule();
 	}
-
+	
 	//Doubleger ecore::EDouble:
 	//	'-'? FLOAT;
 	public DoublegerElements getDoublegerAccess() {
@@ -1289,76 +1269,76 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoublegerRule() {
 		return getDoublegerAccess().getRule();
 	}
-
+	
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return tCOMMENT_ANNOTATION;
-	} 
-
+	}
+	
 	//@ Override terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
-	} 
-
+	}
+	
 	//terminal SL_COMMENT_ANNOTATION:
 	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return tSL_COMMENT_ANNOTATION;
-	} 
-
+	}
+	
 	//@ Override terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
-	} 
-
+	}
+	
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return tNUMBER;
-	} 
-
+	}
+	
 	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return tINT;
-	} 
-
+	}
+	
 	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;
-	} 
-
+	}
+	
 	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return tBOOLEAN;
-	} 
-
+	}
+	
 	//@ Override terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return tSTRING;
-	} 
-
+	}
+	
 	//@ Override terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return tID;
-	} 
-
+	}
+	
 	//terminal WS:
 	//	' ' | '\t' | '\r' | '\n'+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
-	} 
-
+	}
+	
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
-	} 
+	}
 }

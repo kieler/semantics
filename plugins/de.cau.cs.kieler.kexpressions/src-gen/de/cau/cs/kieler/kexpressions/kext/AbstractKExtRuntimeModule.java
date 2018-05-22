@@ -3,18 +3,54 @@
  */
 package de.cau.cs.kieler.kexpressions.kext;
 
-import java.util.Properties;
-
-import org.eclipse.xtext.Constants;
-
 import com.google.inject.Binder;
+import com.google.inject.Provider;
 import com.google.inject.name.Names;
+import de.cau.cs.kieler.kexpressions.kext.formatting2.KExtFormatter;
+import de.cau.cs.kieler.kexpressions.kext.parser.antlr.KExtAntlrTokenFileProvider;
+import de.cau.cs.kieler.kexpressions.kext.parser.antlr.KExtParser;
+import de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtLexer;
+import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider;
+import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
+import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSyntacticSequencer;
+import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
+import de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator;
+import java.util.Properties;
+import org.eclipse.xtext.Constants;
+import org.eclipse.xtext.IGrammarAccess;
+import org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider;
+import org.eclipse.xtext.formatting2.FormatterPreferences;
+import org.eclipse.xtext.formatting2.IFormatter2;
+import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.parser.IParser;
+import org.eclipse.xtext.parser.ITokenToStringConverter;
+import org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider;
+import org.eclipse.xtext.parser.antlr.AntlrTokenToStringConverter;
+import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
+import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.eclipse.xtext.parser.antlr.Lexer;
+import org.eclipse.xtext.parser.antlr.LexerBindings;
+import org.eclipse.xtext.parser.antlr.LexerProvider;
+import org.eclipse.xtext.preferences.IPreferenceValuesProvider;
+import org.eclipse.xtext.scoping.IGlobalScopeProvider;
+import org.eclipse.xtext.scoping.IScopeProvider;
+import org.eclipse.xtext.scoping.IgnoreCaseLinking;
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
+import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
+import org.eclipse.xtext.serializer.ISerializer;
+import org.eclipse.xtext.serializer.impl.Serializer;
+import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
+import org.eclipse.xtext.service.DefaultRuntimeModule;
+import org.eclipse.xtext.service.SingletonBinding;
 
 /**
- * Manual modifications go to {de.cau.cs.kieler.kexpressions.kext.KExtRuntimeModule}
+ * Manual modifications go to {@link KExtRuntimeModule}.
  */
 @SuppressWarnings("all")
-public abstract class AbstractKExtRuntimeModule extends org.eclipse.xtext.service.DefaultRuntimeModule {
+public abstract class AbstractKExtRuntimeModule extends DefaultRuntimeModule {
 
 	protected Properties properties = null;
 
@@ -33,104 +69,107 @@ public abstract class AbstractKExtRuntimeModule extends org.eclipse.xtext.servic
 			binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS)).toInstance("kext");
 	}
 	
-	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
-	public java.lang.ClassLoader bindClassLoaderToInstance() {
+	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
+	public ClassLoader bindClassLoaderToInstance() {
 		return getClass().getClassLoader();
 	}
-
-	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
-	public Class<? extends org.eclipse.xtext.IGrammarAccess> bindIGrammarAccess() {
-		return de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
+	public Class<? extends IGrammarAccess> bindIGrammarAccess() {
+		return KExtGrammarAccess.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	public Class<? extends org.eclipse.xtext.serializer.sequencer.ISemanticSequencer> bindISemanticSequencer() {
-		return de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
+		return KExtSemanticSequencer.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	public Class<? extends org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer> bindISyntacticSequencer() {
-		return de.cau.cs.kieler.kexpressions.kext.serializer.KExtSyntacticSequencer.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
+		return KExtSyntacticSequencer.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
-		return org.eclipse.xtext.serializer.impl.Serializer.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	public Class<? extends ISerializer> bindISerializer() {
+		return Serializer.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
-		return de.cau.cs.kieler.kexpressions.kext.parser.antlr.KExtParser.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends IParser> bindIParser() {
+		return KExtParser.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public Class<? extends org.eclipse.xtext.parser.ITokenToStringConverter> bindITokenToStringConverter() {
-		return org.eclipse.xtext.parser.antlr.AntlrTokenToStringConverter.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends ITokenToStringConverter> bindITokenToStringConverter() {
+		return AntlrTokenToStringConverter.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public Class<? extends org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider> bindIAntlrTokenFileProvider() {
-		return de.cau.cs.kieler.kexpressions.kext.parser.antlr.KExtAntlrTokenFileProvider.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends IAntlrTokenFileProvider> bindIAntlrTokenFileProvider() {
+		return KExtAntlrTokenFileProvider.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public Class<? extends org.eclipse.xtext.parser.antlr.Lexer> bindLexer() {
-		return de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtLexer.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends Lexer> bindLexer() {
+		return InternalKExtLexer.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public com.google.inject.Provider<de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtLexer> provideInternalKExtLexer() {
-		return org.eclipse.xtext.parser.antlr.LexerProvider.create(de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtLexer.class);
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends ITokenDefProvider> bindITokenDefProvider() {
+		return AntlrTokenDefProvider.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public void configureRuntimeLexer(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.parser.antlr.LexerBindings.RUNTIME)).to(de.cau.cs.kieler.kexpressions.kext.parser.antlr.internal.InternalKExtLexer.class);
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Provider<? extends InternalKExtLexer> provideInternalKExtLexer() {
+		return LexerProvider.create(InternalKExtLexer.class);
 	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public Class<? extends org.eclipse.xtext.parser.antlr.ITokenDefProvider> bindITokenDefProvider() {
-		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public void configureRuntimeLexer(Binder binder) {
+		binder.bind(Lexer.class)
+			.annotatedWith(Names.named(LexerBindings.RUNTIME))
+			.to(InternalKExtLexer.class);
 	}
-
-	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator> bindKExtValidator() {
-		return de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	@SingletonBinding(eager=true)
+	public Class<? extends KExtValidator> bindKExtValidator() {
+		return KExtValidator.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
-	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
-		return de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public Class<? extends IScopeProvider> bindIScopeProvider() {
+		return KExtScopeProvider.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
-	public void configureIScopeProviderDelegate(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.scoping.IScopeProvider.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider.NAMED_DELEGATE)).to(org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider.class);
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public void configureIScopeProviderDelegate(Binder binder) {
+		binder.bind(IScopeProvider.class).annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE)).to(ImportedNamespaceAwareLocalScopeProvider.class);
 	}
-
-	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
-	public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
-		return org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
+		return DefaultGlobalScopeProvider.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
-	public void configureIgnoreCaseLinking(com.google.inject.Binder binder) {
-		binder.bindConstant().annotatedWith(org.eclipse.xtext.scoping.IgnoreCaseLinking.class).to(false);
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public void configureIgnoreCaseLinking(Binder binder) {
+		binder.bindConstant().annotatedWith(IgnoreCaseLinking.class).to(false);
 	}
-
-	// contributed by org.eclipse.xtext.generator.exporting.QualifiedNamesFragment
-	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
-		return org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
+	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
+		return DefaultDeclarativeQualifiedNameProvider.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
-	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
-		return de.cau.cs.kieler.kexpressions.kext.formatting2.KExtFormatter.class;
+	
+	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	public Class<? extends IFormatter2> bindIFormatter2() {
+		return KExtFormatter.class;
 	}
-
-	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
-	public void configureFormatterPreferences(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class).annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class).to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
+	
+	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	public void configureFormatterPreferences(Binder binder) {
+		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}
-
+	
 }

@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.kicool.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.kicool.parser.antlr.internal.InternalKiCoolParser;
 import de.cau.cs.kieler.kicool.services.KiCoolGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class KiCoolParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class KiCoolParser extends AbstractAntlrParser {
+
 	@Inject
 	private KiCoolGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.kicool.parser.antlr.internal.InternalKiCoolParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.kicool.parser.antlr.internal.InternalKiCoolParser(stream, getGrammarAccess());
+	protected InternalKiCoolParser createParser(XtextTokenStream stream) {
+		return new InternalKiCoolParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "System";
 	}
-	
+
 	public KiCoolGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(KiCoolGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

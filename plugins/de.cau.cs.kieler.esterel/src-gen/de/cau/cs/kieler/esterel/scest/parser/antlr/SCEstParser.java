@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.esterel.scest.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.esterel.scest.parser.antlr.internal.InternalSCEstParser;
 import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class SCEstParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class SCEstParser extends AbstractAntlrParser {
+
 	@Inject
 	private SCEstGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.esterel.scest.parser.antlr.internal.InternalSCEstParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.esterel.scest.parser.antlr.internal.InternalSCEstParser(stream, getGrammarAccess());
+	protected InternalSCEstParser createParser(XtextTokenStream stream) {
+		return new InternalSCEstParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "EsterelProgram";
 	}
-	
+
 	public SCEstGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(SCEstGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

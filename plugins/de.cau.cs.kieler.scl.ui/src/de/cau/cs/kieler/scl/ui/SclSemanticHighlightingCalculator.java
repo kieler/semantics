@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scl.ui;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
+import org.eclipse.xtext.util.CancelIndicator;
 
 import de.cau.cs.kieler.kexpressions.ui.KExpressionsSemanticHighlightingCalculator;
 
@@ -25,13 +26,12 @@ import de.cau.cs.kieler.kexpressions.ui.KExpressionsSemanticHighlightingCalculat
  */
 public class SclSemanticHighlightingCalculator extends KExpressionsSemanticHighlightingCalculator {
     
+//    Semantic highlighting causes a crash on large files
 
-    /**
-     * {@inheritDoc}
-     */
-    public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
-        super.provideHighlightingFor(resource, acceptor);
-        // Semantic highlighting causes a crash on large files
+//    /**
+//     * {@inheritDoc}
+//     */
+//    public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor, CancelIndicator cancelIndicator  ) {
 //        if (resource == null || resource.getParseResult() == null)
 //            return;
 //
@@ -46,5 +46,5 @@ public class SclSemanticHighlightingCalculator extends KExpressionsSemanticHighl
 //                super.provideHighlightingFor(resource, acceptor);
 //            }
 //        }
-    }
+//    }
 }
