@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kexpressions.ide
+package de.cau.cs.kieler.sccharts.ide.text
 
 
 
@@ -25,10 +25,10 @@ import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.kexpressions.ide.kext.KExtIdeSetup
 import de.cau.cs.kieler.kexpressions.kext.KExtRuntimeModule
-import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetupGenerated
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetupGenerated
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
 
 /**
  * @author sdo
@@ -41,9 +41,9 @@ class RunSocketServer {
 
     def static void main() throws Exception {
 //        val injector = KExtIdeSetup.doSetup
-        KEffectsStandaloneSetup.doSetup();
-        val standAloneSetup = new KExtStandaloneSetupGenerated
-        val injector = Guice.createInjector(Modules2.mixin(new ServerModule(), new KExtRuntimeModule()));
+        KExtStandaloneSetup.doSetup();
+        val standAloneSetup = new SCTXStandaloneSetupGenerated
+        val injector = Guice.createInjector(Modules2.mixin(new ServerModule(), new SCTXRuntimeModule()));
         standAloneSetup.register(injector)
         print("Got to do registration")
 //        injector.createChildInjector(Modules2.mixin(new ServerModule))

@@ -26,12 +26,17 @@ import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
 import org.eclipse.xtext.xtext.generator.model.TextFileAccess
 import com.google.inject.Inject
+import org.eclipse.xtext.generator.FileSystemAccessRequest
 
 /**
  * @author sdo
  *
  */
 class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
+    
+    String highlightingModuleName
+    
+    String highlightingPath
     
     override void generate() {
         val String langId=IterableExtensions.<String>head(this.getLanguage().getFileExtensions()) 
@@ -59,7 +64,8 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
         IterableExtensions.<String>filter(allKeywords, filterKeywords).forEach(sortKeywords) 
         Collections.<String>sort(wordKeywords) 
         Collections.<String>sort(nonWordKeywords) 
-        val TextFileAccess jsFile=this.fileAccessFactory.createTextFile() 
+        val jsFile = fileAccessFactory.createTextFile()
+        jsFile.path = highlightingPath
         var StringConcatenationClient content=new StringConcatenationClient(){
             override protected void appendTo(TargetStringConcatenation target) {
                 target.append("export const configuration: monaco.languages.LanguageConfiguration = {\n" + 
@@ -194,7 +200,7 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
             }
         }
         jsFile.setContent(content) 
-        // change path
-        jsFile.writeTo(this.getProjectConfig().getWeb().getAssets()) 
+        // TODO change path
+        jsFile.writeTo(this.getProjectConfig().getGenericIde().metaInf) 
     }
 }

@@ -14,7 +14,7 @@ package de.cau.cs.kieler.language.server
 
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
-import de.cau.cs.kieler.kexpressions.ide.RunSocketServer
+import de.cau.cs.kieler.sccharts.ide.text.RunSocketServer
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
