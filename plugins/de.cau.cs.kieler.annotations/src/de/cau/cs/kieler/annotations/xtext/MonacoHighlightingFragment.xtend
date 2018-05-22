@@ -98,23 +98,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
                 target.append("\n" + 
                         "    ],\n");
                 
-                target.append("    NonKeywords: [\n");
-                for (String string2 : nonWordKeywords) {
-                    target.append("        '");
-                    target.append(string2);
-                    target.append("',\n");
-                }
-                target.append("\n" + 
-                        "    ],\n");
-                target.append("    allKeywords: [\n");
-                for (String string2 : allKeywords) {
-                    target.append("        '");
-                    target.append(string2);
-                    target.append("',\n");
-                }
-                target.append("\n" + 
-                        "    ],\n");
-                
 //              target.append(
 //                      "    operators: [\n" + 
 //                      "        '=', '>', '<', '!', ':',\n" + 
@@ -151,7 +134,11 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
                         "                    '@default': ''\n" + 
                         "                }\n" + 
                         "            }],\n" + 
+                        "\n")
+                target.append("\n" + 
+                "                    [/@\\s*[a-zA-Z_\\$][\\w\\$]*/, { token: 'annotation', log: 'annotation token: $0' }],\n" + 
                         "\n" + 
+                        "      // numbers" + 
                         "            // numbers\n" + 
                         "            [/(@digits)[eE]([\\-+]?(@digits))?[fFdD]?/, 'number.float'],\n" + 
                         "            [/(@digits)\\.(@digits)([eE][\\-+]?(@digits))?[fFdD]?/, 'number.float'],\n" + 
