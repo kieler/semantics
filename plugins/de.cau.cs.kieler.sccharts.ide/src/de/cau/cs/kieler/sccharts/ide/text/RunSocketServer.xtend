@@ -38,6 +38,13 @@ class RunSocketServer {
     static val LOG = Logger.getLogger(RunSocketServer)
 
     def static void main() throws Exception {
+        // TODO check how to add more languages
+//        new SCLIdeSetup {
+//            override createInjector() {
+//                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
+//            }
+//        }.createInjectorAndDoEMFRegistration()
+        
         // TODO why does this work and the implementation from theia-xtext doesn#t???
         new SCTXIdeSetup {
             override createInjector() {
@@ -48,6 +55,7 @@ class RunSocketServer {
         val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
             bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
         ]))
+        print("Create injector and register emf")
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", 5007))
         val threadPool = Executors.newCachedThreadPool()
         
