@@ -8,13 +8,14 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions;
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.Link;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -564,6 +565,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         return result.toString();
     }
     
-    private static KExpressionsSerializeExtensions serializer = new KExpressionsSerializeExtensions();
+    private static KEffectsSerializeExtensions serializer = new KEffectsSerializeExtensions();
 
 } //AssignmentImpl

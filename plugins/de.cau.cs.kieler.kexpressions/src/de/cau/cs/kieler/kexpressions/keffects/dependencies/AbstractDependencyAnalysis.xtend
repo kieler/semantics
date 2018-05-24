@@ -43,6 +43,7 @@ import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import java.util.List
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
 
 /** 
  * @author ssm
@@ -59,6 +60,12 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
         new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
+        
+    public static val IProperty<ValuedObjectAccessors> VALUED_OBJECT_ACCESSORS = 
+        new Property<ValuedObjectAccessors>("de.cau.cs.kieler.kexpressions.keffects.dependencies.valuedObjectAccessors", null)
+        
+    public static val IProperty<LinkableInterfaceData> LINKABLE_INTERFACE_DATA = 
+        new Property<LinkableInterfaceData>("de.cau.cs.kieler.kexpressions.keffects.dependencies.linkableInterfaceData", null)
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
@@ -85,8 +92,10 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     def processSubModel(S subModel) {
         val valuedObjectAccessors = new ValuedObjectAccessors
         subModel.searchDependencies(valuedObjectAccessors)          
-        subModel.addDependencies(valuedObjectAccessors)   
-        subModel.postProcessValuedObjectAccessors(valuedObjectAccessors)                  
+        environment.setProperty(VALUED_OBJECT_ACCESSORS, valuedObjectAccessors)              
+        subModel.addDependencies(valuedObjectAccessors)  
+        subModel.createInterfaceData(valuedObjectAccessors) 
+        subModel.postProcessValuedObjectAccessors(valuedObjectAccessors)    
     }
     
     /** After a sub-model is done, this method gets called. You can put post-processing code here. */
@@ -384,9 +393,6 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         eObject as Assignment
     }
     
-    
-    
-    
     static def EObject getGenericLeastCommonAncestorFork(ForkStack sourceStack, 
         ForkStack targetStack, Function1<? super EObject, Boolean> concurrentForkFilter
     ) {
@@ -400,5 +406,32 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         return null
     }
     
+
+
+    
+    protected def createInterfaceData(S subModel, ValuedObjectAccessors valuedObjectAccessors) {
+        val iData = new LinkableInterfaceData
+        val linkables = valuedObjectAccessors.getLinkableAccessMap
+        
+        for (l : linkables.keySet) {
+            println(l)
+            val VOIs = linkables.get(l)
+            for (VOI : VOIs) {
+                println("  " + VOI)
+                
+                val lie = new LinkableInterfaceEntry(l, VOI.valuedObject) 
+                lie.directInputAccess = l.incomingLinks.filter(Dependency).forall[ 
+                    it.reference instanceof ValuedObject && it.reference === VOI.valuedObject
+                ]
+                lie.directOutputAccess = l.outgoingLinks.filter(Dependency).forall[ 
+                    it.reference instanceof ValuedObject && it.reference === VOI.valuedObject
+                ]
+                             
+                println("    direct: " + lie.directInputAccess + ", " + lie.directOutputAccess)
+            } 
+        }
+        environment.setProperty(LINKABLE_INTERFACE_DATA, iData)
+    }
+
     
 }

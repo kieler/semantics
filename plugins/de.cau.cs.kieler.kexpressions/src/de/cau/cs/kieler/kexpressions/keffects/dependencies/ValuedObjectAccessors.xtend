@@ -27,19 +27,34 @@ import de.cau.cs.kieler.kexpressions.keffects.Linkable
 class ValuedObjectAccessors {
 
     protected val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> accesses = HashMultimap.create
+    protected val accessLOT = <ValuedObjectAccess, ValuedObjectIdentifier> newHashMap
     
     def addAccess(ValuedObjectIdentifier VOI, Linkable node, EObject schedule, ValuedObject scheduleObject, int priority, 
         ForkStack forkStack, boolean isSpecific
     ) {
-        accesses.put(VOI, new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack, isSpecific))
+        val VOA = new ValuedObjectAccess(node, schedule, scheduleObject, priority, forkStack, isSpecific)
+        accesses.put(VOI, VOA)
+        accessLOT.put(VOA, VOI)
     }
     
     def addAccess(ValuedObjectIdentifier VOI, ValuedObjectAccess VOA) {
         accesses.put(VOI, VOA)
+        accessLOT.put(VOA, VOI)
     }
           
     def getMap() {
         accesses
     }          
+    
+    def getLinkableAccessMap() {
+        val accesses = accesses.values.toList
+        val HashMultimap<Linkable, ValuedObjectIdentifier> linkables = HashMultimap.create => [ map |
+            accesses.forEach[
+                val key = accessLOT.get(it)
+                map.put(it.associatedNode, key)
+            ]
+        ]
+        return linkables
+    }
           
 }

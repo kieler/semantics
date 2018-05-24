@@ -133,6 +133,11 @@ class KExpressionsValuedObjectExtensions {
         if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isOutput
     }
+    
+    def boolean isLocal(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        !valuedObject.isInput && !valuedObject.isOutput
+    }    
 
     def boolean isStatic(ValuedObject valuedObject) {
         if (!valuedObject.isVariableReference) return false
@@ -238,6 +243,21 @@ class KExpressionsValuedObjectExtensions {
         	}
         ]  
     }    
+    
+    def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
+        if (eObject === null) {
+            return <ValuedObjectReference> newArrayList
+        }
+        else if (eObject instanceof Expression) {
+            return eObject.allReferences
+        } else {
+            val l = <ValuedObjectReference> newArrayList
+            for (e : eObject.eAllContents.toIterable.filter(ValuedObjectReference)) {
+                l += e
+            }
+            return l
+        }
+    }
     
     def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
