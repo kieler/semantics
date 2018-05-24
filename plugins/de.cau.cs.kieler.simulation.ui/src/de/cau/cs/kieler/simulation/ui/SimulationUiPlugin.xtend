@@ -4,9 +4,9 @@ import com.google.inject.Module
 import de.cau.cs.kieler.prom.build.RegisterVariablesFinder
 import de.cau.cs.kieler.simulation.KiSimRuntimeModule
 import de.cau.cs.kieler.simulation.trace.KTraceRuntimeModule
+import de.cau.cs.kieler.simulation.ui.internal.KTraceActivator
 import de.cau.cs.kieler.simulation.ui.internal.KiSimActivator
 import de.cau.cs.kieler.simulation.ui.trace.KTraceUiModule
-import de.cau.cs.kieler.simulation.ui.trace.internal.KTraceActivator
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleContext
 

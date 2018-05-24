@@ -309,5 +309,39 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
+    <!-- Rename Refactoring -->
+    <extension point="org.eclipse.ui.handlers">
+        <handler 
+            class="de.cau.cs.kieler.annotations.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+            commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.annotations.Annotations.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+            <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+                style="push">
+                <visibleWhen checkEnabled="false">
+                    <reference
+                        definitionId="de.cau.cs.kieler.annotations.Annotations.Editor.opened">
+                    </reference>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+    </extension>
+    <extension point="org.eclipse.ui.preferencePages">
+        <page
+            category="de.cau.cs.kieler.annotations.Annotations"
+            class="de.cau.cs.kieler.annotations.ui.AnnotationsExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+            id="de.cau.cs.kieler.annotations.Annotations.refactoring"
+            name="Refactoring">
+            <keywordReference id="de.cau.cs.kieler.annotations.ui.keyword_Annotations"/>
+        </page>
+    </extension>
 
 </plugin>

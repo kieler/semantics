@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.annotations.parser.antlr.internal; 
+package de.cau.cs.kieler.annotations.parser.antlr.internal;
 
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parser.*;
@@ -63,18 +63,18 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
      	private AnnotationsGrammarAccess grammarAccess;
-     	
+
         public InternalAnnotationsParser(TokenStream input, AnnotationsGrammarAccess grammarAccess) {
             this(input);
             this.grammarAccess = grammarAccess;
             registerRules(grammarAccess.getGrammar());
         }
-        
+
         @Override
         protected String getFirstRuleName() {
-        	return "Annotation";	
+        	return "Annotation";
        	}
-       	
+
        	@Override
        	protected AnnotationsGrammarAccess getGrammarAccess() {
        		return grammarAccess;
@@ -82,8 +82,9 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
 
+
     // $ANTLR start "entryRuleAnnotation"
-    // InternalAnnotations.g:67:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
+    // InternalAnnotations.g:64:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
     public final EObject entryRuleAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -91,8 +92,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:68:2: (iv_ruleAnnotation= ruleAnnotation EOF )
-            // InternalAnnotations.g:69:2: iv_ruleAnnotation= ruleAnnotation EOF
+            // InternalAnnotations.g:64:51: (iv_ruleAnnotation= ruleAnnotation EOF )
+            // InternalAnnotations.g:65:2: iv_ruleAnnotation= ruleAnnotation EOF
             {
              newCompositeNode(grammarAccess.getAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -106,11 +107,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -119,7 +120,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnnotation"
-    // InternalAnnotations.g:76:1: ruleAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
+    // InternalAnnotations.g:71:1: ruleAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
     public final EObject ruleAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -132,85 +133,86 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         EObject this_TagAnnotation_3 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:79:28: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
-            // InternalAnnotations.g:80:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalAnnotations.g:77:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
+            // InternalAnnotations.g:78:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
-            // InternalAnnotations.g:80:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalAnnotations.g:78:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             int alt1=4;
             alt1 = dfa1.predict(input);
             switch (alt1) {
                 case 1 :
-                    // InternalAnnotations.g:81:5: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalAnnotations.g:79:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
-                     
-                            newCompositeNode(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_CommentAnnotation_0=ruleCommentAnnotation();
 
                     state._fsp--;
 
-                     
-                            current = this_CommentAnnotation_0; 
-                            afterParserOrEnumRuleCall();
-                        
+
+                    			current = this_CommentAnnotation_0;
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
                 case 2 :
-                    // InternalAnnotations.g:91:5: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+                    // InternalAnnotations.g:88:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
                     {
-                     
-                            newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_KeyStringValueAnnotation_1=ruleKeyStringValueAnnotation();
 
                     state._fsp--;
 
-                     
-                            current = this_KeyStringValueAnnotation_1; 
-                            afterParserOrEnumRuleCall();
-                        
+
+                    			current = this_KeyStringValueAnnotation_1;
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
                 case 3 :
-                    // InternalAnnotations.g:101:5: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
+                    // InternalAnnotations.g:97:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
                     {
-                     
-                            newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_TypedKeyStringValueAnnotation_2=ruleTypedKeyStringValueAnnotation();
 
                     state._fsp--;
 
-                     
-                            current = this_TypedKeyStringValueAnnotation_2; 
-                            afterParserOrEnumRuleCall();
-                        
+
+                    			current = this_TypedKeyStringValueAnnotation_2;
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
                 case 4 :
-                    // InternalAnnotations.g:111:5: this_TagAnnotation_3= ruleTagAnnotation
+                    // InternalAnnotations.g:106:3: this_TagAnnotation_3= ruleTagAnnotation
                     {
-                     
-                            newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_3()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_3());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_TagAnnotation_3=ruleTagAnnotation();
 
                     state._fsp--;
 
-                     
-                            current = this_TagAnnotation_3; 
-                            afterParserOrEnumRuleCall();
-                        
+
+                    			current = this_TagAnnotation_3;
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
@@ -220,13 +222,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -235,7 +239,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalAnnotations.g:135:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
+    // InternalAnnotations.g:118:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
     public final EObject entryRuleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -243,8 +247,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:136:2: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
-            // InternalAnnotations.g:137:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
+            // InternalAnnotations.g:118:58: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
+            // InternalAnnotations.g:119:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
             {
              newCompositeNode(grammarAccess.getCommentAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -258,11 +262,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -271,54 +275,57 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalAnnotations.g:144:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
+    // InternalAnnotations.g:125:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token lv_values_0_0=null;
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:147:28: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
-            // InternalAnnotations.g:148:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalAnnotations.g:131:2: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
+            // InternalAnnotations.g:132:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
             {
-            // InternalAnnotations.g:148:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
-            // InternalAnnotations.g:149:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalAnnotations.g:132:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalAnnotations.g:133:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
             {
-            // InternalAnnotations.g:149:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
-            // InternalAnnotations.g:150:3: lv_values_0_0= RULE_COMMENT_ANNOTATION
+            // InternalAnnotations.g:133:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalAnnotations.g:134:4: lv_values_0_0= RULE_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); 
 
-            			newLeafNode(lv_values_0_0, grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
-            		
+            				newLeafNode(lv_values_0_0, grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0());
+            			
 
-            	        if (current==null) {
-            	            current = createModelElement(grammarAccess.getCommentAnnotationRule());
-            	        }
-                   		addWithLastConsumed(
-                   			current, 
-                   			"values",
-                    		lv_values_0_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.COMMENT_ANNOTATION");
-            	    
-
-            }
-
+            				if (current==null) {
+            					current = createModelElement(grammarAccess.getCommentAnnotationRule());
+            				}
+            				addWithLastConsumed(
+            					current,
+            					"values",
+            					lv_values_0_0,
+            					"de.cau.cs.kieler.annotations.Annotations.COMMENT_ANNOTATION");
+            			
 
             }
 
 
             }
 
-             leaveRule(); 
+
+            }
+
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -327,7 +334,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalAnnotations.g:176:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
+    // InternalAnnotations.g:153:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
     public final EObject entryRuleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -335,8 +342,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:177:2: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
-            // InternalAnnotations.g:178:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
+            // InternalAnnotations.g:153:54: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
+            // InternalAnnotations.g:154:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
             {
              newCompositeNode(grammarAccess.getTagAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -350,11 +357,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -363,7 +370,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalAnnotations.g:185:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalAnnotations.g:160:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject ruleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -371,44 +378,45 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:188:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalAnnotations.g:189:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalAnnotations.g:166:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalAnnotations.g:167:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalAnnotations.g:189:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalAnnotations.g:189:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:167:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalAnnotations.g:168:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:193:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:194:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:172:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:173:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:194:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:195:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:173:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:174:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_2);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getTagAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getTagAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -421,13 +429,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -436,7 +446,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePragmaTag"
-    // InternalAnnotations.g:219:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
+    // InternalAnnotations.g:195:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
     public final EObject entryRulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -444,8 +454,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:220:2: (iv_rulePragmaTag= rulePragmaTag EOF )
-            // InternalAnnotations.g:221:2: iv_rulePragmaTag= rulePragmaTag EOF
+            // InternalAnnotations.g:195:50: (iv_rulePragmaTag= rulePragmaTag EOF )
+            // InternalAnnotations.g:196:2: iv_rulePragmaTag= rulePragmaTag EOF
             {
              newCompositeNode(grammarAccess.getPragmaTagRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -459,11 +469,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -472,7 +482,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePragmaTag"
-    // InternalAnnotations.g:228:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalAnnotations.g:202:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject rulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -480,44 +490,45 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:231:28: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalAnnotations.g:232:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalAnnotations.g:208:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalAnnotations.g:209:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalAnnotations.g:232:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalAnnotations.g:232:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:209:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalAnnotations.g:210:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
             {
             otherlv_0=(Token)match(input,17,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
-                
-            // InternalAnnotations.g:236:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:237:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
+            		
+            // InternalAnnotations.g:214:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:215:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:237:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:238:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:215:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:216:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_2);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getPragmaTagRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getPragmaTagRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -530,13 +541,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -545,7 +558,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalAnnotations.g:262:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:237:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
     public final EObject entryRuleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -553,8 +566,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:263:2: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:264:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:237:65: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:238:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
             {
              newCompositeNode(grammarAccess.getKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -568,11 +581,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -581,7 +594,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalAnnotations.g:271:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalAnnotations.g:244:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -594,82 +607,83 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_values_4_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:274:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalAnnotations.g:275:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalAnnotations.g:250:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalAnnotations.g:251:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalAnnotations.g:275:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalAnnotations.g:275:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalAnnotations.g:251:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalAnnotations.g:252:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:279:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:280:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:256:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:257:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:280:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:281:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:257:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:258:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_4);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:297:2: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalAnnotations.g:298:1: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalAnnotations.g:275:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalAnnotations.g:276:4: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:298:1: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalAnnotations.g:299:3: lv_values_2_0= ruleEStringAllTypes
+            // InternalAnnotations.g:276:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalAnnotations.g:277:5: lv_values_2_0= ruleEStringAllTypes
             {
-             
-            	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0());
+            				
             pushFollow(FollowSets000.FOLLOW_5);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
-            	        }
-                   		add(
-                   			current, 
-                   			"values",
-                    		lv_values_2_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
+            					}
+            					add(
+            						current,
+            						"values",
+            						lv_values_2_0,
+            						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:315:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalAnnotations.g:294:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             loop2:
             do {
                 int alt2=2;
@@ -682,37 +696,37 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalAnnotations.g:315:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalAnnotations.g:295:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
             	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_4); 
 
-            	        	newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
-            	        
-            	    // InternalAnnotations.g:319:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalAnnotations.g:320:1: (lv_values_4_0= ruleEStringAllTypes )
+            	    				newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	    			
+            	    // InternalAnnotations.g:299:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalAnnotations.g:300:5: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalAnnotations.g:320:1: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalAnnotations.g:321:3: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalAnnotations.g:300:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalAnnotations.g:301:6: lv_values_4_0= ruleEStringAllTypes
             	    {
-            	     
-            	    	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
-            	    	    
+
+            	    						newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
+            	    					
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
 
 
-            	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
-            	    	        }
-            	           		add(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_4_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	    	        afterParserOrEnumRuleCall();
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
+            	    						}
+            	    						add(
+            	    							current,
+            	    							"values",
+            	    							lv_values_4_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	    						afterParserOrEnumRuleCall();
+            	    					
 
             	    }
 
@@ -734,13 +748,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -749,7 +765,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
-    // InternalAnnotations.g:345:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:323:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -757,8 +773,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:346:2: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:347:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:323:75: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:324:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
             {
              newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -772,11 +788,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -785,7 +801,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
-    // InternalAnnotations.g:354:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
+    // InternalAnnotations.g:330:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
     public final EObject ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -798,82 +814,83 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_values_4_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:357:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
-            // InternalAnnotations.g:358:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalAnnotations.g:336:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
+            // InternalAnnotations.g:337:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalAnnotations.g:358:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
-            // InternalAnnotations.g:358:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            // InternalAnnotations.g:337:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalAnnotations.g:338:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:362:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:363:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:342:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:343:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:363:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:364:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:343:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:344:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_6);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:380:2: ( (lv_values_2_0= ruleEStringBoolean ) )
-            // InternalAnnotations.g:381:1: (lv_values_2_0= ruleEStringBoolean )
+            // InternalAnnotations.g:361:3: ( (lv_values_2_0= ruleEStringBoolean ) )
+            // InternalAnnotations.g:362:4: (lv_values_2_0= ruleEStringBoolean )
             {
-            // InternalAnnotations.g:381:1: (lv_values_2_0= ruleEStringBoolean )
-            // InternalAnnotations.g:382:3: lv_values_2_0= ruleEStringBoolean
+            // InternalAnnotations.g:362:4: (lv_values_2_0= ruleEStringBoolean )
+            // InternalAnnotations.g:363:5: lv_values_2_0= ruleEStringBoolean
             {
-             
-            	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0());
+            				
             pushFollow(FollowSets000.FOLLOW_5);
             lv_values_2_0=ruleEStringBoolean();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
-            	        }
-                   		add(
-                   			current, 
-                   			"values",
-                    		lv_values_2_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+            					}
+            					add(
+            						current,
+            						"values",
+            						lv_values_2_0,
+            						"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:398:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            // InternalAnnotations.g:380:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             loop3:
             do {
                 int alt3=2;
@@ -886,37 +903,37 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalAnnotations.g:398:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalAnnotations.g:381:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
             	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_6); 
 
-            	        	newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
-            	        
-            	    // InternalAnnotations.g:402:1: ( (lv_values_4_0= ruleEStringBoolean ) )
-            	    // InternalAnnotations.g:403:1: (lv_values_4_0= ruleEStringBoolean )
+            	    				newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	    			
+            	    // InternalAnnotations.g:385:4: ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalAnnotations.g:386:5: (lv_values_4_0= ruleEStringBoolean )
             	    {
-            	    // InternalAnnotations.g:403:1: (lv_values_4_0= ruleEStringBoolean )
-            	    // InternalAnnotations.g:404:3: lv_values_4_0= ruleEStringBoolean
+            	    // InternalAnnotations.g:386:5: (lv_values_4_0= ruleEStringBoolean )
+            	    // InternalAnnotations.g:387:6: lv_values_4_0= ruleEStringBoolean
             	    {
-            	     
-            	    	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
-            	    	    
+
+            	    						newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0());
+            	    					
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    lv_values_4_0=ruleEStringBoolean();
 
             	    state._fsp--;
 
 
-            	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
-            	    	        }
-            	           		add(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_4_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-            	    	        afterParserOrEnumRuleCall();
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+            	    						}
+            	    						add(
+            	    							current,
+            	    							"values",
+            	    							lv_values_4_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            	    						afterParserOrEnumRuleCall();
+            	    					
 
             	    }
 
@@ -938,13 +955,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -953,7 +972,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringPragma"
-    // InternalAnnotations.g:428:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
+    // InternalAnnotations.g:409:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
     public final EObject entryRuleStringPragma() throws RecognitionException {
         EObject current = null;
 
@@ -961,8 +980,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:429:2: (iv_ruleStringPragma= ruleStringPragma EOF )
-            // InternalAnnotations.g:430:2: iv_ruleStringPragma= ruleStringPragma EOF
+            // InternalAnnotations.g:409:53: (iv_ruleStringPragma= ruleStringPragma EOF )
+            // InternalAnnotations.g:410:2: iv_ruleStringPragma= ruleStringPragma EOF
             {
              newCompositeNode(grammarAccess.getStringPragmaRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -976,11 +995,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -989,7 +1008,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringPragma"
-    // InternalAnnotations.g:437:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalAnnotations.g:416:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleStringPragma() throws RecognitionException {
         EObject current = null;
 
@@ -1002,82 +1021,83 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_values_4_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:440:28: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalAnnotations.g:441:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalAnnotations.g:422:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalAnnotations.g:423:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalAnnotations.g:441:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalAnnotations.g:441:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalAnnotations.g:423:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalAnnotations.g:424:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,17,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
-                
-            // InternalAnnotations.g:445:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:446:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
+            		
+            // InternalAnnotations.g:428:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:429:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:446:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:447:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:429:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:430:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_4);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:463:2: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalAnnotations.g:464:1: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalAnnotations.g:447:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalAnnotations.g:448:4: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:464:1: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalAnnotations.g:465:3: lv_values_2_0= ruleEStringAllTypes
+            // InternalAnnotations.g:448:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalAnnotations.g:449:5: lv_values_2_0= ruleEStringAllTypes
             {
-             
-            	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0());
+            				
             pushFollow(FollowSets000.FOLLOW_5);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
-            	        }
-                   		add(
-                   			current, 
-                   			"values",
-                    		lv_values_2_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+            					}
+            					add(
+            						current,
+            						"values",
+            						lv_values_2_0,
+            						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:481:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalAnnotations.g:466:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             loop4:
             do {
                 int alt4=2;
@@ -1090,37 +1110,37 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalAnnotations.g:481:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalAnnotations.g:467:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
             	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_4); 
 
-            	        	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
-            	        
-            	    // InternalAnnotations.g:485:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalAnnotations.g:486:1: (lv_values_4_0= ruleEStringAllTypes )
+            	    				newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
+            	    			
+            	    // InternalAnnotations.g:471:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalAnnotations.g:472:5: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalAnnotations.g:486:1: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalAnnotations.g:487:3: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalAnnotations.g:472:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalAnnotations.g:473:6: lv_values_4_0= ruleEStringAllTypes
             	    {
-            	     
-            	    	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
-            	    	    
+
+            	    						newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
+            	    					
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
 
 
-            	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
-            	    	        }
-            	           		add(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_4_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	    	        afterParserOrEnumRuleCall();
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+            	    						}
+            	    						add(
+            	    							current,
+            	    							"values",
+            	    							lv_values_4_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	    						afterParserOrEnumRuleCall();
+            	    					
 
             	    }
 
@@ -1142,13 +1162,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1157,7 +1179,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:511:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:495:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1165,8 +1187,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:512:2: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:513:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:495:70: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:496:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
             {
              newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1180,11 +1202,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1193,7 +1215,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:520:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalAnnotations.g:502:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1210,44 +1232,45 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:523:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalAnnotations.g:524:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalAnnotations.g:508:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalAnnotations.g:509:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalAnnotations.g:524:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
-            // InternalAnnotations.g:524:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalAnnotations.g:509:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalAnnotations.g:510:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:528:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:529:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:514:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:515:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:529:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:530:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:515:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:516:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_7);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -1256,33 +1279,33 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             otherlv_2=(Token)match(input,19,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-                
-            // InternalAnnotations.g:550:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalAnnotations.g:551:1: (lv_type_3_0= ruleExtendedID )
+            			newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+            		
+            // InternalAnnotations.g:537:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalAnnotations.g:538:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:551:1: (lv_type_3_0= ruleExtendedID )
-            // InternalAnnotations.g:552:3: lv_type_3_0= ruleExtendedID
+            // InternalAnnotations.g:538:4: (lv_type_3_0= ruleExtendedID )
+            // InternalAnnotations.g:539:5: lv_type_3_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
+            				
             pushFollow(FollowSets000.FOLLOW_8);
             lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"type",
-                    		lv_type_3_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"type",
+            						lv_type_3_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -1291,40 +1314,40 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_4); 
 
-                	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-                
-            // InternalAnnotations.g:572:1: ( (lv_values_5_0= ruleEStringAllTypes ) )
-            // InternalAnnotations.g:573:1: (lv_values_5_0= ruleEStringAllTypes )
+            			newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+            		
+            // InternalAnnotations.g:560:3: ( (lv_values_5_0= ruleEStringAllTypes ) )
+            // InternalAnnotations.g:561:4: (lv_values_5_0= ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:573:1: (lv_values_5_0= ruleEStringAllTypes )
-            // InternalAnnotations.g:574:3: lv_values_5_0= ruleEStringAllTypes
+            // InternalAnnotations.g:561:4: (lv_values_5_0= ruleEStringAllTypes )
+            // InternalAnnotations.g:562:5: lv_values_5_0= ruleEStringAllTypes
             {
-             
-            	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0());
+            				
             pushFollow(FollowSets000.FOLLOW_5);
             lv_values_5_0=ruleEStringAllTypes();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
-            	        }
-                   		add(
-                   			current, 
-                   			"values",
-                    		lv_values_5_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+            					}
+            					add(
+            						current,
+            						"values",
+            						lv_values_5_0,
+            						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:590:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalAnnotations.g:579:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             loop5:
             do {
                 int alt5=2;
@@ -1337,37 +1360,37 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalAnnotations.g:590:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalAnnotations.g:580:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
             	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_4); 
 
-            	        	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
-            	        
-            	    // InternalAnnotations.g:594:1: ( (lv_values_7_0= ruleEStringAllTypes ) )
-            	    // InternalAnnotations.g:595:1: (lv_values_7_0= ruleEStringAllTypes )
+            	    				newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	    			
+            	    // InternalAnnotations.g:584:4: ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalAnnotations.g:585:5: (lv_values_7_0= ruleEStringAllTypes )
             	    {
-            	    // InternalAnnotations.g:595:1: (lv_values_7_0= ruleEStringAllTypes )
-            	    // InternalAnnotations.g:596:3: lv_values_7_0= ruleEStringAllTypes
+            	    // InternalAnnotations.g:585:5: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalAnnotations.g:586:6: lv_values_7_0= ruleEStringAllTypes
             	    {
-            	     
-            	    	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
-            	    	    
+
+            	    						newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0());
+            	    					
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    lv_values_7_0=ruleEStringAllTypes();
 
             	    state._fsp--;
 
 
-            	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
-            	    	        }
-            	           		add(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_7_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	    	        afterParserOrEnumRuleCall();
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+            	    						}
+            	    						add(
+            	    							current,
+            	    							"values",
+            	    							lv_values_7_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	    						afterParserOrEnumRuleCall();
+            	    					
 
             	    }
 
@@ -1389,13 +1412,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1404,7 +1429,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:620:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:608:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1412,8 +1437,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:621:2: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:622:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:608:80: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:609:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
             {
              newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1427,11 +1452,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1440,7 +1465,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:629:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
+    // InternalAnnotations.g:615:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
     public final EObject ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1457,44 +1482,45 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:632:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
-            // InternalAnnotations.g:633:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalAnnotations.g:621:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
+            // InternalAnnotations.g:622:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalAnnotations.g:633:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
-            // InternalAnnotations.g:633:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalAnnotations.g:622:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalAnnotations.g:623:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:637:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:638:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:627:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:628:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:638:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:639:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:628:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:629:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_7);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -1503,33 +1529,33 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             otherlv_2=(Token)match(input,19,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-                
-            // InternalAnnotations.g:659:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalAnnotations.g:660:1: (lv_type_3_0= ruleExtendedID )
+            			newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+            		
+            // InternalAnnotations.g:650:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalAnnotations.g:651:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:660:1: (lv_type_3_0= ruleExtendedID )
-            // InternalAnnotations.g:661:3: lv_type_3_0= ruleExtendedID
+            // InternalAnnotations.g:651:4: (lv_type_3_0= ruleExtendedID )
+            // InternalAnnotations.g:652:5: lv_type_3_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
+            				
             pushFollow(FollowSets000.FOLLOW_8);
             lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"type",
-                    		lv_type_3_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"type",
+            						lv_type_3_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -1538,40 +1564,40 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_6); 
 
-                	newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-                
-            // InternalAnnotations.g:681:1: ( (lv_values_5_0= ruleEStringBoolean ) )
-            // InternalAnnotations.g:682:1: (lv_values_5_0= ruleEStringBoolean )
+            			newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+            		
+            // InternalAnnotations.g:673:3: ( (lv_values_5_0= ruleEStringBoolean ) )
+            // InternalAnnotations.g:674:4: (lv_values_5_0= ruleEStringBoolean )
             {
-            // InternalAnnotations.g:682:1: (lv_values_5_0= ruleEStringBoolean )
-            // InternalAnnotations.g:683:3: lv_values_5_0= ruleEStringBoolean
+            // InternalAnnotations.g:674:4: (lv_values_5_0= ruleEStringBoolean )
+            // InternalAnnotations.g:675:5: lv_values_5_0= ruleEStringBoolean
             {
-             
-            	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0());
+            				
             pushFollow(FollowSets000.FOLLOW_5);
             lv_values_5_0=ruleEStringBoolean();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
-            	        }
-                   		add(
-                   			current, 
-                   			"values",
-                    		lv_values_5_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+            					}
+            					add(
+            						current,
+            						"values",
+            						lv_values_5_0,
+            						"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:699:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalAnnotations.g:692:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             loop6:
             do {
                 int alt6=2;
@@ -1584,37 +1610,37 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalAnnotations.g:699:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalAnnotations.g:693:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
             	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_6); 
 
-            	        	newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
-            	        
-            	    // InternalAnnotations.g:703:1: ( (lv_values_7_0= ruleEStringBoolean ) )
-            	    // InternalAnnotations.g:704:1: (lv_values_7_0= ruleEStringBoolean )
+            	    				newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	    			
+            	    // InternalAnnotations.g:697:4: ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalAnnotations.g:698:5: (lv_values_7_0= ruleEStringBoolean )
             	    {
-            	    // InternalAnnotations.g:704:1: (lv_values_7_0= ruleEStringBoolean )
-            	    // InternalAnnotations.g:705:3: lv_values_7_0= ruleEStringBoolean
+            	    // InternalAnnotations.g:698:5: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalAnnotations.g:699:6: lv_values_7_0= ruleEStringBoolean
             	    {
-            	     
-            	    	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
-            	    	    
+
+            	    						newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0());
+            	    					
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    lv_values_7_0=ruleEStringBoolean();
 
             	    state._fsp--;
 
 
-            	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
-            	    	        }
-            	           		add(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_7_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-            	    	        afterParserOrEnumRuleCall();
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+            	    						}
+            	    						add(
+            	    							current,
+            	    							"values",
+            	    							lv_values_7_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            	    						afterParserOrEnumRuleCall();
+            	    					
 
             	    }
 
@@ -1636,13 +1662,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1651,7 +1679,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalAnnotations.g:729:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:721:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1659,8 +1687,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:730:2: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:731:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:721:71: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:722:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
             {
              newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1674,11 +1702,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1687,7 +1715,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalAnnotations.g:738:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
+    // InternalAnnotations.g:728:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
     public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1698,77 +1726,78 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:741:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
-            // InternalAnnotations.g:742:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalAnnotations.g:734:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
+            // InternalAnnotations.g:735:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
             {
-            // InternalAnnotations.g:742:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
-            // InternalAnnotations.g:742:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            // InternalAnnotations.g:735:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalAnnotations.g:736:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:746:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:747:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:740:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:741:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:747:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:748:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:741:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:742:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_9);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getQuotedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
 
             }
 
-            // InternalAnnotations.g:764:2: ( (lv_values_2_0= RULE_STRING ) )
-            // InternalAnnotations.g:765:1: (lv_values_2_0= RULE_STRING )
+            // InternalAnnotations.g:759:3: ( (lv_values_2_0= RULE_STRING ) )
+            // InternalAnnotations.g:760:4: (lv_values_2_0= RULE_STRING )
             {
-            // InternalAnnotations.g:765:1: (lv_values_2_0= RULE_STRING )
-            // InternalAnnotations.g:766:3: lv_values_2_0= RULE_STRING
+            // InternalAnnotations.g:760:4: (lv_values_2_0= RULE_STRING )
+            // InternalAnnotations.g:761:5: lv_values_2_0= RULE_STRING
             {
             lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_5); 
 
-            			newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()); 
-            		
+            					newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0());
+            				
 
-            	        if (current==null) {
-            	            current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
-            	        }
-                   		addWithLastConsumed(
-                   			current, 
-                   			"values",
-                    		lv_values_2_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.STRING");
-            	    
-
-            }
-
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+            					}
+            					addWithLastConsumed(
+            						current,
+            						"values",
+            						lv_values_2_0,
+            						"de.cau.cs.kieler.annotations.Annotations.STRING");
+            				
 
             }
 
-            // InternalAnnotations.g:782:2: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+
+            }
+
+            // InternalAnnotations.g:777:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1781,32 +1810,32 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalAnnotations.g:782:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalAnnotations.g:778:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
             	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_9); 
 
-            	        	newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
-            	        
-            	    // InternalAnnotations.g:786:1: ( (lv_values_4_0= RULE_STRING ) )
-            	    // InternalAnnotations.g:787:1: (lv_values_4_0= RULE_STRING )
+            	    				newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	    			
+            	    // InternalAnnotations.g:782:4: ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalAnnotations.g:783:5: (lv_values_4_0= RULE_STRING )
             	    {
-            	    // InternalAnnotations.g:787:1: (lv_values_4_0= RULE_STRING )
-            	    // InternalAnnotations.g:788:3: lv_values_4_0= RULE_STRING
+            	    // InternalAnnotations.g:783:5: (lv_values_4_0= RULE_STRING )
+            	    // InternalAnnotations.g:784:6: lv_values_4_0= RULE_STRING
             	    {
             	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_5); 
 
-            	    			newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()); 
-            	    		
+            	    						newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0());
+            	    					
 
-            	    	        if (current==null) {
-            	    	            current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
-            	    	        }
-            	           		addWithLastConsumed(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_4_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.STRING");
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
+            	    						}
+            	    						addWithLastConsumed(
+            	    							current,
+            	    							"values",
+            	    							lv_values_4_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.STRING");
+            	    					
 
             	    }
 
@@ -1828,13 +1857,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1843,7 +1874,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:812:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:805:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1851,8 +1882,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:813:2: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:814:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:805:76: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:806:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
             {
              newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1866,11 +1897,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1879,7 +1910,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:821:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
+    // InternalAnnotations.g:812:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
     public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -1894,44 +1925,45 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_type_3_0 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:824:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
-            // InternalAnnotations.g:825:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalAnnotations.g:818:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
+            // InternalAnnotations.g:819:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
             {
-            // InternalAnnotations.g:825:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
-            // InternalAnnotations.g:825:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalAnnotations.g:819:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalAnnotations.g:820:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-                
-            // InternalAnnotations.g:829:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalAnnotations.g:830:1: (lv_name_1_0= ruleExtendedID )
+            			newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+            		
+            // InternalAnnotations.g:824:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalAnnotations.g:825:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:830:1: (lv_name_1_0= ruleExtendedID )
-            // InternalAnnotations.g:831:3: lv_name_1_0= ruleExtendedID
+            // InternalAnnotations.g:825:4: (lv_name_1_0= ruleExtendedID )
+            // InternalAnnotations.g:826:5: lv_name_1_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+            				
             pushFollow(FollowSets000.FOLLOW_7);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"name",
-                    		lv_name_1_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_1_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -1940,33 +1972,33 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             otherlv_2=(Token)match(input,19,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-                
-            // InternalAnnotations.g:851:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalAnnotations.g:852:1: (lv_type_3_0= ruleExtendedID )
+            			newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+            		
+            // InternalAnnotations.g:847:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalAnnotations.g:848:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalAnnotations.g:852:1: (lv_type_3_0= ruleExtendedID )
-            // InternalAnnotations.g:853:3: lv_type_3_0= ruleExtendedID
+            // InternalAnnotations.g:848:4: (lv_type_3_0= ruleExtendedID )
+            // InternalAnnotations.g:849:5: lv_type_3_0= ruleExtendedID
             {
-             
-            	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
-            	    
+
+            					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
+            				
             pushFollow(FollowSets000.FOLLOW_8);
             lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
 
 
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"type",
-                    		lv_type_3_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-            	        afterParserOrEnumRuleCall();
-            	    
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+            					}
+            					set(
+            						current,
+            						"type",
+            						lv_type_3_0,
+            						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+            					afterParserOrEnumRuleCall();
+            				
 
             }
 
@@ -1975,35 +2007,35 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_9); 
 
-                	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-                
-            // InternalAnnotations.g:873:1: ( (lv_values_5_0= RULE_STRING ) )
-            // InternalAnnotations.g:874:1: (lv_values_5_0= RULE_STRING )
+            			newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+            		
+            // InternalAnnotations.g:870:3: ( (lv_values_5_0= RULE_STRING ) )
+            // InternalAnnotations.g:871:4: (lv_values_5_0= RULE_STRING )
             {
-            // InternalAnnotations.g:874:1: (lv_values_5_0= RULE_STRING )
-            // InternalAnnotations.g:875:3: lv_values_5_0= RULE_STRING
+            // InternalAnnotations.g:871:4: (lv_values_5_0= RULE_STRING )
+            // InternalAnnotations.g:872:5: lv_values_5_0= RULE_STRING
             {
             lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_5); 
 
-            			newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0()); 
-            		
+            					newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0());
+            				
 
-            	        if (current==null) {
-            	            current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-            	        }
-                   		addWithLastConsumed(
-                   			current, 
-                   			"values",
-                    		lv_values_5_0, 
-                    		"de.cau.cs.kieler.annotations.Annotations.STRING");
-            	    
-
-            }
-
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+            					}
+            					addWithLastConsumed(
+            						current,
+            						"values",
+            						lv_values_5_0,
+            						"de.cau.cs.kieler.annotations.Annotations.STRING");
+            				
 
             }
 
-            // InternalAnnotations.g:891:2: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+
+            }
+
+            // InternalAnnotations.g:888:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -2016,32 +2048,32 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalAnnotations.g:891:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalAnnotations.g:889:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
             	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_9); 
 
-            	        	newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
-            	        
-            	    // InternalAnnotations.g:895:1: ( (lv_values_7_0= RULE_STRING ) )
-            	    // InternalAnnotations.g:896:1: (lv_values_7_0= RULE_STRING )
+            	    				newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	    			
+            	    // InternalAnnotations.g:893:4: ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalAnnotations.g:894:5: (lv_values_7_0= RULE_STRING )
             	    {
-            	    // InternalAnnotations.g:896:1: (lv_values_7_0= RULE_STRING )
-            	    // InternalAnnotations.g:897:3: lv_values_7_0= RULE_STRING
+            	    // InternalAnnotations.g:894:5: (lv_values_7_0= RULE_STRING )
+            	    // InternalAnnotations.g:895:6: lv_values_7_0= RULE_STRING
             	    {
             	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_5); 
 
-            	    			newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0()); 
-            	    		
+            	    						newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0());
+            	    					
 
-            	    	        if (current==null) {
-            	    	            current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-            	    	        }
-            	           		addWithLastConsumed(
-            	           			current, 
-            	           			"values",
-            	            		lv_values_7_0, 
-            	            		"de.cau.cs.kieler.annotations.Annotations.STRING");
-            	    	    
+            	    						if (current==null) {
+            	    							current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
+            	    						}
+            	    						addWithLastConsumed(
+            	    							current,
+            	    							"values",
+            	    							lv_values_7_0,
+            	    							"de.cau.cs.kieler.annotations.Annotations.STRING");
+            	    					
 
             	    }
 
@@ -2063,13 +2095,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2078,7 +2112,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalAnnotations.g:923:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
+    // InternalAnnotations.g:916:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
     public final String entryRuleEStringBoolean() throws RecognitionException {
         String current = null;
 
@@ -2086,8 +2120,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:924:2: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
-            // InternalAnnotations.g:925:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
+            // InternalAnnotations.g:916:54: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
+            // InternalAnnotations.g:917:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
             {
              newCompositeNode(grammarAccess.getEStringBooleanRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2101,11 +2135,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2114,7 +2148,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalAnnotations.g:932:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
+    // InternalAnnotations.g:923:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
     public final AntlrDatatypeRuleToken ruleEStringBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2123,13 +2157,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken this_ExtendedID_1 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:935:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
-            // InternalAnnotations.g:936:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalAnnotations.g:929:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
+            // InternalAnnotations.g:930:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
-            // InternalAnnotations.g:936:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalAnnotations.g:930:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             int alt9=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
@@ -2156,48 +2191,48 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             switch (alt9) {
                 case 1 :
-                    // InternalAnnotations.g:936:6: this_STRING_0= RULE_STRING
+                    // InternalAnnotations.g:931:3: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
 
-                    		current.merge(this_STRING_0);
-                        
-                     
-                        newLeafNode(this_STRING_0, grammarAccess.getEStringBooleanAccess().getSTRINGTerminalRuleCall_0()); 
-                        
+                    			current.merge(this_STRING_0);
+                    		
+
+                    			newLeafNode(this_STRING_0, grammarAccess.getEStringBooleanAccess().getSTRINGTerminalRuleCall_0());
+                    		
 
                     }
                     break;
                 case 2 :
-                    // InternalAnnotations.g:945:5: this_ExtendedID_1= ruleExtendedID
+                    // InternalAnnotations.g:939:3: this_ExtendedID_1= ruleExtendedID
                     {
-                     
-                            newCompositeNode(grammarAccess.getEStringBooleanAccess().getExtendedIDParserRuleCall_1()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getEStringBooleanAccess().getExtendedIDParserRuleCall_1());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_ExtendedID_1=ruleExtendedID();
 
                     state._fsp--;
 
 
-                    		current.merge(this_ExtendedID_1);
-                        
-                     
-                            afterParserOrEnumRuleCall();
-                        
+                    			current.merge(this_ExtendedID_1);
+                    		
+
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
                 case 3 :
-                    // InternalAnnotations.g:956:10: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalAnnotations.g:950:3: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); 
 
-                    		current.merge(this_BOOLEAN_2);
-                        
-                     
-                        newLeafNode(this_BOOLEAN_2, grammarAccess.getEStringBooleanAccess().getBOOLEANTerminalRuleCall_2()); 
-                        
+                    			current.merge(this_BOOLEAN_2);
+                    		
+
+                    			newLeafNode(this_BOOLEAN_2, grammarAccess.getEStringBooleanAccess().getBOOLEANTerminalRuleCall_2());
+                    		
 
                     }
                     break;
@@ -2207,13 +2242,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2222,7 +2259,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEStringAllTypes"
-    // InternalAnnotations.g:971:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
+    // InternalAnnotations.g:961:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
     public final String entryRuleEStringAllTypes() throws RecognitionException {
         String current = null;
 
@@ -2230,8 +2267,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:972:2: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
-            // InternalAnnotations.g:973:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
+            // InternalAnnotations.g:961:55: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
+            // InternalAnnotations.g:962:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
             {
              newCompositeNode(grammarAccess.getEStringAllTypesRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2245,11 +2282,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2258,7 +2295,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringAllTypes"
-    // InternalAnnotations.g:980:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
+    // InternalAnnotations.g:968:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
     public final AntlrDatatypeRuleToken ruleEStringAllTypes() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2271,13 +2308,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken this_Floateger_4 = null;
 
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:983:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
-            // InternalAnnotations.g:984:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            // InternalAnnotations.g:974:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
+            // InternalAnnotations.g:975:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
-            // InternalAnnotations.g:984:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            // InternalAnnotations.g:975:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             int alt10=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
@@ -2332,88 +2370,88 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             switch (alt10) {
                 case 1 :
-                    // InternalAnnotations.g:984:6: this_STRING_0= RULE_STRING
+                    // InternalAnnotations.g:976:3: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
 
-                    		current.merge(this_STRING_0);
-                        
-                     
-                        newLeafNode(this_STRING_0, grammarAccess.getEStringAllTypesAccess().getSTRINGTerminalRuleCall_0()); 
-                        
+                    			current.merge(this_STRING_0);
+                    		
+
+                    			newLeafNode(this_STRING_0, grammarAccess.getEStringAllTypesAccess().getSTRINGTerminalRuleCall_0());
+                    		
 
                     }
                     break;
                 case 2 :
-                    // InternalAnnotations.g:993:5: this_ExtendedID_1= ruleExtendedID
+                    // InternalAnnotations.g:984:3: this_ExtendedID_1= ruleExtendedID
                     {
-                     
-                            newCompositeNode(grammarAccess.getEStringAllTypesAccess().getExtendedIDParserRuleCall_1()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getEStringAllTypesAccess().getExtendedIDParserRuleCall_1());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_ExtendedID_1=ruleExtendedID();
 
                     state._fsp--;
 
 
-                    		current.merge(this_ExtendedID_1);
-                        
-                     
-                            afterParserOrEnumRuleCall();
-                        
+                    			current.merge(this_ExtendedID_1);
+                    		
+
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
                 case 3 :
-                    // InternalAnnotations.g:1004:10: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalAnnotations.g:995:3: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); 
 
-                    		current.merge(this_BOOLEAN_2);
-                        
-                     
-                        newLeafNode(this_BOOLEAN_2, grammarAccess.getEStringAllTypesAccess().getBOOLEANTerminalRuleCall_2()); 
-                        
+                    			current.merge(this_BOOLEAN_2);
+                    		
+
+                    			newLeafNode(this_BOOLEAN_2, grammarAccess.getEStringAllTypesAccess().getBOOLEANTerminalRuleCall_2());
+                    		
 
                     }
                     break;
                 case 4 :
-                    // InternalAnnotations.g:1013:5: this_Integer_3= ruleInteger
+                    // InternalAnnotations.g:1003:3: this_Integer_3= ruleInteger
                     {
-                     
-                            newCompositeNode(grammarAccess.getEStringAllTypesAccess().getIntegerParserRuleCall_3()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getEStringAllTypesAccess().getIntegerParserRuleCall_3());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_Integer_3=ruleInteger();
 
                     state._fsp--;
 
 
-                    		current.merge(this_Integer_3);
-                        
-                     
-                            afterParserOrEnumRuleCall();
-                        
+                    			current.merge(this_Integer_3);
+                    		
+
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
                 case 5 :
-                    // InternalAnnotations.g:1025:5: this_Floateger_4= ruleFloateger
+                    // InternalAnnotations.g:1014:3: this_Floateger_4= ruleFloateger
                     {
-                     
-                            newCompositeNode(grammarAccess.getEStringAllTypesAccess().getFloategerParserRuleCall_4()); 
-                        
+
+                    			newCompositeNode(grammarAccess.getEStringAllTypesAccess().getFloategerParserRuleCall_4());
+                    		
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_Floateger_4=ruleFloateger();
 
                     state._fsp--;
 
 
-                    		current.merge(this_Floateger_4);
-                        
-                     
-                            afterParserOrEnumRuleCall();
-                        
+                    			current.merge(this_Floateger_4);
+                    		
+
+                    			afterParserOrEnumRuleCall();
+                    		
 
                     }
                     break;
@@ -2423,13 +2461,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2438,7 +2478,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExtendedID"
-    // InternalAnnotations.g:1043:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
+    // InternalAnnotations.g:1028:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
     public final String entryRuleExtendedID() throws RecognitionException {
         String current = null;
 
@@ -2446,8 +2486,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:1044:2: (iv_ruleExtendedID= ruleExtendedID EOF )
-            // InternalAnnotations.g:1045:2: iv_ruleExtendedID= ruleExtendedID EOF
+            // InternalAnnotations.g:1028:50: (iv_ruleExtendedID= ruleExtendedID EOF )
+            // InternalAnnotations.g:1029:2: iv_ruleExtendedID= ruleExtendedID EOF
             {
              newCompositeNode(grammarAccess.getExtendedIDRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2461,11 +2501,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2474,7 +2514,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalAnnotations.g:1052:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalAnnotations.g:1035:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2483,23 +2523,24 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         Token this_ID_3=null;
         Token this_INT_5=null;
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:1055:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalAnnotations.g:1056:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalAnnotations.g:1041:2: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalAnnotations.g:1042:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalAnnotations.g:1056:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalAnnotations.g:1056:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalAnnotations.g:1042:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalAnnotations.g:1043:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
 
-            		current.merge(this_ID_0);
-                
-             
-                newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
-                
-            // InternalAnnotations.g:1063:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            			current.merge(this_ID_0);
+            		
+
+            			newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0());
+            		
+            // InternalAnnotations.g:1050:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
             loop12:
             do {
                 int alt12=2;
@@ -2521,9 +2562,9 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt12) {
             	case 1 :
-            	    // InternalAnnotations.g:1063:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
+            	    // InternalAnnotations.g:1051:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    // InternalAnnotations.g:1063:2: (kw= '.' | kw= '-' )
+            	    // InternalAnnotations.g:1051:4: (kw= '.' | kw= '-' )
             	    int alt11=2;
             	    int LA11_0 = input.LA(1);
 
@@ -2541,24 +2582,24 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             	    }
             	    switch (alt11) {
             	        case 1 :
-            	            // InternalAnnotations.g:1064:2: kw= '.'
+            	            // InternalAnnotations.g:1052:5: kw= '.'
             	            {
             	            kw=(Token)match(input,21,FollowSets000.FOLLOW_3); 
 
-            	                    current.merge(kw);
-            	                    newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
-            	                
+            	            					current.merge(kw);
+            	            					newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0());
+            	            				
 
             	            }
             	            break;
             	        case 2 :
-            	            // InternalAnnotations.g:1071:2: kw= '-'
+            	            // InternalAnnotations.g:1058:5: kw= '-'
             	            {
             	            kw=(Token)match(input,22,FollowSets000.FOLLOW_3); 
 
-            	                    current.merge(kw);
-            	                    newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
-            	                
+            	            					current.merge(kw);
+            	            					newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1());
+            	            				
 
             	            }
             	            break;
@@ -2567,11 +2608,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
 
-            	    		current.merge(this_ID_3);
-            	        
-            	     
-            	        newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
-            	        
+            	    				current.merge(this_ID_3);
+            	    			
+
+            	    				newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1());
+            	    			
 
             	    }
             	    break;
@@ -2581,7 +2622,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalAnnotations.g:1083:3: (kw= '#' this_INT_5= RULE_INT )?
+            // InternalAnnotations.g:1072:3: (kw= '#' this_INT_5= RULE_INT )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2590,20 +2631,20 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalAnnotations.g:1084:2: kw= '#' this_INT_5= RULE_INT
+                    // InternalAnnotations.g:1073:4: kw= '#' this_INT_5= RULE_INT
                     {
                     kw=(Token)match(input,17,FollowSets000.FOLLOW_11); 
 
-                            current.merge(kw);
-                            newLeafNode(kw, grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
-                        
+                    				current.merge(kw);
+                    				newLeafNode(kw, grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0());
+                    			
                     this_INT_5=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); 
 
-                    		current.merge(this_INT_5);
-                        
-                     
-                        newLeafNode(this_INT_5, grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
-                        
+                    				current.merge(this_INT_5);
+                    			
+
+                    				newLeafNode(this_INT_5, grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1());
+                    			
 
                     }
                     break;
@@ -2616,13 +2657,15 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2631,7 +2674,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalAnnotations.g:1106:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalAnnotations.g:1090:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
 
@@ -2639,8 +2682,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:1107:2: (iv_ruleInteger= ruleInteger EOF )
-            // InternalAnnotations.g:1108:2: iv_ruleInteger= ruleInteger EOF
+            // InternalAnnotations.g:1090:47: (iv_ruleInteger= ruleInteger EOF )
+            // InternalAnnotations.g:1091:2: iv_ruleInteger= ruleInteger EOF
             {
              newCompositeNode(grammarAccess.getIntegerRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2654,11 +2697,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2667,23 +2710,24 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalAnnotations.g:1115:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalAnnotations.g:1097:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token kw=null;
         Token this_INT_1=null;
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:1118:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalAnnotations.g:1119:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalAnnotations.g:1103:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalAnnotations.g:1104:2: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalAnnotations.g:1119:1: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalAnnotations.g:1119:2: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalAnnotations.g:1104:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalAnnotations.g:1105:3: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalAnnotations.g:1119:2: (kw= '-' )?
+            // InternalAnnotations.g:1105:3: (kw= '-' )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -2692,13 +2736,13 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalAnnotations.g:1120:2: kw= '-'
+                    // InternalAnnotations.g:1106:4: kw= '-'
                     {
                     kw=(Token)match(input,22,FollowSets000.FOLLOW_11); 
 
-                            current.merge(kw);
-                            newLeafNode(kw, grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
-                        
+                    				current.merge(kw);
+                    				newLeafNode(kw, grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0());
+                    			
 
                     }
                     break;
@@ -2707,24 +2751,26 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             this_INT_1=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); 
 
-            		current.merge(this_INT_1);
-                
-             
-                newLeafNode(this_INT_1, grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
-                
+            			current.merge(this_INT_1);
+            		
+
+            			newLeafNode(this_INT_1, grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1());
+            		
 
             }
 
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2733,7 +2779,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalAnnotations.g:1140:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalAnnotations.g:1123:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
 
@@ -2741,8 +2787,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:1141:2: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalAnnotations.g:1142:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalAnnotations.g:1123:49: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalAnnotations.g:1124:2: iv_ruleFloateger= ruleFloateger EOF
             {
              newCompositeNode(grammarAccess.getFloategerRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2756,11 +2802,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2769,23 +2815,24 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalAnnotations.g:1149:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalAnnotations.g:1130:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token kw=null;
         Token this_FLOAT_1=null;
 
-         enterRule(); 
-            
+
+        	enterRule();
+
         try {
-            // InternalAnnotations.g:1152:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalAnnotations.g:1153:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalAnnotations.g:1136:2: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalAnnotations.g:1137:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalAnnotations.g:1153:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalAnnotations.g:1153:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalAnnotations.g:1137:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalAnnotations.g:1138:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalAnnotations.g:1153:2: (kw= '-' )?
+            // InternalAnnotations.g:1138:3: (kw= '-' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -2794,13 +2841,13 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalAnnotations.g:1154:2: kw= '-'
+                    // InternalAnnotations.g:1139:4: kw= '-'
                     {
                     kw=(Token)match(input,22,FollowSets000.FOLLOW_12); 
 
-                            current.merge(kw);
-                            newLeafNode(kw, grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
-                        
+                    				current.merge(kw);
+                    				newLeafNode(kw, grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0());
+                    			
 
                     }
                     break;
@@ -2809,24 +2856,26 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             this_FLOAT_1=(Token)match(input,RULE_FLOAT,FollowSets000.FOLLOW_2); 
 
-            		current.merge(this_FLOAT_1);
-                
-             
-                newLeafNode(this_FLOAT_1, grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
-                
+            			current.merge(this_FLOAT_1);
+            		
+
+            			newLeafNode(this_FLOAT_1, grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1());
+            		
 
             }
 
 
             }
 
-             leaveRule(); 
+
+            	leaveRule();
+
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2880,7 +2929,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_7;
         }
         public String getDescription() {
-            return "80:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
+            return "78:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
     }
  

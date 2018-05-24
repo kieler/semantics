@@ -29,7 +29,8 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.kicool,
  org.eclipse.elk.alg.force,
- de.cau.cs.kieler.klighd.kgraph
+ de.cau.cs.kieler.klighd.kgraph,
+ de.cau.cs.kieler.sccharts.ide
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,
@@ -43,9 +44,6 @@ Export-Package: de.cau.cs.kieler.sccharts.ui,
  de.cau.cs.kieler.sccharts.ui.synthesis.styles,
  de.cau.cs.kieler.sccharts.ui.text,
  de.cau.cs.kieler.sccharts.ui.text.contentassist,
- de.cau.cs.kieler.sccharts.ui.text.contentassist.antlr,
- de.cau.cs.kieler.sccharts.ui.text.contentassist.antlr.internal,
- de.cau.cs.kieler.sccharts.ui.text.internal,
  de.cau.cs.kieler.sccharts.ui.text.labeling,
  de.cau.cs.kieler.sccharts.ui.text.outline,
  de.cau.cs.kieler.sccharts.ui.text.quickfix,

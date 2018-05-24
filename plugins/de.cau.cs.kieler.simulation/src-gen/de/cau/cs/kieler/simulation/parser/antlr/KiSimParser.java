@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.simulation.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.simulation.parser.antlr.internal.InternalKiSimParser;
 import de.cau.cs.kieler.simulation.services.KiSimGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class KiSimParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class KiSimParser extends AbstractAntlrParser {
+
 	@Inject
 	private KiSimGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.simulation.parser.antlr.internal.InternalKiSimParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.simulation.parser.antlr.internal.InternalKiSimParser(stream, getGrammarAccess());
+	protected InternalKiSimParser createParser(XtextTokenStream stream) {
+		return new InternalKiSimParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "SimulationConfiguration";
 	}
-	
+
 	public KiSimGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(KiSimGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

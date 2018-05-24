@@ -3,19 +3,20 @@
  */
 package de.cau.cs.kieler.prom.ui.contentassist;
 
+import de.cau.cs.kieler.kexpressions.ui.contentassist.KExpressionsProposalProvider;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 /**
- * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.kexpressions.ui.contentassist.KExpressionsProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link KExpressionsProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
-@SuppressWarnings("all")
-public class AbstractKiBuildProposalProvider extends de.cau.cs.kieler.kexpressions.ui.contentassist.KExpressionsProposalProvider {
-		
+public abstract class AbstractKiBuildProposalProvider extends KExpressionsProposalProvider {
+
 	public void completeBuildConfiguration_Attributes(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
@@ -91,7 +92,7 @@ public class AbstractKiBuildProposalProvider extends de.cau.cs.kieler.kexpressio
 	public void completeTextValue_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-    
+
 	public void complete_BuildConfiguration(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}

@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.annotations.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.annotations.parser.antlr.internal.InternalAnnotationsParser;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class AnnotationsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class AnnotationsParser extends AbstractAntlrParser {
+
 	@Inject
 	private AnnotationsGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.annotations.parser.antlr.internal.InternalAnnotationsParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.annotations.parser.antlr.internal.InternalAnnotationsParser(stream, getGrammarAccess());
+	protected InternalAnnotationsParser createParser(XtextTokenStream stream) {
+		return new InternalAnnotationsParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "Annotation";
 	}
-	
+
 	public AnnotationsGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(AnnotationsGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.sccharts.ui;
 
-import de.cau.cs.kieler.sccharts.ui.text.internal.SCTXActivator;
+import de.cau.cs.kieler.sccharts.ui.internal.SCTXActivator;
 
 /**
  * Use this class to register components to be used within the IDE.

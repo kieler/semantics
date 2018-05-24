@@ -3,17 +3,19 @@
  */
 package de.cau.cs.kieler.kicool.validation;
 
+import de.cau.cs.kieler.annotations.validation.AnnotationsValidator;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.ecore.EPackage;
 
-public class AbstractKiCoolValidator extends de.cau.cs.kieler.annotations.validation.AnnotationsValidator {
-
+public abstract class AbstractKiCoolValidator extends AnnotationsValidator {
+	
 	@Override
 	protected List<EPackage> getEPackages() {
-	    List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kicool/0.1.0"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
+		List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kicool/0.1.0"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
+	
 }

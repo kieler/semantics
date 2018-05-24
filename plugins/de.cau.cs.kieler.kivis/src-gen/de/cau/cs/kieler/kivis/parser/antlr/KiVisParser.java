@@ -4,36 +4,37 @@
 package de.cau.cs.kieler.kivis.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import de.cau.cs.kieler.kivis.parser.antlr.internal.InternalKiVisParser;
 import de.cau.cs.kieler.kivis.services.KiVisGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class KiVisParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+public class KiVisParser extends AbstractAntlrParser {
+
 	@Inject
 	private KiVisGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
+
 	@Override
-	protected de.cau.cs.kieler.kivis.parser.antlr.internal.InternalKiVisParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.kivis.parser.antlr.internal.InternalKiVisParser(stream, getGrammarAccess());
+	protected InternalKiVisParser createParser(XtextTokenStream stream) {
+		return new InternalKiVisParser(stream, getGrammarAccess());
 	}
-	
+
 	@Override 
 	protected String getDefaultRuleName() {
 		return "VisualizationConfiguration";
 	}
-	
+
 	public KiVisGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(KiVisGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

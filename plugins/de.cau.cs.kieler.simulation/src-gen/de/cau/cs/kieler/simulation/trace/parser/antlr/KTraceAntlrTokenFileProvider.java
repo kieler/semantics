@@ -7,10 +7,10 @@ import java.io.InputStream;
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class KTraceAntlrTokenFileProvider implements IAntlrTokenFileProvider {
-	
+
 	@Override
 	public InputStream getAntlrTokenFile() {
 		ClassLoader classLoader = getClass().getClassLoader();
-    	return classLoader.getResourceAsStream("de/cau/cs/kieler/simulation/trace/parser/antlr/internal/InternalKTrace.tokens");
+		return classLoader.getResourceAsStream("de/cau/cs/kieler/simulation/trace/parser/antlr/internal/InternalKTrace.tokens");
 	}
 }

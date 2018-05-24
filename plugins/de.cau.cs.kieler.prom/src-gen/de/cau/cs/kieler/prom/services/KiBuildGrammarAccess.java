@@ -3,22 +3,30 @@
  */
 package de.cau.cs.kieler.prom.services;
 
-import com.google.inject.Singleton;
 import com.google.inject.Inject;
-
-import java.util.List;
-
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
-
-import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import com.google.inject.Singleton;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import java.util.List;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.EnumLiteralDeclaration;
+import org.eclipse.xtext.EnumRule;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
 public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
-	
 	
 	public class BuildConfigurationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.BuildConfiguration");
@@ -38,36 +46,35 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	simulationCompilers+=SimulationCompiler*
 		//	templateProcessors+=TemplateProcessor*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//attributes+=AttributeMapping* modelCompilers+=ModelCompiler* simulationCompilers+=SimulationCompiler*
 		//templateProcessors+=TemplateProcessor*
 		public Group getGroup() { return cGroup; }
-
+		
 		//attributes+=AttributeMapping*
 		public Assignment getAttributesAssignment_0() { return cAttributesAssignment_0; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_0_0() { return cAttributesAttributeMappingParserRuleCall_0_0; }
-
+		
 		//modelCompilers+=ModelCompiler*
 		public Assignment getModelCompilersAssignment_1() { return cModelCompilersAssignment_1; }
-
+		
 		//ModelCompiler
 		public RuleCall getModelCompilersModelCompilerParserRuleCall_1_0() { return cModelCompilersModelCompilerParserRuleCall_1_0; }
-
+		
 		//simulationCompilers+=SimulationCompiler*
 		public Assignment getSimulationCompilersAssignment_2() { return cSimulationCompilersAssignment_2; }
-
+		
 		//SimulationCompiler
 		public RuleCall getSimulationCompilersSimulationCompilerParserRuleCall_2_0() { return cSimulationCompilersSimulationCompilerParserRuleCall_2_0; }
-
+		
 		//templateProcessors+=TemplateProcessor*
 		public Assignment getTemplateProcessorsAssignment_3() { return cTemplateProcessorsAssignment_3; }
-
+		
 		//TemplateProcessor
 		public RuleCall getTemplateProcessorsTemplateProcessorParserRuleCall_3_0() { return cTemplateProcessorsTemplateProcessorParserRuleCall_3_0; }
 	}
-
 	public class ModelCompilerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.ModelCompiler");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -88,41 +95,40 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	simulationProcessor=SimulationTemplateProcessor?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'model' 'compiler' name=ID '{' attributes+=AttributeMapping* simulationProcessor=SimulationTemplateProcessor? '}'
 		public Group getGroup() { return cGroup; }
-
+		
 		//'model'
 		public Keyword getModelKeyword_0() { return cModelKeyword_0; }
-
+		
 		//'compiler'
 		public Keyword getCompilerKeyword_1() { return cCompilerKeyword_1; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-
+		
 		//attributes+=AttributeMapping*
 		public Assignment getAttributesAssignment_4() { return cAttributesAssignment_4; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_4_0() { return cAttributesAttributeMappingParserRuleCall_4_0; }
-
+		
 		//simulationProcessor=SimulationTemplateProcessor?
 		public Assignment getSimulationProcessorAssignment_5() { return cSimulationProcessorAssignment_5; }
-
+		
 		//SimulationTemplateProcessor
 		public RuleCall getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0() { return cSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
-
 	public class SimulationCompilerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.SimulationCompiler");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -140,35 +146,34 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	attributes+=AttributeMapping*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'simulation' 'compiler' name=ID '{' attributes+=AttributeMapping* '}'
 		public Group getGroup() { return cGroup; }
-
+		
 		//'simulation'
 		public Keyword getSimulationKeyword_0() { return cSimulationKeyword_0; }
-
+		
 		//'compiler'
 		public Keyword getCompilerKeyword_1() { return cCompilerKeyword_1; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-
+		
 		//attributes+=AttributeMapping*
 		public Assignment getAttributesAssignment_4() { return cAttributesAssignment_4; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_4_0() { return cAttributesAttributeMappingParserRuleCall_4_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
-
 	public class TemplateProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.TemplateProcessor");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -181,20 +186,19 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	| SimulationTemplateProcessor
 		//	| WrapperCodeTemplateProcessor;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//NormalTemplateProcessor | SimulationTemplateProcessor | WrapperCodeTemplateProcessor
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//NormalTemplateProcessor
 		public RuleCall getNormalTemplateProcessorParserRuleCall_0() { return cNormalTemplateProcessorParserRuleCall_0; }
-
+		
 		//SimulationTemplateProcessor
 		public RuleCall getSimulationTemplateProcessorParserRuleCall_1() { return cSimulationTemplateProcessorParserRuleCall_1; }
-
+		
 		//WrapperCodeTemplateProcessor
 		public RuleCall getWrapperCodeTemplateProcessorParserRuleCall_2() { return cWrapperCodeTemplateProcessorParserRuleCall_2; }
 	}
-
 	public class NormalTemplateProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.NormalTemplateProcessor");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -210,32 +214,31 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	'process' 'template' '{' {NormalTemplateProcessor} attributes+=AttributeMapping*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'process' 'template' '{' {NormalTemplateProcessor} attributes+=AttributeMapping* '}'
 		public Group getGroup() { return cGroup; }
-
+		
 		//'process'
 		public Keyword getProcessKeyword_0() { return cProcessKeyword_0; }
-
+		
 		//'template'
 		public Keyword getTemplateKeyword_1() { return cTemplateKeyword_1; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
-
+		
 		//{NormalTemplateProcessor}
 		public Action getNormalTemplateProcessorAction_3() { return cNormalTemplateProcessorAction_3; }
-
+		
 		//attributes+=AttributeMapping*
 		public Assignment getAttributesAssignment_4() { return cAttributesAssignment_4; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_4_0() { return cAttributesAttributeMappingParserRuleCall_4_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
-
 	public class SimulationTemplateProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.SimulationTemplateProcessor");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -252,35 +255,34 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	'process' 'simulation' 'template' '{' {SimulationTemplateProcessor} attributes+=AttributeMapping*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'process' 'simulation' 'template' '{' {SimulationTemplateProcessor} attributes+=AttributeMapping* '}'
 		public Group getGroup() { return cGroup; }
-
+		
 		//'process'
 		public Keyword getProcessKeyword_0() { return cProcessKeyword_0; }
-
+		
 		//'simulation'
 		public Keyword getSimulationKeyword_1() { return cSimulationKeyword_1; }
-
+		
 		//'template'
 		public Keyword getTemplateKeyword_2() { return cTemplateKeyword_2; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-
+		
 		//{SimulationTemplateProcessor}
 		public Action getSimulationTemplateProcessorAction_4() { return cSimulationTemplateProcessorAction_4; }
-
+		
 		//attributes+=AttributeMapping*
 		public Assignment getAttributesAssignment_5() { return cAttributesAssignment_5; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_5_0() { return cAttributesAttributeMappingParserRuleCall_5_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
-
 	public class WrapperCodeTemplateProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.WrapperCodeTemplateProcessor");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -297,35 +299,34 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	'process' 'wrapper' 'template' '{' {WrapperCodeTemplateProcessor} attributes+=AttributeMapping*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'process' 'wrapper' 'template' '{' {WrapperCodeTemplateProcessor} attributes+=AttributeMapping* '}'
 		public Group getGroup() { return cGroup; }
-
+		
 		//'process'
 		public Keyword getProcessKeyword_0() { return cProcessKeyword_0; }
-
+		
 		//'wrapper'
 		public Keyword getWrapperKeyword_1() { return cWrapperKeyword_1; }
-
+		
 		//'template'
 		public Keyword getTemplateKeyword_2() { return cTemplateKeyword_2; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-
+		
 		//{WrapperCodeTemplateProcessor}
 		public Action getWrapperCodeTemplateProcessorAction_4() { return cWrapperCodeTemplateProcessorAction_4; }
-
+		
 		//attributes+=AttributeMapping*
 		public Assignment getAttributesAssignment_5() { return cAttributesAssignment_5; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_5_0() { return cAttributesAttributeMappingParserRuleCall_5_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
-
 	public class AttributeMappingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.AttributeMapping");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -358,81 +359,80 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
 		//	attributes+=AttributeMapping+ '}');
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//name=ID arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
 		//attributes+=AttributeMapping+ '}')
 		public Group getGroup() { return cGroup; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
-
+		
 		//arrayIndex=ArrayIndex?
 		public Assignment getArrayIndexAssignment_1() { return cArrayIndexAssignment_1; }
-
+		
 		//ArrayIndex
 		public RuleCall getArrayIndexArrayIndexParserRuleCall_1_0() { return cArrayIndexArrayIndexParserRuleCall_1_0; }
-
+		
 		//':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}'
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
+		
 		//':' value=Literal
 		public Group getGroup_2_0() { return cGroup_2_0; }
-
+		
 		//':'
 		public Keyword getColonKeyword_2_0_0() { return cColonKeyword_2_0_0; }
-
+		
 		//value=Literal
 		public Assignment getValueAssignment_2_0_1() { return cValueAssignment_2_0_1; }
-
+		
 		//Literal
 		public RuleCall getValueLiteralParserRuleCall_2_0_1_0() { return cValueLiteralParserRuleCall_2_0_1_0; }
-
+		
 		//':' values+=Literal (',' values+=Literal)+
 		public Group getGroup_2_1() { return cGroup_2_1; }
-
+		
 		//':'
 		public Keyword getColonKeyword_2_1_0() { return cColonKeyword_2_1_0; }
-
+		
 		//values+=Literal
 		public Assignment getValuesAssignment_2_1_1() { return cValuesAssignment_2_1_1; }
-
+		
 		//Literal
 		public RuleCall getValuesLiteralParserRuleCall_2_1_1_0() { return cValuesLiteralParserRuleCall_2_1_1_0; }
-
+		
 		//(',' values+=Literal)+
 		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
-
+		
 		//','
 		public Keyword getCommaKeyword_2_1_2_0() { return cCommaKeyword_2_1_2_0; }
-
+		
 		//values+=Literal
 		public Assignment getValuesAssignment_2_1_2_1() { return cValuesAssignment_2_1_2_1; }
-
+		
 		//Literal
 		public RuleCall getValuesLiteralParserRuleCall_2_1_2_1_0() { return cValuesLiteralParserRuleCall_2_1_2_1_0; }
-
+		
 		//':'? '{' attributes+=AttributeMapping+ '}'
 		public Group getGroup_2_2() { return cGroup_2_2; }
-
+		
 		//':'?
 		public Keyword getColonKeyword_2_2_0() { return cColonKeyword_2_2_0; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_2_1() { return cLeftCurlyBracketKeyword_2_2_1; }
-
+		
 		//attributes+=AttributeMapping+
 		public Assignment getAttributesAssignment_2_2_2() { return cAttributesAssignment_2_2_2; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_2_2_2_0() { return cAttributesAttributeMappingParserRuleCall_2_2_2_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_2_3() { return cRightCurlyBracketKeyword_2_2_3; }
 	}
-
 	public class LiteralElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.Literal");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -453,44 +453,43 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	| value=SignedFloat
 		//	| value=AnyValue;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//value=TextValue arrayIndex=ArrayIndex? | value=SignedInt | value=SignedFloat | value=AnyValue
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//value=TextValue arrayIndex=ArrayIndex?
 		public Group getGroup_0() { return cGroup_0; }
-
+		
 		//value=TextValue
 		public Assignment getValueAssignment_0_0() { return cValueAssignment_0_0; }
-
+		
 		//TextValue
 		public RuleCall getValueTextValueParserRuleCall_0_0_0() { return cValueTextValueParserRuleCall_0_0_0; }
-
+		
 		//arrayIndex=ArrayIndex?
 		public Assignment getArrayIndexAssignment_0_1() { return cArrayIndexAssignment_0_1; }
-
+		
 		//ArrayIndex
 		public RuleCall getArrayIndexArrayIndexParserRuleCall_0_1_0() { return cArrayIndexArrayIndexParserRuleCall_0_1_0; }
-
+		
 		//value=SignedInt
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
+		
 		//SignedInt
 		public RuleCall getValueSignedIntParserRuleCall_1_0() { return cValueSignedIntParserRuleCall_1_0; }
-
+		
 		//value=SignedFloat
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
-
+		
 		//SignedFloat
 		public RuleCall getValueSignedFloatParserRuleCall_2_0() { return cValueSignedFloatParserRuleCall_2_0; }
-
+		
 		//value=AnyValue
 		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
-
+		
 		//AnyValue
 		public RuleCall getValueAnyValueParserRuleCall_3_0() { return cValueAnyValueParserRuleCall_3_0; }
 	}
-
 	public class ArrayIndexElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.ArrayIndex");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -502,23 +501,22 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//ArrayIndex:
 		//	('[' indices+=INT ']')+;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//('[' indices+=INT ']')+
 		public Group getGroup() { return cGroup; }
-
+		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
-
+		
 		//indices+=INT
 		public Assignment getIndicesAssignment_1() { return cIndicesAssignment_1; }
-
+		
 		//INT
 		public RuleCall getIndicesINTTerminalRuleCall_1_0() { return cIndicesINTTerminalRuleCall_1_0; }
-
+		
 		//']'
 		public Keyword getRightSquareBracketKeyword_2() { return cRightSquareBracketKeyword_2; }
 	}
-
 	public class SignedFloatElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.SignedFloat");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -531,23 +529,22 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	sign=Sign?
 		//	value=FLOAT;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//sign=Sign? value=FLOAT
 		public Group getGroup() { return cGroup; }
-
+		
 		//sign=Sign?
 		public Assignment getSignAssignment_0() { return cSignAssignment_0; }
-
+		
 		//Sign
 		public RuleCall getSignSignEnumRuleCall_0_0() { return cSignSignEnumRuleCall_0_0; }
-
+		
 		//value=FLOAT
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
+		
 		//FLOAT
 		public RuleCall getValueFLOATTerminalRuleCall_1_0() { return cValueFLOATTerminalRuleCall_1_0; }
 	}
-
 	public class SignedIntElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.SignedInt");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -560,23 +557,22 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//	sign=Sign?
 		//	value=INT;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//sign=Sign? value=INT
 		public Group getGroup() { return cGroup; }
-
+		
 		//sign=Sign?
 		public Assignment getSignAssignment_0() { return cSignAssignment_0; }
-
+		
 		//Sign
 		public RuleCall getSignSignEnumRuleCall_0_0() { return cSignSignEnumRuleCall_0_0; }
-
+		
 		//value=INT
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
+		
 		//INT
 		public RuleCall getValueINTTerminalRuleCall_1_0() { return cValueINTTerminalRuleCall_1_0; }
 	}
-
 	public class TextValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.TextValue");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
@@ -585,14 +581,13 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//TextValue:
 		//	value=ID;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//value=ID
 		public Assignment getValueAssignment() { return cValueAssignment; }
-
+		
 		//ID
 		public RuleCall getValueIDTerminalRuleCall_0() { return cValueIDTerminalRuleCall_0; }
 	}
-	
 	
 	public class SignElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.Sign");
@@ -605,19 +600,19 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//enum Sign:
 		//	POSITIVE='+' | NEGATIVE='-';
 		public EnumRule getRule() { return rule; }
-
+		
 		//POSITIVE='+' | NEGATIVE='-'
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//POSITIVE='+'
 		public EnumLiteralDeclaration getPOSITIVEEnumLiteralDeclaration_0() { return cPOSITIVEEnumLiteralDeclaration_0; }
-
+		
 		//'+'
 		public Keyword getPOSITIVEPlusSignKeyword_0_0() { return cPOSITIVEPlusSignKeyword_0_0; }
-
+		
 		//NEGATIVE='-'
 		public EnumLiteralDeclaration getNEGATIVEEnumLiteralDeclaration_1() { return cNEGATIVEEnumLiteralDeclaration_1; }
-
+		
 		//'-'
 		public Keyword getNEGATIVEHyphenMinusKeyword_1_0() { return cNEGATIVEHyphenMinusKeyword_1_0; }
 	}
@@ -640,18 +635,18 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	private final TerminalRule tID;
 	
 	private final Grammar grammar;
-
+	
 	private final KExpressionsGrammarAccess gaKExpressions;
-
+	
 	private final AnnotationsGrammarAccess gaAnnotations;
-
+	
 	private final TerminalsGrammarAccess gaTerminals;
 
 	@Inject
 	public KiBuildGrammarAccess(GrammarProvider grammarProvider,
-		KExpressionsGrammarAccess gaKExpressions,
-		AnnotationsGrammarAccess gaAnnotations,
-		TerminalsGrammarAccess gaTerminals) {
+			KExpressionsGrammarAccess gaKExpressions,
+			AnnotationsGrammarAccess gaAnnotations,
+			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
@@ -695,15 +690,15 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return grammar;
 	}
 	
-
+	
 	public KExpressionsGrammarAccess getKExpressionsGrammarAccess() {
 		return gaKExpressions;
 	}
-
+	
 	public AnnotationsGrammarAccess getAnnotationsGrammarAccess() {
 		return gaAnnotations;
 	}
-
+	
 	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
 		return gaTerminals;
 	}
@@ -721,7 +716,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBuildConfigurationRule() {
 		return getBuildConfigurationAccess().getRule();
 	}
-
+	
 	//ModelCompiler:
 	//	'model' 'compiler' name=ID '{'
 	//	attributes+=AttributeMapping*
@@ -734,7 +729,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModelCompilerRule() {
 		return getModelCompilerAccess().getRule();
 	}
-
+	
 	//SimulationCompiler:
 	//	'simulation' 'compiler' name=ID '{'
 	//	attributes+=AttributeMapping*
@@ -746,7 +741,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSimulationCompilerRule() {
 		return getSimulationCompilerAccess().getRule();
 	}
-
+	
 	//TemplateProcessor:
 	//	NormalTemplateProcessor
 	//	| SimulationTemplateProcessor
@@ -758,7 +753,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTemplateProcessorRule() {
 		return getTemplateProcessorAccess().getRule();
 	}
-
+	
 	//NormalTemplateProcessor TemplateProcessor:
 	//	'process' 'template' '{' {NormalTemplateProcessor} attributes+=AttributeMapping*
 	//	'}';
@@ -769,7 +764,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNormalTemplateProcessorRule() {
 		return getNormalTemplateProcessorAccess().getRule();
 	}
-
+	
 	//SimulationTemplateProcessor TemplateProcessor:
 	//	'process' 'simulation' 'template' '{' {SimulationTemplateProcessor} attributes+=AttributeMapping*
 	//	'}';
@@ -780,7 +775,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSimulationTemplateProcessorRule() {
 		return getSimulationTemplateProcessorAccess().getRule();
 	}
-
+	
 	//WrapperCodeTemplateProcessor TemplateProcessor:
 	//	'process' 'wrapper' 'template' '{' {WrapperCodeTemplateProcessor} attributes+=AttributeMapping*
 	//	'}';
@@ -791,7 +786,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getWrapperCodeTemplateProcessorRule() {
 		return getWrapperCodeTemplateProcessorAccess().getRule();
 	}
-
+	
 	//AttributeMapping:
 	//	name=ID
 	//	arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
@@ -803,7 +798,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAttributeMappingRule() {
 		return getAttributeMappingAccess().getRule();
 	}
-
+	
 	//Literal:
 	//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
 	//	| value=SignedFloat
@@ -815,7 +810,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLiteralRule() {
 		return getLiteralAccess().getRule();
 	}
-
+	
 	//ArrayIndex:
 	//	('[' indices+=INT ']')+;
 	public ArrayIndexElements getArrayIndexAccess() {
@@ -825,7 +820,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getArrayIndexRule() {
 		return getArrayIndexAccess().getRule();
 	}
-
+	
 	//enum Sign:
 	//	POSITIVE='+' | NEGATIVE='-';
 	public SignElements getSignAccess() {
@@ -835,7 +830,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getSignRule() {
 		return getSignAccess().getRule();
 	}
-
+	
 	//SignedFloat:
 	//	sign=Sign?
 	//	value=FLOAT;
@@ -846,7 +841,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignedFloatRule() {
 		return getSignedFloatAccess().getRule();
 	}
-
+	
 	//SignedInt:
 	//	sign=Sign?
 	//	value=INT;
@@ -857,7 +852,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignedIntRule() {
 		return getSignedIntAccess().getRule();
 	}
-
+	
 	//TextValue:
 	//	value=ID;
 	public TextValueElements getTextValueAccess() {
@@ -867,19 +862,19 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTextValueRule() {
 		return getTextValueAccess().getRule();
 	}
-
+	
 	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return tBOOLEAN;
-	} 
-
+	}
+	
 	//terminal ID:
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return tID;
-	} 
-
+	}
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
@@ -930,7 +925,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRootRule() {
 		return getRootAccess().getRule();
 	}
-
+	
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
@@ -942,7 +937,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExpressionRule() {
 		return getExpressionAccess().getRule();
 	}
-
+	
 	//// Boolean Expression Rule
 	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
 	//// One could skip directly to the next rule.
@@ -955,7 +950,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBoolExpressionRule() {
 		return getBoolExpressionAccess().getRule();
 	}
-
+	
 	//// Logical Or Expression Rule
 	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -969,7 +964,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLogicalOrExpressionRule() {
 		return getLogicalOrExpressionAccess().getRule();
 	}
-
+	
 	//// Logical And Expression Rule
 	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -983,7 +978,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLogicalAndExpressionRule() {
 		return getLogicalAndExpressionAccess().getRule();
 	}
-
+	
 	//// Bitwiese Or Expression Rule
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -997,7 +992,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseOrExpressionRule() {
 		return getBitwiseOrExpressionAccess().getRule();
 	}
-
+	
 	//BitwiseXOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
 	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
@@ -1008,7 +1003,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseXOrExpressionRule() {
 		return getBitwiseXOrExpressionAccess().getRule();
 	}
-
+	
 	//// Bitwise And Expression Rule
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -1022,7 +1017,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
 	}
-
+	
 	//// Compare Operation Rule
 	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
 	//// Example: 42 <= val(A)
@@ -1036,7 +1031,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCompareOperationRule() {
 		return getCompareOperationAccess().getRule();
 	}
-
+	
 	//// 'Not or Valued Expression' Rule
 	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression Expression:
@@ -1049,7 +1044,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNotOrValuedExpressionRule() {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
-
+	
 	//BitwiseNotExpression Expression:
 	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
@@ -1059,7 +1054,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseNotExpressionRule() {
 		return getBitwiseNotExpressionAccess().getRule();
 	}
-
+	
 	//// Not Expression Rule
 	//// Example: !A, !false, !(A or B)
 	//// At the latter we need the parents to indicate the right binding.
@@ -1073,7 +1068,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNotExpressionRule() {
 		return getNotExpressionAccess().getRule();
 	}
-
+	
 	//// Valued Expression Rule    
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
@@ -1086,7 +1081,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedExpressionRule() {
 		return getValuedExpressionAccess().getRule();
 	}
-
+	
 	//ShiftLeftExpression Expression:
 	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
 	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
@@ -1097,7 +1092,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftLeftExpressionRule() {
 		return getShiftLeftExpressionAccess().getRule();
 	}
-
+	
 	//ShiftRightExpression Expression:
 	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
 	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
@@ -1108,7 +1103,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftRightExpressionRule() {
 		return getShiftRightExpressionAccess().getRule();
 	}
-
+	
 	//ShiftRightUnsignedExpression Expression:
 	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
 	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?;
@@ -1119,7 +1114,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftRightUnsignedExpressionRule() {
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
-
+	
 	//// Add Expression Rule
 	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1134,7 +1129,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAddExpressionRule() {
 		return getAddExpressionAccess().getRule();
 	}
-
+	
 	//// Sub Expression Rule
 	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1149,14 +1144,14 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSubExpressionRule() {
 		return getSubExpressionAccess().getRule();
 	}
-
+	
 	//// Mult Expression Rule
 	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1164,7 +1159,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getMultExpressionRule() {
 		return getMultExpressionAccess().getRule();
 	}
-
+	
 	//// Div Expression Rule
 	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1179,7 +1174,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDivExpressionRule() {
 		return getDivExpressionAccess().getRule();
 	}
-
+	
 	//// Mod Expression Rule
 	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1194,7 +1189,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModExpressionRule() {
 		return getModExpressionAccess().getRule();
 	}
-
+	
 	//// Neg Expression Rule
 	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
 	//// Example: -i, -2
@@ -1207,7 +1202,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
 	}
-
+	
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
@@ -1219,7 +1214,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
 	}
-
+	
 	//FBYExpression Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
 	//	subExpressions+=AtomicValuedExpression
@@ -1231,7 +1226,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFBYExpressionRule() {
 		return getFBYExpressionAccess().getRule();
 	}
-
+	
 	//// Atomic Expression Rule
 	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
 	//// encapsulated in braces, a function call or a text expression.
@@ -1252,7 +1247,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAtomicExpressionRule() {
 		return getAtomicExpressionAccess().getRule();
 	}
-
+	
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
@@ -1271,7 +1266,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
-
+	
 	//// Valued Object Test Expression Rule
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
@@ -1286,7 +1281,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectTestExpressionRule() {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
-
+	
 	//// ID with primes
 	//PrimeID:
 	//	super::ID "'"*;
@@ -1297,7 +1292,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPrimeIDRule() {
 		return getPrimeIDAccess().getRule();
 	}
-
+	
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
@@ -1310,7 +1305,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
 	}
-
+	
 	//ScheduleObjectReference:
 	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
@@ -1320,7 +1315,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScheduleObjectReferenceRule() {
 		return getScheduleObjectReferenceAccess().getRule();
 	}
-
+	
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
@@ -1333,7 +1328,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReferenceCallRule() {
 		return getReferenceCallAccess().getRule();
 	}
-
+	
 	//// Random Call Rule
 	//// Calls the random function. 
 	//RandomCall:
@@ -1346,7 +1341,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomCallRule() {
 		return getRandomCallAccess().getRule();
 	}
-
+	
 	//// Random Call Rule
 	//// Calls the random function. 
 	//RandomizeCall:
@@ -1359,7 +1354,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomizeCallRule() {
 		return getRandomizeCallAccess().getRule();
 	}
-
+	
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
@@ -1372,7 +1367,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
 	}
-
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
@@ -1387,7 +1382,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getParameterRule() {
 		return getParameterAccess().getRule();
 	}
-
+	
 	//// Text Expression Rule
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
@@ -1401,7 +1396,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTextExpressionRule() {
 		return getTextExpressionAccess().getRule();
 	}
-
+	
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
@@ -1411,7 +1406,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntValueRule() {
 		return getIntValueAccess().getRule();
 	}
-
+	
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -1421,7 +1416,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloatValueRule() {
 		return getFloatValueAccess().getRule();
 	}
-
+	
 	//BoolValue:
 	//	value=super::BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
@@ -1431,7 +1426,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
 	}
-
+	
 	//StringValue:
 	//	value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
@@ -1441,7 +1436,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
 	}
-
+	
 	//VectorValue:
 	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
@@ -1451,7 +1446,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVectorValueRule() {
 		return getVectorValueAccess().getRule();
 	}
-
+	
 	//VectorValueMember Expression:
 	//	BoolExpression | ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
@@ -1461,7 +1456,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVectorValueMemberRule() {
 		return getVectorValueMemberAccess().getRule();
 	}
-
+	
 	//IgnoreValue:
 	//	{IgnoreValue} '_';
 	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
@@ -1471,7 +1466,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIgnoreValueRule() {
 		return getIgnoreValueAccess().getRule();
 	}
-
+	
 	//// Any Type Rule
 	//// Data type rule allowing any kind of value to be accepted,
 	//// e.g. as initialValues of valued objects used in Kits.xtext. 
@@ -1484,7 +1479,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
 	}
-
+	
 	//AnyValue Value:
 	//	IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
@@ -1494,7 +1489,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnyValueRule() {
 		return getAnyValueAccess().getRule();
 	}
-
+	
 	//enum CompareOperator returns OperatorType:
 	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
@@ -1504,7 +1499,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getCompareOperatorRule() {
 		return getCompareOperatorAccess().getRule();
 	}
-
+	
 	//enum PreOperator returns OperatorType:
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
@@ -1514,7 +1509,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseNotOperator returns OperatorType:
 	//	BITWISE_NOT="~";
 	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
@@ -1524,7 +1519,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseNotOperatorRule() {
 		return getBitwiseNotOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseXOrOperator returns OperatorType:
 	//	BITWISE_XOR="^";
 	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
@@ -1534,7 +1529,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseXOrOperatorRule() {
 		return getBitwiseXOrOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseOrOperator returns OperatorType:
 	//	BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
@@ -1544,7 +1539,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseOrOperatorRule() {
 		return getBitwiseOrOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseAndOperator returns OperatorType:
 	//	BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
@@ -1554,7 +1549,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseAndOperatorRule() {
 		return getBitwiseAndOperatorAccess().getRule();
 	}
-
+	
 	//enum NotOperator returns OperatorType:
 	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
@@ -1564,7 +1559,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getNotOperatorRule() {
 		return getNotOperatorAccess().getRule();
 	}
-
+	
 	//enum AddOperator returns OperatorType:
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
@@ -1574,7 +1569,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getAddOperatorRule() {
 		return getAddOperatorAccess().getRule();
 	}
-
+	
 	//enum SubOperator returns OperatorType:
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
@@ -1584,7 +1579,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getSubOperatorRule() {
 		return getSubOperatorAccess().getRule();
 	}
-
+	
 	//enum MultOperator returns OperatorType:
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
@@ -1594,7 +1589,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getMultOperatorRule() {
 		return getMultOperatorAccess().getRule();
 	}
-
+	
 	//enum ModOperator returns OperatorType:
 	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
@@ -1604,7 +1599,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getModOperatorRule() {
 		return getModOperatorAccess().getRule();
 	}
-
+	
 	//enum DivOperator returns OperatorType:
 	//	DIV="/";
 	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
@@ -1614,7 +1609,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getDivOperatorRule() {
 		return getDivOperatorAccess().getRule();
 	}
-
+	
 	//enum ValOperator returns OperatorType:
 	//	VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
@@ -1624,7 +1619,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getValOperatorRule() {
 		return getValOperatorAccess().getRule();
 	}
-
+	
 	//enum LogicalOrOperator returns OperatorType:
 	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
@@ -1634,7 +1629,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getLogicalOrOperatorRule() {
 		return getLogicalOrOperatorAccess().getRule();
 	}
-
+	
 	//enum LogicalAndOperator returns OperatorType:
 	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
@@ -1644,7 +1639,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getLogicalAndOperatorRule() {
 		return getLogicalAndOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftLeftOperator returns OperatorType:
 	//	SHIFT_LEFT="<<";
 	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
@@ -1654,7 +1649,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftLeftOperatorRule() {
 		return getShiftLeftOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftRightOperator returns OperatorType:
 	//	SHIFT_RIGHT=">>";
 	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
@@ -1664,7 +1659,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftRightOperatorRule() {
 		return getShiftRightOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftRightUnsignedOperator returns OperatorType:
 	//	SHIFT_RIGHT_UNSIGNED=">>>";
 	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
@@ -1674,7 +1669,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftRightUnsignedOperatorRule() {
 		return getShiftRightUnsignedOperatorAccess().getRule();
 	}
-
+	
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
@@ -1684,7 +1679,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixAddRule() {
 		return getPostfixAddAccess().getRule();
 	}
-
+	
 	//enum PostfixSub returns OperatorType:
 	//	POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
@@ -1694,7 +1689,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
 	}
-
+	
 	//enum ConditionalOperator returns OperatorType:
 	//	CONDITIONAL="?";
 	public KExpressionsGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
@@ -1704,7 +1699,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getConditionalOperatorRule() {
 		return getConditionalOperatorAccess().getRule();
 	}
-
+	
 	//enum FBYOperator returns OperatorType:
 	//	FBY="->";
 	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
@@ -1714,7 +1709,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getFBYOperatorRule() {
 		return getFBYOperatorAccess().getRule();
 	}
-
+	
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
@@ -1726,7 +1721,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getValueTypeRule() {
 		return getValueTypeAccess().getRule();
 	}
-
+	
 	//enum HostType returns ValueType:
 	//	HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
@@ -1736,7 +1731,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getHostTypeRule() {
 		return getHostTypeAccess().getRule();
 	}
-
+	
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="|" | AND="&" | HOST="host";
@@ -1747,13 +1742,13 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
 	}
-
+	
 	//terminal HOSTCODE:
 	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
-	} 
-
+	}
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
@@ -1772,7 +1767,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
 	}
-
+	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
@@ -1784,7 +1779,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaRule() {
 		return getPragmaAccess().getRule();
 	}
-
+	
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
@@ -1798,7 +1793,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedAnnotationRule() {
 		return getValuedAnnotationAccess().getRule();
 	}
-
+	
 	//// Restricted Type Annotation Rule
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
@@ -1811,7 +1806,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypeAnnotationRule() {
 		return getRestrictedTypeAnnotationAccess().getRule();
 	}
-
+	
 	//// Quoted String Annotation Rule
 	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
@@ -1826,7 +1821,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
 	}
-
+	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
@@ -1838,7 +1833,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotationRule() {
 		return getCommentAnnotationAccess().getRule();
 	}
-
+	
 	//CommentAnnotatonSL CommentAnnotation:
 	//	values+=SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
@@ -1848,7 +1843,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotatonSLRule() {
 		return getCommentAnnotatonSLAccess().getRule();
 	}
-
+	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation:
@@ -1860,7 +1855,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTagAnnotationRule() {
 		return getTagAnnotationAccess().getRule();
 	}
-
+	
 	//PragmaTag Pragma:
 	//	'#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
@@ -1870,7 +1865,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaTagRule() {
 		return getPragmaTagAccess().getRule();
 	}
-
+	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -1883,7 +1878,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getKeyStringValueAnnotationRule() {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
 	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
@@ -1893,7 +1888,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//StringPragma:
 	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
@@ -1903,7 +1898,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringPragmaRule() {
 		return getStringPragmaAccess().getRule();
 	}
-
+	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
@@ -1915,7 +1910,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
 	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
@@ -1925,7 +1920,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
 		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -1938,7 +1933,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedKeyStringValueAnnotationRule() {
 		return getQuotedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -1951,7 +1946,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -1964,7 +1959,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringRule() {
 		return getEStringAccess().getRule();
 	}
-
+	
 	//EStringBoolean:
 	//	STRING | ExtendedID | super::BOOLEAN;
 	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
@@ -1974,7 +1969,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringBooleanRule() {
 		return getEStringBooleanAccess().getRule();
 	}
-
+	
 	//EStringAllTypes:
 	//	STRING | ExtendedID | super::BOOLEAN | Integer | Floateger;
 	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
@@ -1984,7 +1979,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringAllTypesRule() {
 		return getEStringAllTypesAccess().getRule();
 	}
-
+	
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
@@ -1997,7 +1992,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
 	}
-
+	
 	//QualifiedID:
 	//	super::ID ("." super::ID)*;
 	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
@@ -2007,7 +2002,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQualifiedIDRule() {
 		return getQualifiedIDAccess().getRule();
 	}
-
+	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
@@ -2019,7 +2014,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntegerRule() {
 		return getIntegerAccess().getRule();
 	}
-
+	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
@@ -2031,7 +2026,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloategerRule() {
 		return getFloategerAccess().getRule();
 	}
-
+	
 	//Double ecore::EDouble:
 	//	FLOAT;
 	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
@@ -2041,7 +2036,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoubleRule() {
 		return getDoubleAccess().getRule();
 	}
-
+	
 	//Doubleger ecore::EDouble:
 	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
@@ -2051,64 +2046,64 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoublegerRule() {
 		return getDoublegerAccess().getRule();
 	}
-
+	
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
-	} 
-
+	}
+	
 	//@ Override terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
-	} 
-
+	}
+	
 	//terminal SL_COMMENT_ANNOTATION:
 	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
-	} 
-
+	}
+	
 	//@ Override terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
-	} 
-
+	}
+	
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return gaAnnotations.getNUMBERRule();
-	} 
-
+	}
+	
 	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
-	} 
-
+	}
+	
 	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();
-	} 
-
+	}
+	
 	//@ Override terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
-	} 
-
+	}
+	
 	//terminal WS:
 	//	' ' | '\t' | '\r' | '\n'+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
-	} 
-
+	}
+	
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
-	} 
+	}
 }

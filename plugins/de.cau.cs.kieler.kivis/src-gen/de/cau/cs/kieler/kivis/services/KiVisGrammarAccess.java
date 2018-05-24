@@ -3,23 +3,31 @@
  */
 package de.cau.cs.kieler.kivis.services;
 
-import com.google.inject.Singleton;
 import com.google.inject.Inject;
-
-import java.util.List;
-
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
-
-import de.cau.cs.kieler.prom.services.KiBuildGrammarAccess;
-import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import com.google.inject.Singleton;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.prom.services.KiBuildGrammarAccess;
+import java.util.List;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.EnumLiteralDeclaration;
+import org.eclipse.xtext.EnumRule;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
 public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
-	
 	
 	public class VisualizationConfigurationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.VisualizationConfiguration");
@@ -38,41 +46,40 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//VisualizationConfiguration:
 		//	('image' ':' image=STRING)? (elements+=Element | interactions+=Interaction)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//('image' ':' image=STRING)? (elements+=Element | interactions+=Interaction)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//('image' ':' image=STRING)?
 		public Group getGroup_0() { return cGroup_0; }
-
+		
 		//'image'
 		public Keyword getImageKeyword_0_0() { return cImageKeyword_0_0; }
-
+		
 		//':'
 		public Keyword getColonKeyword_0_1() { return cColonKeyword_0_1; }
-
+		
 		//image=STRING
 		public Assignment getImageAssignment_0_2() { return cImageAssignment_0_2; }
-
+		
 		//STRING
 		public RuleCall getImageSTRINGTerminalRuleCall_0_2_0() { return cImageSTRINGTerminalRuleCall_0_2_0; }
-
+		
 		//(elements+=Element | interactions+=Interaction)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
+		
 		//elements+=Element
 		public Assignment getElementsAssignment_1_0() { return cElementsAssignment_1_0; }
-
+		
 		//Element
 		public RuleCall getElementsElementParserRuleCall_1_0_0() { return cElementsElementParserRuleCall_1_0_0; }
-
+		
 		//interactions+=Interaction
 		public Assignment getInteractionsAssignment_1_1() { return cInteractionsAssignment_1_1; }
-
+		
 		//Interaction
 		public RuleCall getInteractionsInteractionParserRuleCall_1_1_0() { return cInteractionsInteractionParserRuleCall_1_1_0; }
 	}
-
 	public class ElementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Element");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -89,32 +96,31 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	animations+=Animation+
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'animate' name=ID '{' animations+=Animation+ '}'
 		public Group getGroup() { return cGroup; }
-
+		
 		//'animate'
 		public Keyword getAnimateKeyword_0() { return cAnimateKeyword_0; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
-
+		
 		//animations+=Animation+
 		public Assignment getAnimationsAssignment_3() { return cAnimationsAssignment_3; }
-
+		
 		//Animation
 		public RuleCall getAnimationsAnimationParserRuleCall_3_0() { return cAnimationsAnimationParserRuleCall_3_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 	}
-
 	public class InteractionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Interaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -145,72 +151,71 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	actions+=Action*
 		//	'}' ('if' condition=AndExpression)?;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//{Interaction} 'perform' (('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?) '{'
 		//actions+=Action* '}' ('if' condition=AndExpression)?
 		public Group getGroup() { return cGroup; }
-
+		
 		//{Interaction}
 		public Action getInteractionAction_0() { return cInteractionAction_0; }
-
+		
 		//'perform'
 		public Keyword getPerformKeyword_1() { return cPerformKeyword_1; }
-
+		
 		//('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
+		
 		//('on' event=Event)?
 		public Group getGroup_2_0() { return cGroup_2_0; }
-
+		
 		//'on'
 		public Keyword getOnKeyword_2_0_0() { return cOnKeyword_2_0_0; }
-
+		
 		//event=Event
 		public Assignment getEventAssignment_2_0_1() { return cEventAssignment_2_0_1; }
-
+		
 		//Event
 		public RuleCall getEventEventParserRuleCall_2_0_1_0() { return cEventEventParserRuleCall_2_0_1_0; }
-
+		
 		//(afterTick?='after tick' | beforeTick?='before tick')?
 		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
-
+		
 		//afterTick?='after tick'
 		public Assignment getAfterTickAssignment_2_1_0() { return cAfterTickAssignment_2_1_0; }
-
+		
 		//'after tick'
 		public Keyword getAfterTickAfterTickKeyword_2_1_0_0() { return cAfterTickAfterTickKeyword_2_1_0_0; }
-
+		
 		//beforeTick?='before tick'
 		public Assignment getBeforeTickAssignment_2_1_1() { return cBeforeTickAssignment_2_1_1; }
-
+		
 		//'before tick'
 		public Keyword getBeforeTickBeforeTickKeyword_2_1_1_0() { return cBeforeTickBeforeTickKeyword_2_1_1_0; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-
+		
 		//actions+=Action*
 		public Assignment getActionsAssignment_4() { return cActionsAssignment_4; }
-
+		
 		//Action
 		public RuleCall getActionsActionParserRuleCall_4_0() { return cActionsActionParserRuleCall_4_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
-
+		
 		//('if' condition=AndExpression)?
 		public Group getGroup_6() { return cGroup_6; }
-
+		
 		//'if'
 		public Keyword getIfKeyword_6_0() { return cIfKeyword_6_0; }
-
+		
 		//condition=AndExpression
 		public Assignment getConditionAssignment_6_1() { return cConditionAssignment_6_1; }
-
+		
 		//AndExpression
 		public RuleCall getConditionAndExpressionParserRuleCall_6_1_0() { return cConditionAndExpressionParserRuleCall_6_1_0; }
 	}
-
 	public class EventElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Event");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -223,26 +228,25 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//Event:
 		//	event=DOMEvent 'from' element=ID;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//event=DOMEvent 'from' element=ID
 		public Group getGroup() { return cGroup; }
-
+		
 		//event=DOMEvent
 		public Assignment getEventAssignment_0() { return cEventAssignment_0; }
-
+		
 		//DOMEvent
 		public RuleCall getEventDOMEventEnumRuleCall_0_0() { return cEventDOMEventEnumRuleCall_0_0; }
-
+		
 		//'from'
 		public Keyword getFromKeyword_1() { return cFromKeyword_1; }
-
+		
 		//element=ID
 		public Assignment getElementAssignment_2() { return cElementAssignment_2; }
-
+		
 		//ID
 		public RuleCall getElementIDTerminalRuleCall_2_0() { return cElementIDTerminalRuleCall_2_0; }
 	}
-
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Action");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -252,17 +256,16 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//Action:
 		//	VariableAssignment | SimulationAction;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//VariableAssignment | SimulationAction
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//VariableAssignment
 		public RuleCall getVariableAssignmentParserRuleCall_0() { return cVariableAssignmentParserRuleCall_0; }
-
+		
 		//SimulationAction
 		public RuleCall getSimulationActionParserRuleCall_1() { return cSimulationActionParserRuleCall_1; }
 	}
-
 	public class VariableAssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.VariableAssignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -278,35 +281,34 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//VariableAssignment Action:
 		//	variable=VariableReference '=' (value=Literal | function=Function);
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//variable=VariableReference '=' (value=Literal | function=Function)
 		public Group getGroup() { return cGroup; }
-
+		
 		//variable=VariableReference
 		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
-
+		
 		//VariableReference
 		public RuleCall getVariableVariableReferenceParserRuleCall_0_0() { return cVariableVariableReferenceParserRuleCall_0_0; }
-
+		
 		//'='
 		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
-
+		
 		//value=Literal | function=Function
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
+		
 		//value=Literal
 		public Assignment getValueAssignment_2_0() { return cValueAssignment_2_0; }
-
+		
 		//Literal
 		public RuleCall getValueLiteralParserRuleCall_2_0_0() { return cValueLiteralParserRuleCall_2_0_0; }
-
+		
 		//function=Function
 		public Assignment getFunctionAssignment_2_1() { return cFunctionAssignment_2_1; }
-
+		
 		//Function
 		public RuleCall getFunctionFunctionParserRuleCall_2_1_0() { return cFunctionFunctionParserRuleCall_2_1_0; }
 	}
-
 	public class SimulationActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.SimulationAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -317,20 +319,19 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//SimulationAction Action:
 		//	operation=SimulationOperation 'simulation';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//operation=SimulationOperation 'simulation'
 		public Group getGroup() { return cGroup; }
-
+		
 		//operation=SimulationOperation
 		public Assignment getOperationAssignment_0() { return cOperationAssignment_0; }
-
+		
 		//SimulationOperation
 		public RuleCall getOperationSimulationOperationEnumRuleCall_0_0() { return cOperationSimulationOperationEnumRuleCall_0_0; }
-
+		
 		//'simulation'
 		public Keyword getSimulationKeyword_1() { return cSimulationKeyword_1; }
 	}
-
 	public class FunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Function");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -351,50 +352,49 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//Function:
 		//	functionName=ID ('(' parameters+=FunctionParameter (',' parameters+=FunctionParameter)* ')' | '()');
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//functionName=ID ('(' parameters+=FunctionParameter (',' parameters+=FunctionParameter)* ')' | '()')
 		public Group getGroup() { return cGroup; }
-
+		
 		//functionName=ID
 		public Assignment getFunctionNameAssignment_0() { return cFunctionNameAssignment_0; }
-
+		
 		//ID
 		public RuleCall getFunctionNameIDTerminalRuleCall_0_0() { return cFunctionNameIDTerminalRuleCall_0_0; }
-
+		
 		//'(' parameters+=FunctionParameter (',' parameters+=FunctionParameter)* ')' | '()'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
+		
 		//'(' parameters+=FunctionParameter (',' parameters+=FunctionParameter)* ')'
 		public Group getGroup_1_0() { return cGroup_1_0; }
-
+		
 		//'('
 		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
-
+		
 		//parameters+=FunctionParameter
 		public Assignment getParametersAssignment_1_0_1() { return cParametersAssignment_1_0_1; }
-
+		
 		//FunctionParameter
 		public RuleCall getParametersFunctionParameterParserRuleCall_1_0_1_0() { return cParametersFunctionParameterParserRuleCall_1_0_1_0; }
-
+		
 		//(',' parameters+=FunctionParameter)*
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
-
+		
 		//','
 		public Keyword getCommaKeyword_1_0_2_0() { return cCommaKeyword_1_0_2_0; }
-
+		
 		//parameters+=FunctionParameter
 		public Assignment getParametersAssignment_1_0_2_1() { return cParametersAssignment_1_0_2_1; }
-
+		
 		//FunctionParameter
 		public RuleCall getParametersFunctionParameterParserRuleCall_1_0_2_1_0() { return cParametersFunctionParameterParserRuleCall_1_0_2_1_0; }
-
+		
 		//')'
 		public Keyword getRightParenthesisKeyword_1_0_3() { return cRightParenthesisKeyword_1_0_3; }
-
+		
 		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_1_1() { return cLeftParenthesisRightParenthesisKeyword_1_1; }
 	}
-
 	public class AnimationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Animation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -419,57 +419,56 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	attributeMappings+=AttributeMapping*
 		//	'}' ('if' condition=AndExpression)?;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'apply' type=ID ('using' variable=VariableReference)? '{' attributeMappings+=AttributeMapping* '}' ('if'
 		//condition=AndExpression)?
 		public Group getGroup() { return cGroup; }
-
+		
 		//'apply'
 		public Keyword getApplyKeyword_0() { return cApplyKeyword_0; }
-
+		
 		//type=ID
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
-
+		
 		//ID
 		public RuleCall getTypeIDTerminalRuleCall_1_0() { return cTypeIDTerminalRuleCall_1_0; }
-
+		
 		//('using' variable=VariableReference)?
 		public Group getGroup_2() { return cGroup_2; }
-
+		
 		//'using'
 		public Keyword getUsingKeyword_2_0() { return cUsingKeyword_2_0; }
-
+		
 		//variable=VariableReference
 		public Assignment getVariableAssignment_2_1() { return cVariableAssignment_2_1; }
-
+		
 		//VariableReference
 		public RuleCall getVariableVariableReferenceParserRuleCall_2_1_0() { return cVariableVariableReferenceParserRuleCall_2_1_0; }
-
+		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-
+		
 		//attributeMappings+=AttributeMapping*
 		public Assignment getAttributeMappingsAssignment_4() { return cAttributeMappingsAssignment_4; }
-
+		
 		//AttributeMapping
 		public RuleCall getAttributeMappingsAttributeMappingParserRuleCall_4_0() { return cAttributeMappingsAttributeMappingParserRuleCall_4_0; }
-
+		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
-
+		
 		//('if' condition=AndExpression)?
 		public Group getGroup_6() { return cGroup_6; }
-
+		
 		//'if'
 		public Keyword getIfKeyword_6_0() { return cIfKeyword_6_0; }
-
+		
 		//condition=AndExpression
 		public Assignment getConditionAssignment_6_1() { return cConditionAssignment_6_1; }
-
+		
 		//AndExpression
 		public RuleCall getConditionAndExpressionParserRuleCall_6_1_0() { return cConditionAndExpressionParserRuleCall_6_1_0; }
 	}
-
 	public class AttributeMappingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.AttributeMapping");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -492,56 +491,55 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//AttributeMapping:
 		//	attribute=ID ':' (currentValue?='value' | literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*);
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//attribute=ID ':' (currentValue?='value' | literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*)
 		public Group getGroup() { return cGroup; }
-
+		
 		//attribute=ID
 		public Assignment getAttributeAssignment_0() { return cAttributeAssignment_0; }
-
+		
 		//ID
 		public RuleCall getAttributeIDTerminalRuleCall_0_0() { return cAttributeIDTerminalRuleCall_0_0; }
-
+		
 		//':'
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
-
+		
 		//currentValue?='value' | literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
+		
 		//currentValue?='value'
 		public Assignment getCurrentValueAssignment_2_0() { return cCurrentValueAssignment_2_0; }
-
+		
 		//'value'
 		public Keyword getCurrentValueValueKeyword_2_0_0() { return cCurrentValueValueKeyword_2_0_0; }
-
+		
 		//literal=Literal
 		public Assignment getLiteralAssignment_2_1() { return cLiteralAssignment_2_1; }
-
+		
 		//Literal
 		public RuleCall getLiteralLiteralParserRuleCall_2_1_0() { return cLiteralLiteralParserRuleCall_2_1_0; }
-
+		
 		//mappings+=Mapping (',' mappings+=Mapping)*
 		public Group getGroup_2_2() { return cGroup_2_2; }
-
+		
 		//mappings+=Mapping
 		public Assignment getMappingsAssignment_2_2_0() { return cMappingsAssignment_2_2_0; }
-
+		
 		//Mapping
 		public RuleCall getMappingsMappingParserRuleCall_2_2_0_0() { return cMappingsMappingParserRuleCall_2_2_0_0; }
-
+		
 		//(',' mappings+=Mapping)*
 		public Group getGroup_2_2_1() { return cGroup_2_2_1; }
-
+		
 		//','
 		public Keyword getCommaKeyword_2_2_1_0() { return cCommaKeyword_2_2_1_0; }
-
+		
 		//mappings+=Mapping
 		public Assignment getMappingsAssignment_2_2_1_1() { return cMappingsAssignment_2_2_1_1; }
-
+		
 		//Mapping
 		public RuleCall getMappingsMappingParserRuleCall_2_2_1_1_0() { return cMappingsMappingParserRuleCall_2_2_1_1_0; }
 	}
-
 	public class MappingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Mapping");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -554,26 +552,25 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//Mapping:
 		//	variableDomain=VariableDomain 'is' attributeDomain=AttributeDomain;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//variableDomain=VariableDomain 'is' attributeDomain=AttributeDomain
 		public Group getGroup() { return cGroup; }
-
+		
 		//variableDomain=VariableDomain
 		public Assignment getVariableDomainAssignment_0() { return cVariableDomainAssignment_0; }
-
+		
 		//VariableDomain
 		public RuleCall getVariableDomainVariableDomainParserRuleCall_0_0() { return cVariableDomainVariableDomainParserRuleCall_0_0; }
-
+		
 		//'is'
 		public Keyword getIsKeyword_1() { return cIsKeyword_1; }
-
+		
 		//attributeDomain=AttributeDomain
 		public Assignment getAttributeDomainAssignment_2() { return cAttributeDomainAssignment_2; }
-
+		
 		//AttributeDomain
 		public RuleCall getAttributeDomainAttributeDomainParserRuleCall_2_0() { return cAttributeDomainAttributeDomainParserRuleCall_2_0; }
 	}
-
 	public class AndExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.AndExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -589,35 +586,34 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//AndExpression Condition:
 		//	Comparison (({AndExpression.left=current} operator="&&") right=Comparison)*;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//Comparison (({AndExpression.left=current} operator="&&") right=Comparison)*
 		public Group getGroup() { return cGroup; }
-
+		
 		//Comparison
 		public RuleCall getComparisonParserRuleCall_0() { return cComparisonParserRuleCall_0; }
-
+		
 		//(({AndExpression.left=current} operator="&&") right=Comparison)*
 		public Group getGroup_1() { return cGroup_1; }
-
+		
 		//{AndExpression.left=current} operator="&&"
 		public Group getGroup_1_0() { return cGroup_1_0; }
-
+		
 		//{AndExpression.left=current}
 		public Action getAndExpressionLeftAction_1_0_0() { return cAndExpressionLeftAction_1_0_0; }
-
+		
 		//operator="&&"
 		public Assignment getOperatorAssignment_1_0_1() { return cOperatorAssignment_1_0_1; }
-
+		
 		//"&&"
 		public Keyword getOperatorAmpersandAmpersandKeyword_1_0_1_0() { return cOperatorAmpersandAmpersandKeyword_1_0_1_0; }
-
+		
 		//right=Comparison
 		public Assignment getRightAssignment_1_1() { return cRightAssignment_1_1; }
-
+		
 		//Comparison
 		public RuleCall getRightComparisonParserRuleCall_1_1_0() { return cRightComparisonParserRuleCall_1_1_0; }
 	}
-
 	public class ComparisonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Comparison");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -635,38 +631,37 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	left=VariableReference
 		//	relation=CompareOperator (right=Literal | right=VariableReference);
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//left=VariableReference relation=CompareOperator (right=Literal | right=VariableReference)
 		public Group getGroup() { return cGroup; }
-
+		
 		//left=VariableReference
 		public Assignment getLeftAssignment_0() { return cLeftAssignment_0; }
-
+		
 		//VariableReference
 		public RuleCall getLeftVariableReferenceParserRuleCall_0_0() { return cLeftVariableReferenceParserRuleCall_0_0; }
-
+		
 		//relation=CompareOperator
 		public Assignment getRelationAssignment_1() { return cRelationAssignment_1; }
-
+		
 		//CompareOperator
 		public RuleCall getRelationCompareOperatorEnumRuleCall_1_0() { return cRelationCompareOperatorEnumRuleCall_1_0; }
-
+		
 		//right=Literal | right=VariableReference
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
+		
 		//right=Literal
 		public Assignment getRightAssignment_2_0() { return cRightAssignment_2_0; }
-
+		
 		//Literal
 		public RuleCall getRightLiteralParserRuleCall_2_0_0() { return cRightLiteralParserRuleCall_2_0_0; }
-
+		
 		//right=VariableReference
 		public Assignment getRightAssignment_2_1() { return cRightAssignment_2_1; }
-
+		
 		//VariableReference
 		public RuleCall getRightVariableReferenceParserRuleCall_2_1_0() { return cRightVariableReferenceParserRuleCall_2_1_0; }
 	}
-
 	public class VariableDomainElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.VariableDomain");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -682,29 +677,28 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	| value=Literal
 		//	| range=Interval;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//otherValues?='others' | value=Literal | range=Interval
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//otherValues?='others'
 		public Assignment getOtherValuesAssignment_0() { return cOtherValuesAssignment_0; }
-
+		
 		//'others'
 		public Keyword getOtherValuesOthersKeyword_0_0() { return cOtherValuesOthersKeyword_0_0; }
-
+		
 		//value=Literal
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
+		
 		//Literal
 		public RuleCall getValueLiteralParserRuleCall_1_0() { return cValueLiteralParserRuleCall_1_0; }
-
+		
 		//range=Interval
 		public Assignment getRangeAssignment_2() { return cRangeAssignment_2; }
-
+		
 		//Interval
 		public RuleCall getRangeIntervalParserRuleCall_2_0() { return cRangeIntervalParserRuleCall_2_0; }
 	}
-
 	public class IntervalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Interval");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -723,44 +717,43 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//Interval:
 		//	(from=SignedInt | from=SignedFloat) Range (to=SignedInt | to=SignedFloat);
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//(from=SignedInt | from=SignedFloat) Range (to=SignedInt | to=SignedFloat)
 		public Group getGroup() { return cGroup; }
-
+		
 		//from=SignedInt | from=SignedFloat
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
+		
 		//from=SignedInt
 		public Assignment getFromAssignment_0_0() { return cFromAssignment_0_0; }
-
+		
 		//SignedInt
 		public RuleCall getFromSignedIntParserRuleCall_0_0_0() { return cFromSignedIntParserRuleCall_0_0_0; }
-
+		
 		//from=SignedFloat
 		public Assignment getFromAssignment_0_1() { return cFromAssignment_0_1; }
-
+		
 		//SignedFloat
 		public RuleCall getFromSignedFloatParserRuleCall_0_1_0() { return cFromSignedFloatParserRuleCall_0_1_0; }
-
+		
 		//Range
 		public RuleCall getRangeParserRuleCall_1() { return cRangeParserRuleCall_1; }
-
+		
 		//to=SignedInt | to=SignedFloat
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
+		
 		//to=SignedInt
 		public Assignment getToAssignment_2_0() { return cToAssignment_2_0; }
-
+		
 		//SignedInt
 		public RuleCall getToSignedIntParserRuleCall_2_0_0() { return cToSignedIntParserRuleCall_2_0_0; }
-
+		
 		//to=SignedFloat
 		public Assignment getToAssignment_2_1() { return cToAssignment_2_1; }
-
+		
 		//SignedFloat
 		public RuleCall getToSignedFloatParserRuleCall_2_1_0() { return cToSignedFloatParserRuleCall_2_1_0; }
 	}
-
 	public class AttributeDomainElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.AttributeDomain");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -776,29 +769,28 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	| value=Literal
 		//	| range=Interval;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//currentValue?='value' | value=Literal | range=Interval
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//currentValue?='value'
 		public Assignment getCurrentValueAssignment_0() { return cCurrentValueAssignment_0; }
-
+		
 		//'value'
 		public Keyword getCurrentValueValueKeyword_0_0() { return cCurrentValueValueKeyword_0_0; }
-
+		
 		//value=Literal
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
+		
 		//Literal
 		public RuleCall getValueLiteralParserRuleCall_1_0() { return cValueLiteralParserRuleCall_1_0; }
-
+		
 		//range=Interval
 		public Assignment getRangeAssignment_2() { return cRangeAssignment_2; }
-
+		
 		//Interval
 		public RuleCall getRangeIntervalParserRuleCall_2_0() { return cRangeIntervalParserRuleCall_2_0; }
 	}
-
 	public class VariableReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.VariableReference");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -814,29 +806,28 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	name=ID
 		//	arrayIndex=ArrayIndex?;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//model=ModelReference? name=ID arrayIndex=ArrayIndex?
 		public Group getGroup() { return cGroup; }
-
+		
 		//model=ModelReference?
 		public Assignment getModelAssignment_0() { return cModelAssignment_0; }
-
+		
 		//ModelReference
 		public RuleCall getModelModelReferenceParserRuleCall_0_0() { return cModelModelReferenceParserRuleCall_0_0; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-
+		
 		//arrayIndex=ArrayIndex?
 		public Assignment getArrayIndexAssignment_2() { return cArrayIndexAssignment_2; }
-
+		
 		//ArrayIndex
 		public RuleCall getArrayIndexArrayIndexParserRuleCall_2_0() { return cArrayIndexArrayIndexParserRuleCall_2_0; }
 	}
-
 	public class ModelReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.ModelReference");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -847,20 +838,19 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//ModelReference:
 		//	name=ID '.';
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//name=ID '.'
 		public Group getGroup() { return cGroup; }
-
+		
 		//name=ID
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
-
+		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
-
+		
 		//'.'
 		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
 	}
-
 	public class FunctionParameterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.FunctionParameter");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -873,23 +863,22 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	variableReference=VariableReference
 		//	| value=Literal;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//variableReference=VariableReference | value=Literal
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//variableReference=VariableReference
 		public Assignment getVariableReferenceAssignment_0() { return cVariableReferenceAssignment_0; }
-
+		
 		//VariableReference
 		public RuleCall getVariableReferenceVariableReferenceParserRuleCall_0_0() { return cVariableReferenceVariableReferenceParserRuleCall_0_0; }
-
+		
 		//value=Literal
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
+		
 		//Literal
 		public RuleCall getValueLiteralParserRuleCall_1_0() { return cValueLiteralParserRuleCall_1_0; }
 	}
-
 	public class RangeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Range");
 		private final Keyword cHyphenMinusKeyword = (Keyword)rule.eContents().get(1);
@@ -898,11 +887,10 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	'-' // Alternative would be '..' but this creates problems with floating point numbers
 		//;
 		@Override public ParserRule getRule() { return rule; }
-
+		
 		//'-'
 		public Keyword getHyphenMinusKeyword() { return cHyphenMinusKeyword; }
 	}
-	
 	
 	public class DOMEventElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.DOMEvent");
@@ -926,35 +914,34 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//	//    | MOUSEENTER='mouseenter' | MOUSELEAVE='mouseleave'
 		//;
 		public EnumRule getRule() { return rule; }
-
+		
 		//CLICK='click' | MOUSEDOWN='mousedown' | MOUSEUP='mouseup' | MOUSEMOVE='mousemove'
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//CLICK='click'
 		public EnumLiteralDeclaration getCLICKEnumLiteralDeclaration_0() { return cCLICKEnumLiteralDeclaration_0; }
-
+		
 		//'click'
 		public Keyword getCLICKClickKeyword_0_0() { return cCLICKClickKeyword_0_0; }
-
+		
 		//MOUSEDOWN='mousedown'
 		public EnumLiteralDeclaration getMOUSEDOWNEnumLiteralDeclaration_1() { return cMOUSEDOWNEnumLiteralDeclaration_1; }
-
+		
 		//'mousedown'
 		public Keyword getMOUSEDOWNMousedownKeyword_1_0() { return cMOUSEDOWNMousedownKeyword_1_0; }
-
+		
 		//MOUSEUP='mouseup'
 		public EnumLiteralDeclaration getMOUSEUPEnumLiteralDeclaration_2() { return cMOUSEUPEnumLiteralDeclaration_2; }
-
+		
 		//'mouseup'
 		public Keyword getMOUSEUPMouseupKeyword_2_0() { return cMOUSEUPMouseupKeyword_2_0; }
-
+		
 		//MOUSEMOVE='mousemove'
 		public EnumLiteralDeclaration getMOUSEMOVEEnumLiteralDeclaration_3() { return cMOUSEMOVEEnumLiteralDeclaration_3; }
-
+		
 		//'mousemove'
 		public Keyword getMOUSEMOVEMousemoveKeyword_3_0() { return cMOUSEMOVEMousemoveKeyword_3_0; }
 	}
-
 	public class SimulationOperationElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.SimulationOperation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -970,31 +957,31 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//enum SimulationOperation:
 		//	STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play';
 		public EnumRule getRule() { return rule; }
-
+		
 		//STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
 		public Alternatives getAlternatives() { return cAlternatives; }
-
+		
 		//STEP='step'
 		public EnumLiteralDeclaration getSTEPEnumLiteralDeclaration_0() { return cSTEPEnumLiteralDeclaration_0; }
-
+		
 		//'step'
 		public Keyword getSTEPStepKeyword_0_0() { return cSTEPStepKeyword_0_0; }
-
+		
 		//STOP='stop'
 		public EnumLiteralDeclaration getSTOPEnumLiteralDeclaration_1() { return cSTOPEnumLiteralDeclaration_1; }
-
+		
 		//'stop'
 		public Keyword getSTOPStopKeyword_1_0() { return cSTOPStopKeyword_1_0; }
-
+		
 		//PAUSE='pause'
 		public EnumLiteralDeclaration getPAUSEEnumLiteralDeclaration_2() { return cPAUSEEnumLiteralDeclaration_2; }
-
+		
 		//'pause'
 		public Keyword getPAUSEPauseKeyword_2_0() { return cPAUSEPauseKeyword_2_0; }
-
+		
 		//PLAY='play'
 		public EnumLiteralDeclaration getPLAYEnumLiteralDeclaration_3() { return cPLAYEnumLiteralDeclaration_3; }
-
+		
 		//'play'
 		public Keyword getPLAYPlayKeyword_3_0() { return cPLAYPlayKeyword_3_0; }
 	}
@@ -1023,21 +1010,21 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final RangeElements pRange;
 	
 	private final Grammar grammar;
-
+	
 	private final KiBuildGrammarAccess gaKiBuild;
-
+	
 	private final KExpressionsGrammarAccess gaKExpressions;
-
+	
 	private final AnnotationsGrammarAccess gaAnnotations;
-
+	
 	private final TerminalsGrammarAccess gaTerminals;
 
 	@Inject
 	public KiVisGrammarAccess(GrammarProvider grammarProvider,
-		KiBuildGrammarAccess gaKiBuild,
-		KExpressionsGrammarAccess gaKExpressions,
-		AnnotationsGrammarAccess gaAnnotations,
-		TerminalsGrammarAccess gaTerminals) {
+			KiBuildGrammarAccess gaKiBuild,
+			KExpressionsGrammarAccess gaKExpressions,
+			AnnotationsGrammarAccess gaAnnotations,
+			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKiBuild = gaKiBuild;
 		this.gaKExpressions = gaKExpressions;
@@ -1088,19 +1075,19 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		return grammar;
 	}
 	
-
+	
 	public KiBuildGrammarAccess getKiBuildGrammarAccess() {
 		return gaKiBuild;
 	}
-
+	
 	public KExpressionsGrammarAccess getKExpressionsGrammarAccess() {
 		return gaKExpressions;
 	}
-
+	
 	public AnnotationsGrammarAccess getAnnotationsGrammarAccess() {
 		return gaAnnotations;
 	}
-
+	
 	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
 		return gaTerminals;
 	}
@@ -1115,7 +1102,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVisualizationConfigurationRule() {
 		return getVisualizationConfigurationAccess().getRule();
 	}
-
+	
 	//Element:
 	//	'animate' name=ID '{'
 	//	animations+=Animation+
@@ -1127,7 +1114,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getElementRule() {
 		return getElementAccess().getRule();
 	}
-
+	
 	//Interaction:
 	//	{Interaction}
 	//	'perform' (('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?) '{'
@@ -1140,7 +1127,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getInteractionRule() {
 		return getInteractionAccess().getRule();
 	}
-
+	
 	//Event:
 	//	event=DOMEvent 'from' element=ID;
 	public EventElements getEventAccess() {
@@ -1150,7 +1137,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEventRule() {
 		return getEventAccess().getRule();
 	}
-
+	
 	//Action:
 	//	VariableAssignment | SimulationAction;
 	public ActionElements getActionAccess() {
@@ -1160,7 +1147,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getActionRule() {
 		return getActionAccess().getRule();
 	}
-
+	
 	//VariableAssignment Action:
 	//	variable=VariableReference '=' (value=Literal | function=Function);
 	public VariableAssignmentElements getVariableAssignmentAccess() {
@@ -1170,7 +1157,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableAssignmentRule() {
 		return getVariableAssignmentAccess().getRule();
 	}
-
+	
 	//SimulationAction Action:
 	//	operation=SimulationOperation 'simulation';
 	public SimulationActionElements getSimulationActionAccess() {
@@ -1180,7 +1167,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSimulationActionRule() {
 		return getSimulationActionAccess().getRule();
 	}
-
+	
 	//Function:
 	//	functionName=ID ('(' parameters+=FunctionParameter (',' parameters+=FunctionParameter)* ')' | '()');
 	public FunctionElements getFunctionAccess() {
@@ -1190,7 +1177,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionRule() {
 		return getFunctionAccess().getRule();
 	}
-
+	
 	//Animation:
 	//	'apply' type=ID ('using' variable=VariableReference)? '{'
 	//	attributeMappings+=AttributeMapping*
@@ -1202,7 +1189,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnimationRule() {
 		return getAnimationAccess().getRule();
 	}
-
+	
 	//AttributeMapping:
 	//	attribute=ID ':' (currentValue?='value' | literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*);
 	public AttributeMappingElements getAttributeMappingAccess() {
@@ -1212,7 +1199,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAttributeMappingRule() {
 		return getAttributeMappingAccess().getRule();
 	}
-
+	
 	//Mapping:
 	//	variableDomain=VariableDomain 'is' attributeDomain=AttributeDomain;
 	public MappingElements getMappingAccess() {
@@ -1222,7 +1209,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getMappingRule() {
 		return getMappingAccess().getRule();
 	}
-
+	
 	//AndExpression Condition:
 	//	Comparison (({AndExpression.left=current} operator="&&") right=Comparison)*;
 	public AndExpressionElements getAndExpressionAccess() {
@@ -1232,7 +1219,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAndExpressionRule() {
 		return getAndExpressionAccess().getRule();
 	}
-
+	
 	//Comparison:
 	//	left=VariableReference
 	//	relation=CompareOperator (right=Literal | right=VariableReference);
@@ -1243,7 +1230,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getComparisonRule() {
 		return getComparisonAccess().getRule();
 	}
-
+	
 	//VariableDomain Domain:
 	//	otherValues?='others'
 	//	| value=Literal
@@ -1255,7 +1242,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableDomainRule() {
 		return getVariableDomainAccess().getRule();
 	}
-
+	
 	//Interval:
 	//	(from=SignedInt | from=SignedFloat) Range (to=SignedInt | to=SignedFloat);
 	public IntervalElements getIntervalAccess() {
@@ -1265,7 +1252,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntervalRule() {
 		return getIntervalAccess().getRule();
 	}
-
+	
 	//AttributeDomain Domain:
 	//	currentValue?='value'
 	//	| value=Literal
@@ -1277,7 +1264,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAttributeDomainRule() {
 		return getAttributeDomainAccess().getRule();
 	}
-
+	
 	//VariableReference:
 	//	model=ModelReference?
 	//	name=ID
@@ -1289,7 +1276,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVariableReferenceRule() {
 		return getVariableReferenceAccess().getRule();
 	}
-
+	
 	//ModelReference:
 	//	name=ID '.';
 	public ModelReferenceElements getModelReferenceAccess() {
@@ -1299,7 +1286,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModelReferenceRule() {
 		return getModelReferenceAccess().getRule();
 	}
-
+	
 	//FunctionParameter:
 	//	variableReference=VariableReference
 	//	| value=Literal;
@@ -1310,7 +1297,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionParameterRule() {
 		return getFunctionParameterAccess().getRule();
 	}
-
+	
 	//enum DOMEvent:
 	//	CLICK='click'
 	//	| MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
@@ -1327,7 +1314,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getDOMEventRule() {
 		return getDOMEventAccess().getRule();
 	}
-
+	
 	//enum SimulationOperation:
 	//	STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play';
 	public SimulationOperationElements getSimulationOperationAccess() {
@@ -1337,7 +1324,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getSimulationOperationRule() {
 		return getSimulationOperationAccess().getRule();
 	}
-
+	
 	//Range:
 	//	'-' // Alternative would be '..' but this creates problems with floating point numbers
 	//;
@@ -1348,7 +1335,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRangeRule() {
 		return getRangeAccess().getRule();
 	}
-
+	
 	//BuildConfiguration:
 	//	attributes+=super::AttributeMapping*
 	//	modelCompilers+=ModelCompiler*
@@ -1361,7 +1348,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBuildConfigurationRule() {
 		return getBuildConfigurationAccess().getRule();
 	}
-
+	
 	//ModelCompiler:
 	//	'model' 'compiler' name=ID '{'
 	//	attributes+=super::AttributeMapping*
@@ -1374,7 +1361,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModelCompilerRule() {
 		return getModelCompilerAccess().getRule();
 	}
-
+	
 	//SimulationCompiler:
 	//	'simulation' 'compiler' name=ID '{'
 	//	attributes+=super::AttributeMapping*
@@ -1386,7 +1373,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSimulationCompilerRule() {
 		return getSimulationCompilerAccess().getRule();
 	}
-
+	
 	//TemplateProcessor:
 	//	NormalTemplateProcessor
 	//	| SimulationTemplateProcessor
@@ -1398,7 +1385,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTemplateProcessorRule() {
 		return getTemplateProcessorAccess().getRule();
 	}
-
+	
 	//NormalTemplateProcessor TemplateProcessor:
 	//	'process' 'template' '{' {NormalTemplateProcessor} attributes+=super::AttributeMapping*
 	//	'}';
@@ -1409,7 +1396,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNormalTemplateProcessorRule() {
 		return getNormalTemplateProcessorAccess().getRule();
 	}
-
+	
 	//SimulationTemplateProcessor TemplateProcessor:
 	//	'process' 'simulation' 'template' '{' {SimulationTemplateProcessor} attributes+=super::AttributeMapping*
 	//	'}';
@@ -1420,7 +1407,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSimulationTemplateProcessorRule() {
 		return getSimulationTemplateProcessorAccess().getRule();
 	}
-
+	
 	//WrapperCodeTemplateProcessor TemplateProcessor:
 	//	'process' 'wrapper' 'template' '{' {WrapperCodeTemplateProcessor} attributes+=super::AttributeMapping*
 	//	'}';
@@ -1431,7 +1418,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getWrapperCodeTemplateProcessorRule() {
 		return getWrapperCodeTemplateProcessorAccess().getRule();
 	}
-
+	
 	//Literal:
 	//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
 	//	| value=SignedFloat
@@ -1443,7 +1430,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLiteralRule() {
 		return getLiteralAccess().getRule();
 	}
-
+	
 	//ArrayIndex:
 	//	('[' indices+=INT ']')+;
 	public KiBuildGrammarAccess.ArrayIndexElements getArrayIndexAccess() {
@@ -1453,7 +1440,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getArrayIndexRule() {
 		return getArrayIndexAccess().getRule();
 	}
-
+	
 	//enum Sign:
 	//	POSITIVE='+' | NEGATIVE='-';
 	public KiBuildGrammarAccess.SignElements getSignAccess() {
@@ -1463,7 +1450,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getSignRule() {
 		return getSignAccess().getRule();
 	}
-
+	
 	//SignedFloat:
 	//	sign=Sign?
 	//	value=FLOAT;
@@ -1474,7 +1461,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignedFloatRule() {
 		return getSignedFloatAccess().getRule();
 	}
-
+	
 	//SignedInt:
 	//	sign=Sign?
 	//	value=INT;
@@ -1485,7 +1472,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSignedIntRule() {
 		return getSignedIntAccess().getRule();
 	}
-
+	
 	//TextValue:
 	//	value=ID;
 	public KiBuildGrammarAccess.TextValueElements getTextValueAccess() {
@@ -1495,19 +1482,19 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTextValueRule() {
 		return getTextValueAccess().getRule();
 	}
-
+	
 	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return gaKiBuild.getBOOLEANRule();
-	} 
-
+	}
+	
 	//terminal ID:
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaKiBuild.getIDRule();
-	} 
-
+	}
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
@@ -1558,7 +1545,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRootRule() {
 		return getRootAccess().getRule();
 	}
-
+	
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
@@ -1570,7 +1557,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExpressionRule() {
 		return getExpressionAccess().getRule();
 	}
-
+	
 	//// Boolean Expression Rule
 	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
 	//// One could skip directly to the next rule.
@@ -1583,7 +1570,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBoolExpressionRule() {
 		return getBoolExpressionAccess().getRule();
 	}
-
+	
 	//// Logical Or Expression Rule
 	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -1597,7 +1584,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLogicalOrExpressionRule() {
 		return getLogicalOrExpressionAccess().getRule();
 	}
-
+	
 	//// Logical And Expression Rule
 	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -1611,7 +1598,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getLogicalAndExpressionRule() {
 		return getLogicalAndExpressionAccess().getRule();
 	}
-
+	
 	//// Bitwiese Or Expression Rule
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -1625,7 +1612,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseOrExpressionRule() {
 		return getBitwiseOrExpressionAccess().getRule();
 	}
-
+	
 	//BitwiseXOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
 	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
@@ -1636,7 +1623,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseXOrExpressionRule() {
 		return getBitwiseXOrExpressionAccess().getRule();
 	}
-
+	
 	//// Bitwise And Expression Rule
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
@@ -1650,7 +1637,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
 	}
-
+	
 	//// Compare Operation Rule
 	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
 	//// Example: 42 <= val(A)
@@ -1664,7 +1651,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCompareOperationRule() {
 		return getCompareOperationAccess().getRule();
 	}
-
+	
 	//// 'Not or Valued Expression' Rule
 	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression Expression:
@@ -1677,7 +1664,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNotOrValuedExpressionRule() {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
-
+	
 	//BitwiseNotExpression Expression:
 	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
@@ -1687,7 +1674,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBitwiseNotExpressionRule() {
 		return getBitwiseNotExpressionAccess().getRule();
 	}
-
+	
 	//// Not Expression Rule
 	//// Example: !A, !false, !(A or B)
 	//// At the latter we need the parents to indicate the right binding.
@@ -1701,7 +1688,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNotExpressionRule() {
 		return getNotExpressionAccess().getRule();
 	}
-
+	
 	//// Valued Expression Rule    
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
@@ -1714,7 +1701,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedExpressionRule() {
 		return getValuedExpressionAccess().getRule();
 	}
-
+	
 	//ShiftLeftExpression Expression:
 	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
 	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
@@ -1725,7 +1712,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftLeftExpressionRule() {
 		return getShiftLeftExpressionAccess().getRule();
 	}
-
+	
 	//ShiftRightExpression Expression:
 	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
 	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
@@ -1736,7 +1723,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftRightExpressionRule() {
 		return getShiftRightExpressionAccess().getRule();
 	}
-
+	
 	//ShiftRightUnsignedExpression Expression:
 	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
 	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?;
@@ -1747,7 +1734,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getShiftRightUnsignedExpressionRule() {
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
-
+	
 	//// Add Expression Rule
 	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1762,7 +1749,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAddExpressionRule() {
 		return getAddExpressionAccess().getRule();
 	}
-
+	
 	//// Sub Expression Rule
 	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1777,14 +1764,14 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getSubExpressionRule() {
 		return getSubExpressionAccess().getRule();
 	}
-
+	
 	//// Mult Expression Rule
 	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1792,7 +1779,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getMultExpressionRule() {
 		return getMultExpressionAccess().getRule();
 	}
-
+	
 	//// Div Expression Rule
 	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1807,7 +1794,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDivExpressionRule() {
 		return getDivExpressionAccess().getRule();
 	}
-
+	
 	//// Mod Expression Rule
 	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
@@ -1822,7 +1809,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getModExpressionRule() {
 		return getModExpressionAccess().getRule();
 	}
-
+	
 	//// Neg Expression Rule
 	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
 	//// Example: -i, -2
@@ -1835,7 +1822,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
 	}
-
+	
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
@@ -1847,7 +1834,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
 	}
-
+	
 	//FBYExpression Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
 	//	subExpressions+=AtomicValuedExpression
@@ -1859,7 +1846,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFBYExpressionRule() {
 		return getFBYExpressionAccess().getRule();
 	}
-
+	
 	//// Atomic Expression Rule
 	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
 	//// encapsulated in braces, a function call or a text expression.
@@ -1880,7 +1867,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAtomicExpressionRule() {
 		return getAtomicExpressionAccess().getRule();
 	}
-
+	
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
@@ -1899,7 +1886,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
-
+	
 	//// Valued Object Test Expression Rule
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
@@ -1914,7 +1901,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectTestExpressionRule() {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
-
+	
 	//// ID with primes
 	//PrimeID:
 	//	super::ID "'"*;
@@ -1925,7 +1912,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPrimeIDRule() {
 		return getPrimeIDAccess().getRule();
 	}
-
+	
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
@@ -1938,7 +1925,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
 	}
-
+	
 	//ScheduleObjectReference:
 	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
@@ -1948,7 +1935,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getScheduleObjectReferenceRule() {
 		return getScheduleObjectReferenceAccess().getRule();
 	}
-
+	
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
@@ -1961,7 +1948,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getReferenceCallRule() {
 		return getReferenceCallAccess().getRule();
 	}
-
+	
 	//// Random Call Rule
 	//// Calls the random function. 
 	//RandomCall:
@@ -1974,7 +1961,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomCallRule() {
 		return getRandomCallAccess().getRule();
 	}
-
+	
 	//// Random Call Rule
 	//// Calls the random function. 
 	//RandomizeCall:
@@ -1987,7 +1974,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRandomizeCallRule() {
 		return getRandomizeCallAccess().getRule();
 	}
-
+	
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
@@ -2000,7 +1987,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
 	}
-
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
@@ -2015,7 +2002,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getParameterRule() {
 		return getParameterAccess().getRule();
 	}
-
+	
 	//// Text Expression Rule
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
@@ -2029,7 +2016,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTextExpressionRule() {
 		return getTextExpressionAccess().getRule();
 	}
-
+	
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
@@ -2039,7 +2026,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntValueRule() {
 		return getIntValueAccess().getRule();
 	}
-
+	
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -2049,7 +2036,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloatValueRule() {
 		return getFloatValueAccess().getRule();
 	}
-
+	
 	//BoolValue:
 	//	value=super::BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
@@ -2059,7 +2046,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
 	}
-
+	
 	//StringValue:
 	//	value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
@@ -2069,7 +2056,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
 	}
-
+	
 	//VectorValue:
 	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
@@ -2079,7 +2066,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVectorValueRule() {
 		return getVectorValueAccess().getRule();
 	}
-
+	
 	//VectorValueMember Expression:
 	//	BoolExpression | ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
@@ -2089,7 +2076,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getVectorValueMemberRule() {
 		return getVectorValueMemberAccess().getRule();
 	}
-
+	
 	//IgnoreValue:
 	//	{IgnoreValue} '_';
 	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
@@ -2099,7 +2086,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIgnoreValueRule() {
 		return getIgnoreValueAccess().getRule();
 	}
-
+	
 	//// Any Type Rule
 	//// Data type rule allowing any kind of value to be accepted,
 	//// e.g. as initialValues of valued objects used in Kits.xtext. 
@@ -2112,7 +2099,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
 	}
-
+	
 	//AnyValue Value:
 	//	IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
@@ -2122,7 +2109,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnyValueRule() {
 		return getAnyValueAccess().getRule();
 	}
-
+	
 	//enum CompareOperator returns OperatorType:
 	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
@@ -2132,7 +2119,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getCompareOperatorRule() {
 		return getCompareOperatorAccess().getRule();
 	}
-
+	
 	//enum PreOperator returns OperatorType:
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
@@ -2142,7 +2129,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseNotOperator returns OperatorType:
 	//	BITWISE_NOT="~";
 	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
@@ -2152,7 +2139,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseNotOperatorRule() {
 		return getBitwiseNotOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseXOrOperator returns OperatorType:
 	//	BITWISE_XOR="^";
 	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
@@ -2162,7 +2149,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseXOrOperatorRule() {
 		return getBitwiseXOrOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseOrOperator returns OperatorType:
 	//	BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
@@ -2172,7 +2159,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseOrOperatorRule() {
 		return getBitwiseOrOperatorAccess().getRule();
 	}
-
+	
 	//enum BitwiseAndOperator returns OperatorType:
 	//	BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
@@ -2182,7 +2169,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getBitwiseAndOperatorRule() {
 		return getBitwiseAndOperatorAccess().getRule();
 	}
-
+	
 	//enum NotOperator returns OperatorType:
 	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
@@ -2192,7 +2179,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getNotOperatorRule() {
 		return getNotOperatorAccess().getRule();
 	}
-
+	
 	//enum AddOperator returns OperatorType:
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
@@ -2202,7 +2189,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getAddOperatorRule() {
 		return getAddOperatorAccess().getRule();
 	}
-
+	
 	//enum SubOperator returns OperatorType:
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
@@ -2212,7 +2199,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getSubOperatorRule() {
 		return getSubOperatorAccess().getRule();
 	}
-
+	
 	//enum MultOperator returns OperatorType:
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
@@ -2222,7 +2209,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getMultOperatorRule() {
 		return getMultOperatorAccess().getRule();
 	}
-
+	
 	//enum ModOperator returns OperatorType:
 	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
@@ -2232,7 +2219,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getModOperatorRule() {
 		return getModOperatorAccess().getRule();
 	}
-
+	
 	//enum DivOperator returns OperatorType:
 	//	DIV="/";
 	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
@@ -2242,7 +2229,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getDivOperatorRule() {
 		return getDivOperatorAccess().getRule();
 	}
-
+	
 	//enum ValOperator returns OperatorType:
 	//	VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
@@ -2252,7 +2239,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getValOperatorRule() {
 		return getValOperatorAccess().getRule();
 	}
-
+	
 	//enum LogicalOrOperator returns OperatorType:
 	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
@@ -2262,7 +2249,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getLogicalOrOperatorRule() {
 		return getLogicalOrOperatorAccess().getRule();
 	}
-
+	
 	//enum LogicalAndOperator returns OperatorType:
 	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
@@ -2272,7 +2259,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getLogicalAndOperatorRule() {
 		return getLogicalAndOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftLeftOperator returns OperatorType:
 	//	SHIFT_LEFT="<<";
 	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
@@ -2282,7 +2269,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftLeftOperatorRule() {
 		return getShiftLeftOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftRightOperator returns OperatorType:
 	//	SHIFT_RIGHT=">>";
 	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
@@ -2292,7 +2279,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftRightOperatorRule() {
 		return getShiftRightOperatorAccess().getRule();
 	}
-
+	
 	//enum ShiftRightUnsignedOperator returns OperatorType:
 	//	SHIFT_RIGHT_UNSIGNED=">>>";
 	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
@@ -2302,7 +2289,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getShiftRightUnsignedOperatorRule() {
 		return getShiftRightUnsignedOperatorAccess().getRule();
 	}
-
+	
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
@@ -2312,7 +2299,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixAddRule() {
 		return getPostfixAddAccess().getRule();
 	}
-
+	
 	//enum PostfixSub returns OperatorType:
 	//	POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
@@ -2322,7 +2309,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
 	}
-
+	
 	//enum ConditionalOperator returns OperatorType:
 	//	CONDITIONAL="?";
 	public KExpressionsGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
@@ -2332,7 +2319,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getConditionalOperatorRule() {
 		return getConditionalOperatorAccess().getRule();
 	}
-
+	
 	//enum FBYOperator returns OperatorType:
 	//	FBY="->";
 	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
@@ -2342,7 +2329,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getFBYOperatorRule() {
 		return getFBYOperatorAccess().getRule();
 	}
-
+	
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
 	//	INT="int" | FLOAT="float" |
@@ -2354,7 +2341,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getValueTypeRule() {
 		return getValueTypeAccess().getRule();
 	}
-
+	
 	//enum HostType returns ValueType:
 	//	HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
@@ -2364,7 +2351,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getHostTypeRule() {
 		return getHostTypeAccess().getRule();
 	}
-
+	
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="|" | AND="&" | HOST="host";
@@ -2375,13 +2362,13 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
 	}
-
+	
 	//terminal HOSTCODE:
 	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
-	} 
-
+	}
+	
 	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
@@ -2400,7 +2387,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
 	}
-
+	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
@@ -2412,7 +2399,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaRule() {
 		return getPragmaAccess().getRule();
 	}
-
+	
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
@@ -2426,7 +2413,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getValuedAnnotationRule() {
 		return getValuedAnnotationAccess().getRule();
 	}
-
+	
 	//// Restricted Type Annotation Rule
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
@@ -2439,7 +2426,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypeAnnotationRule() {
 		return getRestrictedTypeAnnotationAccess().getRule();
 	}
-
+	
 	//// Quoted String Annotation Rule
 	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
@@ -2454,7 +2441,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
 	}
-
+	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
@@ -2466,7 +2453,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotationRule() {
 		return getCommentAnnotationAccess().getRule();
 	}
-
+	
 	//CommentAnnotatonSL CommentAnnotation:
 	//	values+=SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
@@ -2476,7 +2463,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getCommentAnnotatonSLRule() {
 		return getCommentAnnotatonSLAccess().getRule();
 	}
-
+	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation:
@@ -2488,7 +2475,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTagAnnotationRule() {
 		return getTagAnnotationAccess().getRule();
 	}
-
+	
 	//PragmaTag Pragma:
 	//	'#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
@@ -2498,7 +2485,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getPragmaTagRule() {
 		return getPragmaTagAccess().getRule();
 	}
-
+	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -2511,7 +2498,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getKeyStringValueAnnotationRule() {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
 	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
@@ -2521,7 +2508,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//StringPragma:
 	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
@@ -2531,7 +2518,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getStringPragmaRule() {
 		return getStringPragmaAccess().getRule();
 	}
-
+	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
@@ -2543,7 +2530,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
 	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
@@ -2553,7 +2540,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
 		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -2566,7 +2553,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedKeyStringValueAnnotationRule() {
 		return getQuotedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
@@ -2579,7 +2566,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
-
+	
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -2592,7 +2579,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringRule() {
 		return getEStringAccess().getRule();
 	}
-
+	
 	//EStringBoolean:
 	//	STRING | ExtendedID | super::BOOLEAN;
 	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
@@ -2602,7 +2589,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringBooleanRule() {
 		return getEStringBooleanAccess().getRule();
 	}
-
+	
 	//EStringAllTypes:
 	//	STRING | ExtendedID | super::BOOLEAN | Integer | Floateger;
 	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
@@ -2612,7 +2599,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getEStringAllTypesRule() {
 		return getEStringAllTypesAccess().getRule();
 	}
-
+	
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
@@ -2625,7 +2612,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
 	}
-
+	
 	//QualifiedID:
 	//	super::ID ("." super::ID)*;
 	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
@@ -2635,7 +2622,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getQualifiedIDRule() {
 		return getQualifiedIDAccess().getRule();
 	}
-
+	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
@@ -2647,7 +2634,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIntegerRule() {
 		return getIntegerAccess().getRule();
 	}
-
+	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
@@ -2659,7 +2646,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getFloategerRule() {
 		return getFloategerAccess().getRule();
 	}
-
+	
 	//Double ecore::EDouble:
 	//	FLOAT;
 	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
@@ -2669,7 +2656,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoubleRule() {
 		return getDoubleAccess().getRule();
 	}
-
+	
 	//Doubleger ecore::EDouble:
 	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
@@ -2679,64 +2666,64 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getDoublegerRule() {
 		return getDoublegerAccess().getRule();
 	}
-
+	
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
-	} 
-
+	}
+	
 	//@ Override terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
-	} 
-
+	}
+	
 	//terminal SL_COMMENT_ANNOTATION:
 	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
-	} 
-
+	}
+	
 	//@ Override terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
-	} 
-
+	}
+	
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return gaAnnotations.getNUMBERRule();
-	} 
-
+	}
+	
 	//@ Override terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
-	} 
-
+	}
+	
 	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();
-	} 
-
+	}
+	
 	//@ Override terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
-	} 
-
+	}
+	
 	//terminal WS:
 	//	' ' | '\t' | '\r' | '\n'+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
-	} 
-
+	}
+	
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
-	} 
+	}
 }

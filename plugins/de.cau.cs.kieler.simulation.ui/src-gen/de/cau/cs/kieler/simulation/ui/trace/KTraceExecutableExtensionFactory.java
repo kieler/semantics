@@ -3,12 +3,10 @@
  */
 package de.cau.cs.kieler.simulation.ui.trace;
 
+import com.google.inject.Injector;
+import de.cau.cs.kieler.simulation.ui.internal.KTraceActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-
-import com.google.inject.Injector;
-
-import de.cau.cs.kieler.simulation.ui.trace.internal.KTraceActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
