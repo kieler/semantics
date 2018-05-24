@@ -25,10 +25,8 @@ import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.kexpressions.kext.KExtRuntimeModule
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetupGenerated
-import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
+import org.eclipse.xtext.resource.IResourceServiceProvider
 
 /**
  * @author sdo
@@ -40,35 +38,23 @@ class RunSocketServer {
     static val LOG = Logger.getLogger(RunSocketServer)
 
     def static void main() throws Exception {
-//        val injector = KExtIdeSetup.doSetup
-        KExtStandaloneSetup.doSetup();
-        val standAloneSetup = new SCTXStandaloneSetupGenerated
-        val injector = Guice.createInjector(Modules2.mixin(new ServerModule(), new SCTXRuntimeModule()));
-        standAloneSetup.register(injector)
-        print("Got to do registration")
-//        injector.createChildInjector(Modules2.mixin(new ServerModule))
-//        val injector = Guice.createInjector(Modules2.mixin(new ServerModule))
+        // TODO why does this work and the implementation from theia-xtext doesn#t???
+        new SCTXIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
+        
+        val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
+            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+        ]))
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", 5007))
         val threadPool = Executors.newCachedThreadPool()
-//        new Thread {
-//            override run() {
-//                val socketChannel = serverSocket.accept.get
-//            val in = Channels.newInputStream(socketChannel)
-//            val out = Channels.newOutputStream(socketChannel)
-//            
-//            val languageServer = injector.getInstance(LanguageServerImpl)
-//            val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it])
-//            languageServer.connect(launcher.remoteProxy)
-//            launcher.startListening
-//            LOG.info("Started language server for client " + socketChannel.remoteAddress)
-//            }
-//        }.start
+        
         while (true) {
             val socketChannel = serverSocket.accept.get
-            print("Got past get")
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
-            
             val languageServer = injector.getInstance(LanguageServerImpl)
             val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it])
             languageServer.connect(launcher.remoteProxy)
