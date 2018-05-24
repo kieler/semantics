@@ -4,3 +4,4 @@ system de.cau.cs.kieler.sccharts.dataflow
     input SCCharts
     
 de.cau.cs.kieler.sccharts.processors.regionDependencies
+de.cau.cs.kieler.sccharts.processors.toDataflow

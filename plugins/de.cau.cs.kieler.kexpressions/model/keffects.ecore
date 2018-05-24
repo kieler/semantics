@@ -43,13 +43,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="RandomizeCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//RandomizeCall"/>
   <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingLinks" upperBound="-1"
-        eType="#//Link" containment="true"/>
+        eType="#//Link" transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
-        eType="#//Link" eOpposite="#//Link/target"/>
+        eType="#//Link" transient="true" eOpposite="#//Link/target"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Link" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        eType="#//Linkable" eOpposite="#//Linkable/incomingLinks"/>
+        eType="#//Linkable" transient="true" eOpposite="#//Linkable/incomingLinks"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>

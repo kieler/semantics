@@ -37,7 +37,7 @@ public interface Link extends Annotatable {
      * @see #setTarget(Linkable)
      * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getLink_Target()
      * @see de.cau.cs.kieler.kexpressions.keffects.Linkable#getIncomingLinks
-     * @model opposite="incomingLinks" required="true"
+     * @model opposite="incomingLinks" required="true" transient="true"
      * @generated
      */
     Linkable getTarget();

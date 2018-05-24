@@ -44,6 +44,7 @@ class ValuedObjectAccess {
     @Accessors int priority 
     @Accessors ForkStack forkStack
     @Accessors boolean isSpecific
+    @Accessors boolean isWriteAccess = false
     
     new(Linkable node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
         this.node = node

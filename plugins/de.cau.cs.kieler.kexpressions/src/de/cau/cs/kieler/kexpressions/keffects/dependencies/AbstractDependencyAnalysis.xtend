@@ -152,6 +152,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             }
             
             val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
+            writeAccess.isWriteAccess = true
             valuedObjectAccessors.addAccess(writeVOI, writeAccess)
         }
     }
@@ -414,20 +415,26 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         val linkables = valuedObjectAccessors.getLinkableAccessMap
         
         for (l : linkables.keySet) {
-            println(l)
+//            println(l)
             val VOIs = linkables.get(l)
             for (VOI : VOIs) {
-                println("  " + VOI)
+//                println("  " + VOI)
                 
                 val lie = new LinkableInterfaceEntry(l, VOI.valuedObject) 
-                lie.directInputAccess = l.incomingLinks.filter(Dependency).forall[ 
+                lie.directInputAccess = !l.incomingLinks.filter(Dependency).exists[ 
                     it.reference instanceof ValuedObject && it.reference === VOI.valuedObject
                 ]
-                lie.directOutputAccess = l.outgoingLinks.filter(Dependency).forall[ 
+                lie.directOutputAccess = !l.outgoingLinks.filter(Dependency).exists[ 
                     it.reference instanceof ValuedObject && it.reference === VOI.valuedObject
+                ]
+                lie.isWriteAccess = valuedObjectAccessors.map.get(VOI).exists[ 
+                    it.associatedNode === l && it.isWriteAccess
                 ]
                              
-                println("    direct: " + lie.directInputAccess + ", " + lie.directOutputAccess)
+//                println("    direct: " + lie.directInputAccess + ", " + lie.directOutputAccess)
+//                println("    write: " + lie.isWriteAccess)
+
+                iData.add(lie)
             } 
         }
         environment.setProperty(LINKABLE_INTERFACE_DATA, iData)

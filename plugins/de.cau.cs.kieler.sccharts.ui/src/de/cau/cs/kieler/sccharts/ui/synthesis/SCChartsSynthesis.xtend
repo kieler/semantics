@@ -146,8 +146,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 
                 hooks.invokeFinish(rootState, rootNode)
             }
+            rootNode.children.addAll(rootStateNodes.values)
             if (scc.rootStates.size > 1) {
-                rootNode.configureInterChartCommunication(scc, rootStateNodes)
+//                rootNode.configureInterChartCommunication(scc, rootStateNodes)
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)

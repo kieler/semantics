@@ -31,6 +31,7 @@ class LinkableInterfaceEntry {
     @Accessors ValuedObject valuedObject
     @Accessors boolean directInputAccess
     @Accessors boolean directOutputAccess
+    @Accessors boolean isWriteAccess
     
     new(Linkable linkable, ValuedObject valuedObject) {
         this.linkable = linkable

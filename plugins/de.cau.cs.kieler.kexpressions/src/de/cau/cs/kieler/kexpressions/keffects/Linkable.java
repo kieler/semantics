@@ -35,7 +35,7 @@ public interface Linkable extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Outgoing Links</em>' containment reference list.
      * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getLinkable_OutgoingLinks()
-     * @model containment="true"
+     * @model containment="true" transient="true"
      * @generated
      */
     EList<Link> getOutgoingLinks();
@@ -53,7 +53,7 @@ public interface Linkable extends EObject {
      * @return the value of the '<em>Incoming Links</em>' reference list.
      * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getLinkable_IncomingLinks()
      * @see de.cau.cs.kieler.kexpressions.keffects.Link#getTarget
-     * @model opposite="target"
+     * @model opposite="target" transient="true"
      * @generated
      */
     EList<Link> getIncomingLinks();

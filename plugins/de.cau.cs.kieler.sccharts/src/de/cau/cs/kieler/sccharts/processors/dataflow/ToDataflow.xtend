@@ -40,6 +40,12 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.LinkableInterfaceData
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 
 /**
  * @author ssm
@@ -49,6 +55,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 class ToDataflow extends SCChartsProcessor {
     
     @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
@@ -57,10 +64,13 @@ class ToDataflow extends SCChartsProcessor {
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsReplacementExtensions
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
     
     static val GENERATED_PREFIX = "__tdf_"
+    
+    var regionCounter = 0
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.toDataflow"
@@ -71,15 +81,80 @@ class ToDataflow extends SCChartsProcessor {
     }
     
     override process() {
+        val lid = environment.getProperty(AbstractDependencyAnalysis.LINKABLE_INTERFACE_DATA)
+        if (lid === null) {
+            environment.errors.add("This processor must succeed the region dependency processor.")
+            return
+        }
+        
         val model = getModel
         for (subModel : model.rootStates.immutableCopy) {
-            subModel.processSuperState(model)
+            subModel.processSuperState(model, lid)
         }
     }
     
-    def processSuperState(State state, SCCharts scc) {
-        val cfr = state.regions.filter(ControlflowRegion).toList
+    def processSuperState(State state, SCCharts scc, LinkableInterfaceData lid) {
+        val cfrs = state.regions.filter(ControlflowRegion).toList
+        val dfr = createDataflowRegion(state.name) => [ state.regions += it ]
          
+        for (cfr : cfrs.immutableCopy) {
+            val stateName = if (cfr.name.nullOrEmpty) GENERATED_PREFIX + regionCounter++ else cfr.name
+            val rootState = createState(stateName).uniqueName
+            scc.rootStates += rootState
+            rootState.regions += cfr
+            
+            
+            
+            val stateReference = createValuedObject(rootState.name)
+            val refDecl = createReferenceDeclaration => [ 
+                state.declarations += it
+                reference = rootState
+                valuedObjects += stateReference
+            ]
+            
+            
+            
+            val incomingDependencies = cfr.incomingLinks.filter(DataDependency).filter[ reference !== null ].toList
+            val incomingDirectAccess = lid.filter[ linkable == cfr && directInputAccess && !isWriteAccess && !incomingDependencies.contains(valuedObject) ].toList
+            val incomingValuedObjects = incomingDependencies.map[ reference ].filter(ValuedObject).toList + 
+                incomingDirectAccess.map[ valuedObject ].toList
+            
+            for (vo : incomingValuedObjects) {
+                val newVO = createValuedObject(vo.name)
+                createVariableDeclaration(vo.getVariableDeclaration.type) => [ 
+                    input = true
+                    valuedObjects += newVO
+                    rootState.declarations += it
+                ]
+                cfr.replace(vo, newVO)
+                
+                val dfass = createAssignment(stateReference, newVO, vo.reference)
+                dfr.equations += dfass 
+            } 
+
+
+
+            val outgoingDependencies = cfr.outgoingLinks.filter(DataDependency).filter[ reference !== null ].toList
+            val outgoingDirectAccess = lid.filter[ linkable == cfr && directOutputAccess && isWriteAccess && !outgoingDependencies.contains(valuedObject) ].toList
+            val outgoingValuedObjects = outgoingDependencies.map[ reference ].filter(ValuedObject).toList + 
+                outgoingDirectAccess.map[ valuedObject ].toList
+            
+            for (vo : outgoingValuedObjects) {
+                val newVO = createValuedObject(vo.name)
+                createVariableDeclaration(vo.getVariableDeclaration.type) => [ 
+                    output = true
+                    valuedObjects += newVO
+                    rootState.declarations += it
+                ]
+                cfr.replace(vo, newVO)
+                
+                val dfass = createAssignment(vo, stateReference.reference => [ subReference = newVO.reference ])
+                dfr.equations += dfass 
+            } 
+            
+                        
+            snapshot
+        }
     }
     
 }

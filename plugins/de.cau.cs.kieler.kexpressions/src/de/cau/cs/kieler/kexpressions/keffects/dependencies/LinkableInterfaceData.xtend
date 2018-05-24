@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kexpressions.keffects.dependencies
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import java.util.LinkedList
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author ssm
@@ -37,8 +39,13 @@ class LinkableInterfaceData extends LinkedList<LinkableInterfaceEntry> implement
     override void resolveCopiedObjects(Copier copier) {
         val resolved = new LinkableInterfaceData
         for (k : this) {
-            val r = copier.get(k) as LinkableInterfaceEntry
-            resolved.add(r)
+            val linkable = copier.get(k.linkable) as Linkable
+            val valuedObject = copier.get(k.valuedObject) as ValuedObject
+            val lie = new LinkableInterfaceEntry(linkable, valuedObject)
+            lie.isWriteAccess = k.isWriteAccess
+            lie.directInputAccess = k.directInputAccess
+            lie.directOutputAccess = k.directOutputAccess
+            resolved.add(lie)
         } 
         this.clear
         this.addAll(resolved)
