@@ -16,8 +16,6 @@ package de.cau.cs.kieler.kexpressions.extensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ValueType
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.emf.ecore.EObject
 import java.util.List
@@ -30,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.ExternString
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import com.google.inject.Inject
 
 /**
  * @author ssm
@@ -37,6 +36,9 @@ import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
  * @kieler.rating 2015-08-19 proposed yellow
  */
 class KExpressionsDeclarationExtensions {
+    
+    @Inject
+    extension EcoreUtilExtensions
     
     def dispatch Declaration createDeclaration(VariableDeclaration declaration) {
         declaration.createVariableDeclaration
@@ -174,7 +176,7 @@ class KExpressionsDeclarationExtensions {
         <Declaration> newArrayList => [ targetList | 
             for (declaration : source.eContents.filter(typeof(Declaration))) {
                 // @als: is this trace necessary?
-                targetList += createDeclaration(declaration).trace(declaration) => [ newDec |
+                targetList += createDeclaration(declaration) => [ newDec |
                     declaration.valuedObjects.forEach[ _copyValuedObject(newDec) ]
                 ]
             }

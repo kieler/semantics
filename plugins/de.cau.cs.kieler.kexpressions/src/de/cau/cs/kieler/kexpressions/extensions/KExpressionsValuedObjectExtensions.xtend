@@ -20,7 +20,6 @@ import java.util.List
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
@@ -43,6 +42,9 @@ class KExpressionsValuedObjectExtensions {
     
     @Inject
     extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension EcoreUtilExtensions
     
     def Declaration getDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
