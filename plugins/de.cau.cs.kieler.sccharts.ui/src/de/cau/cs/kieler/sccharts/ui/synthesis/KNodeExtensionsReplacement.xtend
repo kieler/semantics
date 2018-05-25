@@ -143,6 +143,15 @@ class KNodeExtensionsReplacement {
         newArrayList(o1, o2).internalCreateNode
     }
     
+    def KNode getExistingNode(Object o) {
+        if (o.nodeExists) return newArrayList(o).internalCreateNode else return null
+    }
+    
+    def KNode getExistingNode(Object o1, Object o2) {
+        if (o1.nodeExists(o2)) return newArrayList(o1, o2).internalCreateNode else return null
+    }
+    
+    
     /**
      * A convenience method to create a KNode without relating it to a business object. 
      */

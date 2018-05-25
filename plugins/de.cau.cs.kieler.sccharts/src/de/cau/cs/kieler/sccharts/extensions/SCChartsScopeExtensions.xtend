@@ -40,6 +40,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -108,6 +109,15 @@ class SCChartsScopeExtensions {
         }
     }    
     
+    def Scope getNextScope(EObject eObject) {
+        if (eObject === null) {
+            return null
+        } else if (eObject instanceof Scope) {
+            return eObject
+        } else {
+            return eObject.eContainer.getNextScope
+        }
+    }
     
     
     def ValuedObject getValuedObjectByName(Scope scope, String name) {
