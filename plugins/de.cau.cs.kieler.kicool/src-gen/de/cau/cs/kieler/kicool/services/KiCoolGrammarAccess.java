@@ -6,10 +6,14 @@ package de.cau.cs.kieler.kicool.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 import java.util.List;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Group;
@@ -31,41 +35,39 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPublicPublicKeyword_0_0 = (Keyword)cPublicAssignment_0.eContents().get(0);
 		private final Assignment cDeveloperAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cDeveloperDeveloperKeyword_1_0 = (Keyword)cDeveloperAssignment_1.eContents().get(0);
-		private final Keyword cSystemKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cIdQualifiedIDParserRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
-		private final Keyword cVersionKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cVersionAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cVersionINTTerminalRuleCall_5_0 = (RuleCall)cVersionAssignment_5.eContents().get(0);
-		private final Keyword cLabelKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Assignment cLabelAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cLabelEStringParserRuleCall_7_0 = (RuleCall)cLabelAssignment_7.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cInputKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cInputClassAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cInputClassIDTerminalRuleCall_8_1_0 = (RuleCall)cInputClassAssignment_8_1.eContents().get(0);
-		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cSetKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cStartsetsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cStartsetsKVPairParserRuleCall_9_1_0 = (RuleCall)cStartsetsAssignment_9_1.eContents().get(0);
-		private final Assignment cIntermediatesAssignment_10 = (Assignment)cGroup.eContents().get(10);
-		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_10_0 = (RuleCall)cIntermediatesAssignment_10.eContents().get(0);
-		private final Assignment cProcessorsAssignment_11 = (Assignment)cGroup.eContents().get(11);
-		private final RuleCall cProcessorsProcessorGroupParserRuleCall_11_0 = (RuleCall)cProcessorsAssignment_11.eContents().get(0);
+		private final Assignment cSimulationAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cSimulationSimulationKeyword_2_0 = (Keyword)cSimulationAssignment_2.eContents().get(0);
+		private final Keyword cSystemKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cIdAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cIdQualifiedIDParserRuleCall_4_0 = (RuleCall)cIdAssignment_4.eContents().get(0);
+		private final Keyword cLabelKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cLabelAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cLabelEStringParserRuleCall_6_0 = (RuleCall)cLabelAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cConfigKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cConfigAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cConfigJsonObjectValueParserRuleCall_7_1_0 = (RuleCall)cConfigAssignment_7_1.eContents().get(0);
+		private final Assignment cIntermediatesAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_8_0 = (RuleCall)cIntermediatesAssignment_8.eContents().get(0);
+		private final Assignment cProcessorsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cProcessorsProcessorGroupParserRuleCall_9_0 = (RuleCall)cProcessorsAssignment_9.eContents().get(0);
 		
 		///**
-		// * @author ssm
+		// * @author ssm, als
 		// * @kieler.design 2016-10-19 proposed 
 		// * @kieler.rating 2016-10-19 proposed yellow
 		// */ System kicool::System:
-		//	public?='public'? developer?='developer'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input'
-		//	inputClass=ID)? ('set' startsets+=KVPair)*
+		//	public?='public'?
+		//	developer?='developer'?
+		//	simulation?='simulation'?
+		//	'system' id=QualifiedID
+		//	'label' label=EString ('config' config=JsonObjectValue)?
 		//	intermediates+=IntermediateReference*
 		//	processors=ProcessorGroup;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//public?='public'? developer?='developer'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input'
-		//inputClass=ID)? ('set' startsets+=KVPair)* intermediates+=IntermediateReference* processors=ProcessorGroup
+		//public?='public'? developer?='developer'? simulation?='simulation'? 'system' id=QualifiedID 'label' label=EString
+		//('config' config=JsonObjectValue)? intermediates+=IntermediateReference* processors=ProcessorGroup
 		public Group getGroup() { return cGroup; }
 		
 		//public?='public'?
@@ -80,68 +82,53 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//'developer'
 		public Keyword getDeveloperDeveloperKeyword_1_0() { return cDeveloperDeveloperKeyword_1_0; }
 		
+		//simulation?='simulation'?
+		public Assignment getSimulationAssignment_2() { return cSimulationAssignment_2; }
+		
+		//'simulation'
+		public Keyword getSimulationSimulationKeyword_2_0() { return cSimulationSimulationKeyword_2_0; }
+		
 		//'system'
-		public Keyword getSystemKeyword_2() { return cSystemKeyword_2; }
+		public Keyword getSystemKeyword_3() { return cSystemKeyword_3; }
 		
 		//id=QualifiedID
-		public Assignment getIdAssignment_3() { return cIdAssignment_3; }
+		public Assignment getIdAssignment_4() { return cIdAssignment_4; }
 		
 		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_3_0() { return cIdQualifiedIDParserRuleCall_3_0; }
-		
-		//'version'
-		public Keyword getVersionKeyword_4() { return cVersionKeyword_4; }
-		
-		//version=INT
-		public Assignment getVersionAssignment_5() { return cVersionAssignment_5; }
-		
-		//INT
-		public RuleCall getVersionINTTerminalRuleCall_5_0() { return cVersionINTTerminalRuleCall_5_0; }
+		public RuleCall getIdQualifiedIDParserRuleCall_4_0() { return cIdQualifiedIDParserRuleCall_4_0; }
 		
 		//'label'
-		public Keyword getLabelKeyword_6() { return cLabelKeyword_6; }
+		public Keyword getLabelKeyword_5() { return cLabelKeyword_5; }
 		
 		//label=EString
-		public Assignment getLabelAssignment_7() { return cLabelAssignment_7; }
+		public Assignment getLabelAssignment_6() { return cLabelAssignment_6; }
 		
 		//EString
-		public RuleCall getLabelEStringParserRuleCall_7_0() { return cLabelEStringParserRuleCall_7_0; }
+		public RuleCall getLabelEStringParserRuleCall_6_0() { return cLabelEStringParserRuleCall_6_0; }
 		
-		//('input' inputClass=ID)?
-		public Group getGroup_8() { return cGroup_8; }
+		//('config' config=JsonObjectValue)?
+		public Group getGroup_7() { return cGroup_7; }
 		
-		//'input'
-		public Keyword getInputKeyword_8_0() { return cInputKeyword_8_0; }
+		//'config'
+		public Keyword getConfigKeyword_7_0() { return cConfigKeyword_7_0; }
 		
-		//inputClass=ID
-		public Assignment getInputClassAssignment_8_1() { return cInputClassAssignment_8_1; }
+		//config=JsonObjectValue
+		public Assignment getConfigAssignment_7_1() { return cConfigAssignment_7_1; }
 		
-		//ID
-		public RuleCall getInputClassIDTerminalRuleCall_8_1_0() { return cInputClassIDTerminalRuleCall_8_1_0; }
-		
-		//('set' startsets+=KVPair)*
-		public Group getGroup_9() { return cGroup_9; }
-		
-		//'set'
-		public Keyword getSetKeyword_9_0() { return cSetKeyword_9_0; }
-		
-		//startsets+=KVPair
-		public Assignment getStartsetsAssignment_9_1() { return cStartsetsAssignment_9_1; }
-		
-		//KVPair
-		public RuleCall getStartsetsKVPairParserRuleCall_9_1_0() { return cStartsetsKVPairParserRuleCall_9_1_0; }
+		//JsonObjectValue
+		public RuleCall getConfigJsonObjectValueParserRuleCall_7_1_0() { return cConfigJsonObjectValueParserRuleCall_7_1_0; }
 		
 		//intermediates+=IntermediateReference*
-		public Assignment getIntermediatesAssignment_10() { return cIntermediatesAssignment_10; }
+		public Assignment getIntermediatesAssignment_8() { return cIntermediatesAssignment_8; }
 		
 		//IntermediateReference
-		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_10_0() { return cIntermediatesIntermediateReferenceParserRuleCall_10_0; }
+		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_8_0() { return cIntermediatesIntermediateReferenceParserRuleCall_8_0; }
 		
 		//processors=ProcessorGroup
-		public Assignment getProcessorsAssignment_11() { return cProcessorsAssignment_11; }
+		public Assignment getProcessorsAssignment_9() { return cProcessorsAssignment_9; }
 		
 		//ProcessorGroup
-		public RuleCall getProcessorsProcessorGroupParserRuleCall_11_0() { return cProcessorsProcessorGroupParserRuleCall_11_0; }
+		public RuleCall getProcessorsProcessorGroupParserRuleCall_9_0() { return cProcessorsProcessorGroupParserRuleCall_9_0; }
 	}
 	public class IntermediateReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
@@ -291,16 +278,19 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
 		private final Keyword cPreKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Keyword cSetKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cPresetsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cPresetsKVPairParserRuleCall_0_2_0 = (RuleCall)cPresetsAssignment_0_2.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cPreKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cProcessKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cPreprocessesAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cPreprocessesCoProcessorParserRuleCall_1_2_0 = (RuleCall)cPreprocessesAssignment_1_2.eContents().get(0);
-		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cIdQualifiedIDParserRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
+		private final Keyword cProcessKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cPreprocessesAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cPreprocessesCoProcessorParserRuleCall_0_2_0 = (RuleCall)cPreprocessesAssignment_0_2.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cConfigKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cPreconfigAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cPreconfigJsonObjectValueParserRuleCall_2_1_0 = (RuleCall)cPreconfigAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cPostKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cPostconfigAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cPostconfigJsonObjectValueParserRuleCall_2_2_1_0 = (RuleCall)cPostconfigAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cIntermediateKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cMetricAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -311,58 +301,62 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cProcessKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
 		private final Assignment cPostprocessesAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
 		private final RuleCall cPostprocessesCoProcessorParserRuleCall_4_2_0 = (RuleCall)cPostprocessesAssignment_4_2.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cPostKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cSetKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cPostsetsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cPostsetsKVPairParserRuleCall_5_2_0 = (RuleCall)cPostsetsAssignment_5_2.eContents().get(0);
 		
 		//Processor kicool::ProcessorReference:
-		//	('pre' 'set' presets+=KVPair)* ('pre' 'process' preprocesses+=CoProcessor)*
-		//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process'
-		//	postprocesses+=CoProcessor)* ('post' 'set' postsets+=KVPair)*;
+		//	('pre' 'process' preprocesses+=CoProcessor)*
+		//	id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)? ('intermediate'
+		//	metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('pre' 'set' presets+=KVPair)* ('pre' 'process' preprocesses+=CoProcessor)* id=QualifiedID ('intermediate'
-		//metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)* ('post' 'set'
-		//postsets+=KVPair)*
+		//('pre' 'process' preprocesses+=CoProcessor)* id=QualifiedID ('config' preconfig=JsonObjectValue ('post'
+		//postconfig=JsonObjectValue)?)? ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process'
+		//postprocesses+=CoProcessor)*
 		public Group getGroup() { return cGroup; }
 		
-		//('pre' 'set' presets+=KVPair)*
+		//('pre' 'process' preprocesses+=CoProcessor)*
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'pre'
 		public Keyword getPreKeyword_0_0() { return cPreKeyword_0_0; }
 		
-		//'set'
-		public Keyword getSetKeyword_0_1() { return cSetKeyword_0_1; }
-		
-		//presets+=KVPair
-		public Assignment getPresetsAssignment_0_2() { return cPresetsAssignment_0_2; }
-		
-		//KVPair
-		public RuleCall getPresetsKVPairParserRuleCall_0_2_0() { return cPresetsKVPairParserRuleCall_0_2_0; }
-		
-		//('pre' 'process' preprocesses+=CoProcessor)*
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//'pre'
-		public Keyword getPreKeyword_1_0() { return cPreKeyword_1_0; }
-		
 		//'process'
-		public Keyword getProcessKeyword_1_1() { return cProcessKeyword_1_1; }
+		public Keyword getProcessKeyword_0_1() { return cProcessKeyword_0_1; }
 		
 		//preprocesses+=CoProcessor
-		public Assignment getPreprocessesAssignment_1_2() { return cPreprocessesAssignment_1_2; }
+		public Assignment getPreprocessesAssignment_0_2() { return cPreprocessesAssignment_0_2; }
 		
 		//CoProcessor
-		public RuleCall getPreprocessesCoProcessorParserRuleCall_1_2_0() { return cPreprocessesCoProcessorParserRuleCall_1_2_0; }
+		public RuleCall getPreprocessesCoProcessorParserRuleCall_0_2_0() { return cPreprocessesCoProcessorParserRuleCall_0_2_0; }
 		
 		//id=QualifiedID
-		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
 		
 		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_2_0() { return cIdQualifiedIDParserRuleCall_2_0; }
+		public RuleCall getIdQualifiedIDParserRuleCall_1_0() { return cIdQualifiedIDParserRuleCall_1_0; }
+		
+		//('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'config'
+		public Keyword getConfigKeyword_2_0() { return cConfigKeyword_2_0; }
+		
+		//preconfig=JsonObjectValue
+		public Assignment getPreconfigAssignment_2_1() { return cPreconfigAssignment_2_1; }
+		
+		//JsonObjectValue
+		public RuleCall getPreconfigJsonObjectValueParserRuleCall_2_1_0() { return cPreconfigJsonObjectValueParserRuleCall_2_1_0; }
+		
+		//('post' postconfig=JsonObjectValue)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//'post'
+		public Keyword getPostKeyword_2_2_0() { return cPostKeyword_2_2_0; }
+		
+		//postconfig=JsonObjectValue
+		public Assignment getPostconfigAssignment_2_2_1() { return cPostconfigAssignment_2_2_1; }
+		
+		//JsonObjectValue
+		public RuleCall getPostconfigJsonObjectValueParserRuleCall_2_2_1_0() { return cPostconfigJsonObjectValueParserRuleCall_2_2_1_0; }
 		
 		//('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
 		public Group getGroup_3() { return cGroup_3; }
@@ -393,48 +387,66 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CoProcessor
 		public RuleCall getPostprocessesCoProcessorParserRuleCall_4_2_0() { return cPostprocessesCoProcessorParserRuleCall_4_2_0; }
-		
-		//('post' 'set' postsets+=KVPair)*
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//'post'
-		public Keyword getPostKeyword_5_0() { return cPostKeyword_5_0; }
-		
-		//'set'
-		public Keyword getSetKeyword_5_1() { return cSetKeyword_5_1; }
-		
-		//postsets+=KVPair
-		public Assignment getPostsetsAssignment_5_2() { return cPostsetsAssignment_5_2; }
-		
-		//KVPair
-		public RuleCall getPostsetsKVPairParserRuleCall_5_2_0() { return cPostsetsKVPairParserRuleCall_5_2_0; }
 	}
 	public class CoProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.CoProcessor");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cIdAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cIdQualifiedIDParserRuleCall_0_0 = (RuleCall)cIdAssignment_0.eContents().get(0);
-		private final Assignment cSilentAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cSilentSilentKeyword_1_0 = (Keyword)cSilentAssignment_1.eContents().get(0);
+		private final Assignment cSilentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cSilentSilentKeyword_0_0 = (Keyword)cSilentAssignment_0.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cConfigKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cPreconfigAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cPreconfigJsonObjectValueParserRuleCall_2_1_0 = (RuleCall)cPreconfigAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cPostKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cPostconfigAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cPostconfigJsonObjectValueParserRuleCall_2_2_1_0 = (RuleCall)cPostconfigAssignment_2_2_1.eContents().get(0);
 		
 		//CoProcessor kicool::ProcessorReference:
-		//	id=QualifiedID silent?='silent'?;
+		//	silent?='silent'?
+		//	id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//id=QualifiedID silent?='silent'?
+		//silent?='silent'? id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
 		public Group getGroup() { return cGroup; }
 		
-		//id=QualifiedID
-		public Assignment getIdAssignment_0() { return cIdAssignment_0; }
-		
-		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_0_0() { return cIdQualifiedIDParserRuleCall_0_0; }
-		
 		//silent?='silent'?
-		public Assignment getSilentAssignment_1() { return cSilentAssignment_1; }
+		public Assignment getSilentAssignment_0() { return cSilentAssignment_0; }
 		
 		//'silent'
-		public Keyword getSilentSilentKeyword_1_0() { return cSilentSilentKeyword_1_0; }
+		public Keyword getSilentSilentKeyword_0_0() { return cSilentSilentKeyword_0_0; }
+		
+		//id=QualifiedID
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
+		
+		//QualifiedID
+		public RuleCall getIdQualifiedIDParserRuleCall_1_0() { return cIdQualifiedIDParserRuleCall_1_0; }
+		
+		//('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'config'
+		public Keyword getConfigKeyword_2_0() { return cConfigKeyword_2_0; }
+		
+		//preconfig=JsonObjectValue
+		public Assignment getPreconfigAssignment_2_1() { return cPreconfigAssignment_2_1; }
+		
+		//JsonObjectValue
+		public RuleCall getPreconfigJsonObjectValueParserRuleCall_2_1_0() { return cPreconfigJsonObjectValueParserRuleCall_2_1_0; }
+		
+		//('post' postconfig=JsonObjectValue)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//'post'
+		public Keyword getPostKeyword_2_2_0() { return cPostKeyword_2_2_0; }
+		
+		//postconfig=JsonObjectValue
+		public Assignment getPostconfigAssignment_2_2_1() { return cPostconfigAssignment_2_2_1; }
+		
+		//JsonObjectValue
+		public RuleCall getPostconfigJsonObjectValueParserRuleCall_2_2_1_0() { return cPostconfigJsonObjectValueParserRuleCall_2_2_1_0; }
 	}
 	public class ProcessorSystemElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.ProcessorSystem");
@@ -507,41 +519,6 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//ProcessorGroup
 		public RuleCall getProcessorsProcessorGroupParserRuleCall_1_1_1_0() { return cProcessorsProcessorGroupParserRuleCall_1_1_1_0; }
 	}
-	public class KVPairElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.KVPair");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cKeyEStringParserRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
-		private final Assignment cIsKeyValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsKeyValueKeyKeyword_1_0 = (Keyword)cIsKeyValueAssignment_1.eContents().get(0);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueEStringAllTypesParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		
-		//KVPair kicool::KVPair:
-		//	key=EString isKeyValue?='key'? value=EStringAllTypes;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//key=EString isKeyValue?='key'? value=EStringAllTypes
-		public Group getGroup() { return cGroup; }
-		
-		//key=EString
-		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
-		
-		//EString
-		public RuleCall getKeyEStringParserRuleCall_0_0() { return cKeyEStringParserRuleCall_0_0; }
-		
-		//isKeyValue?='key'?
-		public Assignment getIsKeyValueAssignment_1() { return cIsKeyValueAssignment_1; }
-		
-		//'key'
-		public Keyword getIsKeyValueKeyKeyword_1_0() { return cIsKeyValueKeyKeyword_1_0; }
-		
-		//value=EStringAllTypes
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
-		
-		//EStringAllTypes
-		public RuleCall getValueEStringAllTypesParserRuleCall_2_0() { return cValueEStringAllTypesParserRuleCall_2_0; }
-	}
 	
 	
 	private final SystemElements pSystem;
@@ -551,9 +528,14 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	private final CoProcessorElements pCoProcessor;
 	private final ProcessorSystemElements pProcessorSystem;
 	private final ProcessorAlternativeGroupElements pProcessorAlternativeGroup;
-	private final KVPairElements pKVPair;
 	
 	private final Grammar grammar;
+	
+	private final KExtGrammarAccess gaKExt;
+	
+	private final KEffectsGrammarAccess gaKEffects;
+	
+	private final KExpressionsGrammarAccess gaKExpressions;
 	
 	private final AnnotationsGrammarAccess gaAnnotations;
 	
@@ -561,9 +543,15 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 
 	@Inject
 	public KiCoolGrammarAccess(GrammarProvider grammarProvider,
+			KExtGrammarAccess gaKExt,
+			KEffectsGrammarAccess gaKEffects,
+			KExpressionsGrammarAccess gaKExpressions,
 			AnnotationsGrammarAccess gaAnnotations,
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
+		this.gaKExt = gaKExt;
+		this.gaKEffects = gaKEffects;
+		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
 		this.pSystem = new SystemElements();
@@ -573,7 +561,6 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		this.pCoProcessor = new CoProcessorElements();
 		this.pProcessorSystem = new ProcessorSystemElements();
 		this.pProcessorAlternativeGroup = new ProcessorAlternativeGroupElements();
-		this.pKVPair = new KVPairElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -598,6 +585,18 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	public KExtGrammarAccess getKExtGrammarAccess() {
+		return gaKExt;
+	}
+	
+	public KEffectsGrammarAccess getKEffectsGrammarAccess() {
+		return gaKEffects;
+	}
+	
+	public KExpressionsGrammarAccess getKExpressionsGrammarAccess() {
+		return gaKExpressions;
+	}
+	
 	public AnnotationsGrammarAccess getAnnotationsGrammarAccess() {
 		return gaAnnotations;
 	}
@@ -608,12 +607,15 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	///**
-	// * @author ssm
+	// * @author ssm, als
 	// * @kieler.design 2016-10-19 proposed 
 	// * @kieler.rating 2016-10-19 proposed yellow
 	// */ System kicool::System:
-	//	public?='public'? developer?='developer'? 'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input'
-	//	inputClass=ID)? ('set' startsets+=KVPair)*
+	//	public?='public'?
+	//	developer?='developer'?
+	//	simulation?='simulation'?
+	//	'system' id=QualifiedID
+	//	'label' label=EString ('config' config=JsonObjectValue)?
 	//	intermediates+=IntermediateReference*
 	//	processors=ProcessorGroup;
 	public SystemElements getSystemAccess() {
@@ -652,9 +654,9 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Processor kicool::ProcessorReference:
-	//	('pre' 'set' presets+=KVPair)* ('pre' 'process' preprocesses+=CoProcessor)*
-	//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process'
-	//	postprocesses+=CoProcessor)* ('post' 'set' postsets+=KVPair)*;
+	//	('pre' 'process' preprocesses+=CoProcessor)*
+	//	id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)? ('intermediate'
+	//	metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)*;
 	public ProcessorElements getProcessorAccess() {
 		return pProcessor;
 	}
@@ -664,7 +666,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//CoProcessor kicool::ProcessorReference:
-	//	id=QualifiedID silent?='silent'?;
+	//	silent?='silent'?
+	//	id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?;
 	public CoProcessorElements getCoProcessorAccess() {
 		return pCoProcessor;
 	}
@@ -694,14 +697,1342 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getProcessorAlternativeGroupAccess().getRule();
 	}
 	
-	//KVPair kicool::KVPair:
-	//	key=EString isKeyValue?='key'? value=EStringAllTypes;
-	public KVPairElements getKVPairAccess() {
-		return pKVPair;
+	///**
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// */ /*
+	// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
+	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
+	// * that is used for testing kexpressions and keffects.  
+	// */ // ------------ //
+	////  KEXT Rules  // 
+	//// ------------ //
+	//// KEXT Rule
+	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+	//// test entities may follow.
+	//Kext kext::Kext:
+	//	scopes+=RootScope;
+	public KExtGrammarAccess.KextElements getKextAccess() {
+		return gaKExt.getKextAccess();
 	}
 	
-	public ParserRule getKVPairRule() {
-		return getKVPairAccess().getRule();
+	public ParserRule getKextRule() {
+		return getKextAccess().getRule();
+	}
+	
+	//RootScope kext::KExtScope:
+	//	{kext::KExtScope} declarations+=Declaration*
+	//	entities+=TestEntity* ('scope' scopes+=Scope)*;
+	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
+		return gaKExt.getRootScopeAccess();
+	}
+	
+	public ParserRule getRootScopeRule() {
+		return getRootScopeAccess().getRule();
+	}
+	
+	//Scope kext::KExtScope:
+	//	{kext::KExtScope} name=ID? '{'
+	//	declarations+=Declaration*
+	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}';
+	public KExtGrammarAccess.ScopeElements getScopeAccess() {
+		return gaKExt.getScopeAccess();
+	}
+	
+	public ParserRule getScopeRule() {
+		return getScopeAccess().getRule();
+	}
+	
+	//// Test Entity Rule
+	//// A test entity is either an annotation expression or an effect.
+	//TestEntity kext::TestEntity:
+	//	expression=AnnotatedExpression | effect=Effect;
+	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
+		return gaKExt.getTestEntityAccess();
+	}
+	
+	public ParserRule getTestEntityRule() {
+		return getTestEntityAccess().getRule();
+	}
+	
+	//// Annotated Expression Rule
+	//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
+	//// of annotations. The expression itself follows the keyword.
+	//AnnotatedExpression kext::AnnotatedExpression:
+	//	annotations+=Annotation*
+	//	'expression'
+	//	expression=Expression;
+	public KExtGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
+		return gaKExt.getAnnotatedExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedExpressionRule() {
+		return getAnnotatedExpressionAccess().getRule();
+	}
+	
+	//// Declaration Rule
+	//// A declaration follows the general KIELER pattern for variable declaration. More specific:
+	//// this centralized declaration rule should replace any other declaration in drived grammars.
+	//// It may start with arbitrary many declarations followed by keywords affecting the type of the
+	//// valued objects that follow.
+	//// Examples: const float pi = 3.14, input signal I, output bool z  
+	//Declaration kexpressions::Declaration:
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
+	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
+		return gaKExt.getDeclarationAccess();
+	}
+	
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
+	}
+	
+	//DeclarationWOSemicolon kexpressions::Declaration:
+	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
+	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
+		return gaKExt.getDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getDeclarationWOSemicolonRule() {
+		return getDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//VariableDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=Annotation*
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	global?='global'?
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
+		return gaKExt.getVariableDeclarationAccess();
+	}
+	
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
+	}
+	
+	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
+	//	annotations+=Annotation*
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	global?='global'?
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
+		return gaKExt.getVariableDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getVariableDeclarationWOSemicolonRule() {
+		return getVariableDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//NamespaceID:
+	//	ExtendedID (':' PrimeID)*;
+	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
+		return gaKExt.getNamespaceIDAccess();
+	}
+	
+	public ParserRule getNamespaceIDRule() {
+		return getNamespaceIDAccess().getRule();
+	}
+	
+	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
+	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
+		return gaKExt.getReferenceDeclarationAccess();
+	}
+	
+	public ParserRule getReferenceDeclarationRule() {
+		return getReferenceDeclarationAccess().getRule();
+	}
+	
+	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
+	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
+		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getReferenceDeclarationWOSemicolonRule() {
+		return getReferenceDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//ExternString kexpressions::ExternString:
+	//	annotations+=TagAnnotation*
+	//	code=STRING;
+	public KExtGrammarAccess.ExternStringElements getExternStringAccess() {
+		return gaKExt.getExternStringAccess();
+	}
+	
+	public ParserRule getExternStringRule() {
+		return getExternStringAccess().getRule();
+	}
+	
+	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
+	//	annotations+=Annotation*
+	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	priorities+=PriorityProtocol)* '}')?
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
+		return gaKExt.getScheduleDeclarationAccess();
+	}
+	
+	public ParserRule getScheduleDeclarationRule() {
+		return getScheduleDeclarationAccess().getRule();
+	}
+	
+	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
+	//	annotations+=Annotation*
+	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
+	//	priorities+=PriorityProtocol)* '}')?
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
+		return gaKExt.getScheduleDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getScheduleDeclarationWOSemicolonRule() {
+		return getScheduleDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
+	//	CONFLICT="conflict" | CONFLUENT="confluent";
+	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
+		return gaKExt.getPriorityProtocolAccess();
+	}
+	
+	public EnumRule getPriorityProtocolRule() {
+		return getPriorityProtocolAccess().getRule();
+	}
+	
+	//// Valued Object Rule
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// Examples: array[10], initial = false, z = 0 combine max
+	//ValuedObject kexpressions::ValuedObject:
+	//	annotations+=QuotedStringAnnotation*
+	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
+	//	combineOperator=CombineOperator)?;
+	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKExt.getValuedObjectAccess();
+	}
+	
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
+	}
+	
+	///**
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// */ /*
+	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
+	// * postfix effects, esterel like emissions, host code and function call effects.
+	// * Of course other grammars may extend this list.
+	// */ // ---------------- //
+	////  KEffects Rules  // 
+	//// ---------------- //
+	//// Effect Rule
+	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+	//// function call effect.
+	//Effect keffects::Effect:
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+	//	RandomizeCallEffect;
+	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
+		return gaKEffects.getEffectAccess();
+	}
+	
+	public ParserRule getEffectRule() {
+		return getEffectAccess().getRule();
+	}
+	
+	//// Emission Rule
+	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
+	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
+	//// a new value in the case of valued signals. 
+	//// Example: A, B(2)
+	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
+	//// annotations defined in the annotations grammar.		
+	//Emission keffects::Emission:
+	//	annotations+=QuotedStringAnnotation*
+	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
+	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
+		return gaKEffects.getEmissionAccess();
+	}
+	
+	public ParserRule getEmissionRule() {
+		return getEmissionAccess().getRule();
+	}
+	
+	//// Assignment Rule
+	//// An assignment may start with a list of arbitrary annotatations.
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// indices part. The type of assignment is determined by the type of the operator.
+	//// Example: A = true, I[0] = I[1], I += 1     
+	//Assignment keffects::Assignment:
+	//	annotations+=Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
+	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
+		return gaKEffects.getAssignmentAccess();
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
+	}
+	
+	////SubReferenceAssignment returns keffects::Assignment:
+	////    (annotations+=Annotation)*    
+	////    valuedObject=ValuedObjectReference
+	////     operator=AssignOperator expression = Expression
+	////     ('schedule' schedule+=ScheduleObjectReference+)?;	 
+	//// Postfix Effect
+	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
+	//// must be a postfix operator.
+	//// Example: I++, I-- 
+	//PostfixEffect keffects::Assignment:
+	//	annotations+=Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
+	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
+		return gaKEffects.getPostfixEffectAccess();
+	}
+	
+	public ParserRule getPostfixEffectRule() {
+		return getPostfixEffectAccess().getRule();
+	}
+	
+	//// Hostcode Effect Rule
+	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
+	//HostcodeEffect keffects::HostcodeEffect:
+	//	annotations+=Annotation*
+	//	text=HOSTCODE;
+	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
+		return gaKEffects.getHostcodeEffectAccess();
+	}
+	
+	public ParserRule getHostcodeEffectRule() {
+		return getHostcodeEffectAccess().getRule();
+	}
+	
+	//// Reference Call Effect Rule
+	//// A reference call effect works similar to the reference call expression. Additionally, it may be
+	//// preceded by a list of annotations.
+	//ReferenceCallEffect keffects::ReferenceCallEffect:
+	//	annotations+=Annotation*
+	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
+		return gaKEffects.getReferenceCallEffectAccess();
+	}
+	
+	public ParserRule getReferenceCallEffectRule() {
+		return getReferenceCallEffectAccess().getRule();
+	}
+	
+	//// Function Call Effect Rule
+	//// A function call effect works similar to the function call expression. Additionally, it may be
+	//// preceded by a list of annotations.
+	//FunctionCallEffect keffects::FunctionCallEffect:
+	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()'));
+	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
+		return gaKEffects.getFunctionCallEffectAccess();
+	}
+	
+	public ParserRule getFunctionCallEffectRule() {
+		return getFunctionCallEffectAccess().getRule();
+	}
+	
+	//// Print Call Effect Rule
+	//// A print functions that enables target-independent prints in the model.    
+	//PrintCallEffect keffects::PrintCallEffect:
+	//	annotations+=Annotation*
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
+	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
+		return gaKEffects.getPrintCallEffectAccess();
+	}
+	
+	public ParserRule getPrintCallEffectRule() {
+		return getPrintCallEffectAccess().getRule();
+	}
+	
+	//RandomizeCallEffect keffects::RandomizeCallEffect:
+	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
+		return gaKEffects.getRandomizeCallEffectAccess();
+	}
+	
+	public ParserRule getRandomizeCallEffectRule() {
+		return getRandomizeCallEffectAccess().getRule();
+	}
+	
+	//enum AssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
+	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
+	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
+	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
+		return gaKEffects.getAssignOperatorAccess();
+	}
+	
+	public EnumRule getAssignOperatorRule() {
+		return getAssignOperatorAccess().getRule();
+	}
+	
+	//enum PostfixOperator returns keffects::AssignOperator:
+	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
+		return gaKEffects.getPostfixOperatorAccess();
+	}
+	
+	public EnumRule getPostfixOperatorRule() {
+		return getPostfixOperatorAccess().getRule();
+	}
+	
+	///**
+	// * @author ssm
+	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.rating 2015-08-21 proposed yellow
+	// */ // -------------------- //
+	////  KExpressions Rules  // 
+	//// -------------------- //
+	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
+	// * can be created. This also implies an order of precedence.
+	// *
+	// * Expression
+	// * + BooleanExpression
+	// *   + LogicalOrExpression
+	// *     + LogicalAndExpression
+	// *       + BitwiseOrExpression
+	// *         + BitwiseAndExpression
+	// *           + CompareExpression
+	// *             + NotOrValuedExpression
+	// *               + ValuedExpression (see valued expression below)
+	// *               + NotExpression *
+	// *                 + AtomicExpression *
+	// *                   + BoolValue
+	// *                   + ValuedObjectTestExpression
+	// *                     + ValuedObjectReference
+	// *                   + FunctionCall
+	// *                   + TextExpression
+	// * + ValuedExpression
+	// *   + AddExpression
+	// *     + SubExpression
+	// *       + MultExpression
+	// *         + DivExpression
+	// *           + ModExpression
+	// *             + NegExpression *
+	// *               + AtomicValuedExpression *
+	// *                 + IntValue
+	// *                 + FloatValue
+	// *                 + StringValue
+	// *                 + AtomicExpression
+	// */ // Root Rule
+	//// Always return an expression.
+	//Root ecore::EObject:
+	//	Expression;
+	public KExpressionsGrammarAccess.RootElements getRootAccess() {
+		return gaKExpressions.getRootAccess();
+	}
+	
+	public ParserRule getRootRule() {
+		return getRootAccess().getRule();
+	}
+	
+	//// Expression Rule
+	//// An expression is either a boolean expression or a valued expression.
+	//Expression:
+	//	BoolExpression | ValuedExpression;
+	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
+		return gaKExpressions.getExpressionAccess();
+	}
+	
+	public ParserRule getExpressionRule() {
+		return getExpressionAccess().getRule();
+	}
+	
+	//// Boolean Expression Rule
+	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
+	//// One could skip directly to the next rule.
+	//BoolExpression Expression:
+	//	LogicalOrExpression;
+	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
+		return gaKExpressions.getBoolExpressionAccess();
+	}
+	
+	public ParserRule getBoolExpressionRule() {
+		return getBoolExpressionAccess().getRule();
+	}
+	
+	//// Logical Or Expression Rule
+	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//LogicalOrExpression Expression:
+	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?;
+	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
+		return gaKExpressions.getLogicalOrExpressionAccess();
+	}
+	
+	public ParserRule getLogicalOrExpressionRule() {
+		return getLogicalOrExpressionAccess().getRule();
+	}
+	
+	//// Logical And Expression Rule
+	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//LogicalAndExpression Expression:
+	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?;
+	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
+		return gaKExpressions.getLogicalAndExpressionAccess();
+	}
+	
+	public ParserRule getLogicalAndExpressionRule() {
+		return getLogicalAndExpressionAccess().getRule();
+	}
+	
+	//// Bitwiese Or Expression Rule
+	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//BitwiseOrExpression Expression:
+	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?;
+	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
+		return gaKExpressions.getBitwiseOrExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseOrExpressionRule() {
+		return getBitwiseOrExpressionAccess().getRule();
+	}
+	
+	//BitwiseXOrExpression Expression:
+	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
+	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
+	public KExpressionsGrammarAccess.BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
+		return gaKExpressions.getBitwiseXOrExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseXOrExpressionRule() {
+		return getBitwiseXOrExpressionAccess().getRule();
+	}
+	
+	//// Bitwise And Expression Rule
+	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//BitwiseAndExpression Expression:
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?;
+	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
+		return gaKExpressions.getBitwiseAndExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseAndExpressionRule() {
+		return getBitwiseAndExpressionAccess().getRule();
+	}
+	
+	//// Compare Operation Rule
+	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
+	//// Example: 42 <= val(A)
+	//CompareOperation Expression:
+	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+	//	subExpressions+=NotOrValuedExpression)?;
+	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
+		return gaKExpressions.getCompareOperationAccess();
+	}
+	
+	public ParserRule getCompareOperationRule() {
+		return getCompareOperationAccess().getRule();
+	}
+	
+	//// 'Not or Valued Expression' Rule
+	//// ORDER IS IMPORTANT!
+	//NotOrValuedExpression Expression:
+	//	ValuedExpression
+	//	| NotExpression;
+	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
+		return gaKExpressions.getNotOrValuedExpressionAccess();
+	}
+	
+	public ParserRule getNotOrValuedExpressionRule() {
+		return getNotOrValuedExpressionAccess().getRule();
+	}
+	
+	//BitwiseNotExpression Expression:
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
+	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
+		return gaKExpressions.getBitwiseNotExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseNotExpressionRule() {
+		return getBitwiseNotExpressionAccess().getRule();
+	}
+	
+	//// Not Expression Rule
+	//// Example: !A, !false, !(A or B)
+	//// At the latter we need the parents to indicate the right binding.
+	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
+	//NotExpression Expression:
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression;
+	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
+		return gaKExpressions.getNotExpressionAccess();
+	}
+	
+	public ParserRule getNotExpressionRule() {
+		return getNotExpressionAccess().getRule();
+	}
+	
+	//// Valued Expression Rule    
+	//// Everything that evaluates to a primitive number value.
+	//// Similar to the boolean rule this rule is there for overview reasons.
+	//ValuedExpression Expression:
+	//	ShiftLeftExpression;
+	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
+		return gaKExpressions.getValuedExpressionAccess();
+	}
+	
+	public ParserRule getValuedExpressionRule() {
+		return getValuedExpressionAccess().getRule();
+	}
+	
+	//ShiftLeftExpression Expression:
+	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
+		return gaKExpressions.getShiftLeftExpressionAccess();
+	}
+	
+	public ParserRule getShiftLeftExpressionRule() {
+		return getShiftLeftExpressionAccess().getRule();
+	}
+	
+	//ShiftRightExpression Expression:
+	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
+		return gaKExpressions.getShiftRightExpressionAccess();
+	}
+	
+	public ParserRule getShiftRightExpressionRule() {
+		return getShiftRightExpressionAccess().getRule();
+	}
+	
+	//ShiftRightUnsignedExpression Expression:
+	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
+		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
+	}
+	
+	public ParserRule getShiftRightUnsignedExpressionRule() {
+		return getShiftRightUnsignedExpressionAccess().getRule();
+	}
+	
+	//// Add Expression Rule
+	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: 1 + 2
+	//AddExpression Expression:
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+	//	subExpressions+=SubExpression)*)?;
+	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
+		return gaKExpressions.getAddExpressionAccess();
+	}
+	
+	public ParserRule getAddExpressionRule() {
+		return getAddExpressionAccess().getRule();
+	}
+	
+	//// Sub Expression Rule
+	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: var(A) - i
+	//SubExpression Expression:
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
+	//	('-' subExpressions+=MultExpression)*)?;
+	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
+		return gaKExpressions.getSubExpressionAccess();
+	}
+	
+	public ParserRule getSubExpressionRule() {
+		return getSubExpressionAccess().getRule();
+	}
+	
+	//// Mult Expression Rule
+	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: 2 * 4
+	//MultExpression Expression:
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?;
+	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
+		return gaKExpressions.getMultExpressionAccess();
+	}
+	
+	public ParserRule getMultExpressionRule() {
+		return getMultExpressionAccess().getRule();
+	}
+	
+	//// Div Expression Rule
+	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: 2 / 4
+	//DivExpression Expression:
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+	//	subExpressions+=ModExpression)*)?;
+	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
+		return gaKExpressions.getDivExpressionAccess();
+	}
+	
+	public ParserRule getDivExpressionRule() {
+		return getDivExpressionAccess().getRule();
+	}
+	
+	//// Mod Expression Rule
+	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: i % j
+	//ModExpression Expression:
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?;
+	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
+		return gaKExpressions.getModExpressionAccess();
+	}
+	
+	public ParserRule getModExpressionRule() {
+		return getModExpressionAccess().getRule();
+	}
+	
+	//// Neg Expression Rule
+	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
+	//// Example: -i, -2
+	//NegExpression Expression:
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation;
+	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
+		return gaKExpressions.getNegExpressionAccess();
+	}
+	
+	public ParserRule getNegExpressionRule() {
+		return getNegExpressionAccess().getRule();
+	}
+	
+	//TernaryOperation Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+	//	| FBYExpression;
+	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
+		return gaKExpressions.getTernaryOperationAccess();
+	}
+	
+	public ParserRule getTernaryOperationRule() {
+		return getTernaryOperationAccess().getRule();
+	}
+	
+	//FBYExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//	subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
+		return gaKExpressions.getFBYExpressionAccess();
+	}
+	
+	public ParserRule getFBYExpressionRule() {
+		return getFBYExpressionAccess().getRule();
+	}
+	
+	//// Atomic Expression Rule
+	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
+	//// encapsulated in braces, a function call or a text expression.
+	//// Basically, the rule chain may start over again at this point.     
+	//AtomicExpression Expression:
+	//	BoolValue
+	//	| ValuedObjectTestExpression
+	//	| '(' BoolExpression ')'
+	//	| ReferenceCall
+	//	| FunctionCall
+	//	| RandomCall
+	//	| RandomizeCall
+	//	| TextExpression;
+	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
+		return gaKExpressions.getAtomicExpressionAccess();
+	}
+	
+	public ParserRule getAtomicExpressionRule() {
+		return getAtomicExpressionAccess().getRule();
+	}
+	
+	//// Atomic Valued Expression Rule
+	//// An atomic valued expression is either a simple int float or string literal, another valued expression
+	//// encapsulated in braces, or a atomic expression.
+	//// Basically, the rule chain may start over again at this point.     
+	//AtomicValuedExpression Expression:
+	//	IntValue
+	//	| FloatValue
+	//	| StringValue
+	//	| VectorValue
+	//	| '(' ValuedExpression ')'
+	//	| AtomicExpression;
+	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
+		return gaKExpressions.getAtomicValuedExpressionAccess();
+	}
+	
+	public ParserRule getAtomicValuedExpressionRule() {
+		return getAtomicValuedExpressionAccess().getRule();
+	}
+	
+	//// Valued Object Test Expression Rule
+	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
+	//// valued object reference.
+	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
+	//ValuedObjectTestExpression Expression:
+	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+	//	| ValuedObjectReference;
+	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
+		return gaKExpressions.getValuedObjectTestExpressionAccess();
+	}
+	
+	public ParserRule getValuedObjectTestExpressionRule() {
+		return getValuedObjectTestExpressionAccess().getRule();
+	}
+	
+	//// ID with primes
+	//PrimeID:
+	//	ID "'"*;
+	public KExpressionsGrammarAccess.PrimeIDElements getPrimeIDAccess() {
+		return gaKExpressions.getPrimeIDAccess();
+	}
+	
+	public ParserRule getPrimeIDRule() {
+		return getPrimeIDAccess().getRule();
+	}
+	
+	//// Valued Object Reference Rule
+	//// References a valued object with arbitrary (including none) indices part.
+	//// Example: A, B
+	//ValuedObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
+	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
+		return gaKExpressions.getValuedObjectReferenceAccess();
+	}
+	
+	public ParserRule getValuedObjectReferenceRule() {
+		return getValuedObjectReferenceAccess().getRule();
+	}
+	
+	//ScheduleObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
+		return gaKExpressions.getScheduleObjectReferenceAccess();
+	}
+	
+	public ParserRule getScheduleObjectReferenceRule() {
+		return getScheduleObjectReferenceAccess().getRule();
+	}
+	
+	//// Reference Call Rule
+	//// Calls to references. They may include a parameter list. 
+	//ReferenceCall:
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
+		return gaKExpressions.getReferenceCallAccess();
+	}
+	
+	public ParserRule getReferenceCallRule() {
+		return getReferenceCallAccess().getRule();
+	}
+	
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomCall:
+	//	{RandomCall}
+	//	'random' '()'?;
+	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
+		return gaKExpressions.getRandomCallAccess();
+	}
+	
+	public ParserRule getRandomCallRule() {
+		return getRandomCallAccess().getRule();
+	}
+	
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomizeCall:
+	//	{RandomizeCall}
+	//	'randomize' '()'?;
+	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
+		return gaKExpressions.getRandomizeCallAccess();
+	}
+	
+	public ParserRule getRandomizeCallRule() {
+		return getRandomizeCallAccess().getRule();
+	}
+	
+	//// Function Call Rule
+	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
+	//FunctionCall:
+	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
+		return gaKExpressions.getFunctionCallAccess();
+	}
+	
+	public ParserRule getFunctionCallRule() {
+		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Parameter Rule
+	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
+	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
+	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
+	//Parameter:
+	//	(pureOutput?='!'? callByReference?='&')?
+	//	expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKExpressions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
+	}
+	
+	//// Text Expression Rule
+	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
+	//// Example: 'printf(...)'
+	//TextExpression:
+	//	annotations+=Annotation*
+	//	text=HOSTCODE;
+	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
+		return gaKExpressions.getTextExpressionAccess();
+	}
+	
+	public ParserRule getTextExpressionRule() {
+		return getTextExpressionAccess().getRule();
+	}
+	
+	//IntValue:
+	//	value=INT;
+	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
+		return gaKExpressions.getIntValueAccess();
+	}
+	
+	public ParserRule getIntValueRule() {
+		return getIntValueAccess().getRule();
+	}
+	
+	//FloatValue:
+	//	value=FLOAT;
+	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
+		return gaKExpressions.getFloatValueAccess();
+	}
+	
+	public ParserRule getFloatValueRule() {
+		return getFloatValueAccess().getRule();
+	}
+	
+	//BoolValue:
+	//	value=BOOLEAN;
+	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
+		return gaKExpressions.getBoolValueAccess();
+	}
+	
+	public ParserRule getBoolValueRule() {
+		return getBoolValueAccess().getRule();
+	}
+	
+	//StringValue:
+	//	value=STRING;
+	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
+		return gaKExpressions.getStringValueAccess();
+	}
+	
+	public ParserRule getStringValueRule() {
+		return getStringValueAccess().getRule();
+	}
+	
+	//VectorValue:
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
+		return gaKExpressions.getVectorValueAccess();
+	}
+	
+	public ParserRule getVectorValueRule() {
+		return getVectorValueAccess().getRule();
+	}
+	
+	//VectorValueMember Expression:
+	//	BoolExpression | ValuedExpression | IgnoreValue;
+	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
+		return gaKExpressions.getVectorValueMemberAccess();
+	}
+	
+	public ParserRule getVectorValueMemberRule() {
+		return getVectorValueMemberAccess().getRule();
+	}
+	
+	//IgnoreValue:
+	//	{IgnoreValue} '_';
+	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
+		return gaKExpressions.getIgnoreValueAccess();
+	}
+	
+	public ParserRule getIgnoreValueRule() {
+		return getIgnoreValueAccess().getRule();
+	}
+	
+	//// Any Type Rule
+	//// Data type rule allowing any kind of value to be accepted,
+	//// e.g. as initialValues of valued objects used in Kits.xtext. 
+	//AnyType:
+	//	BOOLEAN | INT | FLOAT | ID | STRING;
+	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
+		return gaKExpressions.getAnyTypeAccess();
+	}
+	
+	public ParserRule getAnyTypeRule() {
+		return getAnyTypeAccess().getRule();
+	}
+	
+	//AnyValue Value:
+	//	IntValue | FloatValue | BoolValue | StringValue;
+	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
+		return gaKExpressions.getAnyValueAccess();
+	}
+	
+	public ParserRule getAnyValueRule() {
+		return getAnyValueAccess().getRule();
+	}
+	
+	//enum CompareOperator returns OperatorType:
+	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
+	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
+		return gaKExpressions.getCompareOperatorAccess();
+	}
+	
+	public EnumRule getCompareOperatorRule() {
+		return getCompareOperatorAccess().getRule();
+	}
+	
+	//enum PreOperator returns OperatorType:
+	//	PRE="pre";
+	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
+		return gaKExpressions.getPreOperatorAccess();
+	}
+	
+	public EnumRule getPreOperatorRule() {
+		return getPreOperatorAccess().getRule();
+	}
+	
+	//enum BitwiseNotOperator returns OperatorType:
+	//	BITWISE_NOT="~";
+	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
+		return gaKExpressions.getBitwiseNotOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseNotOperatorRule() {
+		return getBitwiseNotOperatorAccess().getRule();
+	}
+	
+	//enum BitwiseXOrOperator returns OperatorType:
+	//	BITWISE_XOR="^";
+	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
+		return gaKExpressions.getBitwiseXOrOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseXOrOperatorRule() {
+		return getBitwiseXOrOperatorAccess().getRule();
+	}
+	
+	//enum BitwiseOrOperator returns OperatorType:
+	//	BITWISE_OR="|";
+	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
+		return gaKExpressions.getBitwiseOrOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseOrOperatorRule() {
+		return getBitwiseOrOperatorAccess().getRule();
+	}
+	
+	//enum BitwiseAndOperator returns OperatorType:
+	//	BITWISE_AND="&";
+	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
+		return gaKExpressions.getBitwiseAndOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseAndOperatorRule() {
+		return getBitwiseAndOperatorAccess().getRule();
+	}
+	
+	//enum NotOperator returns OperatorType:
+	//	NOT="!";
+	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
+		return gaKExpressions.getNotOperatorAccess();
+	}
+	
+	public EnumRule getNotOperatorRule() {
+		return getNotOperatorAccess().getRule();
+	}
+	
+	//enum AddOperator returns OperatorType:
+	//	ADD="+";
+	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
+		return gaKExpressions.getAddOperatorAccess();
+	}
+	
+	public EnumRule getAddOperatorRule() {
+		return getAddOperatorAccess().getRule();
+	}
+	
+	//enum SubOperator returns OperatorType:
+	//	SUB="-";
+	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
+		return gaKExpressions.getSubOperatorAccess();
+	}
+	
+	public EnumRule getSubOperatorRule() {
+		return getSubOperatorAccess().getRule();
+	}
+	
+	//enum MultOperator returns OperatorType:
+	//	MULT="*";
+	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
+		return gaKExpressions.getMultOperatorAccess();
+	}
+	
+	public EnumRule getMultOperatorRule() {
+		return getMultOperatorAccess().getRule();
+	}
+	
+	//enum ModOperator returns OperatorType:
+	//	MOD="%";
+	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
+		return gaKExpressions.getModOperatorAccess();
+	}
+	
+	public EnumRule getModOperatorRule() {
+		return getModOperatorAccess().getRule();
+	}
+	
+	//enum DivOperator returns OperatorType:
+	//	DIV="/";
+	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
+		return gaKExpressions.getDivOperatorAccess();
+	}
+	
+	public EnumRule getDivOperatorRule() {
+		return getDivOperatorAccess().getRule();
+	}
+	
+	//enum ValOperator returns OperatorType:
+	//	VAL="val";
+	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
+		return gaKExpressions.getValOperatorAccess();
+	}
+	
+	public EnumRule getValOperatorRule() {
+		return getValOperatorAccess().getRule();
+	}
+	
+	//enum LogicalOrOperator returns OperatorType:
+	//	LOGICAL_OR="||";
+	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
+		return gaKExpressions.getLogicalOrOperatorAccess();
+	}
+	
+	public EnumRule getLogicalOrOperatorRule() {
+		return getLogicalOrOperatorAccess().getRule();
+	}
+	
+	//enum LogicalAndOperator returns OperatorType:
+	//	LOGICAL_AND="&&";
+	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
+		return gaKExpressions.getLogicalAndOperatorAccess();
+	}
+	
+	public EnumRule getLogicalAndOperatorRule() {
+		return getLogicalAndOperatorAccess().getRule();
+	}
+	
+	//enum ShiftLeftOperator returns OperatorType:
+	//	SHIFT_LEFT="<<";
+	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
+		return gaKExpressions.getShiftLeftOperatorAccess();
+	}
+	
+	public EnumRule getShiftLeftOperatorRule() {
+		return getShiftLeftOperatorAccess().getRule();
+	}
+	
+	//enum ShiftRightOperator returns OperatorType:
+	//	SHIFT_RIGHT=">>";
+	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
+		return gaKExpressions.getShiftRightOperatorAccess();
+	}
+	
+	public EnumRule getShiftRightOperatorRule() {
+		return getShiftRightOperatorAccess().getRule();
+	}
+	
+	//enum ShiftRightUnsignedOperator returns OperatorType:
+	//	SHIFT_RIGHT_UNSIGNED=">>>";
+	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
+		return gaKExpressions.getShiftRightUnsignedOperatorAccess();
+	}
+	
+	public EnumRule getShiftRightUnsignedOperatorRule() {
+		return getShiftRightUnsignedOperatorAccess().getRule();
+	}
+	
+	//enum PostfixAdd returns OperatorType:
+	//	POSTFIX_ADD="++";
+	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
+		return gaKExpressions.getPostfixAddAccess();
+	}
+	
+	public EnumRule getPostfixAddRule() {
+		return getPostfixAddAccess().getRule();
+	}
+	
+	//enum PostfixSub returns OperatorType:
+	//	POSTFIX_SUB="--";
+	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
+		return gaKExpressions.getPostfixSubAccess();
+	}
+	
+	public EnumRule getPostfixSubRule() {
+		return getPostfixSubAccess().getRule();
+	}
+	
+	//enum ConditionalOperator returns OperatorType:
+	//	CONDITIONAL="?";
+	public KExpressionsGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
+		return gaKExpressions.getConditionalOperatorAccess();
+	}
+	
+	public EnumRule getConditionalOperatorRule() {
+		return getConditionalOperatorAccess().getRule();
+	}
+	
+	//enum FBYOperator returns OperatorType:
+	//	FBY="->";
+	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
+		return gaKExpressions.getFBYOperatorAccess();
+	}
+	
+	public EnumRule getFBYOperatorRule() {
+		return getFBYOperatorAccess().getRule();
+	}
+	
+	//enum ValueType:
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
+	//	INT="int" | FLOAT="float" |
+	//	STRING="string";
+	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
+		return gaKExpressions.getValueTypeAccess();
+	}
+	
+	public EnumRule getValueTypeRule() {
+		return getValueTypeAccess().getRule();
+	}
+	
+	//enum HostType returns ValueType:
+	//	HOST="host";
+	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
+		return gaKExpressions.getHostTypeAccess();
+	}
+	
+	public EnumRule getHostTypeRule() {
+		return getHostTypeAccess().getRule();
+	}
+	
+	//enum CombineOperator:
+	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
+	//	MIN="min" | OR="|" | AND="&" | HOST="host";
+	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
+		return gaKExpressions.getCombineOperatorAccess();
+	}
+	
+	public EnumRule getCombineOperatorRule() {
+		return getCombineOperatorAccess().getRule();
+	}
+	
+	//// -------------------- //
+	////  JSON                // 
+	//// -------------------- //
+	//JsonObjectValue:
+	//	{JsonObjectValue}
+	//	'{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
+	//	'}';
+	public KExpressionsGrammarAccess.JsonObjectValueElements getJsonObjectValueAccess() {
+		return gaKExpressions.getJsonObjectValueAccess();
+	}
+	
+	public ParserRule getJsonObjectValueRule() {
+		return getJsonObjectValueAccess().getRule();
+	}
+	
+	//JsonObjectMember:
+	//	key=STRING ':' value=JsonValue;
+	public KExpressionsGrammarAccess.JsonObjectMemberElements getJsonObjectMemberAccess() {
+		return gaKExpressions.getJsonObjectMemberAccess();
+	}
+	
+	public ParserRule getJsonObjectMemberRule() {
+		return getJsonObjectMemberAccess().getRule();
+	}
+	
+	//JsonArrayValue:
+	//	{JsonArrayValue}
+	//	'[' (elements+=JsonValue (',' elements+=JsonValue)*)?
+	//	']';
+	public KExpressionsGrammarAccess.JsonArrayValueElements getJsonArrayValueAccess() {
+		return gaKExpressions.getJsonArrayValueAccess();
+	}
+	
+	public ParserRule getJsonArrayValueRule() {
+		return getJsonArrayValueAccess().getRule();
+	}
+	
+	//JsonValue Value:
+	//	JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+	public KExpressionsGrammarAccess.JsonValueElements getJsonValueAccess() {
+		return gaKExpressions.getJsonValueAccess();
+	}
+	
+	public ParserRule getJsonValueRule() {
+		return getJsonValueAccess().getRule();
+	}
+	
+	//NullValue:
+	//	{NullValue}
+	//	'null';
+	public KExpressionsGrammarAccess.NullValueElements getNullValueAccess() {
+		return gaKExpressions.getNullValueAccess();
+	}
+	
+	public ParserRule getNullValueRule() {
+		return getNullValueAccess().getRule();
+	}
+	
+	//terminal HOSTCODE:
+	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
+	public TerminalRule getHOSTCODERule() {
+		return gaKExpressions.getHOSTCODERule();
 	}
 	
 	///**

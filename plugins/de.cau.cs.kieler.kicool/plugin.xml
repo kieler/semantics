@@ -16,7 +16,7 @@
             class="de.cau.cs.kieler.kicool.KiCoolPackage"
             genModel="model/KiCool.genmodel"/>
    </extension>
-   
+
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem

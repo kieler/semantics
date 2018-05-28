@@ -155,7 +155,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
         
         // Set environment information that come from the outside, e.g. the system.
-        environment.processEnvironmentSetter(processorReference.presets)
+        environment.processEnvironmentConfig(processorReference.preconfig)
         
         val environmentPrime = environment.preparePrimeEnvironment
         
@@ -201,7 +201,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
         
         // Set post data that come from the outside, e.g. the system.
-        environmentPrime.processEnvironmentSetter(processorReference.postsets)
+        environmentPrime.processEnvironmentConfig(processorReference.postconfig)
         
         notify(new ProcessorFinished(this, processorReference, processorInstance))
         

@@ -1,5 +1,4 @@
 system de.cau.cs.kieler.scl.scc
-    version 1 
     label "SCL SCCharts"
     
 de.cau.cs.kieler.scl.processors.transformators.scl2scg    

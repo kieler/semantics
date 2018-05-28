@@ -1,5 +1,4 @@
 public system de.cau.cs.kieler.sccharts.priority.java
-    version 1 
     label "Priority-based Compilation (Java)"
     
 system de.cau.cs.kieler.sccharts.extended.core

@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kicool;
 
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -15,14 +16,13 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getId <em>Id</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.System#getVersion <em>Version</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getProcessors <em>Processors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getIntermediates <em>Intermediates</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.System#getStartsets <em>Startsets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#getConfig <em>Config</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#isPublic <em>Public</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#isDeveloper <em>Developer</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#isSimulation <em>Simulation</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem()
@@ -55,32 +55,6 @@ public interface System extends EObject {
      * @generated
      */
     void setId(String value);
-
-    /**
-     * Returns the value of the '<em><b>Version</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Version</em>' attribute.
-     * @see #setVersion(int)
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Version()
-     * @model
-     * @generated
-     */
-    int getVersion();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#getVersion <em>Version</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Version</em>' attribute.
-     * @see #getVersion()
-     * @generated
-     */
-    void setVersion(int value);
 
     /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
@@ -151,46 +125,30 @@ public interface System extends EObject {
     EList<IntermediateReference> getIntermediates();
 
     /**
-     * Returns the value of the '<em><b>Input Class</b></em>' attribute.
+     * Returns the value of the '<em><b>Config</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Input Class</em>' attribute isn't clear,
+     * If the meaning of the '<em>Config</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Input Class</em>' attribute.
-     * @see #setInputClass(String)
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_InputClass()
-     * @model
-     * @generated
-     */
-    String getInputClass();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Input Class</em>' attribute.
-     * @see #getInputClass()
-     * @generated
-     */
-    void setInputClass(String value);
-
-    /**
-     * Returns the value of the '<em><b>Startsets</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kicool.KVPair}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Startsets</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Startsets</em>' containment reference list.
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Startsets()
+     * @return the value of the '<em>Config</em>' containment reference.
+     * @see #setConfig(JsonObjectValue)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Config()
      * @model containment="true"
      * @generated
      */
-    EList<KVPair> getStartsets();
+    JsonObjectValue getConfig();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#getConfig <em>Config</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Config</em>' containment reference.
+     * @see #getConfig()
+     * @generated
+     */
+    void setConfig(JsonObjectValue value);
 
     /**
      * Returns the value of the '<em><b>Public</b></em>' attribute.
@@ -243,5 +201,31 @@ public interface System extends EObject {
      * @generated
      */
     void setDeveloper(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Simulation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Simulation</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Simulation</em>' attribute.
+     * @see #setSimulation(boolean)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Simulation()
+     * @model
+     * @generated
+     */
+    boolean isSimulation();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#isSimulation <em>Simulation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Simulation</em>' attribute.
+     * @see #isSimulation()
+     * @generated
+     */
+    void setSimulation(boolean value);
 
 } // System

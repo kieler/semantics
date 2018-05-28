@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kicool.IntermediateReference;
-import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 
@@ -29,14 +29,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getProcessors <em>Processors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getIntermediates <em>Intermediates</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getInputClass <em>Input Class</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getStartsets <em>Startsets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getConfig <em>Config</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isPublic <em>Public</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isDeveloper <em>Developer</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isSimulation <em>Simulation</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,26 +60,6 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * @ordered
      */
     protected String id = ID_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getVersion()
-     * @generated
-     * @ordered
-     */
-    protected static final int VERSION_EDEFAULT = 0;
-
-    /**
-     * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getVersion()
-     * @generated
-     * @ordered
-     */
-    protected int version = VERSION_EDEFAULT;
 
     /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -123,34 +102,14 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     protected EList<IntermediateReference> intermediates;
 
     /**
-     * The default value of the '{@link #getInputClass() <em>Input Class</em>}' attribute.
+     * The cached value of the '{@link #getConfig() <em>Config</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getInputClass()
+     * @see #getConfig()
      * @generated
      * @ordered
      */
-    protected static final String INPUT_CLASS_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getInputClass() <em>Input Class</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInputClass()
-     * @generated
-     * @ordered
-     */
-    protected String inputClass = INPUT_CLASS_EDEFAULT;
-
-    /**
-     * The cached value of the '{@link #getStartsets() <em>Startsets</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getStartsets()
-     * @generated
-     * @ordered
-     */
-    protected EList<KVPair> startsets;
+    protected JsonObjectValue config;
 
     /**
      * The default value of the '{@link #isPublic() <em>Public</em>}' attribute.
@@ -193,6 +152,26 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     protected boolean developer = DEVELOPER_EDEFAULT;
 
     /**
+     * The default value of the '{@link #isSimulation() <em>Simulation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSimulation()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SIMULATION_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSimulation() <em>Simulation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSimulation()
+     * @generated
+     * @ordered
+     */
+    protected boolean simulation = SIMULATION_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -230,27 +209,6 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
         id = newId;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__ID, oldId, id));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public int getVersion() {
-        return version;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setVersion(int newVersion) {
-        int oldVersion = version;
-        version = newVersion;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__VERSION, oldVersion, version));
     }
 
     /**
@@ -334,8 +292,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getInputClass() {
-        return inputClass;
+    public JsonObjectValue getConfig() {
+        return config;
     }
 
     /**
@@ -343,23 +301,33 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setInputClass(String newInputClass) {
-        String oldInputClass = inputClass;
-        inputClass = newInputClass;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__INPUT_CLASS, oldInputClass, inputClass));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<KVPair> getStartsets() {
-        if (startsets == null) {
-            startsets = new EObjectContainmentEList<KVPair>(KVPair.class, this, KiCoolPackage.SYSTEM__STARTSETS);
+    public NotificationChain basicSetConfig(JsonObjectValue newConfig, NotificationChain msgs) {
+        JsonObjectValue oldConfig = config;
+        config = newConfig;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__CONFIG, oldConfig, newConfig);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return startsets;
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setConfig(JsonObjectValue newConfig) {
+        if (newConfig != config) {
+            NotificationChain msgs = null;
+            if (config != null)
+                msgs = ((InternalEObject)config).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.SYSTEM__CONFIG, null, msgs);
+            if (newConfig != null)
+                msgs = ((InternalEObject)newConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.SYSTEM__CONFIG, null, msgs);
+            msgs = basicSetConfig(newConfig, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__CONFIG, newConfig, newConfig));
     }
 
     /**
@@ -409,6 +377,27 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isSimulation() {
+        return simulation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSimulation(boolean newSimulation) {
+        boolean oldSimulation = simulation;
+        simulation = newSimulation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__SIMULATION, oldSimulation, simulation));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -416,8 +405,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return basicSetProcessors(null, msgs);
             case KiCoolPackage.SYSTEM__INTERMEDIATES:
                 return ((InternalEList<?>)getIntermediates()).basicRemove(otherEnd, msgs);
-            case KiCoolPackage.SYSTEM__STARTSETS:
-                return ((InternalEList<?>)getStartsets()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.SYSTEM__CONFIG:
+                return basicSetConfig(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -432,22 +421,20 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
         switch (featureID) {
             case KiCoolPackage.SYSTEM__ID:
                 return getId();
-            case KiCoolPackage.SYSTEM__VERSION:
-                return getVersion();
             case KiCoolPackage.SYSTEM__LABEL:
                 return getLabel();
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 return getProcessors();
             case KiCoolPackage.SYSTEM__INTERMEDIATES:
                 return getIntermediates();
-            case KiCoolPackage.SYSTEM__INPUT_CLASS:
-                return getInputClass();
-            case KiCoolPackage.SYSTEM__STARTSETS:
-                return getStartsets();
+            case KiCoolPackage.SYSTEM__CONFIG:
+                return getConfig();
             case KiCoolPackage.SYSTEM__PUBLIC:
                 return isPublic();
             case KiCoolPackage.SYSTEM__DEVELOPER:
                 return isDeveloper();
+            case KiCoolPackage.SYSTEM__SIMULATION:
+                return isSimulation();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -464,9 +451,6 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__ID:
                 setId((String)newValue);
                 return;
-            case KiCoolPackage.SYSTEM__VERSION:
-                setVersion((Integer)newValue);
-                return;
             case KiCoolPackage.SYSTEM__LABEL:
                 setLabel((String)newValue);
                 return;
@@ -477,18 +461,17 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 getIntermediates().clear();
                 getIntermediates().addAll((Collection<? extends IntermediateReference>)newValue);
                 return;
-            case KiCoolPackage.SYSTEM__INPUT_CLASS:
-                setInputClass((String)newValue);
-                return;
-            case KiCoolPackage.SYSTEM__STARTSETS:
-                getStartsets().clear();
-                getStartsets().addAll((Collection<? extends KVPair>)newValue);
+            case KiCoolPackage.SYSTEM__CONFIG:
+                setConfig((JsonObjectValue)newValue);
                 return;
             case KiCoolPackage.SYSTEM__PUBLIC:
                 setPublic((Boolean)newValue);
                 return;
             case KiCoolPackage.SYSTEM__DEVELOPER:
                 setDeveloper((Boolean)newValue);
+                return;
+            case KiCoolPackage.SYSTEM__SIMULATION:
+                setSimulation((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -505,9 +488,6 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__ID:
                 setId(ID_EDEFAULT);
                 return;
-            case KiCoolPackage.SYSTEM__VERSION:
-                setVersion(VERSION_EDEFAULT);
-                return;
             case KiCoolPackage.SYSTEM__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
@@ -517,17 +497,17 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__INTERMEDIATES:
                 getIntermediates().clear();
                 return;
-            case KiCoolPackage.SYSTEM__INPUT_CLASS:
-                setInputClass(INPUT_CLASS_EDEFAULT);
-                return;
-            case KiCoolPackage.SYSTEM__STARTSETS:
-                getStartsets().clear();
+            case KiCoolPackage.SYSTEM__CONFIG:
+                setConfig((JsonObjectValue)null);
                 return;
             case KiCoolPackage.SYSTEM__PUBLIC:
                 setPublic(PUBLIC_EDEFAULT);
                 return;
             case KiCoolPackage.SYSTEM__DEVELOPER:
                 setDeveloper(DEVELOPER_EDEFAULT);
+                return;
+            case KiCoolPackage.SYSTEM__SIMULATION:
+                setSimulation(SIMULATION_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -543,22 +523,20 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
         switch (featureID) {
             case KiCoolPackage.SYSTEM__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case KiCoolPackage.SYSTEM__VERSION:
-                return version != VERSION_EDEFAULT;
             case KiCoolPackage.SYSTEM__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 return processors != null;
             case KiCoolPackage.SYSTEM__INTERMEDIATES:
                 return intermediates != null && !intermediates.isEmpty();
-            case KiCoolPackage.SYSTEM__INPUT_CLASS:
-                return INPUT_CLASS_EDEFAULT == null ? inputClass != null : !INPUT_CLASS_EDEFAULT.equals(inputClass);
-            case KiCoolPackage.SYSTEM__STARTSETS:
-                return startsets != null && !startsets.isEmpty();
+            case KiCoolPackage.SYSTEM__CONFIG:
+                return config != null;
             case KiCoolPackage.SYSTEM__PUBLIC:
                 return public_ != PUBLIC_EDEFAULT;
             case KiCoolPackage.SYSTEM__DEVELOPER:
                 return developer != DEVELOPER_EDEFAULT;
+            case KiCoolPackage.SYSTEM__SIMULATION:
+                return simulation != SIMULATION_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -575,16 +553,14 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (id: ");
         result.append(id);
-        result.append(", version: ");
-        result.append(version);
         result.append(", label: ");
         result.append(label);
-        result.append(", inputClass: ");
-        result.append(inputClass);
         result.append(", public: ");
         result.append(public_);
         result.append(", developer: ");
         result.append(developer);
+        result.append(", simulation: ");
+        result.append(simulation);
         result.append(')');
         return result.toString();
     }

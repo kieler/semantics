@@ -3,8 +3,10 @@
 package de.cau.cs.kieler.kicool.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kicool.IntermediateReference;
-import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolFactory;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
@@ -77,13 +79,6 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
     private EClass intermediateReferenceEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass kvPairEClass = null;
-
-    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -131,6 +126,9 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
         // Initialize simple dependencies
         AnnotationsPackage.eINSTANCE.eClass();
+        KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
+        KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theKiCoolPackage.createPackageContents();
@@ -170,7 +168,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSystem_Version() {
+    public EAttribute getSystem_Label() {
         return (EAttribute)systemEClass.getEStructuralFeatures().get(1);
     }
 
@@ -179,17 +177,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSystem_Label() {
-        return (EAttribute)systemEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getSystem_Processors() {
-        return (EReference)systemEClass.getEStructuralFeatures().get(3);
+        return (EReference)systemEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -198,6 +187,15 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     public EReference getSystem_Intermediates() {
+        return (EReference)systemEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSystem_Config() {
         return (EReference)systemEClass.getEStructuralFeatures().get(4);
     }
 
@@ -206,7 +204,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSystem_InputClass() {
+    public EAttribute getSystem_Public() {
         return (EAttribute)systemEClass.getEStructuralFeatures().get(5);
     }
 
@@ -215,26 +213,17 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSystem_Startsets() {
-        return (EReference)systemEClass.getEStructuralFeatures().get(6);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSystem_Public() {
-        return (EAttribute)systemEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getSystem_Developer() {
-        return (EAttribute)systemEClass.getEStructuralFeatures().get(8);
+        return (EAttribute)systemEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getSystem_Simulation() {
+        return (EAttribute)systemEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -269,7 +258,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProcessorReference_Presets() {
+    public EReference getProcessorReference_Preconfig() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(0);
     }
 
@@ -278,7 +267,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProcessorReference_Postsets() {
+    public EReference getProcessorReference_Postconfig() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(1);
     }
 
@@ -386,42 +375,6 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getKVPair() {
-        return kvPairEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getKVPair_Key() {
-        return (EAttribute)kvPairEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getKVPair_Value() {
-        return (EAttribute)kvPairEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getKVPair_IsKeyValue() {
-        return (EAttribute)kvPairEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public KiCoolFactory getKiCoolFactory() {
         return (KiCoolFactory)getEFactoryInstance();
     }
@@ -447,21 +400,20 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         // Create classes and their features
         systemEClass = createEClass(SYSTEM);
         createEAttribute(systemEClass, SYSTEM__ID);
-        createEAttribute(systemEClass, SYSTEM__VERSION);
         createEAttribute(systemEClass, SYSTEM__LABEL);
         createEReference(systemEClass, SYSTEM__PROCESSORS);
         createEReference(systemEClass, SYSTEM__INTERMEDIATES);
-        createEAttribute(systemEClass, SYSTEM__INPUT_CLASS);
-        createEReference(systemEClass, SYSTEM__STARTSETS);
+        createEReference(systemEClass, SYSTEM__CONFIG);
         createEAttribute(systemEClass, SYSTEM__PUBLIC);
         createEAttribute(systemEClass, SYSTEM__DEVELOPER);
+        createEAttribute(systemEClass, SYSTEM__SIMULATION);
 
         processorEntryEClass = createEClass(PROCESSOR_ENTRY);
         createEAttribute(processorEntryEClass, PROCESSOR_ENTRY__ID);
 
         processorReferenceEClass = createEClass(PROCESSOR_REFERENCE);
-        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__PRESETS);
-        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__POSTSETS);
+        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__PRECONFIG);
+        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__POSTCONFIG);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__METRIC);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__PREPROCESSES);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__POSTPROCESSES);
@@ -477,11 +429,6 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
         intermediateReferenceEClass = createEClass(INTERMEDIATE_REFERENCE);
         createEAttribute(intermediateReferenceEClass, INTERMEDIATE_REFERENCE__ALIAS);
-
-        kvPairEClass = createEClass(KV_PAIR);
-        createEAttribute(kvPairEClass, KV_PAIR__KEY);
-        createEAttribute(kvPairEClass, KV_PAIR__VALUE);
-        createEAttribute(kvPairEClass, KV_PAIR__IS_KEY_VALUE);
     }
 
     /**
@@ -507,6 +454,9 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         setNsPrefix(eNS_PREFIX);
         setNsURI(eNS_URI);
 
+        // Obtain other dependent packages
+        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+
         // Create type parameters
 
         // Set bounds for type parameters
@@ -521,21 +471,20 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         // Initialize classes, features, and operations; add parameters
         initEClass(systemEClass, de.cau.cs.kieler.kicool.System.class, "System", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSystem_Id(), ecorePackage.getEString(), "id", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSystem_Version(), ecorePackage.getEInt(), "version", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Label(), ecorePackage.getEString(), "label", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSystem_Processors(), this.getProcessorEntry(), null, "processors", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSystem_Intermediates(), this.getIntermediateReference(), null, "intermediates", null, 0, -1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSystem_InputClass(), ecorePackage.getEString(), "inputClass", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSystem_Startsets(), this.getKVPair(), null, "startsets", null, 0, -1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSystem_Config(), theKExpressionsPackage.getJsonObjectValue(), null, "config", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Public(), ecorePackage.getEBoolean(), "public", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Developer(), ecorePackage.getEBoolean(), "developer", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSystem_Simulation(), ecorePackage.getEBoolean(), "simulation", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorEntryEClass, ProcessorEntry.class, "ProcessorEntry", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getProcessorEntry_Id(), ecorePackage.getEString(), "id", null, 0, 1, ProcessorEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorReferenceEClass, ProcessorReference.class, "ProcessorReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getProcessorReference_Presets(), this.getKVPair(), null, "presets", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessorReference_Postsets(), this.getKVPair(), null, "postsets", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getProcessorReference_Preconfig(), theKExpressionsPackage.getJsonObjectValue(), null, "preconfig", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getProcessorReference_Postconfig(), theKExpressionsPackage.getJsonObjectValue(), null, "postconfig", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Metric(), this.getIntermediateReference(), null, "metric", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Preprocesses(), this.getProcessorReference(), null, "preprocesses", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Postprocesses(), this.getProcessorReference(), null, "postprocesses", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -551,11 +500,6 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
         initEClass(intermediateReferenceEClass, IntermediateReference.class, "IntermediateReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateReference_Alias(), ecorePackage.getEString(), "alias", null, 0, 1, IntermediateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(kvPairEClass, KVPair.class, "KVPair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getKVPair_Key(), ecorePackage.getEString(), "key", null, 0, 1, KVPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getKVPair_Value(), ecorePackage.getEString(), "value", null, 0, 1, KVPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getKVPair_IsKeyValue(), ecorePackage.getEBoolean(), "isKeyValue", null, 0, 1, KVPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

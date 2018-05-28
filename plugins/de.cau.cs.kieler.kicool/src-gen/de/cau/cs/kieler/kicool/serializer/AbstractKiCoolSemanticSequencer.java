@@ -11,9 +11,45 @@ import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
+import de.cau.cs.kieler.kexpressions.BoolValue;
+import de.cau.cs.kieler.kexpressions.ExternString;
+import de.cau.cs.kieler.kexpressions.FloatValue;
+import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IgnoreValue;
+import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonArrayValue;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.NullValue;
+import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.RandomCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.StringValue;
+import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.VectorValue;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
+import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtScope;
+import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
+import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.kicool.IntermediateReference;
-import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
@@ -31,7 +67,7 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanticSequencer {
+public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequencer {
 
 	@Inject
 	private KiCoolGrammarAccess grammarAccess;
@@ -104,13 +140,216 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 				}
 				else break;
 			}
+		else if (epackage == KEffectsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KEffectsPackage.ASSIGNMENT:
+				if (rule == grammarAccess.getAssignmentRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()) {
+					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.EMISSION:
+				sequence_Emission(context, (Emission) semanticObject); 
+				return; 
+			case KEffectsPackage.FUNCTION_CALL_EFFECT:
+				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.HOSTCODE_EFFECT:
+				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.PRINT_CALL_EFFECT:
+				sequence_PrintCallEffect(context, (PrintCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.RANDOMIZE_CALL_EFFECT:
+				sequence_RandomizeCallEffect(context, (RandomizeCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.REFERENCE_CALL_EFFECT:
+				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
+				return; 
+			}
+		else if (epackage == KExpressionsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KExpressionsPackage.BOOL_VALUE:
+				sequence_BoolValue(context, (BoolValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.EXTERN_STRING:
+				sequence_ExternString(context, (ExternString) semanticObject); 
+				return; 
+			case KExpressionsPackage.FLOAT_VALUE:
+				sequence_FloatValue(context, (FloatValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.FUNCTION_CALL:
+				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.IGNORE_VALUE:
+				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.INT_VALUE:
+				sequence_IntValue(context, (IntValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_ARRAY_VALUE:
+				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_MEMBER:
+				sequence_JsonObjectMember(context, (JsonObjectMember) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_VALUE:
+				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.NULL_VALUE:
+				sequence_NullValue(context, (NullValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.OPERATOR_EXPRESSION:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getFBYExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
+					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.PARAMETER:
+				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.RANDOM_CALL:
+				sequence_RandomCall(context, (RandomCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.RANDOMIZE_CALL:
+				sequence_RandomizeCall(context, (RandomizeCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.SCHEDULE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
+					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getScheduleDeclarationRule()) {
+					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
+				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
+				return; 
+			case KExpressionsPackage.STRING_VALUE:
+				sequence_StringValue(context, (StringValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.TEXT_EXPRESSION:
+				sequence_TextExpression(context, (TextExpression) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT:
+				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
+				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+				return; 
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getVariableDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VECTOR_VALUE:
+				sequence_VectorValue(context, (VectorValue) semanticObject); 
+				return; 
+			}
+		else if (epackage == KExtPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KExtPackage.ANNOTATED_EXPRESSION:
+				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+				return; 
+			case KExtPackage.KEXT_SCOPE:
+				if (rule == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KExtScope) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KExtScope) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExtPackage.KEXT:
+				sequence_Kext(context, (Kext) semanticObject); 
+				return; 
+			case KExtPackage.TEST_ENTITY:
+				sequence_TestEntity(context, (TestEntity) semanticObject); 
+				return; 
+			}
 		else if (epackage == KiCoolPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KiCoolPackage.INTERMEDIATE_REFERENCE:
 				sequence_IntermediateReference(context, (IntermediateReference) semanticObject); 
-				return; 
-			case KiCoolPackage.KV_PAIR:
-				sequence_KVPair(context, (KVPair) semanticObject); 
 				return; 
 			case KiCoolPackage.PROCESSOR_ALTERNATIVE_GROUP:
 				sequence_ProcessorAlternativeGroup(context, (ProcessorAlternativeGroup) semanticObject); 
@@ -144,7 +383,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     CoProcessor returns ProcessorReference
 	 *
 	 * Constraint:
-	 *     (id=QualifiedID silent?='silent'?)
+	 *     (silent?='silent'? id=QualifiedID (preconfig=JsonObjectValue postconfig=JsonObjectValue?)?)
 	 */
 	protected void sequence_CoProcessor(ISerializationContext context, ProcessorReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -159,18 +398,6 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     (id=QualifiedID alias=EString?)
 	 */
 	protected void sequence_IntermediateReference(ISerializationContext context, IntermediateReference semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     KVPair returns KVPair
-	 *
-	 * Constraint:
-	 *     (key=EString isKeyValue?='key'? value=EStringAllTypes)
-	 */
-	protected void sequence_KVPair(ISerializationContext context, KVPair semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -223,12 +450,11 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *
 	 * Constraint:
 	 *     (
-	 *         presets+=KVPair* 
 	 *         preprocesses+=CoProcessor* 
 	 *         id=QualifiedID 
+	 *         (preconfig=JsonObjectValue postconfig=JsonObjectValue?)? 
 	 *         metric=[IntermediateReference|QualifiedID]? 
-	 *         postprocesses+=CoProcessor* 
-	 *         postsets+=KVPair*
+	 *         postprocesses+=CoProcessor*
 	 *     )
 	 */
 	protected void sequence_Processor(ISerializationContext context, ProcessorReference semanticObject) {
@@ -244,11 +470,10 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     (
 	 *         public?='public'? 
 	 *         developer?='developer'? 
+	 *         simulation?='simulation'? 
 	 *         id=QualifiedID 
-	 *         version=INT 
 	 *         label=EString 
-	 *         inputClass=ID? 
-	 *         startsets+=KVPair* 
+	 *         config=JsonObjectValue? 
 	 *         intermediates+=IntermediateReference* 
 	 *         processors=ProcessorGroup
 	 *     )

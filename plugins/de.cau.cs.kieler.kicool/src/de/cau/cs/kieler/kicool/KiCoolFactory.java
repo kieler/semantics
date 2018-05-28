@@ -76,15 +76,6 @@ public interface KiCoolFactory extends EFactory {
     IntermediateReference createIntermediateReference();
 
     /**
-     * Returns a new object of class '<em>KV Pair</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>KV Pair</em>'.
-     * @generated
-     */
-    KVPair createKVPair();
-
-    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -29,7 +29,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kgraph.text,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.prom.ui,
- de.cau.cs.kieler.kicool.ide
+ de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.kexpressions.ui,
+ de.cau.cs.kieler.kexpressions.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,

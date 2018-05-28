@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kicool/src" modelPluginID="de.cau.cs.kieler.kicool"
     modelName="KiCool" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations"
+    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext"
     operationReflection="true" importOrganizing="true">
   <foreignModel>KiCool.ecore</foreignModel>
   <genPackages prefix="KiCool" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"

@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.compare,
  org.eclipse.emf.compare.rcp,
  org.eclipse.emf.workspace;bundle-version="1.5.1",
- de.cau.cs.kieler.kexpressions
+ de.cau.cs.kieler.kexpressions;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.kicool.classes,
