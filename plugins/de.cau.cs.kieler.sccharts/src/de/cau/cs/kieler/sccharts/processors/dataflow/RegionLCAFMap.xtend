@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kicool.classes.ITypedKiCoolCloneable
 
 /**
  * The Region-LCAF mapping stores dependency least common ancestor fork (lcaf) data.
@@ -31,7 +32,7 @@ import de.cau.cs.kieler.sccharts.State
  * @kieler.rating 2018-05-17 proposed yellow  
  *
  */
-class RegionLCAFMap extends HashMap<Dependency, State> implements IKiCoolCloneable {
+class RegionLCAFMap extends HashMap<Dependency, State> implements ITypedKiCoolCloneable<RegionLCAFMap> {
     
     extension SCChartsControlflowRegionExtensions cfgExt = new SCChartsControlflowRegionExtensions
     
@@ -82,7 +83,16 @@ class RegionLCAFMap extends HashMap<Dependency, State> implements IKiCoolCloneab
         return new Pair<Region, Region>(sourceRegion, targetRegion)
     }    
     
+    
+    private val persistedOriginal = <Dependency, State> newHashMap
+    
     override getOriginalObject() {
-        
+        new RegionLCAFMap => [
+            putAll(persistedOriginal)
+        ]
+    }
+    
+    def setOriginal() {
+        persistedOriginal.putAll(this)
     }
 }

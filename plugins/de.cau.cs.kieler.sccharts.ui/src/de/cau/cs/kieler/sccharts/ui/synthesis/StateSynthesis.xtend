@@ -250,8 +250,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
         if (compilationContext === null) return;
         
+        val result = compilationContext.getResultForModel(state.SCCharts)
+        if (result === null) return;
+        
         // Fetch the least common ancestor fork (lcaf) data from the compilation environment. 
-        val lcafMap = compilationContext.result.getProperty(RegionDependencies.REGION_LCAF_MAP)
+        val lcafMap = result.getProperty(RegionDependencies.REGION_LCAF_MAP) 
         val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(DataDependency).toList
         
         for (dependency : dependencies.filter(DataDependency)) {

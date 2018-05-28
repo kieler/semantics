@@ -69,6 +69,7 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     override process() {
         super.process()
         environment.setProperty(REGION_DEPENDENCIES, new ImmutableCloneable<SCCharts>(targetModel))
+        environment.getProperty(REGION_LCAF_MAP).setOriginal
 //        getModel.pragmas += REGION_DEPENDENCIES.createPragmaTag 
     }
     
