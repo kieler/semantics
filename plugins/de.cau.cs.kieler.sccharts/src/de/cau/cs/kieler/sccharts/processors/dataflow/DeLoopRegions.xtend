@@ -13,40 +13,14 @@
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.kicool.environments.AnnotationModel
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.DelayType
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.AbstractDependencyAnalysis
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.LinkableInterfaceData
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
-import de.cau.cs.kieler.kicool.environments.AnnotationModel
 
 /**
  * @author ssm
@@ -55,23 +29,7 @@ import de.cau.cs.kieler.kicool.environments.AnnotationModel
  */
 class DeLoopRegions extends SCChartsProcessor {
     
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsDataflowRegionExtensions
-    @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension KExtDeclarationExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsReplacementExtensions
-    
-    extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
-    
-    static val GENERATED_PREFIX = "__dlr_"
-    
-    var regionCounter = 0
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.DeLoopRegions"
