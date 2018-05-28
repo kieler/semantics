@@ -1840,6 +1840,64 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getCombineOperatorAccess().getRule();
 	}
 	
+	//// -------------------- //
+	////  JSON                // 
+	//// -------------------- //
+	//JsonObjectValue:
+	//	{JsonObjectValue}
+	//	'{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
+	//	'}';
+	public KExpressionsGrammarAccess.JsonObjectValueElements getJsonObjectValueAccess() {
+		return gaKExpressions.getJsonObjectValueAccess();
+	}
+	
+	public ParserRule getJsonObjectValueRule() {
+		return getJsonObjectValueAccess().getRule();
+	}
+	
+	//JsonObjectMember:
+	//	key=STRING ':' value=JsonValue;
+	public KExpressionsGrammarAccess.JsonObjectMemberElements getJsonObjectMemberAccess() {
+		return gaKExpressions.getJsonObjectMemberAccess();
+	}
+	
+	public ParserRule getJsonObjectMemberRule() {
+		return getJsonObjectMemberAccess().getRule();
+	}
+	
+	//JsonArrayValue:
+	//	{JsonArrayValue}
+	//	'[' (elements+=JsonValue (',' elements+=JsonValue)*)?
+	//	']';
+	public KExpressionsGrammarAccess.JsonArrayValueElements getJsonArrayValueAccess() {
+		return gaKExpressions.getJsonArrayValueAccess();
+	}
+	
+	public ParserRule getJsonArrayValueRule() {
+		return getJsonArrayValueAccess().getRule();
+	}
+	
+	//JsonValue Value:
+	//	JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+	public KExpressionsGrammarAccess.JsonValueElements getJsonValueAccess() {
+		return gaKExpressions.getJsonValueAccess();
+	}
+	
+	public ParserRule getJsonValueRule() {
+		return getJsonValueAccess().getRule();
+	}
+	
+	//NullValue:
+	//	{NullValue}
+	//	'null';
+	public KExpressionsGrammarAccess.NullValueElements getNullValueAccess() {
+		return gaKExpressions.getNullValueAccess();
+	}
+	
+	public ParserRule getNullValueRule() {
+		return getNullValueAccess().getRule();
+	}
+	
 	//terminal HOSTCODE:
 	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {

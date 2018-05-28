@@ -16963,6 +16963,331 @@ ruleAnyValue returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleJsonObjectValue
+entryRuleJsonObjectValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getJsonObjectValueRule()); }
+	iv_ruleJsonObjectValue=ruleJsonObjectValue
+	{ $current=$iv_ruleJsonObjectValue.current; }
+	EOF;
+
+// Rule JsonObjectValue
+ruleJsonObjectValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getJsonObjectValueAccess().getJsonObjectValueAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='{'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getJsonObjectValueAccess().getLeftCurlyBracketKeyword_1());
+		}
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getJsonObjectValueAccess().getMembersJsonObjectMemberParserRuleCall_2_0_0());
+					}
+					lv_members_2_0=ruleJsonObjectMember
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getJsonObjectValueRule());
+						}
+						add(
+							$current,
+							"members",
+							lv_members_2_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectMember");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_3=','
+				{
+					newLeafNode(otherlv_3, grammarAccess.getJsonObjectValueAccess().getCommaKeyword_2_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getJsonObjectValueAccess().getMembersJsonObjectMemberParserRuleCall_2_1_1_0());
+						}
+						lv_members_4_0=ruleJsonObjectMember
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getJsonObjectValueRule());
+							}
+							add(
+								$current,
+								"members",
+								lv_members_4_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectMember");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
+		otherlv_5='}'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getJsonObjectValueAccess().getRightCurlyBracketKeyword_3());
+		}
+	)
+;
+
+// Entry rule entryRuleJsonObjectMember
+entryRuleJsonObjectMember returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getJsonObjectMemberRule()); }
+	iv_ruleJsonObjectMember=ruleJsonObjectMember
+	{ $current=$iv_ruleJsonObjectMember.current; }
+	EOF;
+
+// Rule JsonObjectMember
+ruleJsonObjectMember returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_key_0_0=RULE_STRING
+				{
+					newLeafNode(lv_key_0_0, grammarAccess.getJsonObjectMemberAccess().getKeySTRINGTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getJsonObjectMemberRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"key",
+						lv_key_0_0,
+						"de.cau.cs.kieler.esterel.Esterel.STRING");
+				}
+			)
+		)
+		otherlv_1=':'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getJsonObjectMemberAccess().getColonKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getJsonObjectMemberAccess().getValueJsonValueParserRuleCall_2_0());
+				}
+				lv_value_2_0=ruleJsonValue
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getJsonObjectMemberRule());
+					}
+					set(
+						$current,
+						"value",
+						lv_value_2_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.JsonValue");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleJsonArrayValue
+entryRuleJsonArrayValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getJsonArrayValueRule()); }
+	iv_ruleJsonArrayValue=ruleJsonArrayValue
+	{ $current=$iv_ruleJsonArrayValue.current; }
+	EOF;
+
+// Rule JsonArrayValue
+ruleJsonArrayValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getJsonArrayValueAccess().getJsonArrayValueAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='['
+		{
+			newLeafNode(otherlv_1, grammarAccess.getJsonArrayValueAccess().getLeftSquareBracketKeyword_1());
+		}
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_0_0());
+					}
+					lv_elements_2_0=ruleJsonValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getJsonArrayValueRule());
+						}
+						add(
+							$current,
+							"elements",
+							lv_elements_2_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.JsonValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_3=','
+				{
+					newLeafNode(otherlv_3, grammarAccess.getJsonArrayValueAccess().getCommaKeyword_2_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_1_1_0());
+						}
+						lv_elements_4_0=ruleJsonValue
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getJsonArrayValueRule());
+							}
+							add(
+								$current,
+								"elements",
+								lv_elements_4_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.JsonValue");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
+		otherlv_5=']'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getJsonArrayValueAccess().getRightSquareBracketKeyword_3());
+		}
+	)
+;
+
+// Entry rule entryRuleJsonValue
+entryRuleJsonValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getJsonValueRule()); }
+	iv_ruleJsonValue=ruleJsonValue
+	{ $current=$iv_ruleJsonValue.current; }
+	EOF;
+
+// Rule JsonValue
+ruleJsonValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonObjectValueParserRuleCall_0());
+		}
+		this_JsonObjectValue_0=ruleJsonObjectValue
+		{
+			$current = $this_JsonObjectValue_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonArrayValueParserRuleCall_1());
+		}
+		this_JsonArrayValue_1=ruleJsonArrayValue
+		{
+			$current = $this_JsonArrayValue_1.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getJsonValueAccess().getNullValueParserRuleCall_2());
+		}
+		this_NullValue_2=ruleNullValue
+		{
+			$current = $this_NullValue_2.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getJsonValueAccess().getAnyValueParserRuleCall_3());
+		}
+		this_AnyValue_3=ruleAnyValue
+		{
+			$current = $this_AnyValue_3.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleNullValue
+entryRuleNullValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getNullValueRule()); }
+	iv_ruleNullValue=ruleNullValue
+	{ $current=$iv_ruleNullValue.current; }
+	EOF;
+
+// Rule NullValue
+ruleNullValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getNullValueAccess().getNullValueAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='null'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getNullValueAccess().getNullKeyword_1());
+		}
+	)
+;
+
 // Entry rule entryRuleAnnotation
 entryRuleAnnotation returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getAnnotationRule()); }
