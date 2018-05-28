@@ -459,6 +459,32 @@ enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";
 
+// -------------------- //
+//  JSON                // 
+// -------------------- //
+
+JsonObjectValue returns JsonObjectValue:
+    {JsonObjectValue}
+    '{'
+    ( (members+=JsonObjectMember) (',' members+=JsonObjectMember)* )? 
+    '}';
+
+JsonObjectMember returns JsonObjectMember:
+    key=STRING ':' value=JsonValue;
+
+JsonArrayValue returns JsonArrayValue:
+    {JsonArrayValue}
+    '['
+    ( (elements+=JsonValue) (',' elements+=JsonValue)* )? 
+    ']';
+
+JsonValue returns Value:
+    JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+
+NullValue returns NullValue:
+    {NullValue}
+    'null';
+
 // ------------------------ //
 //  KExpressions Terminals  // 
 // ------------------------ //

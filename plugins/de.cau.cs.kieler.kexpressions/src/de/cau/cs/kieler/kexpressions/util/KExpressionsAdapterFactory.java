@@ -114,6 +114,22 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createIgnoreValueAdapter();
             }
             @Override
+            public Adapter caseJsonObjectValue(JsonObjectValue object) {
+                return createJsonObjectValueAdapter();
+            }
+            @Override
+            public Adapter caseJsonObjectMember(JsonObjectMember object) {
+                return createJsonObjectMemberAdapter();
+            }
+            @Override
+            public Adapter caseJsonArrayValue(JsonArrayValue object) {
+                return createJsonArrayValueAdapter();
+            }
+            @Override
+            public Adapter caseNullValue(NullValue object) {
+                return createNullValueAdapter();
+            }
+            @Override
             public Adapter caseOperatorExpression(OperatorExpression object) {
                 return createOperatorExpressionAdapter();
             }
@@ -570,6 +586,62 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIgnoreValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.JsonObjectValue <em>Json Object Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectValue
+     * @generated
+     */
+    public Adapter createJsonObjectValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.JsonObjectMember <em>Json Object Member</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectMember
+     * @generated
+     */
+    public Adapter createJsonObjectMemberAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.JsonArrayValue <em>Json Array Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.JsonArrayValue
+     * @generated
+     */
+    public Adapter createJsonArrayValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.NullValue <em>Null Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.NullValue
+     * @generated
+     */
+    public Adapter createNullValueAdapter() {
         return null;
     }
 

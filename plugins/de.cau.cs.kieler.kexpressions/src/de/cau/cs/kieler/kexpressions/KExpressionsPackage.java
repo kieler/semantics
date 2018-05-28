@@ -70,7 +70,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
      * @generated
      */
-    int SCHEDULABLE = 25;
+    int SCHEDULABLE = 29;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -384,7 +384,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorExpression()
      * @generated
      */
-    int OPERATOR_EXPRESSION = 10;
+    int OPERATOR_EXPRESSION = 14;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl <em>Text Expression</em>}' class.
@@ -394,7 +394,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getTextExpression()
      * @generated
      */
-    int TEXT_EXPRESSION = 11;
+    int TEXT_EXPRESSION = 15;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl <em>Declaration</em>}' class.
@@ -404,7 +404,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getDeclaration()
      * @generated
      */
-    int DECLARATION = 12;
+    int DECLARATION = 16;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -414,7 +414,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getVariableDeclaration()
      * @generated
      */
-    int VARIABLE_DECLARATION = 13;
+    int VARIABLE_DECLARATION = 17;
 
                 /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl <em>Reference Declaration</em>}' class.
@@ -424,7 +424,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceDeclaration()
      * @generated
      */
-    int REFERENCE_DECLARATION = 14;
+    int REFERENCE_DECLARATION = 18;
 
                 /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
@@ -434,7 +434,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
      * @generated
      */
-    int FUNCTION_CALL = 20;
+    int FUNCTION_CALL = 24;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.
@@ -444,7 +444,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 24;
+    int REFERENCEABLE = 28;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -454,7 +454,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 17;
+    int PARAMETER = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.StringValueImpl <em>String Value</em>}' class.
@@ -557,6 +557,145 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
     int IGNORE_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.JsonObjectValueImpl <em>Json Object Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.JsonObjectValueImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getJsonObjectValue()
+     * @generated
+     */
+    int JSON_OBJECT_VALUE = 10;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_OBJECT_VALUE__SCHEDULE = VALUE__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Members</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_OBJECT_VALUE__MEMBERS = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Json Object Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_OBJECT_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.JsonObjectMemberImpl <em>Json Object Member</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.JsonObjectMemberImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getJsonObjectMember()
+     * @generated
+     */
+    int JSON_OBJECT_MEMBER = 11;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_OBJECT_MEMBER__KEY = 0;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_OBJECT_MEMBER__VALUE = 1;
+
+    /**
+     * The number of structural features of the '<em>Json Object Member</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_OBJECT_MEMBER_FEATURE_COUNT = 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.JsonArrayValueImpl <em>Json Array Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.JsonArrayValueImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getJsonArrayValue()
+     * @generated
+     */
+    int JSON_ARRAY_VALUE = 12;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_ARRAY_VALUE__SCHEDULE = VALUE__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Elements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_ARRAY_VALUE__ELEMENTS = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Json Array Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JSON_ARRAY_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.NullValueImpl <em>Null Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.NullValueImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getNullValue()
+     * @generated
+     */
+    int NULL_VALUE = 13;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NULL_VALUE__SCHEDULE = VALUE__SCHEDULE;
+
+    /**
+     * The number of structural features of the '<em>Null Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NULL_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -836,7 +975,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleDeclaration()
      * @generated
      */
-    int SCHEDULE_DECLARATION = 15;
+    int SCHEDULE_DECLARATION = 19;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -900,7 +1039,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleObjectReference()
      * @generated
      */
-    int SCHEDULE_OBJECT_REFERENCE = 16;
+    int SCHEDULE_OBJECT_REFERENCE = 20;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1018,7 +1157,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCall()
      * @generated
      */
-    int CALL = 18;
+    int CALL = 22;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1055,7 +1194,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceCall()
      * @generated
      */
-    int REFERENCE_CALL = 19;
+    int REFERENCE_CALL = 23;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1155,7 +1294,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPrintCall()
      * @generated
      */
-    int PRINT_CALL = 21;
+    int PRINT_CALL = 25;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1192,7 +1331,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomCall()
      * @generated
      */
-    int RANDOM_CALL = 22;
+    int RANDOM_CALL = 26;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1229,7 +1368,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomizeCall()
      * @generated
      */
-    int RANDOMIZE_CALL = 23;
+    int RANDOMIZE_CALL = 27;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1275,7 +1414,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getExternString()
      * @generated
      */
-    int EXTERN_STRING = 26;
+    int EXTERN_STRING = 30;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1312,7 +1451,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 27;
+    int COMBINE_OPERATOR = 31;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1322,7 +1461,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 28;
+    int OPERATOR_TYPE = 32;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1332,7 +1471,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 29;
+    int VALUE_TYPE = 33;
 
 
     /**
@@ -1343,7 +1482,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPriorityProtocol()
      * @generated
      */
-    int PRIORITY_PROTOCOL = 30;
+    int PRIORITY_PROTOCOL = 34;
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
@@ -2036,6 +2175,90 @@ public interface KExpressionsPackage extends EPackage {
     EClass getIgnoreValue();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.JsonObjectValue <em>Json Object Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Json Object Value</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectValue
+     * @generated
+     */
+    EClass getJsonObjectValue();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.JsonObjectValue#getMembers <em>Members</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Members</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectValue#getMembers()
+     * @see #getJsonObjectValue()
+     * @generated
+     */
+    EReference getJsonObjectValue_Members();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.JsonObjectMember <em>Json Object Member</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Json Object Member</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectMember
+     * @generated
+     */
+    EClass getJsonObjectMember();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.JsonObjectMember#getKey <em>Key</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Key</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectMember#getKey()
+     * @see #getJsonObjectMember()
+     * @generated
+     */
+    EAttribute getJsonObjectMember_Key();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.JsonObjectMember#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Value</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonObjectMember#getValue()
+     * @see #getJsonObjectMember()
+     * @generated
+     */
+    EReference getJsonObjectMember_Value();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.JsonArrayValue <em>Json Array Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Json Array Value</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonArrayValue
+     * @generated
+     */
+    EClass getJsonArrayValue();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.JsonArrayValue#getElements <em>Elements</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Elements</em>'.
+     * @see de.cau.cs.kieler.kexpressions.JsonArrayValue#getElements()
+     * @see #getJsonArrayValue()
+     * @generated
+     */
+    EReference getJsonArrayValue_Elements();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.NullValue <em>Null Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Null Value</em>'.
+     * @see de.cau.cs.kieler.kexpressions.NullValue
+     * @generated
+     */
+    EClass getNullValue();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2697,6 +2920,78 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass IGNORE_VALUE = eINSTANCE.getIgnoreValue();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.JsonObjectValueImpl <em>Json Object Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.JsonObjectValueImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getJsonObjectValue()
+         * @generated
+         */
+        EClass JSON_OBJECT_VALUE = eINSTANCE.getJsonObjectValue();
+
+        /**
+         * The meta object literal for the '<em><b>Members</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference JSON_OBJECT_VALUE__MEMBERS = eINSTANCE.getJsonObjectValue_Members();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.JsonObjectMemberImpl <em>Json Object Member</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.JsonObjectMemberImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getJsonObjectMember()
+         * @generated
+         */
+        EClass JSON_OBJECT_MEMBER = eINSTANCE.getJsonObjectMember();
+
+        /**
+         * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute JSON_OBJECT_MEMBER__KEY = eINSTANCE.getJsonObjectMember_Key();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference JSON_OBJECT_MEMBER__VALUE = eINSTANCE.getJsonObjectMember_Value();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.JsonArrayValueImpl <em>Json Array Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.JsonArrayValueImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getJsonArrayValue()
+         * @generated
+         */
+        EClass JSON_ARRAY_VALUE = eINSTANCE.getJsonArrayValue();
+
+        /**
+         * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference JSON_ARRAY_VALUE__ELEMENTS = eINSTANCE.getJsonArrayValue_Elements();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.NullValueImpl <em>Null Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.NullValueImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getNullValue()
+         * @generated
+         */
+        EClass NULL_VALUE = eINSTANCE.getNullValue();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}' class.
