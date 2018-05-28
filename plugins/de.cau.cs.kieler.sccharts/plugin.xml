@@ -171,6 +171,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.DeLoopRegions">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
