@@ -105,6 +105,21 @@ class LustreFormatter extends AbstractFormatter2 {
 
 	def dispatch void format(Node_Declaration node_declaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		
+		node_declaration.regionFor.keyword("let")?.prepend[ newLine ]
+		node_declaration.regionFor.keywordPairs("let", "tel").head?.interior[ indent ]
+		node_declaration.regionFor.keyword("tel")?.prepend[ newLine ]
+		node_declaration.regionFor.keyword("tel")?.append[ setNewLines(2) ]
+		
+		node_declaration.regionFor.keyword("(")?.append[ noSpace ]
+		node_declaration.regionFor.keyword(")")?.prepend[ noSpace ]
+		node_declaration.regionFor.keyword(node_DeclarationAccess.leftParenthesisKeyword_6)?.append[ noSpace ]
+		node_declaration.regionFor.keyword(node_DeclarationAccess.rightParenthesisKeyword_9)?.prepend[ noSpace ]
+		node_declaration.regionFor.keyword(node_DeclarationAccess.semicolonKeyword_15)?.prepend[ noSpace ]
+		node_declaration.regionFor.keyword(node_DeclarationAccess.semicolonKeyword_10)?.prepend[ noSpace ]
+		node_declaration.regionFor.keyword(node_DeclarationAccess.commaKeyword_3_1_0)?.prepend[ noSpace ]
+		node_declaration.regionFor.keyword(node_DeclarationAccess.commaKeyword_8_0)?.prepend[ noSpace ]
+		
 		for (Variable_Declaration parameters : node_declaration.getParameters()) {
 			format(parameters, document);
 		}
@@ -119,6 +134,7 @@ class LustreFormatter extends AbstractFormatter2 {
 		}
 		for (Equation equations : node_declaration.getEquations()) {
 			format(equations, document);
+			equations.prepend[ newLine ]
 		}
 		for (Assertion assertions : node_declaration.getAssertions()) {
 			format(assertions, document);
@@ -129,7 +145,8 @@ class LustreFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Equation equation, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		// TODO: format HiddenRegions around keywords, attributes, cross references, etc.
+        equation.regionFor.keyword(equationAccess.semicolonKeyword_3)?.prepend[ noSpace ]		 
 		format(equation.getRight(), document);
 	}
 
