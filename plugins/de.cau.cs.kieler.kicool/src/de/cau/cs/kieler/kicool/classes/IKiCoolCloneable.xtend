@@ -44,4 +44,11 @@ interface IKiCoolCloneable {
      * Determines if the objects must be resolved after the environment copy.
      */
     def void resolveCopiedObjects(Copier copier) { }
+    
+    /**
+     * If you are using the resolveCopiedObjects method, getOriginalObject should retrieve the original object.
+     * This is not necessary for the kieler compiler framework to function, but provides observers and syntheses
+     * a convenient way to access the original data object.
+     */
+    def Object getOriginalObject() { }
 }

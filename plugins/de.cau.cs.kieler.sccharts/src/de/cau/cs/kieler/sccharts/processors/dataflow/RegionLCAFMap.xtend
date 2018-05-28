@@ -82,4 +82,7 @@ class RegionLCAFMap extends HashMap<Dependency, State> implements IKiCoolCloneab
         return new Pair<Region, Region>(sourceRegion, targetRegion)
     }    
     
+    override getOriginalObject() {
+        
+    }
 }

@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifier
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
 
 /**
  * @author ssm
@@ -49,8 +50,8 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
     
-    public static val IProperty<SCCharts> REGION_DEPENDENCIES = 
-        new Property<SCCharts>("de.cau.cs.kieler.sccharts.dataflow.regionDependencies", null)    
+    public static val IProperty<ImmutableCloneable<SCCharts>> REGION_DEPENDENCIES = 
+        new Property<ImmutableCloneable<SCCharts>>("de.cau.cs.kieler.sccharts.dataflow.regionDependencies", null)    
     
     public static val IProperty<RegionLCAFMap> REGION_LCAF_MAP = 
         new Property<RegionLCAFMap>("de.cau.cs.kieler.sccharts.dataflow.regionLCAFMap", new RegionLCAFMap)    
@@ -67,7 +68,7 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     
     override process() {
         super.process()
-        environment.setProperty(REGION_DEPENDENCIES, model)
+        environment.setProperty(REGION_DEPENDENCIES, new ImmutableCloneable<SCCharts>(targetModel))
 //        getModel.pragmas += REGION_DEPENDENCIES.createPragmaTag 
     }
     

@@ -91,7 +91,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // configure region dependency layout config if an appropriate result is present.
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
         val regionDependencies = (compilationContext !== null) &&  
-            compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES) == state.SCCharts
+            compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES).object == state.SCCharts
         if (regionDependencies) {
             configureLayoutRegionDependencies(node)
         } else {
