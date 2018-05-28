@@ -96,6 +96,7 @@ class ToDataflow extends SCChartsProcessor {
     def processSuperState(State state, SCCharts scc, LinkableInterfaceData lid) {
         val cfrs = state.regions.filter(ControlflowRegion).toList
         val dfr = createDataflowRegion(state.name) => [ state.regions += it ]
+        val localVariables = <ValuedObject> newLinkedList
          
         for (cfr : cfrs.immutableCopy) {
             val stateName = if (cfr.name.nullOrEmpty) GENERATED_PREFIX + regionCounter++ else cfr.name
@@ -129,7 +130,9 @@ class ToDataflow extends SCChartsProcessor {
                 cfr.replace(vo, newVO)
                 
                 val dfass = createAssignment(stateReference, newVO, vo.reference)
-                dfr.equations += dfass 
+                dfr.equations += dfass
+                
+                if (vo.local) localVariables += vo 
             } 
 
 
@@ -149,11 +152,18 @@ class ToDataflow extends SCChartsProcessor {
                 cfr.replace(vo, newVO)
                 
                 val dfass = createAssignment(vo, stateReference.reference => [ subReference = newVO.reference ])
-                dfr.equations += dfass 
+                dfr.equations += dfass
+                
+                if (vo.local) localVariables += vo 
             } 
-            
                         
             snapshot
+        }
+        
+        for (vo : localVariables) {
+            if (vo.declaration.eContainer === state) {
+                dfr.declarations += vo.declaration
+            }
         }
     }
     

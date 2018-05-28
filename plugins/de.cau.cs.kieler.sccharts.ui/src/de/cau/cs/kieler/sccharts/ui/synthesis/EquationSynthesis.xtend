@@ -176,7 +176,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     }
                 } else {
                     node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter, 
-                        if (wire.wireIsLocal) INPUT_ID else INPUT_ID
+                        if (wire.wireIsLocal) LOCAL_ID else INPUT_ID
                     )
                     wire.semanticSource.addPort(OUT_PORT, node.ports.head)
                     node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
@@ -213,7 +213,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     )
                 }
             } else { 
-                node = wire.sink.createKGTNode(wire.externalSinkReferenceCounter, OUTPUT_ID)
+                node = wire.sink.createKGTNode(wire.externalSinkReferenceCounter, 
+                    if (wire.wireIsLocal) LOCAL_ID else OUTPUT_ID
+                )
                 wire.sink.addPort(IN_PORT, node.ports.head)
                 val text = wire.semanticSink.serializeHR.toString
                 node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
