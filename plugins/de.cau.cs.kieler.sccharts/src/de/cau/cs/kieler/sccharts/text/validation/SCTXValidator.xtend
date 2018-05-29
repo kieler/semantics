@@ -728,6 +728,19 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
         }
     }
+    
+    @Check(CheckType.NORMAL) 
+    def void checkFloatingPointTriggerComparison(Action action) {
+        if (action.trigger !== null) {
+            val trigger = action.trigger
+            if (trigger instanceof ValuedObjectReference) {
+                if (trigger.valuedObject.isFloat) {
+                    error("Float tests must have a comparison operator!", 
+                        action.trigger, null)
+                }
+            }
+        }
+    }
         
     // ENFORCER SPECIFIC
     

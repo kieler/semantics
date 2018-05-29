@@ -191,6 +191,33 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.variableDeclaration.isSignal && valuedObject.type != ValueType::PURE
     }   
     
+    def boolean isInt(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.INT
+    }
+    
+    def boolean isBool(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.BOOL
+    }
+
+    def boolean isFloat(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.FLOAT
+    }
+
+    def boolean isString(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.STRING
+    }
+
+    def boolean isHost(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.HOST
+    }
+
+    
+    
     def ValuedObject createValuedObject() {
         KExpressionsFactory::eINSTANCE.createValuedObject()
     }
