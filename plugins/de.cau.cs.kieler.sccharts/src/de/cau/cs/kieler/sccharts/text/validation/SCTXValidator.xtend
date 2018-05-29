@@ -47,6 +47,8 @@ import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 //import org.eclipse.xtext.validation.Check
 
@@ -726,7 +728,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
         }
     }
-    
+        
     // ENFORCER SPECIFIC
     
     public static val DIRECTOR = "director"
