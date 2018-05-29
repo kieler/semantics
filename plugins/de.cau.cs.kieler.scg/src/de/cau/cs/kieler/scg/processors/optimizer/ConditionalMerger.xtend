@@ -92,7 +92,11 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                                 tail.target = thenNode
                                 tail = thenNode.allNext.head
                                 if (thenNode instanceof Assignment) {
-                                    environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
+                                    if (thenNode.reference !== null && thenNode.reference.valuedObject !== null) {
+                                        environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
+                                    } else {
+                                        environment.infos.add("CM", thenNode, true)
+                                    }
                                 }
                                 
                                 thenNodes += thenNode.allNext.filter[ target !== node.^else.targetNode ].map[ targetNode ] 
