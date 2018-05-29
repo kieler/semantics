@@ -42,4 +42,9 @@ class SCChartsDataflowRegionExtensions {
     def DataflowRegion createDataflowRegion(String id) {
         createDataflowRegion(id, "")
     }
+    
+    def DataflowRegion createDataflowRegion(State state, String id) {
+        createDataflowRegion(id, "") => [ state.regions += it ]
+    }
+    
 }

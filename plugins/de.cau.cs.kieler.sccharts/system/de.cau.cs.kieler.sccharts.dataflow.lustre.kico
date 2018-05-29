@@ -1,9 +1,9 @@
-system de.cau.cs.kieler.sccharts.dataflow
+system de.cau.cs.kieler.sccharts.dataflow.lustre
 	version 1 
-	label "SCCharts to Dataflow"
+	label "SCCharts to Lustre"
     input SCCharts
     
 de.cau.cs.kieler.sccharts.processors.regionDependencies
 de.cau.cs.kieler.sccharts.processors.toHybridDataflow
 de.cau.cs.kieler.sccharts.processors.DeLoopRegions
-de.cau.cs.kieler.sccharts.processors.toSimpleDataflow
+de.cau.cs.kieler.lustre.processors.SCCToLustre

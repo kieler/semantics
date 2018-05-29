@@ -52,7 +52,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtension
  * @kieler.design 2018-05-16 proposed
  * @kieler.rating 2018-05-16 proposed yellow  
  */
-class ToDataflow extends SCChartsProcessor {
+class ToHybridDataflow extends SCChartsProcessor {
     
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -73,11 +73,11 @@ class ToDataflow extends SCChartsProcessor {
     var regionCounter = 0
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.toDataflow"
+        "de.cau.cs.kieler.sccharts.processors.toHybridDataflow"
     }
     
     override getName() {
-        "ToDataflow"
+        "Hybrid Dataflow"
     }
     
     override process() {

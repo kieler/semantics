@@ -166,7 +166,10 @@
               class="de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGenerator">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.dataflow.ToDataflow">
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.ToHybridDataflow">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.ToSimpleDataflow">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies">
@@ -194,6 +197,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.dataflow.lustre.kico">
         </TransformationSystem>
      </extension>
 
