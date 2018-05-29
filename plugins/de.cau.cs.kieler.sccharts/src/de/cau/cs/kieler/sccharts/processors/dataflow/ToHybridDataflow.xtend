@@ -19,7 +19,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-
+import de.cau.cs.kieler.core.model.Pair
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -46,6 +46,13 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.LinkableInterfaceData
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.sccharts.Region
+import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import java.util.Map
+import com.google.common.collect.Multimap
+import com.google.common.collect.HashMultimap
 
 /**
  * @author ssm
@@ -87,13 +94,26 @@ class ToHybridDataflow extends SCChartsProcessor {
             return
         }
         
+        val lcafMap = environment.getProperty(RegionDependencies.REGION_LCAF_MAP) 
+        
         val model = getModel
         for (subModel : model.rootStates.immutableCopy) {
-            subModel.processSuperState(model, lid)
+            val dependencies = subModel.eAllContents.filter(Linkable).map[ outgoingLinks ].toList.flatten.filter(DataDependency).toList
+            val Multimap<Region, Dependency> lrSourceMap =  HashMultimap.create
+            val Multimap<Region, Dependency> lrTargetMap =  HashMultimap.create
+            for (d : dependencies) {
+                val lr = lcafMap.levelRegions(d)
+                lrSourceMap.put(lr.first, d)
+                lrTargetMap.put(lr.second, d)
+            }
+            
+            subModel.processSuperState(model, lid, lrSourceMap, lrTargetMap)  
         }
     }
     
-    def processSuperState(State state, SCCharts scc, LinkableInterfaceData lid) {
+    def processSuperState(State state, SCCharts scc, LinkableInterfaceData lid, 
+        Multimap<Region, Dependency> lrSourceMap, Multimap<Region, Dependency> lrTargetMap) 
+    {
         val cfrs = state.regions.filter(ControlflowRegion).toList
         val dfr = createDataflowRegion(state.name) => [ state.regions += it ]
         val localVariables = <ValuedObject> newLinkedList
@@ -105,7 +125,6 @@ class ToHybridDataflow extends SCChartsProcessor {
             rootState.regions += cfr
             
             
-            
             val stateReference = createValuedObject(rootState.name)
             val refDecl = createReferenceDeclaration => [ 
                 state.declarations += it
@@ -115,12 +134,14 @@ class ToHybridDataflow extends SCChartsProcessor {
             
             
             
-            val incomingDependencies = cfr.incomingLinks.filter(DataDependency).filter[ reference !== null ].toList
+//            val incomingDependencies = cfr.incomingLinks.filter(DataDependency).filter[ reference !== null ].toList
+            val incomingDependencies = lrTargetMap.get(cfr).filter[ reference !== null ].toList
             val incomingDirectAccess = lid.filter[ linkable == cfr && directInputAccess && !isWriteAccess && !incomingDependencies.contains(valuedObject) ].toList
-            val incomingValuedObjects = incomingDependencies.map[ reference ].filter(ValuedObject).toList + 
+            val incomingValuedObjects = incomingDependencies.map[ reference ].filter(ValuedObject).toList +
+//                incomingDependencies2.map[ reference ].filter(ValuedObject).toList +
                 incomingDirectAccess.map[ valuedObject ].toList
             
-            for (vo : incomingValuedObjects) {
+            for (vo : incomingValuedObjects.toSet) {
                 val newVO = createValuedObject(vo.name)
                 createVariableDeclaration(vo.getVariableDeclaration.type) => [ 
                     input = true
@@ -137,12 +158,13 @@ class ToHybridDataflow extends SCChartsProcessor {
 
 
 
-            val outgoingDependencies = cfr.outgoingLinks.filter(DataDependency).filter[ reference !== null ].toList
+//            val outgoingDependencies = cfr.outgoingLinks.filter(DataDependency).filter[ reference !== null ].toList
+            val outgoingDependencies = lrSourceMap.get(cfr).filter[ reference !== null ].toList
             val outgoingDirectAccess = lid.filter[ linkable == cfr && directOutputAccess && isWriteAccess && !outgoingDependencies.contains(valuedObject) ].toList
             val outgoingValuedObjects = outgoingDependencies.map[ reference ].filter(ValuedObject).toList + 
                 outgoingDirectAccess.map[ valuedObject ].toList
             
-            for (vo : outgoingValuedObjects) {
+            for (vo : outgoingValuedObjects.toSet) {
                 val newVO = createValuedObject(vo.name)
                 createVariableDeclaration(vo.getVariableDeclaration.type) => [ 
                     output = true
