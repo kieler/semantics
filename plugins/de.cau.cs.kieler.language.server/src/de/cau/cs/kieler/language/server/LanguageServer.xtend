@@ -43,7 +43,7 @@ import de.cau.cs.kieler.scl.ide.SCLIdeModule
  * <b>Note:</b> On MacOS X make sure to add "-Djava.awt.headless=true" to the vmargs!
  * Otherwise the application will freeze! 
  * 
- * @author als
+ * @author als, sdo
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
@@ -54,25 +54,23 @@ class LanguageServer implements IApplication {
     
     override start(IApplicationContext context) throws Exception {
         // Start all language servers
-        print("Starting language server")
-        // TODO check how to add more languages
+        println("Starting language server")
         new SCLIdeSetup {
             override createInjector() {
                 Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
         
-        // TODO why does this work and the implementation from theia-xtext doesn#t???
         new SCTXIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule))
+                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new MyModule))
             }
         }.createInjectorAndDoEMFRegistration()
         
         val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
             bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
         ]))
-        print("Create injector and register emf")
+        println("Create injector and register emf")
         this.run(injector)
         
         
