@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcess
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
+import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 
 /**
  * @author als
@@ -46,7 +47,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         if (infra.sourceCode !== null) {
             val structFile = infra.sourceCode.files.filter(CCodeFile).filter[!dataStructName.nullOrEmpty].head
             if (structFile !== null) {
-                generalTemplateEnvironment.put("model_struct", structFile.dataStructName)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, structFile.dataStructName)
             }
         }
         

@@ -108,7 +108,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     def Environment compile() {
         startEnvironment.addTracingProperty
         
-        val modelCopy = TracingIntegration.copy((originalModel as EObject), startEnvironment)
+        val modelCopy = if (originalModel instanceof EObject) {
+            TracingIntegration.copy((originalModel as EObject), startEnvironment)
+        } else {
+            originalModel
+        }
         startEnvironment.setProperty(MODEL, modelCopy)
         
         if (startEnvironment.getProperty(UNIQUE_NAME_CACHE_ENABLED)) {

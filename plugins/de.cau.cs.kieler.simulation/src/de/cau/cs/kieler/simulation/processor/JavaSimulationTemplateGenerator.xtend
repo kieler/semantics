@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcess
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
+import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * @author als
@@ -46,87 +48,107 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
         if (infra.sourceCode !== null) {
             val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).head
             if (javaClassFile !== null && !javaClassFile.className.nullOrEmpty) {
-                generalTemplateEnvironment.put("model_class", javaClassFile.className)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, javaClassFile.className)
             }
         }
         
         // Generate template
-        val cc = new CodeContainer
-        val builder = new StringBuilder
+        logger.println("Generating simulation code")
         
-        // import
-        logger.println("Generating simulation imports")
-        environment.addMacroInjection(HEADER, "simulation_imports")
-        builder.append(
+        val store = VariableStore.getVariableStore(environment)
+        if (store.ambiguous) {
+            environment.warnings.add("VariableStore contains ambiguous information for variables.")
+            logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
+        }
+        
+        val cc = new CodeContainer
+        val code = 
             '''
             <#macro simulation_imports position>
-                import java.io.BufferedReader;
-                import java.io.IOException;
-                import java.io.InputStreamReader;
-                
-                import org.json.*;
+            import java.io.BufferedReader;
+            import java.io.IOException;
+            import java.io.InputStreamReader;
+            
+            import org.json.*;
             </#macro>
-            '''
-        )
-
-        // communication
-        logger.println("Generating simulation communication")
-        environment.addMacroInjection(INIT, "simulation_out")
-        environment.addMacroInjection(INPUT, "simulation_in")
-        environment.addMacroInjection(OUTPUT, "simulation_out")
-        builder.append(
-            '''
+            
             <#macro simulation_in position>
-                receiveVariables();
+            receiveVariables();
             </#macro>
+            
             <#macro simulation_out position>
-                sendVariables();
+            sendVariables();
             </#macro>
-            '''
-        )
-
-        // send/receive
-        logger.println("Generating send/receive code")
-        environment.addMacroInjection(BODY, "simulation_body")
-        builder.append(
-            '''
+            
             <#macro simulation_body position>
                 public static BufferedReader stdInReader = new BufferedReader(new InputStreamReader(System.in));
                         
                 private static void receiveVariables() {
                     try {
-                      String line = stdInReader.readLine();
-                      JSONObject json = new JSONObject(line);
-                      JSONObject jsonVar;
-                      JSONObject arrayObject;
-                      JSONArray jsonArray;
-                      
-                      // TODO !!
-                    
+                        String line = stdInReader.readLine();
+                        JSONObject json = new JSONObject(line);
+                        JSONArray jsonArray;
+                        
+                        «FOR v : store.variables.keySet»
+                            // Receive «v»
+                            if(json.has("«v»")) {
+                                «IF store.variables.get(v).head.isArray»
+                                jsonArray = json.getJSONArray("«v»");
+                                «store.parseArray(v, "jsonArray")»
+                                «ELSE»
+                                «store.parse(v, "json")»
+                                «ENDIF»
+                            }
+                        «ENDFOR»
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
-                      // Ignore other input
+                       // Ignore other input
                     }
                 }
                 
                 private static void sendVariables() {
                     JSONObject json = new JSONObject();
-                    JSONObject jsonVar;
-                    JSONObject arrayObject;
                     JSONArray jsonArray;
                     
-                    // TODO !!
-                
+                    «FOR v : store.variables.keySet»
+                        // Send «v»
+                        «IF store.variables.get(v).head.isArray»
+                        jsonArray = new JSONArray();
+                        «store.serialize(v)»
+                        json.put("«v»", jsonArray);
+                        «ELSE»
+                        json.put("«v»", «store.serialize(v)»);
+                        «ENDIF»
+                    «ENDFOR»
+                    
                     System.out.println(json.toString());
                 }
             </#macro>
             '''
-        )
         
-        cc.add(FILE_NAME, builder.toString)
+        cc.add(FILE_NAME, code)
+        
         environment.addIncludeInjection(FILE_NAME.relativeTemplatePath)
+        environment.addMacroInjection(HEADER, "simulation_imports")
+        environment.addMacroInjection(BODY, "simulation_body")
+        environment.addMacroInjection(INIT, "simulation_out")
+        environment.addMacroInjection(INPUT, "simulation_in")
+        environment.addMacroInjection(OUTPUT, "simulation_out")
+        
         return cc
+    }
+    
+    def parse(VariableStore store, String varName, String array) {
+        return "${tickdata_name}." + varName
+    }
+    
+    def parseArray(VariableStore store, String varName, String json) {
+        return "${tickdata_name}." + varName
+    }
+    
+    def serialize(VariableStore store, String varName) {
+        return "${tickdata_name}." + varName
     }
     
 }

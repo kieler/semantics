@@ -1,14 +1,14 @@
 <#include "/templates/Injection.ftl">
 
-package sim.code; // ?? Default package?
+//package sim.code; // ?? Default package?
 
 <@inject position="header" />
 
-import model.*; // ?? Default package?
+//import model.*; // ?? Default package?
 
 public class ${target_basename} {
 
-    public static ${model_class} model = new ${model_class}();
+    public static ${tickdata_type} ${tickdata_name} = new ${tickdata_type}();
   
     public static int nextTick = 0;
     
@@ -16,20 +16,20 @@ public class ${target_basename} {
     
     public static void main(String[] args) {
         // Initialize 
-        model.reset();
+        ${tickdata_name}.reset();
         nextTick = 1;
         
-        <@inject position="init" />
+        <@inject position="init" /><#nt>
         
         while (true) {
            // Read inputs
-           <@inject position="input" />
+           <@inject position="input" /><#nt>
            
            // Reaction of model
-           model.tick();
+           ${tickdata_name}.tick();
            
            // Send outputs
-           <@inject position="output" />
+           <@inject position="output" /><#nt>
            
            // Increment tick count
            nextTick++;

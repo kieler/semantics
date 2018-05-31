@@ -32,10 +32,6 @@ class TemplateInjection {
     public static val INPUT = "input"
     public static val OUTPUT = "output"
     
-    // Injection template keys
-    static val INCLUDES_KEY = "inject_templates"
-    static val MACROS_KEY = "inject_macros"
-    
     // Environment properties
     public static val IProperty<List<String>> INCLUDES = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.deploy.template.injection.includes", null)
@@ -61,10 +57,10 @@ class TemplateInjection {
     static def registerTemplateInjection(Map<String, Object> templateEnv, Environment env) {
         val includes = env.getProperty(INCLUDES)?:newArrayList
         includes.removeIf[nullOrEmpty]
-        templateEnv.put(INCLUDES_KEY, includes)
+        templateEnv.put(CommonTemplateVariables.INJECTION_INCLUDES, includes)
         
         val macroMap = env.getProperty(MACROS)?:newHashMap
         macroMap.entrySet.removeIf[key.nullOrEmpty || value === null || value.empty]
-        templateEnv.put(MACROS_KEY, macroMap)
+        templateEnv.put(CommonTemplateVariables.INJECTION_MACROS, macroMap)
     }
 }

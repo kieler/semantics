@@ -14,7 +14,9 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import freemarker.cache.FileTemplateLoader
 import freemarker.template.Configuration
 import freemarker.template.TemplateExceptionHandler
 import freemarker.template.Version
@@ -62,16 +64,20 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         // Setup template environment
         logger.println("== General Template Environment ==")
         
-        val generalTemplateEnvironment = environment.getProperty(GENRAL_ENVIRONMENT)?:newHashMap
+        val generalTemplateEnvironment = <String, Object>newHashMap
         
-        generalTemplateEnvironment.put("basedir", infra.generadedCodeFolder.toString)       
+        // Defaults
+        generalTemplateEnvironment.putAll(CommonTemplateVariables.DEFAULTS)
+        // Environment
+        generalTemplateEnvironment.putAll(environment.getProperty(GENRAL_ENVIRONMENT)?:newHashMap)
+        // Genral
+        generalTemplateEnvironment.put(CommonTemplateVariables.BASE_DIR, infra.generadedCodeFolder.toString)       
+        // Injection
+        generalTemplateEnvironment.registerTemplateInjection(environment)
         
         for (entry : generalTemplateEnvironment.entrySet) {
             logger.println(entry.key + ": " + entry.value)
         }
-        
-        // Injection
-        generalTemplateEnvironment.registerTemplateInjection(environment)
         
         val additionalTemplateEnvironments = environment.getProperty(SPECIFIC_ENVIRONMENT)?:newHashMap
         
@@ -100,7 +106,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 val writer = new FileWriter(target)
                 
                 // prepare environment
-                logger.println("Additional environment: " + target)
+                logger.println("Additional environment:")
                 val templateEnvironment = newHashMap
                 templateEnvironment.putAll(generalTemplateEnvironment)
                 
@@ -113,18 +119,18 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                     }
                 }
                 
-                additionalTemplateEnvironment.put("target", target.toString) 
-                additionalTemplateEnvironment.put("target_name", target.name) 
-                additionalTemplateEnvironment.put("target_basename", target.name.substring(0, target.name.lastIndexOf("."))) 
+                additionalTemplateEnvironment.put(CommonTemplateVariables.TARGET, target.toString) 
+                additionalTemplateEnvironment.put(CommonTemplateVariables.TARGET_NAME, target.name) 
+                additionalTemplateEnvironment.put(CommonTemplateVariables.TARGET_BASENAME, target.name.substring(0, target.name.lastIndexOf("."))) 
                 
                 templateEnvironment.putAll(additionalTemplateEnvironment)
                 for (kv : additionalTemplateEnvironment.entrySet) {
                     logger.println("  " + kv.key + ": " + kv.value)
                 }
                 
-                // prepare freemarker
-                val freemarkerTemplate = createFreemarkerConfiguration(infra.generadedCodeFolder.toString).getTemplate(relativeTemplatePath)
                 
+                // prepare freemarker
+                val freemarkerTemplate = createFreemarkerConfiguration(infra.generadedCodeFolder).getTemplate(relativeTemplatePath)
                 // process
                 freemarkerTemplate.process(templateEnvironment, writer)
                 
@@ -150,15 +156,16 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
      * Creates a new configuration and sets its template directory and prepares a string template loader.
      * @return the created configuration.
      */
-    protected def Configuration createFreemarkerConfiguration(String templateDirectory) {
+    protected def Configuration createFreemarkerConfiguration(File templateDirectory) {
         // Configure FreeMarker
-        val configuration = new Configuration(new Version(2, 3, 0));
-        configuration.defaultEncoding = "UTF-8";
-        configuration.locale = Locale.US;
+        val configuration = new Configuration(new Version(2, 3, 0))
+        configuration.defaultEncoding = "UTF-8"
+        configuration.locale = Locale.US
         configuration.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
         configuration.whitespaceStripping = true
         configuration.numberFormat = "0.##########"
         configuration.classicCompatible = false
+        configuration.templateLoader = new FileTemplateLoader(templateDirectory)
         return configuration
     }
 }
