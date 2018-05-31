@@ -214,9 +214,7 @@ class KiCoolRegistration {
         if (processorModelTypes.keySet.contains(source) && processorModelTypes.keySet.contains(target)) {
             val sPair = processorModelTypes.get(source)
             val tPair = processorModelTypes.get(target)
-            if (sPair.target != tPair.source) {
-                return false
-            }
+            return tPair.source.class.isAssignableFrom(sPair.target.class)
         } 
         return true
     }
