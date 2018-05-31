@@ -165,7 +165,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         program.append(sb)
         
 
-        code.add(scg.name + ".c", program.toString)
+        code.addCCode(scg.name + ".c", program.toString, null)
     }
     
     

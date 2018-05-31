@@ -39,7 +39,7 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
     }    
     
-    def getName() {
+    override getName() {
         RESET_NAME + baseName + suffix
     }
     

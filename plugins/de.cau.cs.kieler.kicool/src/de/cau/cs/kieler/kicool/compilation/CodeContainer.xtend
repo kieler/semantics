@@ -12,8 +12,12 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
+import java.io.File
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.Map
+import org.eclipse.xtend.lib.annotations.Data
+
+import static extension com.google.common.base.Preconditions.*
 
 /**
  * A CodeContainer contains a map of files. Each file is represented by a string.
@@ -25,18 +29,58 @@ import java.util.Map
  */
 class CodeContainer {
     
-    @Accessors Map<String, String> files = <String, String> newLinkedHashMap
-    
-    def add(String file, String code) {
-        files.put(file, code)
-    }
+    @Accessors List<CodeFile> files = <CodeFile>newArrayList
     
     def get(String file) {
-        files.get(file)
+        files.findFirst[fileName.equals(file)]
     }
     
     def getHead() {
-        files.get(files.keySet.head)
+        files.head
     }
     
+    def getFilesMap() {
+        return files.toMap[fileName]
+    }
+    
+    def add(String fileName, String code) {
+        files += new CodeFile(fileName, code)
+    }
+    
+    def addCHeader(String fileName, String code, String dataStructName) {
+        files += new CCodeFile(fileName, code, true, dataStructName)
+    }
+    
+    def addCCode(String fileName, String code, String dataStructName) {
+        files += new CCodeFile(fileName, code, false, dataStructName)
+    }
+    
+    def addJavaCode(String fileName, String code) {
+        checkArgument(fileName.endsWith(".java"), "File name has not the correct pattern for java source files")
+        files += new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java")))
+    }
+}
+
+@Data
+class CodeFile {
+    
+    val String fileName
+    val String code
+    
+    def getFile() {
+        return new File(fileName)
+    }
+}
+
+@Data
+class CCodeFile extends CodeFile {
+    
+    val boolean header
+    val String dataStructName
+}
+
+@Data
+class JavaCodeFile extends CodeFile {
+    
+    val String className
 }

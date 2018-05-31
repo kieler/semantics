@@ -23,7 +23,9 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import java.util.ArrayList
 import java.util.Collection
+import java.util.LinkedHashMap
 import java.util.LinkedList
 import java.util.List
 import java.util.Map
@@ -155,7 +157,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             JsonArrayValue: {
                 val current = environment.getPropertyById(id)
                 if (current === null) {
-                    emptyList.addToArray(value, environment, id)
+                    (new ArrayList).addToArray(value, environment, id)
                 } else if (current instanceof Collection<?>) {
                     (current as Collection<Object>).addToArray(value, environment, id)
                 } else {
@@ -166,7 +168,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             JsonObjectValue: {
                 val current = environment.getPropertyById(id)
                 if (current === null) {
-                    emptyMap.addToMap(value, environment, id)
+                    (new LinkedHashMap).addToMap(value, environment, id)
                 } else if (current instanceof Map<?, ?>) {
                     (current as Map<Object, Object>).addToMap(value, environment, id)
                 } else {

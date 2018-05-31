@@ -101,8 +101,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)
 
-        codeContainer.add(cFilename, cFile.toString)         
-        codeContainer.add(hFilename, hFile.toString)
+        codeContainer.addCCode(cFilename, cFile.toString, struct.name)         
+        codeContainer.addCHeader(hFilename, hFile.toString, struct.name)
     }    
     
     /**

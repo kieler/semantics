@@ -46,8 +46,8 @@ class CodeContainerSynthesis extends AbstractDiagramSynthesis<CodeContainer> {
         
         val rootNode = model.createNode
         val myViewContext = usedContext
-        for (file : model.files.keySet) {
-            val cphModel = new CodePlaceHolder(file, model.get(file))
+        for (file : model.files) {
+            val cphModel = new CodePlaceHolder(file.fileName, file.code)
                          
             val diagramVC = LightDiagramServices.translateModel2(
                 cphModel, usedContext)

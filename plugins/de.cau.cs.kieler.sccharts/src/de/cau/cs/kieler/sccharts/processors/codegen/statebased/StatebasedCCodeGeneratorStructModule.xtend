@@ -75,7 +75,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     var noneCounter = 0
     
-    def getName() {
+    override getName() {
         STRUCT_NAME + baseName + suffix
     }
     

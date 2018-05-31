@@ -43,6 +43,12 @@
       <Processor
             class="de.cau.cs.kieler.kicool.processors.DynamicIdentity">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.ProjectSetup">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine">
+      </Processor>
    </extension>
    
 </plugin>

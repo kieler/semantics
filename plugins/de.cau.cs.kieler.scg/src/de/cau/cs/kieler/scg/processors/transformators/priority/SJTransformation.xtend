@@ -169,7 +169,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         program.appendInd("}\n")
         program.toString
         
-        code.add(scg.name + ".java", program.toString)
+        code.addJavaCode(scg.name + ".java", program.toString)
     }
     
     /** 

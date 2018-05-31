@@ -66,7 +66,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         
         cFile.append("}\n")
 
-        codeContainer.add(cFilename, cFile.toString)         
+        codeContainer.addJavaCode(cFilename, cFile.toString)        
     }    
     
     override def void addHeader(StringBuilder sb) {
