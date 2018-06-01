@@ -115,7 +115,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                         // Send «v»
                         «IF store.variables.get(v).head.isArray»
                         jsonArray = new JSONArray();
-                        «store.serialize(v)»
+                        «store.serializeArray(v)»
                         json.put("«v»", jsonArray);
                         «ELSE»
                         json.put("«v»", «store.serialize(v)»);
@@ -139,12 +139,28 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
         return cc
     }
     
-    def parse(VariableStore store, String varName, String array) {
-        return "${tickdata_name}." + varName
+    def parse(VariableStore store, String varName, String json) {
+        return '''${tickdata_name}.«varName» = «json».«store.jsonTypeGetter(varName)»("varName");'''
+    }
+    
+    def jsonTypeGetter(VariableStore store, String varName) {
+        val type = store.variables.get(varName).head.type
+        return switch(type) {
+            case BOOL: "getBoolean"
+            case DOUBLE,
+            case FLOAT: "getDouble"
+            case INT: "getInt"
+            case STRING: "getString"
+            default: throw new IllegalArgumentException("Unsupported type: " + type)
+        }
     }
     
     def parseArray(VariableStore store, String varName, String json) {
-        return "${tickdata_name}." + varName
+        return "//${tickdata_name}." + varName + ";"
+    }
+    
+    def serializeArray(VariableStore store, String varName) {
+        return "//${tickdata_name}." + varName + ";"
     }
     
     def serialize(VariableStore store, String varName) {

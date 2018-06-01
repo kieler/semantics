@@ -49,6 +49,9 @@
       <Processor
             class="de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.JavaCompiler">
+      </Processor>
    </extension>
    
 </plugin>

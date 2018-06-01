@@ -15,7 +15,11 @@ de.cau.cs.kieler.kicool.deploy.templates config {
         "Main.java": "templates/Main.ftl"
     }
 }
-//de.cau.cs.kieler.kicool.??.compiler.java
+de.cau.cs.kieler.kicool.deploy.compiler.java config {
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main.java", "org/json"],
+    "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.name": "simulation-main.jar",
+    "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.entry": "Main"
+}
 //de.cau.cs.kieler.simulation
 
 
