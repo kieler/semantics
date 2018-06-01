@@ -3,9 +3,18 @@
  */
 package de.cau.cs.kieler.sccharts.ide.text
 
+import org.eclipse.xtext.ide.server.ILanguageServerExtension
 
 /**
  * Use this class to register ide components.
  */
 class SCTXIdeModule extends AbstractSCTXIdeModule {
+   
+//    def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
+//        MyLanguageServerExtension
+//    }
+//
+//    def Class<? extends IExecutableCommandService> bindIExecutableCommandService() {
+//        MyExecutableCommandService
+//    }
 }

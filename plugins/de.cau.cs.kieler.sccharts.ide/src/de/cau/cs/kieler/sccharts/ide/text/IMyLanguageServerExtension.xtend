@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.language.server
+package de.cau.cs.kieler.sccharts.ide.text
 
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
@@ -19,6 +19,7 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import com.google.inject.ImplementedBy
 import java.util.concurrent.CompletableFuture
 import org.eclipse.xtend.lib.annotations.ToString
+import de.cau.cs.kieler.sccharts.ide.text.MyLanguageServerExtension
 
 /**
  * @author sdo

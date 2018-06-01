@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.language.server
+package de.cau.cs.kieler.sccharts.ide.text
 
 import org.eclipse.lsp4j.ExecuteCommandParams
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
@@ -18,10 +18,10 @@ import org.eclipse.xtext.util.CancelIndicator
 
 /**
  * @author sdo
- * TODO
+ * 
  */
 class MyExecutableCommandService implements IExecutableCommandService {
-
+//TODO
     override initialize() {
         #["testlang.a", "testlang.b", "testlang.c"]
     }

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.language.server
+package de.cau.cs.kieler.sccharts.ide.text
 
 
 import java.util.List
@@ -19,10 +19,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.util.IDisposable
 import org.eclipse.xtext.util.CancelIndicator
 
-/**
- * @author sdo
- *
- */
 interface IExecutableCommandService {
     
     /**

@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
+ *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -12,21 +12,23 @@
  */
 package de.cau.cs.kieler.language.server
 
-import org.eclipse.xtext.service.AbstractGenericModule
+import de.cau.cs.kieler.sccharts.ide.text.IExecutableCommandService
+import de.cau.cs.kieler.sccharts.ide.text.MyExecutableCommandService
+import de.cau.cs.kieler.sccharts.ide.text.MyLanguageServerExtension
+import org.eclipse.xtext.ide.DefaultIdeModule
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 
 /**
  * @author sdo
- * 
+ *
  */
-class MyModule extends AbstractGenericModule {
-
-// TODO bind everything needed
+class MyServerModule extends DefaultIdeModule {
+    
     def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
         MyLanguageServerExtension
     }
 
-//    def Class<? extends IExecutableCommandService> bindIExecutableCommandService() {
-//        MyExecutableCommandService
-//    }
+    def Class<? extends IExecutableCommandService> bindIExecutableCommandService() {
+        MyExecutableCommandService
+    }
 }

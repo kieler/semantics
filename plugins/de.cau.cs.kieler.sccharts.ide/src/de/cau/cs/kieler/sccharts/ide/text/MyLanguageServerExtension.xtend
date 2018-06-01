@@ -10,11 +10,9 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.language.server
+package de.cau.cs.kieler.sccharts.ide.text
 
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
-import de.cau.cs.kieler.language.server.IMyLanguageServerExtension.TextOfLineParam
-import de.cau.cs.kieler.language.server.IMyLanguageServerExtension.CustomClient
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.ILanguageServerAccess.IBuildListener
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider
@@ -23,12 +21,13 @@ import org.eclipse.xtext.resource.IResourceDescription.Delta
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints
 import org.eclipse.lsp4j.Position
 import org.eclipse.lsp4j.jsonrpc.Endpoint
+import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 
 /**
  * @author sdo
  * 
  */
-class MyLanguageServerExtension implements ILanguageServerExtension, IMyLanguageServerExtension, IBuildListener, JsonRpcMethodProvider {
+class MyLanguageServerExtension implements IMyLanguageServerExtension, IBuildListener, JsonRpcMethodProvider {
 
     ILanguageServerAccess access
     CustomClient client
@@ -64,5 +63,4 @@ class MyLanguageServerExtension implements ILanguageServerExtension, IMyLanguage
             message = "Built " + deltas.map[uri.toString].join(', ')
         ])
     }
-    
 }
