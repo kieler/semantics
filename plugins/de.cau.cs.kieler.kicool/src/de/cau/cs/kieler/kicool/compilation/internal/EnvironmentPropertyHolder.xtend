@@ -135,6 +135,8 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             } else if (v instanceof List<?>) {
                 if (k.equals(Environment.ERRORS)) {
                     target.propertyMap.put(k, new LinkedList<String>(v as List<String>))
+                } else {
+                    target.propertyMap.put(k, v)
                 }
             } else {
                 target.propertyMap.put(k, v)
