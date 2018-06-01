@@ -266,7 +266,7 @@
             uriExtension="strl">
         </resourceServiceProvider>
         <resourceServiceProvider
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
               uriExtension="scest">
         </resourceServiceProvider>
     </extension>
