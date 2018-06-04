@@ -6,7 +6,8 @@ system de.cau.cs.kieler.sccharts.netlist.java
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
         "org/json": "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/libs/org/json",
-        "templates": "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/templates"
+        "templates/Main.ftl": "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/templates/Main.ftl",
+        "templates/Injection.ftl": "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/Injection.ftl"
     }
 }
 pre process de.cau.cs.kieler.^simulation.java.template
