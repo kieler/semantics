@@ -52,7 +52,9 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
         val inputs = rootState.variableDeclarations.filter[ input ].map[ valuedObjects ].flatten.toList
         val outputs = rootState.variableDeclarations.filter[ output ].map[ valuedObjects ].flatten.toList
         
-        val modelName = "temp"
+        
+        
+        val modelName = rootState.name;
         
         buildWrapperFile(modelName, inputs, outputs)
         buildMatlabFile(modelName, inputs, outputs)
@@ -68,18 +70,16 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
                                  " * \n" +
                                  " * http://rtsys.informatik.uni-kiel.de/kieler \n" +
                                  " */ \n\n")
-        wrapperFileString.append("#include \"KIELER.c\" \n\n")
+        wrapperFileString.append("#include \"" + modelName + ".c\" \n\n")
         wrapperFileString.append("TickData d; \n\n")
         wrapperFileString.append("void wrapper_" + modelName + "(")
         for (input : inputs) {
-            val inputType = input.getVariableDeclaration.type
             val inputName = input.name
-            wrapperFileString.append(inputType.toString + " " + inputName + ", ")
+            wrapperFileString.append("double " + inputName + ", ")
         }
         for (output : outputs) {
-            val outputType = output.getVariableDeclaration.type
             val outputName = output.name
-            wrapperFileString.append(outputType.toString + " *" + outputName)
+            wrapperFileString.append("double *" + outputName)
             if(output == outputs.last()) {wrapperFileString.append(") \n")}
             else{wrapperFileString.append(", ")}  
         }
@@ -87,10 +87,11 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
                                  "  reset(&d); \n")                      
         for (input : inputs) {
             val inputName = input.name
-            wrapperFileString.append("  d." + inputName + " = " + inputName + "; \n")
+            val inputType = input.getVariableDeclaration.type
+            wrapperFileString.append("  d." + inputName + " = (" + inputType.toString + ") " + inputName + "; \n")
         }                         
-        wrapperFileString.append("  d._pg3 = 1; \n" +
-                                 "  tick(&d); \n\n")   // TODO find right value for _pg ... 
+        // wrapperFileString.append("  d._pg3 = 1; \n")  // TODO look if manual setting is ever necessary
+        wrapperFileString.append("  tick(&d);\n\n");
         for (output : outputs) {
             val outputType = output.getVariableDeclaration.type
             val outputName = output.name
@@ -127,7 +128,7 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
             if(input != inputs.last()) {matlabFileString.append(", ")} 
         }
         matlabFileString.append(") \n\n")
-        matlabFileString.append("coder.cinclude(" + modelName + "_wrapper.c'); \n\n")
+        matlabFileString.append("coder.cinclude('" + modelName + "_wrapper.c'); \n\n")
         for (output : outputs) {
             val outputName = output.name
             matlabFileString.append(outputName + " = 0.0; \n")
