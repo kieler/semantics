@@ -2,6 +2,10 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.impl.PragmatableImpl;
 import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
@@ -16,7 +20,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -28,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getProcessors <em>Processors</em>}</li>
@@ -40,7 +44,17 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.cs.kieler.kicool.System {
+public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kicool.System {
+    /**
+     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> annotations;
+
     /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -188,6 +202,18 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     @Override
     protected EClass eStaticClass() {
         return KiCoolPackage.Literals.SYSTEM;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getAnnotations() {
+        if (annotations == null) {
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KiCoolPackage.SYSTEM__ANNOTATIONS);
+        }
+        return annotations;
     }
 
     /**
@@ -401,6 +427,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KiCoolPackage.SYSTEM__ANNOTATIONS:
+                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 return basicSetProcessors(null, msgs);
             case KiCoolPackage.SYSTEM__INTERMEDIATES:
@@ -419,6 +447,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KiCoolPackage.SYSTEM__ANNOTATIONS:
+                return getAnnotations();
             case KiCoolPackage.SYSTEM__ID:
                 return getId();
             case KiCoolPackage.SYSTEM__LABEL:
@@ -448,6 +478,10 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KiCoolPackage.SYSTEM__ANNOTATIONS:
+                getAnnotations().clear();
+                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
             case KiCoolPackage.SYSTEM__ID:
                 setId((String)newValue);
                 return;
@@ -485,6 +519,9 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KiCoolPackage.SYSTEM__ANNOTATIONS:
+                getAnnotations().clear();
+                return;
             case KiCoolPackage.SYSTEM__ID:
                 setId(ID_EDEFAULT);
                 return;
@@ -521,6 +558,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KiCoolPackage.SYSTEM__ANNOTATIONS:
+                return annotations != null && !annotations.isEmpty();
             case KiCoolPackage.SYSTEM__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case KiCoolPackage.SYSTEM__LABEL:
@@ -539,6 +578,38 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return simulation != SIMULATION_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Annotatable.class) {
+            switch (derivedFeatureID) {
+                case KiCoolPackage.SYSTEM__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Annotatable.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return KiCoolPackage.SYSTEM__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**

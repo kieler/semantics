@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kicool;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -67,13 +69,31 @@ public interface KiCoolPackage extends EPackage {
     int SYSTEM = 0;
 
     /**
+     * The feature id for the '<em><b>Pragmas</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SYSTEM__PRAGMAS = AnnotationsPackage.PRAGMATABLE__PRAGMAS;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SYSTEM__ANNOTATIONS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SYSTEM__ID = 0;
+    int SYSTEM__ID = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -82,7 +102,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__LABEL = 1;
+    int SYSTEM__LABEL = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Processors</b></em>' containment reference.
@@ -91,7 +111,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__PROCESSORS = 2;
+    int SYSTEM__PROCESSORS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Intermediates</b></em>' containment reference list.
@@ -100,7 +120,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__INTERMEDIATES = 3;
+    int SYSTEM__INTERMEDIATES = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Config</b></em>' containment reference.
@@ -109,7 +129,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__CONFIG = 4;
+    int SYSTEM__CONFIG = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Public</b></em>' attribute.
@@ -118,7 +138,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__PUBLIC = 5;
+    int SYSTEM__PUBLIC = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Developer</b></em>' attribute.
@@ -127,7 +147,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__DEVELOPER = 6;
+    int SYSTEM__DEVELOPER = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Simulation</b></em>' attribute.
@@ -136,7 +156,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__SIMULATION = 7;
+    int SYSTEM__SIMULATION = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>System</em>' class.
@@ -145,16 +165,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM_FEATURE_COUNT = 8;
-
-    /**
-     * The number of operations of the '<em>System</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SYSTEM_OPERATION_COUNT = 0;
+    int SYSTEM_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorEntryImpl <em>Processor Entry</em>}' class.
@@ -183,15 +194,6 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int PROCESSOR_ENTRY_FEATURE_COUNT = 1;
-
-    /**
-     * The number of operations of the '<em>Processor Entry</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_ENTRY_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl <em>Processor Reference</em>}' class.
@@ -276,15 +278,6 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 6;
 
     /**
-     * The number of operations of the '<em>Processor Reference</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_REFERENCE_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorSystemImpl <em>Processor System</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -311,15 +304,6 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int PROCESSOR_SYSTEM_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
-
-    /**
-     * The number of operations of the '<em>Processor System</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_SYSTEM_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorGroupImpl <em>Processor Group</em>}' class.
@@ -368,15 +352,6 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_GROUP_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 2;
 
     /**
-     * The number of operations of the '<em>Processor Group</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_GROUP_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorAlternativeGroupImpl <em>Processor Alternative Group</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -421,15 +396,6 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int PROCESSOR_ALTERNATIVE_GROUP_FEATURE_COUNT = PROCESSOR_GROUP_FEATURE_COUNT + 0;
-
-    /**
-     * The number of operations of the '<em>Processor Alternative Group</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_ALTERNATIVE_GROUP_OPERATION_COUNT = PROCESSOR_GROUP_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.IntermediateReferenceImpl <em>Intermediate Reference</em>}' class.
@@ -521,15 +487,6 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_REFERENCE_FEATURE_COUNT = PROCESSOR_REFERENCE_FEATURE_COUNT + 1;
-
-    /**
-     * The number of operations of the '<em>Intermediate Reference</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_REFERENCE_OPERATION_COUNT = PROCESSOR_REFERENCE_OPERATION_COUNT + 0;
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.System <em>System</em>}'.

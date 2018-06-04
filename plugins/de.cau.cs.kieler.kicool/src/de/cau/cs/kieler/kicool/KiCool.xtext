@@ -27,6 +27,8 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
  */
  
 System returns kicool::System:
+    pragmas+=Pragma*
+    annotations += Annotation*
     public?='public'?
     developer?='developer'?
     simulation?='simulation'?

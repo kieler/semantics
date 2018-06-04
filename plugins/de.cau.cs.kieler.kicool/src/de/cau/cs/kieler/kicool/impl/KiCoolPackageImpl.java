@@ -455,6 +455,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
+        AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
         // Create type parameters
@@ -462,13 +463,15 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        systemEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
+        systemEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         processorReferenceEClass.getESuperTypes().add(this.getProcessorEntry());
         processorSystemEClass.getESuperTypes().add(this.getProcessorEntry());
         processorGroupEClass.getESuperTypes().add(this.getProcessorEntry());
         processorAlternativeGroupEClass.getESuperTypes().add(this.getProcessorGroup());
         intermediateReferenceEClass.getESuperTypes().add(this.getProcessorReference());
 
-        // Initialize classes, features, and operations; add parameters
+        // Initialize classes and features; add operations and parameters
         initEClass(systemEClass, de.cau.cs.kieler.kicool.System.class, "System", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSystem_Id(), ecorePackage.getEString(), "id", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Label(), ecorePackage.getEString(), "label", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

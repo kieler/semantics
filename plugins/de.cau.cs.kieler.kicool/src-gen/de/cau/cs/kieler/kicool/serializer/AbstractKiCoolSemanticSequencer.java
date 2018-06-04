@@ -468,6 +468,8 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
+	 *         pragmas+=Pragma* 
+	 *         annotations+=Annotation* 
 	 *         public?='public'? 
 	 *         developer?='developer'? 
 	 *         simulation?='simulation'? 
