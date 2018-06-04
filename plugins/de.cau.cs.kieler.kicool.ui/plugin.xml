@@ -408,6 +408,14 @@
                 class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent"
                 id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent">
           </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.view.registry.FocusNodeAction"
+                id="de.cau.cs.kieler.ui.view.registry.focusNode">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.view.registry.DeFocusNodeAction"
+                id="de.cau.cs.kieler.ui.view.registry.deFocusNode">
+          </action>
        </extension>
        <extension
              point="de.cau.cs.kieler.klighd.ui.view.controller">

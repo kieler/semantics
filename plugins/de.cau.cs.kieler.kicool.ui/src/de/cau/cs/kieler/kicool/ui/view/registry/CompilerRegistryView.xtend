@@ -44,6 +44,7 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -73,8 +74,9 @@ class CompilerRegistryView extends DiagramViewPart {
             "de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
+//        properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
                                 
-        updateDiagram((new KiCoolRegistrySummary).fetchFromRegistry, properties)
+        updateDiagram((new KiCoolRegistrySummary).fetchAll, properties)
     }
     
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
@@ -102,6 +104,7 @@ class CompilerRegistryView extends DiagramViewPart {
             "de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
+//        properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
                                 
         DiagramViewManager.initializeView(this, model, null, properties);
     }    
