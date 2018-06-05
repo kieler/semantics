@@ -68,6 +68,12 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         // Defaults
         generalTemplateEnvironment.putAll(CommonTemplateVariables.DEFAULTS)
+        val sourceFile = infra.sourceCode.files.head
+        if (sourceFile !== null) {
+            generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, sourceFile.fileName)
+            val name = if (sourceFile.fileName.contains(".")) sourceFile.fileName.substring(0, sourceFile.fileName.lastIndexOf(".")) else sourceFile.fileName
+            generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, name)
+        }
         // Environment
         generalTemplateEnvironment.putAll(environment.getProperty(GENRAL_ENVIRONMENT)?:newHashMap)
         // Genral

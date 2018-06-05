@@ -14,7 +14,7 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
+import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
@@ -24,23 +24,17 @@ import java.nio.file.Files
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
-    
-    public static val IProperty<Boolean> JAR = 
-        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar", true)
+class CCompiler extends AbstractSystemCompilerProcessor<Object> {
         
-    public static val IProperty<String> JAR_NAME = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar.name", "main.jar")        
-        
-    public static val IProperty<String> JAR_ENTRY = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar.entry", "Main") 
+    public static val IProperty<String> EXE_NAME = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.exe.name", "main.exe")
     
     override getId() {
-        "de.cau.cs.kieler.kicool.deploy.compiler.java"
+        "de.cau.cs.kieler.kicool.deploy.compiler.c"
     }
     
     override getName() {
-        "Java Compiler"
+        "GCC Compiler"
     }
     
     override process() {
@@ -54,16 +48,17 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
         
         // Bin folder
         val binFolder = infra.createBinFolder
-        val binPath = infra.generadedCodeFolder.toPath.relativize(binFolder.toPath).toString
         
         // javac
         logger.println
-        logger.println("== Compiling source files (javac) ==")
+        logger.println("== Compiling source files (GCC) ==")
         
         val sources = newArrayList
         val sourcePaths = newLinkedHashSet
+        val iDir = newLinkedHashSet
+        
         if (environment.getProperty(INCLUDE_GENERATED_FILES)) {
-            sources.addAll(infra.sourceCode.files.filter(JavaCodeFile).map[fileName])
+            sources.addAll(infra.sourceCode.files.filter(CCodeFile).filter[!header].map[fileName])
         }
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
         
@@ -74,10 +69,11 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
                 sourcePaths += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
                 for (path : Files.find(sourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
-                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(".java")
+                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(".c")
                 ]).iterator.toIterable) {
                     sourcePaths += infra.generadedCodeFolder.toPath.relativize(path).toString
                 }
+                iDir += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else {
                 environment.errors.add("Source location does not exist: " + sourceFile)
                 logger.println("ERROR: Source location does not exist: " + sourceFile)
@@ -85,58 +81,44 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
         }
         sourcePaths.forEach[logger.println("  " + it)]
         
-        val javac = newArrayList("javac")
-        javac += "-verbose"
-        javac += "-cp"
-        javac += "."
-        javac += "-d"
-        javac += binPath
+        if (!iDir.empty) {
+            logger.println("Include directories:") 
+            iDir.forEach[logger.println("  " + it)] 
+        }
+        
+        val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
+        val targetExePath = binFolder.toPath.relativize(targetExe.toPath).toString
+        logger.println("Target exe file: " + targetExe)
+        
+        val gcc = newArrayList("gcc")
+        gcc += "-std=c99"
+        gcc += "-lm"
+        gcc += "-v"
+        gcc += "-Wall"
+        gcc += "-o"
+        gcc += targetExePath
+        if (!iDir.empty) {
+            iDir.forEach[ gcc += "-I"+it] 
+        }
         if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
             val args = environment.getProperty(ADDITIONAL_OPTIONS)
             if (args.contains(" ")) {
-                javac += args.split(" ")
+                gcc += args.split(" ")
             } else {
-                javac += args
+                gcc += args
             }
         }
-        javac += sourcePaths
+        gcc += sourcePaths
         
         // Run javac compiler
-        var success = javac.invoke(infra.generadedCodeFolder)?:-1 == 0
+        var success = gcc.invoke(infra.generadedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")
-            logger.println("Aborting compilation")
-        }
-
-        // jar
-        if (success && environment.getProperty(JAR)) {
-            logger.println
-            logger.println("== Bundling jar archive (jar) ==")
-            
-            val targetJar = new File(binFolder, environment.getProperty(JAR_NAME)?:JAR_NAME.^default)
-            val targetJarPath = binFolder.toPath.relativize(targetJar.toPath).toString
-            logger.println("Target jar file: " + targetJar)
-            val entryPoint = environment.getProperty(JAR_ENTRY)?:JAR_ENTRY.^default
-            logger.println("Jar entry point: " + entryPoint)            
-            
-            val jar = newArrayList("jar")
-            jar += "cvfe"
-            jar += targetJarPath
-            jar += entryPoint
-            for (s : sourcePaths) {
-                jar += s.replace(".java", ".class")
-            }
-            
-            // Run javac compiler
-            success = jar.invoke(binFolder)?:-1 == 0
-            if (!success) {
-                environment.errors.add("Compiler did not return success (exit value != 0)")
-                logger.println("Compilation failed")
-            }
+            logger.println("Compilation failed")
         }
         
         // report
-        saveLog("java-compiler-report.log")
+        saveLog("gcc-compiler-report.log")
         infra.refresh
     }
 

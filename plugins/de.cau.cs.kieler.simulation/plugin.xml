@@ -74,6 +74,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.simulation.netlist.java.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.netlist.c.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">

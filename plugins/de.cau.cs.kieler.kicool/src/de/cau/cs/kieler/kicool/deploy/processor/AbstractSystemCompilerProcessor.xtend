@@ -42,6 +42,20 @@ abstract class AbstractSystemCompilerProcessor<I> extends AbstractDeploymentProc
         
     public static val IProperty<Long> TIMEOUT_SEC = 
         new Property<Long>("de.cau.cs.kieler.kicool.deploy.compiler.timeout", 60L)
+        
+    def createBinFolder(ProjectInfrastructure infra) {
+        val binFolder = new File(infra.generadedCodeFolder, environment.getProperty(BIN_FOLDER)?:BIN_FOLDER.^default)
+        logger.println("Binary output folder: " + binFolder)
+        if (binFolder.exists) {
+            if (!binFolder.directory) {
+                environment.errors.add("Binary output folder exists and is not a directory")
+                logger.println("ERROR: Binary output folder exists and is not a directory")
+            }
+        } else {
+            binFolder.mkdirs
+        }
+        return binFolder
+    }
     
     def invoke(List<String> command, File directory) {
         logger.println("Invoking command: " + command.join(" "))

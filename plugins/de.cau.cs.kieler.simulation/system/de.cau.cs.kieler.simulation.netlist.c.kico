@@ -1,0 +1,22 @@
+developer simulation system de.cau.cs.kieler.sccharts.^simulation.netlist.c
+    label "Netlist-based Simulation (C)"
+
+de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
+system de.cau.cs.kieler.sccharts.netlist
+de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "lib": "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/json",
+        "templates/c-main.ftl": "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/templates/c-main.ftl",
+        "templates/injection.ftl": "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl"
+    }
+}
+pre process de.cau.cs.kieler.^simulation.c.template
+de.cau.cs.kieler.kicool.deploy.templates config {
+    "de.cau.cs.kieler.kicool.deploy.templates": {
+        "main.c": "templates/c-main.ftl"
+    }
+}
+de.cau.cs.kieler.kicool.deploy.compiler.c config {
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["main.c", "lib"],
+    "de.cau.cs.kieler.kicool.deploy.compiler.c.exe.name": "simulation.exe"
+}

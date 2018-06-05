@@ -29,7 +29,7 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
  */
 class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
     
-    static val FILE_NAME = "java-simulation.ftl" 
+    public static val FILE_NAME = "java-simulation.ftl" 
     
     override getId() {
         "de.cau.cs.kieler.simulation.java.template"
@@ -49,6 +49,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
             val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).head
             if (javaClassFile !== null && !javaClassFile.className.nullOrEmpty) {
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, javaClassFile.className)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, javaClassFile.fileName)
             }
         }
         
@@ -156,10 +157,12 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
     }
     
     def parseArray(VariableStore store, String varName, String json) {
+        // TODO
         return "//${tickdata_name}." + varName + ";"
     }
     
     def serializeArray(VariableStore store, String varName) {
+        // TODO
         return "//${tickdata_name}." + varName + ";"
     }
     

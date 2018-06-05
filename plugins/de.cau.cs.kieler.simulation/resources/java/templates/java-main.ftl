@@ -1,10 +1,6 @@
-<#include "/templates/Injection.ftl">
-
-//package sim.code; // ?? Default package?
+<#include "/templates/injection.ftl">
 
 <@inject position="header" />
-
-//import model.*; // ?? Default package?
 
 public class ${target_basename} {
 
