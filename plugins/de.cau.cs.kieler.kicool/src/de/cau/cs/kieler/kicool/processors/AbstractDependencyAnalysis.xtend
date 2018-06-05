@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kexpressions.keffects.dependencies
+package de.cau.cs.kieler.kicool.processors
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
@@ -44,6 +44,10 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import java.util.List
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifier
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.LinkableInterfaceEntry
 
 /** 
  * @author ssm

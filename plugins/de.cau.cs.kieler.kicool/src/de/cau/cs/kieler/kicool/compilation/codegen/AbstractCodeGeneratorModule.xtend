@@ -42,6 +42,11 @@ abstract class AbstractCodeGeneratorModule {
     }
     
     /**
+     * The name of the generated code part.
+     */
+    def String getName()
+    
+    /**
      * Indent adds the indentation to the builder.
      */
     protected def indent() {

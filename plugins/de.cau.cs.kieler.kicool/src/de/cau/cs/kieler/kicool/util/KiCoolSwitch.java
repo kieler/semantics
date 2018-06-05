@@ -2,8 +2,9 @@
  */
 package de.cau.cs.kieler.kicool.util;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kicool.IntermediateReference;
-import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
@@ -76,6 +77,8 @@ public class KiCoolSwitch<T> extends Switch<T> {
             case KiCoolPackage.SYSTEM: {
                 de.cau.cs.kieler.kicool.System system = (de.cau.cs.kieler.kicool.System)theEObject;
                 T result = caseSystem(system);
+                if (result == null) result = casePragmatable(system);
+                if (result == null) result = caseAnnotatable(system);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -119,12 +122,6 @@ public class KiCoolSwitch<T> extends Switch<T> {
                 T result = caseIntermediateReference(intermediateReference);
                 if (result == null) result = caseProcessorReference(intermediateReference);
                 if (result == null) result = caseProcessorEntry(intermediateReference);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KiCoolPackage.KV_PAIR: {
-                KVPair kvPair = (KVPair)theEObject;
-                T result = caseKVPair(kvPair);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -238,17 +235,32 @@ public class KiCoolSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>KV Pair</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>KV Pair</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseKVPair(KVPair object) {
+    public T casePragmatable(Pragmatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAnnotatable(Annotatable object) {
         return null;
     }
 

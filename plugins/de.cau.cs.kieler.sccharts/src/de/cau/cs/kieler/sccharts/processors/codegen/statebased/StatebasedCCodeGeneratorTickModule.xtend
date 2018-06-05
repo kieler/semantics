@@ -40,7 +40,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         logic = (parent as StatebasedCCodeGeneratorModule).logic as StatebasedCCodeGeneratorLogicModule
     }
     
-    def getName() {
+    override getName() {
         TICK_NAME + baseName + suffix
     }
     

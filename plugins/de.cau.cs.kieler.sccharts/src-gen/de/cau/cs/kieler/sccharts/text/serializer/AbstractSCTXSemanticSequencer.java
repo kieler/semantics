@@ -17,7 +17,11 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonArrayValue;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
@@ -228,7 +232,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()
-						|| rule == grammarAccess.getAnyValueRule()) {
+						|| rule == grammarAccess.getAnyValueRule()
+						|| rule == grammarAccess.getJsonValueRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
@@ -283,7 +288,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()
-						|| rule == grammarAccess.getAnyValueRule()) {
+						|| rule == grammarAccess.getAnyValueRule()
+						|| rule == grammarAccess.getJsonValueRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
 				}
@@ -390,11 +396,24 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()
-						|| rule == grammarAccess.getAnyValueRule()) {
+						|| rule == grammarAccess.getAnyValueRule()
+						|| rule == grammarAccess.getJsonValueRule()) {
 					sequence_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.JSON_ARRAY_VALUE:
+				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_MEMBER:
+				sequence_JsonObjectMember(context, (JsonObjectMember) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_VALUE:
+				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.NULL_VALUE:
+				sequence_NullValue(context, (NullValue) semanticObject); 
+				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
@@ -686,7 +705,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()
-						|| rule == grammarAccess.getAnyValueRule()) {
+						|| rule == grammarAccess.getAnyValueRule()
+						|| rule == grammarAccess.getJsonValueRule()) {
 					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}

@@ -1,33 +1,35 @@
 /**
  */
-package de.cau.cs.kieler.kicool.impl;
+package de.cau.cs.kieler.kexpressions.impl;
 
-import de.cau.cs.kieler.kicool.KVPair;
-import de.cau.cs.kieler.kicool.KiCoolPackage;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Value;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>KV Pair</b></em>'.
+ * An implementation of the model object '<em><b>Json Object Member</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.KVPairImpl#getKey <em>Key</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.KVPairImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.KVPairImpl#isIsKeyValue <em>Is Key Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.JsonObjectMemberImpl#getKey <em>Key</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.JsonObjectMemberImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
+public class JsonObjectMemberImpl extends EObjectImpl implements JsonObjectMember {
     /**
      * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -49,51 +51,21 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
     protected String key = KEY_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getValue()
      * @generated
      * @ordered
      */
-    protected static final String VALUE_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getValue()
-     * @generated
-     * @ordered
-     */
-    protected String value = VALUE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isIsKeyValue() <em>Is Key Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsKeyValue()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean IS_KEY_VALUE_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isIsKeyValue() <em>Is Key Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsKeyValue()
-     * @generated
-     * @ordered
-     */
-    protected boolean isKeyValue = IS_KEY_VALUE_EDEFAULT;
+    protected Value value;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected KVPairImpl() {
+    protected JsonObjectMemberImpl() {
         super();
     }
 
@@ -104,7 +76,7 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      */
     @Override
     protected EClass eStaticClass() {
-        return KiCoolPackage.Literals.KV_PAIR;
+        return KExpressionsPackage.Literals.JSON_OBJECT_MEMBER;
     }
 
     /**
@@ -125,7 +97,7 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
         String oldKey = key;
         key = newKey;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.KV_PAIR__KEY, oldKey, key));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.JSON_OBJECT_MEMBER__KEY, oldKey, key));
     }
 
     /**
@@ -133,7 +105,7 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getValue() {
+    public Value getValue() {
         return value;
     }
 
@@ -142,11 +114,14 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(String newValue) {
-        String oldValue = value;
+    public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
+        Value oldValue = value;
         value = newValue;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.KV_PAIR__VALUE, oldValue, value));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE, oldValue, newValue);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
 
     /**
@@ -154,8 +129,18 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isIsKeyValue() {
-        return isKeyValue;
+    public void setValue(Value newValue) {
+        if (newValue != value) {
+            NotificationChain msgs = null;
+            if (value != null)
+                msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE, null, msgs);
+            if (newValue != null)
+                msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE, null, msgs);
+            msgs = basicSetValue(newValue, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE, newValue, newValue));
     }
 
     /**
@@ -163,11 +148,13 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setIsKeyValue(boolean newIsKeyValue) {
-        boolean oldIsKeyValue = isKeyValue;
-        isKeyValue = newIsKeyValue;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.KV_PAIR__IS_KEY_VALUE, oldIsKeyValue, isKeyValue));
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE:
+                return basicSetValue(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -178,12 +165,10 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KiCoolPackage.KV_PAIR__KEY:
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__KEY:
                 return getKey();
-            case KiCoolPackage.KV_PAIR__VALUE:
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE:
                 return getValue();
-            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
-                return isIsKeyValue();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -196,14 +181,11 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KiCoolPackage.KV_PAIR__KEY:
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__KEY:
                 setKey((String)newValue);
                 return;
-            case KiCoolPackage.KV_PAIR__VALUE:
-                setValue((String)newValue);
-                return;
-            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
-                setIsKeyValue((Boolean)newValue);
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE:
+                setValue((Value)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -217,14 +199,11 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.KV_PAIR__KEY:
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__KEY:
                 setKey(KEY_EDEFAULT);
                 return;
-            case KiCoolPackage.KV_PAIR__VALUE:
-                setValue(VALUE_EDEFAULT);
-                return;
-            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
-                setIsKeyValue(IS_KEY_VALUE_EDEFAULT);
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE:
+                setValue((Value)null);
                 return;
         }
         super.eUnset(featureID);
@@ -238,12 +217,10 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.KV_PAIR__KEY:
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__KEY:
                 return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-            case KiCoolPackage.KV_PAIR__VALUE:
-                return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
-                return isKeyValue != IS_KEY_VALUE_EDEFAULT;
+            case KExpressionsPackage.JSON_OBJECT_MEMBER__VALUE:
+                return value != null;
         }
         return super.eIsSet(featureID);
     }
@@ -260,12 +237,8 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (key: ");
         result.append(key);
-        result.append(", value: ");
-        result.append(value);
-        result.append(", isKeyValue: ");
-        result.append(isKeyValue);
         result.append(')');
         return result.toString();
     }
 
-} //KVPairImpl
+} //JsonObjectMemberImpl

@@ -1,5 +1,4 @@
 public system de.cau.cs.kieler.sccharts.netlist.java
-	version 1 
 	label "Netlist-based Compilation (Java)"
 	
 system de.cau.cs.kieler.sccharts.extended.core

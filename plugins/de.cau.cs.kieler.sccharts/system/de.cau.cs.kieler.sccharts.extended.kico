@@ -1,18 +1,17 @@
 system de.cau.cs.kieler.sccharts.extended 
-	version 1 
 	label "Extended SCCharts"
 
 de.cau.cs.kieler.sccharts.processors.reference
 de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
-de.cau.cs.kieler.sccharts.processors.const
+de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
 de.cau.cs.kieler.sccharts.processors.fby
 de.cau.cs.kieler.sccharts.processors.history
 [ label "SyncCharts"	
-	de.cau.cs.kieler.sccharts.processors.signal
+	de.cau.cs.kieler.sccharts.processors.^signal
 	de.cau.cs.kieler.sccharts.processors.suspend
 	de.cau.cs.kieler.sccharts.processors.countDelay
     de.cau.cs.kieler.sccharts.processors.^pre
@@ -21,7 +20,7 @@ de.cau.cs.kieler.sccharts.processors.history
 [ label "Scade / Quartz / Esterel V7"
 	de.cau.cs.kieler.sccharts.processors.weakSuspend
 	de.cau.cs.kieler.sccharts.processors.deferred
-	de.cau.cs.kieler.sccharts.processors.static
+	de.cau.cs.kieler.sccharts.processors.^static
 ]
 	
 [ label "Statecharts"

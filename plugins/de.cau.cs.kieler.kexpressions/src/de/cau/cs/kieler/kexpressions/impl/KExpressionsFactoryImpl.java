@@ -69,6 +69,10 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.VECTOR_VALUE: return createVectorValue();
             case KExpressionsPackage.IGNORE_VALUE: return createIgnoreValue();
+            case KExpressionsPackage.JSON_OBJECT_VALUE: return createJsonObjectValue();
+            case KExpressionsPackage.JSON_OBJECT_MEMBER: return createJsonObjectMember();
+            case KExpressionsPackage.JSON_ARRAY_VALUE: return createJsonArrayValue();
+            case KExpressionsPackage.NULL_VALUE: return createNullValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
@@ -327,6 +331,46 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public IgnoreValue createIgnoreValue() {
         IgnoreValueImpl ignoreValue = new IgnoreValueImpl();
         return ignoreValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public JsonObjectValue createJsonObjectValue() {
+        JsonObjectValueImpl jsonObjectValue = new JsonObjectValueImpl();
+        return jsonObjectValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public JsonObjectMember createJsonObjectMember() {
+        JsonObjectMemberImpl jsonObjectMember = new JsonObjectMemberImpl();
+        return jsonObjectMember;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public JsonArrayValue createJsonArrayValue() {
+        JsonArrayValueImpl jsonArrayValue = new JsonArrayValueImpl();
+        return jsonArrayValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NullValue createNullValue() {
+        NullValueImpl nullValue = new NullValueImpl();
+        return nullValue;
     }
 
     /**

@@ -1,5 +1,4 @@
 public system de.cau.cs.kieler.sccharts.netlist 
-	version 1 
 	label "Netlist-based Compilation (C)"
 	
 system de.cau.cs.kieler.sccharts.extended.core

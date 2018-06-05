@@ -2,13 +2,12 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kicool.IntermediateReference;
-import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorReference;
 
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -30,8 +29,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPresets <em>Presets</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostsets <em>Postsets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPreconfig <em>Preconfig</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostconfig <em>Postconfig</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getMetric <em>Metric</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPreprocesses <em>Preprocesses</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostprocesses <em>Postprocesses</em>}</li>
@@ -42,24 +41,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ProcessorReferenceImpl extends ProcessorEntryImpl implements ProcessorReference {
     /**
-     * The cached value of the '{@link #getPresets() <em>Presets</em>}' containment reference list.
+     * The cached value of the '{@link #getPreconfig() <em>Preconfig</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPresets()
+     * @see #getPreconfig()
      * @generated
      * @ordered
      */
-    protected EList<KVPair> presets;
+    protected JsonObjectValue preconfig;
 
     /**
-     * The cached value of the '{@link #getPostsets() <em>Postsets</em>}' containment reference list.
+     * The cached value of the '{@link #getPostconfig() <em>Postconfig</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPostsets()
+     * @see #getPostconfig()
      * @generated
      * @ordered
      */
-    protected EList<KVPair> postsets;
+    protected JsonObjectValue postconfig;
 
     /**
      * The cached value of the '{@link #getMetric() <em>Metric</em>}' reference.
@@ -135,11 +134,8 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<KVPair> getPresets() {
-        if (presets == null) {
-            presets = new EObjectContainmentEList<KVPair>(KVPair.class, this, KiCoolPackage.PROCESSOR_REFERENCE__PRESETS);
-        }
-        return presets;
+    public JsonObjectValue getPreconfig() {
+        return preconfig;
     }
 
     /**
@@ -147,11 +143,76 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<KVPair> getPostsets() {
-        if (postsets == null) {
-            postsets = new EObjectContainmentEList<KVPair>(KVPair.class, this, KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS);
+    public NotificationChain basicSetPreconfig(JsonObjectValue newPreconfig, NotificationChain msgs) {
+        JsonObjectValue oldPreconfig = preconfig;
+        preconfig = newPreconfig;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG, oldPreconfig, newPreconfig);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return postsets;
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setPreconfig(JsonObjectValue newPreconfig) {
+        if (newPreconfig != preconfig) {
+            NotificationChain msgs = null;
+            if (preconfig != null)
+                msgs = ((InternalEObject)preconfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG, null, msgs);
+            if (newPreconfig != null)
+                msgs = ((InternalEObject)newPreconfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG, null, msgs);
+            msgs = basicSetPreconfig(newPreconfig, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG, newPreconfig, newPreconfig));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public JsonObjectValue getPostconfig() {
+        return postconfig;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetPostconfig(JsonObjectValue newPostconfig, NotificationChain msgs) {
+        JsonObjectValue oldPostconfig = postconfig;
+        postconfig = newPostconfig;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG, oldPostconfig, newPostconfig);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setPostconfig(JsonObjectValue newPostconfig) {
+        if (newPostconfig != postconfig) {
+            NotificationChain msgs = null;
+            if (postconfig != null)
+                msgs = ((InternalEObject)postconfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG, null, msgs);
+            if (newPostconfig != null)
+                msgs = ((InternalEObject)newPostconfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG, null, msgs);
+            msgs = basicSetPostconfig(newPostconfig, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG, newPostconfig, newPostconfig));
     }
 
     /**
@@ -245,10 +306,10 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR_REFERENCE__PRESETS:
-                return ((InternalEList<?>)getPresets()).basicRemove(otherEnd, msgs);
-            case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
-                return ((InternalEList<?>)getPostsets()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
+                return basicSetPreconfig(null, msgs);
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
+                return basicSetPostconfig(null, msgs);
             case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:
                 return ((InternalEList<?>)getPreprocesses()).basicRemove(otherEnd, msgs);
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
@@ -265,10 +326,10 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR_REFERENCE__PRESETS:
-                return getPresets();
-            case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
-                return getPostsets();
+            case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
+                return getPreconfig();
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
+                return getPostconfig();
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 if (resolve) return getMetric();
                 return basicGetMetric();
@@ -291,13 +352,11 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR_REFERENCE__PRESETS:
-                getPresets().clear();
-                getPresets().addAll((Collection<? extends KVPair>)newValue);
+            case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
+                setPreconfig((JsonObjectValue)newValue);
                 return;
-            case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
-                getPostsets().clear();
-                getPostsets().addAll((Collection<? extends KVPair>)newValue);
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
+                setPostconfig((JsonObjectValue)newValue);
                 return;
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 setMetric((IntermediateReference)newValue);
@@ -325,11 +384,11 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR_REFERENCE__PRESETS:
-                getPresets().clear();
+            case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
+                setPreconfig((JsonObjectValue)null);
                 return;
-            case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
-                getPostsets().clear();
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
+                setPostconfig((JsonObjectValue)null);
                 return;
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 setMetric((IntermediateReference)null);
@@ -355,10 +414,10 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR_REFERENCE__PRESETS:
-                return presets != null && !presets.isEmpty();
-            case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
-                return postsets != null && !postsets.isEmpty();
+            case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
+                return preconfig != null;
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
+                return postconfig != null;
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 return metric != null;
             case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:

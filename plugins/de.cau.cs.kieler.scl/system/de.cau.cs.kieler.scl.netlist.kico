@@ -1,11 +1,11 @@
 public system de.cau.cs.kieler.scl.netlist
-	version 1 
 	label "SCL Netlist-based"
 
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
-post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
-pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
-de.cau.cs.kieler.scg.processors.dependency
+post process silent de.cau.cs.kieler.scg.processors.threadAnalyzer
+de.cau.cs.kieler.scg.processors.dependency config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": true
+}
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
 de.cau.cs.kieler.scg.processors.basicBlocks
@@ -17,5 +17,5 @@ post process de.cau.cs.kieler.scg.processors.copyPropagation
 post process de.cau.cs.kieler.scg.processors.conditionalMerger
 post process de.cau.cs.kieler.scg.processors.haltStateRemover
 post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
-post process de.cau.cs.kieler.scg.processors.cleanupValuedObjects silent
+post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
 de.cau.cs.kieler.scg.processors.codegen.c

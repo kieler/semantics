@@ -41,8 +41,6 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.AbstractDependencyAnalysis
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.LinkableInterfaceData
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
@@ -53,6 +51,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import java.util.Map
 import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
+import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kicool.processors.LinkableInterfaceData
 
 /**
  * @author ssm

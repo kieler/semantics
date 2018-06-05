@@ -1,7 +1,5 @@
 public system de.cau.cs.kieler.esterel.scest.scl.struct.incr
-    version 1 
     label "Esterel/SCEst to SCL - SLIC"
-    input Object
     
 de.cau.cs.kieler.esterel.processors.initialization
 de.cau.cs.kieler.esterel.processors.run
@@ -28,6 +26,6 @@ de.cau.cs.kieler.esterel.processors.function
 de.cau.cs.kieler.esterel.processors.repeat
 de.cau.cs.kieler.esterel.processors.sensor
 de.cau.cs.kieler.esterel.processors.constant
-de.cau.cs.kieler.esterel.processors.signal
+de.cau.cs.kieler.esterel.processors.^signal
 de.cau.cs.kieler.esterel.processors.localsignal
 de.cau.cs.kieler.esterel.processors.scesttoscl

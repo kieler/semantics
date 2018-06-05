@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.AbstractDependencyAnalysis
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 import java.util.Set
@@ -36,6 +35,7 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifie
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
+import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
 
 /**
  * @author ssm

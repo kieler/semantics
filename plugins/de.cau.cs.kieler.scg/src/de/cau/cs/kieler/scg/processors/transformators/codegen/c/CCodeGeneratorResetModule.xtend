@@ -37,7 +37,7 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
     }    
     
-    def getName() {
+    override getName() {
         RESET_NAME + baseName + suffix
     }
     

@@ -15,7 +15,9 @@ package de.cau.cs.kieler.kicool.registration
 import com.google.inject.Guice
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
 import java.io.IOException
 import java.util.HashMap
 import java.util.List
@@ -24,12 +26,15 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.util.CancelIndicator
+import org.eclipse.xtext.validation.CheckMode
+import org.eclipse.xtext.validation.IResourceValidator
 
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
-import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 
 /**
  * Main class for the registration of systems and processors.
@@ -44,7 +49,7 @@ class KiCoolRegistration {
     public static val EXTENSION_POINT_SYSTEM = "de.cau.cs.kieler.kicool.system"
     public static val EXTENSION_POINT_PROCESSOR = "de.cau.cs.kieler.kicool.processor"
     
-    private static val injector = Guice.createInjector
+    private static val injector = Guice.createInjector(TracingIntegration.MODULE)
     private static val kicoolXtextInjector = KiCoolStandaloneSetup.doSetup
     
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
@@ -140,6 +145,10 @@ class KiCoolRegistration {
         val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
         val Resource resource = resourceSet.getResource(uri, true)
         if (resource !== null && resource.getContents() !== null && resource.getContents().size() > 0) {
+            val validatorResults = kicoolXtextInjector.getInstance(IResourceValidator).validate(resource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
+            if (!validatorResults.empty) {
+                println("KiCool WARNING: There are error markers in system located at " + bundleId + ":" + resourceLocation + ": \n- " + validatorResults.map[message].join("\n- "))
+            }
             val eobject = resource.getContents().get(0)
             return eobject
         }
@@ -205,9 +214,7 @@ class KiCoolRegistration {
         if (processorModelTypes.keySet.contains(source) && processorModelTypes.keySet.contains(target)) {
             val sPair = processorModelTypes.get(source)
             val tPair = processorModelTypes.get(target)
-            if (sPair.target != tPair.source) {
-                return false
-            }
+            return tPair.source.class.isAssignableFrom(sPair.target.class)
         } 
         return true
     }

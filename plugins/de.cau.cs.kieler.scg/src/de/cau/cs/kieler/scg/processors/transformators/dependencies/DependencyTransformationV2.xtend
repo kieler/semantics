@@ -29,12 +29,11 @@ import java.util.Deque
 import java.util.Set
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.AbstractDependencyAnalysis
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
-
+import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
