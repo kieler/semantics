@@ -3,18 +3,14 @@
  */
 package de.cau.cs.kieler.sccharts.ide.text
 
-import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import org.eclipse.lsp4j.ExecuteCommandParams
 
 /**
  * Use this class to register ide components.
  */
-class SCTXIdeModule extends AbstractSCTXIdeModule {
-   
-//    def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
-//        MyLanguageServerExtension
-//    }
-//
-//    def Class<? extends IExecutableCommandService> bindIExecutableCommandService() {
-//        MyExecutableCommandService
-//    }
+class SCTXIdeModule extends AbstractSCTXIdeModule {    
+    
+    def executeCommand(ExecuteCommandParams params) {
+        throw new UnsupportedOperationException("TODO: executeClientComamnd")
+    }
 }
