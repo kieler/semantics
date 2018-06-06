@@ -71,7 +71,6 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
                                  " * http://rtsys.informatik.uni-kiel.de/kieler \n" +
                                  " */ \n\n")
         wrapperFileString.append("#include \"" + modelName + ".c\" \n\n")
-        wrapperFileString.append("TickData d; \n\n")
         wrapperFileString.append("void wrapper_" + modelName + "(")
         for (input : inputs) {
             val inputName = input.name
@@ -83,7 +82,8 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
             if(output == outputs.last()) {wrapperFileString.append(") \n")}
             else{wrapperFileString.append(", ")}  
         }
-        wrapperFileString.append("{ \n" +
+        wrapperFileString.append("{ \n\n" +
+                                 "  TickData d; \n\n" +
                                  "  reset(&d); \n")                      
         for (input : inputs) {
             val inputName = input.name
