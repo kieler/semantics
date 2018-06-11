@@ -18,29 +18,54 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.scg.PatternType
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -51,47 +76,23 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import java.util.HashMap
+import java.util.List
 import java.util.Set
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
-import de.cau.cs.kieler.kexpressions.PrintCall
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.scg.SCChartsSCGPlugin
-import de.cau.cs.kieler.sccharts.scg.PatternType
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
-import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
-import de.cau.cs.kieler.kexpressions.RandomCall
-import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
-import de.cau.cs.kieler.kexpressions.Call
-import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -140,12 +141,13 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsFixExtensions
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension UniqueNameExtensions
 
     private static val Injector i = SCTXStandaloneSetup::doSetup();
     private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
 
-    private val stateTypeCache = <State, Set<de.cau.cs.kieler.sccharts.scg.PatternType>>newHashMap
+    private val stateTypeCache = <State, Set<PatternType>>newHashMap
     private val uniqueNameCache = new UniqueNameCache
 
     private static val String ANNOTATION_REGIONNAME = "regionName"
@@ -290,7 +292,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         stateList.add(rootState)
 
         for (s : stateList) {
-            val stateTypeSet = <de.cau.cs.kieler.sccharts.scg.PatternType>newHashSet
+            val stateTypeSet = <PatternType>newHashSet
             if (s.isPause)
                 stateTypeSet += PatternType::PAUSE
             else if (s.isConditional)
@@ -870,6 +872,40 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             rc.valuedObject = referenceCall.valuedObject.getSCGValuedObject
             referenceCall.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
         ]
+    }
+    
+    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, UniqueNameCache nameCache) {
+        val voStore = VariableStore.getVariableStore(environment)
+        
+        // Traverse all states
+        for (scope : scopeList) {
+            scope.transformExposeLocalValuedObjectCached(targetScope, false, nameCache, voStore);
+        }
+    }
+
+    // Traverse all states and transform possible local valuedObjects.
+    def void transformExposeLocalValuedObjectCached(Scope scope, Scope targetScope, boolean expose,
+        UniqueNameCache nameCache, VariableStore voStore) {
+
+        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
+        // and wherever the local valuedObject is emitted, also emit the new global 
+        // valuedObject.
+        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
+        // Exclude the top level state
+        if (scope == targetScope) {
+            return;
+        }
+
+        var hierarchicalScopeName = targetScope.getHierarchicalName("local")
+        for(declaration : scope.declarations.immutableCopy) {
+            targetScope.declarations.add(declaration)
+            if (expose && declaration instanceof VariableDeclaration) (declaration as VariableDeclaration).output = true
+            for(valuedObject : declaration.valuedObjects) {
+                valuedObject.name = ("_" + hierarchicalScopeName + "_" + valuedObject.name)
+                valuedObject.uniqueName(nameCache)
+                voStore.update(valuedObject)
+            }
+        }
     }
     
 // -------------------------------------------------------------------------   

@@ -119,6 +119,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 annotations += createTagAnnotation(DELTA_TIME_ANNOTATION)
                 valuedObjects += deltaT
             ]
+            voStore.add(deltaT, SCCHARTS_GENERATED)
             
             val sleepT = createValuedObject(SLEEP_T_NAME).uniqueName
             if (dynamicTicks) {
@@ -129,6 +130,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     annotations += createTagAnnotation(SLEEP_TIME_ANNOTATION)
                     valuedObjects += sleepT
                 ]
+                voStore.add(sleepT, SCCHARTS_GENERATED)
             }
             
             // Global sleep time handling
@@ -152,6 +154,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
                 for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
                     clock.declaration.asVariableDeclaration.type = ValueType.FLOAT
+                    voStore.update(clock, SCCHARTS_GENERATED)
                     if (clock.initialValue === null) clock.initialValue = createFloatValue(0)
                     
                     var region = state.controlflowRegions.head

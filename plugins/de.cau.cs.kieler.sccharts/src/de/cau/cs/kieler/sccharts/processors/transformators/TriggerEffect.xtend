@@ -98,7 +98,7 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
     //     Add T_eff to C's outgoing transitions. 
     def State transform(State rootState) {
         nameCache.clear
-        rootState.transformValuedObjectRise
+        rootState.transformValuedObjectRise(environment)
 
         // Traverse all transitions
         for (targetTransition : rootState.getAllContainedTransitions.toList) {

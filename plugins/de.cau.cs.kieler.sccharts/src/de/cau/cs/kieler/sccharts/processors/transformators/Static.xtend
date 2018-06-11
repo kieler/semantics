@@ -80,7 +80,7 @@ class Static extends SCChartsProcessor implements Traceable {
     // This is applied for all superstates that contain static variable declarations.
     //
     def State transform(State rootState) {
-        rootState.transformValuedObjectRise
+        rootState.transformValuedObjectRise(environment)
         
         // Traverse all states
         for (targetTransition : rootState.getAllStates.toList) {
@@ -95,6 +95,7 @@ class Static extends SCChartsProcessor implements Traceable {
             for (staticValuedObject : staticDeclaration.valuedObjects) {
                 staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX +
                     staticValuedObject.name)
+                voStore.update(staticValuedObject)
             }
             staticDeclaration.static = false
             targetRootState.declarations += staticDeclaration
@@ -111,12 +112,14 @@ class Static extends SCChartsProcessor implements Traceable {
                             global = false
                             valuedObjects += valuedObject
                         ]
+                        voStore.update(valuedObject)
                     } else {
                         val references = state.eAllContents.filter(ValuedObjectReference).filter[ it.valuedObject === valuedObject ].toList
                         for (reference : references) {
                             reference.valuedObject = existing
                         }
                         valuedObject.remove
+                        voStore.remove(valuedObject)
                     }
                 }
                 

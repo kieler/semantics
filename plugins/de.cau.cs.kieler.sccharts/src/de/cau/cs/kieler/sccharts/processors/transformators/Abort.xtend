@@ -13,36 +13,32 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Abort Transformation.
@@ -251,6 +247,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                                 // strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                                 val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                                     GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                                voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
                                 state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                                 transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                                 strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(
@@ -281,6 +278,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                             // Create a new _transitionTrigger valuedObject
                             val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                                 GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                            voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
                             state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                             weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(

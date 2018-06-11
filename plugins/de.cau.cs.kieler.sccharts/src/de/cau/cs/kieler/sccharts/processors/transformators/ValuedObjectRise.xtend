@@ -21,6 +21,9 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import java.lang.invoke.VolatileCallSite
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * SCCharts ValuedObject Transformation. Rises valued objects declared in regions to its
@@ -49,18 +52,19 @@ class ValuedObjectRise {
     private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
 
     // Transforming a signal to a variable. 
-    def State transformValuedObjectRise(State rootState) {
+    def State transformValuedObjectRise(State rootState, Environment env) {
         val targetRootState = rootState
+        val voStore = VariableStore.getVariableStore(env)
         
         // Traverse all states
         targetRootState.allContainedControlflowRegions.forEach [ targetState |
-            targetState.transformValuedObjectRise(targetRootState);
+            targetState.transformValuedObjectRise(targetRootState, voStore);
         ]
         targetRootState;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
-    def void transformValuedObjectRise(ControlflowRegion region, State targetRootState) {
+    def void transformValuedObjectRise(ControlflowRegion region, State targetRootState, VariableStore voStore) {
         if (!region.declarations.nullOrEmpty) {
             
             val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region)
@@ -68,6 +72,7 @@ class ValuedObjectRise {
             for (valuedObject : region.valuedObjects) {
                 valuedObject.setName(regionId + GENERATED_PREFIX +
                     valuedObject.name)
+                voStore.update(valuedObject)
             }
             
             region.parentState.declarations.addAll(region.declarations)

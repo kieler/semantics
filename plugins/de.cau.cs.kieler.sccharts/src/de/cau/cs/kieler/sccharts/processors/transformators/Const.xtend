@@ -88,7 +88,7 @@ class Const extends SCChartsProcessor implements Traceable {
     def State transform(State rootState) {
         var targetRootState = rootState
 
-        targetRootState.transformValuedObjectRise
+        targetRootState.transformValuedObjectRise(environment)
 
         // Traverse all states
         for (scopes : targetRootState.getAllScopes.toList) {
@@ -127,7 +127,7 @@ class Const extends SCChartsProcessor implements Traceable {
                 ]
             }
         }
-        constObjects.forEach[ removeFromContainmentAndCleanup ]
+        constObjects.forEach[ removeFromContainmentAndCleanup; voStore.remove(it) ]
 
     }
 

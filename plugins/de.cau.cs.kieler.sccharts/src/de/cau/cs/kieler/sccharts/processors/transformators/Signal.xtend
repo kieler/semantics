@@ -119,7 +119,7 @@ class Signal extends SCChartsProcessor implements Traceable {
     // input signal S:integer; --> input boolean S; input integer S_val;
     // Transforming a signal to a variable. 
     def State transform(State rootState) {
-        rootState.transformValuedObjectRise
+        rootState.transformValuedObjectRise(environment)
         
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
@@ -172,10 +172,13 @@ class Signal extends SCChartsProcessor implements Traceable {
                 
                 // Copy type and input/output attributes from the original signal
                 currentValueVariable.applyAttributes(signal)
-                valueDecl.setInput(signal.isInput);
-                valueDecl.setOutput(signal.isOutput);
+                valueDecl.setInput(signal.isInput)
+                valueDecl.setOutput(signal.isOutput)
                 valueVariable.applyAttributes(signal)
 
+                voStore.add(valueVariable, SCCHARTS_GENERATED, "signal", variableValueExtension)
+                voStore.add(currentValueVariable, SCCHARTS_GENERATED, "signal", variableCurrentValueExtension)
+                
                 // Add an immediate during action that updates the value (in case of an emission)
                 // to the current value
                 if(arrayIndexIterator === null) {
@@ -252,6 +255,7 @@ class Signal extends SCChartsProcessor implements Traceable {
             val declarationScope = presentVariable.declarationScope
             presentVariable.removeFromContainmentAndCleanup
             declarationScope.addValuedObject(presentVariable, newDecl)
+            voStore.update(presentVariable)
             
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every

@@ -74,12 +74,32 @@ class VariableStore implements IKiCoolCloneable {
         }
     }
     
-    def add(ValuedObject vo) {
+    def add(ValuedObject vo, String... properties) {
+        update(vo, new VariableInformation, properties)
+    }
+    
+    def update(ValuedObject vo, String... properties) {
+        var info = variables.get(vo.name).findFirst[valuedObject == vo]
+        if (info === null) {
+            val entry = variables.entries.findFirst[value.valuedObject == vo]
+            if (entry !== null && !entry.key.equals(vo.name)) {
+                // allow renaming
+                variables.entries.remove(entry)
+            }
+            info = entry?.value
+        }
+        if (info === null) {
+            throw new IllegalArgumentException("ValuedObject with name " + vo.name + " was not previously registered! Use add(..) to register.")
+        }
+        update(vo, info, properties)
+    }
+    
+    def update(ValuedObject vo, VariableInformation info, String... properties) {
         val decl = vo.eContainer
-        val info = new VariableInformation
         
         info.valuedObject = vo
         info.dimensions = vo.cardinalities.size
+        info.properties += properties
         
         if (decl instanceof VariableDeclaration) {
             // flags
@@ -97,6 +117,7 @@ class VariableStore implements IKiCoolCloneable {
         }
         
         variables.put(vo.name, info)
+        return info
     }
     
     def remove(ValuedObject vo) {
