@@ -278,8 +278,8 @@ class EHelpGenerator extends AbstractGenerator implements IOutputConfigurationPr
                 EHelpConsts.genFolderName + "/" + EHelpConsts.imageSubFolderName;
 
             for (file : model.configs.filter[e|e instanceof ConfigHome].toList) {
-                val src = new File(projectFolder + "/" + file)
-                val dst = new File(destFolder + "/" + file)
+                val src = new File(projectFolder + "/" + (file as ConfigHome).home)
+                val dst = new File(destFolder + "/" + (file as ConfigHome).home)
                 if (src.exists) {
                     Files.copy(src.toPath, dst.toPath, StandardCopyOption.REPLACE_EXISTING);
                     println(" copied " + dst.toString)
