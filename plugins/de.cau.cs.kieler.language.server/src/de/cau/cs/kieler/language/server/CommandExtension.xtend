@@ -20,16 +20,16 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.lsp4j.generator.JsonRpcData
-
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
  * @author sdo
  *
  */
-@JsonSegment('workspace')
+@JsonSegment('compile')
 interface CommandExtension {
     @JsonRequest('testen')
-    def CompletableFuture<ExecuteCommandParams> testen(ExecuteCommandParams params);  
+    def CompletableFuture<MyCodeContainer> testen(ExecuteCommandParams params);  
     
     @JsonNotification
     def void didTesten(MyParams params); 

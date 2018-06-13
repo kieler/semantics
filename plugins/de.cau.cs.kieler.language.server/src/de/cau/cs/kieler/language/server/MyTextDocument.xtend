@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -12,19 +12,18 @@
  */
 package de.cau.cs.kieler.language.server
 
-import org.eclipse.xtext.ide.server.ILanguageServerExtension
-import org.eclipse.xtext.service.AbstractGenericModule
-import com.google.inject.Inject
-import org.eclipse.xtext.ide.server.WorkspaceManager
-
 /**
  * @author sdo
- *
+ * 
  */
-class MyServerModule extends AbstractGenericModule {
+class MyTextDocument {
+
+    String key
+    String value
     
-    def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
-        MyLanguageServerExtension
+    new (String key, String value) {
+        this.key = key
+        this.value = value
     }
-    
+
 }

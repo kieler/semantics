@@ -33,11 +33,7 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import java.util.function.Consumer
-import com.google.gson.GsonBuilder
-import de.cau.cs.kieler.sccharts.ide.text.util.MyLanguageServerExtension
-import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints
-import de.cau.cs.kieler.sccharts.ide.text.util.MyEndpoint
+import org.eclipse.xtext.ide.server.IProjectDescriptionFactory
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -66,7 +62,7 @@ class LanguageServer implements IApplication {
         
         new SCTXIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule))
+                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new MyServerModule))
             }
         }.createInjectorAndDoEMFRegistration()
         
@@ -96,7 +92,7 @@ class LanguageServer implements IApplication {
 //            val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
 //                TypeAdapter<ServerModule>.configureGson(gsonBuilder)
 //            ]
-            val languageServer = injector.getInstance(MyLanguageServerImpl) // gets client that connects
+            val languageServer = injector.getInstance(LanguageServerImpl) // gets client that connects
 //            languageServer.supportedMethods.putAll(ServiceEndpoints.getSupportedMethods(MyEndpoint))
             val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it])
             languageServer.connect(launcher.remoteProxy)
