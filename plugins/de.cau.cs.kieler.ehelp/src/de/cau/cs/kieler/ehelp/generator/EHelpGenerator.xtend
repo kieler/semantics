@@ -275,7 +275,7 @@ class EHelpGenerator extends AbstractGenerator implements IOutputConfigurationPr
             val projectFolder = EHelpUtil.getCurrentWorkspaceLocationString()
 
             val destFolder = EHelpUtil.getCurrentWorkspaceLocationString() + "/" + EHelpConsts.genFolderBase + "/" +
-                EHelpConsts.genFolderName + "/" + EHelpConsts.imageSubFolderName;
+                EHelpConsts.genFolderName;
 
             for (file : model.configs.filter[e|e instanceof ConfigHome].toList) {
                 val src = new File(projectFolder + "/" + (file as ConfigHome).home)
