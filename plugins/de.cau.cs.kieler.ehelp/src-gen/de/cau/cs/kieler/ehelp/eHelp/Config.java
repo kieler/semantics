@@ -7,14 +7,14 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Content</b></em>'.
+ * A representation of the model object '<em><b>Config</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see de.cau.cs.kieler.ehelp.eHelp.EHelpPackage#getContent()
+ * @see de.cau.cs.kieler.ehelp.eHelp.EHelpPackage#getConfig()
  * @model
  * @generated
  */
-public interface Content extends EObject
+public interface Config extends EObject
 {
-} // Content
+} // Config

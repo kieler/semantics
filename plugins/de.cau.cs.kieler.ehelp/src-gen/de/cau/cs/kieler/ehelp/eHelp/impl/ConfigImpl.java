@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.ehelp.eHelp.impl;
 
-import de.cau.cs.kieler.ehelp.eHelp.Content;
+import de.cau.cs.kieler.ehelp.eHelp.Config;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpPackage;
 
 import org.eclipse.emf.ecore.EClass;
@@ -12,19 +12,19 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Content</b></em>'.
+ * An implementation of the model object '<em><b>Config</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class ContentImpl extends MinimalEObjectImpl.Container implements Content
+public class ConfigImpl extends MinimalEObjectImpl.Container implements Config
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ContentImpl()
+  protected ConfigImpl()
   {
     super();
   }
@@ -37,7 +37,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   @Override
   protected EClass eStaticClass()
   {
-    return EHelpPackage.Literals.CONTENT;
+    return EHelpPackage.Literals.CONFIG;
   }
 
-} //ContentImpl
+} //ConfigImpl

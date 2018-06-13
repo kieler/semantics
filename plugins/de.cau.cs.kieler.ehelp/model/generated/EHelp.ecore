@@ -2,8 +2,17 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="eHelp" nsURI="http://www.cau.de/cs/kieler/ehelp/EHelp" nsPrefix="eHelp">
   <eClassifiers xsi:type="ecore:EClass" name="EHelpModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="configs" upperBound="-1"
+        eType="#//Config" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="chapters" upperBound="-1"
         eType="#//Chapter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Config"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigPath" eSuperTypes="#//Config">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigHome" eSuperTypes="#//Config">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="home" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Chapter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -3,7 +3,23 @@ grammar de.cau.cs.kieler.ehelp.EHelp with org.eclipse.xtext.common.Terminals
 generate eHelp "http://www.cau.de/cs/kieler/ehelp/EHelp"
 
 EHelpModel:
+    configs+=Config*
 	chapters+=Chapter*;
+	
+      
+
+Config:
+       (ConfigPath | ConfigHome)
+;     
+
+ConfigPath:
+       'config' 'path' path=STRING
+;
+
+ConfigHome:
+       'config' 'home' home=STRING
+;	
+	
 
 Chapter:
 	'chapter' (name=ID)? title=STRING '{' (content+=Content*)? (subchapters+=Chapter*) '}';

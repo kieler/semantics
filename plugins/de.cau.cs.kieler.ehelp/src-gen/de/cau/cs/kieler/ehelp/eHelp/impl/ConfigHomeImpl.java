@@ -3,8 +3,8 @@
  */
 package de.cau.cs.kieler.ehelp.eHelp.impl;
 
+import de.cau.cs.kieler.ehelp.eHelp.ConfigHome;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpPackage;
-import de.cau.cs.kieler.ehelp.eHelp.Text;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -14,45 +14,45 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Text</b></em>'.
+ * An implementation of the model object '<em><b>Config Home</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.impl.TextImpl#getText <em>Text</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigHomeImpl#getHome <em>Home</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TextImpl extends ContentImpl implements Text
+public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
 {
   /**
-   * The default value of the '{@link #getText() <em>Text</em>}' attribute.
+   * The default value of the '{@link #getHome() <em>Home</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getText()
+   * @see #getHome()
    * @generated
    * @ordered
    */
-  protected static final String TEXT_EDEFAULT = null;
+  protected static final String HOME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
+   * The cached value of the '{@link #getHome() <em>Home</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getText()
+   * @see #getHome()
    * @generated
    * @ordered
    */
-  protected String text = TEXT_EDEFAULT;
+  protected String home = HOME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected TextImpl()
+  protected ConfigHomeImpl()
   {
     super();
   }
@@ -65,7 +65,7 @@ public class TextImpl extends ContentImpl implements Text
   @Override
   protected EClass eStaticClass()
   {
-    return EHelpPackage.Literals.TEXT;
+    return EHelpPackage.Literals.CONFIG_HOME;
   }
 
   /**
@@ -73,9 +73,9 @@ public class TextImpl extends ContentImpl implements Text
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getText()
+  public String getHome()
   {
-    return text;
+    return home;
   }
 
   /**
@@ -83,12 +83,12 @@ public class TextImpl extends ContentImpl implements Text
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setText(String newText)
+  public void setHome(String newHome)
   {
-    String oldText = text;
-    text = newText;
+    String oldHome = home;
+    home = newHome;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EHelpPackage.TEXT__TEXT, oldText, text));
+      eNotify(new ENotificationImpl(this, Notification.SET, EHelpPackage.CONFIG_HOME__HOME, oldHome, home));
   }
 
   /**
@@ -101,8 +101,8 @@ public class TextImpl extends ContentImpl implements Text
   {
     switch (featureID)
     {
-      case EHelpPackage.TEXT__TEXT:
-        return getText();
+      case EHelpPackage.CONFIG_HOME__HOME:
+        return getHome();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -117,8 +117,8 @@ public class TextImpl extends ContentImpl implements Text
   {
     switch (featureID)
     {
-      case EHelpPackage.TEXT__TEXT:
-        setText((String)newValue);
+      case EHelpPackage.CONFIG_HOME__HOME:
+        setHome((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -134,8 +134,8 @@ public class TextImpl extends ContentImpl implements Text
   {
     switch (featureID)
     {
-      case EHelpPackage.TEXT__TEXT:
-        setText(TEXT_EDEFAULT);
+      case EHelpPackage.CONFIG_HOME__HOME:
+        setHome(HOME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -151,8 +151,8 @@ public class TextImpl extends ContentImpl implements Text
   {
     switch (featureID)
     {
-      case EHelpPackage.TEXT__TEXT:
-        return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
+      case EHelpPackage.CONFIG_HOME__HOME:
+        return HOME_EDEFAULT == null ? home != null : !HOME_EDEFAULT.equals(home);
     }
     return super.eIsSet(featureID);
   }
@@ -168,10 +168,10 @@ public class TextImpl extends ContentImpl implements Text
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (text: ");
-    result.append(text);
+    result.append(" (home: ");
+    result.append(home);
     result.append(')');
     return result.toString();
   }
 
-} //TextImpl
+} //ConfigHomeImpl

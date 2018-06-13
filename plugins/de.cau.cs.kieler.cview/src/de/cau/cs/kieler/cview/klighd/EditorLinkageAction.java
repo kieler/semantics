@@ -104,7 +104,6 @@ public class EditorLinkageAction implements IAction {
 	@Override
 	public ActionResult execute(ActionContext context) {
 	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-	    //IViewPart view = page.findView("org.eclipse.jdt.ui.ProjectsView");
 	    for (IViewPart view : page.getViews()) {
 	        if (view instanceof CommonNavigator) {
 	            boolean linkingEnabled = ((CommonNavigator) view).isLinkingEnabled();    

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.ehelp.eHelp.Table
 import de.cau.cs.kieler.ehelp.eHelp.TableRow
 import de.cau.cs.kieler.ehelp.eHelp.TableCell
 import de.cau.cs.kieler.ehelp.eHelp.Context
+import de.cau.cs.kieler.ehelp.eHelp.ConfigPath
 
 /**
  * This class contains the code generation templates used in EHelpGenerator for
@@ -47,7 +48,7 @@ class HelpFileGenerator {
             if (keywordParentChapter !== null) {
                 returnText += '''<entry keyword="«keyword.text»">''' + "\n"
                 returnText +=
-                    '''<topic href="«keywordParentChapter.fileName».«EHelpConsts.htmlFileExtension»" />''' + "\n"
+                    '''<topic href="«model.path»«keywordParentChapter.fileName».«EHelpConsts.htmlFileExtension»" />''' + "\n"
                 returnText += '''</entry>''' + "\n"
             }
         }
@@ -92,7 +93,7 @@ class HelpFileGenerator {
             if (contextParentChapter !== null) {
                 returnText += '''<context id="«context.id»«EHelpConsts.contextIdPostfix»">''' + "\n"
                 returnText +=
-                    '''<topic href="«contextParentChapter.fileName».«EHelpConsts.htmlFileExtension»" label="«context.label»"  />''' +
+                    '''<topic href="«model.path»«contextParentChapter.fileName».«EHelpConsts.htmlFileExtension»" label="«context.label»"  />''' +
                         "\n"
 				returnText += '''</context>''' + "\n"
                     }
@@ -120,7 +121,7 @@ class HelpFileGenerator {
                                 val subchapter2 = subchapter as Chapter
                                 if (subchapter2 != null) {
                                     returnText +=
-                                        '''<li><a href="«subchapter2.fileName».«EHelpConsts.htmlFileExtension»">«subchapter2.title»</a></li>'''
+                                        '''<li><a href="«chapter.path»«subchapter2.fileName».«EHelpConsts.htmlFileExtension»">«subchapter2.title»</a></li>'''
                                 }
                             }
                             returnText += '''</ol></p>'''
@@ -177,10 +178,10 @@ class HelpFileGenerator {
             private def String generateTOCChapter(Chapter chapter) {
                 if (!chapter.
                     hasSubchapters) {
-                    return '''<topic href="«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title.removeHTMLCode»"/>''' +
+                    return '''<topic href="«chapter.path»«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title.removeHTMLCode»"/>''' +
                         "\n"
                 } else {
-                    var returnText = '''<topic href="«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title.removeHTMLCode»">''' +
+                    var returnText = '''<topic href="«chapter.path»«chapter.fileName».«EHelpConsts.htmlFileExtension»" label="«chapter.title.removeHTMLCode»">''' +
                         "\n"
                     for (subchapter : chapter.subchapters) {
                         returnText += subchapter.generateTOCChapter
@@ -226,9 +227,9 @@ class HelpFileGenerator {
             // Link
             private def dispatch String expandContent(Link content, boolean linksOff) {
                 if (!linksOff) {
-                    return '''<a href="«content.link.fileName».«EHelpConsts.htmlFileExtension»">«content.caption»</a>'''
+                    return '''<a href="«content.path»«content.link.fileName».«EHelpConsts.htmlFileExtension»">«content.caption»</a>'''
                 } else {
-                    return '''<a href="#«content.link.chaperIndex»">«content.caption»</a>'''
+                    return '''<a href="«content.path»#«content.link.chaperIndex»">«content.caption»</a>'''
                 }
             }
 
@@ -385,6 +386,19 @@ class HelpFileGenerator {
                 }
                 return null
             }
+            
+            
+            
+            // ------------------------------------------------------------------------
+            // Root model
+            def EHelpModel getModel(EObject eObject) {
+                if (eObject instanceof EHelpModel) {
+                        return eObject
+                } else {
+                    return eObject.eContainer.getModel
+                }
+            }
+
 
             // ------------------------------------------------------------------------
             // Root chapter
@@ -445,6 +459,24 @@ class HelpFileGenerator {
             // ------------------------------------------------------------------------
             // --             			U T I L I T Y   
             // ------------------------------------------------------------------------
+            
+            public def path(EHelpModel model) {
+                val path = model.configs.filter[e | e instanceof ConfigPath]
+                if (path != null && path.size > 0) {
+                    return (path.get(0) as ConfigPath).path
+                }
+                return ""
+            }
+            
+            public def path(Chapter chapter) {
+                chapter.model.path
+            }
+            
+            public def path(Link link) {
+                link.model.path
+            }
+            
+            
             var chapterIndex = 0
             var HashMap<Chapter, Integer> chapterIndexCache = newHashMap
 

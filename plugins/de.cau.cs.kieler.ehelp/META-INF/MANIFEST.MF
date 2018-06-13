@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Help System Authoring Laguange & Generator
 Bundle-Vendor: Kiel University, License EPL
-Bundle-Version: 0.1.6.qualifier
+Bundle-Version: 0.1.7.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.ehelp; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
