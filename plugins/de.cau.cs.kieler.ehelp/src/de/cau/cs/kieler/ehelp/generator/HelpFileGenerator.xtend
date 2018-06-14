@@ -460,16 +460,13 @@ class HelpFileGenerator {
             // --             			U T I L I T Y   
             // ------------------------------------------------------------------------
             
-            public def path(EHelpModel model) {
+            public def getPath(EObject modelElement) {
+                val model = modelElement.getModel
                 val path = model.configs.filter[e | e instanceof ConfigPath]
                 if (path != null && path.size > 0) {
                     return (path.get(0) as ConfigPath).path
                 }
                 return ""
-            }
-            
-            public def path(EObject chapter) {
-                chapter.model.path
             }
             
             
