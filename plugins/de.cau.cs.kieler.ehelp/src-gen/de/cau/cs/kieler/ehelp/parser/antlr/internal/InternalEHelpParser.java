@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEHelpParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'config'", "'path'", "'home'", "'chapter'", "'{'", "'}'", "'list'", "'enum'", "'-'", "'table'", "'spacing'", "'='", "'stretch'", "'|'", "'center'", "'left'", "'right'", "'top'", "'middle'", "'bottom'", "'?'", "'!'", "'['", "']'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'config'", "'tocpath'", "'copyfile'", "'chapter'", "'{'", "'}'", "'list'", "'enum'", "'-'", "'table'", "'spacing'", "'='", "'stretch'", "'|'", "'center'", "'left'", "'right'", "'top'", "'middle'", "'bottom'", "'?'", "'!'", "'['", "']'"
     };
     public static final int RULE_STRING=4;
     public static final int RULE_SL_COMMENT=8;
@@ -446,7 +446,7 @@ public class InternalEHelpParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConfigPath"
-    // InternalEHelp.g:164:1: ruleConfigPath returns [EObject current=null] : (otherlv_0= 'config' otherlv_1= 'path' ( (lv_path_2_0= RULE_STRING ) ) ) ;
+    // InternalEHelp.g:164:1: ruleConfigPath returns [EObject current=null] : (otherlv_0= 'config' otherlv_1= 'tocpath' ( (lv_path_2_0= RULE_STRING ) ) ) ;
     public final EObject ruleConfigPath() throws RecognitionException {
         EObject current = null;
 
@@ -458,11 +458,11 @@ public class InternalEHelpParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalEHelp.g:170:2: ( (otherlv_0= 'config' otherlv_1= 'path' ( (lv_path_2_0= RULE_STRING ) ) ) )
-            // InternalEHelp.g:171:2: (otherlv_0= 'config' otherlv_1= 'path' ( (lv_path_2_0= RULE_STRING ) ) )
+            // InternalEHelp.g:170:2: ( (otherlv_0= 'config' otherlv_1= 'tocpath' ( (lv_path_2_0= RULE_STRING ) ) ) )
+            // InternalEHelp.g:171:2: (otherlv_0= 'config' otherlv_1= 'tocpath' ( (lv_path_2_0= RULE_STRING ) ) )
             {
-            // InternalEHelp.g:171:2: (otherlv_0= 'config' otherlv_1= 'path' ( (lv_path_2_0= RULE_STRING ) ) )
-            // InternalEHelp.g:172:3: otherlv_0= 'config' otherlv_1= 'path' ( (lv_path_2_0= RULE_STRING ) )
+            // InternalEHelp.g:171:2: (otherlv_0= 'config' otherlv_1= 'tocpath' ( (lv_path_2_0= RULE_STRING ) ) )
+            // InternalEHelp.g:172:3: otherlv_0= 'config' otherlv_1= 'tocpath' ( (lv_path_2_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,11,FOLLOW_5); 
 
@@ -470,7 +470,7 @@ public class InternalEHelpParser extends AbstractInternalAntlrParser {
             		
             otherlv_1=(Token)match(input,12,FOLLOW_6); 
 
-            			newLeafNode(otherlv_1, grammarAccess.getConfigPathAccess().getPathKeyword_1());
+            			newLeafNode(otherlv_1, grammarAccess.getConfigPathAccess().getTocpathKeyword_1());
             		
             // InternalEHelp.g:180:3: ( (lv_path_2_0= RULE_STRING ) )
             // InternalEHelp.g:181:4: (lv_path_2_0= RULE_STRING )
@@ -557,7 +557,7 @@ public class InternalEHelpParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConfigHome"
-    // InternalEHelp.g:209:1: ruleConfigHome returns [EObject current=null] : (otherlv_0= 'config' otherlv_1= 'home' ( (lv_home_2_0= RULE_STRING ) ) ) ;
+    // InternalEHelp.g:209:1: ruleConfigHome returns [EObject current=null] : (otherlv_0= 'config' otherlv_1= 'copyfile' ( (lv_home_2_0= RULE_STRING ) ) ) ;
     public final EObject ruleConfigHome() throws RecognitionException {
         EObject current = null;
 
@@ -569,11 +569,11 @@ public class InternalEHelpParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalEHelp.g:215:2: ( (otherlv_0= 'config' otherlv_1= 'home' ( (lv_home_2_0= RULE_STRING ) ) ) )
-            // InternalEHelp.g:216:2: (otherlv_0= 'config' otherlv_1= 'home' ( (lv_home_2_0= RULE_STRING ) ) )
+            // InternalEHelp.g:215:2: ( (otherlv_0= 'config' otherlv_1= 'copyfile' ( (lv_home_2_0= RULE_STRING ) ) ) )
+            // InternalEHelp.g:216:2: (otherlv_0= 'config' otherlv_1= 'copyfile' ( (lv_home_2_0= RULE_STRING ) ) )
             {
-            // InternalEHelp.g:216:2: (otherlv_0= 'config' otherlv_1= 'home' ( (lv_home_2_0= RULE_STRING ) ) )
-            // InternalEHelp.g:217:3: otherlv_0= 'config' otherlv_1= 'home' ( (lv_home_2_0= RULE_STRING ) )
+            // InternalEHelp.g:216:2: (otherlv_0= 'config' otherlv_1= 'copyfile' ( (lv_home_2_0= RULE_STRING ) ) )
+            // InternalEHelp.g:217:3: otherlv_0= 'config' otherlv_1= 'copyfile' ( (lv_home_2_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,11,FOLLOW_7); 
 
@@ -581,7 +581,7 @@ public class InternalEHelpParser extends AbstractInternalAntlrParser {
             		
             otherlv_1=(Token)match(input,13,FOLLOW_6); 
 
-            			newLeafNode(otherlv_1, grammarAccess.getConfigHomeAccess().getHomeKeyword_1());
+            			newLeafNode(otherlv_1, grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1());
             		
             // InternalEHelp.g:225:3: ( (lv_home_2_0= RULE_STRING ) )
             // InternalEHelp.g:226:4: (lv_home_2_0= RULE_STRING )

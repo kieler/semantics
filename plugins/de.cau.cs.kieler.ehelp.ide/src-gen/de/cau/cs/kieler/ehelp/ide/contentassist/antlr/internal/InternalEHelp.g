@@ -651,9 +651,9 @@ rule__ConfigPath__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getConfigPathAccess().getPathKeyword_1()); }
-	'path'
-	{ after(grammarAccess.getConfigPathAccess().getPathKeyword_1()); }
+	{ before(grammarAccess.getConfigPathAccess().getTocpathKeyword_1()); }
+	'tocpath'
+	{ after(grammarAccess.getConfigPathAccess().getTocpathKeyword_1()); }
 )
 ;
 finally {
@@ -732,9 +732,9 @@ rule__ConfigHome__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getConfigHomeAccess().getHomeKeyword_1()); }
-	'home'
-	{ after(grammarAccess.getConfigHomeAccess().getHomeKeyword_1()); }
+	{ before(grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1()); }
+	'copyfile'
+	{ after(grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1()); }
 )
 ;
 finally {

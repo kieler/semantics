@@ -173,9 +173,9 @@ ruleConfigPath returns [EObject current=null]
 		{
 			newLeafNode(otherlv_0, grammarAccess.getConfigPathAccess().getConfigKeyword_0());
 		}
-		otherlv_1='path'
+		otherlv_1='tocpath'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getConfigPathAccess().getPathKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getConfigPathAccess().getTocpathKeyword_1());
 		}
 		(
 			(
@@ -218,9 +218,9 @@ ruleConfigHome returns [EObject current=null]
 		{
 			newLeafNode(otherlv_0, grammarAccess.getConfigHomeAccess().getConfigKeyword_0());
 		}
-		otherlv_1='home'
+		otherlv_1='copyfile'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getConfigHomeAccess().getHomeKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1());
 		}
 		(
 			(

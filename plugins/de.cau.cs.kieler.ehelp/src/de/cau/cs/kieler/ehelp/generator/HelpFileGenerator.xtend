@@ -121,7 +121,7 @@ class HelpFileGenerator {
                                 val subchapter2 = subchapter as Chapter
                                 if (subchapter2 != null) {
                                     returnText +=
-                                        '''<li><a href="«chapter.path»«subchapter2.fileName».«EHelpConsts.htmlFileExtension»">«subchapter2.title»</a></li>'''
+                                        '''<li><a href="«subchapter2.fileName».«EHelpConsts.htmlFileExtension»">«subchapter2.title»</a></li>'''
                                 }
                             }
                             returnText += '''</ol></p>'''
@@ -217,7 +217,7 @@ class HelpFileGenerator {
 		     class="MsoNormal">
 		     «FOR image : content.images»
 		      <span><img
-		       src="«content.path»«EHelpConsts.imageSubFolderName»/«image»"></span>		     
+		       src="«EHelpConsts.imageSubFolderName»/«image»"></span>		     
 		     «ENDFOR»
 		    </p>'''
             }
@@ -227,9 +227,9 @@ class HelpFileGenerator {
             // Link
             private def dispatch String expandContent(Link content, boolean linksOff) {
                 if (!linksOff) {
-                    return '''<a href="«content.path»«content.link.fileName».«EHelpConsts.htmlFileExtension»">«content.caption»</a>'''
+                    return '''<a href="«content.link.fileName».«EHelpConsts.htmlFileExtension»">«content.caption»</a>'''
                 } else {
-                    return '''<a href="«content.path»#«content.link.chaperIndex»">«content.caption»</a>'''
+                    return '''<a href="#«content.link.chaperIndex»">«content.caption»</a>'''
                 }
             }
 

@@ -13,11 +13,11 @@ Config:
 ;     
 
 ConfigPath:
-       'config' 'path' path=STRING
+       'config' 'tocpath' path=STRING
 ;
 
 ConfigHome:
-       'config' 'home' home=STRING
+       'config' 'copyfile' home=STRING
 ;	
 	
 

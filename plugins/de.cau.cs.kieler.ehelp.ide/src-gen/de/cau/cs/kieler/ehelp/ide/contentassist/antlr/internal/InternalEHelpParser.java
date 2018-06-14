@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEHelpParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'config'", "'path'", "'home'", "'chapter'", "'{'", "'}'", "'list'", "'enum'", "'-'", "'table'", "'spacing'", "'='", "'|'", "'?'", "'!'", "'['", "']'", "'stretch'", "'center'", "'left'", "'right'", "'top'", "'middle'", "'bottom'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'config'", "'tocpath'", "'copyfile'", "'chapter'", "'{'", "'}'", "'list'", "'enum'", "'-'", "'table'", "'spacing'", "'='", "'|'", "'?'", "'!'", "'['", "']'", "'stretch'", "'center'", "'left'", "'right'", "'top'", "'middle'", "'bottom'"
     };
     public static final int RULE_STRING=4;
     public static final int RULE_SL_COMMENT=8;
@@ -1985,21 +1985,21 @@ public class InternalEHelpParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConfigPath__Group__1__Impl"
-    // InternalEHelp.g:648:1: rule__ConfigPath__Group__1__Impl : ( 'path' ) ;
+    // InternalEHelp.g:648:1: rule__ConfigPath__Group__1__Impl : ( 'tocpath' ) ;
     public final void rule__ConfigPath__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalEHelp.g:652:1: ( ( 'path' ) )
-            // InternalEHelp.g:653:1: ( 'path' )
+            // InternalEHelp.g:652:1: ( ( 'tocpath' ) )
+            // InternalEHelp.g:653:1: ( 'tocpath' )
             {
-            // InternalEHelp.g:653:1: ( 'path' )
-            // InternalEHelp.g:654:2: 'path'
+            // InternalEHelp.g:653:1: ( 'tocpath' )
+            // InternalEHelp.g:654:2: 'tocpath'
             {
-             before(grammarAccess.getConfigPathAccess().getPathKeyword_1()); 
+             before(grammarAccess.getConfigPathAccess().getTocpathKeyword_1()); 
             match(input,12,FOLLOW_2); 
-             after(grammarAccess.getConfigPathAccess().getPathKeyword_1()); 
+             after(grammarAccess.getConfigPathAccess().getTocpathKeyword_1()); 
 
             }
 
@@ -2215,21 +2215,21 @@ public class InternalEHelpParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConfigHome__Group__1__Impl"
-    // InternalEHelp.g:729:1: rule__ConfigHome__Group__1__Impl : ( 'home' ) ;
+    // InternalEHelp.g:729:1: rule__ConfigHome__Group__1__Impl : ( 'copyfile' ) ;
     public final void rule__ConfigHome__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalEHelp.g:733:1: ( ( 'home' ) )
-            // InternalEHelp.g:734:1: ( 'home' )
+            // InternalEHelp.g:733:1: ( ( 'copyfile' ) )
+            // InternalEHelp.g:734:1: ( 'copyfile' )
             {
-            // InternalEHelp.g:734:1: ( 'home' )
-            // InternalEHelp.g:735:2: 'home'
+            // InternalEHelp.g:734:1: ( 'copyfile' )
+            // InternalEHelp.g:735:2: 'copyfile'
             {
-             before(grammarAccess.getConfigHomeAccess().getHomeKeyword_1()); 
+             before(grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1()); 
             match(input,13,FOLLOW_2); 
-             after(grammarAccess.getConfigHomeAccess().getHomeKeyword_1()); 
+             after(grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1()); 
 
             }
 
