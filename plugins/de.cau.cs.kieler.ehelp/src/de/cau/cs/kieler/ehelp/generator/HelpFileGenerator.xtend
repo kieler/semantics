@@ -217,7 +217,7 @@ class HelpFileGenerator {
 		     class="MsoNormal">
 		     «FOR image : content.images»
 		      <span><img
-		       src="«EHelpConsts.imageSubFolderName»/«image»"></span>		     
+		       src="«content.path»«EHelpConsts.imageSubFolderName»/«image»"></span>		     
 		     «ENDFOR»
 		    </p>'''
             }
@@ -468,12 +468,8 @@ class HelpFileGenerator {
                 return ""
             }
             
-            public def path(Chapter chapter) {
+            public def path(EObject chapter) {
                 chapter.model.path
-            }
-            
-            public def path(Link link) {
-                link.model.path
             }
             
             
