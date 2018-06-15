@@ -13,11 +13,12 @@
 package de.cau.cs.kieler.language.server
 
 import java.util.List
+import java.util.LinkedList
 
 /**
  * @author sdo
  *
  */
 class MyCodeContainer {
-    public List<MyTextDocument> files
+    public List<MyTextDocument> files = new LinkedList
 }

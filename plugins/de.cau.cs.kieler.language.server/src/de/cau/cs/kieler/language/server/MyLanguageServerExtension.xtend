@@ -40,6 +40,14 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
 import org.eclipse.xtext.ide.server.IProjectDescriptionFactory
 import java.util.LinkedList
+import de.cau.cs.kieler.kicool.environments.Environment
+import java.util.Map
+import de.cau.cs.kieler.kicool.ProcessorSystem
+import de.cau.cs.kieler.sccharts.impl.SCChartsImpl
+import de.cau.cs.kieler.annotations.impl.PragmatableImpl
+import java.util.List
+import java.io.ByteArrayOutputStream
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
 
 /**
  * @author sdo
@@ -47,8 +55,12 @@ import java.util.LinkedList
  */
 class MyLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
+    @Inject
+    IResourceServiceProvider.Registry xtextRegistry;
 
     protected static val LOG = Logger.getLogger(MyLanguageServerExtension)
+    
+    protected List<EObject> eObjects = new LinkedList
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
 
@@ -61,6 +73,12 @@ class MyLanguageServerExtension implements ILanguageServerExtension, CommandExte
     
     @Inject
     Injector injector
+    
+    Integer index = 100
+    
+    Integer currentModelIndex = 0
+    
+    protected List<MyTextDocument> documents = new LinkedList
     
     
 //    @Inject Provider<IDiagramServer> diagramServerProvider
@@ -99,10 +117,10 @@ class MyLanguageServerExtension implements ILanguageServerExtension, CommandExte
         return _client
     }
     
-    override testen(ExecuteCommandParams params) {
-        
+    override compile(ExecuteCommandParams params) {
+        index = 100
         var string = (params.arguments.get(0) as JsonPrimitive).asString
-        var compilationApproach = (params.arguments.get(1) as JsonPrimitive).asString
+        var compilationSystemId = (params.arguments.get(1) as JsonPrimitive).asString
         if (string.startsWith("file://")) {
             string = string.substring(7) 
         }
@@ -110,24 +128,31 @@ class MyLanguageServerExtension implements ILanguageServerExtension, CommandExte
         var uri = URI.createFileURI(string)
         
         println(uri)
-        println(compilationApproach)
+        println(compilationSystemId)
         // Get resource set
         var resourceSet = uri.xtextResourceSet 
         val resource = resourceSet.getResource(uri, true)
         
-        var test = resource.getContents().head
-        var context = compile(test, (params.arguments.get(1) as JsonPrimitive).asString)
+        var eobject = resource.getContents().head
+        var context = compile(eobject, compilationSystemId)
         
         val model = (context as CompilationContext).result.model
-        var head = (model as CodeContainer).head
-        println(head)
-        
-        
-        val uriC = URI.createFileURI(path + ".c")
-        head = head.replaceAll("\n", "<br>")
-        val htmlhead = head.replaceAll("  ", "&emsp;")
-        val mymodel = convert(model as CodeContainer)
+        val mymodel = new MyCodeContainer
+        for (iResult : context.processorInstancesSequence) {
+            if (convertImpl(iResult.environment.model) !== null) {
+                var tempDocuments = convertImpl(iResult.environment.model).files
+                if (tempDocuments !== null) {
+                    for (document : tempDocuments) {
+                        if (document !== null) {
+                            mymodel.files.add(document)
+                        }
+                    }
+                }
+            }
+        }
         return requestManager.runRead[ cancelIndicator |
+//            values
+//            test as MyCodeContainer
             mymodel as MyCodeContainer
         ]
 //        requestManager.runWrite([
@@ -135,6 +160,24 @@ class MyLanguageServerExtension implements ILanguageServerExtension, CommandExte
 //        ], [/*cancelIndicator , buildable | 
 //            buildable.build(cancelIndicator)*/
 //        ])
+    }
+    
+    def convertImpl(Object impl) {
+        if (impl instanceof CodeContainer) {
+            println("Have CodeContainer")
+            var cc = convert(impl as CodeContainer)
+            documents.addAll(cc.files)
+            return cc
+        }
+//        val mcc = new MyCodeContainer();
+//        mcc.files = new LinkedList<MyTextDocument>
+//        this.eObjects.add(impl as PragmatableImpl)
+//        mcc.files.add(transform(impl as EObject))
+        var textDocument = transform(impl as EObject)
+        if (textDocument !== null) {
+            this.documents.add(textDocument as MyTextDocument)
+        }
+        return null
     }
     
     def convert(CodeContainer cc) {
@@ -164,10 +207,63 @@ class MyLanguageServerExtension implements ILanguageServerExtension, CommandExte
     }
     
     private def compile(EObject eobject, String systemId) {
-        val context = Compile.createCompilationContext('de.cau.cs.kieler.sccharts.netlist', eobject)
+        val context = Compile.createCompilationContext(systemId, eobject)
 
         context.compile
         
         return context
     }
+    
+    def MyTextDocument transform(EObject model) {
+        // TODO adapt to kicool
+        // btw, kicoUtil.serialize is too unstructured. Redo for this purpose.
+        var String serialized = null
+        index++
+        if (ResourceExtension.getResourceExtension(model) !== null){
+            val outputStream = new ByteArrayOutputStream
+            val ext = ResourceExtension.getResourceExtension(model).fileExtension
+            val uri = URI.createURI(#["inmemory:/", model.hashCode, ".", ext].join)
+            val provider = xtextRegistry.getResourceServiceProvider(uri)
+            val rset = provider.get(XtextResourceSet)
+            var res = rset.createResource(uri)
+            if (res !== null) {
+                res.contents += model
+                res.save(outputStream, emptyMap)
+                serialized = outputStream.toString
+            } else {
+                println("Did not come here")
+            }
+            return new MyTextDocument("model" + index +  "." + ext, serialized)   
+        }  
+    }
+    
+    override showNext(ExecuteCommandParams params) {
+        currentModelIndex = Math.min(currentModelIndex + 1, documents.length - 1)
+        return requestManager.runRead[ cancelIndicator |
+            documents.get(currentModelIndex) as MyTextDocument
+        ]
+    }
+    
+    override showPrevious(ExecuteCommandParams params) {
+        currentModelIndex = Math.max(currentModelIndex -1, 0)
+        return requestManager.runRead[ cancelIndicator |
+            documents.get(currentModelIndex) as MyTextDocument
+        ]
+    }
+    
+    override showOriginal(ExecuteCommandParams params) {
+        currentModelIndex = 0
+        return requestManager.runRead[ cancelIndicator |
+            documents.get(currentModelIndex) as MyTextDocument
+        ]
+        
+    }
+    
+    override showLast(ExecuteCommandParams params) {
+        currentModelIndex = documents.length - 1
+        return requestManager.runRead[ cancelIndicator |
+            documents.get(currentModelIndex) as MyTextDocument
+        ]
+    }
+    
 }

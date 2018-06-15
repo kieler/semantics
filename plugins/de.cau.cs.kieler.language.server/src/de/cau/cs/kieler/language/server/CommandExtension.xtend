@@ -29,7 +29,19 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 @JsonSegment('compile')
 interface CommandExtension {
     @JsonRequest('testen')
-    def CompletableFuture<MyCodeContainer> testen(ExecuteCommandParams params);  
+    def CompletableFuture<Object> compile(ExecuteCommandParams params);
+    
+    @JsonRequest('show_next')
+    def CompletableFuture<Object> showNext(ExecuteCommandParams params)
+    
+    @JsonRequest('show_previous')
+    def CompletableFuture<Object> showPrevious(ExecuteCommandParams params)
+    
+    @JsonRequest('show_original')
+    def CompletableFuture<Object> showOriginal(ExecuteCommandParams params)
+    
+    @JsonRequest('show_last')
+    def CompletableFuture<Object> showLast(ExecuteCommandParams params)
     
     @JsonNotification
     def void didTesten(MyParams params); 

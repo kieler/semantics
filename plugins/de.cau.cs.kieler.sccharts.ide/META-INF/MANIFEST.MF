@@ -15,7 +15,8 @@ Require-Bundle: org.antlr.runtime,
  com.google.gson;bundle-version="2.7.0",
  org.apache.log4j;bundle-version="1.2.15",
  org.eclipse.lsp4j;bundle-version="0.2.0",
- org.eclipse.lsp4j.jsonrpc;bundle-version="0.2.0"
+ org.eclipse.lsp4j.jsonrpc;bundle-version="0.2.0",
+ org.eclipse.lsp4j.generator;bundle-version="0.4.1"
 Export-Package: de.cau.cs.kieler.sccharts.ide.text,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal
