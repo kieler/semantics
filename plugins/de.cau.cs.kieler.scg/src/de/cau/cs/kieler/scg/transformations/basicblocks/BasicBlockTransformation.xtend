@@ -50,6 +50,7 @@ import java.util.logging.Level
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -265,6 +266,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         // Each guard is identified by its unique name and is of boolean type.
         val guardValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
         guardValuedObject.name = GUARDPREFIX + newIndex.toString
+        VariableStore.store(environment).add(guardValuedObject, "guard")
 //        guard.type = ValueType::BOOL;
         
         // Increase the index for successive iterative calls.

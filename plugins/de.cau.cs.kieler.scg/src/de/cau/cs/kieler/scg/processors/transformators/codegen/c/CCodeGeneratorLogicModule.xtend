@@ -36,6 +36,8 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.PrintCall
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * C Code Generator Logic Module
@@ -222,6 +224,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
         // Add the pre variable to the variables hashes to mark it handled.    
         preVariables += name.toString
+        VariableStore.store(processorInstance.environment).add(name, "guard", "preGuard").type = ValueType.BOOL
         
         // Add the variable to the data struct.
         struct.code.append(indentation +  "char ")

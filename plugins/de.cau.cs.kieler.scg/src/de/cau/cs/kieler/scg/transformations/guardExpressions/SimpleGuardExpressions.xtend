@@ -61,6 +61,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -114,6 +115,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     protected val conditionalGuards = <Conditional, Guard>newHashMap
     
     override SCGraph createGuards(SCGraph scg) {
+        val voStore = VariableStore.getVariableStore(environment)
         val timestamp = System.currentTimeMillis
         
         /**
@@ -167,6 +169,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             if (conditional !== null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
                 newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name.replaceFirst("^_", "")
+                voStore.add(newVO, "guard", "conditionalGuard")
 
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = newVO

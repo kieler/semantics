@@ -57,6 +57,7 @@ class VariableStore implements IKiCoolCloneable {
     @Accessors
     val variables = HashMultimap.<String, VariableInformation>create
     
+    
     static def getVariableStore(Environment env) {
         var store = env.getProperty(STORE)
         if (store === null) {
@@ -66,6 +67,11 @@ class VariableStore implements IKiCoolCloneable {
         return store
     }
     
+    // alias
+    static def store(Environment env) {
+        getVariableStore(env)
+    }
+    
     def initialize(EObject root) {
         for (decl : root.eAllContents.filter(VariableDeclaration).toIterable) {
             for (vo : decl.valuedObjects) {
@@ -73,12 +79,14 @@ class VariableStore implements IKiCoolCloneable {
             }
         }
     }
+
+    // Convenance for Valued Objects
     
-    def add(ValuedObject vo, String... properties) {
+    def VariableInformation add(ValuedObject vo, String... properties) {
         update(vo, new VariableInformation, properties)
     }
     
-    def update(ValuedObject vo, String... properties) {
+    def VariableInformation update(ValuedObject vo, String... properties) {
         var info = variables.get(vo.name).findFirst[valuedObject == vo]
         if (info === null) {
             val entry = variables.entries.findFirst[value.valuedObject == vo]
@@ -94,7 +102,7 @@ class VariableStore implements IKiCoolCloneable {
         update(vo, info, properties)
     }
     
-    def update(ValuedObject vo, VariableInformation info, String... properties) {
+    def VariableInformation update(ValuedObject vo, VariableInformation info, String... properties) {
         val decl = vo.eContainer
         
         info.valuedObject = vo
@@ -123,6 +131,17 @@ class VariableStore implements IKiCoolCloneable {
     def remove(ValuedObject vo) {
         variables.values.removeIf[valuedObject == vo]
     }
+    
+    // Functions without VO
+        
+    def VariableInformation add(CharSequence name, String... properties) {
+        val info = new VariableInformation => [it.properties += properties]
+        variables.put(name.toString, info)
+        return info
+    }
+    
+    
+    // Clonable
     
     override isMutable() {
         true
@@ -187,6 +206,13 @@ class VariableInformation {
     
     def isArray() {
         return dimensions > 0
+    }
+    
+    def setType(ValueType type) {
+        if (typeName.nullOrEmpty) {
+            typeName = type.literal
+        }
+        this.type = type
     }
     
 }

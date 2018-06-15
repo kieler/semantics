@@ -126,7 +126,6 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                 
                 «FOR v : store.variables.keySet»
                     // Send «v»
-                    item = cJSON_CreateObject();
                     «IF store.variables.get(v).head.isArray»
                     «store.serializeArray(v)»
                     «ELSE»
