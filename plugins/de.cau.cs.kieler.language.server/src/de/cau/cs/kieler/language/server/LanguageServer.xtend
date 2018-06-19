@@ -62,7 +62,7 @@ class LanguageServer implements IApplication {
         
         new SCTXIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new MyServerModule))
+                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new SCChartsServerModule))
             }
         }.createInjectorAndDoEMFRegistration()
         

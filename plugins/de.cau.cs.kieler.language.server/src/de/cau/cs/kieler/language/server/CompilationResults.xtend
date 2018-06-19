@@ -19,6 +19,6 @@ import java.util.LinkedList
  * @author sdo
  *
  */
-class MyCodeContainer {
-    public List<MyTextDocument> files = new LinkedList
+class CompilationResults {
+    public List<TextDocument> files = new LinkedList
 }
