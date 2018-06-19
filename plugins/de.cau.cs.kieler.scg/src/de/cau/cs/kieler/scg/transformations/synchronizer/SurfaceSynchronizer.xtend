@@ -161,6 +161,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             newGuard.valuedObject = emptyExp.valuedObject
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
+            newGuards += newGuard
             emptyDeclaration.valuedObjects += newGuard.valuedObject
             
             SCGPlugin.log("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize, Level.FINE)

@@ -16,3 +16,4 @@ post process de.cau.cs.kieler.scg.processors.conditionalMerger
 post process de.cau.cs.kieler.scg.processors.haltStateRemover
 post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
 post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
+post process de.cau.cs.kieler.kicool.deploy.variable.store.clean

@@ -80,8 +80,6 @@ class Static extends SCChartsProcessor implements Traceable {
     // This is applied for all superstates that contain static variable declarations.
     //
     def State transform(State rootState) {
-        rootState.transformValuedObjectRise(environment)
-        
         // Traverse all states
         for (targetTransition : rootState.getAllStates.toList) {
             targetTransition.transformStatic(rootState)

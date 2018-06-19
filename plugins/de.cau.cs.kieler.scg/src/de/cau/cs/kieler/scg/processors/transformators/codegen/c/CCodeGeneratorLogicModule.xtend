@@ -224,7 +224,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
         // Add the pre variable to the variables hashes to mark it handled.    
         preVariables += name.toString
-        VariableStore.store(processorInstance.environment).add(name, "guard", "preGuard").type = ValueType.BOOL
+        VariableStore.get(processorInstance.environment).add(name, "guard", "preGuard").type = ValueType.BOOL
         
         // Add the variable to the data struct.
         struct.code.append(indentation +  "char ")

@@ -29,13 +29,13 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 /**
- * SCCharts During Transformation.
+ * SCCharts Region Actions Transformation.
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
+ * @author als
+ * @kieler.design 2018-04-05 proposed 
+ * @kieler.rating 2018-04-05 proposed yellow
  */
-class RegionActions extends SCChartsProcessor implements Traceable {
+class RegionActionsAndDeclarations extends SCChartsProcessor implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -63,35 +63,50 @@ class RegionActions extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension ComplexFinalState
-
+    
+    // This prefix is used for naming of all generated signals, states and regions
+    static public final String GENERATED_PREFIX = "_"
    
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
     }
 
     def void transform(State rootState) {
-        for (region : rootState.allContainedControlflowRegions.filter[!actions.empty].toList) {
-            val newState = createInitialState(region.name)
-            newState.label = ""
-            val newRegion = newState.createControlflowRegion(region.name)
-            newRegion.label = region.label
-            region.label = ""
-            
-            // move content     
-            newRegion.states.addAll(region.states)
-            newState.actions.addAll(region.actions)
-            newState.declarations.addAll(region.declarations)
-            
-            // Add new State
-            region.states += newState
-            
-            // Fix termination
-            if (newRegion.states.exists[final]) {
-                for (s : newRegion.states.filter[isComplexFinalState]) {
-                    environment.errors.add("Cannot handle complex final states.", s, true)
+        for (region : rootState.allContainedControlflowRegions.filter[!actions.empty || !declarations.empty].toList) {
+            if (region.actions.empty) {
+                val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region) + GENERATED_PREFIX + region.name
+                
+                for (valuedObject : region.declarations.map[valuedObjects].flatten) {
+                    valuedObject.setName(regionId + GENERATED_PREFIX +
+                        valuedObject.name)
+                    voStore.update(valuedObject)
                 }
-                val newFinalState = region.createFinalState("_Done")
-                newState.createTransitionTo(newFinalState).setTypeTermination
+                
+                region.parentState.declarations.addAll(region.declarations)
+                
+            } else {
+                val newState = createInitialState(region.name)
+                newState.label = ""
+                val newRegion = newState.createControlflowRegion(region.name)
+                newRegion.label = region.label
+                region.label = ""
+                
+                // move content     
+                newRegion.states.addAll(region.states)
+                newState.actions.addAll(region.actions)
+                newState.declarations.addAll(region.declarations)
+                
+                // Add new State
+                region.states += newState
+                
+                // Fix termination
+                if (newRegion.states.exists[final]) {
+                    for (s : newRegion.states.filter[isComplexFinalState]) {
+                        environment.errors.add("Cannot handle complex final states.", s, true)
+                    }
+                    val newFinalState = region.createFinalState("_Done")
+                    newState.createTransitionTo(newFinalState).setTypeTermination
+                }
             }
         }
     }

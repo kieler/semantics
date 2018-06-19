@@ -169,7 +169,6 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             if (conditional !== null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
                 newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name.replaceFirst("^_", "")
-                voStore.add(newVO, "guard", "conditionalGuard")
 
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = newVO
@@ -181,6 +180,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
                 conditionalGuards.put(conditional, newGuard)
                 conditionalDeclaration.valuedObjects += newVO
+                voStore.add(newVO, "guard", "conditionalGuard")
                 SCGPlugin.log(
                     "Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " +
                         newGuard.expression.serialize + ", " + newGuard.valuedObject, Level.FINE)
@@ -488,6 +488,12 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         //        }
         synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, this,
             schedulingBlockCache)
+                
+        // Add empty guards to VariableStore
+        val voStore = VariableStore.get(environment)
+        synchronizer.newGuards.forEach[
+            voStore.add(it.valuedObject, "guard", "emptyGuard")
+        ]
 
 //        val newGuards = synchronizer.newGuards
 

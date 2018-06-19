@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -73,6 +74,7 @@ abstract class AbstractGuardExpressions extends InplaceProcessor<SCGraphs> {
         // Don't forget to add it to the SCG.
         createValuedObject(GO_GUARD_NAME) => [
             scg.declarations += createBoolDeclaration.attach(it)    
+            VariableStore.get(environment).add(it, "guard", "goGuard")
         ]
     }
     

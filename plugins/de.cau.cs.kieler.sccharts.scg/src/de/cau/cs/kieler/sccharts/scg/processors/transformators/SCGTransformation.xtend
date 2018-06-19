@@ -243,12 +243,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     }
     
     def SCGraph transformSCG(State rootState) {
-
+        val voStore = VariableStore.get(environment)
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
-
-        // Expose local variables
-        scopeList.transformLocalValuedObjectCached(rootState, uniqueNameCache)
 
         // Clear mappings
         resetMapping
@@ -273,10 +270,14 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         // }
         for (declaration : rootState.declarations) {
             val newDeclaration = createDeclaration(declaration).trace(declaration)
-            declaration.valuedObjects.forEach [
-                val newValuedObject = it.copy
+            declaration.valuedObjects.forEach [ oldVO |
+                val newValuedObject = oldVO.copy
                 newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.map(it)
+                newValuedObject.map(oldVO)
+                
+                // Fix VO association in VariableStore
+                val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
+                if (info !== null) info.valuedObject = newValuedObject
             ]
             sCGraph.declarations += newDeclaration
         }
@@ -872,40 +873,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             rc.valuedObject = referenceCall.valuedObject.getSCGValuedObject
             referenceCall.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
         ]
-    }
-    
-    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, UniqueNameCache nameCache) {
-        val voStore = VariableStore.getVariableStore(environment)
-        
-        // Traverse all states
-        for (scope : scopeList) {
-            scope.transformExposeLocalValuedObjectCached(targetScope, false, nameCache, voStore);
-        }
-    }
-
-    // Traverse all states and transform possible local valuedObjects.
-    def void transformExposeLocalValuedObjectCached(Scope scope, Scope targetScope, boolean expose,
-        UniqueNameCache nameCache, VariableStore voStore) {
-
-        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
-        // and wherever the local valuedObject is emitted, also emit the new global 
-        // valuedObject.
-        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
-        // Exclude the top level state
-        if (scope == targetScope) {
-            return;
-        }
-
-        var hierarchicalScopeName = targetScope.getHierarchicalName("local")
-        for(declaration : scope.declarations.immutableCopy) {
-            targetScope.declarations.add(declaration)
-            if (expose && declaration instanceof VariableDeclaration) (declaration as VariableDeclaration).output = true
-            for(valuedObject : declaration.valuedObjects) {
-                valuedObject.name = ("_" + hierarchicalScopeName + "_" + valuedObject.name)
-                valuedObject.uniqueName(nameCache)
-                voStore.update(valuedObject)
-            }
-        }
     }
     
 // -------------------------------------------------------------------------   

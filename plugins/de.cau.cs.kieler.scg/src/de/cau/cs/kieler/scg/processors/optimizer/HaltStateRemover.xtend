@@ -30,6 +30,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * Halt State Remover
@@ -60,6 +61,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
         for (scg : model.scgs) {
             scg.performHaltStateRemove
         }
+        VariableStore.get(environment).removeAllUncontainedVO(model, environment)
     }
     
     def performHaltStateRemove(SCGraph scg) {

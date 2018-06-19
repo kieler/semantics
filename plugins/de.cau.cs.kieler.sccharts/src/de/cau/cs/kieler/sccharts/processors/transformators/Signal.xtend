@@ -119,8 +119,6 @@ class Signal extends SCChartsProcessor implements Traceable {
     // input signal S:integer; --> input boolean S; input integer S_val;
     // Transforming a signal to a variable. 
     def State transform(State rootState) {
-        rootState.transformValuedObjectRise(environment)
-        
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformSignal(rootState);

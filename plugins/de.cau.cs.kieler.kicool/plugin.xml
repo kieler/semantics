@@ -53,6 +53,9 @@
             class="de.cau.cs.kieler.kicool.deploy.processor.VariableStoreInitializer">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.VariableStoreCleaner">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.kicool.deploy.processor.JavaCompiler">
       </Processor>
       <Processor

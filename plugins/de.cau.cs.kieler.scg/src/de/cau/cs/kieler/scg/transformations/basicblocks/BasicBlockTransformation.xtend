@@ -174,7 +174,10 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 }
             }
         }
-
+        
+        val voStore = VariableStore.get(environment)
+        basicBlockGuardCache.keySet.forEach[voStore.add(it, "guard")]
+        
         scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float
@@ -266,7 +269,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         // Each guard is identified by its unique name and is of boolean type.
         val guardValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
         guardValuedObject.name = GUARDPREFIX + newIndex.toString
-        VariableStore.store(environment).add(guardValuedObject, "guard")
 //        guard.type = ValueType::BOOL;
         
         // Increase the index for successive iterative calls.

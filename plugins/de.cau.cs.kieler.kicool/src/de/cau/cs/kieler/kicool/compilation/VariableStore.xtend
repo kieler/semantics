@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.compilation
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
@@ -25,7 +26,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
-import de.cau.cs.kieler.kexpressions.ValueType
+import com.google.common.collect.Sets
+import org.eclipse.xtend.lib.annotations.ToString
 
 /**
  * @author als
@@ -68,7 +70,7 @@ class VariableStore implements IKiCoolCloneable {
     }
     
     // alias
-    static def store(Environment env) {
+    static def get(Environment env) {
         getVariableStore(env)
     }
     
@@ -131,6 +133,37 @@ class VariableStore implements IKiCoolCloneable {
     def remove(ValuedObject vo) {
         variables.values.removeIf[valuedObject == vo]
     }
+
+    def void removeAllUncontainedVO(EObject eObject, Environment env) {
+        removeAllUncontainedVO(eObject, env, false, false)
+    }
+    
+    def void removeAllUncontainedVO(EObject eObject, Environment env, boolean checkNonVO, boolean warning) {
+        val containedVOs = eObject.eAllContents.filter(ValuedObject).toSet
+        variables.entries.removeIf[
+            val remove = (it.value.valuedObject !== null || checkNonVO) && !containedVOs.contains(it.value.valuedObject)
+            if (remove && warning) {
+                if (it.value.valuedObject !== null) {
+                    env.warnings.add("Removing ValuedObject " + (it.value.valuedObject.name)?:"null" + " from VariableStore since it is no longer contained in the model.")
+                } else {
+                    env.warnings.add("Removing entry " + it.key + " without ValuedObject association from VariableStore.")
+                }
+            }
+            return remove
+        ]
+    }
+    
+    def void matchAllVOs(EObject eObject, Environment env, boolean error) {
+        val containedVOs = eObject.eAllContents.filter(ValuedObject).toSet
+        val markedVOs = variables.values.map[valuedObject].toSet
+        
+        Sets.difference(containedVOs, markedVOs).forEach[
+            (if (error) env.errors else env.warnings).add("ValuedObject with name " + it.name + " is contained in the model but not in VariableStore.")
+        ]
+        Sets.difference(markedVOs, containedVOs).forEach[
+            (if (error) env.errors else env.warnings).add("ValuedObject with name " + it.name + " is registered in the VariableStore but not contained in the model.")
+        ]        
+    }
     
     // Functions without VO
         
@@ -167,11 +200,12 @@ class VariableStore implements IKiCoolCloneable {
     }
     
     def isAmbiguous() {
-        return variables.keySet.size != variables.values.size
+        return variables.keySet.size != variables.entries.size
     }
     
 }
 
+@ToString
 class VariableInformation {
     
     /** OPTIONAL VO reference */
@@ -213,6 +247,21 @@ class VariableInformation {
             typeName = type.literal
         }
         this.type = type
+    }
+    
+    def inferType() {
+        if (type !== null) {
+            return type
+        }
+        if (!typeName.nullOrEmpty) {
+            val t = ValueType.get(typeName)
+            if (t !== null) {
+                return t
+            } else {
+                return ValueType.getByName(typeName)
+            }
+        }
+        return null
     }
     
 }
