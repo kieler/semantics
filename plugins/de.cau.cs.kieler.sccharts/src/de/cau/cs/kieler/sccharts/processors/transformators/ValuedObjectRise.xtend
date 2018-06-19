@@ -79,9 +79,14 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
         for(declaration : scope.declarations.immutableCopy) {
             targetScope.declarations.add(declaration)
             for(valuedObject : declaration.valuedObjects) {
-                valuedObject.name = ("_" + hierarchicalScopeName + "_" + valuedObject.name)
+                val oldName = valuedObject.name
+                valuedObject.name = "_" + hierarchicalScopeName + "_" + valuedObject.name
                 valuedObject.uniqueName
-                voStore.update(valuedObject)
+                if (voStore.variables.containsKey(oldName)) {
+                    voStore.update(valuedObject)
+                } else {
+                    voStore.add(valuedObject)
+                }
             }
         }
     }

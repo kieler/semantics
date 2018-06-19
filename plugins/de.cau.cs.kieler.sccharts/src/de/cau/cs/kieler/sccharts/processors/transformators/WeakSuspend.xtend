@@ -118,6 +118,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).uniqueName(nameCache)
             weakSuspendFlag.setInitialValue(FALSE)
+            voStore.add(weakSuspendFlag, SCCHARTS_GENERATED)
  
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
@@ -134,6 +135,8 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.name, createIntDeclaration).uniqueName(nameCache)
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
+                voStore.add(stateBookmark, SCCHARTS_GENERATED)
+                
                 var counter = 0
                 val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).uniqueName(nameCache)
 

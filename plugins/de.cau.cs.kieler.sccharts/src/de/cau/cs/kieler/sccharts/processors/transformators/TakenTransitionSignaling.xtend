@@ -96,11 +96,13 @@ class TakenTransitionSignaling extends SCChartsProcessor {
                 // Create transition array
                 val transitionArrayDecl = createIntDeclaration
                 val transitionArray = newRootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
-                voStore.add(transitionArray, SCCHARTS_GENERATED, "simulation")
                 // Create assignments to taken transition array
                 rootState.createEmitForTakenTransitions(transitions, transitionArray)
                 // Create reset region
                 newRootState.createResetRegion(transitionArray)
+                
+                // Regiser in VO Store
+                voStore.add(transitionArray, SCCHARTS_GENERATED, "simulation")
             }
         }
     }

@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
  */
 abstract class SCChartsProcessor extends InplaceProcessor<SCCharts> {
     
-    public static val SCCHARTS_GENERATED = "generated-sccharts"
+    public static val SCCHARTS_GENERATED = "sccharts-generated"
     
     var VariableStore voStore = null
     
