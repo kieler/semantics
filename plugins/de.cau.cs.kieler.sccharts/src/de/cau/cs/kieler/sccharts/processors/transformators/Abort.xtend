@@ -86,7 +86,6 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension AnnotationsExtensions
-    @Inject extension Termination
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsTransformationExtension
     @Inject extension SCChartsScopeExtensions
@@ -95,6 +94,7 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_A"
@@ -108,7 +108,7 @@ class Abort extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     // Transforming Aborts.
     def State transform(State rootState) {
-
+        termTrans.setEnvironment(environments.source, environments.target)
         nameCache.clear
 
         // Traverse all states
