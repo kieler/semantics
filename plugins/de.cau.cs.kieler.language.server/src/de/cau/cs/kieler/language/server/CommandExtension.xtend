@@ -13,14 +13,9 @@
 package de.cau.cs.kieler.language.server
 
 import java.util.concurrent.CompletableFuture
-import org.eclipse.lsp4j.DidChangeWatchedFilesParams
 import org.eclipse.lsp4j.ExecuteCommandParams
-import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import org.eclipse.lsp4j.jsonrpc.validation.NonNull
-import org.eclipse.lsp4j.generator.JsonRpcData
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
  * @author sdo
@@ -42,25 +37,4 @@ interface CommandExtension {
     
     @JsonRequest('show_last')
     def CompletableFuture<Object> showLast(ExecuteCommandParams params)
-    
-    @JsonNotification
-    def void didTesten(MyParams params); 
-}
-
-
-@JsonRpcData
-class MyParams {
-    /**
-     * The identifier of the actual command handler.
-     */
-    @NonNull
-    String command
-    
-    
-    new() {
-    }
-    
-    new(@NonNull String command) {
-        this.command = command
-    }
 }

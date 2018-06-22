@@ -14,8 +14,6 @@ package de.cau.cs.kieler.language.server
 
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.service.AbstractGenericModule
-import com.google.inject.Inject
-import org.eclipse.xtext.ide.server.WorkspaceManager
 
 /**
  * @author sdo

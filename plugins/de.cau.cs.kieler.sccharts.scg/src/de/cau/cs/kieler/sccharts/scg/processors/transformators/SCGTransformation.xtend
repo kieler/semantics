@@ -142,8 +142,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsFixExtensions
 
-    private static val Injector i = SCTXStandaloneSetup::doSetup();
-    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
+//    private static val Injector i = SCTXStandaloneSetup::doSetup();
+//    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
 
     private val stateTypeCache = <State, Set<de.cau.cs.kieler.sccharts.scg.PatternType>>newHashMap
     private val uniqueNameCache = new UniqueNameCache

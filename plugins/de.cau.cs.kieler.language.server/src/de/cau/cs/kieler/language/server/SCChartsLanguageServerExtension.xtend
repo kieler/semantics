@@ -17,7 +17,6 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import java.io.ByteArrayOutputStream
@@ -111,11 +110,10 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         if (string.startsWith("file://")) {
             string = string.substring(7) 
         }
-        var path = string.substring(0, string.length - 5) // throw away .sctx
         var uri = URI.createFileURI(string)
         
-        println(uri)
-        println(compilationSystemId)
+//        println(uri)
+//        println(compilationSystemId)
         // Get resource set
         var resourceSet = uri.xtextResourceSet 
         val resource = resourceSet.getResource(uri, true)
@@ -123,7 +121,6 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         var eobject = resource.getContents().head
         var context = compile(eobject, compilationSystemId)
         
-        val model = (context as CompilationContext).result.model
         val mymodel = new CompilationResults
         for (iResult : context.processorInstancesSequence) {
             var convertedImpl = convertImpl(iResult.environment.model, originalUri)
@@ -138,7 +135,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 }
             }
         }
-        println("Send TextDocuments")
+//        println("Send TextDocuments")
         return requestManager.runRead[ cancelIndicator |
 //            values
 //            test as MyCodeContainer
@@ -153,7 +150,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     
     def convertImpl(Object impl, String uri) {
         if (impl instanceof CodeContainer) {
-            println("Have CodeContainer")
+//            println("Have CodeContainer")
             var cc = convert(impl as CodeContainer)
             
             this.resultMap.get(uri).addAll(cc.files)
@@ -177,30 +174,20 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         mcc.files = new LinkedList();
         cc.files.forEach[key, value | mcc.files.add(new TextDocument(key, value))]
         return mcc
-    }
-    
-    override didTesten(MyParams params) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-    
-    
+    }   
     
     
     /**
      * @return the correct XtextResourceSet for the given uri based in its file extension.
      */
     def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
-        if (injector !== null) {
-            return injector.getInstance(XtextResourceSet);
-        } else {
-            val registry = Guice.createInjector().getInstance(IResourceServiceProvider.Registry)
-            return registry.getResourceServiceProvider(uri).get(XtextResourceSet)
-        }
+        // removed case injector null
+        return injector.getInstance(XtextResourceSet);
     }
     
     private def compile(EObject eobject, String systemId) {
         val context = Compile.createCompilationContext(systemId, eobject)
-
+        var testInjector = injector
         context.compile
         
         return context
@@ -223,7 +210,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 res.save(outputStream, emptyMap)
                 serialized = outputStream.toString
             } else {
-                println("Did not come here")
+//                println("Did not come here")
             }
             return new TextDocument("model" + index +  "." + ext, serialized)   
         }  

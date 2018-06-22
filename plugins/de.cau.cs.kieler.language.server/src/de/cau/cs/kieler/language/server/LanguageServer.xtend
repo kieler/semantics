@@ -33,7 +33,7 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import org.eclipse.xtext.ide.server.IProjectDescriptionFactory
+import java.io.FileOutputStream
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -51,31 +51,45 @@ class LanguageServer implements IApplication {
     
     
     override start(IApplicationContext context) throws Exception {
-        
-        // Start all language servers
-        println("Starting language server")
-        new SCLIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        
-        new SCTXIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new SCChartsServerModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        
-        val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
-            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-        ]))
-        println("Create injector and register emf")
-        this.run(injector)
-        
-        
-//        RunSocketServer.main()
-//        print("Existed language server")
-        return EXIT_OK
+        var socket = ""
+        var args = (context.arguments.get("application.args")) as String[]
+        if (args.size > 0) {
+            
+            socket = args.get(0)
+        }
+        if (socket == "socket") {
+            
+            println(args.toString)
+            println("Connection via: " + socket)
+               
+            // Start all language servers
+            println("Starting language server socket")
+            new SCLIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            
+            new SCTXIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new SCChartsServerModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            
+            val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
+                bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+            ]))
+            println("Create injector and register emf")
+            this.run(injector)
+            
+            
+    //        RunSocketServer.main()
+    //        print("Existed language server")
+            return EXIT_OK 
+        } else {
+            LanguageServerLauncher.main(#[])//#['shouldValidate'])
+            return EXIT_OK
+        }
     }
     
     override stop() {
@@ -83,7 +97,7 @@ class LanguageServer implements IApplication {
     }
     
     def run(Injector injector) {
-        val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", 5008))
+        val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", 5007))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
             val socketChannel = serverSocket.accept.get
