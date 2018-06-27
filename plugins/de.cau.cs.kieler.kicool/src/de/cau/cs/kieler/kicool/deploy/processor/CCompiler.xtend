@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.deploy.processor
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
@@ -117,8 +118,11 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object> {
             logger.println("Compilation failed")
         }
         
+        // Create model
+        model = new ExecutableContainer(targetExe)
+        
         // report
-        saveLog("gcc-compiler-report.log")
+        logger.closeLog("gcc-compiler-report.log").snapshot
         infra.refresh
     }
 

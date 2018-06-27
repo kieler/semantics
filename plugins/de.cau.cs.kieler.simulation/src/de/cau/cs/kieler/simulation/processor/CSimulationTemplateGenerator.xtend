@@ -109,7 +109,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                         item = cJSON_GetObjectItemCaseSensitive(root, "«v»");
                         if(item != NULL) {
                             «IF store.variables.get(v).head.isArray»
-                            jsonArray = json.getJSONArray("«v»");
+«««                            jsonArray = json.getJSONArray("«v»");
                             «store.parseArray(v, "jsonArray")»
                             «ELSE»
                             «store.parse(v, "item")»
@@ -127,7 +127,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                 «FOR v : store.variables.keySet»
                     // Send «v»
                     «IF store.variables.get(v).head.isArray»
-                    «store.serializeArray(v)»
+«««                    «store.serializeArray(v)»
                     «ELSE»
                     cJSON_AddItemToObject(root, "«v»", «store.serialize(v)»);
                     «ENDIF»
@@ -166,14 +166,17 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
     }
     
     def jsonTypeGetter(VariableStore store, String varName) {
-        val type = store.variables.get(varName).head.type
+        val type = store.variables.get(varName).head.inferType
         return switch(type) {
             case BOOL,
             case INT: "->valueint"
             case DOUBLE,
             case FLOAT: "->valuedouble"
             case STRING: "->valuestring"
-            default: throw new IllegalArgumentException("Unsupported type: " + type)
+            default: {
+                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                ""
+            }
         }
     }
     
@@ -211,7 +214,10 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             case DOUBLE,
             case FLOAT: "cJSON_CreateNumber(${tickdata_name}" + access + varName + ")"
             case STRING: "cJSON_CreateString((${tickdata_name}" + access + varName + " != NULL) ? ${tickdata_name}" + access + varName + " : \"\")"
-            default: throw new IllegalArgumentException("Unsupported type: " + type)
+            default: {
+                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                ""
+            }
         }
     }
     

@@ -94,8 +94,8 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                             // Receive «v»
                             if(json.has("«v»")) {
                                 «IF store.variables.get(v).head.isArray»
-                                jsonArray = json.getJSONArray("«v»");
-                                «store.parseArray(v, "jsonArray")»
+«««                                jsonArray = json.getJSONArray("«v»");
+«««                                «store.parseArray(v, "jsonArray")»
                                 «ELSE»
                                 «store.parse(v, "json")»
                                 «ENDIF»
@@ -115,9 +115,9 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                     «FOR v : store.variables.keySet»
                         // Send «v»
                         «IF store.variables.get(v).head.isArray»
-                        jsonArray = new JSONArray();
-                        «store.serializeArray(v)»
-                        json.put("«v»", jsonArray);
+«««                        jsonArray = new JSONArray();
+«««                        «store.serializeArray(v)»
+«««                        json.put("«v»", jsonArray);
                         «ELSE»
                         json.put("«v»", «store.serialize(v)»);
                         «ENDIF»
@@ -145,14 +145,17 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
     }
     
     def jsonTypeGetter(VariableStore store, String varName) {
-        val type = store.variables.get(varName).head.type
+        val type = store.variables.get(varName).head.inferType
         return switch(type) {
             case BOOL: "getBoolean"
             case DOUBLE,
             case FLOAT: "getDouble"
             case INT: "getInt"
             case STRING: "getString"
-            default: throw new IllegalArgumentException("Unsupported type: " + type)
+            default: {
+                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                ""
+            }
         }
     }
     

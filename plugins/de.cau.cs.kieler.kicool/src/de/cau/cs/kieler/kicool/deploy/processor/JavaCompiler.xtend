@@ -14,6 +14,8 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.compilation.ExecutableJarContainer
 import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
@@ -133,10 +135,14 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
                 environment.errors.add("Compiler did not return success (exit value != 0)")
                 logger.println("Compilation failed")
             }
+            
+            model = new ExecutableJarContainer(targetJar)
+        } else {
+            model = new ExecutableContainer(new File(sources.head))
         }
         
         // report
-        saveLog("java-compiler-report.log")
+        logger.closeLog("java-compiler-report.log").snapshot
         infra.refresh
     }
 

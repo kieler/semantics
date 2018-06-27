@@ -14,19 +14,23 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.util.List
 import java.util.concurrent.TimeUnit
-import java.io.File
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class AbstractSystemCompilerProcessor<I> extends AbstractDeploymentProcessor<I> {
+abstract class AbstractSystemCompilerProcessor<I> extends Processor<I, ExecutableContainer> {
     
     public static val IProperty<Boolean> INCLUDE_GENERATED_FILES = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.sources.include-generated", true)
@@ -42,6 +46,12 @@ abstract class AbstractSystemCompilerProcessor<I> extends AbstractDeploymentProc
         
     public static val IProperty<Long> TIMEOUT_SEC = 
         new Property<Long>("de.cau.cs.kieler.kicool.deploy.compiler.timeout", 60L)
+        
+    protected val logger = new Logger()
+    
+    override getType() {
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
+    }
         
     def createBinFolder(ProjectInfrastructure infra) {
         val binFolder = new File(infra.generadedCodeFolder, environment.getProperty(BIN_FOLDER)?:BIN_FOLDER.^default)

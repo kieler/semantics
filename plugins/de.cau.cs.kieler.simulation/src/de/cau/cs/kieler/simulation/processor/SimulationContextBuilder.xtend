@@ -10,28 +10,36 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.deploy.processor
+package de.cau.cs.kieler.simulation.processor
 
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.deploy.Logger
+import de.cau.cs.kieler.simulation.SimulationContext
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class AbstractDeploymentProcessor<I> extends Processor<I, CodeContainer> {
+class SimulationContextBuilder extends Processor<ExecutableContainer, SimulationContext> {
 
-    protected val logger = new Logger
+    override getId() {
+        "de.cau.cs.kieler.simulation.context.build"
+    }
     
-    protected def saveLog(String logFileName) {
-        model = logger.closeLog(logFileName)
+    override getName() {
+        "Build Simulation"
     }
     
     override getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
-
+    
+    protected val logger = new Logger
+    
+    override process() {
+    }
+    
 }
