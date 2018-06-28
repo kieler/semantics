@@ -68,10 +68,10 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
             sources.addAll(infra.sourceCode.files.filter(JavaCodeFile).map[fileName])
         }
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
+        val sourceFiles = sources.map[new File(infra.generadedCodeFolder, it)].toList
         
         logger.println("Files:")
-        for (source : sources) {
-            val sourceFile = new File(infra.generadedCodeFolder, source)
+        for (sourceFile : sourceFiles) {
             if (sourceFile.file) {
                 sourcePaths += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
@@ -125,9 +125,10 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
             jar += "cvfe"
             jar += targetJarPath
             jar += entryPoint
-            for (s : sourcePaths) {
-                jar += s.replace(".java", ".class")
-            }
+            jar += sourceFiles.map[
+                val path = infra.generadedCodeFolder.toPath.relativize(it.toPath).toString
+                if (it.file) path.replace(".java", ".class") else path
+            ]
             
             // Run javac compiler
             success = jar.invoke(binFolder)?:-1 == 0

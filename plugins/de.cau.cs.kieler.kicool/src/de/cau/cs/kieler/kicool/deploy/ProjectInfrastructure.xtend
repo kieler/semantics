@@ -52,7 +52,7 @@ class ProjectInfrastructure {
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.use", true)
 
     public static val IProperty<String> TEMPORARY_PROJECT_NAME = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.name", "Temporary KIELER Project")
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.name", "KIELER-Temp")
         
     public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)

@@ -27,18 +27,26 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class ExecutableContainer {
     
     @Accessors
-    val File executableFile
+    val File file
+    @Accessors(PUBLIC_GETTER)
+    protected var boolean isExecutableFile = true
     
     def getProcessBuilder() {
-        new ProcessBuilder(executableFile.toString)
+        new ProcessBuilder(file.toString)
     }
     
 }
 
-@FinalFieldsConstructor
 class ExecutableJarContainer extends ExecutableContainer {
     
+    new(File file) {
+        super(file)
+        isExecutableFile = false
+    }
+    
     override getProcessBuilder() {
-        new ProcessBuilder("java", "-jar", executableFile.toString)
+        var jarPath = file.toString
+        if (jarPath.contains(" ")) jarPath = "\"" + jarPath + "\""
+        new ProcessBuilder("java", "-jar", jarPath)
     }  
 }

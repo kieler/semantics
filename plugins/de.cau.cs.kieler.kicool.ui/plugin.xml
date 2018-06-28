@@ -356,6 +356,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainerSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainer">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">
@@ -396,6 +400,10 @@
           <action
                 class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent"
                 id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction"
+                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction">
           </action>
        </extension>
        <extension

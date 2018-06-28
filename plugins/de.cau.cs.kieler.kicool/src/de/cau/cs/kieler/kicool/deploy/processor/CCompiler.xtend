@@ -88,7 +88,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object> {
         }
         
         val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
-        val targetExePath = binFolder.toPath.relativize(targetExe.toPath).toString
+        val targetExePath = infra.generadedCodeFolder.toPath.relativize(targetExe.toPath).toString
         logger.println("Target exe file: " + targetExe)
         
         val gcc = newArrayList("gcc")
