@@ -52,6 +52,9 @@
       <Processor
             class="de.cau.cs.kieler.kicool.deploy.processor.JavaCompiler">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.Snapshot">
+      </Processor>
    </extension>
    
 </plugin>

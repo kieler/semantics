@@ -135,6 +135,12 @@
       <Processor
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.PersistentStateOptimizer">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.PartialAssignmentEvaluation">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

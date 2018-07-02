@@ -15,4 +15,7 @@ post process de.cau.cs.kieler.scg.processors.copyPropagation
 post process de.cau.cs.kieler.scg.processors.conditionalMerger
 post process de.cau.cs.kieler.scg.processors.haltStateRemover
 post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+post process de.cau.cs.kieler.scg.processors.persistentStateOptimizer
+post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
 post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
