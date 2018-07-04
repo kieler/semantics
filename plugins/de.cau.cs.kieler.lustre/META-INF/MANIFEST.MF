@@ -31,6 +31,5 @@ Export-Package: de.cau.cs.kieler.lustre,
  de.cau.cs.kieler.lustre.services,
  de.cau.cs.kieler.lustre.transformations,
  de.cau.cs.kieler.lustre.validation,
- de.cau.cs.kieler.lustre.validation.typing,
- de.cau.cs.kieler.sccharts.processors.dataflow
+ de.cau.cs.kieler.lustre.validation.typing
 Import-Package: org.apache.log4j
