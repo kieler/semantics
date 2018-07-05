@@ -211,4 +211,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         return TracingIntegration.copyAndReturnCopier(eObject, eph as Environment)
     }
     
+    def <T> boolean propertyExists(IProperty<T> property) {
+        return allProperties.keySet.contains(property)
+    }
 }

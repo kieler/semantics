@@ -34,6 +34,10 @@ class LoopData extends SingleLoop implements IKiCoolCloneable {
         false
     }
     
+    override preserveInSnapshot() {
+        true
+    }
+    
     override cloneObject() {
         new LoopData(persistent) => [ ld |
             ld.criticalNodes.addAll(criticalNodes)

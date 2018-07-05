@@ -55,6 +55,11 @@ class UnobservableGuardRemover extends InplaceProcessor<SCGraphs> implements Tra
         for (loop : loopData.loops) {
             if (loop.criticalNodes.exists[ !dependencies.filter(GuardDependency).empty ]) 
                 unobservableLoops -= loop
+            for (n : loop.criticalNodes.filter[ it !== null ]) 
+                for (d : n.dependencies) {
+                    if (!loop.criticalNodes.contains(d.target))
+                        unobservableLoops -= loop
+                }
         }
         
         val unobservableNodes = <Node> newHashSet

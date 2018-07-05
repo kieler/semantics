@@ -2126,13 +2126,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     
     private def void synthesizeSCCInGuardSCG(SCGraph scg) {
+        val rootModel = scg.eContainer
         var LoopData ld = null;
         
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
         if (compilationContext !== null) {
             val scgs = scg.eContainer
             if (scgs !== null) {
-                ld = compilationContext.getResultForModel(scgs)?.getProperty(LoopAnalyzerV2.LOOP_DATA)
+                ld = compilationContext.getResultForModel(scgs)?.getProperty(LoopAnalyzerV2.LOOP_DATA, rootModel)
             }
         }        
         
@@ -2140,7 +2141,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         for (l : ld.loops) {
             val guardedNodes = <Node> newHashSet
-            for (n : l.criticalNodes) {
+            for (n : l.criticalNodes.filter[ it !== null ]) {
                 for (gd : n.dependencies.filter(GuardDependency)) {
                     guardedNodes += gd.target as Node
                 }

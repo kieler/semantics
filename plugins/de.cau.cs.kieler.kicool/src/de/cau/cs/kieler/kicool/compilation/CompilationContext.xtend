@@ -267,7 +267,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             
             val snapshots = processor.environment.getProperty(SNAPSHOTS)
             for (snapshot : snapshots) {
-                if (snapshot == model) {
+                if (snapshot.object == model) {
                     return processor.environment
                 }
             }

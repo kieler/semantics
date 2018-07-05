@@ -366,11 +366,11 @@ class ProcessorDataManager {
                     intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += intermediateNode
                     intermediateNode.setProperty(INTERMEDIATE_DATA, 
-                        new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot, 
+                        new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot.object, 
                             view, intermediateModelCounter++, intermediateNode
                         ))
                     intermediatePosX += intermediatePosXInc
-                    lastModel = snapshot
+                    lastModel = snapshot.object
                 }
             }
             
