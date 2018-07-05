@@ -108,6 +108,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.TickBoundaryDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -330,6 +331,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 168; it.green = 128; it.blue = 96;]
     private static val KColor DEPENDENCY_GUARD = RENDERING_FACTORY.createKColor() =>
         [it.red = 240; it.green = 128; it.blue = 128;]
+    private static val KColor DEPENDENCY_TICKBOUNDARY = RENDERING_FACTORY.createKColor() =>
+        [it.red = 128; it.green = 128; it.blue = 128;]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     public static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
@@ -816,12 +819,20 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                 ]
             ]
+            
             // Add ports for control-flow and dependency routing.
             if (isGuardSCG) {
             	node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
             } else {
 	            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
+            
+            if (isGuardSCG) {
+                if (assignment.incomingLinks.empty || assignment.incomingLinks.forall[ it instanceof TickBoundaryDependency ]) {
+                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                }
+            }
+            
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
@@ -1715,6 +1726,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 	it.addArrowDecorator
             	]            	
             }
+            else if (dependency instanceof TickBoundaryDependency) {
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    it.foreground = DEPENDENCY_TICKBOUNDARY.copy
+                    it.lineStyle = LineStyle::DOT
+                    it.addArrowDecorator
+                ]               
+            }
+            
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG) || (isGuardSCG)) {
             	if (isGuardSCG) {

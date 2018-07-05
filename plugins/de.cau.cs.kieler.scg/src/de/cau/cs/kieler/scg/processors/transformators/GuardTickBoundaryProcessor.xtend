@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
@@ -79,7 +78,14 @@ class GuardTickBoundaryProcessor extends InplaceProcessor<SCGraphs> implements T
             val pgs = preAss.expression.getAllPreOperatorExpressions
             
             for (pg : pgs) {
-                
+                val preVO = pg.subExpressions.head.asValuedObjectReference.valuedObject
+                val preVOAss = voAssMapping.get(preVO)
+                if (preVOAss !== null) {
+                    preVOAss.createTickBoundaryDependency(preAss)
+                } else {
+                    environment.warnings.add("The assignment references a valued object across tick boundaries, " + 
+                        "but a corresponding assignment to that pre expression was not found.", preAss, true);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
 de.cau.cs.kieler.scg.processors.basicBlocks
 post process de.cau.cs.kieler.scg.processors.expressions
 de.cau.cs.kieler.scg.processors.guards
+post process de.cau.cs.kieler.scg.processors.guards.tickBoundaries
 de.cau.cs.kieler.scg.processors.scheduler
 de.cau.cs.kieler.scg.processors.sequentializer
 post process de.cau.cs.kieler.scg.processors.copyPropagation
