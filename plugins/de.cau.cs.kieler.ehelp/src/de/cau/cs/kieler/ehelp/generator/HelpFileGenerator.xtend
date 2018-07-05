@@ -323,7 +323,7 @@ class HelpFileGenerator {
                     valign = '''valign="middle"'''
                 }
 
-                return '''<td ''' + align + ''' ''' + valign + ''''>
+                return '''<td ''' + align + ''' ''' + valign + '''>
                 «FOR content : cell.content» 
                     «(content as Content).expandContent(linksOff)»
                 «ENDFOR»</td>'''

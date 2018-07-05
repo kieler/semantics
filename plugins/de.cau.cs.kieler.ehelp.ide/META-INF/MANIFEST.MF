@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Help System Authoring IDE
 Bundle-Vendor: Kiel University, License EPL
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.8.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.ehelp.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.ehelp,
