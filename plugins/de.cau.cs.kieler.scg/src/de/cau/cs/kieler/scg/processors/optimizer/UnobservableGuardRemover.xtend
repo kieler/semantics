@@ -16,9 +16,13 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.scg.processors.analyzer.SingleLoop
+import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -27,30 +31,42 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2018-07-05 proposed 
  * @kieler.rating 2018-07-05 proposed yellow
  */
-class IneffectiveGuardRemover extends InplaceProcessor<SCGraphs> implements Traceable {
+class UnobservableGuardRemover extends InplaceProcessor<SCGraphs> implements Traceable {
 
     @Inject extension SCGDependencyExtensions
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.ineffectiveGuardRemover"
+        "de.cau.cs.kieler.scg.processors.unobservableGuardRemover"
     }
     
     override getName() {
-        "Ineffective Guard Remover"
+        "Unobservable Guard Remover"
     }
     
     override process() {
         val model = getModel
+        val loopData = environment.getProperty(LoopAnalyzerV2.LOOP_DATA)
+        
+        if (loopData === null) return;
+        
+        val unobservableLoops = <SingleLoop> newHashSet
+        unobservableLoops.addAll(loopData.loops)
+        
+        for (loop : loopData.loops) {
+            if (loop.criticalNodes.exists[ !dependencies.filter(GuardDependency).empty ]) 
+                unobservableLoops -= loop
+        }
+        
+        val unobservableNodes = <Node> newHashSet
+        unobservableLoops.forEach[ unobservableNodes.addAll(it.criticalNodes) ]
         
         for (scg : model.scgs) {
-            scg.performIneffectiveGuardRemoval
+            scg.performIneffectiveGuardRemoval(unobservableNodes)
         }
     }
     
-    def performIneffectiveGuardRemoval(SCGraph scg) {
-        val ineffectiveNodes = scg.nodes.filter[ dependencies.empty && incomingLinks.filter(GuardDependency).empty ].toList
-        
-        for (n : ineffectiveNodes) {
+    def performIneffectiveGuardRemoval(SCGraph scg, Set<Node> unobservableNodes) {
+        for (n : unobservableNodes) {
             for (il :  n.incomingLinks.immutableCopy) {
                 il.target = null
                 il.remove                
