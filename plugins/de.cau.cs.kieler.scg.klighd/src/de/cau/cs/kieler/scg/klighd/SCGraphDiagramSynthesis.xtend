@@ -109,6 +109,7 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.TickBoundaryDependency
+import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -382,6 +383,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
     private static val int NODEGROUPING_GUARDBLOCK = 3
     private static val int NODEGROUPING_SCHEDULE = 4
+    private static val int NODEGROUPING_SCC = 5
 
     /** Constants for the graph orientation */
     private static val int ORIENTATION_PORTRAIT = 0
@@ -721,6 +723,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 scg.nodes.forEach[
                     it.dependenciesView.forEach[ synthesizeDependency ]
                 ]
+            }
+            
+            if (isGuardSCG) {
+                scg.synthesizeSCCInGuardSCG
             }
             
             // Draw strongly connected components
@@ -1863,6 +1869,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background = SCCHARTSBLUE.copy;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
+        if (nodeGrouping == NODEGROUPING_SCC) {
+            kContainer.addRoundedRectangle(1, 1, 2) => [
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
+            ]
+            kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(196f)
+            kContainer.KRendering.background = SCCHARTSBLUE.copy;
+            kContainer.KRendering.background.alpha = Math.round(0f)
+        }
         
         // Add the nodes to the container.
         // They will be removed from the original parent!
@@ -2083,6 +2099,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //        scg.analyses.forEach[visualize(it, this)]
 
         if (pilNodes.empty) return;
+        if (isGuardSCG) return;
         
         for (n : pilNodes.filter[ it !== null]) {
             val nextFlows = n.allNext
@@ -2104,6 +2121,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     } 
                 }
             }            
+        }
+    }
+    
+    
+    private def void synthesizeSCCInGuardSCG(SCGraph scg) {
+        var LoopData ld = null;
+        
+        val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+        if (compilationContext !== null) {
+            val scgs = scg.eContainer
+            if (scgs !== null) {
+                ld = compilationContext.getResultForModel(scgs)?.getProperty(LoopAnalyzerV2.LOOP_DATA)
+            }
+        }        
+        
+        if (ld === null) return;
+        
+        for (l : ld.loops) {
+            val guardedNodes = <Node> newHashSet
+            for (n : l.criticalNodes) {
+                for (gd : n.dependencies.filter(GuardDependency)) {
+                    guardedNodes += gd.target as Node
+                }
+            }
+
+            createHierarchy((l.criticalNodes + guardedNodes).toList, NODEGROUPING_SCC, scg)
         }
     }
 

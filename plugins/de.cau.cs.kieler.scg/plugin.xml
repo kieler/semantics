@@ -144,6 +144,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.GuardTickBoundaryProcessor">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.IneffectiveGuardRemover">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

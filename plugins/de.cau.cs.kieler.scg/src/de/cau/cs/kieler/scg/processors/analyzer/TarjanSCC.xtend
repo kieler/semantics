@@ -36,8 +36,8 @@ class TarjanSCC {
     private var sccList = <LinkedList<Node>>newLinkedList
     private var isContained = <Node, Boolean>newHashMap
     
-    public def void  findSCCs(SCGraph scg, LoopData loopData) {
-        val res = scg.nodes.findSCCs.filter[ size > 1 ].toList
+    public def void  findSCCs(SCGraph scg, LoopData loopData, boolean considerAllDependencies) {
+        val res = scg.nodes.findSCCs(considerAllDependencies).filter[ size > 1 ].toList
         
         for (l : res) {
             val loop = new SingleLoop => [ criticalNodes.addAll(l) ]
@@ -56,7 +56,7 @@ class TarjanSCC {
      * @return
      *          List of all Strongly Connected Components in the SCG
      */
-    public def LinkedList<LinkedList<Node>> findSCCs(Iterable<Node> nodes) {
+    public def LinkedList<LinkedList<Node>> findSCCs(Iterable<Node> nodes, boolean considerAllDependencies) {
 
         // Clear everything to enable a second run
         lowlink.clear
@@ -74,7 +74,7 @@ class TarjanSCC {
         // Ensure that all nodes of the SCG are visited once
         for (node : nodes) {
             if (!visited.containsKey(node) || !visited.get(node)) {
-                tarjan(node)
+                tarjan(node, considerAllDependencies)
             }
         }
         
@@ -89,18 +89,20 @@ class TarjanSCC {
      *              The Node that is contained in the Strongly Connected Component to be built
      * 
      */
-    private def void tarjan(Node currentNode) {
+    private def void tarjan(Node currentNode, boolean considerAllDependencies) {
         index.put(currentNode, count)
         lowlink.put(currentNode, count)
         count++
         stack.push(currentNode)
         visited.put(currentNode, true)
         
-        for (nextNode : currentNode.neighborsAndDependencies) {
+        val neighbors = if (considerAllDependencies) currentNode.getNeighborsAndAllDependencies
+            else currentNode.neighborsAndDependencies
+        for (nextNode : neighbors) {
             if (isContained.containsKey(nextNode) && isContained.get(nextNode)) {                
                 // Next node has not yet been visited
                 if (!visited.containsKey(nextNode) || !visited.get(nextNode)) {
-                    tarjan(nextNode)
+                    tarjan(nextNode, considerAllDependencies)
                     lowlink.replace(currentNode, Math.min(lowlink.get(currentNode), lowlink.get(nextNode)))
                 } // Next node has already been visited, hence in the current Strongly Connected Component
                 else if (index.get(nextNode) < index.get(currentNode)) {
