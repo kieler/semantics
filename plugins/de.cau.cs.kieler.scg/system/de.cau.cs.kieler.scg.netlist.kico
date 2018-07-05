@@ -10,7 +10,8 @@ de.cau.cs.kieler.scg.processors.basicBlocks
 post process de.cau.cs.kieler.scg.processors.expressions
 de.cau.cs.kieler.scg.processors.guards config {
     "de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies": true,
-    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": false
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": false,
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.data.persistent": true
 }
 post process de.cau.cs.kieler.scg.processors.guards.tickBoundaries
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2

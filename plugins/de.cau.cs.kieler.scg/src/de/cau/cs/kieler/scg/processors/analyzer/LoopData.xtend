@@ -26,12 +26,16 @@ class LoopData extends SingleLoop implements IKiCoolCloneable {
     
     @Accessors var Set<SingleLoop> loops = <SingleLoop> newLinkedHashSet
     
+    new(boolean persistent) {
+        super(persistent)
+    }
+    
     override isMutable() {
         false
     }
     
     override cloneObject() {
-        new LoopData => [ ld |
+        new LoopData(persistent) => [ ld |
             ld.criticalNodes.addAll(criticalNodes)
             loops.forEach[ loop |
                 ld.loops.add(loop.cloneObject as SingleLoop)
@@ -40,12 +44,16 @@ class LoopData extends SingleLoop implements IKiCoolCloneable {
     }
     
     override void resolveCopiedObjects(Copier copier) {
-        val resolvedLoopdData = <Node> newLinkedHashSet
+        val resolvedLoopData = <Node> newLinkedHashSet
         for (key : criticalNodes) {
             val newNode = copier.get(key) as Node
-            resolvedLoopdData.add(newNode)
-        } 
-        criticalNodes = resolvedLoopdData
+            resolvedLoopData.add(newNode)
+        }
+        if (persistent) {
+            criticalNodes.addAll(resolvedLoopData)
+        } else {
+            criticalNodes = resolvedLoopData
+        }
         loops.forEach[ resolveCopiedObjects(copier) ]
     } 
     

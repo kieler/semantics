@@ -26,13 +26,18 @@ class SingleLoop implements IKiCoolCloneable {
     
     @Accessors var Set<Node> criticalNodes = <Node> newLinkedHashSet
     @Accessors var boolean isDependencyLoop = false
+    @Accessors var boolean persistent = false
+    
+    new(boolean persistent) {
+        this.persistent = persistent
+    }
     
     override isMutable() {
         false
     }
     
     override cloneObject() {
-        new SingleLoop => [ ld |
+        new SingleLoop(persistent) => [ ld |
             ld.criticalNodes.addAll(criticalNodes)
             ld.isDependencyLoop = isDependencyLoop
         ] 
@@ -44,7 +49,11 @@ class SingleLoop implements IKiCoolCloneable {
             val newNode = copier.get(key) as Node
             resolvedLoopdData.add(newNode)
         } 
-        criticalNodes = resolvedLoopdData
+        if (persistent) {
+            criticalNodes.addAll(resolvedLoopdData)           
+        } else {
+            criticalNodes = resolvedLoopdData
+        }
     } 
     
 }

@@ -45,6 +45,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies", false)
     public static val IProperty<LoopData> LOOP_DATA = 
         new Property<LoopData>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data", null)	
+    public static val IProperty<Boolean> LOOP_DATA_PERSISTENT = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data.persistent", false)   
     public static val IProperty<Boolean> ERROR_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop", false)
     public static val IProperty<Boolean> WARNING_ON_INSTANTANEOUS_LOOP = 
@@ -68,7 +70,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
     
     override process() {
         val model = getModel
-        val loopData = new LoopData
+        val loopData = new LoopData(environment.getProperty(LOOP_DATA_PERSISTENT))
         val threadData = environment.getProperty(ThreadAnalyzer.THREAD_DATA)
         if (threadData === null) {
             environment.warnings.add("This processor requires thread information, but no thread data was found.")

@@ -40,7 +40,7 @@ class TarjanSCC {
         val res = scg.nodes.findSCCs(considerAllDependencies).filter[ size > 1 ].toList
         
         for (l : res) {
-            val loop = new SingleLoop => [ criticalNodes.addAll(l) ]
+            val loop = new SingleLoop(loopData.persistent) => [ criticalNodes.addAll(l) ]
             loopData.criticalNodes += loop.criticalNodes
             loopData.loops += loop            
         }
