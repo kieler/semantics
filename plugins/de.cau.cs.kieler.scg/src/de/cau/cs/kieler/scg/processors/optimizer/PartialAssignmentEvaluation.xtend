@@ -108,6 +108,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
             	}
             	
             	if (node.reference !== null) {
+            	    parEval.values.remove(node.reference.valuedObject)
             	    if (node.expression instanceof Value) {
             	        parEval.values.put(node.reference.valuedObject, (node.expression as Value).copy)
             	        candidates.put(node.reference.valuedObject, node)
