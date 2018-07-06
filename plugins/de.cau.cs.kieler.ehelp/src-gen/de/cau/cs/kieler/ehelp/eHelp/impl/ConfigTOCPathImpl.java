@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.ehelp.eHelp.impl;
 
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -14,18 +14,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Config Path</b></em>'.
+ * An implementation of the model object '<em><b>Config TOC Path</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigPathImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigTOCPathImpl#getPath <em>Path</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ConfigPathImpl extends ConfigImpl implements ConfigPath
+public class ConfigTOCPathImpl extends ConfigImpl implements ConfigTOCPath
 {
   /**
    * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
@@ -52,7 +52,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ConfigPathImpl()
+  protected ConfigTOCPathImpl()
   {
     super();
   }
@@ -65,7 +65,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
   @Override
   protected EClass eStaticClass()
   {
-    return EHelpPackage.Literals.CONFIG_PATH;
+    return EHelpPackage.Literals.CONFIG_TOC_PATH;
   }
 
   /**
@@ -88,7 +88,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
     String oldPath = path;
     path = newPath;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EHelpPackage.CONFIG_PATH__PATH, oldPath, path));
+      eNotify(new ENotificationImpl(this, Notification.SET, EHelpPackage.CONFIG_TOC_PATH__PATH, oldPath, path));
   }
 
   /**
@@ -101,7 +101,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_PATH__PATH:
+      case EHelpPackage.CONFIG_TOC_PATH__PATH:
         return getPath();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_PATH__PATH:
+      case EHelpPackage.CONFIG_TOC_PATH__PATH:
         setPath((String)newValue);
         return;
     }
@@ -134,7 +134,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_PATH__PATH:
+      case EHelpPackage.CONFIG_TOC_PATH__PATH:
         setPath(PATH_EDEFAULT);
         return;
     }
@@ -151,7 +151,7 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_PATH__PATH:
+      case EHelpPackage.CONFIG_TOC_PATH__PATH:
         return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
     }
     return super.eIsSet(featureID);
@@ -174,4 +174,4 @@ public class ConfigPathImpl extends ConfigImpl implements ConfigPath
     return result.toString();
   }
 
-} //ConfigPathImpl
+} //ConfigTOCPathImpl
