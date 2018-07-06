@@ -187,7 +187,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
                     for(node : sb.nodes) {
                         if (node instanceof Entry)
-                        if (node.incoming.filter(ControlFlow).empty) 
+                        if (node.incomingLinks.filter(ControlFlow).empty) 
                             mainThreadEntries.put(assignment, node.name)
                         if (node instanceof Exit)
                         if (node.next === null) 

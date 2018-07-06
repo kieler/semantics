@@ -35,7 +35,7 @@ class ThreadData implements IKiCoolCloneable {
     def createForkMap() {
         for (entry : data.keySet) {
             if (entry !== null) {
-                val parentFork = entry.incoming.filter(ControlFlow)?.map[eContainer].filter(Fork)?.head
+                val parentFork = entry.incomingLinks.filter(ControlFlow)?.map[eContainer].filter(Fork)?.head
                 if (parentFork !== null) {
                     forkMap.put(parentFork, entry)
                 }

@@ -15,19 +15,27 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,6 +45,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getParentState <em>Parent State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getCounterVariable <em>Counter Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getForStart <em>For Start</em>}</li>
@@ -54,6 +64,26 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
 	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
+
+                /**
      * The cached value of the '{@link #getCounterVariable() <em>Counter Variable</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -99,6 +129,30 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
     @Override
     protected EClass eStaticClass() {
         return SCChartsPackage.Literals.REGION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, SCChartsPackage.REGION__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, SCChartsPackage.REGION__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
     }
 
     /**
@@ -276,9 +330,12 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case SCChartsPackage.REGION__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
             case SCChartsPackage.REGION__PARENT_STATE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -295,6 +352,10 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case SCChartsPackage.REGION__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.REGION__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.REGION__PARENT_STATE:
                 return basicSetParentState(null, msgs);
             case SCChartsPackage.REGION__COUNTER_VARIABLE:
@@ -329,6 +390,10 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case SCChartsPackage.REGION__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case SCChartsPackage.REGION__INCOMING_LINKS:
+                return getIncomingLinks();
             case SCChartsPackage.REGION__PARENT_STATE:
                 return getParentState();
             case SCChartsPackage.REGION__COUNTER_VARIABLE:
@@ -346,9 +411,18 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case SCChartsPackage.REGION__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case SCChartsPackage.REGION__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
             case SCChartsPackage.REGION__PARENT_STATE:
                 setParentState((State)newValue);
                 return;
@@ -373,6 +447,12 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case SCChartsPackage.REGION__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case SCChartsPackage.REGION__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case SCChartsPackage.REGION__PARENT_STATE:
                 setParentState((State)null);
                 return;
@@ -397,6 +477,10 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case SCChartsPackage.REGION__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case SCChartsPackage.REGION__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case SCChartsPackage.REGION__PARENT_STATE:
                 return getParentState() != null;
             case SCChartsPackage.REGION__COUNTER_VARIABLE:
@@ -407,6 +491,40 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
                 return forEnd != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case SCChartsPackage.REGION__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case SCChartsPackage.REGION__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return SCChartsPackage.REGION__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return SCChartsPackage.REGION__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 } //RegionImpl

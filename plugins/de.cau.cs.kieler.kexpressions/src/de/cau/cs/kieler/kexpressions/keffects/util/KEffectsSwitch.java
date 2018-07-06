@@ -83,6 +83,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 T result = caseEffect(effect);
                 if (result == null) result = caseAnnotatable(effect);
                 if (result == null) result = caseSchedulable(effect);
+                if (result == null) result = caseLinkable(effect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -92,6 +93,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = caseSchedulable(assignment);
+                if (result == null) result = caseLinkable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -101,6 +103,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(emission);
                 if (result == null) result = caseAnnotatable(emission);
                 if (result == null) result = caseSchedulable(emission);
+                if (result == null) result = caseLinkable(emission);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -110,6 +113,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(hostcodeEffect);
                 if (result == null) result = caseTextExpression(hostcodeEffect);
                 if (result == null) result = caseAnnotatable(hostcodeEffect);
+                if (result == null) result = caseLinkable(hostcodeEffect);
                 if (result == null) result = caseExpression(hostcodeEffect);
                 if (result == null) result = caseSchedulable(hostcodeEffect);
                 if (result == null) result = defaultCase(theEObject);
@@ -121,6 +125,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(referenceCallEffect);
                 if (result == null) result = caseReferenceCall(referenceCallEffect);
                 if (result == null) result = caseAnnotatable(referenceCallEffect);
+                if (result == null) result = caseLinkable(referenceCallEffect);
                 if (result == null) result = caseValuedObjectReference(referenceCallEffect);
                 if (result == null) result = caseCall(referenceCallEffect);
                 if (result == null) result = caseExpression(referenceCallEffect);
@@ -134,6 +139,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(functionCallEffect);
                 if (result == null) result = caseFunctionCall(functionCallEffect);
                 if (result == null) result = caseAnnotatable(functionCallEffect);
+                if (result == null) result = caseLinkable(functionCallEffect);
                 if (result == null) result = caseCall(functionCallEffect);
                 if (result == null) result = caseExpression(functionCallEffect);
                 if (result == null) result = caseSchedulable(functionCallEffect);
@@ -146,6 +152,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(printCallEffect);
                 if (result == null) result = casePrintCall(printCallEffect);
                 if (result == null) result = caseAnnotatable(printCallEffect);
+                if (result == null) result = caseLinkable(printCallEffect);
                 if (result == null) result = caseCall(printCallEffect);
                 if (result == null) result = caseExpression(printCallEffect);
                 if (result == null) result = caseSchedulable(printCallEffect);
@@ -158,9 +165,40 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(randomizeCallEffect);
                 if (result == null) result = caseRandomizeCall(randomizeCallEffect);
                 if (result == null) result = caseAnnotatable(randomizeCallEffect);
+                if (result == null) result = caseLinkable(randomizeCallEffect);
                 if (result == null) result = caseCall(randomizeCallEffect);
                 if (result == null) result = caseExpression(randomizeCallEffect);
                 if (result == null) result = caseSchedulable(randomizeCallEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KEffectsPackage.LINKABLE: {
+                Linkable linkable = (Linkable)theEObject;
+                T result = caseLinkable(linkable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KEffectsPackage.LINK: {
+                Link link = (Link)theEObject;
+                T result = caseLink(link);
+                if (result == null) result = caseAnnotatable(link);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KEffectsPackage.DEPENDENCY: {
+                Dependency dependency = (Dependency)theEObject;
+                T result = caseDependency(dependency);
+                if (result == null) result = caseLink(dependency);
+                if (result == null) result = caseAnnotatable(dependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KEffectsPackage.DATA_DEPENDENCY: {
+                DataDependency dataDependency = (DataDependency)theEObject;
+                T result = caseDataDependency(dataDependency);
+                if (result == null) result = caseDependency(dataDependency);
+                if (result == null) result = caseLink(dataDependency);
+                if (result == null) result = caseAnnotatable(dataDependency);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -285,6 +323,66 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseRandomizeCallEffect(RandomizeCallEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLinkable(Linkable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Link</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Link</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLink(Link object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDependency(Dependency object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataDependency(DataDependency object) {
         return null;
     }
 

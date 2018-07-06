@@ -38,12 +38,12 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.scg.DataDependencyType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -172,8 +172,8 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
         
         // Generate a data basis for the subsequent analysis. 
         val allAssignments = scg.nodes.filter(typeof(Assignment))  
-        val assignments = allAssignments.filter[ valuedObject != null || expression instanceof FunctionCall ].toList //.immutableCopy
-        val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList //.immutableCopy
+        val assignments = allAssignments.filter[ valuedObject !== null || expression instanceof FunctionCall ].toList //.immutableCopy
+        val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition !== null ].toList //.immutableCopy
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: Nodes (time elapsed: "+(time / 1000)+"s).")  
 
@@ -192,7 +192,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
         for(entry : threadNodeMap.keySet) { 
             // If the entry node has incoming flows, it also has a fork node.
         	var Fork fork = null
-        	if (entry.incoming.size>0) fork = (entry.incoming.filter(ControlFlow).head.eContainer as Fork)
+        	if (entry.incomingLinks.size>0) fork = (entry.incomingLinks.filter(ControlFlow).head.eContainer as Fork)
         	val finalFork = fork
         	threadNodeMap.get(entry).forEach[ node |
         		if ((node instanceof Assignment) || (node instanceof Conditional)) {
@@ -206,9 +206,9 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
                     }
                     
                     // If present, add the fork to the ancestor fork cache in the same step.
-                    if (finalFork != null) {
+                    if (finalFork !== null) {
                     	val ancestorForks = ancestorForkCache.get(node)
-                    	if (ancestorForks == null) {
+                    	if (ancestorForks === null) {
                     		ancestorForkCache.put(node, <Fork> newArrayList(finalFork))
                     	} else {
   							if (!ancestorForks.contains(finalFork)) {
@@ -222,7 +222,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
         
         // Generate the valued object cache for assignments.
         assignments.forEach[ assignment |
-            if (assignment.expression != null) {
+            if (assignment.expression !== null) {
         	   val references = assignment.expression.eAllContents.filter(typeof(ValuedObjectReference)).toList
         	   if (assignment.expression instanceof ValuedObjectReference) {
         	        references += assignment.expression as ValuedObjectReference
@@ -233,19 +233,19 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
         	   ]
         	   valuedObjects.forEach[ vo | 
         		  val cache = valuedObjectCache.get(vo)
-        		  if (cache == null) {
+        		  if (cache === null) {
         			 valuedObjectCache.put(vo, <Node> newArrayList(assignment))
         		  } else {
         			 cache += assignment	
         		  }
             	] 
             	// If there is no ancestor fork information for this node, insert an empty list.
-            	if (ancestorForkCache.get(assignment) == null) {
+            	if (ancestorForkCache.get(assignment) === null) {
         	       ancestorForkCache.put(assignment, <Fork> newArrayList())
         	   }
        	   } else if (assignment.operator.isPostfixOperator) {
                 val cache = valuedObjectCache.get(assignment.valuedObject)
-                if (cache == null) {
+                if (cache === null) {
                     valuedObjectCache.put(assignment.valuedObject, <Node> newArrayList(assignment))
                 } else {
                     cache += assignment    
@@ -266,14 +266,14 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
         	]
         	valuedObjects.forEach[ vo | 
         		val vocl = valuedObjectCache.get(vo)
-        		if (vocl == null) {
+        		if (vocl === null) {
         			valuedObjectCache.put(vo, <Node> newArrayList(conditional))
         		} else {
         			vocl += conditional	
         		}
         	] 
             // If there is no ancestor fork information for this node, insert an empty list.
-            if (ancestorForkCache.get(conditional) == null) {
+            if (ancestorForkCache.get(conditional) === null) {
                 ancestorForkCache.put(conditional, <Fork> newArrayList())
             }
         ]
@@ -357,7 +357,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
                 }
                 // If a dependency was created, add the target, the concurrency state and update the 
                 // assignment.
-                if (dependency != null) {
+                if (dependency !== null) {
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     dependency.target = node;
@@ -382,7 +382,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
             if (node.isReader(assignment)) {
                 dependency = createDataDependency(DataDependencyType.WRITE_READ)
             }
-            if (dependency != null) {
+            if (dependency !== null) {
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 dependency.target = node;
                 dependency.trace(node);
@@ -460,7 +460,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
     private def boolean isReader(Assignment asg1, Assignment asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
-    	if (asg1.expression == null || asg2.expression == null) return false
+    	if (asg1.expression === null || asg2.expression === null) return false
     	if (asg1.expression instanceof FunctionCall) {
     	    for(par : (asg1.expression as FunctionCall).parameters) {
     	        if (par.expression.isReader(asg2)) return true
@@ -474,7 +474,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
     private def boolean isReader(Conditional cond, Assignment asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
-        if (asg2.expression == null) return false
+        if (asg2.expression === null) return false
         if (cond.condition instanceof FunctionCall) {
             for(par : (cond.condition as FunctionCall).parameters) {
                 if (par.expression.isReader(asg2)) return true
@@ -525,7 +525,7 @@ class DependencyTransformationV1 {//extends AbstractProductionTransformation imp
     
     private def List<Fork> getCachedAncestorForks(Node node) {
     	var af = ancestorForkCache.get(node)
-    	if (af == null) {
+    	if (af === null) {
     		af = node.getAncestorForks
     		ancestorForkCache.put(node, af)
     	}

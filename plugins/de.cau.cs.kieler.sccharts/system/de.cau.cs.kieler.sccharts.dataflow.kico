@@ -1,0 +1,7 @@
+system de.cau.cs.kieler.sccharts.dataflow
+	label "SCCharts to Dataflow"
+    
+de.cau.cs.kieler.sccharts.processors.regionDependencies
+de.cau.cs.kieler.sccharts.processors.toHybridDataflow
+de.cau.cs.kieler.sccharts.processors.DeLoopRegions
+de.cau.cs.kieler.sccharts.processors.toSimpleDataflow

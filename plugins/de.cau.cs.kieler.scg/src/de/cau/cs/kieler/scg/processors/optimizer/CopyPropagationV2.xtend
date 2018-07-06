@@ -141,9 +141,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
             }
             
             if (node instanceof Conditional) {
-                nextNodes.add(node.^else.target)
+                nextNodes.add(node.^else.targetNode)
             } else {
-                val newNodes = node.allNext.map[ target ].filter[ it !== null && !visited.contains(it)].toList
+                val newNodes = node.allNext.map[ targetNode ].filter[ it !== null && !visited.contains(it)].toList
                 if (!newNodes.empty && newNodes.head !== nextNodes.peek) {
                     nextNodes.addAll(newNodes)
                 } 

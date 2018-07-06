@@ -20,8 +20,6 @@ import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.DataDependencyType
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import java.util.List
@@ -35,6 +33,13 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.EnumSet
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.Link
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -56,18 +61,20 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design 2016-02-24 proposed 
  * @kieler.rating 2016-02-24 proposed yellow
  */
-class SCGDependencyExtensions { 
+class SCGDependencyExtensions extends KEffectsDependencyExtensions { 
 	
 	@Inject extension SCGControlFlowExtensions
 	@Inject extension KExpressionsValueExtensions
 	@Inject extension KEffectsExtensions
 	
-	 def DataDependency createDataDependency(DataDependencyType type) {
-	 	ScgFactory::eINSTANCE.createDataDependency => [ 
-	 		it.type = type
-	 	]
-	 }
-
+	def List<Link> getDependencies(Linkable linkable) {
+	    return linkable.outgoingLinks
+	}
+	
+	def Iterable<Dependency> getDependenciesView(Linkable linkable) {
+	    return linkable.outgoingLinks.filter(Dependency)
+	}
+	
     def DataDependency createDataDependency(Node source, Node target, DataDependencyType type) {
     	type.createDataDependency => [ 
     		source.dependencies += it
@@ -103,29 +110,6 @@ class SCGDependencyExtensions {
     	]
     }
     
-    def DataDependency checkAndSetConfluence(DataDependency dependency) {
-        val sourceNode = dependency.eContainer as Node
-        val targetNode = dependency.target
-        dependency.confluent = false
-        if (sourceNode instanceof Assignment) {
-            if (targetNode instanceof Assignment) {
-                if (sourceNode.operator == AssignOperator.ASSIGN && targetNode.operator == AssignOperator.ASSIGN) {
-                    val sourceExpression = sourceNode.expression
-                    val targetExpression = targetNode.expression
-                    if (sourceExpression.isSameValue(targetExpression)) {
-                        dependency.confluent = true
-                    } else {
-                        // To be downward-compatible, check for operator expression with same value.
-                        if (areOldConfluentSetter(sourceNode, targetNode)) {
-                            dependency.confluent = true
-                        }
-                    }
-                }
-            }
-        }
-        dependency
-    }
-    
     def boolean areOldConfluentSetter(Assignment sourceAssignment, Assignment targetAssignment) {
         val sourceExpression = sourceAssignment.expression
         val targetExpression = targetAssignment.expression
@@ -149,7 +133,7 @@ class SCGDependencyExtensions {
                                 // Assume there is only one VO and one literal per OE.
                                 val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
                                 val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
-                                if (sourceRelativeVOR != null && targetRelativeVOR != null) {
+                                if (sourceRelativeVOR !== null && targetRelativeVOR !== null) {
                                     if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
                                         targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
                                         val sourceValue = sourceExpression.subExpressions.filter(Value).head
@@ -188,12 +172,12 @@ class SCGDependencyExtensions {
     		var Fork sourceFork = null
     		val sourcePredecessor = sourceEntry.getAllPreviousHeadNode
     		if (sourcePredecessor instanceof Fork) sourceFork = sourcePredecessor as Fork
-    		if (sourceFork != null) {
+    		if (sourceFork !== null) {
     			for(targetEntry : targetThreads) {
     				var Fork targetFork = null
     				val targetPredecessor = targetEntry.getAllPreviousHeadNode
     				if (targetPredecessor instanceof Fork) targetFork = targetPredecessor as Fork
-   					if (targetFork != null && sourceFork == targetFork && sourceEntry != targetEntry) {
+   					if (targetFork !== null && sourceFork == targetFork && sourceEntry != targetEntry) {
    						dependency.concurrent = true;
    						return dependency
    					}

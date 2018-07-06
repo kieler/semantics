@@ -22,13 +22,11 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
@@ -39,9 +37,10 @@ import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
 
 import static com.google.common.collect.Maps.*
-import static de.cau.cs.kieler.scg.DataDependencyType.*
+import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The SSA transformation for SCGs.
@@ -154,7 +153,7 @@ class CSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable
         val refs = HashMultimap.<Assignment, Parameter>create
         val nodes = newHashMap
         for (n : scg.nodes.filter[!isSSA]) {
-            val incomingDeps = n.incoming.filter(DataDependency).filter[concurrent && (type == WRITE_READ || type == WRITE_RELATIVEWRITE)].toList
+            val incomingDeps = n.incomingLinks.filter(DataDependency).filter[concurrent && (type == WRITE_READ || type == WRITE_RELATIVEWRITE)].toList
             if (!incomingDeps.empty) {
                 val concVODefs = HashMultimap.<ValuedObject, Assignment>create
                 incomingDeps.forEach[

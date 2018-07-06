@@ -4,11 +4,7 @@ import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.CommentAnnotation
-import de.cau.cs.kieler.annotations.Pragma
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation
-import de.cau.cs.kieler.annotations.Pragmatable
 import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import java.util.Set
 
@@ -34,18 +30,6 @@ class AnnotationsExtensions {
         ]
     } 
     
-    def Pragma getPragma(Pragmatable pragmatable, String name) {
-        pragmatable.getPragmas(name)?.head
-    } 
-
-    def getPragmas(Pragmatable pragmatable, String name) {
-        pragmatable.pragmas.filter[ it.name.equals(name) ]
-    }     
-    
-    def getStringPragmas(Pragmatable pragmatable, String name) {
-        pragmatable.getPragmas(name).filter(StringPragma)
-    }
-	
 	def String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
 		if (annotation !== null) 
@@ -95,16 +79,6 @@ class AnnotationsExtensions {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name ].empty
 	}
 
-    def boolean hasPragma(Pragmatable pragmatable, String name) {
-        !pragmatable.pragmas.nullOrEmpty && !pragmatable.getPragmas(name).empty
-    }
-    
-    def void copyPragmas(Pragmatable source, Pragmatable target) {
-        source.pragmas.forEach[
-            target.pragmas += it.copy
-        ]
-    }    
-	
     def void removeAnnotations(Annotatable annotatable, String name) {
         if (!annotatable.annotations.nullOrEmpty) {
             !annotatable.annotations.removeIf[ it.name.equals(name) ]

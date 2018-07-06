@@ -32,9 +32,10 @@ import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
 import de.cau.cs.kieler.scg.processors.analyzer.ThreadData
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.DataDependency
 import java.util.Collection
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /**
  * @author ssm
@@ -47,6 +48,7 @@ class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions    
+    @Inject extension SCGDependencyExtensions
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.surfaceDepthSeparator"
@@ -90,11 +92,11 @@ class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
                 for (node : nodeMapping.keySet.filter[ it !== null]) {
                     val isInSurface = node.isInSurface(threadData.forkMap.get(fork))
                     for (dependency : node.dependencies.filter(DataDependency).filter[ concurrent ].toList) {
-                        if (dependency.target.isInSurface(threadData.forkMap.get(fork)) != isInSurface) {
+                        if (dependency.targetNode.isInSurface(threadData.forkMap.get(fork)) != isInSurface) {
                             dependency.remove
                         }
                     }
-                    for (dependency : node.incoming.filter(DataDependency).filter[ concurrent ].toList) {
+                    for (dependency : node.incomingLinks.filter(DataDependency).filter[ concurrent ].toList) {
                         if (dependency.eContainer.asNode.isInSurface(threadData.forkMap.get(fork)) != isInSurface) {
                             dependency.remove
                         }
@@ -130,7 +132,7 @@ class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
             }
             
             visited += head
-            val nextNodes = head.allNext.map[ target ].
+            val nextNodes = head.allNext.map[ targetNode ].
                 filter[ !(it instanceof Join) && !(it instanceof Surface) && !(it instanceof Exit) ].
                 filter[ !visited.contains(it) ]
             if (!nextNodes.empty) {

@@ -18,6 +18,7 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
@@ -39,7 +40,6 @@ import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -52,6 +52,7 @@ import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
@@ -82,17 +83,11 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import java.util.HashMap
-import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -103,7 +98,36 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
  */
 class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceable {
     
+    // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
+    public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
+
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsFixExtensions
+    @Inject extension PragmaExtensions
+    
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
+    
+    private static val Injector i = SCTXStandaloneSetup::doSetup();
+    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
+
+    private val stateTypeCache = <State, Set<PatternType>>newHashMap
+    private val uniqueNameCache = new UniqueNameCache
+
+    private static val String ANNOTATION_REGIONNAME = "regionName"
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
+
+    private var Entry rootStateEntry = null
+
+    // State mappings         
+    HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()
+    HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
 
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCG"
@@ -129,35 +153,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         ]
         setModel(scgs)
     }
-
-    // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
-    public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
-
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension AnnotationsExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsCoreExtensions
-    @Inject extension UniqueNameExtensions
-
-    private static val Injector i = SCTXStandaloneSetup::doSetup();
-    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
-
-    private val stateTypeCache = <State, Set<PatternType>>newHashMap
-    private val uniqueNameCache = new UniqueNameCache
-
-    private static val String ANNOTATION_REGIONNAME = "regionName"
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-
-    private var Entry rootStateEntry = null
-
-    // State mappings         
-    HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()
-    HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()
 
     def Node getMappedNode(State state) {
         stateOrRegion2node.get(state)
@@ -446,7 +441,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val superfluousExitNodes = exitNodes.filter(e|e.next !== null && e.next.target instanceof Exit).toList
         for (exitNode : superfluousExitNodes.immutableCopy) {
             val links = <ControlFlow>newArrayList
-            links.addAll(exitNode.incoming.filter(typeof(ControlFlow)))
+            links.addAll(exitNode.incomingLinks.filter(typeof(ControlFlow)))
             for (link : links) {
                 link.setTarget(exitNode.next.target)
             }
@@ -458,7 +453,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             exitNode.next.target.trace(exitNode)
 
             // The removal of the EOpposite relation is necessary
-            link.target.incoming.remove(link)
+            link.target.incomingLinks.remove(link)
 
             // Remove superfluous exit node
             sCGraph.nodes.remove(exitNode)
@@ -478,7 +473,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         ).toList
         for (conditionalNode : superfluousConditionalNodes.immutableCopy) {
             val links = <ControlFlow>newArrayList
-            conditionalNode.incoming.filter(typeof(ControlFlow)).forEach[links += it]
+            conditionalNode.incomingLinks.filter(typeof(ControlFlow)).forEach[links += it]
 
             // val links = sCGraph.eAllContents.filter(typeof(ControlFlow))
             // .filter( e | e.target == conditionalNode).toList
@@ -491,8 +486,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 val linkElse = conditionalNode.getElse
 
                 // The removal of the EOpposite relation is necessary
-                linkThen.target.incoming.remove(linkThen)
-                linkElse.target.incoming.remove(linkElse)
+                linkThen.target.incomingLinks.remove(linkThen)
+                linkElse.target.incomingLinks.remove(linkElse)
 
                 // KITT redirect tracing origins
                 links.trace(linkThen, linkElse)

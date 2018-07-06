@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.scg.transformations.basicblocks
 
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -52,7 +51,7 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
 
     override boolean schedulingBlockSplitter(Node node, Node lastNode) {
         super.schedulingBlockSplitter(node, lastNode) ||
-        node.eContents.filter(typeof(DataDependency)).filter[ concurrent && !confluent ].empty
+            node.eContents.filter(DataDependency).filter[ concurrent && !confluent ].empty
     } 
     
   

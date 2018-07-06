@@ -24,8 +24,6 @@ import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -50,6 +48,8 @@ import java.util.logging.Level
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
@@ -294,9 +294,9 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             	 */
                 val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
                 if (node.asConditional.then !== null)
-                    newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
+                    newIndex = scg.createBasicBlocks((node as Conditional).then.targetNode, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
                 if (node.asConditional.^else !== null)                    
-                    newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
+                    newIndex = scg.createBasicBlocks((node as Conditional).^else.targetNode, newIndex, basicBlockCache, newLinkedList(block), threadEntry)
                 node = null
             } else 
             if (node instanceof Surface) {
@@ -320,9 +320,9 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             	// Insert the actual block. 
                 val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
                 // Call the createBasicBlock method for each control flow.
-                for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
+                for(flow : node.eAllContents.filter(ControlFlow).toList) {
                     val entry = flow.target as Entry
-                    newIndex = scg.createBasicBlocks(flow.target, newIndex, basicBlockCache, newLinkedList(block), entry)
+                    newIndex = scg.createBasicBlocks(flow.targetNode, newIndex, basicBlockCache, newLinkedList(block), entry)
                     
                     // Make sure the exit node was processed.
                     newIndex = scg.createBasicBlocks((flow.target as Entry).exit, newIndex, basicBlockCache, <BasicBlock> newLinkedList, entry)
@@ -345,9 +345,9 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             	 * Therefore, check the next block for these properties.
             	 */
             	// Retrieve the target of the next control flow.
-                var next = node.eContents.filter(typeof(ControlFlow))?.head?.target
+                var next = node.eContents.filter(ControlFlow)?.head?.targetNode
                 // if the node has already been processed, skip it.
-                if (processedNodes.contains(next) && next.incoming.filter(typeof(ControlFlow)).size < 2) {
+                if (processedNodes.contains(next) && next.incomingLinks.filter(ControlFlow).size < 2) {
                     next = null
                 }
                 if (next instanceof Join || next === null) {
@@ -359,7 +359,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                     scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks, threadEntry)
                     node = null
                 } else
-                if (next !== null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
+                if (next !== null && next.incomingLinks.filter(ControlFlow).size > 1) {
                 	/**
                 	 * If the next block has more than one incoming control flow, it starts a new block.
                 	 * Hence, add the actual block and proceed with the next one but exit this instance. 
@@ -511,7 +511,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guards += newGuard
                 block.label = newGuard.valuedObject.name
-                block.dependencies.addAll(node.incoming.filter(Dependency))
+                block.dependencies.addAll(node.incomingLinks.filter(Dependency))
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
@@ -525,7 +525,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     }
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
-        (!node.incoming.filter(typeof(DataDependency)).filter[ concurrent && !confluent].empty) ||
+        (!node.incomingLinks.filter(DataDependency).filter[ concurrent && !confluent].empty) ||
         (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
     } 
     

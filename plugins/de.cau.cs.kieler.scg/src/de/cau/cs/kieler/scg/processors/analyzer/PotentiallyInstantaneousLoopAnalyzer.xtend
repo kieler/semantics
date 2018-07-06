@@ -20,9 +20,8 @@ import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.DataDependency
 import com.google.inject.Guice
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -75,10 +74,10 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	
 	private def boolean checkInstantaneousLoop(Node node, Set<Node> uncriticalPath, Set<Node> uncertainPath) {
 	    val previousNodes = node.allPrevious.map[ eContainer ].toList
-        val nextNodes = node.allNext.map[ target ].toList
+        val nextNodes = node.allNext.map[ targetNode ].toList
         
-        previousNodes += node.incoming.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ target ].toList
-        nextNodes += node.eContents.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ target ].toList
+        previousNodes += node.incomingLinks.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ targetNode ].toList
+        nextNodes += node.eContents.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ targetNode ].toList
 	    
 	    var uncritical = true
 	    for(pn : nextNodes) {
@@ -122,11 +121,11 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	    
 	    if (node instanceof Surface) {
 	        val surface = (node as Surface)
-	        if (surface.depth != null && surface.depth.next != null &&
-	            surface.depth.next.target != null) {
+	        if (surface.depth !== null && surface.depth.next !== null &&
+	            surface.depth.next.target !== null) {
     	        uncriticalPath += (node as Surface).depth;
     	        if (surface.depth.next.target != surface) {
-    	           (node as Surface).depth.next.target.checkInstantaneousLoop(uncriticalPath, uncertainPath)
+    	           (node as Surface).depth.next.targetNode.checkInstantaneousLoop(uncriticalPath, uncertainPath)
 	           }
 	        }
 	    }
@@ -142,7 +141,7 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
         
         uncriticalPath += scg.nodes.head;
         
-        (scg.nodes.head as Entry).next.target.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
+        (scg.nodes.head as Entry).next.targetNode.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
         
         result
     }
@@ -151,7 +150,7 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
         var pilData = emptySet//if (context != null) context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult)?.head?.
                 //criticalNodes?.toSet else null
         
-        if (pilData == null) {
+        if (pilData === null) {
             val PotentiallyInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
                 Guice.createInjector().getInstance(PotentiallyInstantaneousLoopAnalyzer)
             val p = potentialInstantaneousLoopAnalyzer.analyze(scg) as PotentialInstantaneousLoopResult

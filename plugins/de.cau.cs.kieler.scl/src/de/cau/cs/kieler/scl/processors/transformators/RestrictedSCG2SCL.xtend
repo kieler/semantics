@@ -145,7 +145,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     def dispatch Scope transform(Exit exit, Scope scope) {
         if (exit.visited) return scope
         exit.markVisted
-        if (exit.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(exit)) {
+        if (exit.incomingLinks.filter(ControlFlow).size > 1 && !labels.containsKey(exit)) {
             scope.createLabel(exit)
         }
         return scope
@@ -153,7 +153,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     
     def dispatch Scope transform(Surface surface, Scope scope) {
         if (surface.visited) return scope
-        if (surface.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(surface)) {
+        if (surface.incomingLinks.filter(ControlFlow).size > 1 && !labels.containsKey(surface)) {
             scope.createLabel(surface)
         }
         surface.markVisted
@@ -166,9 +166,9 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     def dispatch Scope transform(Depth depth, Scope scope) {
         if (depth.visited) return scope
         depth.markVisted
-        val next = depth.next?.target
-        if (next != null) {
-            if (next != null && next.visited) {
+        val next = depth.next?.targetNode
+        if (next !== null) {
+            if (next !== null && next.visited) {
                 if (labels.containsKey(next)) {
                     scope.statements += createGoto => [
                         gotos.put(it, next)
@@ -183,7 +183,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
 
     def dispatch Scope transform(Fork fork, Scope scope) {
         if (fork.visited) return scope
-        if (fork.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(fork)) {
+        if (fork.incomingLinks.filter(ControlFlow).size > 1 && !labels.containsKey(fork)) {
             scope.createLabel(fork)
         }
         fork.markVisted
@@ -202,9 +202,9 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     def dispatch Scope transform(Join join, Scope scope) {
         if (join.visited) return scope
         join.markVisted
-        val next = join.next?.target
-        if (next != null) {
-            if (next != null && next.visited) {
+        val next = join.next?.targetNode
+        if (next !== null) {
+            if (next !== null && next.visited) {
                 if (labels.containsKey(next)){
                     scope.statements += createGoto => [
                         gotos.put(it, next)
@@ -220,16 +220,16 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     def dispatch Scope transform(Assignment assignment, Scope scope) {
         if (assignment.visited) return scope
         assignment.markVisted
-        if (assignment.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(assignment)) {
+        if (assignment.incomingLinks.filter(ControlFlow).size > 1 && !labels.containsKey(assignment)) {
             scope.createLabel(assignment)
         }
-        val next = assignment.next?.target
+        val next = assignment.next?.targetNode
         val statement = sCLFactory.createAssignment => [
             valuedObject = assignment.valuedObject.copyValuedObject
             expression = assignment.expression.copyExpression
         ]
         scope.statements.add(statement)
-        if (next != null) {
+        if (next !== null) {
             if (next.visited) {
                 if (labels.containsKey(next)) {
                     scope.statements += createGoto => [
@@ -247,14 +247,14 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     def dispatch Scope transform(Conditional conditional, Scope scope) {
         if (conditional.visited) return scope
         conditional.markVisted
-        if (conditional.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(conditional)) {
+        if (conditional.incomingLinks.filter(ControlFlow).size > 1 && !labels.containsKey(conditional)) {
             scope.createLabel(conditional)
         }
 
         // Then Path
         val thenPath = newLinkedHashSet
         val thenQueue = newLinkedList
-        thenQueue.add(conditional.then.target)
+        thenQueue.add(conditional.then.targetNode)
         var thenLoop = false
         var search = true
         while (search) {
@@ -268,9 +268,9 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
                     } else {
                         if (next instanceof Surface) {
                             thenPath.add(next.depth)
-                            thenQueue.addAll(next.depth.allNext.map[target].filterNull.filter[!thenPath.contains(it)])
+                            thenQueue.addAll(next.depth.allNext.map[targetNode].filterNull.filter[!thenPath.contains(it)])
                         } else {
-                            thenQueue.addAll(next.allNext.map[target].filterNull.filter[!thenPath.contains(it)])
+                            thenQueue.addAll(next.allNext.map[targetNode].filterNull.filter[!thenPath.contains(it)])
                         }
                     }
                 }
@@ -282,7 +282,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
         // Else Path
         val elsePath = newLinkedHashSet
         val elseQueue = newLinkedList
-        elseQueue.add(conditional.^else.target)
+        elseQueue.add(conditional.^else.targetNode)
         var elseLoop = false
         search = true
         while (search) {
@@ -296,9 +296,9 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
                     } else {
                         if (next instanceof Surface) {
                             elsePath.add(next.depth)
-                            elseQueue.addAll(next.depth.allNext.map[target].filterNull.filter[!elsePath.contains(it)])
+                            elseQueue.addAll(next.depth.allNext.map[targetNode].filterNull.filter[!elsePath.contains(it)])
                         } else {
-                            elseQueue.addAll(next.allNext.map[target].filterNull.filter[!elsePath.contains(it)])
+                            elseQueue.addAll(next.allNext.map[targetNode].filterNull.filter[!elsePath.contains(it)])
                         }
                     }
                 }
@@ -310,13 +310,13 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
         var Node j = null
         for (t : thenPath) {
             for (e : elsePath) {
-                if (j == null && t == e) {
+                if (j === null && t == e) {
                     j = t
                 }
             }
         }
         val join = j
-        if (join == null && (thenLoop || elseLoop)) {
+        if (join === null && (thenLoop || elseLoop)) {
             val loopPath = if (thenLoop) {
                     thenPath
                 } else {
@@ -357,7 +357,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
             val statement = createConditional
             scope.statements.add(statement)
             val joinVisted = join.isVisited
-            if (join != null) {
+            if (join !== null) {
                 join.transform(scope)
             }
             statement => [

@@ -13,6 +13,8 @@ import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 
 import java.util.Collection;
@@ -25,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -36,6 +39,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
@@ -51,6 +56,26 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
 
     /**
      * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
@@ -98,6 +123,30 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS);
@@ -110,11 +159,30 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS:
                 return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
@@ -131,6 +199,10 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
         switch (featureID) {
             case KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE:
                 return getSchedule();
+            case KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS:
+                return getIncomingLinks();
             case KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS:
                 return getParameters();
         }
@@ -149,6 +221,14 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
             case KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE:
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
             case KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
@@ -169,6 +249,12 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
             case KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
                 return;
@@ -186,6 +272,10 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
         switch (featureID) {
             case KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
         }
@@ -202,6 +292,13 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
         if (baseClass == Schedulable.class) {
             switch (derivedFeatureID) {
                 case KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
                 default: return -1;
             }
         }
@@ -234,6 +331,13 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
         if (baseClass == Schedulable.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS;
                 default: return -1;
             }
         }

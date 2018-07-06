@@ -87,13 +87,31 @@ public interface KEffectsPackage extends EPackage {
     int EFFECT__SCHEDULE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EFFECT__OUTGOING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EFFECT__INCOMING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Effect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EFFECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int EFFECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -122,6 +140,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int ASSIGNMENT__SCHEDULE = EFFECT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference.
@@ -197,6 +233,24 @@ public interface KEffectsPackage extends EPackage {
     int EMISSION__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMISSION__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMISSION__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -252,6 +306,24 @@ public interface KEffectsPackage extends EPackage {
     int HOSTCODE_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HOSTCODE_EFFECT__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HOSTCODE_EFFECT__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -296,6 +368,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int REFERENCE_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -371,6 +461,24 @@ public interface KEffectsPackage extends EPackage {
     int FUNCTION_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -426,6 +534,24 @@ public interface KEffectsPackage extends EPackage {
     int PRINT_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_EFFECT__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_EFFECT__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -472,6 +598,24 @@ public interface KEffectsPackage extends EPackage {
     int RANDOMIZE_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_EFFECT__OUTGOING_LINKS = EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RANDOMIZE_CALL_EFFECT__INCOMING_LINKS = EFFECT__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -490,6 +634,235 @@ public interface KEffectsPackage extends EPackage {
     int RANDOMIZE_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkableImpl <em>Linkable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.LinkableImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getLinkable()
+     * @generated
+     */
+    int LINKABLE = 8;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINKABLE__OUTGOING_LINKS = 0;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINKABLE__INCOMING_LINKS = 1;
+
+    /**
+     * The number of structural features of the '<em>Linkable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINKABLE_FEATURE_COUNT = 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl <em>Link</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getLink()
+     * @generated
+     */
+    int LINK = 9;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__TAG = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl <em>Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDependency()
+     * @generated
+     */
+    int DEPENDENCY = 10;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__ANNOTATIONS = LINK__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__TARGET = LINK__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__TAG = LINK__TAG;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__REFERENCE = LINK__REFERENCE;
+
+    /**
+     * The number of structural features of the '<em>Dependency</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDataDependency()
+     * @generated
+     */
+    int DATA_DEPENDENCY = 11;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__TAG = DEPENDENCY__TAG;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__REFERENCE = DEPENDENCY__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__TYPE = DEPENDENCY_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__CONCURRENT = DEPENDENCY_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__CONFLUENT = DEPENDENCY_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Data Dependency</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 3;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -497,7 +870,18 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
      * @generated
      */
-    int ASSIGN_OPERATOR = 8;
+    int ASSIGN_OPERATOR = 12;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependencyType <em>Data Dependency Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDataDependencyType()
+     * @generated
+     */
+    int DATA_DEPENDENCY_TYPE = 13;
 
 
     /**
@@ -647,6 +1031,134 @@ public interface KEffectsPackage extends EPackage {
     EClass getRandomizeCallEffect();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Linkable</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
+     * @generated
+     */
+    EClass getLinkable();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable#getOutgoingLinks <em>Outgoing Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Outgoing Links</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable#getOutgoingLinks()
+     * @see #getLinkable()
+     * @generated
+     */
+    EReference getLinkable_OutgoingLinks();
+
+    /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Incoming Links</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable#getIncomingLinks()
+     * @see #getLinkable()
+     * @generated
+     */
+    EReference getLinkable_IncomingLinks();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Link <em>Link</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Link</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link
+     * @generated
+     */
+    EClass getLink();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getTarget()
+     * @see #getLink()
+     * @generated
+     */
+    EReference getLink_Target();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getTag <em>Tag</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tag</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getTag()
+     * @see #getLink()
+     * @generated
+     */
+    EAttribute getLink_Tag();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getReference <em>Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Reference</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getReference()
+     * @see #getLink()
+     * @generated
+     */
+    EReference getLink_Reference();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Dependency <em>Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Dependency</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Dependency
+     * @generated
+     */
+    EClass getDependency();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependency <em>Data Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Dependency</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.DataDependency
+     * @generated
+     */
+    EClass getDataDependency();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependency#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.DataDependency#getType()
+     * @see #getDataDependency()
+     * @generated
+     */
+    EAttribute getDataDependency_Type();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependency#isConcurrent <em>Concurrent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Concurrent</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.DataDependency#isConcurrent()
+     * @see #getDataDependency()
+     * @generated
+     */
+    EAttribute getDataDependency_Concurrent();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependency#isConfluent <em>Confluent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Confluent</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.DataDependency#isConfluent()
+     * @see #getDataDependency()
+     * @generated
+     */
+    EAttribute getDataDependency_Confluent();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -655,6 +1167,16 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EEnum getAssignOperator();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependencyType <em>Data Dependency Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Data Dependency Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+     * @generated
+     */
+    EEnum getDataDependencyType();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -807,6 +1329,110 @@ public interface KEffectsPackage extends EPackage {
         EClass RANDOMIZE_CALL_EFFECT = eINSTANCE.getRandomizeCallEffect();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkableImpl <em>Linkable</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.LinkableImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getLinkable()
+         * @generated
+         */
+        EClass LINKABLE = eINSTANCE.getLinkable();
+
+        /**
+         * The meta object literal for the '<em><b>Outgoing Links</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINKABLE__OUTGOING_LINKS = eINSTANCE.getLinkable_OutgoingLinks();
+
+        /**
+         * The meta object literal for the '<em><b>Incoming Links</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINKABLE__INCOMING_LINKS = eINSTANCE.getLinkable_IncomingLinks();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl <em>Link</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getLink()
+         * @generated
+         */
+        EClass LINK = eINSTANCE.getLink();
+
+        /**
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINK__TARGET = eINSTANCE.getLink_Target();
+
+        /**
+         * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LINK__TAG = eINSTANCE.getLink_Tag();
+
+        /**
+         * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINK__REFERENCE = eINSTANCE.getLink_Reference();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl <em>Dependency</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDependency()
+         * @generated
+         */
+        EClass DEPENDENCY = eINSTANCE.getDependency();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.DataDependencyImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDataDependency()
+         * @generated
+         */
+        EClass DATA_DEPENDENCY = eINSTANCE.getDataDependency();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_DEPENDENCY__TYPE = eINSTANCE.getDataDependency_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Concurrent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_DEPENDENCY__CONCURRENT = eINSTANCE.getDataDependency_Concurrent();
+
+        /**
+         * The meta object literal for the '<em><b>Confluent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_DEPENDENCY__CONFLUENT = eINSTANCE.getDataDependency_Confluent();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -815,6 +1441,16 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EEnum ASSIGN_OPERATOR = eINSTANCE.getAssignOperator();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.DataDependencyType <em>Data Dependency Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDataDependencyType()
+         * @generated
+         */
+        EEnum DATA_DEPENDENCY_TYPE = eINSTANCE.getDataDependencyType();
 
     }
 

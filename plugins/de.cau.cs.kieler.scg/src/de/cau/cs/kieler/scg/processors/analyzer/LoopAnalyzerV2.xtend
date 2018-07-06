@@ -26,6 +26,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * @author ssm
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.scg.Depth
 class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
+	@Inject extension SCGDependencyExtensions
 	@Inject extension TarjanSCC
 	
 	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 
@@ -143,19 +145,19 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             switch(sourceNode) {
                 Entry,
                 Depth:  {
-                            iter = sourceNode.allNext.map[ target ];
+                            iter = sourceNode.allNext.map[ targetNode ];
                             localDepth = 1
                         }
                 Exit,
                 Surface:{ 
-                            iter = sourceNode.incoming.map[ eContainer ].filter(Node)
+                            iter = sourceNode.incomingLinks.map[ eContainer ].filter(Node)
                             localDepth = 1
                         } 
             }       
         } else {
-            iter = sourceNode.incoming.map[ eContainer ].filter(Node) +
-                   sourceNode.allNext.map[ target ] + 
-                   sourceNode.dependencies.map[ target ]
+            iter = sourceNode.incomingLinks.map[ eContainer ].filter(Node) +
+                   sourceNode.allNext.map[ targetNode ] + 
+                   sourceNode.dependencies.map[ targetNode ]
         }
         if (localDepth > 1) {
             val nList = <Node> newLinkedList            

@@ -13,15 +13,11 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizer
 
-import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -64,7 +60,7 @@ class SuperfluousThreadRemover extends AbstractOptimizer {
             
             // Remove all marked control flows.
             removeControlFlows.filterNull.forEach[
-                target?.incoming?.remove(it) 
+                target?.incomingLinks?.remove(it) 
                 remove
             ]
             

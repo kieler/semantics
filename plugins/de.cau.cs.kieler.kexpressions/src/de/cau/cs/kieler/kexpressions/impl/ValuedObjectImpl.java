@@ -360,16 +360,17 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (combineOperator: ");
-        result.append(combineOperator);
-        result.append(')');
+        StringBuffer result = new StringBuffer();
+        result.append("ValuedObjectImpl");
+        result.append("@");
+        result.append(String.format("%08x", this.hashCode()));
+        result.append(" ");
+        result.append(name);
         return result.toString();
     }
 

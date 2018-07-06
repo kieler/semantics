@@ -23,6 +23,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * @author ssm
@@ -33,6 +34,7 @@ class UnreferencedGuardElimination extends AbstractOptimizer {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGControlFlowExtensions
     
     private static val GUARDNAME = "guard" 
     
@@ -51,11 +53,11 @@ class UnreferencedGuardElimination extends AbstractOptimizer {
         val ic = ImmutableList::copyOf(unreferencedAssignments)  
         
         ic.forEach[ ra |
-            val incoming = ImmutableList::copyOf(ra.incoming.filter(typeof(ControlFlow)))
-            incoming.forEach[ target = ra.next.target ]
+            val incoming = ImmutableList::copyOf(ra.incomingLinks.filter(typeof(ControlFlow)))
+            incoming.forEach[ target = ra.next.targetNode ]
             
             ra.valuedObject.removeFromContainmentAndCleanup
-            ra.next.target.incoming -= ra.next
+            ra.next.target.incomingLinks -= ra.next
             ra.remove
         ]
         

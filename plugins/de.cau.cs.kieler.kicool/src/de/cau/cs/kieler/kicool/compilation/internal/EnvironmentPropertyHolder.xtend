@@ -92,7 +92,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                     copyValue(target, k, v, modelCopier)
                 }
                 
-                if (modelCopier != null) {
+                if (modelCopier !== null) {
                     if (v instanceof IKiCoolCloneable) {
                         if (ongoingWorkingCopy) {
                             (source.getProperty(k) as IKiCoolCloneable).resolveCopiedObjects(modelCopier)    

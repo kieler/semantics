@@ -85,6 +85,10 @@ public class ColorStore {
         
         USER_SCHEDULE_COLOR(0x28, 0x99, 0x7E),
         
+        DEPENDENCY_ABSWRITEREAD(0, 192, 0),
+        DEPENDENCY_ABSWRITERELWRITE(0, 0, 255),
+        DEPENDENCY_ABSWRITEABSWRITE(255, 0, 0),
+        
         KEYWORD(115, 0, 65);
 
         /** the default color */

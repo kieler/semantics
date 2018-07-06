@@ -3,6 +3,11 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.validation
 
+import org.eclipse.xtext.validation.Check
+import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+
 //import org.eclipse.xtext.validation.Check
 
 /**
@@ -12,14 +17,14 @@ package de.cau.cs.kieler.kexpressions.keffects.validation
  */
 class KEffectsValidator extends AbstractKEffectsValidator {
 
-//  public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MyDslPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+    @Check(CheckType.NORMAL)
+    def void checkPrintCallOperatorExpression(PrintCallEffect printCallEffect) {
+        if (printCallEffect.parameters.size > 0) {
+            if (printCallEffect.parameters.head.expression instanceof OperatorExpression) {
+                warning("You do a calculation inside a print call effect. You should use printf syntax to be safe on different code generators.", 
+                    printCallEffect, null)                
+            }
+        }
+    }
+
 }

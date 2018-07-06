@@ -15,8 +15,6 @@ package de.cau.cs.kieler.scg.processors.transformators.priority
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
@@ -26,6 +24,9 @@ import java.util.LinkedList
 import java.util.Stack
 import de.cau.cs.kieler.scg.extensions.SCCExtensions
 import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /**
  * A class to determine the Strongly Connected Components of an SCG. Also determines schedulability of the SCG.
@@ -37,6 +38,7 @@ class StronglyConnectedComponentCalc {
     @Inject extension SCCExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCGThreadExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject Injector injector
 
     private static val SCHIZO_ANNOTATION = "Schizophrenic"

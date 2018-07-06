@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 
 /**
  * @author ssm
@@ -31,4 +32,19 @@ class SCChartsDataflowRegionExtensions {
         !state.regions.filter(DataflowRegion).empty
     }    
 
+    def DataflowRegion createDataflowRegion(String id, String label) {
+        SCChartsFactory::eINSTANCE.createDataflowRegion => [
+            setName(id)
+            setLabel(label)
+        ]
+    }
+
+    def DataflowRegion createDataflowRegion(String id) {
+        createDataflowRegion(id, "")
+    }
+    
+    def DataflowRegion createDataflowRegion(State state, String id) {
+        createDataflowRegion(id, "") => [ state.regions += it ]
+    }
+    
 }

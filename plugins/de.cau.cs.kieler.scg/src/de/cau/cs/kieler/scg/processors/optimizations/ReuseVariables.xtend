@@ -38,10 +38,12 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.Map.Entry
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 class ReuseVariables {
     
     @Inject extension KEffectsExtensions    
+    @Inject extension SCGControlFlowExtensions
     
     ArrayList<Node> visited = new ArrayList() 
     Iterable<AssignmentImpl> assignments;
@@ -65,7 +67,7 @@ class ReuseVariables {
         assignments = nodes.filter(typeof(AssignmentImpl)).filter [
             it.operator.getName().equals("ASSIGN")
         ].filter [
-            if (it.valuedObject == null) {
+            if (it.valuedObject === null) {
                 return false
             }
             it.valuedObject.getName().startsWith("g")
@@ -120,7 +122,7 @@ class ReuseVariables {
             val firstElem = lastUse.pollFirstEntry
             // get second element which is not a pre-node from firstElem
             val secondElem = GetSecondElem(lastUse, firstElem)
-            if (secondElem != null) {
+            if (secondElem !== null) {
                 lastUse.remove(secondElem.key)
                 // get all occures / assigments of secondElem
                 val valuedObjRep = new ArrayList<ValuedObjectReferenceImpl>()
@@ -153,7 +155,7 @@ class ReuseVariables {
                     val secondAss = assignments.findFirst[
                         it.valuedObject.name.equals(secondElem.key)
                     ]
-                    if(secondAss != null) {
+                    if(secondAss !== null) {
                         secondAss.valuedObject = firstAss.valuedObject   
                     }
                 ]
@@ -198,12 +200,12 @@ class ReuseVariables {
             var one = false
             var two = false
             if (!condNode.^else.target.equals(needle)) {
-                one = InNextPointerChain(needle, condNode.^else.target, hard, hops + 1)
+                one = InNextPointerChain(needle, condNode.^else.targetNode, hard, hops + 1)
             } else {
                 one = true
             }
             if (one || !condNode.then.target.equals(needle)) {
-                two = InNextPointerChain(needle, condNode.then.target, hard, hops + 1)
+                two = InNextPointerChain(needle, condNode.then.targetNode, hard, hops + 1)
             } else {
                 two = true
             }
@@ -211,7 +213,7 @@ class ReuseVariables {
         } else if (nextP instanceof AssignmentImpl) {
             val assNode = nextP as AssignmentImpl
             if (!assNode.next.target.equals(needle)) {
-                return InNextPointerChain(needle, assNode.next.target, hard, hops + 1)
+                return InNextPointerChain(needle, assNode.next.targetNode, hard, hops + 1)
             } else {
                 return true
             }

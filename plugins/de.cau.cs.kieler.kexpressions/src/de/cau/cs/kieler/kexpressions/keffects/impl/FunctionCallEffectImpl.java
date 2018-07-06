@@ -14,6 +14,8 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -38,6 +41,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
  * </ul>
@@ -54,6 +59,26 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
 
     /**
      * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
@@ -121,6 +146,30 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getFunctionName() {
         return functionName;
     }
@@ -135,6 +184,21 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
         functionName = newFunctionName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME, oldFunctionName, functionName));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
@@ -159,6 +223,10 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
         switch (featureID) {
             case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
@@ -175,6 +243,10 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
         switch (featureID) {
             case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
                 return getSchedule();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS:
+                return getIncomingLinks();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return getParameters();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
@@ -195,6 +267,14 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
             case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
@@ -218,6 +298,12 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
             case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
                 return;
@@ -238,6 +324,10 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
         switch (featureID) {
             case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
@@ -256,6 +346,13 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
         if (baseClass == Schedulable.class) {
             switch (derivedFeatureID) {
                 case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
                 default: return -1;
             }
         }
@@ -289,6 +386,13 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
         if (baseClass == Schedulable.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS;
                 default: return -1;
             }
         }

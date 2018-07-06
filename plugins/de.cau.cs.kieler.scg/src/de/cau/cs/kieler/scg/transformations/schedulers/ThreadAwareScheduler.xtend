@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scg.transformations.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
@@ -24,9 +23,9 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -92,7 +91,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
 		for (sBlock : cluster) {
 			for (nodes : sBlock.nodes) {
 				dependencies = dependencies + 
-					nodes.incoming.filter(typeof(DataDependency)).filter[ concurrent == true ].size
+					nodes.incomingLinks.filter(typeof(DataDependency)).filter[ concurrent == true ].size
 			}
 		}
 		

@@ -236,10 +236,6 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.annotations.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.circuit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.circuit.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
    <plugin id="de.cau.cs.kieler.core.model" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.core.perspectives" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -296,15 +292,11 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.sccharts.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.sccharts.timing" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
    <plugin id="de.cau.cs.kieler.sccharts.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.scg.circuit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.scg.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    

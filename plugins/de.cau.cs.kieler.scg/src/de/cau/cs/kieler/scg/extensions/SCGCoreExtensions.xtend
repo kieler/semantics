@@ -38,9 +38,9 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.DataDependency
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -66,6 +66,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 class SCGCoreExtensions { 
     
     @Inject extension KEffectsExtensions
+    @Inject extension SCGDependencyExtensions
     
     // -------------------------------------------------------------------------
     // -- Block queries
@@ -88,7 +89,7 @@ class SCGCoreExtensions {
 	 */
     def SCGraph graph(Node node) {
         var EObject nodeObj = node
-        while(nodeObj != null) {
+        while(nodeObj !== null) {
             if (nodeObj.eContainer instanceof SCGraph) return nodeObj.eContainer as SCGraph;
             nodeObj = nodeObj.eContainer
         }
@@ -110,7 +111,7 @@ class SCGCoreExtensions {
 	 */
     def SchedulingBlock schedulingBlock(Node node) {
         val scg = node.graph
-        if (scg == null) return null
+        if (scg === null) return null
         var SchedulingBlock myBlock = null
         for (block : scg.schedulingBlocks ) {
             if (block.nodes.contains(node)) { myBlock = block }
@@ -140,7 +141,7 @@ class SCGCoreExtensions {
      * @return Returns the basic block of the given scheduling block. May return null.
      */
     def BasicBlock basicBlock(SchedulingBlock schedulingBlock) {
-   		if (schedulingBlock.eContainer == null) return null
+   		if (schedulingBlock.eContainer === null) return null
         schedulingBlock.eContainer as BasicBlock
     }
    
@@ -286,7 +287,7 @@ class SCGCoreExtensions {
     
     
     def isNull(EObject eObject) {
-        eObject == null
+        eObject === null
     }
     
     
@@ -320,7 +321,7 @@ class SCGCoreExtensions {
         }
         
         if (copyIncomingDependencies) {
-            val incomingDependencies = node.incoming.filter(DataDependency).toList 
+            val incomingDependencies = node.incomingLinks.filter(DataDependency).toList 
             for(var i = 0; i < incomingDependencies.size; i++) {
                 val dep = incomingDependencies.get(i).copy
                 dep.target = o

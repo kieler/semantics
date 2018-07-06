@@ -100,7 +100,7 @@ class SCGThreadExtensions {
         controlFlows.addAll(entry.allNext)
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
-            var nextNode = controlFlows.head.target
+            var nextNode = controlFlows.head.targetNode
             
             // Remove this control flow.
             controlFlows.remove(0)
@@ -222,7 +222,7 @@ class SCGThreadExtensions {
         controlFlows.addAll(entry.allNext)
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
-            var nextNode = controlFlows.head.target
+            var nextNode = controlFlows.head.targetNode
             
             // Remove this control flow.
             controlFlows.remove(0)
@@ -330,7 +330,7 @@ class SCGThreadExtensions {
         controlFlows.addAll(entry.allNext)
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
-            var nextNode = controlFlows.head.target
+            var nextNode = controlFlows.head.targetNode
             
             // Remove this control flow.
             controlFlows.remove(0)
@@ -575,7 +575,7 @@ class SCGThreadExtensions {
         		localFlow, newType, threadTypes, source
         	)
         } else {
-            val nextFlows = next.target.allNext.filter[!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)]
+            val nextFlows = next.targetNode.allNext.filter[!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)]
     	    for (nextFlow : nextFlows) {
 	    	    nextFlow.accumulateThreadControlFlowsTypes(localFlow, type, threadTypes, source)
            }

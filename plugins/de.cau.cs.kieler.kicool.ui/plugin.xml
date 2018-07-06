@@ -357,6 +357,10 @@
             id="de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis"
+            id="de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainerSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainer">
       </diagramSynthesis>
@@ -368,6 +372,13 @@
                 icon="icons/IMBC_gear.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler"
                 name="Kieler Compiler"
+                restorable="true">
+          </view>
+          <view
+                class="de.cau.cs.kieler.kicool.ui.view.registry.CompilerRegistryView"
+                icon="icons/IMBC_key.png"
+                id="de.cau.cs.kieler.kicool.ui.view.compiler.registry"
+                name="Kieler Compiler Registry"
                 restorable="true">
           </view>
        </extension>
@@ -400,6 +411,14 @@
           <action
                 class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent"
                 id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.view.registry.FocusNodeAction"
+                id="de.cau.cs.kieler.ui.view.registry.focusNode">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.view.registry.DeFocusNodeAction"
+                id="de.cau.cs.kieler.ui.view.registry.deFocusNode">
           </action>
           <action
                 class="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction"

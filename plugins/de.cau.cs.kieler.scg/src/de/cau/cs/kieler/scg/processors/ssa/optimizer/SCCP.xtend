@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.processors.ssa.optimizer
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kexpressions.Call
@@ -38,7 +37,6 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
@@ -51,20 +49,19 @@ import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.processors.ssa.SSATransformation
 import de.cau.cs.kieler.scg.processors.ssa.SimpleSCSSATransformation
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Map
 import javax.inject.Inject
 
-import static de.cau.cs.kieler.scg.DataDependencyType.*
+import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The Sparse Conditional Constant Propagation for SCGs.
@@ -112,15 +109,12 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             
     // -------------------------------------------------------------------------
     
-    @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
-    @Inject extension SCGThreadExtensions
     @Inject extension SCGManipulationExtensions
-    @Inject extension SSATransformationExtensions
     @Inject extension SSACoreExtensions
     
     // -------------------------------------------------------------------------
@@ -269,15 +263,15 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
         
         // Remove dead threads
         var deadThreads = 0
-        for (entry : scg.nodes.filter(Entry).filter[!incoming.empty].toList) {
+        for (entry : scg.nodes.filter(Entry).filter[!incomingLinks.empty].toList) {
             if (entry.eContainer !== null) {
                 val threadNodes = <Node>newArrayList()
                 var dead = true
-                var next = entry.next.target
+                var next = entry.next.targetNode
                 while (dead && !(next instanceof Exit)) {
                     if (next.isSSA) {
                         val asm = next as Assignment
-                        next = asm.next.target
+                        next = asm.next.targetNode
                         threadNodes += next
                     } else {
                         dead = false
@@ -303,10 +297,10 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                         joinBB.synchronizerBlock = false
                         
                         val psis = <Assignment>newArrayList
-                        next = join.next.target
+                        next = join.next.targetNode
                         while (next.isSSA(PSI)) {
                             psis += next as Assignment
-                            next = (next as Assignment).next.target
+                            next = (next as Assignment).next.targetNode
                         }
                         
                         fork.removeNode(true)
@@ -479,7 +473,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                 }
             }
             // Remove dependencies
-            reader.incoming.filter(DataDependency).filter[type == WRITE_READ].filter[
+            reader.incomingLinks.filter(DataDependency).filter[type == WRITE_READ].filter[
                 !reads.contains((eContainer as Assignment).valuedObject)
             ].toList.forEach[remove]
         }
@@ -552,7 +546,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
                         val aliveTargetBranch = if (!superfluousConditionals.get(cond)) cond.then else cond.^else
                         val sourceBB = parameterMapping.get(fc.parameters.get(entry.key))
                         if (sourceBB == cond.basicBlock) {
-                            exec = aliveTargetBranch.target.basicBlock == bb
+                            exec = aliveTargetBranch.targetNode.basicBlock == bb
                         } else {
                             exec = executable.contains(sourceBB)
                         }
@@ -654,14 +648,14 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             val branch = PartialExpressionEvaluator.isThruthy(parEvalResult)
             // Activate branch
             if (branch) {
-                if (cond.then !== null) cond.then.target.basicBlock.markExecutable
+                if (cond.then !== null) cond.then.targetNode.basicBlock.markExecutable
             } else {
-                if (cond.^else !== null) cond.^else.target.basicBlock.markExecutable
+                if (cond.^else !== null) cond.^else.targetNode.basicBlock.markExecutable
             }
             superfluousConditionals.put(cond, !branch)
         } else if (parEvalResult.isOverdefined) { // Mark both
-            if (cond.then !== null) cond.then.target.basicBlock.markExecutable
-            if (cond.^else !== null) cond.^else.target.basicBlock.markExecutable
+            if (cond.then !== null) cond.then.targetNode.basicBlock.markExecutable
+            if (cond.^else !== null) cond.^else.targetNode.basicBlock.markExecutable
         }
     } 
           
@@ -754,9 +748,9 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
 
         // Checking null branches is important for cured schizophrenia
         val deadTargetBranch = if (trueBranchDead) c.then else c.^else
-        val deadTargetBB = if (deadTargetBranch !== null) deadTargetBranch.target.basicBlock
+        val deadTargetBB = if (deadTargetBranch !== null) deadTargetBranch.targetNode.basicBlock
         val aliveTargetBranch = if (!trueBranchDead) c.then else c.^else
-        val aliveTargetBB = if (aliveTargetBranch !== null) aliveTargetBranch.target.basicBlock
+        val aliveTargetBB = if (aliveTargetBranch !== null) aliveTargetBranch.targetNode.basicBlock
         if (deadTargetBB !== null) {
             deadTargetBB.predecessors.removeIf[basicBlock == bb]
             if (fixSSA) deadTargetBB.fixSSANodes(bb)

@@ -653,13 +653,31 @@ public interface SCChartsPackage extends EPackage {
     int REGION__REFERENCE = SCOPE__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__OUTGOING_LINKS = SCOPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__INCOMING_LINKS = SCOPE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
+    int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
@@ -668,7 +686,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION__COUNTER_VARIABLE = SCOPE_FEATURE_COUNT + 1;
+    int REGION__COUNTER_VARIABLE = SCOPE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>For Start</b></em>' containment reference.
@@ -677,7 +695,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION__FOR_START = SCOPE_FEATURE_COUNT + 2;
+    int REGION__FOR_START = SCOPE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>For End</b></em>' containment reference.
@@ -686,7 +704,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION__FOR_END = SCOPE_FEATURE_COUNT + 3;
+    int REGION__FOR_END = SCOPE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Region</em>' class.
@@ -695,7 +713,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 4;
+    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
@@ -769,6 +787,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__REFERENCE = REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__OUTGOING_LINKS = REGION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__INCOMING_LINKS = REGION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -905,6 +941,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__REFERENCE = REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__OUTGOING_LINKS = REGION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__INCOMING_LINKS = REGION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.

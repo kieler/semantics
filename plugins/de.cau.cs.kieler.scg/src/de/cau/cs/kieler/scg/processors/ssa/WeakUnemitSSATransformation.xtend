@@ -33,7 +33,6 @@ import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
@@ -64,6 +63,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The SSA transformation for SCGs
@@ -210,7 +210,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     
     def void addConcurrentWritersToReaders(SCGraph scg) {
         for (node : scg.uses.values.filter[!isSSA].toSet) {
-            for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
+            for (declDepPair : node.incomingLinks.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
                 if (!declDepPair.key.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                     val refs = (if (node instanceof Assignment) node.expression else if (node instanceof Conditional) node.condition).allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
@@ -251,7 +251,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     private def void removeImplicitEvironmentAssignments(SCGraph scg) {
         for (n : scg.nodes.filter(Assignment).filter[hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)].toList) {
             scg.schedulingBlocks.findFirst[nodes.contains(n)].nodes.remove(n)
-            val incoming = n.incoming.immutableCopy
+            val incoming = n.incomingLinks.immutableCopy
             for (in : incoming) {
                 in.target = n.next.target
             }
@@ -301,7 +301,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (p : reducedPsi.map[it as Assignment]) {
             if (p.expression instanceof ValuedObjectReference) {
                 scg.nodes.forEach[if (it !== p) eAllContents.filter(ValuedObjectReference).filter[valuedObject == p.valuedObject].forEach[valuedObject = (p.expression as ValuedObjectReference).valuedObject ]]
-                for (in : p.incoming.immutableCopy) {
+                for (in : p.incomingLinks.immutableCopy) {
                     in.target = p.next.target
                 }
                 p.remove
@@ -400,7 +400,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 return it instanceof Conditional || (it instanceof Assignment && !(it.isSSA(PHI) || isSSA(PHI_ASM)))
             ].empty].toList) {
                 scg.schedulingBlocks.findFirst[nodes.contains(n)].nodes.remove(n)
-                val incoming = n.incoming.immutableCopy
+                val incoming = n.incomingLinks.immutableCopy
                 for (in : incoming) {
                     in.target = n.next.target
                 }
@@ -450,19 +450,19 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         phiNodes.removeAll(exitPhis.keySet)
         // Conditional Merge
         val newBBs = <BasicBlock, BasicBlock>newHashMap
-        var phiNode = phiNodes.findFirst[incoming.size > 1]
+        var phiNode = phiNodes.findFirst[incomingLinks.size > 1]
         while (phiNode !== null) {
             val node = phiNode
             val versions = (phiNode.expression as FunctionCall).parameters.toMap[
                 bbVersion.get(it)
             ]
-            for (in : node.incoming.filter[versions.containsKey((it.eContainer as Node).basicBlock)].toList) {
+            for (in : node.incomingLinks.filter[versions.containsKey((it.eContainer as Node).basicBlock)].toList) {
                 scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                     val prev = (in.eContainer as Node)
                     var attachPoint = prev
                     var cf = in
                     while (attachPoint !== null && (attachPoint.isSSA || attachPoint.hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION))) {
-                        cf = attachPoint.incoming.filter(ControlFlow).head
+                        cf = attachPoint.incomingLinks.filter(ControlFlow).head
                         attachPoint = cf.eContainer as Node
                     }
                     val attach = attachPoint
@@ -512,7 +512,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
             node.remove
             phiNodes.remove(node)
             //Next
-            phiNode = phiNodes.findFirst[incoming.size > 1]
+            phiNode = phiNodes.findFirst[incomingLinks.size > 1]
         }
         // Join phis
         for (n : phiNodes) {
@@ -554,7 +554,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                         defs.remove(ref.valuedObject, asm)
                         defs.put(n.valuedObject, asm)
                         defs.remove(n.valuedObject, n)
-                        for (in : n.incoming.immutableCopy) {
+                        for (in : n.incomingLinks.immutableCopy) {
                             in.target = n.next.target
                         }
                         n.remove
@@ -564,7 +564,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                         defs.removeAll(ref.valuedObject)
                         defs.putAll(n.valuedObject, refDef)
                         defs.remove(n.valuedObject, n)
-                        for (in : n.incoming.immutableCopy) {
+                        for (in : n.incomingLinks.immutableCopy) {
                             in.target = n.next.target
                         }
                         n.remove
@@ -624,8 +624,8 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
             val cond = c.condition
             if (cond instanceof BoolValue) {
                 var kill = if (cond.value) c.then else c.^else
-                while (kill.target.incoming.filter(ControlFlow).size == 1) {
-                    val t = kill.target
+                while (kill.target.incomingLinks.filter(ControlFlow).size == 1) {
+                    val t = kill.targetNode
                     t.annotations += createTagAnnotation => [name = "dead"]
 //                    scg.nodes.remove(t)
 //                    kill.target = null

@@ -54,12 +54,12 @@ class KiCoolRegistration {
     
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
     private static val Map<String, System> modelsIdMap = new HashMap<String, System>()
-    private static val List<EObject> systemsModels = loadRegisteredSystemModels
+    private static val List<System> systemsModels = loadRegisteredSystemModels
     private static val Map<String, System> temporarySystems = <String, System> newHashMap
     
-    private static val Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>()
-    private static val Map<String, SourceTargetPair> processorModelTypes = new HashMap<String, SourceTargetPair>()
-    private static val List<Class<? extends Processor>> processorList = loadRegisteredProcessors
+    private static val Map<String, Class<? extends Processor<?,?>>> processorMap = new HashMap<String, Class<? extends Processor<?,?>>>()
+    private static val Map<String, SourceTargetPair<?,?>> processorModelTypes = new HashMap<String, SourceTargetPair<?,?>>()
+    private static val List<Class<? extends Processor<?,?>>> processorList = loadRegisteredProcessors
     
     
     static def getInjector() {
@@ -74,7 +74,7 @@ class KiCoolRegistration {
         injector.getInstance(object.getClass());
     }
     
-    static def List<EObject> getSystemModels() {
+    static def List<System> getSystemModels() {
         val allSystemModels = newArrayList
         if(!temporarySystems.isEmpty) {
             allSystemModels.addAll(temporarySystems.values)
@@ -114,13 +114,13 @@ class KiCoolRegistration {
     
     static def loadRegisteredSystemModels() {
         val systems = getRegisteredSystems
-        val modelList = <EObject> newArrayList
+        val modelList = <System> newArrayList
         modelsMap.clear
         modelsIdMap.clear
         for(system : systems) {
             try {
                 val model = loadEObjectFromResourceLocation(system.key, system.value)
-                modelList += model
+                modelList += model as System
                 modelsMap.put(system.key, model as System) 
                 modelsIdMap.put((model as System).id, model as System)
             } catch (Exception e) {
@@ -144,7 +144,7 @@ class KiCoolRegistration {
         val uri = URI.createPlatformPluginURI("/%s/%s".format(bundleId, resourceLocation), false)
         val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
         val Resource resource = resourceSet.getResource(uri, true)
-        if (resource !== null && resource.getContents() != null && resource.getContents().size() > 0) {
+        if (resource !== null && resource.getContents() !== null && resource.getContents().size() > 0) {
             val validatorResults = kicoolXtextInjector.getInstance(IResourceValidator).validate(resource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
             if (!validatorResults.empty) {
                 println("KiCool WARNING: There are error markers in system located at " + bundleId + ":" + resourceLocation + ": \n- " + validatorResults.map[message].join("\n- "))
@@ -155,9 +155,9 @@ class KiCoolRegistration {
         throw new IOException("Could not load resource '" + resourceLocation + "'!");
     }
     
-    static def void addProcessor(Processor processor) {
-        processorMap.put(processor.id, processor.class)
-        processorList += processor.class
+    static def void addProcessor(Processor<?,?> processor) {
+        processorMap.put(processor.id, processor.class as Class<? extends Processor<?,?>>)
+        processorList += processor.class as Class<? extends Processor<?,?>>
     }
     
     static def loadRegisteredProcessors() {
@@ -166,7 +166,7 @@ class KiCoolRegistration {
         processorModelTypes.clear
         for(processor : processors) {
             try {
-                val instance = getInstance(processor) as Processor
+                val instance = getInstance(processor) as Processor<?,?>
                 processorMap.put(instance.getId, processor)
                 processorModelTypes.put(instance.getId, instance.getSourceTargetTypes)
             } catch(Throwable e) {
@@ -177,13 +177,13 @@ class KiCoolRegistration {
     }
     
     static def getRegisteredProcessors() {
-        val resourceList = <Class<? extends Processor>> newArrayList
+        val resourceList = <Class<? extends Processor<?,?>>> newArrayList
         val processors = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_PROCESSOR);
         for(processor : processors) {
             try {
                 val instance = processor.createExecutableExtension("class")
                 val clazz = instance.getClass
-                resourceList += clazz as Class<? extends Processor> 
+                resourceList += clazz as Class<? extends Processor<?,?>> 
                 //Class.forName(processor.name) as Class<? extends Processor>
             } catch(Throwable e) {
                 java.lang.System.err.println("KiCool: Cannot load processor " + processor.getAttribute("class"));
@@ -206,8 +206,8 @@ class KiCoolRegistration {
     
     static def getProcessorInstance(String id) {
         val clazz = processorMap.get(id)
-        if (clazz == null) return null;
-        getInstance(clazz) as Processor
+        if (clazz === null) return null;
+        getInstance(clazz) as Processor<?,?>
     }
     
     static def checkProcessorCompatibility(String source, String target) {

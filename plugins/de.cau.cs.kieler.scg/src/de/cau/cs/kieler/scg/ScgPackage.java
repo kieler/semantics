@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -217,31 +218,31 @@ public interface ScgPackage extends EPackage {
     int NODE__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int NODE__INCOMING = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int NODE__OUTGOING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__INCOMING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -290,15 +291,24 @@ public interface ScgPackage extends EPackage {
     int CONDITIONAL__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int CONDITIONAL__INCOMING = NODE__INCOMING;
+    int CONDITIONAL__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -306,15 +316,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int CONDITIONAL__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONDITIONAL__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -390,15 +391,24 @@ public interface ScgPackage extends EPackage {
     int SURFACE__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SURFACE__INCOMING = NODE__INCOMING;
+    int SURFACE__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -406,15 +416,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int SURFACE__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SURFACE__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -472,15 +473,24 @@ public interface ScgPackage extends EPackage {
     int DEPTH__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int DEPTH__INCOMING = NODE__INCOMING;
+    int DEPTH__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -488,15 +498,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int DEPTH__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DEPTH__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -563,15 +564,24 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__INCOMING = NODE__INCOMING;
+    int ASSIGNMENT__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -579,15 +589,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int ASSIGNMENT__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ASSIGNMENT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -690,15 +691,24 @@ public interface ScgPackage extends EPackage {
     int FORK__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int FORK__INCOMING = NODE__INCOMING;
+    int FORK__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -706,15 +716,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int FORK__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int FORK__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -781,15 +782,24 @@ public interface ScgPackage extends EPackage {
     int JOIN__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int JOIN__INCOMING = NODE__INCOMING;
+    int JOIN__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -797,15 +807,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int JOIN__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int JOIN__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -844,16 +845,6 @@ public interface ScgPackage extends EPackage {
 	int JOIN_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
 	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.LinkImpl <em>Link</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.LinkImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getLink()
-     * @generated
-     */
-	int LINK = 15;
-
-	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -882,15 +873,24 @@ public interface ScgPackage extends EPackage {
     int ENTRY__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ENTRY__INCOMING = NODE__INCOMING;
+    int ENTRY__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -898,15 +898,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int ENTRY__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ENTRY__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -973,15 +964,24 @@ public interface ScgPackage extends EPackage {
     int EXIT__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int EXIT__INCOMING = NODE__INCOMING;
+    int EXIT__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -989,15 +989,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int EXIT__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int EXIT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -1052,29 +1043,9 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlFlow()
      * @generated
      */
-	int CONTROL_FLOW = 16;
+	int CONTROL_FLOW = 15;
 
 	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DependencyImpl <em>Dependency</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.DependencyImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDependency()
-     * @generated
-     */
-    int DEPENDENCY = 17;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.DataDependencyImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependency()
-     * @generated
-     */
-    int DATA_DEPENDENCY = 18;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1082,7 +1053,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
      * @generated
      */
-    int CONTROL_DEPENDENCY = 19;
+    int CONTROL_DEPENDENCY = 16;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
@@ -1311,7 +1282,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExpressionDependency()
      * @generated
      */
-	int EXPRESSION_DEPENDENCY = 20;
+	int EXPRESSION_DEPENDENCY = 17;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardDependencyImpl <em>Guard Dependency</em>}' class.
@@ -1321,7 +1292,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardDependency()
      * @generated
      */
-	int GUARD_DEPENDENCY = 21;
+	int GUARD_DEPENDENCY = 18;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
@@ -1352,15 +1323,24 @@ public interface ScgPackage extends EPackage {
     int GUARD__NAME = NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD__INCOMING = NODE__INCOMING;
+    int GUARD__OUTGOING_LINKS = NODE__OUTGOING_LINKS;
 
-	/**
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD__INCOMING_LINKS = NODE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1368,15 +1348,6 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
 	int GUARD__IS_INITIAL = NODE__IS_INITIAL;
-
-	/**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int GUARD__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
      * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
@@ -1448,7 +1419,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int LINK__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+	int CONTROL_FLOW__ANNOTATIONS = KEffectsPackage.LINK__ANNOTATIONS;
 
 	/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1457,34 +1428,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int LINK__TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-	/**
-     * The number of structural features of the '<em>Link</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_FLOW__ANNOTATIONS = LINK__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_FLOW__TARGET = LINK__TARGET;
+	int CONTROL_FLOW__TARGET = KEffectsPackage.LINK__TARGET;
 
 	/**
      * The number of structural features of the '<em>Control Flow</em>' class.
@@ -1493,7 +1437,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int CONTROL_FLOW_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+	int CONTROL_FLOW_FEATURE_COUNT = KEffectsPackage.LINK_FEATURE_COUNT + 0;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1502,7 +1446,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int DEPENDENCY__ANNOTATIONS = LINK__ANNOTATIONS;
+	int CONTROL_DEPENDENCY__ANNOTATIONS = KEffectsPackage.DEPENDENCY__ANNOTATIONS;
 
 	/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1511,88 +1455,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int DEPENDENCY__TARGET = LINK__TARGET;
-
-	/**
-     * The number of structural features of the '<em>Dependency</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DEPENDENCY_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DATA_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DATA_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
-
-	/**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DATA_DEPENDENCY__CONCURRENT = DEPENDENCY_FEATURE_COUNT + 0;
-
-	/**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DATA_DEPENDENCY__CONFLUENT = DEPENDENCY_FEATURE_COUNT + 1;
-
-	/**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DATA_DEPENDENCY__TYPE = DEPENDENCY_FEATURE_COUNT + 2;
-
-	/**
-     * The number of structural features of the '<em>Data Dependency</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DATA_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 3;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+	int CONTROL_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 	/**
      * The number of structural features of the '<em>Control Dependency</em>' class.
@@ -1601,7 +1464,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int CONTROL_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int CONTROL_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1610,7 +1473,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int EXPRESSION_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int EXPRESSION_DEPENDENCY__ANNOTATIONS = KEffectsPackage.DEPENDENCY__ANNOTATIONS;
 
 				/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1619,7 +1482,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int EXPRESSION_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+	int EXPRESSION_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 				/**
      * The number of structural features of the '<em>Expression Dependency</em>' class.
@@ -1628,7 +1491,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int EXPRESSION_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int EXPRESSION_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1637,7 +1500,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int GUARD_DEPENDENCY__ANNOTATIONS = KEffectsPackage.DEPENDENCY__ANNOTATIONS;
 
 				/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1646,7 +1509,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+	int GUARD_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 				/**
      * The number of structural features of the '<em>Guard Dependency</em>' class.
@@ -1655,7 +1518,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int GUARD_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl <em>Schedule Dependency</em>}' class.
@@ -1665,7 +1528,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
      * @generated
      */
-	int SCHEDULE_DEPENDENCY = 22;
+	int SCHEDULE_DEPENDENCY = 19;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1674,7 +1537,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SCHEDULE_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int SCHEDULE_DEPENDENCY__ANNOTATIONS = KEffectsPackage.DEPENDENCY__ANNOTATIONS;
 
 				/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1683,7 +1546,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SCHEDULE_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+	int SCHEDULE_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 				/**
      * The number of structural features of the '<em>Schedule Dependency</em>' class.
@@ -1692,7 +1555,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SCHEDULE_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int SCHEDULE_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
@@ -1702,18 +1565,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-	int BRANCH_TYPE = 23;
-
-
-	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.DataDependencyType <em>Data Dependency Type</em>}' enum.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.DataDependencyType
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependencyType()
-     * @generated
-     */
-	int DATA_DEPENDENCY_TYPE = 24;
+	int BRANCH_TYPE = 20;
 
 
 	/**
@@ -1802,17 +1654,6 @@ public interface ScgPackage extends EPackage {
 	EClass getNode();
 
 	/**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.Node#getIncoming <em>Incoming</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Incoming</em>'.
-     * @see de.cau.cs.kieler.scg.Node#getIncoming()
-     * @see #getNode()
-     * @generated
-     */
-	EReference getNode_Incoming();
-
-	/**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1822,17 +1663,6 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
 	EAttribute getNode_IsInitial();
-
-	/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.Node#getDependencies <em>Dependencies</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Dependencies</em>'.
-     * @see de.cau.cs.kieler.scg.Node#getDependencies()
-     * @see #getNode()
-     * @generated
-     */
-	EReference getNode_Dependencies();
 
 	/**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Node#isSchizophrenic <em>Schizophrenic</em>}'.
@@ -2027,27 +1857,6 @@ public interface ScgPackage extends EPackage {
 	EReference getJoin_Next();
 
 	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Link <em>Link</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Link</em>'.
-     * @see de.cau.cs.kieler.scg.Link
-     * @generated
-     */
-	EClass getLink();
-
-	/**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Link#getTarget <em>Target</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Target</em>'.
-     * @see de.cau.cs.kieler.scg.Link#getTarget()
-     * @see #getLink()
-     * @generated
-     */
-	EReference getLink_Target();
-
-	/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2133,59 +1942,6 @@ public interface ScgPackage extends EPackage {
 	EClass getControlFlow();
 
 	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Dependency <em>Dependency</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Dependency</em>'.
-     * @see de.cau.cs.kieler.scg.Dependency
-     * @generated
-     */
-    EClass getDependency();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.DataDependency <em>Data Dependency</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Data Dependency</em>'.
-     * @see de.cau.cs.kieler.scg.DataDependency
-     * @generated
-     */
-    EClass getDataDependency();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.DataDependency#isConcurrent <em>Concurrent</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Concurrent</em>'.
-     * @see de.cau.cs.kieler.scg.DataDependency#isConcurrent()
-     * @see #getDataDependency()
-     * @generated
-     */
-    EAttribute getDataDependency_Concurrent();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.DataDependency#isConfluent <em>Confluent</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Confluent</em>'.
-     * @see de.cau.cs.kieler.scg.DataDependency#isConfluent()
-     * @see #getDataDependency()
-     * @generated
-     */
-    EAttribute getDataDependency_Confluent();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.DataDependency#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.scg.DataDependency#getType()
-     * @see #getDataDependency()
-     * @generated
-     */
-	EAttribute getDataDependency_Type();
-
-				/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2474,16 +2230,6 @@ public interface ScgPackage extends EPackage {
 	EEnum getBranchType();
 
 	/**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.DataDependencyType <em>Data Dependency Type</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Data Dependency Type</em>'.
-     * @see de.cau.cs.kieler.scg.DataDependencyType
-     * @generated
-     */
-	EEnum getDataDependencyType();
-
-	/**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2576,28 +2322,12 @@ public interface ScgPackage extends EPackage {
 		EClass NODE = eINSTANCE.getNode();
 
 		/**
-         * The meta object literal for the '<em><b>Incoming</b></em>' reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference NODE__INCOMING = eINSTANCE.getNode_Incoming();
-
-		/**
          * The meta object literal for the '<em><b>Is Initial</b></em>' attribute feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
          * @generated
          */
 		EAttribute NODE__IS_INITIAL = eINSTANCE.getNode_IsInitial();
-
-		/**
-         * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference NODE__DEPENDENCIES = eINSTANCE.getNode_Dependencies();
 
 		/**
          * The meta object literal for the '<em><b>Schizophrenic</b></em>' attribute feature.
@@ -2756,24 +2486,6 @@ public interface ScgPackage extends EPackage {
 		EReference JOIN__NEXT = eINSTANCE.getJoin_Next();
 
 		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.LinkImpl <em>Link</em>}' class.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.LinkImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getLink()
-         * @generated
-         */
-		EClass LINK = eINSTANCE.getLink();
-
-		/**
-         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference LINK__TARGET = eINSTANCE.getLink_Target();
-
-		/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2844,50 +2556,6 @@ public interface ScgPackage extends EPackage {
 		EClass CONTROL_FLOW = eINSTANCE.getControlFlow();
 
 		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.DependencyImpl <em>Dependency</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.DependencyImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDependency()
-         * @generated
-         */
-        EClass DEPENDENCY = eINSTANCE.getDependency();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.DataDependencyImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependency()
-         * @generated
-         */
-        EClass DATA_DEPENDENCY = eINSTANCE.getDataDependency();
-
-        /**
-         * The meta object literal for the '<em><b>Concurrent</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DATA_DEPENDENCY__CONCURRENT = eINSTANCE.getDataDependency_Concurrent();
-
-        /**
-         * The meta object literal for the '<em><b>Confluent</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DATA_DEPENDENCY__CONFLUENT = eINSTANCE.getDataDependency_Confluent();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EAttribute DATA_DEPENDENCY__TYPE = eINSTANCE.getDataDependency_Type();
-
-								/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3120,16 +2788,6 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
 		EEnum BRANCH_TYPE = eINSTANCE.getBranchType();
-
-		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.DataDependencyType <em>Data Dependency Type</em>}' enum.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.DataDependencyType
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependencyType()
-         * @generated
-         */
-		EEnum DATA_DEPENDENCY_TYPE = eINSTANCE.getDataDependencyType();
 
 	}
 

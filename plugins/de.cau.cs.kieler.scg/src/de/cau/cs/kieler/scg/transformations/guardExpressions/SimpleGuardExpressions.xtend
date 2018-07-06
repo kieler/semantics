@@ -61,6 +61,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
@@ -94,6 +95,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions

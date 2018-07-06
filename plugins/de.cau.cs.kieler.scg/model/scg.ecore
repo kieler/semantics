@@ -14,12 +14,8 @@
         eType="#//Guard" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"
-        eType="#//Link" eOpposite="#//Link/target"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Linkable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
-        eType="#//Dependency" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schizophrenic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Node">
@@ -88,7 +84,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" unique="false"
-        upperBound="-1" eType="#//Dependency"/>
+        upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guards" lowerBound="1"
         upperBound="-1" eType="#//Guard"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -105,28 +101,9 @@
     <eLiterals name="TRUEBRANCH" value="1"/>
     <eLiterals name="ELSEBRANCH" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        eType="#//Node" eOpposite="#//Node/incoming"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ControlFlow" eSuperTypes="#//Link"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Dependency" eSuperTypes="#//Link"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DataDependency" eSuperTypes="#//Dependency">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="concurrent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-        defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="confluent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-        defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataDependencyType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ControlDependency" eSuperTypes="#//Dependency"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ExpressionDependency" eSuperTypes="#//Dependency"/>
-  <eClassifiers xsi:type="ecore:EClass" name="GuardDependency" eSuperTypes="#//Dependency"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ScheduleDependency" eSuperTypes="#//Dependency"/>
-  <eClassifiers xsi:type="ecore:EEnum" name="DataDependencyType">
-    <eLiterals name="IGNORE" value="-2"/>
-    <eLiterals name="UNKNOWN" value="-1"/>
-    <eLiterals name="WRITE_WRITE"/>
-    <eLiterals name="WRITE_RELATIVEWRITE" value="1"/>
-    <eLiterals name="WRITE_READ" value="2"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlFlow" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Link"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpressionDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GuardDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
 </ecore:EPackage>

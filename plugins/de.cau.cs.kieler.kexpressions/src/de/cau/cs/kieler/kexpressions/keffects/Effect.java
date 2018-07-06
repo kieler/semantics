@@ -15,5 +15,5 @@ import de.cau.cs.kieler.kexpressions.Schedulable;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Effect extends Annotatable, Schedulable {
+public interface Effect extends Annotatable, Schedulable, Linkable {
 } // Effect

@@ -60,6 +60,10 @@ class SCChartsActionExtensions {
         action.delay == DelayType.IMMEDIATE
     }
 
+    def isDelayed(Action action) {
+        !action.isImmediate
+    }
+
     def getAllContainedEmissions(Action action) {
         action.eAllContents().filter(Emission)
     }
