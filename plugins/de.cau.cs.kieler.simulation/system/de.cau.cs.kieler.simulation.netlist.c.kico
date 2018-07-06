@@ -19,5 +19,5 @@ de.cau.cs.kieler.kicool.deploy.templates config {
 }
 de.cau.cs.kieler.kicool.deploy.compiler.c config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["main.c", "lib"],
-    "de.cau.cs.kieler.kicool.deploy.compiler.c.exe.name": "simulation.exe"
+    "de.cau.cs.kieler.kicool.deploy.compiler.c.result": "simulation.exe"
 }

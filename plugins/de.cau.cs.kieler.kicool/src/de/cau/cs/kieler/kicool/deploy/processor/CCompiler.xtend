@@ -25,10 +25,10 @@ import java.nio.file.Files
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class CCompiler extends AbstractSystemCompilerProcessor<Object> {
+class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContainer> {
         
     public static val IProperty<String> EXE_NAME = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.exe.name", "main.exe")
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.result", "main.exe")
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.compiler.c"
@@ -111,7 +111,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object> {
         }
         gcc += sourcePaths
         
-        // Run javac compiler
+        // Run c compiler
         var success = gcc.invoke(infra.generadedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")

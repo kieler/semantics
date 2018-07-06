@@ -42,17 +42,17 @@ class StartExecutableAction implements IAction {
      */
     override ActionResult execute(ActionContext context) {
         val vc = context.viewContext
-        val inputModel = vc.getInputModel
+        val exe = vc.getInputModel
 
         // get error model
-        if (inputModel instanceof ExecutableContainer) {
+        if (exe instanceof ExecutableContainer) {
             val launch = createLaunch(IExternalToolConstants.ID_PROGRAM_LAUNCH_CONFIGURATION_TYPE)
             launch.configureExternalTool
             
             if (vc.hasProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)) {
                 val cc = vc.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
                 if (cc !== null) {
-                    val env = cc.processorInstancesSequence.findFirst[environment.model == inputModel]?.environment
+                    val env = cc.processorInstancesSequence.findFirst[environment.model == exe]?.environment
                     if (env !== null) {
                         val pi = env.getProperty(ProjectInfrastructure.PROJECT_INFRASTRUCTURE)
                         if (pi !== null) {
@@ -61,24 +61,27 @@ class StartExecutableAction implements IAction {
                     }
                 } 
             }
+
+            val commands = exe.processBuilder.command
+            launch.setAttribute(IExternalToolConstants.ATTR_LOCATION, commands.head)
             
-            if (inputModel.isExecutableFile) {
-                launch.setAttribute(IExternalToolConstants.ATTR_LOCATION, inputModel.file.toString)
-            } else {
-                val commands = inputModel.processBuilder.command
-                launch.setAttribute(IExternalToolConstants.ATTR_LOCATION, commands.head)
-                
-                if ("java".equals(commands.head)) {
-                    val home = System.getProperty("java.home")
-                    if (!home.nullOrEmpty) {
-                        launch.setAttribute(IExternalToolConstants.ATTR_LOCATION, (new File(new File(home, "bin"), "java")).toString)
-                    }
-                }
-                
-                if (commands.size > 1) {
-                    launch.setAttribute(IExternalToolConstants.ATTR_TOOL_ARGUMENTS, commands.drop(1).join(" "))
+            if ("java".equals(commands.head)) {
+                val home = System.getProperty("java.home")
+                if (!home.nullOrEmpty) {
+                    launch.setAttribute(IExternalToolConstants.ATTR_LOCATION, (new File(new File(home, "bin"), "java")).toString)
                 }
             }
+            
+            if (commands.size > 1) {
+                launch.setAttribute(IExternalToolConstants.ATTR_TOOL_ARGUMENTS, commands.drop(1).join(" "))
+            }
+            
+            if (exe.environment !== null && !exe.environment.empty) {
+                // FIXME Magic key
+                launch.setAttribute("org.eclipse.debug.core.environmentVariables", exe.environment)
+            }
+            
+            launch.setAttribute(DebugPlugin.ATTR_CAPTURE_OUTPUT, exe.console)
             
             DebugUITools.launch(launch.doSave(), ILaunchManager.RUN_MODE)
         }

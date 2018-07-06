@@ -122,7 +122,7 @@ class ProjectInfrastructure {
             if (inputModel instanceof EObject) {
                 resource = inputModel.eResource
                 if (resource !== null) {
-                    modelFile = WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
+                    modelFile = resource.findResourceLocation
                 }
             }
         }
@@ -203,6 +203,10 @@ class ProjectInfrastructure {
         logger.println("Base folder: " + modelFolder)
         logger.println("Generated code folder: " + generadedCodeFolder)
         logger.println
+    }
+    
+    def findResourceLocation(Resource resource) {
+        return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
     }
     
 }

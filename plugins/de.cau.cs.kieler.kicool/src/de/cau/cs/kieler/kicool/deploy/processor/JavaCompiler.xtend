@@ -26,7 +26,7 @@ import java.nio.file.Files
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class JavaCompiler extends AbstractSystemCompilerProcessor<Object> {
+class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContainer> {
     
     public static val IProperty<Boolean> JAR = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar", true)

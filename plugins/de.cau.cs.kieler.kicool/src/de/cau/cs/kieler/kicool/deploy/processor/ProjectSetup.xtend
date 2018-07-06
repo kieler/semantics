@@ -166,7 +166,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
      * @param src The source folder
      * @param dest The destination folder
      */
-    private static def boolean copyFolder(File src, File dest, PrintStream logger, boolean overrideFile) {
+    static def boolean copyFolder(File src, File dest, PrintStream logger, boolean overrideFile) {
         // Checks
         checkNotNull(src, "Source is null")
         checkNotNull(dest, "Target is null")
@@ -194,7 +194,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     }
     
     
-    private static def boolean copyFolder(URI src, File dest, PrintStream logger, boolean overrideFile) {
+    static def boolean copyFolder(URI src, File dest, PrintStream logger, boolean overrideFile) {
         checkNotNull(src, "Source is null")
         checkNotNull(dest, "Target is null")
         checkArgument(src.platformPlugin, "Source is not a plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
@@ -232,7 +232,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         }
     }
     
-    private static def boolean copyFile(File src, File dest, PrintStream logger, boolean overrideFile) {
+    static def boolean copyFile(File src, File dest, PrintStream logger, boolean overrideFile) {
         // Checks
         checkNotNull(src, "Source is null")
         checkNotNull(dest, "Target is null")
@@ -255,7 +255,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         }
     }
     
-    private static def boolean copyFile(URI src, File dest, PrintStream logger, boolean overrideFile) {
+    static def boolean copyFile(URI src, File dest, PrintStream logger, boolean overrideFile) {
         checkNotNull(src, "Source is null")
         checkNotNull(dest, "Target is null")
         checkArgument(src.platformPlugin, "Source is not a plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
@@ -289,7 +289,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         }
     }
     
-    private static def void copyUrlToFile(URL src, File dest) {
+    static def void copyUrlToFile(URL src, File dest) {
         checkNotNull(src, "Source is null")
         checkNotNull(dest, "Target is null")
         

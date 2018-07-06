@@ -30,9 +30,17 @@ class ExecutableContainer {
     val File file
     @Accessors(PUBLIC_GETTER)
     protected var boolean isExecutableFile = true
+    @Accessors(PUBLIC_GETTER)
+    protected var boolean console = true
     
     def getProcessBuilder() {
-        new ProcessBuilder(file.toString)
+        val pb = new ProcessBuilder(file.toString)
+        pb.environment.putAll(environment)
+        return pb
+    }
+    
+    def getEnvironment() {
+        return <String, String>emptyMap
     }
     
 }
@@ -47,6 +55,8 @@ class ExecutableJarContainer extends ExecutableContainer {
     override getProcessBuilder() {
         var jarPath = file.toString
         if (jarPath.contains(" ")) jarPath = "\"" + jarPath + "\""
-        new ProcessBuilder("java", "-jar", jarPath)
+        val pb = new ProcessBuilder("java", "-jar", jarPath)
+        pb.environment.putAll(environment)
+        return pb
     }  
 }

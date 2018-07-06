@@ -30,7 +30,7 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class AbstractSystemCompilerProcessor<I> extends Processor<I, ExecutableContainer> {
+abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
     
     public static val IProperty<Boolean> INCLUDE_GENERATED_FILES = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.sources.include-generated", true)
@@ -69,8 +69,7 @@ abstract class AbstractSystemCompilerProcessor<I> extends Processor<I, Executabl
     
     def invoke(List<String> command, File directory) {
         logger.println("Invoking command: " + command.join(" "))
-        val pb = new ProcessBuilder(command)
-        pb.directory(directory)
+        val pb = createProcessBuilder(command, directory)
         pb.redirectErrorStream(true)
         
         try {
@@ -95,6 +94,12 @@ abstract class AbstractSystemCompilerProcessor<I> extends Processor<I, Executabl
             logger.print("ERROR: Exception while invoking command")
             e.printStackTrace(logger)
         }
+    }
+    
+    def createProcessBuilder(List<String> command, File directory) {
+        val pb = new ProcessBuilder(command)
+        pb.directory(directory)
+        return pb
     }
     
 }
