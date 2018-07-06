@@ -11,11 +11,14 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EHelp.ecore#//EHelpModel/chapters"/>
     </genClasses>
     <genClasses ecoreClass="EHelp.ecore#//Config"/>
-    <genClasses ecoreClass="EHelp.ecore#//ConfigPath">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EHelp.ecore#//ConfigPath/path"/>
+    <genClasses ecoreClass="EHelp.ecore#//ConfigTOCPath">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EHelp.ecore#//ConfigTOCPath/path"/>
+    </genClasses>
+    <genClasses ecoreClass="EHelp.ecore#//ConfigCopyFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EHelp.ecore#//ConfigCopyFile/file"/>
     </genClasses>
     <genClasses ecoreClass="EHelp.ecore#//ConfigHome">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EHelp.ecore#//ConfigHome/home"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EHelp.ecore#//ConfigHome/file"/>
     </genClasses>
     <genClasses ecoreClass="EHelp.ecore#//Chapter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EHelp.ecore#//Chapter/name"/>

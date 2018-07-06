@@ -42,13 +42,22 @@ public interface EHelpFactory extends EFactory
   Config createConfig();
 
   /**
-   * Returns a new object of class '<em>Config Path</em>'.
+   * Returns a new object of class '<em>Config TOC Path</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Config Path</em>'.
+   * @return a new object of class '<em>Config TOC Path</em>'.
    * @generated
    */
-  ConfigPath createConfigPath();
+  ConfigTOCPath createConfigTOCPath();
+
+  /**
+   * Returns a new object of class '<em>Config Copy File</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Config Copy File</em>'.
+   * @generated
+   */
+  ConfigCopyFile createConfigCopyFile();
 
   /**
    * Returns a new object of class '<em>Config Home</em>'.

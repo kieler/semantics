@@ -54,31 +54,35 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 	public class ConfigElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.Config");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cConfigPathParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cConfigHomeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cConfigTOCPathParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cConfigCopyFileParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cConfigHomeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Config:
-		//	ConfigPath | ConfigHome;
+		//	ConfigTOCPath | ConfigCopyFile | ConfigHome;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ConfigPath | ConfigHome
+		//ConfigTOCPath | ConfigCopyFile | ConfigHome
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//ConfigPath
-		public RuleCall getConfigPathParserRuleCall_0() { return cConfigPathParserRuleCall_0; }
+		//ConfigTOCPath
+		public RuleCall getConfigTOCPathParserRuleCall_0() { return cConfigTOCPathParserRuleCall_0; }
+		
+		//ConfigCopyFile
+		public RuleCall getConfigCopyFileParserRuleCall_1() { return cConfigCopyFileParserRuleCall_1; }
 		
 		//ConfigHome
-		public RuleCall getConfigHomeParserRuleCall_1() { return cConfigHomeParserRuleCall_1; }
+		public RuleCall getConfigHomeParserRuleCall_2() { return cConfigHomeParserRuleCall_2; }
 	}
-	public class ConfigPathElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.ConfigPath");
+	public class ConfigTOCPathElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.ConfigTOCPath");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cConfigKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cTocpathKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cPathAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cPathSTRINGTerminalRuleCall_2_0 = (RuleCall)cPathAssignment_2.eContents().get(0);
 		
-		//ConfigPath:
+		//ConfigTOCPath:
 		//	'config' 'tocpath' path=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -97,19 +101,19 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getPathSTRINGTerminalRuleCall_2_0() { return cPathSTRINGTerminalRuleCall_2_0; }
 	}
-	public class ConfigHomeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.ConfigHome");
+	public class ConfigCopyFileElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.ConfigCopyFile");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cConfigKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cCopyfileKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cHomeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cHomeSTRINGTerminalRuleCall_2_0 = (RuleCall)cHomeAssignment_2.eContents().get(0);
+		private final Assignment cFileAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFileSTRINGTerminalRuleCall_2_0 = (RuleCall)cFileAssignment_2.eContents().get(0);
 		
-		//ConfigHome:
-		//	'config' 'copyfile' home=STRING;
+		//ConfigCopyFile:
+		//	'config' 'copyfile' file=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'config' 'copyfile' home=STRING
+		//'config' 'copyfile' file=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//'config'
@@ -118,11 +122,38 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 		//'copyfile'
 		public Keyword getCopyfileKeyword_1() { return cCopyfileKeyword_1; }
 		
-		//home=STRING
-		public Assignment getHomeAssignment_2() { return cHomeAssignment_2; }
+		//file=STRING
+		public Assignment getFileAssignment_2() { return cFileAssignment_2; }
 		
 		//STRING
-		public RuleCall getHomeSTRINGTerminalRuleCall_2_0() { return cHomeSTRINGTerminalRuleCall_2_0; }
+		public RuleCall getFileSTRINGTerminalRuleCall_2_0() { return cFileSTRINGTerminalRuleCall_2_0; }
+	}
+	public class ConfigHomeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.ConfigHome");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cConfigKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cHomeKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cFileAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFileSTRINGTerminalRuleCall_2_0 = (RuleCall)cFileAssignment_2.eContents().get(0);
+		
+		//ConfigHome:
+		//	'config' 'home' file=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'config' 'home' file=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//'config'
+		public Keyword getConfigKeyword_0() { return cConfigKeyword_0; }
+		
+		//'home'
+		public Keyword getHomeKeyword_1() { return cHomeKeyword_1; }
+		
+		//file=STRING
+		public Assignment getFileAssignment_2() { return cFileAssignment_2; }
+		
+		//STRING
+		public RuleCall getFileSTRINGTerminalRuleCall_2_0() { return cFileSTRINGTerminalRuleCall_2_0; }
 	}
 	public class ChapterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.ehelp.EHelp.Chapter");
@@ -627,7 +658,8 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final EHelpModelElements pEHelpModel;
 	private final ConfigElements pConfig;
-	private final ConfigPathElements pConfigPath;
+	private final ConfigTOCPathElements pConfigTOCPath;
+	private final ConfigCopyFileElements pConfigCopyFile;
 	private final ConfigHomeElements pConfigHome;
 	private final ChapterElements pChapter;
 	private final ListElements pList;
@@ -654,7 +686,8 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pEHelpModel = new EHelpModelElements();
 		this.pConfig = new ConfigElements();
-		this.pConfigPath = new ConfigPathElements();
+		this.pConfigTOCPath = new ConfigTOCPathElements();
+		this.pConfigCopyFile = new ConfigCopyFileElements();
 		this.pConfigHome = new ConfigHomeElements();
 		this.pChapter = new ChapterElements();
 		this.pList = new ListElements();
@@ -710,7 +743,7 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Config:
-	//	ConfigPath | ConfigHome;
+	//	ConfigTOCPath | ConfigCopyFile | ConfigHome;
 	public ConfigElements getConfigAccess() {
 		return pConfig;
 	}
@@ -719,18 +752,28 @@ public class EHelpGrammarAccess extends AbstractGrammarElementFinder {
 		return getConfigAccess().getRule();
 	}
 	
-	//ConfigPath:
+	//ConfigTOCPath:
 	//	'config' 'tocpath' path=STRING;
-	public ConfigPathElements getConfigPathAccess() {
-		return pConfigPath;
+	public ConfigTOCPathElements getConfigTOCPathAccess() {
+		return pConfigTOCPath;
 	}
 	
-	public ParserRule getConfigPathRule() {
-		return getConfigPathAccess().getRule();
+	public ParserRule getConfigTOCPathRule() {
+		return getConfigTOCPathAccess().getRule();
+	}
+	
+	//ConfigCopyFile:
+	//	'config' 'copyfile' file=STRING;
+	public ConfigCopyFileElements getConfigCopyFileAccess() {
+		return pConfigCopyFile;
+	}
+	
+	public ParserRule getConfigCopyFileRule() {
+		return getConfigCopyFileAccess().getRule();
 	}
 	
 	//ConfigHome:
-	//	'config' 'copyfile' home=STRING;
+	//	'config' 'home' file=STRING;
 	public ConfigHomeElements getConfigHomeAccess() {
 		return pConfigHome;
 	}

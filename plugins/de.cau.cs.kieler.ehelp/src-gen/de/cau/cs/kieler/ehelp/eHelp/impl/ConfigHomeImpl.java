@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigHomeImpl#getHome <em>Home</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigHomeImpl#getFile <em>File</em>}</li>
  * </ul>
  *
  * @generated
@@ -28,24 +28,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
 {
   /**
-   * The default value of the '{@link #getHome() <em>Home</em>}' attribute.
+   * The default value of the '{@link #getFile() <em>File</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getHome()
+   * @see #getFile()
    * @generated
    * @ordered
    */
-  protected static final String HOME_EDEFAULT = null;
+  protected static final String FILE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getHome() <em>Home</em>}' attribute.
+   * The cached value of the '{@link #getFile() <em>File</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getHome()
+   * @see #getFile()
    * @generated
    * @ordered
    */
-  protected String home = HOME_EDEFAULT;
+  protected String file = FILE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -73,9 +73,9 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getHome()
+  public String getFile()
   {
-    return home;
+    return file;
   }
 
   /**
@@ -83,12 +83,12 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setHome(String newHome)
+  public void setFile(String newFile)
   {
-    String oldHome = home;
-    home = newHome;
+    String oldFile = file;
+    file = newFile;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EHelpPackage.CONFIG_HOME__HOME, oldHome, home));
+      eNotify(new ENotificationImpl(this, Notification.SET, EHelpPackage.CONFIG_HOME__FILE, oldFile, file));
   }
 
   /**
@@ -101,8 +101,8 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_HOME__HOME:
-        return getHome();
+      case EHelpPackage.CONFIG_HOME__FILE:
+        return getFile();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -117,8 +117,8 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_HOME__HOME:
-        setHome((String)newValue);
+      case EHelpPackage.CONFIG_HOME__FILE:
+        setFile((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -134,8 +134,8 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_HOME__HOME:
-        setHome(HOME_EDEFAULT);
+      case EHelpPackage.CONFIG_HOME__FILE:
+        setFile(FILE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -151,8 +151,8 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
   {
     switch (featureID)
     {
-      case EHelpPackage.CONFIG_HOME__HOME:
-        return HOME_EDEFAULT == null ? home != null : !HOME_EDEFAULT.equals(home);
+      case EHelpPackage.CONFIG_HOME__FILE:
+        return FILE_EDEFAULT == null ? file != null : !FILE_EDEFAULT.equals(file);
     }
     return super.eIsSet(featureID);
   }
@@ -168,8 +168,8 @@ public class ConfigHomeImpl extends ConfigImpl implements ConfigHome
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (home: ");
-    result.append(home);
+    result.append(" (file: ");
+    result.append(file);
     result.append(')');
     return result.toString();
   }

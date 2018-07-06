@@ -5,8 +5,9 @@ package de.cau.cs.kieler.ehelp.eHelp.impl;
 
 import de.cau.cs.kieler.ehelp.eHelp.Chapter;
 import de.cau.cs.kieler.ehelp.eHelp.Config;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile;
 import de.cau.cs.kieler.ehelp.eHelp.ConfigHome;
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath;
 import de.cau.cs.kieler.ehelp.eHelp.Content;
 import de.cau.cs.kieler.ehelp.eHelp.Context;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpFactory;
@@ -56,7 +57,14 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass configPathEClass = null;
+  private EClass configTOCPathEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass configCopyFileEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -264,9 +272,9 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getConfigPath()
+  public EClass getConfigTOCPath()
   {
-    return configPathEClass;
+    return configTOCPathEClass;
   }
 
   /**
@@ -274,9 +282,29 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConfigPath_Path()
+  public EAttribute getConfigTOCPath_Path()
   {
-    return (EAttribute)configPathEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)configTOCPathEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConfigCopyFile()
+  {
+    return configCopyFileEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConfigCopyFile_File()
+  {
+    return (EAttribute)configCopyFileEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -294,7 +322,7 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConfigHome_Home()
+  public EAttribute getConfigHome_File()
   {
     return (EAttribute)configHomeEClass.getEStructuralFeatures().get(0);
   }
@@ -725,11 +753,14 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
 
     configEClass = createEClass(CONFIG);
 
-    configPathEClass = createEClass(CONFIG_PATH);
-    createEAttribute(configPathEClass, CONFIG_PATH__PATH);
+    configTOCPathEClass = createEClass(CONFIG_TOC_PATH);
+    createEAttribute(configTOCPathEClass, CONFIG_TOC_PATH__PATH);
+
+    configCopyFileEClass = createEClass(CONFIG_COPY_FILE);
+    createEAttribute(configCopyFileEClass, CONFIG_COPY_FILE__FILE);
 
     configHomeEClass = createEClass(CONFIG_HOME);
-    createEAttribute(configHomeEClass, CONFIG_HOME__HOME);
+    createEAttribute(configHomeEClass, CONFIG_HOME__FILE);
 
     chapterEClass = createEClass(CHAPTER);
     createEAttribute(chapterEClass, CHAPTER__NAME);
@@ -813,7 +844,8 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    configPathEClass.getESuperTypes().add(this.getConfig());
+    configTOCPathEClass.getESuperTypes().add(this.getConfig());
+    configCopyFileEClass.getESuperTypes().add(this.getConfig());
     configHomeEClass.getESuperTypes().add(this.getConfig());
     listEClass.getESuperTypes().add(this.getContent());
     enumEClass.getESuperTypes().add(this.getContent());
@@ -831,11 +863,14 @@ public class EHelpPackageImpl extends EPackageImpl implements EHelpPackage
 
     initEClass(configEClass, Config.class, "Config", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(configPathEClass, ConfigPath.class, "ConfigPath", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConfigPath_Path(), ecorePackage.getEString(), "path", null, 0, 1, ConfigPath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(configTOCPathEClass, ConfigTOCPath.class, "ConfigTOCPath", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConfigTOCPath_Path(), ecorePackage.getEString(), "path", null, 0, 1, ConfigTOCPath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(configCopyFileEClass, ConfigCopyFile.class, "ConfigCopyFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConfigCopyFile_File(), ecorePackage.getEString(), "file", null, 0, 1, ConfigCopyFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configHomeEClass, ConfigHome.class, "ConfigHome", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConfigHome_Home(), ecorePackage.getEString(), "home", null, 0, 1, ConfigHome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConfigHome_File(), ecorePackage.getEString(), "file", null, 0, 1, ConfigHome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(chapterEClass, Chapter.class, "Chapter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getChapter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Chapter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

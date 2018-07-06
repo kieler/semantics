@@ -5,8 +5,9 @@ package de.cau.cs.kieler.ehelp.eHelp.util;
 
 import de.cau.cs.kieler.ehelp.eHelp.Chapter;
 import de.cau.cs.kieler.ehelp.eHelp.Config;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile;
 import de.cau.cs.kieler.ehelp.eHelp.ConfigHome;
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath;
 import de.cau.cs.kieler.ehelp.eHelp.Content;
 import de.cau.cs.kieler.ehelp.eHelp.Context;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpModel;
@@ -103,11 +104,19 @@ public class EHelpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EHelpPackage.CONFIG_PATH:
+      case EHelpPackage.CONFIG_TOC_PATH:
       {
-        ConfigPath configPath = (ConfigPath)theEObject;
-        T result = caseConfigPath(configPath);
-        if (result == null) result = caseConfig(configPath);
+        ConfigTOCPath configTOCPath = (ConfigTOCPath)theEObject;
+        T result = caseConfigTOCPath(configTOCPath);
+        if (result == null) result = caseConfig(configTOCPath);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EHelpPackage.CONFIG_COPY_FILE:
+      {
+        ConfigCopyFile configCopyFile = (ConfigCopyFile)theEObject;
+        T result = caseConfigCopyFile(configCopyFile);
+        if (result == null) result = caseConfig(configCopyFile);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -255,17 +264,33 @@ public class EHelpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Config Path</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Config TOC Path</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Config Path</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Config TOC Path</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConfigPath(ConfigPath object)
+  public T caseConfigTOCPath(ConfigTOCPath object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Config Copy File</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Config Copy File</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConfigCopyFile(ConfigCopyFile object)
   {
     return null;
   }

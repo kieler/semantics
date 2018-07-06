@@ -25,7 +25,8 @@ import de.cau.cs.kieler.ehelp.eHelp.Table
 import de.cau.cs.kieler.ehelp.eHelp.TableRow
 import de.cau.cs.kieler.ehelp.eHelp.TableCell
 import de.cau.cs.kieler.ehelp.eHelp.Context
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath
+import de.cau.cs.kieler.ehelp.eHelp.ConfigHome
 
 /**
  * This class contains the code generation templates used in EHelpGenerator for
@@ -80,7 +81,7 @@ class HelpFileGenerator {
         }
 
         returnText += '''</body></html>'''
-        return returnText
+        return returnText 
     }
 
     // Entry for context sensitive index file content.xml generation 
@@ -164,7 +165,14 @@ class HelpFileGenerator {
 
                 var returnText = '''<?xml version="1.0" encoding="UTF-8"?>''' + "\n"
                 returnText += '''<?NLS TYPE="org.eclipse.help.toc"?>''' + "\n\n"
-                returnText += '''<toc label="«EHelpConsts.mainTitle»" topic=" " >''' + "\n"
+                val home = model.home 
+                if (home != null && home.length > 0) {
+                    returnText += '''<toc label="«EHelpConsts.mainTitle»" topic="«model.path»«home»" >''' + "\n"
+                } else {
+                    // fall back to previous GC result (not config home => no topic)
+                    returnText += '''<toc label="«EHelpConsts.mainTitle»" topic=" " >''' + "\n"
+                }
+                
                 for (chapter : model.chapters) {
                     returnText += chapter.generateTOCChapter
                 }
@@ -460,11 +468,20 @@ class HelpFileGenerator {
             // --             			U T I L I T Y   
             // ------------------------------------------------------------------------
             
+            public def getHome(EObject modelElement) {
+                val model = modelElement.getModel
+                val path = model.configs.filter[e | e instanceof ConfigHome]
+                if (path != null && path.size > 0) {
+                    return (path.get(0) as ConfigHome).file
+                }
+                return ""
+            }            
+            
             public def getPath(EObject modelElement) {
                 val model = modelElement.getModel
-                val path = model.configs.filter[e | e instanceof ConfigPath]
+                val path = model.configs.filter[e | e instanceof ConfigTOCPath]
                 if (path != null && path.size > 0) {
-                    return (path.get(0) as ConfigPath).path
+                    return (path.get(0) as ConfigTOCPath).path
                 }
                 return ""
             }

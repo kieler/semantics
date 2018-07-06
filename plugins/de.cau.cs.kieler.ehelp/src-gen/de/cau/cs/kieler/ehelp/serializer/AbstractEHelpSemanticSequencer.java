@@ -5,8 +5,9 @@ package de.cau.cs.kieler.ehelp.serializer;
 
 import com.google.inject.Inject;
 import de.cau.cs.kieler.ehelp.eHelp.Chapter;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile;
 import de.cau.cs.kieler.ehelp.eHelp.ConfigHome;
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath;
 import de.cau.cs.kieler.ehelp.eHelp.Context;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpModel;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpPackage;
@@ -48,11 +49,14 @@ public abstract class AbstractEHelpSemanticSequencer extends AbstractDelegatingS
 			case EHelpPackage.CHAPTER:
 				sequence_Chapter(context, (Chapter) semanticObject); 
 				return; 
+			case EHelpPackage.CONFIG_COPY_FILE:
+				sequence_ConfigCopyFile(context, (ConfigCopyFile) semanticObject); 
+				return; 
 			case EHelpPackage.CONFIG_HOME:
 				sequence_ConfigHome(context, (ConfigHome) semanticObject); 
 				return; 
-			case EHelpPackage.CONFIG_PATH:
-				sequence_ConfigPath(context, (ConfigPath) semanticObject); 
+			case EHelpPackage.CONFIG_TOC_PATH:
+				sequence_ConfigTOCPath(context, (ConfigTOCPath) semanticObject); 
 				return; 
 			case EHelpPackage.CONTEXT:
 				sequence_Context(context, (Context) semanticObject); 
@@ -109,38 +113,57 @@ public abstract class AbstractEHelpSemanticSequencer extends AbstractDelegatingS
 	
 	/**
 	 * Contexts:
-	 *     Config returns ConfigHome
-	 *     ConfigHome returns ConfigHome
+	 *     Config returns ConfigCopyFile
+	 *     ConfigCopyFile returns ConfigCopyFile
 	 *
 	 * Constraint:
-	 *     home=STRING
+	 *     file=STRING
 	 */
-	protected void sequence_ConfigHome(ISerializationContext context, ConfigHome semanticObject) {
+	protected void sequence_ConfigCopyFile(ISerializationContext context, ConfigCopyFile semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, EHelpPackage.Literals.CONFIG_HOME__HOME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EHelpPackage.Literals.CONFIG_HOME__HOME));
+			if (transientValues.isValueTransient(semanticObject, EHelpPackage.Literals.CONFIG_COPY_FILE__FILE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EHelpPackage.Literals.CONFIG_COPY_FILE__FILE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConfigHomeAccess().getHomeSTRINGTerminalRuleCall_2_0(), semanticObject.getHome());
+		feeder.accept(grammarAccess.getConfigCopyFileAccess().getFileSTRINGTerminalRuleCall_2_0(), semanticObject.getFile());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Config returns ConfigPath
-	 *     ConfigPath returns ConfigPath
+	 *     Config returns ConfigHome
+	 *     ConfigHome returns ConfigHome
+	 *
+	 * Constraint:
+	 *     file=STRING
+	 */
+	protected void sequence_ConfigHome(ISerializationContext context, ConfigHome semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, EHelpPackage.Literals.CONFIG_HOME__FILE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EHelpPackage.Literals.CONFIG_HOME__FILE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConfigHomeAccess().getFileSTRINGTerminalRuleCall_2_0(), semanticObject.getFile());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Config returns ConfigTOCPath
+	 *     ConfigTOCPath returns ConfigTOCPath
 	 *
 	 * Constraint:
 	 *     path=STRING
 	 */
-	protected void sequence_ConfigPath(ISerializationContext context, ConfigPath semanticObject) {
+	protected void sequence_ConfigTOCPath(ISerializationContext context, ConfigTOCPath semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, EHelpPackage.Literals.CONFIG_PATH__PATH) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EHelpPackage.Literals.CONFIG_PATH__PATH));
+			if (transientValues.isValueTransient(semanticObject, EHelpPackage.Literals.CONFIG_TOC_PATH__PATH) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EHelpPackage.Literals.CONFIG_TOC_PATH__PATH));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConfigPathAccess().getPathSTRINGTerminalRuleCall_2_0(), semanticObject.getPath());
+		feeder.accept(grammarAccess.getConfigTOCPathAccess().getPathSTRINGTerminalRuleCall_2_0(), semanticObject.getPath());
 		feeder.finish();
 	}
 	

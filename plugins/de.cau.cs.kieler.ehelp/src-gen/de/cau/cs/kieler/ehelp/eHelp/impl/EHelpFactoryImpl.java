@@ -5,8 +5,9 @@ package de.cau.cs.kieler.ehelp.eHelp.impl;
 
 import de.cau.cs.kieler.ehelp.eHelp.Chapter;
 import de.cau.cs.kieler.ehelp.eHelp.Config;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile;
 import de.cau.cs.kieler.ehelp.eHelp.ConfigHome;
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath;
 import de.cau.cs.kieler.ehelp.eHelp.Content;
 import de.cau.cs.kieler.ehelp.eHelp.Context;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpFactory;
@@ -84,7 +85,8 @@ public class EHelpFactoryImpl extends EFactoryImpl implements EHelpFactory
     {
       case EHelpPackage.EHELP_MODEL: return createEHelpModel();
       case EHelpPackage.CONFIG: return createConfig();
-      case EHelpPackage.CONFIG_PATH: return createConfigPath();
+      case EHelpPackage.CONFIG_TOC_PATH: return createConfigTOCPath();
+      case EHelpPackage.CONFIG_COPY_FILE: return createConfigCopyFile();
       case EHelpPackage.CONFIG_HOME: return createConfigHome();
       case EHelpPackage.CHAPTER: return createChapter();
       case EHelpPackage.LIST: return createList();
@@ -131,10 +133,21 @@ public class EHelpFactoryImpl extends EFactoryImpl implements EHelpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConfigPath createConfigPath()
+  public ConfigTOCPath createConfigTOCPath()
   {
-    ConfigPathImpl configPath = new ConfigPathImpl();
-    return configPath;
+    ConfigTOCPathImpl configTOCPath = new ConfigTOCPathImpl();
+    return configTOCPath;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConfigCopyFile createConfigCopyFile()
+  {
+    ConfigCopyFileImpl configCopyFile = new ConfigCopyFileImpl();
+    return configCopyFile;
   }
 
   /**

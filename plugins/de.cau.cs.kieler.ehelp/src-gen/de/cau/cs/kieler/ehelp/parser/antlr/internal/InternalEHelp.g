@@ -134,34 +134,43 @@ ruleConfig returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getConfigAccess().getConfigPathParserRuleCall_0());
+			newCompositeNode(grammarAccess.getConfigAccess().getConfigTOCPathParserRuleCall_0());
 		}
-		this_ConfigPath_0=ruleConfigPath
+		this_ConfigTOCPath_0=ruleConfigTOCPath
 		{
-			$current = $this_ConfigPath_0.current;
+			$current = $this_ConfigTOCPath_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getConfigAccess().getConfigHomeParserRuleCall_1());
+			newCompositeNode(grammarAccess.getConfigAccess().getConfigCopyFileParserRuleCall_1());
 		}
-		this_ConfigHome_1=ruleConfigHome
+		this_ConfigCopyFile_1=ruleConfigCopyFile
 		{
-			$current = $this_ConfigHome_1.current;
+			$current = $this_ConfigCopyFile_1.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getConfigAccess().getConfigHomeParserRuleCall_2());
+		}
+		this_ConfigHome_2=ruleConfigHome
+		{
+			$current = $this_ConfigHome_2.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleConfigPath
-entryRuleConfigPath returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getConfigPathRule()); }
-	iv_ruleConfigPath=ruleConfigPath
-	{ $current=$iv_ruleConfigPath.current; }
+// Entry rule entryRuleConfigTOCPath
+entryRuleConfigTOCPath returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConfigTOCPathRule()); }
+	iv_ruleConfigTOCPath=ruleConfigTOCPath
+	{ $current=$iv_ruleConfigTOCPath.current; }
 	EOF;
 
-// Rule ConfigPath
-ruleConfigPath returns [EObject current=null]
+// Rule ConfigTOCPath
+ruleConfigTOCPath returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -171,26 +180,71 @@ ruleConfigPath returns [EObject current=null]
 	(
 		otherlv_0='config'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getConfigPathAccess().getConfigKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getConfigTOCPathAccess().getConfigKeyword_0());
 		}
 		otherlv_1='tocpath'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getConfigPathAccess().getTocpathKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getConfigTOCPathAccess().getTocpathKeyword_1());
 		}
 		(
 			(
 				lv_path_2_0=RULE_STRING
 				{
-					newLeafNode(lv_path_2_0, grammarAccess.getConfigPathAccess().getPathSTRINGTerminalRuleCall_2_0());
+					newLeafNode(lv_path_2_0, grammarAccess.getConfigTOCPathAccess().getPathSTRINGTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getConfigPathRule());
+						$current = createModelElement(grammarAccess.getConfigTOCPathRule());
 					}
 					setWithLastConsumed(
 						$current,
 						"path",
 						lv_path_2_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleConfigCopyFile
+entryRuleConfigCopyFile returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConfigCopyFileRule()); }
+	iv_ruleConfigCopyFile=ruleConfigCopyFile
+	{ $current=$iv_ruleConfigCopyFile.current; }
+	EOF;
+
+// Rule ConfigCopyFile
+ruleConfigCopyFile returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='config'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getConfigCopyFileAccess().getConfigKeyword_0());
+		}
+		otherlv_1='copyfile'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getConfigCopyFileAccess().getCopyfileKeyword_1());
+		}
+		(
+			(
+				lv_file_2_0=RULE_STRING
+				{
+					newLeafNode(lv_file_2_0, grammarAccess.getConfigCopyFileAccess().getFileSTRINGTerminalRuleCall_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConfigCopyFileRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"file",
+						lv_file_2_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
@@ -218,15 +272,15 @@ ruleConfigHome returns [EObject current=null]
 		{
 			newLeafNode(otherlv_0, grammarAccess.getConfigHomeAccess().getConfigKeyword_0());
 		}
-		otherlv_1='copyfile'
+		otherlv_1='home'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getConfigHomeAccess().getCopyfileKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getConfigHomeAccess().getHomeKeyword_1());
 		}
 		(
 			(
-				lv_home_2_0=RULE_STRING
+				lv_file_2_0=RULE_STRING
 				{
-					newLeafNode(lv_home_2_0, grammarAccess.getConfigHomeAccess().getHomeSTRINGTerminalRuleCall_2_0());
+					newLeafNode(lv_file_2_0, grammarAccess.getConfigHomeAccess().getFileSTRINGTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -234,8 +288,8 @@ ruleConfigHome returns [EObject current=null]
 					}
 					setWithLastConsumed(
 						$current,
-						"home",
-						lv_home_2_0,
+						"file",
+						lv_file_2_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)

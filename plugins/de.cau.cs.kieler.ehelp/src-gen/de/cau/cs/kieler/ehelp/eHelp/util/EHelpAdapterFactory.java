@@ -5,8 +5,9 @@ package de.cau.cs.kieler.ehelp.eHelp.util;
 
 import de.cau.cs.kieler.ehelp.eHelp.Chapter;
 import de.cau.cs.kieler.ehelp.eHelp.Config;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile;
 import de.cau.cs.kieler.ehelp.eHelp.ConfigHome;
-import de.cau.cs.kieler.ehelp.eHelp.ConfigPath;
+import de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath;
 import de.cau.cs.kieler.ehelp.eHelp.Content;
 import de.cau.cs.kieler.ehelp.eHelp.Context;
 import de.cau.cs.kieler.ehelp.eHelp.EHelpModel;
@@ -102,9 +103,14 @@ public class EHelpAdapterFactory extends AdapterFactoryImpl
         return createConfigAdapter();
       }
       @Override
-      public Adapter caseConfigPath(ConfigPath object)
+      public Adapter caseConfigTOCPath(ConfigTOCPath object)
       {
-        return createConfigPathAdapter();
+        return createConfigTOCPathAdapter();
+      }
+      @Override
+      public Adapter caseConfigCopyFile(ConfigCopyFile object)
+      {
+        return createConfigCopyFileAdapter();
       }
       @Override
       public Adapter caseConfigHome(ConfigHome object)
@@ -229,16 +235,31 @@ public class EHelpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigPath <em>Config Path</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath <em>Config TOC Path</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigPath
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath
    * @generated
    */
-  public Adapter createConfigPathAdapter()
+  public Adapter createConfigTOCPathAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile <em>Config Copy File</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile
+   * @generated
+   */
+  public Adapter createConfigCopyFileAdapter()
   {
     return null;
   }

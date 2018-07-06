@@ -13,7 +13,7 @@ package de.cau.cs.kieler.ehelp.eHelp;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getHome <em>Home</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getFile <em>File</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.ehelp.eHelp.EHelpPackage#getConfigHome()
@@ -23,29 +23,29 @@ package de.cau.cs.kieler.ehelp.eHelp;
 public interface ConfigHome extends Config
 {
   /**
-   * Returns the value of the '<em><b>Home</b></em>' attribute.
+   * Returns the value of the '<em><b>File</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Home</em>' attribute isn't clear,
+   * If the meaning of the '<em>File</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Home</em>' attribute.
-   * @see #setHome(String)
-   * @see de.cau.cs.kieler.ehelp.eHelp.EHelpPackage#getConfigHome_Home()
+   * @return the value of the '<em>File</em>' attribute.
+   * @see #setFile(String)
+   * @see de.cau.cs.kieler.ehelp.eHelp.EHelpPackage#getConfigHome_File()
    * @model
    * @generated
    */
-  String getHome();
+  String getFile();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getHome <em>Home</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getFile <em>File</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Home</em>' attribute.
-   * @see #getHome()
+   * @param value the new value of the '<em>File</em>' attribute.
+   * @see #getFile()
    * @generated
    */
-  void setHome(String value);
+  void setFile(String value);
 
 } // ConfigHome

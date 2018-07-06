@@ -114,14 +114,14 @@ public interface EHelpPackage extends EPackage
   int CONFIG_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigPathImpl <em>Config Path</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigTOCPathImpl <em>Config TOC Path</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.ehelp.eHelp.impl.ConfigPathImpl
-   * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigPath()
+   * @see de.cau.cs.kieler.ehelp.eHelp.impl.ConfigTOCPathImpl
+   * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigTOCPath()
    * @generated
    */
-  int CONFIG_PATH = 2;
+  int CONFIG_TOC_PATH = 2;
 
   /**
    * The feature id for the '<em><b>Path</b></em>' attribute.
@@ -130,16 +130,44 @@ public interface EHelpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIG_PATH__PATH = CONFIG_FEATURE_COUNT + 0;
+  int CONFIG_TOC_PATH__PATH = CONFIG_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Config Path</em>' class.
+   * The number of structural features of the '<em>Config TOC Path</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIG_PATH_FEATURE_COUNT = CONFIG_FEATURE_COUNT + 1;
+  int CONFIG_TOC_PATH_FEATURE_COUNT = CONFIG_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigCopyFileImpl <em>Config Copy File</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.ehelp.eHelp.impl.ConfigCopyFileImpl
+   * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigCopyFile()
+   * @generated
+   */
+  int CONFIG_COPY_FILE = 3;
+
+  /**
+   * The feature id for the '<em><b>File</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_COPY_FILE__FILE = CONFIG_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Config Copy File</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_COPY_FILE_FEATURE_COUNT = CONFIG_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigHomeImpl <em>Config Home</em>}' class.
@@ -149,16 +177,16 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigHome()
    * @generated
    */
-  int CONFIG_HOME = 3;
+  int CONFIG_HOME = 4;
 
   /**
-   * The feature id for the '<em><b>Home</b></em>' attribute.
+   * The feature id for the '<em><b>File</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIG_HOME__HOME = CONFIG_FEATURE_COUNT + 0;
+  int CONFIG_HOME__FILE = CONFIG_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Config Home</em>' class.
@@ -177,7 +205,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getChapter()
    * @generated
    */
-  int CHAPTER = 4;
+  int CHAPTER = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -232,7 +260,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getContent()
    * @generated
    */
-  int CONTENT = 8;
+  int CONTENT = 9;
 
   /**
    * The number of structural features of the '<em>Content</em>' class.
@@ -251,7 +279,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getList()
    * @generated
    */
-  int LIST = 5;
+  int LIST = 6;
 
   /**
    * The feature id for the '<em><b>Items</b></em>' containment reference list.
@@ -279,7 +307,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getEnum()
    * @generated
    */
-  int ENUM = 6;
+  int ENUM = 7;
 
   /**
    * The feature id for the '<em><b>Items</b></em>' containment reference list.
@@ -307,7 +335,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getListItem()
    * @generated
    */
-  int LIST_ITEM = 7;
+  int LIST_ITEM = 8;
 
   /**
    * The feature id for the '<em><b>Content</b></em>' containment reference list.
@@ -335,7 +363,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getTable()
    * @generated
    */
-  int TABLE = 9;
+  int TABLE = 10;
 
   /**
    * The feature id for the '<em><b>Width</b></em>' attribute.
@@ -390,7 +418,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getTableRow()
    * @generated
    */
-  int TABLE_ROW = 10;
+  int TABLE_ROW = 11;
 
   /**
    * The feature id for the '<em><b>Cells</b></em>' containment reference list.
@@ -418,7 +446,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getTableCell()
    * @generated
    */
-  int TABLE_CELL = 11;
+  int TABLE_CELL = 12;
 
   /**
    * The feature id for the '<em><b>Center</b></em>' attribute.
@@ -500,7 +528,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getText()
    * @generated
    */
-  int TEXT = 12;
+  int TEXT = 13;
 
   /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -528,7 +556,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 13;
+  int KEYWORD = 14;
 
   /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -556,7 +584,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getContext()
    * @generated
    */
-  int CONTEXT = 14;
+  int CONTEXT = 15;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -593,7 +621,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getImages()
    * @generated
    */
-  int IMAGES = 15;
+  int IMAGES = 16;
 
   /**
    * The feature id for the '<em><b>Images</b></em>' attribute list.
@@ -621,7 +649,7 @@ public interface EHelpPackage extends EPackage
    * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getLink()
    * @generated
    */
-  int LINK = 16;
+  int LINK = 17;
 
   /**
    * The feature id for the '<em><b>Link</b></em>' reference.
@@ -694,25 +722,46 @@ public interface EHelpPackage extends EPackage
   EClass getConfig();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigPath <em>Config Path</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath <em>Config TOC Path</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Config Path</em>'.
-   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigPath
+   * @return the meta object for class '<em>Config TOC Path</em>'.
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath
    * @generated
    */
-  EClass getConfigPath();
+  EClass getConfigTOCPath();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigPath#getPath <em>Path</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath#getPath <em>Path</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Path</em>'.
-   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigPath#getPath()
-   * @see #getConfigPath()
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigTOCPath#getPath()
+   * @see #getConfigTOCPath()
    * @generated
    */
-  EAttribute getConfigPath_Path();
+  EAttribute getConfigTOCPath_Path();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile <em>Config Copy File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Config Copy File</em>'.
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile
+   * @generated
+   */
+  EClass getConfigCopyFile();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile#getFile <em>File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>File</em>'.
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigCopyFile#getFile()
+   * @see #getConfigCopyFile()
+   * @generated
+   */
+  EAttribute getConfigCopyFile_File();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome <em>Config Home</em>}'.
@@ -725,15 +774,15 @@ public interface EHelpPackage extends EPackage
   EClass getConfigHome();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getHome <em>Home</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getFile <em>File</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Home</em>'.
-   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getHome()
+   * @return the meta object for the attribute '<em>File</em>'.
+   * @see de.cau.cs.kieler.ehelp.eHelp.ConfigHome#getFile()
    * @see #getConfigHome()
    * @generated
    */
-  EAttribute getConfigHome_Home();
+  EAttribute getConfigHome_File();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.ehelp.eHelp.Chapter <em>Chapter</em>}'.
@@ -1211,14 +1260,14 @@ public interface EHelpPackage extends EPackage
     EClass CONFIG = eINSTANCE.getConfig();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigPathImpl <em>Config Path</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigTOCPathImpl <em>Config TOC Path</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ehelp.eHelp.impl.ConfigPathImpl
-     * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigPath()
+     * @see de.cau.cs.kieler.ehelp.eHelp.impl.ConfigTOCPathImpl
+     * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigTOCPath()
      * @generated
      */
-    EClass CONFIG_PATH = eINSTANCE.getConfigPath();
+    EClass CONFIG_TOC_PATH = eINSTANCE.getConfigTOCPath();
 
     /**
      * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
@@ -1226,7 +1275,25 @@ public interface EHelpPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONFIG_PATH__PATH = eINSTANCE.getConfigPath_Path();
+    EAttribute CONFIG_TOC_PATH__PATH = eINSTANCE.getConfigTOCPath_Path();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigCopyFileImpl <em>Config Copy File</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.ehelp.eHelp.impl.ConfigCopyFileImpl
+     * @see de.cau.cs.kieler.ehelp.eHelp.impl.EHelpPackageImpl#getConfigCopyFile()
+     * @generated
+     */
+    EClass CONFIG_COPY_FILE = eINSTANCE.getConfigCopyFile();
+
+    /**
+     * The meta object literal for the '<em><b>File</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONFIG_COPY_FILE__FILE = eINSTANCE.getConfigCopyFile_File();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ConfigHomeImpl <em>Config Home</em>}' class.
@@ -1239,12 +1306,12 @@ public interface EHelpPackage extends EPackage
     EClass CONFIG_HOME = eINSTANCE.getConfigHome();
 
     /**
-     * The meta object literal for the '<em><b>Home</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>File</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONFIG_HOME__HOME = eINSTANCE.getConfigHome_Home();
+    EAttribute CONFIG_HOME__FILE = eINSTANCE.getConfigHome_File();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.ehelp.eHelp.impl.ChapterImpl <em>Chapter</em>}' class.

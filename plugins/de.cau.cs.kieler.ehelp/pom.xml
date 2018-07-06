@@ -8,7 +8,7 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.ehelp</artifactId>
-  <version>0.1.8-SNAPSHOT</version>
+  <version>0.1.9-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>

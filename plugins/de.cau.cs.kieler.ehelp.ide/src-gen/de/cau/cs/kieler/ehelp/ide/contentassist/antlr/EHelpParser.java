@@ -38,7 +38,8 @@ public class EHelpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConfigAccess().getAlternatives(), "rule__Config__Alternatives");
 					put(grammarAccess.getContentAccess().getAlternatives(), "rule__Content__Alternatives");
 					put(grammarAccess.getEHelpModelAccess().getGroup(), "rule__EHelpModel__Group__0");
-					put(grammarAccess.getConfigPathAccess().getGroup(), "rule__ConfigPath__Group__0");
+					put(grammarAccess.getConfigTOCPathAccess().getGroup(), "rule__ConfigTOCPath__Group__0");
+					put(grammarAccess.getConfigCopyFileAccess().getGroup(), "rule__ConfigCopyFile__Group__0");
 					put(grammarAccess.getConfigHomeAccess().getGroup(), "rule__ConfigHome__Group__0");
 					put(grammarAccess.getChapterAccess().getGroup(), "rule__Chapter__Group__0");
 					put(grammarAccess.getListAccess().getGroup(), "rule__List__Group__0");
@@ -55,8 +56,9 @@ public class EHelpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLinkAccess().getGroup(), "rule__Link__Group__0");
 					put(grammarAccess.getEHelpModelAccess().getConfigsAssignment_0(), "rule__EHelpModel__ConfigsAssignment_0");
 					put(grammarAccess.getEHelpModelAccess().getChaptersAssignment_1(), "rule__EHelpModel__ChaptersAssignment_1");
-					put(grammarAccess.getConfigPathAccess().getPathAssignment_2(), "rule__ConfigPath__PathAssignment_2");
-					put(grammarAccess.getConfigHomeAccess().getHomeAssignment_2(), "rule__ConfigHome__HomeAssignment_2");
+					put(grammarAccess.getConfigTOCPathAccess().getPathAssignment_2(), "rule__ConfigTOCPath__PathAssignment_2");
+					put(grammarAccess.getConfigCopyFileAccess().getFileAssignment_2(), "rule__ConfigCopyFile__FileAssignment_2");
+					put(grammarAccess.getConfigHomeAccess().getFileAssignment_2(), "rule__ConfigHome__FileAssignment_2");
 					put(grammarAccess.getChapterAccess().getNameAssignment_1(), "rule__Chapter__NameAssignment_1");
 					put(grammarAccess.getChapterAccess().getTitleAssignment_2(), "rule__Chapter__TitleAssignment_2");
 					put(grammarAccess.getChapterAccess().getContentAssignment_4(), "rule__Chapter__ContentAssignment_4");
