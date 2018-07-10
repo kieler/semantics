@@ -58,6 +58,11 @@ import de.cau.cs.kieler.scg.TickBoundaryDependency
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import java.util.List
+import de.cau.cs.kieler.kexpressions.Value
 
 /** 
  * @author ssm
@@ -93,6 +98,7 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
     override process() {
         val model = getModel
         annotationModel = model.createAnnotationModel
+        environment.setProperty(LoopAnalyzerV2.LOOP_DATA, null)
         
         for (scg : model.scgs) {
             scg.optimizeGuards
@@ -118,6 +124,8 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
     }
     
     public def boolean optimizeNode(Node node, Set<Node> visited, LinkedList<Node> nextNodes) {
+        // Check if incoming dependencies are met. If not, redirect. 
+        // This is basically a topological sort.
         val incomingDependencies = node.incomingLinks.filter(Dependency).
             filter[ !(it instanceof TickBoundaryDependency) ].toList
         
@@ -128,20 +136,63 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
             }
         }
         
+        var List<Dependency> nextNodesDependencies = null
+        
+        // All dependencies are met. Perform the optimizations. 
+        
+
         if (node instanceof Assignment) {
-            // Handle single references (copy propagation)
-            if (node.expression instanceof ValuedObjectReference) {
-                for (ed : node.dependenciesView.filter(ExpressionDependency)) {
-                    ed.target.asNode.asAssignment.expression.replaceValuedObjectReferences(node.reference, node.expression.asValuedObjectReference)
+            if ((!node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME))) {
+                // I) Perform Partial Evaluation
+                
+                // II) Copy Propagation
+                // Handle single references 
+                if (node.expression instanceof ValuedObjectReference) {
+                    val expressionDependencies = node.dependenciesView.filter(ExpressionDependency).toList
+                    val replacedExpressions = <Node> newLinkedList
+                    for (ed : expressionDependencies.immutableCopy) {
+                        if (ed.target.asNode.asAssignment.expression.allReferences.exists[ it.valuedObject == node.reference.valuedObject ])
+                            replacedExpressions += ed.target.asNode
+                        ed.target.asNode.asAssignment.expression.replaceValuedObjectReferences(node.reference, node.expression.asValuedObjectReference)
+                    }
+                    
+                    if (expressionDependencies.size == replacedExpressions.size) {
+                        // All references were replaced. Remove the node and propagate its dependencies.
+                        // If a dependency is propagated to the target of the dependency in question, it may be removed as well.
+                        nextNodesDependencies = node.removeNode
+                    }
                 }
+
+                // III) Constant Propagation
+                // Handle single references 
+                if (node.expression instanceof Value) {
+                    val expressionDependencies = node.dependenciesView.filter(ExpressionDependency).toList
+                    val replacedExpressions = <Node> newLinkedList
+                    for (ed : expressionDependencies.immutableCopy) {
+                        if (ed.target.asNode.asAssignment.expression.allReferences.exists[ it.valuedObject == node.reference.valuedObject ])
+                            replacedExpressions += ed.target.asNode
+                        ed.target.asNode.asAssignment.expression.replaceValuedObjectReferenceWithValue(node.reference, node.expression.asValue)
+                    }
+                    
+                    if (expressionDependencies.size == replacedExpressions.size) {
+                        // All references were replaced. Remove the node and propagate its dependencies.
+                        // If a dependency is propagated to the target of the dependency in question, it may be removed as well.
+                        nextNodesDependencies = node.removeNode
+                    }
+                }
+
             }
         }
         
-        val outgoingDependencies = node.dependenciesView.
-            filter[ !(it instanceof TickBoundaryDependency) ].toList
+        if (nextNodesDependencies === null) {
+            nextNodesDependencies = node.dependenciesView.
+                filter[ !(it instanceof TickBoundaryDependency) ].
+                filter[ !(it instanceof GuardDependency) ].
+                toList
+        }
         
         nextNodes.addAll(
-            outgoingDependencies.map[ target ].filter[ !visited.contains(it) && !nextNodes.contains(it) ].filter(Node)
+            nextNodesDependencies.map[ target ].filter[ !visited.contains(it) && !nextNodes.contains(it) ].filter(Node)
         )
         
         return true
@@ -152,5 +203,127 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
             if (it.valuedObject == what.valuedObject) it.valuedObject = with.valuedObject
         ]
     }
+
+    private def dispatch Expression replaceValuedObjectReferenceWithValue(ValuedObjectReference container, ValuedObjectReference what, Value with) {
+        if (container.valuedObject == what.valuedObject)
+            return with.copy
+        else
+            return container
+    }
+
+    private def dispatch Expression replaceValuedObjectReferenceWithValue(OperatorExpression container, ValuedObjectReference what, Value with) {
+        var seList = <Expression> newArrayList
+        for (se : container.subExpressions) {
+             if (se instanceof ValuedObjectReference) {
+                 seList += se.replaceValuedObjectReferenceWithValue(what, with)
+             } else if (se instanceof OperatorExpression) {
+                 seList += se.replaceValuedObjectReferenceWithValue(what, with)
+             }
+        }
+        if (seList.exists[ !container.subExpressions.contains(it) ]) {
+            container.subExpressions.clear
+            container.subExpressions.addAll(seList)
+        }
+        
+        return container
+    }
+
+    
+    private def List<Dependency> removeNode(Node node) {
+        val nextNodes = <Node> newLinkedList
+        
+        val incomingDependencies = node.incomingLinks.filter(Dependency).
+            filter[ !(it instanceof TickBoundaryDependency) ].
+            filter[ (!(it instanceof DataDependency) || (((it as DataDependency).concurrent) && (!(it as DataDependency).confluent))) ].
+            toList
+        
+        val outgoingDependencies = node.dependenciesView.
+            filter[ !(it instanceof TickBoundaryDependency) ].
+            filter[ !(it instanceof GuardDependency) ].
+            filter[ (!(it instanceof DataDependency) || (((it as DataDependency).concurrent) && (!(it as DataDependency).confluent))) ].
+            toList
+
+        val guardDependencies = node.dependenciesView.
+            filter(GuardDependency).
+            toList
+            
+        val dominator = incomingDependencies.head.eContainer.asNode
+            
+        for (gd : guardDependencies) {
+            dominator.outgoingLinks.add(gd)    
+        }        
+        
+        
+        val controlGuardDependencies = node.dependenciesView.
+            filter(ControlDependency).filter[ it.target.incomingLinks.exists[ it instanceof GuardDependency ]].
+            toList
+            
+        for (cgd : controlGuardDependencies) {
+            val guardAssignment = cgd.target.incomingLinks.filter(GuardDependency).head.eContainer.asNode.asAssignment
+            
+            val otherSuccessors = node.dependenciesView.
+                filter(ExpressionDependency).
+                filter[ it.target != guardAssignment ].
+                map[ target ].filter(Node).
+                toList
+                
+            for (os : otherSuccessors) {
+                cgd.copyDependency(cgd.target.asNode, os)
+            }
+            
+            cgd.target = null
+            cgd.remove
+        }
+        
+        
+        for (id : incomingDependencies) {
+            for (od : outgoingDependencies) {
+                if (od.target != dominator) {
+                    if (dominator.dependenciesView.forall[ it.target != od.target || !it.class.isInstance(id) ]) {
+                        val newID = id.copy
+                        dominator.outgoingLinks.add(newID)        
+                        newID.target = od.target     
+                    }
+                }
+            }
+            
+            id.target = null
+            id.remove
+        }
+        
+        for (od : outgoingDependencies) {
+            od.target = null
+            od.remove
+        }
+        
+        node.remove
+        
+        return dominator.dependenciesView.toList
+    }
+    
+    private def Dependency copyDependency(Dependency dependency, Node newTarget) {
+        if (newTarget != dependency.eContainer) {
+            if (dependency.eContainer.asNode.dependenciesView.forall[ it.target != newTarget || !it.class.isInstance(dependency) ]) {
+                val newDependency = dependency.copy
+                dependency.eContainer.asNode.outgoingLinks.add(newDependency)        
+                newDependency.target = newTarget
+                return newDependency     
+            }
+        }
+        return null
+    }
+    
+    private def Dependency copyDependency(Dependency dependency, Node newTarget, Node newSource) {
+        if (newTarget != newSource) {
+            if (newSource.dependenciesView.forall[ it.target != newTarget || !it.class.isInstance(dependency) ]) {
+                val newDependency = dependency.copy
+                newSource.outgoingLinks.add(newDependency)        
+                newDependency.target = newTarget
+                return newDependency     
+            }
+        }
+        return null
+    }
+    
 	
 }
