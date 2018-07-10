@@ -220,6 +220,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     public static val PRIO_STATEMENTS_PROPERTY = new Property<Boolean>("scgPriority.PrioStatements", false)
     
+    public static val GRAPH_DEPENDENCY = new Property<Dependency>("graph.dependency", null)
+    
     // Text constants for the dependency types filter
     private static val DEPENDENCYFILTERSTRING_WRITE_WRITE = "write - write"
     private static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
@@ -782,17 +784,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
                 	val allNodes = it.dependencies.filter(GuardDependency).map[ targetNode ].toList
                 	val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
-                	for(edge : kContainer.outgoingEdges.immutableCopy) {
+                	
+                	for(edge : kContainer.outgoingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].toList) {
                 		edge.targetPort.remove
                 		edge.remove
                 	}
-                	while(kContainer.incomingEdges.size > 1) {
-                		val edge = kContainer.incomingEdges.get(1)
+                	while(kContainer.incomingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].size > 1) {
+                		val edge = kContainer.incomingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].get(1)
                 		edge.targetPort.remove
                 		kContainer.incomingEdges -= edge
                 		edge.remove
                 	}
-                	kContainer.incomingEdges.head.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
+                	kContainer.incomingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].head?.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
+                	
                 ]
             }
         ]
@@ -1730,7 +1734,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         	        it.foreground = DEPENDENCY_GUARD.copy
                 	it.lineStyle = LineStyle::DASHDOTDOT
                 	it.addArrowDecorator
-            	]            	
+            	]   
+            	edge.setProperty(GRAPH_DEPENDENCY, dependency);         	
             }
             else if (dependency instanceof TickBoundaryDependency) {
                 edge.addRoundedBendsPolyline(8, 2) => [
@@ -1928,6 +1933,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.foreground = ne.KRendering.foreground
             ]
             newEdge.labels.addAll(ne.labels)
+            
+            // Save edge properties
+            if (ne.getProperty(GRAPH_DEPENDENCY) !== null) {
+                newEdge.setProperty(GRAPH_DEPENDENCY, ne.getProperty(GRAPH_DEPENDENCY))
+            }
+            
         }
         kContainer
     }

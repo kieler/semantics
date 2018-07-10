@@ -150,6 +150,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.UnobservableGuardRemover">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardOptimization">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -188,6 +191,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.scg.priority.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico">
       </TransformationSystem>
    </extension>
 
