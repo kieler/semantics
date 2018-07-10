@@ -27,7 +27,13 @@ import java.nio.file.Files
  * @kieler.rating proposed yellow
  */
 class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContainer> {
-    
+
+    public static val IProperty<String> JAVAC_PATH = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.path", "javac")
+
+    public static val IProperty<String> JAR_PATH = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar.path", "jar")
+            
     public static val IProperty<Boolean> JAR = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar", true)
         
@@ -87,7 +93,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         }
         sourcePaths.forEach[logger.println("  " + it)]
         
-        val javac = newArrayList("javac")
+        val javac = newArrayList(environment.getProperty(JAVAC_PATH)?:JAVAC_PATH.^default)
         javac += "-verbose"
         javac += "-cp"
         javac += "."
@@ -121,7 +127,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             val entryPoint = environment.getProperty(JAR_ENTRY)?:JAR_ENTRY.^default
             logger.println("Jar entry point: " + entryPoint)            
             
-            val jar = newArrayList("jar")
+            val jar = newArrayList(environment.getProperty(JAR_PATH)?:JAR_PATH.^default)
             jar += "cvfe"
             jar += targetJarPath
             jar += entryPoint

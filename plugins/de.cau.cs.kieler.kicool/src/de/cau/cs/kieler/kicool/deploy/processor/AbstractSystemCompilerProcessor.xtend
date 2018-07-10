@@ -97,9 +97,16 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
     }
     
     def createProcessBuilder(List<String> command, File directory) {
-        val pb = new ProcessBuilder(command)
+        val pb = new ProcessBuilder(command.escapeOptions)
         pb.directory(directory)
         return pb
+    }
+    
+    protected def List<String> escapeOptions(List<String> command) {
+        command.map[
+            if (it.contains(" ") && !it.startsWith("\"")) return "\"" + it + "\""
+            return it
+        ].toList
     }
     
 }

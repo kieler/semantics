@@ -26,6 +26,9 @@ import java.nio.file.Files
  * @kieler.rating proposed yellow
  */
 class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContainer> {
+
+    public static val IProperty<String> CC_PATH = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.path", "gcc")
         
     public static val IProperty<String> EXE_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.result", "main.exe")
@@ -91,7 +94,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         val targetExePath = infra.generadedCodeFolder.toPath.relativize(targetExe.toPath).toString
         logger.println("Target exe file: " + targetExe)
         
-        val gcc = newArrayList("gcc")
+        val gcc = newArrayList(environment.getProperty(CC_PATH)?:CC_PATH.^default)
         gcc += "-std=c99"
         gcc += "-lm"
         gcc += "-v"
