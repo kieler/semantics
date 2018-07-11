@@ -123,7 +123,8 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
             
             if (nextNode.optimizeNode(visited, nextNodes, parEval)) {
                 nextNodes.pop
-                annotationModel.addInfo(nextNode, "Step " + (step++) + " completed.")
+                nextNodes.removeIf[ it === nextNode ]
+                annotationModel.addInfo(nextNode, "Step " + (step++))
                 snapshot
             }
         }
@@ -135,12 +136,14 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
         val incomingDependencies = node.incomingLinks.filter(Dependency).
             filter[ !(it instanceof TickBoundaryDependency) ].toList
         
+        var ret = false
         for (d : incomingDependencies) {
-            if (!visited.contains(d.target)) {
-                nextNodes.add(d.target.asNode)
-                return false
+            if (!visited.contains(d.eContainer)) {
+                nextNodes.push(d.eContainer.asNode)
+                ret = true
             }
         }
+        if (ret) return false
         
         var List<Dependency> nextNodesDependencies = null
         
@@ -255,7 +258,7 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
             filter(GuardDependency).
             toList
             
-        val dominator = incomingDependencies.head.eContainer.asNode
+        val dominator = incomingDependencies.head?.eContainer.asNode
 
         if (node instanceof Assignment) {
             val expression = node.expression
@@ -329,9 +332,12 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
         
         node.remove
         
-        return dominator.dependenciesView.
-            filter[ !(it instanceof GuardDependency) ].
-            toList
+        if (dominator === null) 
+            return null
+        else 
+            return dominator.dependenciesView.
+                filter[ !(it instanceof GuardDependency) ].
+                toList
     }
     
     private def Dependency copyDependency(Dependency dependency, Node newTarget) {
