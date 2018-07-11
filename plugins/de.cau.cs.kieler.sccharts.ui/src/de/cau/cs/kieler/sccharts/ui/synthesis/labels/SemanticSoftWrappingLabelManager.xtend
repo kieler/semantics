@@ -14,7 +14,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.labels
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.klighd.krendering.KRenderingOptions;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef
@@ -42,7 +42,7 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
      * {@inheritDoc}
      */
     override doResizeLabel(ElkLabel elkLabel, double targetWidth) {
-        var rendering = elkLabel.getProperty(KlighdOptions.K_RENDERING)
+        var rendering = elkLabel.getProperty(KRenderingOptions.K_RENDERING)
         if(rendering instanceof KRenderingRef) rendering = rendering.rendering
         val kLabel = rendering?.eContainer
         val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)

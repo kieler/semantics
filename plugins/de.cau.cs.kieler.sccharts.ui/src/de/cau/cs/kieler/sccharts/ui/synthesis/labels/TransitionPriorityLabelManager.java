@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import org.eclipse.elk.graph.ElkLabel;
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.klighd.KlighdOptions;
+import de.cau.cs.kieler.klighd.krendering.KRenderingOptions;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
@@ -43,7 +43,7 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
 
         // Find the corresponding source model element
         // Grab the rendering from the label
-        KRendering rendering = label.getProperty(KlighdOptions.K_RENDERING);
+        KRendering rendering = label.getProperty(KRenderingOptions.K_RENDERING);
         if (rendering instanceof KRenderingRef) {
             // Evaluate the rendering reference if needed
             rendering = ((KRenderingRef) rendering).getRendering();

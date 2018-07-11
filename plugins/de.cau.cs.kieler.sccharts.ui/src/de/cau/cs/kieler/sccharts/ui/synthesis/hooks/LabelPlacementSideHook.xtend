@@ -21,10 +21,10 @@ import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.labels.inline.DirectionalArrowsDecorator
-import de.cau.cs.kieler.klighd.labels.inline.InlineLabelConfigurator
-import de.cau.cs.kieler.klighd.labels.inline.LinesDecorator
-import de.cau.cs.kieler.klighd.labels.inline.RectangleDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.DirectionalArrowsDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.LabelDecorationConfigurator
+import de.cau.cs.kieler.klighd.labels.decoration.LinesDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.RectangleDecorator
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
@@ -92,7 +92,7 @@ class LabelPlacementSideHook extends SynthesisHook {
         val background = new Color(255, 255, 255, 220);
         
         // Create and properly configure an inline label configurator that will do most of our work for us
-        val inlineLabelConfigurator = InlineLabelConfigurator.create()
+        val inlineLabelConfigurator = LabelDecorationConfigurator.create()
             .withLabelTextRenderingProvider([ container, label | createTextRendering(container, label) ])
             .addDecoratorRenderingProvider(
                 RectangleDecorator.create()
