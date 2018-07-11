@@ -21,20 +21,20 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
  * @author sdo
  *
  */
-@JsonSegment('compile')
+@JsonSegment('sccharts')
 interface CommandExtension {
-    @JsonRequest('testen')
+    @JsonRequest('compile')
     def CompletableFuture<Object> compile(ExecuteCommandParams params);
     
-    @JsonRequest('show_next')
-    def CompletableFuture<Object> showNext(ExecuteCommandParams params)
-    
-    @JsonRequest('show_previous')
-    def CompletableFuture<Object> showPrevious(ExecuteCommandParams params)
-    
-    @JsonRequest('show_original')
-    def CompletableFuture<Object> showOriginal(ExecuteCommandParams params)
-    
-    @JsonRequest('show_last')
-    def CompletableFuture<Object> showLast(ExecuteCommandParams params)
+//    @JsonRequest('show_next')
+//    def CompletableFuture<Object> showNext(ExecuteCommandParams params)
+//    
+//    @JsonRequest('show_previous')
+//    def CompletableFuture<Object> showPrevious(ExecuteCommandParams params)
+//    
+//    @JsonRequest('show_original')
+//    def CompletableFuture<Object> showOriginal(ExecuteCommandParams params)
+//    
+//    @JsonRequest('show_last')
+//    def CompletableFuture<Object> showLast(ExecuteCommandParams params)
 }

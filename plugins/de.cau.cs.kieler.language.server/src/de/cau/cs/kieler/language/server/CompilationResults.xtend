@@ -21,4 +21,13 @@ import java.util.LinkedList
  */
 class CompilationResults {
     public List<TextDocument> files = new LinkedList
+    
+    new (List<TextDocument> files) {
+        this.files = files
+    }
+    
+    new() {
+        this.files = new LinkedList
+    }
+    
 }

@@ -228,6 +228,15 @@
           <groupId>org.eclipse.xtend</groupId>
           <artifactId>xtend-maven-plugin</artifactId>
           <version>${xtend-version}</version>
+          <!-- Workaround for broken build from https://github.com/eclipse/xtext/issues/1231 -->
+          <dependencies>
+            <dependency>
+              <groupId>org.eclipse.jdt</groupId>
+              <artifactId>org.eclipse.jdt.core</artifactId>
+              <version>3.12.2</version>
+            </dependency>
+          </dependencies>
+          <!-- End Workaround -->
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
             <javaSourceVersion>1.8</javaSourceVersion>

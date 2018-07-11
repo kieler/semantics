@@ -13,15 +13,20 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.JsonPrimitive
-import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.ResourceExtension
+import de.cau.cs.kieler.sccharts.impl.SCChartsImpl
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.impl.SCGraphsImpl
 import java.io.ByteArrayOutputStream
+import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
+import java.util.Map
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
@@ -35,8 +40,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
-import java.util.Map
-import java.util.HashMap
 
 /**
  * @author sdo
@@ -56,34 +59,14 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     @Inject
     Injector injector
     
-    Integer index = 100
-    
-    Integer currentModelIndex = 0
-    
     protected Map<String, List<TextDocument>> resultMap = new HashMap<String, List<TextDocument>>
     
-    
-//    @Inject Provider<IDiagramServer> diagramServerProvider
-//    
-//    @Inject Provider<IDiagramGenerator> diagramGeneratorProvider
-    
-//    DeferredDiagramUpdater updater
-
-//    @Accessors(PROTECTED_GETTER)
-//    val Map<String, IDiagramServer> diagramServers = newLinkedHashMap
-//
-
-    CommandExtension _client // TODO see DiagramEndpoint
+    CommandExtension _client
 
     protected extension ILanguageServerAccess languageServerAccess
     
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
-//        updater = new DeferredDiagramUpdater([it | doUpdateDiagrams(it)])
-//        access.addBuildListener [ deltas |
-//            updateDiagrams(deltas.map[uri].toSet)
-//        ]
-//        this.languageServerAccess.addBuildListener(this) // TODO??
     }
     def ILanguageServerAccess getLanguageServerAccess() {
         languageServerAccess
@@ -100,8 +83,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     }
     
     override compile(ExecuteCommandParams params) {
-        index = 100
-        var originalUri = (params.arguments.get(0) as JsonPrimitive).asString
+        val originalUri = (params.arguments.get(0) as JsonPrimitive).asString
         var string = originalUri
         
         this.resultMap.put(originalUri, new LinkedList)
@@ -112,9 +94,6 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         }
         var uri = URI.createFileURI(string)
         
-//        println(uri)
-//        println(compilationSystemId)
-        // Get resource set
         var resourceSet = uri.xtextResourceSet 
         val resource = resourceSet.getResource(uri, true)
         
@@ -123,7 +102,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         
         val mymodel = new CompilationResults
         for (iResult : context.processorInstancesSequence) {
-            var convertedImpl = convertImpl(iResult.environment.model, originalUri)
+            var convertedImpl = convertImpl(iResult.environment.model, iResult.environment.getProperty(Environment.SNAPSHOTS), originalUri, iResult.name)
             if (convertedImpl !== null) {
                 var tempDocuments = convertedImpl.files
                 if (tempDocuments !== null) {
@@ -135,38 +114,48 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 }
             }
         }
-//        println("Send TextDocuments")
         return requestManager.runRead[ cancelIndicator |
-//            values
-//            test as MyCodeContainer
-            mymodel as CompilationResults
+            new CompilationResults(this.resultMap.get(originalUri))
         ]
-//        requestManager.runWrite([
-//            new JsonPrimitive(head)
-//        ], [/*cancelIndicator , buildable | 
-//            buildable.build(cancelIndicator)*/
-//        ])
     }
     
-    def convertImpl(Object impl, String uri) {
+    def convertImpl(Object impl, List<Object> snapshots, String uri, String processorName) {
         if (impl instanceof CodeContainer) {
-//            println("Have CodeContainer")
             var cc = convert(impl as CodeContainer)
             
             this.resultMap.get(uri).addAll(cc.files)
             
             return cc
+        } else if (impl instanceof SCChartsImpl) {
+            var textDocument = transformToTextDocument(impl as EObject, processorName)
+            if (textDocument !== null) {
+                textDocument.key = textDocument.key + ".sctx"
+                this.resultMap.get(uri).add(textDocument as TextDocument)
+            }
+            var count = 0
+            for (snapshot : snapshots) {
+                textDocument = transformToTextDocument(snapshot as EObject, processorName + count)
+                textDocument.key = textDocument.key + ".sctx"
+                this.resultMap.get(uri).add(textDocument as TextDocument)
+                count++
+            }
+            return null
+        } else if (impl instanceof SCGraphsImpl) {
+            try {                
+//                (impl as SCGraphsImpl).
+                var textDocument = transformToTextDocument((impl as SCGraphs).scgs.get(0), processorName)
+                println(textDocument.key + ": " + textDocument.value)
+                return null
+            } catch (Exception e) {
+//                e.printStackTrace TODO
+                return null
+            }
+                
+        } else {
+            println("Got something different than an EObject")
+            return null
         }
-//        val mcc = new MyCodeContainer();
-//        mcc.files = new LinkedList<MyTextDocument>
-//        this.eObjects.add(impl as PragmatableImpl)
-//        mcc.files.add(transform(impl as EObject))
-        var textDocument = transform(impl as EObject)
-        if (textDocument !== null) {
-            
-            this.resultMap.get(uri).add(textDocument as TextDocument)
-        }
-        return null
+        
     }
     
     def convert(CodeContainer cc) {
@@ -187,18 +176,14 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     
     private def compile(EObject eobject, String systemId) {
         val context = Compile.createCompilationContext(systemId, eobject)
-        var testInjector = injector
         context.compile
         
         return context
     }
     
-    def TextDocument transform(EObject model) {
-        // TODO adapt to kicool
-        // btw, kicoUtil.serialize is too unstructured. Redo for this purpose.
+    def TextDocument transformToTextDocument(EObject model, String processorName) {
         var String serialized = null
-        index++
-        if (ResourceExtension.getResourceExtension(model) !== null){
+        if (ResourceExtension.getResourceExtension(model) !== null) { // TODO scg is not transformed, since the model has no resource extension
             val outputStream = new ByteArrayOutputStream
             val ext = ResourceExtension.getResourceExtension(model).fileExtension
             val uri = URI.createURI(#["inmemory:/", model.hashCode, ".", ext].join)
@@ -209,50 +194,18 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 res.contents += model
                 res.save(outputStream, emptyMap)
                 serialized = outputStream.toString
-            } else {
-//                println("Did not come here")
             }
-            return new TextDocument("model" + index +  "." + ext, serialized)   
-        }  
+            return new TextDocument(processorName, serialized)   
+        } else {
+            var test = ResourceExtension.getResourceExtension(model)
+            println(test)
+            return null
+        }
     }
     
     def TextDocument transformToHtmlText(TextDocument document) {
         document.value = document.value.replace("\n", "<br>")
         document.value = document.value.replace("  ", "&emsp;")
         return document
-    }
-    
-    override showNext(ExecuteCommandParams params) {
-        val list = this.resultMap.get((params.arguments.get(0) as JsonPrimitive).toString.replace("\"", ""))
-        currentModelIndex = Math.min(currentModelIndex + 1, list.size - 1)
-        return requestManager.runRead[ cancelIndicator |
-            list.get(currentModelIndex)
-        ]
-    }
-    
-    override showPrevious(ExecuteCommandParams params) {
-        val list = this.resultMap.get((params.arguments.get(0) as JsonPrimitive).toString.replace("\"", ""))
-        currentModelIndex = Math.max(currentModelIndex -1, 0)
-        return requestManager.runRead[ cancelIndicator |
-            list.get(currentModelIndex)
-        ]
-    }
-    
-    override showOriginal(ExecuteCommandParams params) {
-        val list = this.resultMap.get((params.arguments.get(0) as JsonPrimitive).toString.replace("\"", ""))
-        currentModelIndex = 0
-        return requestManager.runRead[ cancelIndicator |
-            list.get(currentModelIndex)
-        ]
-        
-    }
-    
-    override showLast(ExecuteCommandParams params) {
-        val list = this.resultMap.get((params.arguments.get(0) as JsonPrimitive).toString.replace("\"", ""))
-        currentModelIndex = list.size - 1
-        return requestManager.runRead[ cancelIndicator |
-            list.get(currentModelIndex)
-        ]
-    }
-    
+    }    
 }

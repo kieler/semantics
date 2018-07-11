@@ -33,10 +33,10 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import java.io.FileOutputStream
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
+ * Has to be started with socket and #port as arguments to connect via socket <br>
  * <br>
  * <b>Note:</b> On MacOS X make sure to add "-Djava.awt.headless=true" to the vmargs!
  * Otherwise the application will freeze! 
@@ -58,7 +58,10 @@ class LanguageServer implements IApplication {
             socket = args.get(0)
         }
         if (socket == "socket") {
-            
+            if (args.size != 2) {
+                throw new Exception("Wrong number of arguments")
+            }
+            val port = Integer.parseInt(args.get(1))
             println(args.toString)
             println("Connection via: " + socket)
                
@@ -69,7 +72,6 @@ class LanguageServer implements IApplication {
                     Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
                 }
             }.createInjectorAndDoEMFRegistration()
-            
             new SCTXIdeSetup {
                 override createInjector() {
                     Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new SCChartsServerModule))
@@ -78,36 +80,27 @@ class LanguageServer implements IApplication {
             
             val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-            ]))
+            ])) 
             println("Create injector and register emf")
-            this.run(injector)
-            
-            
-    //        RunSocketServer.main()
-    //        print("Existed language server")
+            this.run(injector, port)
             return EXIT_OK 
         } else {
-            LanguageServerLauncher.main(#[])//#['shouldValidate'])
+            LanguageServerLauncher.main(#[])
             return EXIT_OK
         }
     }
     
     override stop() {
-        // Stop all language servers
     }
     
-    def run(Injector injector) {
-        val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", 5007))
+    def run(Injector injector, int port) {
+        val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
             val socketChannel = serverSocket.accept.get
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
-//            val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
-//                TypeAdapter<ServerModule>.configureGson(gsonBuilder)
-//            ]
-            val languageServer = injector.getInstance(LanguageServerImpl) // gets client that connects
-//            languageServer.supportedMethods.putAll(ServiceEndpoints.getSupportedMethods(MyEndpoint))
+            val languageServer = injector.getInstance(LanguageServerImpl)
             val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it])
             languageServer.connect(launcher.remoteProxy)
             launcher.startListening
