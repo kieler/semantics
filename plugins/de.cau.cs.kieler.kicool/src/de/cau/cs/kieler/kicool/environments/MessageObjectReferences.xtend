@@ -38,6 +38,10 @@ class MessageObjectReferences extends HashMap<Object, MessageObjectList> impleme
         add(null, msg, null, false, null, null, null)                
     }
     
+    def void add(String msg, Exception exception) {
+        add(null, msg, null, false, null, exception, null)
+    } 
+       
     def void add(String msg, Object object) {
         add(null, msg, object, object !== null, null, null, null)
     }
@@ -62,14 +66,18 @@ class MessageObjectReferences extends HashMap<Object, MessageObjectList> impleme
         add(sourceModelReference, msg, object, object !== null, null, null, payload)
     }
     
-    def void  add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
+    def void add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
         var mol = get(sourceModelReference)
         if (mol === null) {
             put(sourceModelReference, new MessageObjectList())
             mol = get(sourceModelReference)
         } 
         if (exception !== null) {
-            mol.add(exception)
+            if (msg !== null) {
+                mol.add(msg, exception)
+            } else {
+                mol.add(exception)
+            }
         } else {
             mol.add(msg, object, annotate, colorSystem, payload)
         }
