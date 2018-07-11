@@ -92,7 +92,7 @@ class LabelPlacementSideHook extends SynthesisHook {
         val background = new Color(255, 255, 255, 220);
         
         // Create and properly configure an inline label configurator that will do most of our work for us
-        val inlineLabelConfigurator = LabelDecorationConfigurator.create()
+        val inlineLabelConfigurator = LabelDecorationConfigurator.create.withInlineLabels(true)
             .withLabelTextRenderingProvider([ container, label | createTextRendering(container, label) ])
             .addDecoratorRenderingProvider(
                 RectangleDecorator.create()
