@@ -63,6 +63,8 @@ import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /** 
  * @author ssm
@@ -106,6 +108,10 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
     }    
 
     public def void optimizeGuards(SCGraph scg) {
+        val PartialExpressionEvaluator parEval = new PartialExpressionEvaluator(<ValuedObject, Value> newHashMap) => [ 
+            compute = true
+            inplace = true
+        ]
         
         var step = 0
         val visited = <Node> newHashSet
@@ -115,7 +121,7 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
             val nextNode = nextNodes.peek
             visited += nextNode
             
-            if (nextNode.optimizeNode(visited, nextNodes)) {
+            if (nextNode.optimizeNode(visited, nextNodes, parEval)) {
                 nextNodes.pop
                 annotationModel.addInfo(nextNode, "Step " + (step++) + " completed.")
                 snapshot
@@ -123,7 +129,7 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
         }
     }
     
-    public def boolean optimizeNode(Node node, Set<Node> visited, LinkedList<Node> nextNodes) {
+    public def boolean optimizeNode(Node node, Set<Node> visited, LinkedList<Node> nextNodes, PartialExpressionEvaluator parEval) {
         // Check if incoming dependencies are met. If not, redirect. 
         // This is basically a topological sort.
         val incomingDependencies = node.incomingLinks.filter(Dependency).
@@ -144,6 +150,8 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
         if (node instanceof Assignment) {
             if ((!node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME))) {
                 // I) Perform Partial Evaluation
+                node.expression.replace(parEval.evaluate(node.expression))
+                snapshot
                 
                 // II) Copy Propagation
                 // Handle single references 
@@ -248,9 +256,32 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
             toList
             
         val dominator = incomingDependencies.head.eContainer.asNode
-            
+
+        if (node instanceof Assignment) {
+            val expression = node.expression
+            if (expression instanceof BoolValue) {
+                if (expression.value) {
+                    
+                } else {
+                    for (gd : guardDependencies) {
+                        val targetNode = gd.target.asNode
+                        targetNode.dependenciesView.toList.forEach[ it.removeDependency ]
+                        targetNode.remove
+                        gd.removeDependency
+                    }
+                    guardDependencies.clear
+                }             
+            }
+        }
+        
+                    
         for (gd : guardDependencies) {
-            dominator.outgoingLinks.add(gd)    
+            val domGDs = dominator.outgoingLinks.filter(GuardDependency).toList
+            var GuardDependency lastGD = if (domGDs.empty) null else domGDs.last
+            dominator.outgoingLinks.add(gd)
+            if (lastGD !== null) {
+                lastGD.target.asNode.createControlDependency(gd.target.asNode)
+            }
         }        
         
         
@@ -298,7 +329,9 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
         
         node.remove
         
-        return dominator.dependenciesView.toList
+        return dominator.dependenciesView.
+            filter[ !(it instanceof GuardDependency) ].
+            toList
     }
     
     private def Dependency copyDependency(Dependency dependency, Node newTarget) {

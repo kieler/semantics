@@ -781,7 +781,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             scg.synthesizeScheduleGroups
             
             if (SHOW_HIERARCHY.booleanValue) {
-                scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
+                scg.nodes.filter(Node).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
                 	val allNodes = it.dependencies.filter(GuardDependency).map[ targetNode ].toList
                 	val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
                 	
