@@ -24,5 +24,4 @@ class SCChartsServerModule extends AbstractGenericModule {
     def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
         SCChartsLanguageServerExtension
     }
-    
 }

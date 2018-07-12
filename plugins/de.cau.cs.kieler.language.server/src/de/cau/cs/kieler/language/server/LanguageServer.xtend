@@ -36,7 +36,7 @@ import org.eclipse.xtext.util.Modules2
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
- * Has to be started with socket and #port as arguments to connect via socket <br>
+ * Has to be started with "socket" and #port as arguments to connect via socket <br>
  * <br>
  * <b>Note:</b> On MacOS X make sure to add "-Djava.awt.headless=true" to the vmargs!
  * Otherwise the application will freeze! 
@@ -54,10 +54,10 @@ class LanguageServer implements IApplication {
         var socket = ""
         var args = (context.arguments.get("application.args")) as String[]
         if (args.size > 0) {
-            
             socket = args.get(0)
         }
         if (socket == "socket") {
+            // debug case, communicate via socket
             if (args.size != 2) {
                 throw new Exception("Wrong number of arguments")
             }
@@ -85,14 +85,19 @@ class LanguageServer implements IApplication {
             this.run(injector, port)
             return EXIT_OK 
         } else {
+            // prouct case, communicate via stdin/out
             LanguageServerLauncher.main(#[])
             return EXIT_OK
         }
     }
     
     override stop() {
+        // not implemented
     }
     
+    /**
+     * Starts the language server (has to be separate method, since start method must have a "reachable" return
+     */
     def run(Injector injector, int port) {
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", port))
         val threadPool = Executors.newCachedThreadPool()

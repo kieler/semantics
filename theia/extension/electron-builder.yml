@@ -1,5 +1,5 @@
-productName: KIELER
-appId: theia.kieler
+productName: KEITHRiCharts
+appId: keith.richarts
 
 asar: false
 directories:
@@ -11,6 +11,9 @@ files:
   - "package.json"
   - from: "."
     to: ../../
+    filter: ["package.json"]
+  - from: "."
+    to: ../../../
     filter: ["package.json"]
 win:
   target:

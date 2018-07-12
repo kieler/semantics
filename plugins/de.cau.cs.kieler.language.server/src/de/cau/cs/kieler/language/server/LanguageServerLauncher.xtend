@@ -13,40 +13,33 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.inject.Guice
-import com.google.inject.Injector
+import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeModule
 import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeSetup
 import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
 import de.cau.cs.kieler.scl.SCLRuntimeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
-import java.net.InetSocketAddress
-import java.nio.channels.AsynchronousServerSocketChannel
-import java.nio.channels.Channels
 import java.util.concurrent.Executors
+import java.util.function.Function
+import org.apache.log4j.AppenderSkeleton
+import org.apache.log4j.AsyncAppender
+import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import org.eclipse.equinox.app.IApplication
-import org.eclipse.equinox.app.IApplicationContext
+import org.apache.log4j.spi.LoggingEvent
+import org.eclipse.lsp4j.MessageParams
+import org.eclipse.lsp4j.MessageType
 import org.eclipse.lsp4j.jsonrpc.Launcher
+import org.eclipse.lsp4j.jsonrpc.MessageConsumer
+import org.eclipse.lsp4j.jsonrpc.validation.ReflectiveMessageValidator
 import org.eclipse.lsp4j.services.LanguageClient
+import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.LanguageServerImpl
+import org.eclipse.xtext.ide.server.LaunchArgs
+import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import org.eclipse.xtext.ide.server.ServerLauncher
-import com.google.inject.Inject
-import org.apache.log4j.AsyncAppender
-import java.util.function.Consumer
-import com.google.gson.GsonBuilder
-import org.eclipse.xtext.ide.server.LaunchArgs
-import java.util.function.Function
-import org.eclipse.lsp4j.jsonrpc.MessageConsumer
-import org.eclipse.lsp4j.jsonrpc.validation.ReflectiveMessageValidator
-import org.apache.log4j.AppenderSkeleton
-import org.apache.log4j.spi.LoggingEvent
-import org.eclipse.lsp4j.MessageParams
-import org.apache.log4j.Level
-import org.eclipse.lsp4j.MessageType
 
 /**
  * @author sdo
@@ -57,8 +50,7 @@ class LanguageServerLauncher extends ServerLauncher {
     def static void main(String[] args) {
         
 
-        // Do a manual setup that includes the Yang diagram module
-        
+        // register languages (sublanguages are also registered)
         new SCLIdeSetup {
             override createInjector() {
                 Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
@@ -82,9 +74,6 @@ class LanguageServerLauncher extends ServerLauncher {
     
     override start(LaunchArgs args) {
         val executorService = Executors.newCachedThreadPool
-//        val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
-//            ActionTypeAdapter.configureGson(gsonBuilder)
-//        ] from sprotty
         val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, args.in, args.out, executorService,
                 args.wrapper)
         val client = launcher.remoteProxy

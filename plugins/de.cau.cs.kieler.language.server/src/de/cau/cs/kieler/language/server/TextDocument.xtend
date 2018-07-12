@@ -25,5 +25,4 @@ class TextDocument {
         this.key = key
         this.value = value
     }
-
 }
