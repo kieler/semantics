@@ -69,8 +69,12 @@ class SCChartFileRenderingApplication implements IApplication {
                         println("  -in -      : reads a list of SCCharts file Paths to render from input")
                         println("  -in <file> : reads a list of SCCharts file Paths to render from specified file")
                         println("  <file>     : a SCCharts file Path to render")
-                        println("any parameter may be used multiple times")
-                        println("if no parameter for this application is specified, then the parameter")
+                        println("Any parameter may be used multiple times.")
+                        println("Using a folder as a SCChrat file results in a recursive search")
+                        println("for SCCharts files to render.")
+                        println("The SVG-File is saved in the same location as the SCChrat file")
+                        println("with a different file name extension.")
+                        println("If no parameter for this application is specified, then the parameter")
                         println("\"-in -\" is assumed")
                     } else if (param == "-in") {
                         // next parameter is a file to read target SCCharts from
