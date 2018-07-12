@@ -1,0 +1,16 @@
+.idea
+.browser_modules
+node_modules
+build
+dist
+bin
+lib
+.DS_Store
+sccharts-app/webpack.config.js
+src-gen
+lerna-debug.log
+yangster-app-electron/webpack.config.js
+**/*.log
+**/package-backup.json
+**/webpack.config.js
+workspace

@@ -1,0 +1,65 @@
+productName: KIELER
+appId: theia.kieler
+
+asar: false
+directories:
+  buildResources: resources
+files: 
+  - "src-gen/**/*"
+  - "lib/**/*"
+  - "node_modules/**/*"
+  - "package.json"
+  # - 
+  #   from: "../language-server-archive/semantics2_9_keybindings/kieler/**/*"
+  #   to: "kieler/**/*"
+
+win:
+  target:
+    - nsis
+mac:
+  target:
+    - dmg
+linux:
+  extraResources:
+    - 
+      from: "../language-server-archive/semantics2_9_keybindings/kieler"
+      to: "app/kieler"
+    # - 
+    #   from: "../../../kieler-semantics-master/git/semantics_2/build/de.cau.cs.kieler.semantics.product.repository/target/products/de.cau.cs.kieler.product/linux/gtk/x86_64/kieler"
+    #   to: "app/kieler/"
+    #   filter: ["**/*", "!kieler.ini"]
+    # - 
+    #   from: "../language-server-archive/kieler.ini"
+    #   to: "app/kieler/kieler.ini"
+  target:
+    - deb
+    - AppImage
+  category: Development
+  icon: resources/icons
+
+nsis:
+  menuCategory: true
+  oneClick: false
+  perMachine: true
+  installerHeaderIcon: resources/icon.ico
+  installerIcon: resources/icon.ico
+  uninstallerIcon: resources/icon.ico
+  installerSidebar: resources/installerSidebar.bmp
+  uninstallerSidebar: resources/installerSidebar.bmp
+  allowToChangeInstallationDirectory: true
+  runAfterFinish: false
+  artifactName: ${productName}-Installer-${version}.${ext}
+dmg:
+  background: resources/dmgInstaller.tiff
+  icon: resources/icon.icns
+  iconSize: 128
+  contents:
+    -
+      x: 380
+      y: 240
+      type: link
+      path: /Applications
+    -
+      x: 122
+      y: 240
+      type: file

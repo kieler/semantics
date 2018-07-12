@@ -1,0 +1,93 @@
+/*
+ * Copyright (C) 2017 TypeFox and others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License") you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+import { ContainerModule, interfaces} from 'inversify'
+import { CommandContribution, MenuContribution} from '@theia/core/lib/common'
+import { SCChartsCommandContribution} from './sccharts-commands'
+
+import '../../../src/frontend/widgets/style/index.css';
+import { SCChartsMenuContribution } from './sccharts-menu-contribution';
+import { Constants } from '../../common/constants';
+import { configuration, monarchLanguage } from './sctx-monaco-language';
+import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './lang2-monaco-language';
+import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './lang3-monaco-language';
+import { TextWidget } from '../widgets/text-widget';
+import { BaseWidget, KeybindingContribution, KeybindingContext } from '@theia/core/lib/browser';
+import { SCChartsLanguageClientContribution } from './sccharts-language-client-contribution';
+import { LanguageClientContribution } from '@theia/languages/lib/browser';
+import { Lang2LanguageClientContribution } from './lang2-language-client-contribution';
+import { Lang3LanguageClientContribution } from './lang3-language-client-contribution';
+import { ContextMenuCommands } from './dynamic-commands';
+import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider';
+import { SCChartsMonacoEditorProvider } from '../monaco/sccharts-monaco-editor-provider';
+import { SCChartsKeybindingContext, SCChartsKeybindingContribution } from './sccharts-keybinding-context';
+
+export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
+
+    // (bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind)
+    monaco.languages.register({
+        id: Constants.sctxId,
+        aliases: [Constants.sctxName, Constants.sctxId],
+        extensions: ['.' + Constants.sctxId],
+        mimetypes: ['text/' + Constants.sctxId]
+    })
+    monaco.languages.onLanguage(Constants.sctxId, () => {
+        monaco.languages.setLanguageConfiguration(Constants.sctxId, configuration)
+        monaco.languages.setMonarchTokensProvider(Constants.sctxId, monarchLanguage)
+    });
+
+    monaco.languages.register({ 
+        id: Constants.lang2Id,
+        aliases: [Constants.lang2Name, Constants.lang2Id],
+        extensions: ['.' + Constants.lang2Id],
+        mimetypes: ['text/' + Constants.lang2Id]
+    })
+    monaco.languages.onLanguage(Constants.lang2Id, () => {
+        monaco.languages.setLanguageConfiguration(Constants.lang2Id, configuration2)
+        monaco.languages.setMonarchTokensProvider(Constants.lang2Id, monarchLanguage2)
+    });
+
+    monaco.languages.register({ 
+        id: Constants.lang3Id,
+        aliases: [Constants.lang3Name, Constants.lang3Id],
+        extensions: ['.' + Constants.lang3Id],
+        mimetypes: ['text/' + Constants.lang3Id]
+    })
+    monaco.languages.onLanguage(Constants.lang3Id, () => {
+        monaco.languages.setLanguageConfiguration(Constants.lang3Id, configuration3)
+        monaco.languages.setMonarchTokensProvider(Constants.lang3Id, monarchLanguage3)
+    });
+
+    // widgets
+
+    bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
+    bind(TextWidget).toSelf().inSingletonScope()
+
+    bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
+    // languages
+    bind(SCChartsLanguageClientContribution).toSelf().inSingletonScope()
+    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(SCChartsLanguageClientContribution))
+
+    bind(Lang2LanguageClientContribution).toSelf().inSingletonScope()
+    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(Lang2LanguageClientContribution))
+
+    bind(Lang3LanguageClientContribution).toSelf().inSingletonScope()
+    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(Lang3LanguageClientContribution))
+    
+    // apparently for command core.save
+    bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
+    // needed to open editor
+    rebind(MonacoEditorProvider).to(SCChartsMonacoEditorProvider).inSingletonScope()
+
+    // added for keybinding
+
+    bind(CommandContribution).to(SCChartsCommandContribution).inSingletonScope()
+    bind(SCChartsKeybindingContext).toSelf()
+    bind(KeybindingContext).toDynamicValue(context => context.container.get(SCChartsKeybindingContext));
+    bind(KeybindingContribution).to(SCChartsKeybindingContribution)
+
+})

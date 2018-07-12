@@ -1,0 +1,60 @@
+{
+    "private": true,
+    "name": "sccharts-app",
+    "version": "0.1.0",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@theia/core": "latest",
+        "@theia/editor": "latest",
+        "@theia/editorconfig": "latest",
+        "@theia/extension-manager": "latest",
+        "@theia/filesystem": "latest",
+        "@theia/file-search": "latest",
+        "@theia/languages": "latest",
+        "@theia/markers": "latest",
+        "@theia/messages":"latest",
+        "@theia/metrics": "latest",
+        "@theia/monaco": "latest",
+        "@theia/navigator": "latest",
+        "@theia/outline-view": "latest",
+        "@theia/preferences-api": "latest",
+        "@theia/preferences": "latest",
+        "@theia/preview": "latest",
+        "@theia/process": "latest",
+        "@theia/search-in-workspace": "latest",
+        "@theia/terminal": "latest",
+        "@theia/userstorage": "latest",
+        "@theia/variable-resolver": "latest",
+        "@theia/workspace": "latest",
+        "theia-sccharts-extension": "0.1.0",
+        "vscode-jsonrpc": "^3.6.2"
+    },
+    "akldfh" : {
+
+        "es6-promise" : "^4.2.4",
+        "reflect-metadata": "^0.1.12",
+        "inversify": "^4.13.0",
+        "@theia/output": "latest",
+        "@theia/outline-view" : "latest",
+        "express" : "^4.16.3",
+        "webpack" : "^4.15.1",
+        "yargs" : "^12.0.1",
+        "copy-webpack-plugin": "^4.5.2",
+        "circular-dependency-plugin": "^5.0.2",
+        "css-loader": "^1.0.0",
+        "url-loader": "^1.0.1"
+    },
+    "devDependencies": {
+        "@theia/cli": "latest",
+        "reflect-metadata": "^0.1.12"
+    },
+    "scripts": {
+        "prepare": "theia build --mode development",
+        "start": "theia start --mode development --root-dir=../workspace",
+        "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5007 --port=3000 --loglevel=debug",
+        "watch": "theia build --mode development --watch"
+    },
+    "theia": {
+        "target": "browser"
+    }
+}

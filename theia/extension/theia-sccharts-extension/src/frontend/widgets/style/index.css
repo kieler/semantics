@@ -1,0 +1,12 @@
+.kico_widget {
+    font-size: var(--theia-ui-font-size1);
+    color: var(--theia-ui-font-color1);
+    text-align: center;
+}
+.text_widget {
+    font-size: var(--theia-ui-font-size1);
+    color: var(--theia-ui-font-color1);
+    display: block;
+    margin-left: 20px
+}
+
