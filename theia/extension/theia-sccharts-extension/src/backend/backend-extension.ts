@@ -20,7 +20,7 @@ export default new ContainerModule(bind => {
 });
 
 export const productLsPath:  string = './../../../../kieler/kieler';
-export const debugLsPath: string = "./../../../../language-server-archive/semantics2_9_keybindings/kieler/kieler";
+export const debugLsPath: string = "./../../../../../../../../Documents/theia-sprotty-test/language-server-archive/semantics2_9_keybindings/kieler/kieler";
 
 function getPort(): number | undefined {
     let arg = process.argv.filter(arg => arg.startsWith('--LSP_PORT='))[0]

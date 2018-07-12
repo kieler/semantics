@@ -9,10 +9,9 @@ files:
   - "lib/**/*"
   - "node_modules/**/*"
   - "package.json"
-  # - 
-  #   from: "../language-server-archive/semantics2_9_keybindings/kieler/**/*"
-  #   to: "kieler/**/*"
-
+  - from: "."
+    to: ../../
+    filter: ["package.json"]
 win:
   target:
     - nsis
@@ -22,7 +21,7 @@ mac:
 linux:
   extraResources:
     - 
-      from: "../language-server-archive/semantics2_9_keybindings/kieler"
+      from: "../../../../../Documents/theia-sprotty-test/language-server-archive/semantics2_9_keybindings/kieler"
       to: "app/kieler"
     # - 
     #   from: "../../../kieler-semantics-master/git/semantics_2/build/de.cau.cs.kieler.semantics.product.repository/target/products/de.cau.cs.kieler.product/linux/gtk/x86_64/kieler"

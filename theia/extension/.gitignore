@@ -14,3 +14,4 @@ yangster-app-electron/webpack.config.js
 **/package-backup.json
 **/webpack.config.js
 workspace
+yarn-error.log
