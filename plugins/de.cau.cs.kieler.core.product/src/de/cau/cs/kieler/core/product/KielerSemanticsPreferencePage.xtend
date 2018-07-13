@@ -47,7 +47,7 @@ class KielerSemanticsPreferencePage extends PreferencePage implements IWorkbench
         comp.setLayout(new GridLayout())
 
         val label = new Label(comp, SWT.NONE)
-        label.text = "Select one of the KIELER preference categories to costumize."
+        label.text = "Select one of the KIELER preference categories to customize."
 
         return comp
     }
