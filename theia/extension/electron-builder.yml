@@ -24,17 +24,14 @@ mac:
 linux:
   extraResources:
     - 
-      from: "../../../../../Documents/theia-sprotty-test/language-server-archive/semantics2_9_keybindings/kieler"
-      to: "app/kieler"
-    # - 
-    #   from: "../../../kieler-semantics-master/git/semantics_2/build/de.cau.cs.kieler.semantics.product.repository/target/products/de.cau.cs.kieler.product/linux/gtk/x86_64/kieler"
-    #   to: "app/kieler/"
-    #   filter: ["**/*", "!kieler.ini"]
-    # - 
-    #   from: "../language-server-archive/kieler.ini"
-    #   to: "app/kieler/kieler.ini"
+      from: "../../build/de.cau.cs.kieler.semantics.product.repository/target/products/de.cau.cs.kieler.product/linux/gtk/x86_64/kieler"
+      to: "app/kieler/"
+      filter: ["**/*", "!kieler.ini"]
+    - 
+      from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/kieler.ini"
+      to: "app/kieler/kieler.ini"
   target:
-    - deb
+    # - deb
     - AppImage
   category: Development
   icon: resources/icons
