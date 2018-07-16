@@ -6,3 +6,5 @@ bin/
 xtend-gen/
 target/
 **/.antlr-generator
+build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/
+build/de.cau.cs.kieler.semantics.product.repository/target

@@ -16,9 +16,11 @@ files:
     to: ../../../
     filter: ["package.json"]
 win:
+  # copy ls
   target:
     - nsis
 mac:
+  # copy ls
   target:
     - dmg
 linux:
@@ -34,23 +36,23 @@ linux:
     # - deb
     - AppImage
   category: Development
-  icon: resources/icons
+  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons
 
 nsis:
   menuCategory: true
   oneClick: false
   perMachine: true
-  installerHeaderIcon: resources/icon.ico
-  installerIcon: resources/icon.ico
-  uninstallerIcon: resources/icon.ico
-  installerSidebar: resources/installerSidebar.bmp
-  uninstallerSidebar: resources/installerSidebar.bmp
+  installerHeaderIcon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  installerIcon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  uninstallerIcon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  installerSidebar: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp
+  uninstallerSidebar: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp
   allowToChangeInstallationDirectory: true
   runAfterFinish: false
   artifactName: ${productName}-Installer-${version}.${ext}
 dmg:
   background: resources/dmgInstaller.tiff
-  icon: resources/icon.icns
+  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
   iconSize: 128
   contents:
     -
