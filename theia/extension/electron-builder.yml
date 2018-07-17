@@ -33,7 +33,7 @@ linux:
       from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/kieler.ini"
       to: "app/kieler/kieler.ini"
   target:
-    # - deb
+    - deb
     - AppImage
   category: Development
   icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons
