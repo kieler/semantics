@@ -1,4 +1,4 @@
-productName: KEITHRiCharts
+productName: keith-richarts
 appId: keith.richarts
 
 asar: false
@@ -21,8 +21,10 @@ win:
     - nsis
 mac:
   # copy ls
+  # --prepackaged
   target:
-    - dmg
+    - tar.gz
+    # - dmg only possible on windows
 linux:
   extraResources:
     - 

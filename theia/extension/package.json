@@ -9,12 +9,12 @@
   "theia": {
     "target": "electron"
   },
-  "author": "sdo <stu114053@mail.uni-kiel.de>",
-  "license": "Apache-2.0",
+  "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
+  "license": "EPL v1.0",
   "bugs": {
-    "url": "https://rtsys.informatik.uni-kiel.de/jira/secure/Dashboard.jspa"
+    "url": "https://rtsys.informatik.uni-kiel.de/jira"
   },
-  "homepage": "https://rtsys.informatik.uni-kiel.de/confluence/",
+  "homepage": "https://rtsys.informatik.uni-kiel.de/kieler",
   "//": [
     "See why `yargs` is an explicit dependency: https://github.com/theia-ide/theia/issues/934",
     "See why `xterm` is an explicit dependency: https://github.com/theia-ide/theia/issues/737"
