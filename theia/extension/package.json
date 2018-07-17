@@ -22,7 +22,7 @@
   "scripts": {
     "build": "theia build",
     "package": "yarn run build && electron-builder",
-    "package:all": "yarn run build && electron-builder -lmw",
+    "package:all": "yarn run build && electron-builder --linux && electron-builder --mac && electron-builder --win",
     "package:win": "yarn run build && electron-builder --win",
     "package:linux": "yarn run build && electron-builder --linux",
     "package:mac": "yarn run build && electron-builder --mac",
