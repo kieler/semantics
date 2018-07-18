@@ -39,6 +39,13 @@ class SCChartFileRenderingApplication implements IApplication {
         INPUT_FILE
     }
     
+    enum OutputFormat {
+        SVG,
+        BMP,
+        PNG,
+        JPEG
+    }
+    
     val String SCCHART_FILE_EXTENSION = ".sctx"
     val String SVG_FILE_EXTENSION = ".svg"
     val String BMP_FILE_EXTENSION = ".bmp"
@@ -47,9 +54,6 @@ class SCChartFileRenderingApplication implements IApplication {
     
     // a reference to the resource set to load a SCChart, so it is created only once
     var XtextResourceSet resourceSet = null
-    // informations about the output type
-    var String outputType = IOffscreenRenderer.SVG
-    var String outputExtension = SVG_FILE_EXTENSION
     
     override start(IApplicationContext context) throws Exception {
         // mark this application as running
@@ -57,8 +61,7 @@ class SCChartFileRenderingApplication implements IApplication {
         
         var args = context.arguments.get(IApplicationContext.APPLICATION_ARGS) as String[]
         var inpState = InputState.NONE // no special meaning of next parameter
-        outputType = IOffscreenRenderer.SVG
-        outputExtension = SVG_FILE_EXTENSION
+        var OutputFormat format = OutputFormat.SVG
         
         // read from stdIn if no parameters are specified
         if (args.length == 0) {
@@ -79,13 +82,13 @@ class SCChartFileRenderingApplication implements IApplication {
                         println("  -png       : all following files are rendered to PNG")
                         println("  -bmp       : all following files are rendered to BMP")
                         println("  -jpeg      : all following files are rendered to JPEG")
-                        println("  -in -      : reads a list of SCCharts file Paths to render from input")
-                        println("  -in <file> : reads a list of SCCharts file Paths to render from specified file")
-                        println("  <file>     : a SCCharts file Path to render")
+                        println("  -in -      : reads a list of SCCharts file paths to render from input")
+                        println("  -in <file> : reads a list of SCCharts file paths to render from specified file")
+                        println("  <file>     : a SCCharts file path to render")
                         println("Any parameter may be used multiple times.")
                         println("Using a folder as a SCChrat file results in a recursive search")
-                        println("for SCCharts files to render.")
-                        println("The SVG-File is saved in the same location as the SCChrat file")
+                        println("for SCChart files to render.")
+                        println("The Output-File is saved in the same location as the SCChart file")
                         println("with a different file name extension.")
                         println("If no parameter for this application is specified, then the parameter")
                         println("\"-in -\" is assumed")
@@ -93,20 +96,16 @@ class SCChartFileRenderingApplication implements IApplication {
                         // next parameter is a file to read target SCCharts from
                         inpState = InputState.INPUT_FILE
                     } else if (lowerParam == "-svg") {
-                        outputType = IOffscreenRenderer.SVG
-                        outputExtension = SVG_FILE_EXTENSION
+                        format = OutputFormat.SVG
                     } else if (lowerParam == "-png") {
-                        outputType = IOffscreenRenderer.PNG
-                        outputExtension = PNG_FILE_EXTENSION
+                        format = OutputFormat.PNG
                     } else if (lowerParam == "-bmp") {
-                        outputType = IOffscreenRenderer.BMP
-                        outputExtension = BMP_FILE_EXTENSION
+                        format = OutputFormat.BMP
                     } else if (lowerParam == "-jpeg") {
-                        outputType = IOffscreenRenderer.JPEG
-                        outputExtension = JPEG_FILE_EXTENSION
+                        format = OutputFormat.JPEG
                     } else {
                         // use this parameter as one file specifier for SCCharts to render
-                        handleSpecifiers(Stream.of(param), true)
+                        handleSpecifiers(Stream.of(param), true, format)
                     }
                 }
                 case INPUT_FILE: {
@@ -124,7 +123,7 @@ class SCChartFileRenderingApplication implements IApplication {
                         else reader = new FileReader(file)
                     }
                     // use each line as one SCCHarts specifier
-                    if (reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true)
+                    if (reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true, format)
                 }
             }
         }
@@ -133,9 +132,10 @@ class SCChartFileRenderingApplication implements IApplication {
     }
     
     /**
-     * this method takes a stream of file-path-strings and recurses into folders rendering SCChart files
+     * This method takes a stream of file-path-strings and recurses into folders rendering SCChart files.
+     * The target file type is specified by the OutputFormat format.
      */
-    def void handleSpecifiers(Stream<String> selectors, boolean isDirect) {
+    def void handleSpecifiers(Stream<String> selectors, boolean isDirect, OutputFormat format) {
         selectors.forEach([selector |
             // check file
             var file = new File(selector)
@@ -147,34 +147,45 @@ class SCChartFileRenderingApplication implements IApplication {
                         .filter([p|Files::isRegularFile(p)])
                         .map([path|path.toString])
                     , false
+                    , format
                 )
             } else {
                 if (!file.name.toLowerCase(Locale.ROOT).endsWith(SCCHART_FILE_EXTENSION)) {
                     if (isDirect) System.err.println("File is not a SCCharts file: "+selector)
                 }
                 else if (!file.canRead) System.err.println("File is not readable: "+selector)
-                else renderSCChart(file)
+                else renderSCChart(file, format)
             }
         ])
     }
     
     /**
-     * this method takes a file pointing to a SCChart file which should be rendered as SVG.
-     * The SVG gets saved in the same place as the SCChart with different file extension.
+     * This method initializes the resource set and Display for rendering.
      */
-    def void renderSCChart(File file) {
+    def void init() {
+        val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+        resourceSet = scchartsInjector.getInstance(XtextResourceSet);
+        // initialize some display for rendering
+        Display.^default
+    }
+    
+    /**
+     * this method takes a file pointing to a SCChart file which should be rendered.
+     * The result gets saved in the same place as the SCChart with different file extension.
+     * The target file type is specified by the OutputFormat format.
+     */
+    def void renderSCChart(File file, OutputFormat format) {
         println("Rendering file: "+file.path)
         
         // get output file path
         val absPath = file.absolutePath
-        val targetFile = absPath.substring(0, absPath.length-SCCHART_FILE_EXTENSION.length) + outputExtension
+        val targetFile =
+                absPath.substring(0, absPath.length-SCCHART_FILE_EXTENSION.length)
+                + getExtension(format)
         
         // initialize resource set if not done already
         if (resourceSet === null) {
-            val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
-            resourceSet = scchartsInjector.getInstance(XtextResourceSet);
-            // initialize some display for rendering
-            Display.^default
+            init
         }
         
         // get the SCChart
@@ -184,7 +195,7 @@ class SCChartFileRenderingApplication implements IApplication {
         // render the SCChart
         val IStatus result = LightDiagramServices.renderOffScreen(
               scchart
-            , outputType
+            , getRenderingTargetType(format)
             , targetFile
             //, null
         );
@@ -196,6 +207,30 @@ class SCChartFileRenderingApplication implements IApplication {
             result.exception.printStackTrace
         }
         
+    }
+    
+    /**
+     * This method translates a OutputFormat into its corresponding file extension
+     */
+    private def getExtension(OutputFormat format) {
+        switch (format) {
+            case OutputFormat.SVG: SVG_FILE_EXTENSION
+            case OutputFormat.PNG: PNG_FILE_EXTENSION
+            case OutputFormat.BMP: BMP_FILE_EXTENSION
+            case OutputFormat.JPEG: JPEG_FILE_EXTENSION
+        }
+    }
+    
+    /**
+     * This method translates a OutputFormat into its corresponding rendering target
+     */
+    private def getRenderingTargetType(OutputFormat format) {
+        switch (format) {
+            case OutputFormat.SVG: IOffscreenRenderer.SVG
+            case OutputFormat.PNG: IOffscreenRenderer.PNG
+            case OutputFormat.BMP: IOffscreenRenderer.BMP
+            case OutputFormat.JPEG: IOffscreenRenderer.JPEG
+        }
     }
     
     override stop() {}
