@@ -11,15 +11,18 @@ import { createSocketConnection } from 'vscode-ws-jsonrpc/lib/server'
 import * as path from 'path';
 import * as net from 'net'
 import { Constants } from "../common/constants";
+import { isWindows, isOSX } from "@theia/core";
 
+const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app' : '/kieler')
 
 export default new ContainerModule(bind => {
     bind<LanguageServerContribution>(LanguageServerContribution).to(SCChartsContribution)
     bind<LanguageServerContribution>(LanguageServerContribution).to(Lang2Contribution)
     bind<LanguageServerContribution>(LanguageServerContribution).to(KExtContribution)
 });
-
-export const productLsPath:  string = './../../../../kieler/kieler';
+// path to language server for product for the different operating systems
+export const productLsPath:  string = './../../../../kieler' + osExtension;
+// path to language server for local debugging (could also be read from global.process.argv)
 export const debugLsPath: string = "./../../../../../../../../Documents/theia-sprotty-test/language-server-archive/semantics2_9_keybindings/kieler/kieler";
 
 function getPort(): number | undefined {
