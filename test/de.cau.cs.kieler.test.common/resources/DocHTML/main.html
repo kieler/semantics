@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"> 
+    <title>$$TITLE$$</title>
+    <script src="lib/codemirror.js"></script>
+    <script src="addon/mode/simple.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="mode/sctx.js"></script>
+</head>
+<body>
+<h1>$$HEADLINE$$</h1>
+$$NAV$$
+$$CONTEND$$
+<script>
+let elems = document.getElementsByClassName("code_sctx");
+for (let i = 0; i<elems.length; ++i) {
+    var myCodeMirror = CodeMirror.fromTextArea(elems[i], {
+        readOnly: true,
+        mode: 'xtext/sctx',
+        lineNumbers: true
+    });
+}
+</script>
+</body>
+</html>

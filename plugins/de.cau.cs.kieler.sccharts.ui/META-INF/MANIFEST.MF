@@ -34,6 +34,7 @@ Require-Bundle: de.cau.cs.kieler.klighd,
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,
+ de.cau.cs.kieler.sccharts.ui.application,
  de.cau.cs.kieler.sccharts.ui.synthesis,
  de.cau.cs.kieler.sccharts.ui.synthesis.actions,
  de.cau.cs.kieler.sccharts.ui.synthesis.hooks,

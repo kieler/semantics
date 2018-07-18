@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="de.cau.cs.kieler.test.common.repository.export.html"
+         name="HTML Export"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="de.cau.cs.kieler.test.common.repository.export.html.application.ExportRepositoryExamplesDocHTML">
+         </run>
+      </application>
+   </extension>
+
+</plugin>
