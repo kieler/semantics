@@ -38,8 +38,10 @@ class TestModelData {
     val String resourceSetID
     /** All model paths with the same resource set ID, including this model. */
     val Set<Path> resourceSetModels
-    /** Set of property String characterizing the the model. */
+    /** Set of property String characterizing the model. */
     val Set<String> modelProperties
+    /** Set of documentation tags shown by the model. */
+    val Set<String> docuTags
     /** Map with all properties specified in the repository for this model. */
     val Map<String, String> additionalProperties
     /** Flag indicating that this model is confidential and its content should not be publish in any way. */

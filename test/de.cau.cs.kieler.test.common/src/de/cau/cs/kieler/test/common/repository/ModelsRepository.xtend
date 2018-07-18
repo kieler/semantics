@@ -175,6 +175,7 @@ class ModelsRepository {
                                 property.resourceSetID,
                                 resourceSet.unmodifiableView,
                                 property.modelProperties.unmodifiableView,
+                                property.docuTags.unmodifiableView,
                                 property.additionalProperties.unmodifiableView,
                                 property.confidential
                             ))
@@ -226,6 +227,7 @@ class ModelsRepository {
         val Set<String> traceExt
         val String resourceSetID
         val Set<String> modelProperties
+        val Set<String> docuTags
         val Map<String, String> additionalProperties
         
         package new() {
@@ -235,6 +237,7 @@ class ModelsRepository {
             traceExt = emptySet
             resourceSetID = null
             modelProperties = emptySet
+            docuTags = emptySet
             additionalProperties = emptyMap
         }
         
@@ -253,6 +256,18 @@ class ModelsRepository {
                         modelProperties.remove(prop.substring(1).trim)
                     } else {
                         modelProperties.add(prop)
+                    }
+                }
+            }
+            // Combine docuTags
+            docuTags = newHashSet
+            docuTags.addAll(parent.docuTags)
+            if (propertyFile.containsKey("docuTags")) {
+                for (prop : propertyFile.getProperty("docuTags").split(",").map[trim].toSet) {
+                    if (prop.startsWith("!")) {
+                        docuTags.remove(prop.substring(1).trim)
+                    } else {
+                        docuTags.add(prop)
                     }
                 }
             }
