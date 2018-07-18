@@ -9,8 +9,8 @@
   "theia": {
     "target": "electron"
   },
-  "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
-  "license": "EPL v1.0",
+  "author": "Kiel University <rt-kieler-devel@informatik.uni-kiel.de>",
+  "license": "EPL-1.0",
   "bugs": {
     "url": "https://rtsys.informatik.uni-kiel.de/jira"
   },

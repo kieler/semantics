@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "An extension for Theia connection language support for SCCharts",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
-  "license": "EPL v1.0",
+  "license": "EPL-1.0",
   "keywords": [
     "theia-extension"
   ],
