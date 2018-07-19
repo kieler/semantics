@@ -38,9 +38,22 @@ export class SCChartsLanguageClientContribution extends BaseLanguageClientContri
 
     protected get globPatterns() {
         return [
-            '**/*.' + Constants.sctxId
+            '**/*.' + Constants.sctxId,
+            '**/*.' + Constants.lang2Id,
+            '**/*.' + Constants.lang3Id,
+            '**/*.anno'
         ]
     }
+
+    protected get documentSelector(): string[] {
+        return [
+            Constants.sctxId,
+            Constants.lang2Id,
+            Constants.lang3Id,
+            "anno"
+
+        ];
+}
 
     waitForActivation(app: FrontendApplication): Promise<any> {
         return Promise.race([

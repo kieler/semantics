@@ -15,12 +15,11 @@ import { Constants } from '../../common/constants';
 import { configuration, monarchLanguage } from './sctx-monaco-language';
 import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './lang2-monaco-language';
 import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './lang3-monaco-language';
+import { configuration as configuration4, monarchLanguage as monarchLanguage4} from './lang4-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
 import { BaseWidget, KeybindingContribution, KeybindingContext } from '@theia/core/lib/browser';
 import { SCChartsLanguageClientContribution } from './sccharts-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
-import { Lang2LanguageClientContribution } from './lang2-language-client-contribution';
-import { Lang3LanguageClientContribution } from './lang3-language-client-contribution';
 import { ContextMenuCommands } from './dynamic-commands';
 import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider';
 import { SCChartsMonacoEditorProvider } from '../monaco/sccharts-monaco-editor-provider';
@@ -62,6 +61,19 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         monaco.languages.setMonarchTokensProvider(Constants.lang3Id, monarchLanguage3)
     });
 
+
+
+    monaco.languages.register({ 
+        id: Constants.annoId,
+        aliases: [Constants.annoName, Constants.annoId],
+        extensions: ['.' + Constants.annoId],
+        mimetypes: ['text/' + Constants.annoId]
+    })
+    monaco.languages.onLanguage(Constants.annoId, () => {
+        monaco.languages.setLanguageConfiguration(Constants.annoId, configuration4)
+        monaco.languages.setMonarchTokensProvider(Constants.annoId, monarchLanguage4)
+    });
+
     // widgets
 
     bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
@@ -71,12 +83,6 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // languages
     bind(SCChartsLanguageClientContribution).toSelf().inSingletonScope()
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(SCChartsLanguageClientContribution))
-
-    bind(Lang2LanguageClientContribution).toSelf().inSingletonScope()
-    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(Lang2LanguageClientContribution))
-
-    bind(Lang3LanguageClientContribution).toSelf().inSingletonScope()
-    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(Lang3LanguageClientContribution))
     
     // apparently for command core.save
     bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()

@@ -17,8 +17,8 @@ const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app' : '/kieler')
 
 export default new ContainerModule(bind => {
     bind<LanguageServerContribution>(LanguageServerContribution).to(SCChartsContribution)
-    bind<LanguageServerContribution>(LanguageServerContribution).to(Lang2Contribution)
-    bind<LanguageServerContribution>(LanguageServerContribution).to(KExtContribution)
+    // bind<LanguageServerContribution>(LanguageServerContribution).to(Lang2Contribution)
+    // bind<LanguageServerContribution>(LanguageServerContribution).to(KExtContribution)
 });
 // path to language server for product for the different operating systems
 export const productLsPath:  string = './../../../../kieler' + osExtension;
@@ -65,81 +65,6 @@ class SCChartsContribution extends BaseLanguageServerContribution {
             const serverConnection = this.createProcessStreamConnection(command, []);
             this.forward(clientConnection, serverConnection);
             serverConnection.onClose(() => console.log("Connection closed"))
-        }
-    }
-
-    protected onDidFailSpawnProcess(error: Error): void {
-        super.onDidFailSpawnProcess(error);
-        console.error("Error starting DSL language server.", error)
-    }
-}
-
-@injectable()
-class Lang2Contribution extends BaseLanguageServerContribution {
-
-    readonly id = Constants.lang2Id;
-    readonly name = Constants.lang2Name;
-
-    start(clientConnection: IConnection): void {
-
-        let socketPort = getPort();
-        if (socketPort) {
-            const socket = new net.Socket()
-            const serverConnection = createSocketConnection(socket, socket, () => {
-                socket.destroy()
-            });
-            this.forward(clientConnection, serverConnection)
-            socket.connect(socketPort)
-        } else {
-            var lsPath
-            let arg = process.argv.filter(arg => arg.startsWith('--root-dir='))[0]
-            if (!arg) {
-                lsPath = productLsPath
-            } else {
-                lsPath = debugLsPath
-            }
-            var command = path.resolve(__dirname, lsPath);
-            console.log("\n\n\nCurrent directory is " + __dirname + " \n\n\n")
-            const serverConnection = this.createProcessStreamConnection(command);
-            this.forward(clientConnection, serverConnection);
-        }
-    }
-
-    protected onDidFailSpawnProcess(error: Error): void {
-        super.onDidFailSpawnProcess(error);
-        console.error("Error starting DSL language server.", error)
-    }
-}
-
-
-@injectable()
-class KExtContribution extends BaseLanguageServerContribution {
-
-    readonly id = Constants.lang3Id;
-    readonly name = Constants.lang3Name;
-
-    start(clientConnection: IConnection): void {
-
-        let socketPort = getPort();
-        if (socketPort) {
-            const socket = new net.Socket()
-            const serverConnection = createSocketConnection(socket, socket, () => {
-                socket.destroy()
-            });
-            this.forward(clientConnection, serverConnection)
-            socket.connect(socketPort)
-        } else {
-            var lsPath
-            let arg = process.argv.filter(arg => arg.startsWith('--root-dir='))[0]
-            if (!arg) {
-                lsPath = productLsPath
-            } else {
-                lsPath = debugLsPath
-            }
-            var command = path.resolve(__dirname, lsPath);
-            console.log("\n\n\nCurrent directory is " + __dirname + " \n\n\n")
-            const serverConnection = this.createProcessStreamConnection(command);
-            this.forward(clientConnection, serverConnection);
         }
     }
 

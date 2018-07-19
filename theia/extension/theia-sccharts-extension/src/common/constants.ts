@@ -12,6 +12,8 @@ export class Constants {
     static readonly lang2Name = 'SCL'
     static readonly lang3Id = 'kext'
     static readonly lang3Name = 'KExt'
+    static readonly annoId = 'anno'
+    static readonly annoName = 'Annotations'
     static readonly netlist = 'de.cau.cs.kieler.sccharts.netlist'
     static readonly netlistJava = 'de.cau.cs.kieler.sccharts.netlist.java'
     static readonly priorityJava = 'de.cau.cs.kieler.sccharts.priority.java'
