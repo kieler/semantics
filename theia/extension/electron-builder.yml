@@ -9,12 +9,12 @@ files:
   - "lib/**/*"
   - "node_modules/**/*"
   - "package.json"
-  - from: "."
-    to: ../../
-    filter: ["package.json"]
-  - from: "."
-    to: ../../../
-    filter: ["package.json"]
+  # - from: "."
+  #   to: ../../
+  #   filter: ["package.json"]
+  # - from: "."
+  #   to: ../../../
+  #   filter: ["package.json"]
 win:
   # copy ls
   extraResources:
@@ -28,6 +28,7 @@ win:
   
   target:
     - nsis
+  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
 mac:
   # copy ls
   extraResources:
@@ -40,6 +41,7 @@ mac:
       to: "app/kieler.app/Contents/Eclipse/kieler.ini"
   target:
     - tar.gz
+  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
     # - dmg only possible on macOS
 linux:
   # copy ls
@@ -52,10 +54,10 @@ linux:
       from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/util/kieler.ini"
       to: "app/kieler/kieler.ini"
   target:
-    - deb
+    # - deb
     - AppImage
   category: Development
-  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons
+  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
 
 nsis:
   menuCategory: true
@@ -70,7 +72,7 @@ nsis:
   runAfterFinish: false
   artifactName: ${productName}-Installer-${version}.${ext}
 dmg:
-  background: resources/dmgInstaller.tiff
+  background: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
   icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
   iconSize: 128
   contents:
