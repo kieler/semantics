@@ -27,30 +27,33 @@ export class SCChartsLanguageClientContribution extends BaseLanguageClientContri
         @inject(Workspace) workspace: Workspace,
         @inject(Languages) languages: Languages,
         @inject(LanguageClientFactory) languageClientFactory: LanguageClientFactory,
-        @inject(ContextMenuCommands) protected commands: ContextMenuCommands/*, TODO why can I remove these here? Why are they in yangster?
-        @inject(KeybindingRegistry) protected keybindingRegistry: KeybindingRegistry,
-        @inject(CommandRegistry) protected commandRegistry: CommandRegistry,
-        @inject(CommandService) protected readonly commandService: CommandService,
-        @inject(MessageService) protected readonly messageService: MessageService*/
+        @inject(ContextMenuCommands) protected commands: ContextMenuCommands
     ) {
         super(workspace, languages, languageClientFactory)
     }
 
+    /**
+     * Define pattern of supported languages from language server registered in backend with id and name of class.
+     * Name for extension defined by mapping via monaco registration in frotend
+     */
     protected get globPatterns() {
         return [
             '**/*.' + Constants.sctxId,
             '**/*.' + Constants.lang2Id,
             '**/*.' + Constants.lang3Id,
-            '**/*.anno'
+            '**/*.' + Constants.annoId
         ]
     }
 
+    /**
+     * Define id for pattern seen in globPatterns()
+     */
     protected get documentSelector(): string[] {
         return [
             Constants.sctxId,
             Constants.lang2Id,
             Constants.lang3Id,
-            "anno"
+            Constants.annoId
 
         ];
 }

@@ -27,7 +27,7 @@ import { SCChartsKeybindingContext, SCChartsKeybindingContribution } from './scc
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
 
-    // (bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind)
+    // register sctx
     monaco.languages.register({
         id: Constants.sctxId,
         aliases: [Constants.sctxName, Constants.sctxId],
@@ -39,6 +39,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         monaco.languages.setMonarchTokensProvider(Constants.sctxId, monarchLanguage)
     });
 
+    // register scl
     monaco.languages.register({ 
         id: Constants.lang2Id,
         aliases: [Constants.lang2Name, Constants.lang2Id],
@@ -50,6 +51,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         monaco.languages.setMonarchTokensProvider(Constants.lang2Id, monarchLanguage2)
     });
 
+    // register kext
     monaco.languages.register({ 
         id: Constants.lang3Id,
         aliases: [Constants.lang3Name, Constants.lang3Id],
@@ -61,8 +63,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         monaco.languages.setMonarchTokensProvider(Constants.lang3Id, monarchLanguage3)
     });
 
-
-
+    // register anno
     monaco.languages.register({ 
         id: Constants.annoId,
         aliases: [Constants.annoName, Constants.annoId],
@@ -75,11 +76,11 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     });
 
     // widgets
-
     bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
     bind(TextWidget).toSelf().inSingletonScope()
 
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
+
     // languages
     bind(SCChartsLanguageClientContribution).toSelf().inSingletonScope()
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(SCChartsLanguageClientContribution))
@@ -89,8 +90,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // needed to open editor
     rebind(MonacoEditorProvider).to(SCChartsMonacoEditorProvider).inSingletonScope()
 
-    // added for keybinding
-
+    // added for keybinding and commands
     bind(CommandContribution).to(SCChartsCommandContribution).inSingletonScope()
     bind(SCChartsKeybindingContext).toSelf()
     bind(KeybindingContext).toDynamicValue(context => context.container.get(SCChartsKeybindingContext));

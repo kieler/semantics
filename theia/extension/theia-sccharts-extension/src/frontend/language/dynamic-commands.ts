@@ -25,12 +25,9 @@ export class ContextMenuCommands {
                 const currentEditor = this.editorManager.currentEditor
                 if (this.isDesiredEditor(currentEditor)) {
                     execute(currentEditor.editor.document.uri)
-                }/* else if (this.isAnnoEditor(currentEditor)) {
-                    execute(currentEditor.editor.document.uri)
-                }*/
+                }
             },
-            isVisible: () => this.isDesiredEditor(this.editorManager.currentEditor)/* || 
-                        this.isAnnoEditor(this.editorManager.currentEditor)*/
+            isVisible: () => this.isDesiredEditor(this.editorManager.currentEditor)
         });
         const removeMenu = this.menuRegistry.registerMenuAction(EDITOR_CONTEXT_MENU.concat("2_sctx"), {
             commandId: id,
@@ -50,11 +47,4 @@ export class ContextMenuCommands {
         else
             return false;
     }
-
-    /*private isAnnoEditor(widget: EditorWidget | undefined): widget is EditorWidget {
-        if (widget)
-            return widget.editor.document.languageId === 'anno';
-        else
-            return false;
-    }*/
 }

@@ -17,8 +17,6 @@ const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app' : '/kieler')
 
 export default new ContainerModule(bind => {
     bind<LanguageServerContribution>(LanguageServerContribution).to(SCChartsContribution)
-    // bind<LanguageServerContribution>(LanguageServerContribution).to(Lang2Contribution)
-    // bind<LanguageServerContribution>(LanguageServerContribution).to(KExtContribution)
 });
 // path to language server for product for the different operating systems
 export const productLsPath:  string = './../../../../kieler' + osExtension;
@@ -60,7 +58,6 @@ class SCChartsContribution extends BaseLanguageServerContribution {
             var command = path.resolve(__dirname, lsPath);
             console.log("starting ls " + command)
             console.log("Arguments: \n" + global.process.argv + "\n\n")
-            console.log(path.resolve("~/Documents/theia-sprotty-test/language-server-archive/semantics2_9_keybindings/kieler/kieler"))
             console.log("\n\n\nCurrent directory is " + __dirname + " \n\n\n")
             const serverConnection = this.createProcessStreamConnection(command, []);
             this.forward(clientConnection, serverConnection);

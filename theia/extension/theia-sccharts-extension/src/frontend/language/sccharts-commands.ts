@@ -16,6 +16,7 @@ import { SCChartsLanguageClientContribution } from "./sccharts-language-client-c
 import { TextWidget } from "../widgets/text-widget";
 import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, navigationCommands, compilationCommands, CodeContainer, SHOW_PREVIOUS, SHOW_NEXT, SHOW_FIRST, SHOW_LAST } from "./sccharts-menu-contribution";
 import URI from "@theia/core/lib/common/uri";
+import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 // import { SCChartsKeybindingContext } from "./sccharts-keybinding-context";
 
 @injectable()
@@ -51,6 +52,7 @@ export class SCChartsCommandContribution implements CommandContribution {
         @inject(SCChartsLanguageClientContribution) protected readonly client: SCChartsLanguageClientContribution,
         @inject(OpenerService) protected readonly openerService: OpenerService,
         @inject(EditorManager) protected readonly editorManager: EditorManager,
+        @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager
         // @inject(SCChartsKeybindingContext) protected readonly keybindingContext: SCChartsKeybindingContext
     ) {
     }
@@ -70,14 +72,14 @@ export class SCChartsCommandContribution implements CommandContribution {
                 execute: () => {
                     const editor = this.editorManager.currentEditor;
                     if (!editor) {
-                        this.messageService.error("Editor is undefined")
+                        this.message("Editor is undefined", "error")
                         // this.front.shell.addWidget(new TextWidget("Error", "Editor is undefined", "error"), { area: 'bottom' })
                         // this.front.shell.activateWidget("error")
                         return false;
                     }
                     const uri = editor.editor.uri.toString();
                     if (!(uri.endsWith('sctx') || uri.endsWith('view'))) {
-                        this.messageService.error("URI is different from '.sctx'")
+                        this.message("URI is different from '.sctx'", "error")
                         // this.front.shell.addWidget(new TextWidget("Error", "URI is different from '.sctx'", "error"), { area: 'bottom' })
                         // this.front.shell.activateWidget("error")
                         return false
@@ -104,19 +106,19 @@ export class SCChartsCommandContribution implements CommandContribution {
                         if (this.sourceURI.has(modelUriString)) {
                             var foundSourceUri = this.sourceURI.get(modelUriString)
                             if (!foundSourceUri) {
-                                this.messageService.error("SourceUri undefined, aborting...")
+                                this.message("SourceUri undefined, aborting...", "error")
                                 return false
                             }
                             checkUri = foundSourceUri
                         } else {
-                            this.messageService.error("No sourceUri for " + modelUriString + " found, aborting...")
+                            this.message("No sourceUri for " + modelUriString + " found, aborting...", "error")
                             return false
                         }
                     }
                     console.log("Checking whether " + checkUri +  " was already compiled")
                     // abort if uri was not compiled first, doesn't work, since model.view is not deleted
                     if (!this.isCompiled.get(checkUri)) {
-                        this.messageService.error("Aborting since " + checkUri + " was not compiled " + this.isCompiled.get(checkUri))
+                        this.message("Aborting since " + checkUri + " was not compiled " + this.isCompiled.get(checkUri), "error")
                         return false
                     }
                     var nextIndex = 17
@@ -124,12 +126,12 @@ export class SCChartsCommandContribution implements CommandContribution {
                     const currentIndex = this.indexMap.get(checkUri)
                     const resultMap = this.resultMap.get(checkUri)
                     if (currentIndex === undefined) {
-                        this.messageService.error("currentIndex not set for " + checkUri)
+                        this.message("currentIndex not set for " + checkUri, "error")
                         // TODO error handling
                         return false
                     }
                     if (!resultMap) {
-                        this.messageService.error("resultMap not set for " + checkUri)
+                        this.message("resultMap not set for " + checkUri, "error")
                         // TODO error handling
                         return false
                     }
@@ -149,7 +151,7 @@ export class SCChartsCommandContribution implements CommandContribution {
                             break;
                     
                         default:
-                            this.messageService.error("No known command found")
+                            this.message("No known command found", "error")
                             break;
                     }
                     console.log("Next index = " + nextIndex)
@@ -308,9 +310,9 @@ export class SCChartsCommandContribution implements CommandContribution {
                                 commandStruct.compilationSystemId
                             ]
                         }).then((text: CodeContainer) => {
-                            this.messageService.info("Got compilation result for " + uri)
+                            this.message("Got compilation result for " + uri, "info")
                             if (uri.startsWith("\"")) {
-                                this.messageService.error("Found error in " + uri)
+                                this.message("Found error in " + uri, "error")
                             }
                             this.isCompiled.set(uri as string, true)
                             this.resultMap.set(uri as string, text)
@@ -380,7 +382,7 @@ export class SCChartsCommandContribution implements CommandContribution {
         });
     }
     createSubFiles(baseString : string, text : CodeContainer) {
-        this.messageService.info("Begin to write compilation results")
+        this.message("Begin to write compilation results", "info")
         var index = 0
         text.files.forEach(text => {
             var prefix = index.toString()
@@ -410,4 +412,25 @@ export class SCChartsCommandContribution implements CommandContribution {
     //     })
     //     return new Promise(() => true)
     // }
+    message(message : string, type : string) {
+        switch (type) {
+            case "error":
+                this.messageService.error(message)
+                this.outputManager.getChannel("SCTX").appendLine("ERROR: " +  message)
+                break;
+            case "warn":
+                this.messageService.warn(message)
+                this.outputManager.getChannel("SCTX").appendLine("WARN: " + message)
+                break;
+            case "info":
+                this.messageService.info(message)
+                this.outputManager.getChannel("SCTX").appendLine("INFO: " + message)
+                break;
+            default :
+                this.messageService.log(message)
+                this.outputManager.getChannel("SCTX").appendLine("LOG: " + message)
+                break;
+            
+        }
+    }
 }

@@ -86,14 +86,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
                 target.append(generateLanguageConfiguration);
                 target.append(generateMonarchLanguagePrefix(langId))
                 target.append(generateKeywordHighlighting(wordKeywords))
-                // TODO maybe
-//              target.append(
-//                      "    operators: [\n" + 
-//                      "        '=', '>', '<', '!', ':',\n" + 
-//                      "        '==', '<=', '>=', '!=', 'and', 'or',\n" + 
-//                      "        '+', '-', '*', '/'\n" + 
-//                      "    ],\n"
-//                      );
                 target.append(generateSymbolHighlighting);
                 target.append(generateEscapeHighlighting);
                 target.append(generateDigitHighlighting);
@@ -113,7 +105,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
                     "            [/[<>](?!@symbols)/, '@brackets'],\n" +
                     "            [/@symbols/, {\n" +
                     "                cases: {\n" +
-//                    "                    '@operators': 'delimiter',\n" + 
                     "                    '@default': ''\n" + "                }\n" + "            }],\n" +
                     "\n")
                 if (generateAnnotation.get) {
@@ -129,9 +120,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
         }
         highlightingFile.setContent(content)
         // TODO change path
-//        val test = new XtextGeneratorFileSystemAccess("path", true);
-//        test.
-//        test.setOutputPath("highlighting.js", packageName.javaPath);
         highlightingFile.writeTo(this.projectConfig.genericIde.srcGen)
     }
 
@@ -141,21 +129,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
     def void setGenerateAnnotation(boolean generateAnnotation) {
         this.generateAnnotation.set(generateAnnotation)
     }
-//    
-//    /**
-//     * Name of the syntax highlighting module to be generated.
-//     */
-//    def void setHighlightingModuleName(String moduleName) {
-//        this.highlightingModuleName = moduleName
-//    }
-//    
-//    /**
-//     * The path of the syntax highlighting Typescript file to be generated. The default is to
-//     * derive the path from the {@code highlightingModuleName} property.
-//     */
-//    def void setHighlightingPath(String path) {
-//        this.highlightingPath = path
-//    }
     
     def generateLanguageConfiguration() {
         return "export const configuration: monaco.languages.LanguageConfiguration = {\n" +
@@ -223,7 +196,8 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
     }
     
     def generateNumberHighlighting() {
-        return "\n" + "      // numbers\n" +
+        return "\n" +
+            "            // numbers\n" +
             "            [/(@digits)[eE]([\\-+]?(@digits))?[fFdD]?/, 'number.float'],\n" +
             "            [/(@digits)\\.(@digits)([eE][\\-+]?(@digits))?[fFdD]?/, 'number.float'],\n" +
             "            [/0[xX](@hexdigits)[Ll]?/, 'number.hex'],\n" +

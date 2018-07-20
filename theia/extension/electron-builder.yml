@@ -27,7 +27,7 @@ win:
       to: "app/kieler/kieler.ini"
   
   target:
-    - nsis
+    - portable
   icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
 mac:
   # copy ls

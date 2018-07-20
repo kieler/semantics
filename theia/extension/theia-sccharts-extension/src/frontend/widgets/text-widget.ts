@@ -10,7 +10,7 @@ export class TextWidget extends BaseWidget {
 
     constructor(
         protected readonly titleLabel: string,
-        protected readonly ccode: string,
+        protected readonly text: string,
         protected readonly widgetId: string
     ) {
         super();
@@ -18,8 +18,7 @@ export class TextWidget extends BaseWidget {
         this.title.closable = true
         this.id = widgetId
         this.addClass('text_widget') // class for index.css
-        this.node.innerHTML = "<div>" + ccode + "</div>"
-        //this.node.appendChild(new Node())
+        this.node.innerHTML = "<div>" + text + "</div>"
         this.setHidden(false)
         this.node.focus()
     }
@@ -40,19 +39,6 @@ export class TextWidget extends BaseWidget {
                 container.style.overflow = null;
             }));
         })();
-        // this.select.textContent = "Test"
-        // this.node.innerHTML = this.returnString
-        //var number = this.fileSystem.getCurrentUserHome.toString()
-        //var item = this.workspace.textDocuments.pop.name.toString()
-        //noe.innerText = "TEst: " + this.workspace.textDocuments.entries.length
-        /* var node2 = new HTMLElement()
-        node2.innerText = "Hello"//number
-        var node3 = new HTMLElement()
-        node3.innerText = "world"//item */
-        //print("\n\n\nURHKSFD\n\n\n")
-        //this.node.appendChild(noe)
-        /* this.node.appendChild(node2)
-        this.node.appendChild(node3) */
         this.node.focus()
     }
 

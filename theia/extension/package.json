@@ -76,7 +76,9 @@
     "typescript": "^2.5.2",
     "uuid": "^3.1.0",
     "vscode-jsonrpc": "^3.6.2",
-    "reflect-metadata": "^0.1.12"
+    "reflect-metadata": "^0.1.12",
+    "ts-loader": "^4.4.2",
+    "webpack":"^4.16.1"
   },
   "workspaces": [
     "theia-sccharts-extension",

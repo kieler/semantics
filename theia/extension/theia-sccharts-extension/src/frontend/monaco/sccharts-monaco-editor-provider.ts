@@ -47,6 +47,10 @@ export class SCChartsMonacoEditorProvider extends MonacoEditorProvider {
         editorOptions.dragAndDrop = Constants.dragAndDrop
         editorOptions.autoIndent = Constants.autoIndent
         editorOptions.formatOnPaste = Constants.formatOnPaste
+        editorOptions.minimap = {
+            enabled: true,
+            side: "right",
+        }
         return {
             ...editorOptions,
             snippetSuggestions: 'inline'
