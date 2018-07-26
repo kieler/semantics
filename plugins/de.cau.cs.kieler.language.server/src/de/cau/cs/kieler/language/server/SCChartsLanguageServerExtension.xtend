@@ -108,7 +108,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 if (tempDocuments !== null) {
                     for (document : tempDocuments) {
                         if (document !== null) {
-                            mymodel.files.add(document)
+                            mymodel.files.add(transformToHtmlText(document))
                         }
                     }
                 }
@@ -129,14 +129,14 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         } else if (impl instanceof SCChartsImpl) {
             var textDocument = transformToTextDocument(impl as EObject, processorName)
             if (textDocument !== null) {
-                textDocument.key = textDocument.key + ".sctx"
-                this.resultMap.get(uri).add(textDocument as TextDocument)
+                textDocument.key = textDocument.key
+                this.resultMap.get(uri).add(transformToHtmlText(textDocument as TextDocument))
             }
             var count = 0
             for (snapshot : snapshots) {
                 textDocument = transformToTextDocument(snapshot as EObject, processorName + count)
-                textDocument.key = textDocument.key + ".sctx"
-                this.resultMap.get(uri).add(textDocument as TextDocument)
+                textDocument.key = textDocument.key
+                this.resultMap.get(uri).add(transformToHtmlText(textDocument as TextDocument))
                 count++
             }
             return null
@@ -195,7 +195,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 res.save(outputStream, emptyMap)
                 serialized = outputStream.toString
             }
-            return new TextDocument(processorName, serialized)   
+            return new TextDocument(processorName, serialized)
         } else {
             var test = ResourceExtension.getResourceExtension(model)
             println(test)

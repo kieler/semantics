@@ -59,7 +59,8 @@
     "theia-sccharts-extension": "0.1.0",
     "yargs": "^9.0.1",
     "xterm": "^2.9.2",
-    "vscode-jsonrpc": "^3.6.2"
+    "vscode-jsonrpc": "^3.6.2",
+    "@fortawesome/fontawesome-free" : "^5.2.0"
   },
   "devDependencies": {
     "@theia/cli": "next",

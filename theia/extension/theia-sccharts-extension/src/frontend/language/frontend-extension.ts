@@ -17,7 +17,7 @@ import { configuration as configuration2, monarchLanguage as monarchLanguage2} f
 import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './lang3-monaco-language';
 import { configuration as configuration4, monarchLanguage as monarchLanguage4} from './lang4-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
-import { BaseWidget, KeybindingContribution, KeybindingContext } from '@theia/core/lib/browser';
+import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory } from '@theia/core/lib/browser';
 import { SCChartsLanguageClientContribution } from './sccharts-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
 import { ContextMenuCommands } from './dynamic-commands';
@@ -78,6 +78,10 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // widgets
     bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
     bind(TextWidget).toSelf().inSingletonScope()
+    bind(WidgetFactory).toDynamicValue(context => ({
+        id: "compiler-widget",
+        createWidget: () => context.container.get<TextWidget>(TextWidget)
+}));
 
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
 

@@ -52,6 +52,11 @@ export const SHOW_LAST: Command = {
     label: 'Show last'
 }
 
+export const SHOW_THIS: Command = {
+    id: 'show_this',
+    label: 'Show this'
+}
+
 export const COMPILE: string = 'sccharts/compile'
 
 export const COMPILE_NETLIST_STRUCT: CommandStruct = {
@@ -90,6 +95,12 @@ export const SHOW_PREVIOUS_STRUCT: CommandStruct = {
 
 export const SHOW_ORIGINAL_STRUCT: CommandStruct = {
     command: SHOW_FIRST,
+    compilationSystemId: ' ',
+    commandLSPName: ' '
+}
+
+export const SHOW_THIS_STRUCT: CommandStruct = {
+    command: SHOW_THIS,
     compilationSystemId: ' ',
     commandLSPName: ' '
 }
