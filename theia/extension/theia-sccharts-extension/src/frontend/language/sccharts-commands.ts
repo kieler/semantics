@@ -6,23 +6,18 @@
  */
 
 import { inject, injectable } from "inversify";
-import { CommandContribution, CommandRegistry, ResourceProvider, MessageService, Command } from '@theia/core/lib/common';
+import { CommandContribution, CommandRegistry, ResourceProvider, MessageService } from '@theia/core/lib/common';
 import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { WorkspaceEdit, Workspace } from "@theia/languages/lib/common";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { SCChartsLanguageClientContribution } from "./sccharts-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, navigationCommands, compilationCommands, CodeContainer, SHOW_PREVIOUS, SHOW_NEXT, SHOW_FIRST, SHOW_LAST, CommandStruct, SHOW_THIS, SHOW_THIS_STRUCT, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT } from "./sccharts-menu-contribution";
+import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, SHOW_PREVIOUS, SHOW_NEXT, SHOW_FIRST, SHOW_LAST, CommandStruct, SHOW_THIS, SHOW_THIS_STRUCT, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT, COMPILER, navigationCommands } from "./sccharts-menu-contribution";
 import URI from "@theia/core/lib/common/uri";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
-import { CompileWidget } from "../widgets/compile-widget";
 import { Constants } from "../../common/constants";
 import { TextWidget } from "../widgets/text-widget";
-
-
-const TESTCOMMAND : Command =  {
-    id: "test stuff", label: "do all the stuff"
-}
+import { CompileWidget } from "../widgets/compile-widget";
 @injectable()
 export class SCChartsCommandContribution implements CommandContribution {
 
@@ -31,22 +26,7 @@ export class SCChartsCommandContribution implements CommandContribution {
     resultMap: Map<string, CodeContainer> = new Map
     indexMap: Map<string, number> = new Map
     lengthMap: Map<string, number> = new Map
-    // registerKeybindings(keybindings: KeybindingRegistry): void {
-    //      [
-    //          {
-    //              command: SHOW_PREVIOUS.id,
-    //              context: this.keybindingContext.id,
-    //              keybinding: "alt+shift+down"
-    //          },
-    //          {
-    //              command: SHOW_NEXT.id,                 
-    //              context: this.keybindingContext.id,
-    //              keybinding: "alt+shift+up"
-    //          }
-    //      ].forEach(binding => {
-    //          keybindings.registerKeybinding(binding);
-    //      });
-    // }
+
     constructor(
         @inject(Workspace) protected readonly workspace: Workspace,
         @inject(FileSystem) protected readonly fileSystem: FileSystem,
@@ -57,7 +37,6 @@ export class SCChartsCommandContribution implements CommandContribution {
         @inject(OpenerService) protected readonly openerService: OpenerService,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager
-        // @inject(SCChartsKeybindingContext) protected readonly keybindingContext: SCChartsKeybindingContext
     ) {
     }
 
@@ -70,40 +49,26 @@ export class SCChartsCommandContribution implements CommandContribution {
             execute: (changes: WorkspaceEdit) =>
                 !!this.workspace.applyEdit && this.workspace.applyEdit(changes)
         });
-        commands.registerCommand(TESTCOMMAND, {
+        commands.registerCommand(COMPILER, {
             execute: () => {
-                var textWidget = new CompileWidget(this)
-                this.front.shell.addWidget(textWidget, {area: "bottom"})
-                this.front.shell.activateWidget(textWidget.id)
+                if (this.front.shell.getWidgets("bottom").find((value, index) => {
+                    return value.id == 'compiler-widget'
+                })) {
+                    this.front.shell.activateWidget('compiler-widget')
+                } else {
+                    var compileWidget = new CompileWidget(this)
+                    this.front.shell.addWidget(compileWidget, {area: "bottom"})
+                    this.front.shell.activateWidget(compileWidget.id)
+                }
+                this.front.shell
             }
         })
         navigationCommands.forEach(commandStruct => {
-
             commands.registerCommand(commandStruct.command, {
                 execute: () => {
                     this.executeShow(commandStruct)
                 }
             });
-        });
-        compilationCommands.forEach(commandStruct => {
-            commands.registerCommand(commandStruct.command, {
-                execute: () => {
-                    this.executeCompile(commandStruct)
-                }
-            })
-        });
-    }
-    createSubFiles(baseString : string, text : CodeContainer) {
-        this.message("Begin to write compilation results", "info")
-        var index = 0
-        text.files.forEach(text => {
-            var prefix = index.toString()
-            if (index < 10) {
-                prefix = "0" + prefix
-            }
-            prefix.concat("_")
-            this.fileSystem.createFile(baseString + prefix + text.key.replace(" ", "_").replace("/", ""), {content : text.value})
-            index++
         });
     }
     public message(message : string, type : string) {
@@ -139,7 +104,7 @@ export class SCChartsCommandContribution implements CommandContribution {
     }
 
 
-    public compile(command : string) : Promise<boolean> {
+    public compile(command : string){
         var commandStruct : CommandStruct;
         switch (command) {
             case Constants.netlist:
@@ -157,7 +122,7 @@ export class SCChartsCommandContribution implements CommandContribution {
                 break;
         }
         this.message("Compiling with " + command, "info")
-        return new Promise(() => this.executeCompile(commandStruct))
+        this.executeCompile(commandStruct)
     }
 
     executeShow(commandStruct: CommandStruct) {
@@ -198,7 +163,6 @@ export class SCChartsCommandContribution implements CommandContribution {
                 return false
             }
         }
-        console.log("Checking whether " + checkUri + " was already compiled")
         // abort if uri was not compiled first, doesn't work, since model.view is not deleted
         if (!this.isCompiled.get(checkUri)) {
             this.message("Aborting since " + checkUri + " was not compiled " + this.isCompiled.get(checkUri), "error")
@@ -218,7 +182,6 @@ export class SCChartsCommandContribution implements CommandContribution {
             // TODO error handling
             return false
         }
-        console.log("Current index = " + currentIndex)
         switch (commandStruct.command.id) {
             case SHOW_NEXT.id:
                 nextIndex = Math.min(currentIndex + 1, result.files.length - 1)
@@ -239,12 +202,23 @@ export class SCChartsCommandContribution implements CommandContribution {
                 this.message("No known command found", "error")
                 break;
         }
-        console.log("Next index = " + nextIndex)
         this.indexMap.set(checkUri, nextIndex)
         var textDocument = result.files[nextIndex]
-        this.front.shell
-        this.front.shell.addWidget(new TextWidget(textDocument.key, textDocument.value, uri), {area : "main"})
-        this.front.shell.activateWidget(uri)
+
+        if (this.front.shell.getWidgets("main").find((value, index) => {
+            if (value.id == uri) {
+                (value as TextWidget).updateContent(textDocument.groupId + ": " + textDocument.name + " " +
+                textDocument.snapshotIndex, textDocument.value)
+                return true
+            }
+            return false
+        })) {
+            this.front.shell.activateWidget(uri)
+        } else {
+            this.front.shell.addWidget(new TextWidget(textDocument.groupId + ": " + textDocument.name + " " +
+                textDocument.snapshotIndex, textDocument.value, uri), { area: "main" })
+            this.front.shell.activateWidget(uri)
+        }
     }
 
     executeCompile(commandStruct: CommandStruct) : boolean {
@@ -277,6 +251,7 @@ export class SCChartsCommandContribution implements CommandContribution {
                 this.resultMap.set(uri as string, text)
                 this.indexMap.set(uri as string, -1)
                 this.lengthMap.set(uri as string, text.files.length)
+                this.front.shell.activateWidget("compiler-widget")
                 return true
             });
             return false

@@ -11,15 +11,21 @@
     color: var(--theia-ui-font-color1);
 }
 
+#compiler-widget #compilation-panel {
+    float: right;
+    line-height: var(--theia-content-line-height);
+    font-size: var(--theia-ui-font-size1);
+}
+
 #compiler-widget #compilation-list {
-    position: absolute;
+    float: left;
     right: 24px;
     line-height: var(--theia-content-line-height);
     font-size: var(--theia-ui-font-size1);
     border-width: 1px;
     border-style: solid;
     border-color: var(--theia-border-color1);
-    background: var(--theia-layout-color2);
+    background: var(--theia-layout-color0);
     color: var(--theia-ui-font-color1);
 
     -webkit-appearance: none;
@@ -32,68 +38,18 @@
     padding-right: 15px;
 }
 
-
-#compiler-widget #buttonContainer {
-    position: sticky;
-    right: 24px;
-    top: 50px;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 3;
-}
-
-
-
-#compiler-widget #compile-Button {
-    margin-right: 121px;
-    margin-top: 1px;
-    width: 84px;
-    height: 25px;
-    background-color: var(--theia-layout-color1);
-    padding: 2px;
+#compiler-widget #compile-button {
+    float: left;
     box-sizing: border-box;
-    color: var(--theia-ui-icon-font-color);
-    text-align: center;
-    font-size: var(--theia-ui-font-size0);
-    text-transform: uppercase;
+    color: var(--theia-ui-button-font-color);
+    background-color: var(--theia-ui-button-color);
+    block-size: var(--theia-content-line-height);
+    min-width: var(--theia-content-line-height);
+    line-height: var(--theia-content-line-height);
+    border: none;
+    border-radius: 0;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 1px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px -2px rgba(0, 0, 0, 0.12);
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
-
-#compiler-widget #show-Button.up {
-    position: sticky;
-    left: 24px;
-    top: 50px;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 3;
-    margin-right: 121px;
-    margin-top: 60px;
-    width: 20px;
-    height: 20px;
-    background-color: var(--theia-layout-color1);
-    padding: 2px;
-    box-sizing: border-box;
-    color: var(--theia-ui-icon-font-color);
-    text-align: center;
-    font-size: var(--theia-ui-font-size0);
-    text-transform: uppercase;
-}
-
-#compiler-widget #show-Button.down {
-    position: sticky;
-    left: 24px;
-    top: 50px;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 3;
-    margin-right: 121px;
-    margin-top: 60px;
-    width: 20px;
-    height: 20px;
-    background-color: blueviolet;
-    padding: 2px;
-    box-sizing: border-box;
-    color: var(--theia-ui-icon-font-color);
-    text-align: center;
-    font-size: var(--theia-ui-font-size0);
-    text-transform: uppercase;
-  }

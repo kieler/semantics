@@ -19,11 +19,13 @@ export class CompileWidget extends ReactWidget {
             compilationElements.push(<option key="NONE" value="NONE">NONE</option>);
         }
         return <React.Fragment>
-            {this.renderCompileButton()}
-            <select id='compilation-list'>
-                {compilationElements}
-            </select>
-            {this.renderShowButton()}
+            <div id="compilation-panel">
+                {this.renderCompileButton()}
+                <select id='compilation-list'>
+                    {compilationElements}
+                </select>
+            </div>
+            {this.renderShowButtons()}
         </React.Fragment>
     
     }
@@ -40,11 +42,11 @@ export class CompileWidget extends ReactWidget {
 
     onActivateRequest(msg: Message): void {
         super.onActivateRequest(msg);
-        this.node.focus()
         this.update()
+        this.node.focus()
     }
 
-    renderShowButton(): React.ReactNode {
+    renderShowButtons(): React.ReactNode {
 
         const showButtons: React.ReactNode[] = [];
         var editor = this.commands.editorManager.currentEditor
@@ -62,19 +64,9 @@ export class CompileWidget extends ReactWidget {
         snapshots.files.forEach((textDocument, index) => {
 
             showButtons.push(
-                <div id={"showButton" + (index < 10? "0" + index : index)} className='show-button.up show-button'
-                title = {textDocument.key} 
+                <div key={index} id={"showButton" + (index < 10? "0" + index : index)} className='show-button'
+                title = {textDocument.name} 
                 onClick={event => {
-                    console.log(("showButton" + index).toString())
-                    var classList = (document.getElementById(("showButton" + (index < 10? "0" + index : index)).toString()) as HTMLDivElement).classList
-                    if (classList.contains("show-button.up")) {
-                        classList.remove("show-button.up")
-                        classList.add("show-button.down")
-                    } else {
-                        classList.remove("show-button.down")
-                        classList.add("show-button.up")
-                    }
-
                     if (!uri) {
                         return
                     }
@@ -88,23 +80,17 @@ export class CompileWidget extends ReactWidget {
         </div>
     }
 
-    onUpdateRequest(msg : Message) {
-        this.commands.message("Updating", "info")
-        super.onUpdateRequest(msg)
+    renderCompileButton() : React.ReactNode {
+        return <div id='compile-button'
+            onClick={event => {
+                var selection = document.getElementById("compilation-list") as HTMLSelectElement;
+                this.commands.compile(Constants.compilations[selection.selectedIndex].id)
+            }}>
+            <div className='fa fa-play-circle'> </div>
+        </div>
     }
 
-    renderCompileButton() : React.ReactNode {
-        return <div id='buttonContainer' className='buttonContainer flexcontainer'> 
-            <div id='compileButton' className='compile-button showButton'
-                onClick={event => {
-                    var selection = document.getElementById("compilation-list") as HTMLSelectElement;
-                    this.commands.compile(Constants.compilations[selection.selectedIndex].id).then((bool) => {
-                        console.log("returned with " + bool)
-                        this.update()
-                    })
-                }}>
-                <div className='fa fa-play-circle'></div>
-            </div >
-        </div> 
+    onAfterShow() {
+        this.update()
     }
 }

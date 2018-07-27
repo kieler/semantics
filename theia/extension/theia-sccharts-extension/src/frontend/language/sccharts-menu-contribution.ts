@@ -2,6 +2,7 @@ import { Command, MenuContribution, MenuModelRegistry } from '@theia/core/lib/co
 import { injectable } from 'inversify';
 import { EDITOR_CONTEXT_MENU } from '@theia/editor/lib/browser';
 import { Constants } from '../../common/constants';
+import { CommonMenus } from '@theia/core/lib/browser';
 
 
 /**
@@ -55,6 +56,10 @@ export const SHOW_LAST: Command = {
 export const SHOW_THIS: Command = {
     id: 'show_this',
     label: 'Show this'
+}
+export const COMPILER: Command = {
+    id: 'compiler:toggle',
+    label: 'Compiler'
 }
 
 export const COMPILE: string = 'sccharts/compile'
@@ -161,6 +166,10 @@ export class SCChartsMenuContribution implements MenuContribution {
             label: "show first"
         });
 
+        menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
+            commandId: COMPILER.id
+        });
+
 
         menus.registerSubmenu(CompileMenu.COMPILATION, 'Compile');
         menus.registerMenuAction(CompileMenu.COMPILATION_GROUP, {
@@ -182,11 +191,16 @@ export interface CodeContainer {
     files: TextDocument[]
 }
 
+/**
+ * (name, snapshotId) should be unique. GroupId for bundling in phases. Value holds text
+ */
 export class TextDocument {
-    key: string;
+    groupId: string
+    name: string;
+    snapshotIndex: number;
     value: string
-    constructor(key: string, value: string) {
-        this.key = key,
-            this.value = value
+    constructor(groupId: string, name: string, snapshotIndex : number, value: string) {
+        this.name = name,
+        this.value = value
     }
 }

@@ -19,7 +19,7 @@ export class TextWidget extends BaseWidget {
         this.id = widgetId
         this.addClass('text_widget') // class for index.css
         this.node.innerHTML = "<div>" + text + "</div>"
-        this.setHidden(false)
+       
         this.node.focus()
     }
 
@@ -40,6 +40,11 @@ export class TextWidget extends BaseWidget {
             }));
         })();
         this.node.focus()
+    }
+
+    public updateContent(titleLabel : string, text : string) {
+        this.title.label = titleLabel
+        this.node.innerHTML = "<div>" + text + "</div>"
     }
 
     protected getScrollContainer(): MaybePromise<HTMLElement> {

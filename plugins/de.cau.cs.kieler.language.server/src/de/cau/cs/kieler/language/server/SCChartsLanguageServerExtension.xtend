@@ -127,15 +127,13 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
             
             return cc
         } else if (impl instanceof SCChartsImpl) {
-            var textDocument = transformToTextDocument(impl as EObject, processorName)
+            var textDocument = transformToTextDocument(impl as EObject, processorName, 0)
             if (textDocument !== null) {
-                textDocument.key = textDocument.key
                 this.resultMap.get(uri).add(transformToHtmlText(textDocument as TextDocument))
             }
-            var count = 0
+            var count = 1
             for (snapshot : snapshots) {
-                textDocument = transformToTextDocument(snapshot as EObject, processorName + count)
-                textDocument.key = textDocument.key
+                textDocument = transformToTextDocument(snapshot as EObject, processorName, count)
                 this.resultMap.get(uri).add(transformToHtmlText(textDocument as TextDocument))
                 count++
             }
@@ -143,8 +141,8 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         } else if (impl instanceof SCGraphsImpl) {
             try {                
 //                (impl as SCGraphsImpl).
-                var textDocument = transformToTextDocument((impl as SCGraphs).scgs.get(0), processorName)
-                println(textDocument.key + ": " + textDocument.value)
+                var textDocument = transformToTextDocument((impl as SCGraphs).scgs.get(0), processorName, 0)
+                println(textDocument.name + ": " + textDocument.value)
                 return null
             } catch (Exception e) {
 //                e.printStackTrace TODO
@@ -161,7 +159,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     def convert(CodeContainer cc) {
         val mcc = new CompilationResults();
         mcc.files = new LinkedList();
-        cc.files.forEach[key, value | mcc.files.add(new TextDocument(key, value))]
+        cc.files.forEach[name, value, index | mcc.files.add(new TextDocument("Generated Code", name, index, value))]
         return mcc
     }   
     
@@ -181,7 +179,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         return context
     }
     
-    def TextDocument transformToTextDocument(EObject model, String processorName) {
+    def TextDocument transformToTextDocument(EObject model, String processorName, int snapshotIndex) {
         var String serialized = null
         if (ResourceExtension.getResourceExtension(model) !== null) { // TODO scg is not transformed, since the model has no resource extension
             val outputStream = new ByteArrayOutputStream
@@ -195,7 +193,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 res.save(outputStream, emptyMap)
                 serialized = outputStream.toString
             }
-            return new TextDocument(processorName, serialized)
+            return new TextDocument(ext, processorName, snapshotIndex, serialized)
         } else {
             var test = ResourceExtension.getResourceExtension(model)
             println(test)
@@ -206,6 +204,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     def TextDocument transformToHtmlText(TextDocument document) {
         document.value = document.value.replace("\n", "<br>")
         document.value = document.value.replace("  ", "&emsp;")
+        document.value = document.value.replace("\t", "&emsp;")
         return document
     }    
 }

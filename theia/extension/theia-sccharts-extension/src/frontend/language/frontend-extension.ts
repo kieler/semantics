@@ -81,7 +81,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(WidgetFactory).toDynamicValue(context => ({
         id: "compiler-widget",
         createWidget: () => context.container.get<TextWidget>(TextWidget)
-}));
+    }));
 
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
 

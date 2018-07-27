@@ -18,11 +18,15 @@ package de.cau.cs.kieler.language.server
  */
 class TextDocument {
 
-    public String key
+    public String groupId
+    public String name
+    public int snapshotIndex
     public String value
     
-    new (String key, String value) {
-        this.key = key
+    new (String groupId, String name, int snapshotIndex, String value) {
+        this.groupId = groupId
+        this.name = name
+        this.snapshotIndex = snapshotIndex
         this.value = value
     }
 }
