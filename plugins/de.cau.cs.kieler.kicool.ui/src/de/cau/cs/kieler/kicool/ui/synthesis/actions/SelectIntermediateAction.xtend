@@ -57,5 +57,5 @@ class SelectIntermediateAction implements IAction {
         
         ActionResult.createResult(false).dontAnimateLayout()
     }
-    
+        
 }

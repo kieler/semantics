@@ -177,6 +177,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.DeLoopRegions">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -200,6 +203,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.lustre.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.interactiveScheduling.kico">
         </TransformationSystem>
      </extension>
 

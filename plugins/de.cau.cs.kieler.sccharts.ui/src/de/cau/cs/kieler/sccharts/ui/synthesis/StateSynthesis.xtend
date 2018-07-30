@@ -28,6 +28,7 @@ import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
+import de.cau.cs.kieler.core.model.Pair
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
@@ -47,6 +48,26 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
+import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import java.util.Map
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KCustomRendering
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -59,7 +80,13 @@ import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 @ViewSynthesisShared
 class StateSynthesis extends SubSynthesis<State, KNode> {
 
+    extension KRenderingFactory = KRenderingFactory.eINSTANCE
+    
     @Inject extension KNodeExtensionsReplacement
+    @Inject extension KEdgeExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension KContainerRenderingExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension PragmaExtensions
     @Inject extension SCChartsStateExtensions
@@ -93,7 +120,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val regionDependencies = (compilationContext !== null) && (compilationContext.result !== null) &&
             compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES) !== null &&
             compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES).object == state.SCCharts
-        if (regionDependencies) {
+        if (regionDependencies && !compilationContext.result.getProperty(StateDependencies.STATE_DEPENDENCIES)) {
             configureLayoutRegionDependencies(node)
         } else {
             configureLayout(node)
@@ -246,6 +273,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             !state.declarations.empty || state.isReferencedState;
     }
     
+    private val dependencyEdges = <Pair<EObject, EObject>, KEdge> newHashMap
+    
     /** Draw all region dependencies that are present in this state. */
     private def drawRegionDependencies(State state) {
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
@@ -257,24 +286,90 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Fetch the least common ancestor fork (lcaf) data from the compilation environment. 
         val lcafMap = result.getProperty(RegionDependencies.REGION_LCAF_MAP) 
         val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(DataDependency).toList
+        if (dependencies.empty) {
+            val simpleStates = state.regions.filter(ControlflowRegion).map[ states ].flatten.filter[ !isHierarchical ].toList
+            for (simpleState : simpleStates) {
+                dependencies += simpleState.eAllContents.filter(DataDependency).toList
+            }
+        }
         
+        dependencyEdges.clear
         for (dependency : dependencies.filter(DataDependency)) {
-            dependency.synthesizeDataDependency(lcafMap)
+            dependency.synthesizeDataDependency(lcafMap, state)
         }
     }
     
     /** Synthesize one dependency using the least common ancestor fork (lcaf) data. */
-    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap) {
+    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap, State state) {
         // Don't show confluent dependencies.
         if (dependency.type == DataDependencyType.WRITE_WRITE && dependency.confluent) return;
         
+        val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
+        
         // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
-        val cfrs = regionLCAFMap.levelRegions(dependency)
+        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
         val sourceNode = cfrs.first.node
         val targetNode = cfrs.second.node
 
-        dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+
+        println(dependency.eContainer + " " + dependency.target)
+        
+        if (regionDependency) {
+            dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+        } else {
+            val source = cfrs.first.getEdgeableParent
+            val target = cfrs.second.getEdgeableParent
+            val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
+            edge.source = source.node
+            edge.target = target.node
+            edge.associateWith(dependency)
+        }
     }
     
     
+    
+    private def KEdge createLooseDependencyEdge(Map<Pair<EObject, EObject>, KEdge> edges, KNode attachNode,
+        EObject source, EObject target, DataDependency dependency, boolean ignoreFirstCollapsibleParent) {
+        val sourceTargetPair = new Pair(source, target);
+        val targetSourcePair = new Pair(target, source);
+        var opposite = false;
+        var KEdge edge;
+        // If the is a mutual dependency use the already crested edge
+        if (edges.containsKey(sourceTargetPair)) {
+            edge = edges.get(sourceTargetPair);
+        } else if (edges.containsKey(targetSourcePair)) {
+            edge = edges.get(targetSourcePair);
+            opposite = true;
+        } else {
+            // Create edge
+            dependency.annotations += createTagAnnotation("nolayout")
+            edge = dependency.createDependencyEdge(source.node, target.node)
+            edges.put(sourceTargetPair, edge);
+            edge.setProperty(CoreOptions.NO_LAYOUT, true);
+            
+            edge.getContainer.addAction(Trigger::SINGLECLICK, ToggleDependencyAction.ID)
+            edge.setProperty(ToggleDependencyAction.DATA_DEPENDENCY, dependency)
+        }
+        edge
+    }    
+    
+    
+   
+    protected def EObject getEdgeableParent(EObject eObject) {
+        if (eObject instanceof ControlflowRegion) 
+            return eObject as ControlflowRegion
+        if (eObject instanceof State) 
+            return eObject as State
+//        if (eObject instanceof Transition) 
+//            return eObject as Transition
+        else if (eObject.eContainer === null) 
+            return null
+        else 
+            return eObject.eContainer.getEdgeableParent
+    }            
+
+    static def getContainer(KEdge edge) {
+        edge.getData(KContainerRendering) as KContainerRendering
+    }
+        
 }
