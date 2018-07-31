@@ -303,6 +303,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap, State state) {
         // Don't show confluent dependencies.
         if (dependency.type == DataDependencyType.WRITE_WRITE && dependency.confluent) return;
+        if (!dependency.concurrent) return;
         
         val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
         

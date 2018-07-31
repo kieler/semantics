@@ -102,11 +102,25 @@ class ToggleDependencyAction implements IAction {
                     }
                 } else {
                     val autoObject = source.getOrCreateAutoScheduleObject(rootModel)
-                    val newSSchedule = autoObject.createScheduleReference => [ priority = 1 ]
-                    val newTSchedule = autoObject.createScheduleReference => [ priority = 2 ]
+                    var newPriority = 1
                     
-                    source.schedule += newSSchedule
-                    target.schedule += newTSchedule
+                    val allSOReferences = autoObject.eContainer.eContainer.eAllContents.filter(ScheduleObjectReference).
+                        filter[ it.valuedObject == autoObject ].toList
+                    for (r : allSOReferences) {
+                        if (r.priority > newPriority) newPriority = r.priority + 1
+                    }
+                    
+                    if (sSchedule === null && source.schedule.forall[ valuedObject != autoObject ]) {
+                        val newSSchedule = autoObject.createScheduleReference
+                        newSSchedule.priority = newPriority++
+                        source.schedule += newSSchedule
+                    }
+                    if (tSchedule === null && target.schedule.forall[ valuedObject != autoObject ]) {
+                        val newTSchedule = autoObject.createScheduleReference
+                        newTSchedule.priority = newPriority++
+                        target.schedule += newTSchedule
+                    }
+                    
                 }
                 
                 update = true                
@@ -148,10 +162,10 @@ class ToggleDependencyAction implements IAction {
     private def ValuedObject getOrCreateAutoScheduleObject(EObject source, EObject rootModel) {
         if (source.eContainer == rootModel) {
             if (source instanceof DeclarationScope) {
-//                val sdo = source.declarations.filter(ScheduleDeclaration).map[ valuedObjects ].flatten.toList      
-//                if (sdo.exists[ it.name == AUTO_SCHEDULE_OBJECT_NAME ]) return sdo.filter[ it.name == AUTO_SCHEDULE_OBJECT_NAME ].head
+                val sdo = source.declarations.filter(ScheduleDeclaration).map[ valuedObjects ].flatten.toList      
+                if (sdo.exists[ it.name == AUTO_SCHEDULE_OBJECT_NAME ]) return sdo.filter[ it.name == AUTO_SCHEDULE_OBJECT_NAME ].head
                 
-                val so = createValuedObject(AUTO_SCHEDULE_OBJECT_NAME + autoCounter++)
+                val so = createValuedObject(AUTO_SCHEDULE_OBJECT_NAME)
                 source.declarations += createScheduleDeclaration => [
                     it.valuedObjects += so
                 ]     
@@ -169,17 +183,21 @@ class ToggleDependencyAction implements IAction {
     }
     
     private def updateDiagram(ActionContext context, EObject model, CompilationContext compilationContext) {
-        val diagram = LightDiagramServices.translateModel(
-                        model,
-                        context.viewContext,
-                        new MapPropertyHolder => [ 
-                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis") 
-                            setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
-                        ]
-                    );        
-        val root = (context.KNode.root as KNode)
-        root.children.clear
-        root.children += diagram.children    
+//        val diagram = LightDiagramServices.translateModel(
+//                        model,
+//                        context.viewContext,
+//                        new MapPropertyHolder => [ 
+//                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis") 
+//                            setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
+//                        ]
+//                    );
+//          
+//        val root = (context.KNode.root as KNode)
+//        root.children.clear
+//        root.children += diagram.children
+
+        context.viewContext.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
+        context.viewContext.update(model)    
     }
     
     private def ScheduleObjectReference getSameScheduleObject(Schedulable source, Schedulable target) {
