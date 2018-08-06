@@ -35,10 +35,10 @@
         "reflect-metadata": "^0.1.12"
     },
     "scripts": {
-        "prepare": "theia build --mode development",
-        "start": "theia start --mode development --root-dir=../workspace",
+        "prepare": "theia build",
+        "start": "theia start --root-dir=../workspace",
         "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5007 --port=3000 --loglevel=debug",
-        "watch": "theia build --mode development --watch"
+        "watch": "theia build --watch"
     },
     "theia": {
         "target": "browser"

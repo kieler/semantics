@@ -9,12 +9,12 @@ files:
   - "lib/**/*"
   - "node_modules/**/*"
   - "package.json"
-  # - from: "."
-  #   to: ../../
-  #   filter: ["package.json"]
-  # - from: "."
-  #   to: ../../../
-  #   filter: ["package.json"]
+  - from: "."
+    to: ../../
+    filter: ["package.json"]
+  - from: "."
+    to: ../../../
+    filter: ["package.json"]
 win:
   # copy ls
   extraResources:
@@ -27,7 +27,7 @@ win:
       to: "app/kieler/kieler.ini"
   
   target:
-    - portable
+    - nsis
   icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
 mac:
   # copy ls
