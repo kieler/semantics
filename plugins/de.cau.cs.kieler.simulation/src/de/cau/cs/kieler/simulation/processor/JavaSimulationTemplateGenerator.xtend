@@ -88,17 +88,11 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                     try {
                         String line = stdInReader.readLine();
                         JSONObject json = new JSONObject(line);
-                        JSONArray jsonArray;
                         
-                        «FOR v : store.variables.keySet»
+                        «FOR v : store.orderedVariableNames»
                             // Receive «v»
-                            if(json.has("«v»")) {
-                                «IF store.variables.get(v).head.isArray»
-«««                                jsonArray = json.getJSONArray("«v»");
-«««                                «store.parseArray(v, "jsonArray")»
-                                «ELSE»
+                            if (json.has("«v»")) {
                                 «store.parse(v, "json")»
-                                «ENDIF»
                             }
                         «ENDFOR»
                     } catch (IOException e) {
@@ -110,17 +104,10 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                 
                 private static void sendVariables() {
                     JSONObject json = new JSONObject();
-                    JSONArray jsonArray;
                     
-                    «FOR v : store.variables.keySet»
+                    «FOR v : store.orderedVariableNames»
                         // Send «v»
-                        «IF store.variables.get(v).head.isArray»
-«««                        jsonArray = new JSONArray();
-«««                        «store.serializeArray(v)»
-«««                        json.put("«v»", jsonArray);
-                        «ELSE»
-                        json.put("«v»", «store.serialize(v)»);
-                        «ENDIF»
+                        «store.serialize(v, "json")»
                     «ENDFOR»
                     
                     System.out.println(json.toString());
@@ -140,8 +127,25 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
         return cc
     }
     
+    def serialize(VariableStore store, String varName, String json) {
+        if (store.variables.get(varName).head.array) {
+            return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}.«varName»));'''
+        } else {
+            return '''«json».put("«varName»", ${tickdata_name}.«varName»);'''
+        }
+    }
+    
     def parse(VariableStore store, String varName, String json) {
-        return '''${tickdata_name}.«varName» = «json».«store.jsonTypeGetter(varName)»("varName");'''
+        if (store.variables.get(varName).head.array) {
+            return '''
+                JSONArray _array = «json».getJSONArray("«varName»");
+                for (int i = 0; i < _array.length(); i++) {
+                    «store.parseArray(varName, 1, store.variables.get(varName).head.dimensions.size, "_array")»
+                }
+            '''
+        } else {
+            return '''${tickdata_name}.«varName» = «json».«store.jsonTypeGetter(varName)»("«varName»");'''
+        }
     }
     
     def jsonTypeGetter(VariableStore store, String varName) {
@@ -150,6 +154,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
             case BOOL: "getBoolean"
             case DOUBLE,
             case FLOAT: "getDouble"
+            case UNSIGNED,
             case INT: "getInt"
             case STRING: "getString"
             default: {
@@ -159,18 +164,21 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
         }
     }
     
-    def parseArray(VariableStore store, String varName, String json) {
-        // TODO
-        return "//${tickdata_name}." + varName + ";"
-    }
-    
-    def serializeArray(VariableStore store, String varName) {
-        // TODO
-        return "//${tickdata_name}." + varName + ";"
-    }
-    
-    def serialize(VariableStore store, String varName) {
-        return "${tickdata_name}." + varName
+    def String parseArray(VariableStore store, String varName, int idx, int dimensions, String json) {
+        if (idx == dimensions) {
+            if (idx == 1) {
+                return '''${tickdata_name}.«varName»[i] = «json».«store.jsonTypeGetter(varName)»(i);'''
+            } else {
+                return '''${tickdata_name}.«varName»[i]«(1..<dimensions).map["[i"+it+"]"].join» = «json».«store.jsonTypeGetter(varName)»(i«idx - 1»);'''
+            }
+        } else {
+            return '''
+                JSONArray _array«idx» = «json».getJSONArray(i«if (idx > 1) idx - 1 else ""»);
+                for (int i«idx» = 0; i«idx» < _array«idx».length(); i«idx»++) {
+                    «store.parseArray(varName, idx+1, dimensions, "_array" + idx)»
+                }
+            '''
+        }
     }
     
 }

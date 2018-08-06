@@ -104,16 +104,11 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.variables.keySet»
+                    «FOR v : store.orderedVariableNames»
                         // Receive «v»
                         item = cJSON_GetObjectItemCaseSensitive(root, "«v»");
                         if(item != NULL) {
-                            «IF store.variables.get(v).head.isArray»
-«««                            jsonArray = json.getJSONArray("«v»");
-                            «store.parseArray(v, "jsonArray")»
-                            «ELSE»
                             «store.parse(v, "item")»
-                            «ENDIF»
                         }
                     «ENDFOR» 
                 }
@@ -123,14 +118,13 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             
             void sendVariables() {
                 cJSON* root = cJSON_CreateObject();
+                «IF store.variables.values.exists[array]»
+                    cJSON* array;
+                «ENDIF»
                 
-                «FOR v : store.variables.keySet»
+                «FOR v : store.orderedVariableNames»
                     // Send «v»
-                    «IF store.variables.get(v).head.isArray»
-«««                    «store.serializeArray(v)»
-                    «ELSE»
-                    cJSON_AddItemToObject(root, "«v»", «store.serialize(v)»);
-                    «ENDIF»
+                    «store.serialize(v, "root", "array")»
                 «ENDFOR»
             
                 // Get JSON object as string
@@ -161,13 +155,75 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         return environment.getProperty(STRUCT_ACCESS)?:STRUCT_ACCESS.^default
     }
     
+    def serialize(VariableStore store, String varName, String json, String array) {
+        if (store.variables.get(varName).head.array) {
+            return '''
+                «array» = cJSON_CreateArray();
+                «store.serializeArray(varName, 0, array)»
+                cJSON_AddItemToObject(«json», "«varName»", «array»);
+            '''
+        } else {
+            val type = store.variables.get(varName).head.type
+            val accessor = access + varName
+            val creator = switch(type) {
+                case BOOL: '''cJSON_CreateBool(${tickdata_name}«accessor»)'''
+                case UNSIGNED,
+                case INT,
+                case DOUBLE,
+                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«accessor»)'''
+                case STRING: '''cJSON_CreateString((${tickdata_name}«accessor» != NULL) ? ${tickdata_name}«accessor» : "")'''
+                default: {
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                    ""
+                }
+            }
+            return '''cJSON_AddItemToObject(«json», "«varName»", «creator»);'''
+        }
+    }
+    
+    def String serializeArray(VariableStore store, String varName, int idx, String json) {
+        val info = store.variables.get(varName).head
+        val dimensions = info.dimensions
+        val creator = if (idx + 1 >= dimensions.size) {
+            val accessor = access + varName + (0..<dimensions.size).map["[i"+it+"]"].join
+            switch(info.type) {
+                case BOOL: '''cJSON_CreateBool(${tickdata_name}«accessor»)'''
+                case UNSIGNED,
+                case INT,
+                case DOUBLE,
+                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«accessor»)'''
+                case STRING: '''cJSON_CreateString((${tickdata_name}«accessor» != NULL) ? ${tickdata_name}«accessor» : "")'''
+                default: {
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                    ""
+                }
+            }
+        } else {
+            '''cJSON_CreateArray()'''
+        }
+        return '''
+            for (int i«idx» = 0; i«idx» < «dimensions.get(idx)»; i«idx»++) {
+                cJSON *item«idx» = «creator»;
+                «IF idx + 1 < dimensions.size»
+                «store.serializeArray(varName, idx + 1, "item" + idx)»
+                «ENDIF»
+                cJSON_AddItemToArray(«json», item«idx»);
+            }
+        '''
+    }
+    
     def parse(VariableStore store, String varName, String json) {
-        return "${tickdata_name}" + access + varName + " = " + json + store.jsonTypeGetter(varName) + ";"
+        if (store.variables.get(varName).head.array) {
+            return store.parseArray(varName, 0, store.variables.get(varName).head.dimensions.size, json)
+        } else {
+            return '''${tickdata_name}«access»«varName» = «json»«store.jsonTypeGetter(varName)»;'''
+        }
     }
     
     def jsonTypeGetter(VariableStore store, String varName) {
         val type = store.variables.get(varName).head.inferType
         return switch(type) {
+            case UNSIGNED,
             case BOOL,
             case INT: "->valueint"
             case DOUBLE,
@@ -179,46 +235,17 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             }
         }
     }
-    
-    def parseArray(VariableStore store, String varName, String json) {
-        // TODO
-        return "//${tickdata_name}." + varName + ";"
-        /*
-            <#if indices?has_content>
-            cJSON *array_values = cJSON_GetObjectItemCaseSensitive(value_item, "values");
-            int oneDimIndex = 0;
-            <#assign index = 0>
-            <#list indices as s>
-            for(int i${index} = 0; i${index} < ${s}; i${index}++) {
-            <#assign index = index+1>
-            </#list>
-                cJSON *array_value = cJSON_GetArrayItem(array_values, oneDimIndex);
-                <@array_elem indices /> = <@value_of_item "array_value" />
-                oneDimIndex++;
-            <#list indices as s>
-            }
-            </#list>
-        */
-    }
-    
-    def serializeArray(VariableStore store, String varName) {
-        // TODO
-        return "//${tickdata_name}." + varName + ";"
-    }
-    
-    def serialize(VariableStore store, String varName) {
-        val type = store.variables.get(varName).head.type
-        return switch(type) {
-            case BOOL: "cJSON_CreateBool(${tickdata_name}" + access + varName + ")"
-            case INT,
-            case DOUBLE,
-            case FLOAT: "cJSON_CreateNumber(${tickdata_name}" + access + varName + ")"
-            case STRING: "cJSON_CreateString((${tickdata_name}" + access + varName + " != NULL) ? ${tickdata_name}" + access + varName + " : \"\")"
-            default: {
-                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
-                ""
-            }
+
+    def String parseArray(VariableStore store, String varName, int idx, int dimensions, String json) {
+        if (idx == dimensions) {
+            return '''${tickdata_name}«access»«varName»«(0..<dimensions).map["[i"+it+"]"].join» = item«idx - 1»«store.jsonTypeGetter(varName)»;'''
+        } else {
+            return '''
+                for (int i«idx» = 0; i«idx» < cJSON_GetArraySize(«json»); i«idx»++) {
+                    cJSON *item«idx» = cJSON_GetArrayItem(«json», i«idx»);
+                    «store.parseArray(varName, idx + 1, dimensions, "item" + idx)»
+                }
+            '''
         }
     }
-    
 }
