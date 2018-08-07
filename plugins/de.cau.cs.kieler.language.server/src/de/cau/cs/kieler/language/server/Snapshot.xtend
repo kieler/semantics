@@ -16,17 +16,15 @@ package de.cau.cs.kieler.language.server
  * @author sdo
  * 
  */
-class TextDocument {
+class Snapshot {
 
     public String groupId
     public String name
     public int snapshotIndex
-    public String value
     
-    new (String groupId, String name, int snapshotIndex, String value) {
+    new (String groupId, String name, int snapshotIndex) {
         this.groupId = groupId
         this.name = name
         this.snapshotIndex = snapshotIndex
-        this.value = value
     }
 }

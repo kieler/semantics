@@ -38,6 +38,7 @@ export class CompileWidget extends ReactWidget {
         this.title.iconClass = 'fa fa-play-circle';
         this.title.closable = true
         this.addClass('compiler-widget') // class for index.css
+        this.node.focus()
     }
 
     onActivateRequest(msg: Message): void {

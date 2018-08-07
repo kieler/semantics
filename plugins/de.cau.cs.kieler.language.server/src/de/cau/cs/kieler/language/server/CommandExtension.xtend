@@ -25,4 +25,7 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 interface CommandExtension {
     @JsonRequest('compile')
     def CompletableFuture<Object> compile(ExecuteCommandParams params);
+    
+    @JsonRequest('show')
+    def CompletableFuture<Object> show(String uri, int index)
 }

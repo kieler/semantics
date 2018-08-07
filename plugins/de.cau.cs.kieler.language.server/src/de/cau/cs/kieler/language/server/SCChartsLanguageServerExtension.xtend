@@ -18,11 +18,8 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.sccharts.impl.SCChartsImpl
-import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.impl.SCGraphsImpl
-import java.io.ByteArrayOutputStream
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
@@ -38,8 +35,10 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
-import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
+import java.io.ByteArrayOutputStream
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.IOffscreenRenderer
 
 /**
  * @author sdo
@@ -47,19 +46,15 @@ import org.eclipse.xtext.resource.XtextResourceSet
  */
 class SCChartsLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
-    @Inject
-    IResourceServiceProvider.Registry xtextRegistry;
-
     protected static val LOG = Logger.getLogger(SCChartsLanguageServerExtension)
-    
-    protected List<EObject> eObjects = new LinkedList
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
     
     @Inject
     Injector injector
     
-    protected Map<String, List<TextDocument>> resultMap = new HashMap<String, List<TextDocument>>
+    protected Map<String, List<Snapshot>> snapshotMap = new HashMap<String, List<Snapshot>>
+    protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
     
     CommandExtension _client
 
@@ -86,7 +81,8 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         val originalUri = (params.arguments.get(0) as JsonPrimitive).asString
         var string = originalUri
         
-        this.resultMap.put(originalUri, new LinkedList)
+        this.snapshotMap.put(originalUri, new LinkedList)
+        this.objectMap.put(originalUri, new LinkedList)
         
         var compilationSystemId = (params.arguments.get(1) as JsonPrimitive).asString
         if (string.startsWith("file://")) {
@@ -99,70 +95,41 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         
         var eobject = resource.getContents().head
         var context = compile(eobject, compilationSystemId)
-        
-        val mymodel = new CompilationResults
         for (iResult : context.processorInstancesSequence) {
-            var convertedImpl = convertImpl(iResult.environment.model, iResult.environment.getProperty(Environment.SNAPSHOTS), originalUri, iResult.name)
-            if (convertedImpl !== null) {
-                var tempDocuments = convertedImpl.files
-                if (tempDocuments !== null) {
-                    for (document : tempDocuments) {
-                        if (document !== null) {
-                            mymodel.files.add(transformToHtmlText(document))
-                        }
-                    }
-                }
-            }
+            convertImpl(iResult.environment.model, iResult.environment.getProperty(Environment.SNAPSHOTS), originalUri, iResult.name)
         }
         return requestManager.runRead[ cancelIndicator |
-            new CompilationResults(this.resultMap.get(originalUri))
+            new CompilationResults(this.snapshotMap.get(originalUri))
         ]
     }
     
     def convertImpl(Object impl, List<Object> snapshots, String uri, String processorName) {
         if (impl instanceof CodeContainer) {
-            var cc = convert(impl as CodeContainer)
-            
-            this.resultMap.get(uri).addAll(cc.files)
-            
-            return cc
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("code", "generated", 0))
         } else if (impl instanceof SCChartsImpl) {
-            var textDocument = transformToTextDocument(impl as EObject, processorName, 0)
-            if (textDocument !== null) {
-                this.resultMap.get(uri).add(transformToHtmlText(textDocument as TextDocument))
-            }
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("sctx", processorName, 0))
             var count = 1
             for (snapshot : snapshots) {
-                textDocument = transformToTextDocument(snapshot as EObject, processorName, count)
-                this.resultMap.get(uri).add(transformToHtmlText(textDocument as TextDocument))
+                this.objectMap.get(uri).add(snapshot as EObject)
+                this.snapshotMap.get(uri).add(new Snapshot("sctx", processorName, count))
                 count++
             }
-            return null
         } else if (impl instanceof SCGraphsImpl) {
-            try {                
-//                (impl as SCGraphsImpl).
-                var textDocument = transformToTextDocument((impl as SCGraphs).scgs.get(0), processorName, 0)
-                println(textDocument.name + ": " + textDocument.value)
-                return null
-            } catch (Exception e) {
-//                e.printStackTrace TODO
-                return null
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("scg", processorName, 0))
+            var count = 1
+            for (snapshot : snapshots) {
+                this.objectMap.get(uri).add(snapshot as EObject)
+                this.snapshotMap.get(uri).add(new Snapshot("scg", processorName, count))
+                count++
             }
-                
         } else {
             println("Got something different than an EObject")
-            return null
         }
         
     }
-    
-    def convert(CodeContainer cc) {
-        val mcc = new CompilationResults();
-        mcc.files = new LinkedList();
-        cc.files.forEach[name, value, index | mcc.files.add(new TextDocument("Generated Code", name, index, value))]
-        return mcc
-    }   
-    
     
     /**
      * @return the correct XtextResourceSet for the given uri based in its file extension.
@@ -179,32 +146,13 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         return context
     }
     
-    def TextDocument transformToTextDocument(EObject model, String processorName, int snapshotIndex) {
-        var String serialized = null
-        if (ResourceExtension.getResourceExtension(model) !== null) { // TODO scg is not transformed, since the model has no resource extension
-            val outputStream = new ByteArrayOutputStream
-            val ext = ResourceExtension.getResourceExtension(model).fileExtension
-            val uri = URI.createURI(#["inmemory:/", model.hashCode, ".", ext].join)
-            val provider = xtextRegistry.getResourceServiceProvider(uri)
-            val rset = provider.get(XtextResourceSet)
-            var res = rset.createResource(uri)
-            if (res !== null) {
-                res.contents += model
-                res.save(outputStream, emptyMap)
-                serialized = outputStream.toString
-            }
-            return new TextDocument(ext, processorName, snapshotIndex, serialized)
-        } else {
-            var test = ResourceExtension.getResourceExtension(model)
-            println(test)
-            return null
-        }
+    override show(String uri, int index) {
+        var Object model = this.objectMap.get(uri).get(index)
+        var writer = new ByteArrayOutputStream()
+        LightDiagramServices.renderOffScreen(model, IOffscreenRenderer.SVG, writer)
+        val svg = writer.toString
+        return requestManager.runRead[ cancelIndicator |
+            svg
+        ]
     }
-    
-    def TextDocument transformToHtmlText(TextDocument document) {
-        document.value = document.value.replace("\n", "<br>")
-        document.value = document.value.replace("  ", "&emsp;")
-        document.value = document.value.replace("\t", "&emsp;")
-        return document
-    }    
 }

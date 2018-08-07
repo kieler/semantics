@@ -12,8 +12,7 @@ import { WorkspaceEdit, Workspace } from "@theia/languages/lib/common";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { SCChartsLanguageClientContribution } from "./sccharts-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, SHOW_PREVIOUS, SHOW_NEXT, SHOW_FIRST, SHOW_LAST, CommandStruct, SHOW_THIS, SHOW_THIS_STRUCT, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT, COMPILER, navigationCommands } from "./sccharts-menu-contribution";
-import URI from "@theia/core/lib/common/uri";
+import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer,  CommandStruct, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT, COMPILER} from "./sccharts-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { Constants } from "../../common/constants";
 import { TextWidget } from "../widgets/text-widget";
@@ -63,13 +62,6 @@ export class SCChartsCommandContribution implements CommandContribution {
                 this.front.shell
             }
         })
-        navigationCommands.forEach(commandStruct => {
-            commands.registerCommand(commandStruct.command, {
-                execute: () => {
-                    this.executeShow(commandStruct)
-                }
-            });
-        });
     }
     public message(message : string, type : string) {
         switch (type) {
@@ -98,9 +90,24 @@ export class SCChartsCommandContribution implements CommandContribution {
      * @param id id of snapshot e.g. Signal
      * @param index index of snapshot
      */
-    public show(url : string, index : number) {
-        this.indexMap.set(url, index)
-        this.executeShow(SHOW_THIS_STRUCT)
+    public show(uri : string, index : number) {
+        this.client.languageClient.then(lclient => {
+            lclient.sendRequest("sccharts/show", [uri, index]).then((svg: string) => {
+                var result = this.resultMap.get(uri)
+                if (result) {
+                    var snapshotDescription = result.files[index];
+                    this.front.shell.addWidget(new TextWidget("Diagram: " +
+                        snapshotDescription.groupId +
+                        ", " + snapshotDescription.name +
+                        ": " + snapshotDescription.snapshotIndex, svg, uri),
+                        { area: "main" })
+                    this.front.shell.activateWidget(uri)
+                } else {
+                    this.message("File not compiled yet", "error")
+                }
+            });
+        })
+        this.indexMap.set(uri, index)
     }
 
 
@@ -125,102 +132,6 @@ export class SCChartsCommandContribution implements CommandContribution {
         this.executeCompile(commandStruct)
     }
 
-    executeShow(commandStruct: CommandStruct) {
-        const editor = this.editorManager.currentEditor;
-        if (!editor) {
-            this.message("Editor is undefined", "error")
-            return false;
-        }
-        const uri = editor.editor.uri.toString();
-        if (!(uri.endsWith('sctx') || uri.endsWith('view'))) {
-            this.message("URI is different from '.sctx'", "error")
-            return false
-        }
-        // uri checking an creation TODO remove hack
-        var subURI = new URI(uri)
-        var dir = subURI.path.toString();
-        dir = dir.replace((this.workspace.rootUri as string).substring(7), "");
-        dir = dir.replace(subURI.path.base, "");
-        var srcGen = ""
-        if (!uri.endsWith(".view")) {
-            dir = dir.concat(subURI.path.base.replace(".", "") + "/")
-            srcGen = "/src-gen"
-        }
-        var modelUriString = this.workspace.rootUri + srcGen + dir + "model.view"
-
-        var checkUri = uri // will hold uri of original file (key for maps)
-        if (!checkUri.endsWith('sctx')) {
-            // for .view files check whether source file was compiled
-            if (this.sourceURI.has(modelUriString)) {
-                var foundSourceUri = this.sourceURI.get(modelUriString)
-                if (!foundSourceUri) {
-                    this.message("SourceUri undefined, aborting...", "error")
-                    return false
-                }
-                checkUri = foundSourceUri
-            } else {
-                this.message("No sourceUri for " + modelUriString + " found, aborting...", "error")
-                return false
-            }
-        }
-        // abort if uri was not compiled first, doesn't work, since model.view is not deleted
-        if (!this.isCompiled.get(checkUri)) {
-            this.message("Aborting since " + checkUri + " was not compiled " + this.isCompiled.get(checkUri), "error")
-            return false
-        }
-        var nextIndex = 17
-        // calculate next index
-        const currentIndex = this.indexMap.get(checkUri)
-        const result = this.resultMap.get(checkUri)
-        if (currentIndex === undefined) {
-            this.message("currentIndex not set for " + checkUri, "error")
-            // TODO error handling
-            return false
-        }
-        if (!result) {
-            this.message("result not set for " + checkUri, "error")
-            // TODO error handling
-            return false
-        }
-        switch (commandStruct.command.id) {
-            case SHOW_NEXT.id:
-                nextIndex = Math.min(currentIndex + 1, result.files.length - 1)
-                break;
-            case SHOW_PREVIOUS.id:
-                nextIndex = Math.max(currentIndex - 1, 0)
-                break;
-            case SHOW_FIRST.id:
-                nextIndex = 0
-                break;
-            case SHOW_LAST.id:
-                nextIndex = result.files.length - 1
-                break;
-            case SHOW_THIS.id:
-                nextIndex = currentIndex
-                break;
-            default:
-                this.message("No known command found", "error")
-                break;
-        }
-        this.indexMap.set(checkUri, nextIndex)
-        var textDocument = result.files[nextIndex]
-
-        if (this.front.shell.getWidgets("main").find((value, index) => {
-            if (value.id == uri) {
-                (value as TextWidget).updateContent(textDocument.groupId + ": " + textDocument.name + " " +
-                textDocument.snapshotIndex, textDocument.value)
-                return true
-            }
-            return false
-        })) {
-            this.front.shell.activateWidget(uri)
-        } else {
-            this.front.shell.addWidget(new TextWidget(textDocument.groupId + ": " + textDocument.name + " " +
-                textDocument.snapshotIndex, textDocument.value, uri), { area: "main" })
-            this.front.shell.activateWidget(uri)
-        }
-    }
-
     executeCompile(commandStruct: CommandStruct) : boolean {
         const editor = this.editorManager.currentEditor;
 
@@ -242,15 +153,15 @@ export class SCChartsCommandContribution implements CommandContribution {
                     uri,
                     commandStruct.compilationSystemId
                 ]
-            }).then((text: CodeContainer) => {
+            }).then((snapshotsDescriptions: CodeContainer) => {
                 this.message("Got compilation result for " + uri, "info")
                 if (uri.startsWith("\"")) {
                     this.message("Found error in " + uri, "error")
                 }
                 this.isCompiled.set(uri as string, true)
-                this.resultMap.set(uri as string, text)
+                this.resultMap.set(uri as string, snapshotsDescriptions)
                 this.indexMap.set(uri as string, -1)
-                this.lengthMap.set(uri as string, text.files.length)
+                this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
                 this.front.shell.activateWidget("compiler-widget")
                 return true
             });

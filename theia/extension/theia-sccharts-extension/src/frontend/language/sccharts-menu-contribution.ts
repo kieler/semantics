@@ -188,19 +188,19 @@ export class SCChartsMenuContribution implements MenuContribution {
 }
 
 export interface CodeContainer {
-    files: TextDocument[]
+    files: Snapshots[]
 }
 
 /**
  * (name, snapshotId) should be unique. GroupId for bundling in phases. Value holds text
  */
-export class TextDocument {
+export class Snapshots {
     groupId: string
     name: string;
     snapshotIndex: number;
-    value: string
-    constructor(groupId: string, name: string, snapshotIndex : number, value: string) {
-        this.name = name,
-        this.value = value
+    constructor(groupId: string, name: string, snapshotIndex : number) {
+        this.groupId = groupId
+        this.name = name
+        this.snapshotIndex = snapshotIndex
     }
 }

@@ -45,6 +45,7 @@ export class TextWidget extends BaseWidget {
     public updateContent(titleLabel : string, text : string) {
         this.title.label = titleLabel
         this.node.innerHTML = "<div>" + text + "</div>"
+        this.node.focus()
     }
 
     protected getScrollContainer(): MaybePromise<HTMLElement> {

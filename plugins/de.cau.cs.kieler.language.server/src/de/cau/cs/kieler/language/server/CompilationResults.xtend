@@ -20,14 +20,13 @@ import java.util.LinkedList
  *
  */
 class CompilationResults {
-    public List<TextDocument> files = new LinkedList
+    public List<Snapshot> files = new LinkedList
     
     new() {
         this.files = new LinkedList
     }
     
-    new (List<TextDocument> files) {
+    new (List<Snapshot> files) {
         this.files = files
     }
-    
 }

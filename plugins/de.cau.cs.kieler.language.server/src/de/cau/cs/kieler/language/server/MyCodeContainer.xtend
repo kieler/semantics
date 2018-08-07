@@ -24,9 +24,9 @@ import java.util.ArrayList
  */
 class MyCodeContainer {
     
-    @Accessors List<Pair<String, List<TextDocument>>> files = new ArrayList<Pair<String, List<TextDocument>>>
+    @Accessors List<Pair<String, List<Snapshot>>> files = new ArrayList<Pair<String, List<Snapshot>>>
     
-    def add(String id, List<TextDocument> list) {
+    def add(String id, List<Snapshot> list) {
         files.add(new Pair(id, list))
     }
     
