@@ -3,7 +3,7 @@ import { Message } from "@phosphor/messaging";
 import { BaseWidget } from "@theia/core/lib/browser";
 import PerfectScrollbar from "perfect-scrollbar";
 import { MaybePromise } from "@theia/core";
-import { Disposable } from "@theia/languages/lib/common";
+import { Disposable } from "@theia/languages/lib/browser";
 
 @injectable()
 export class TextWidget extends BaseWidget {
@@ -27,7 +27,7 @@ export class TextWidget extends BaseWidget {
         super.onActivateRequest(msg);
         (async () => {
             const container = await this.getScrollContainer();
-            container.style.overflow = 'hidden';
+            container.style.overflow = 'auto';
             this.scrollBar = new PerfectScrollbar(container);
 
             this.toDispose.push(Disposable.create(async () => {

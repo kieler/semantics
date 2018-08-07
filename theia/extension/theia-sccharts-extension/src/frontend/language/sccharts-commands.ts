@@ -8,7 +8,6 @@
 import { inject, injectable } from "inversify";
 import { CommandContribution, CommandRegistry, ResourceProvider, MessageService } from '@theia/core/lib/common';
 import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
-import { WorkspaceEdit, Workspace } from "@theia/languages/lib/common";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { SCChartsLanguageClientContribution } from "./sccharts-language-client-contribution";
@@ -17,6 +16,7 @@ import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { Constants } from "../../common/constants";
 import { TextWidget } from "../widgets/text-widget";
 import { CompileWidget } from "../widgets/compile-widget";
+import { Workspace, WorkspaceEdit } from "@theia/languages/lib/browser";
 @injectable()
 export class SCChartsCommandContribution implements CommandContribution {
 
