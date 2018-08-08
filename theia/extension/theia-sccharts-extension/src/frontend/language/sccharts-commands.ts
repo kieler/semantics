@@ -11,7 +11,7 @@ import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { SCChartsLanguageClientContribution } from "./sccharts-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer,  CommandStruct, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT, COMPILER} from "./sccharts-menu-contribution";
+import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer,  CommandStruct, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./sccharts-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { Constants } from "../../common/constants";
 import { TextWidget } from "../widgets/text-widget";
@@ -59,7 +59,52 @@ export class SCChartsCommandContribution implements CommandContribution {
                     this.front.shell.addWidget(compileWidget, {area: "bottom"})
                     this.front.shell.activateWidget(compileWidget.id)
                 }
-                this.front.shell
+            }
+        })
+        commands.registerCommand(SHOW_NEXT, {
+            execute: () => {
+                const editor = this.editorManager.currentEditor
+                if (!editor) {
+                    this.message("Editor is undefined", "error")
+                    return false;
+                }
+                const uri = editor.editor.uri.toString();
+                if (!uri.endsWith('sctx')) {
+                    this.message("No .sctx file", "error")
+                    return false
+                }
+                var index = this.indexMap.get(uri)
+                if (!index) {
+                    return false
+                }
+                var length = this.lengthMap.get(uri)
+                if (!length) {
+                    return false
+                }
+                this.show(uri, Math.min(index + 1, length - 1))
+            }
+        })
+        commands.registerCommand(SHOW_PREVIOUS, {
+            execute: () => {
+                const editor = this.editorManager.currentEditor
+                if (!editor) {
+                    this.message("Editor is undefined", "error")
+                    return false;
+                }
+                const uri = editor.editor.uri.toString();
+                if (!uri.endsWith('sctx')) {
+                    this.message("No .sctx file", "error")
+                    return false
+                }
+                var index = this.indexMap.get(uri)
+                if (!index) {
+                    return false
+                }
+                var length = this.lengthMap.get(uri)
+                if (!length) {
+                    return false
+                }
+                this.show(uri, Math.max(index - 1, 0))
             }
         })
     }
@@ -95,13 +140,22 @@ export class SCChartsCommandContribution implements CommandContribution {
             lclient.sendRequest("sccharts/show", [uri, index]).then((svg: string) => {
                 var result = this.resultMap.get(uri)
                 if (result) {
+
                     var snapshotDescription = result.files[index];
-                    this.front.shell.addWidget(new TextWidget("Diagram: " +
-                        snapshotDescription.groupId +
-                        ", " + snapshotDescription.name +
-                        ": " + snapshotDescription.snapshotIndex, svg, uri),
-                        { area: "main" })
-                    this.front.shell.activateWidget(uri)
+                    if (this.front.shell.getWidgets("main").find((value, index) => {
+                        if (value.id == uri) {
+                            (value as TextWidget).updateContent("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
+                            snapshotDescription.snapshotIndex, svg)
+                            return true
+                        }
+                        return false
+                    })) {
+                        this.front.shell.activateWidget(uri)
+                    } else {
+                        this.front.shell.addWidget(new TextWidget("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
+                        snapshotDescription.snapshotIndex, svg, uri), { area: "main" })
+                        this.front.shell.activateWidget(uri)
+                    }
                 } else {
                     this.message("File not compiled yet", "error")
                 }

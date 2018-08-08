@@ -85,7 +85,7 @@ class LanguageServer implements IApplication {
             this.run(injector, port)
             return EXIT_OK 
         } else {
-            // prouct case, communicate via stdin/out
+            // product case, communicate via stdin/out
             LanguageServerLauncher.main(#[])
             return EXIT_OK
         }

@@ -18,6 +18,8 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 
 /**
+ * Interface to the LSP extension commands
+ * 
  * @author sdo
  *
  */

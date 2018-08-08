@@ -19,15 +19,13 @@ export class TextWidget extends BaseWidget {
         this.id = widgetId
         this.addClass('text_widget') // class for index.css
         this.node.innerHTML = "<div>" + text + "</div>"
-       
-        this.node.focus()
     }
 
     onActivateRequest(msg: Message): void {
         super.onActivateRequest(msg);
         (async () => {
             const container = await this.getScrollContainer();
-            container.style.overflow = 'auto';
+            container.style.overflow = 'hidden';
             this.scrollBar = new PerfectScrollbar(container);
 
             this.toDispose.push(Disposable.create(async () => {
@@ -39,13 +37,11 @@ export class TextWidget extends BaseWidget {
                 container.style.overflow = null;
             }));
         })();
-        this.node.focus()
     }
 
     public updateContent(titleLabel : string, text : string) {
         this.title.label = titleLabel
         this.node.innerHTML = "<div>" + text + "</div>"
-        this.node.focus()
     }
 
     protected getScrollContainer(): MaybePromise<HTMLElement> {

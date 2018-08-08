@@ -148,41 +148,8 @@ export namespace CompileMenu {
 export class SCChartsMenuContribution implements MenuContribution {
 
     registerMenus(menus: MenuModelRegistry): void {
-        menus.registerSubmenu(NavigationMainMenu.NAVIGATE, 'Navigate');
-        menus.registerMenuAction(NavigationMainMenu.NAVIGATION_GROUP, {
-            commandId: SHOW_NEXT.id,
-            label: "show next"
-        });
-        menus.registerMenuAction(NavigationMainMenu.NAVIGATION_GROUP, {
-            commandId: SHOW_PREVIOUS.id,
-            label: "show previous"
-        });
-        menus.registerMenuAction(NavigationMainMenu.NAVIGATION_GROUP, {
-            commandId: SHOW_LAST.id,
-            label: "show last"
-        });
-        menus.registerMenuAction(NavigationMainMenu.NAVIGATION_GROUP, {
-            commandId: SHOW_FIRST.id,
-            label: "show first"
-        });
-
         menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
             commandId: COMPILER.id
-        });
-
-
-        menus.registerSubmenu(CompileMenu.COMPILATION, 'Compile');
-        menus.registerMenuAction(CompileMenu.COMPILATION_GROUP, {
-            commandId: COMPILE_NETLIST.id,
-            label: COMPILE_NETLIST.label
-        });
-        menus.registerMenuAction(CompileMenu.COMPILATION_GROUP, {
-            commandId: COMPILE_NETLIST_JAVA.id,
-            label: COMPILE_NETLIST_JAVA.label
-        });
-        menus.registerMenuAction(CompileMenu.COMPILATION_GROUP, {
-            commandId: COMPILE_PRIORITY_JAVA.id,
-            label: COMPILE_PRIORITY_JAVA.label
         });
     }
 }

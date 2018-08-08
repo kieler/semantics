@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.language.server
 
 /**
+ * Description of a Snapshot. Used by client to generate snapshot selection view.
+ * 
  * @author sdo
  * 
  */

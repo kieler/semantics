@@ -28,8 +28,6 @@ import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.ExecuteCommandParams
-import org.eclipse.lsp4j.jsonrpc.Endpoint
-import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
@@ -39,6 +37,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import java.io.ByteArrayOutputStream
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.IOffscreenRenderer
+import de.cau.cs.kieler.kicool.environments.Errors
 
 /**
  * @author sdo
@@ -55,8 +54,6 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     
     protected Map<String, List<Snapshot>> snapshotMap = new HashMap<String, List<Snapshot>>
     protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
-    
-    CommandExtension _client
 
     protected extension ILanguageServerAccess languageServerAccess
     
@@ -65,16 +62,6 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     }
     def ILanguageServerAccess getLanguageServerAccess() {
         languageServerAccess
-    }
-
-    protected def CommandExtension getClient() {
-        if (_client === null) {
-            val client = languageServerAccess.languageClient
-            if (client instanceof Endpoint) {
-                _client = ServiceEndpoints.toServiceObject(client, CommandExtension)
-            }
-        }
-        return _client
     }
     
     override compile(ExecuteCommandParams params) {
@@ -96,6 +83,7 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         var eobject = resource.getContents().head
         var context = compile(eobject, compilationSystemId)
         for (iResult : context.processorInstancesSequence) {
+            // TODO , iResult.environment.errors
             convertImpl(iResult.environment.model, iResult.environment.getProperty(Environment.SNAPSHOTS), originalUri, iResult.name)
         }
         return requestManager.runRead[ cancelIndicator |
@@ -135,14 +123,12 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
      * @return the correct XtextResourceSet for the given uri based in its file extension.
      */
     def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
-        // removed case injector null
         return injector.getInstance(XtextResourceSet);
     }
     
     private def compile(EObject eobject, String systemId) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.compile
-        
         return context
     }
     

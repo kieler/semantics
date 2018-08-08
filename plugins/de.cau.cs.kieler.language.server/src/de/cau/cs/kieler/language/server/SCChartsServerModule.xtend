@@ -16,6 +16,8 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.service.AbstractGenericModule
 
 /**
+ * Register additional classes for SCCharts
+ * 
  * @author sdo
  *
  */
