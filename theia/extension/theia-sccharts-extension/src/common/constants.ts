@@ -14,6 +14,10 @@ export class Constants {
     static readonly lang3Name = 'KExt'
     static readonly annoId = 'anno'
     static readonly annoName = 'Annotations'
+    static readonly esterelId = 'strl'
+    static readonly esterelName = 'Esterel'
+    static readonly lustreId = 'lus'
+    static readonly lustreName = 'Lustre'
     static readonly netlist : string = 'de.cau.cs.kieler.sccharts.netlist'
     static readonly netlistJava : string = 'de.cau.cs.kieler.sccharts.netlist.java'
     static readonly priorityJava : string = 'de.cau.cs.kieler.sccharts.priority.java'
@@ -22,15 +26,15 @@ export class Constants {
     static readonly netlistJavaIndex : number = 1
     static readonly priorityJavaIndex : number = 2
 
-    static readonly netlistCompilation : Compilation = {name : "Netlist", id : Constants.netlist}
-    static readonly netlistJavaCompilation = {name : "Netlist Java", id : Constants.netlistJava}
-    static readonly priorityJavaCompilation = {name : "Priorities Java", id : Constants.priorityJava}
+    static readonly netlistCompilation : Compilation = {label : "Netlist", id : Constants.netlist}
+    static readonly netlistJavaCompilation = {label : "Netlist Java", id : Constants.netlistJava}
+    static readonly priorityJavaCompilation = {label : "Priorities Java", id : Constants.priorityJava}
 
 
     static readonly compilations : Compilation[] = [ Constants.netlistCompilation, Constants.netlistJavaCompilation, Constants.priorityJavaCompilation]
 }
 
 export class Compilation {
-    name : string
+    label : string
     id : string
 }

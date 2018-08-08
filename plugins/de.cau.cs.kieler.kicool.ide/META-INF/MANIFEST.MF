@@ -12,7 +12,9 @@ Require-Bundle: org.antlr.runtime,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
-Export-Package: de.cau.cs.kieler.kicool.ide.contentassist.antlr,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.core.runtime;bundle-version="3.13.0"
+Export-Package: de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal
 

@@ -12,8 +12,9 @@ Require-Bundle: org.antlr.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro
-Export-Package: de.cau.cs.kieler.esterel.ide.contentassist.antlr.internal,
+Export-Package: de.cau.cs.kieler.esterel.ide,
  de.cau.cs.kieler.esterel.ide.contentassist.antlr,
- de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr.internal,
- de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr
+ de.cau.cs.kieler.esterel.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr,
+ de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr.internal
 

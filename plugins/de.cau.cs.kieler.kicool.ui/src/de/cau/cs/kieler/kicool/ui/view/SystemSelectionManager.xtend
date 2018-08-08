@@ -14,7 +14,6 @@ package de.cau.cs.kieler.kicool.ui.view
 
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.ui.DefaultSystemAssociation
 import java.util.ArrayList
 import org.eclipse.jface.action.ControlContribution
 import org.eclipse.swt.SWT
@@ -27,6 +26,7 @@ import org.eclipse.swt.widgets.Control
 import static extension de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction.retrieveModel
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -83,10 +83,9 @@ class SystemSelectionManager implements SelectionListener {
         if (model !== null && model.class !== modelClassFilter) {
             modelClassFilter = model.class
         }
-        val systems = newLinkedList
-        systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
+        val systems = CompilerViewUtil.getSystemModels(filter, modelClassFilter)
         
-        for(system : systems.filter[!filter || hasInput(modelClassFilter)].
+        for(system : systems.
             filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ].
             filter[ !developer || (view !== null && view.developerToggle !== null && view.developerToggle.checked) ]
         ) {
@@ -102,7 +101,7 @@ class SystemSelectionManager implements SelectionListener {
         var defaultIndex = 0
         
         // Default via extension point
-        val defaultSystemID = DefaultSystemAssociation.getDefaultSystem(view.editPartSystemManager.activeEditor?.editorSite?.id)
+        val defaultSystemID = CompilerViewUtil.getDefaultSystem(view.editPartSystemManager.activeEditor?.editorSite?.id)
         if (defaultSystemID !== null) {
             val idx = index.indexOf(defaultSystemID)
             if (idx >= 0) {
@@ -151,7 +150,7 @@ class SystemSelectionManager implements SelectionListener {
     
     def setTemporarySystem(System system) {
         try {
-            KiCoolRegistration.registerTemporarySystem(system)    
+            CompilerViewUtil.temporarySystem = system   
         } catch (Exception e) {
             PromUIPlugin.showError(e)
         }

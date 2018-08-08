@@ -26,8 +26,11 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 @JsonSegment('sccharts')
 interface CommandExtension {
     @JsonRequest('compile')
-    def CompletableFuture<Object> compile(ExecuteCommandParams params);
+    def CompletableFuture<Object> compile(String uri, String command);
     
     @JsonRequest('show')
     def CompletableFuture<Object> show(String uri, int index)
+    
+    @JsonRequest('get_systems')
+    def CompletableFuture<Object> getSystems(String uri, boolean filter)
 }

@@ -11,9 +11,8 @@ import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { SCChartsLanguageClientContribution } from "./sccharts-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer,  CommandStruct, COMPILE_NETLIST_STRUCT, COMPILE_NETLIST_JAVA_STRUCT, COMPILE_PRIORITY_JAVA_STRUCT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./sccharts-menu-contribution";
+import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./sccharts-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
-import { Constants } from "../../common/constants";
 import { TextWidget } from "../widgets/text-widget";
 import { CompileWidget } from "../widgets/compile-widget";
 import { Workspace, WorkspaceEdit } from "@theia/languages/lib/browser";
@@ -32,7 +31,7 @@ export class SCChartsCommandContribution implements CommandContribution {
         @inject(ResourceProvider) protected readonly resourceProvider: ResourceProvider,
         @inject(MessageService) protected readonly messageService: MessageService,
         @inject(FrontendApplication) public readonly front: FrontendApplication,
-        @inject(SCChartsLanguageClientContribution) protected readonly client: SCChartsLanguageClientContribution,
+        @inject(SCChartsLanguageClientContribution) public readonly client: SCChartsLanguageClientContribution,
         @inject(OpenerService) protected readonly openerService: OpenerService,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager
@@ -69,10 +68,6 @@ export class SCChartsCommandContribution implements CommandContribution {
                     return false;
                 }
                 const uri = editor.editor.uri.toString();
-                if (!uri.endsWith('sctx')) {
-                    this.message("No .sctx file", "error")
-                    return false
-                }
                 var index = this.indexMap.get(uri)
                 if (!index) {
                     return false
@@ -92,10 +87,6 @@ export class SCChartsCommandContribution implements CommandContribution {
                     return false;
                 }
                 const uri = editor.editor.uri.toString();
-                if (!uri.endsWith('sctx')) {
-                    this.message("No .sctx file", "error")
-                    return false
-                }
                 var index = this.indexMap.get(uri)
                 if (!index) {
                     return false
@@ -166,27 +157,11 @@ export class SCChartsCommandContribution implements CommandContribution {
 
 
     public compile(command : string){
-        var commandStruct : CommandStruct;
-        switch (command) {
-            case Constants.netlist:
-                commandStruct = COMPILE_NETLIST_STRUCT
-                break;
-            case Constants.netlistJava:
-                commandStruct = COMPILE_NETLIST_JAVA_STRUCT
-                break;
-            case Constants.priorityJava:
-                commandStruct = COMPILE_PRIORITY_JAVA_STRUCT
-                break;
-
-            default:
-                commandStruct = COMPILE_NETLIST_STRUCT
-                break;
-        }
         this.message("Compiling with " + command, "info")
-        this.executeCompile(commandStruct)
+        this.executeCompile(command)
     }
 
-    executeCompile(commandStruct: CommandStruct) : boolean {
+    executeCompile(command: string) : boolean {
         const editor = this.editorManager.currentEditor;
 
         if (!editor) {
@@ -195,19 +170,9 @@ export class SCChartsCommandContribution implements CommandContribution {
         }
 
         const uri = editor.editor.uri.toString();
-        if (!uri.endsWith('sctx')) {
-            this.message("No .sctx file", "error")
-            return false
-        }
         console.log("Compiling " + uri)
-        this.client.languageClient.then(lclient => {// TODO make own requesttype ExecuteCommandRequest.type
-            lclient.sendRequest(commandStruct.commandLSPName, {
-                command: commandStruct.command.id,
-                arguments: [
-                    uri,
-                    commandStruct.compilationSystemId
-                ]
-            }).then((snapshotsDescriptions: CodeContainer) => {
+        this.client.languageClient.then(lclient => {
+            lclient.sendRequest("sccharts/compile", [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
                 this.message("Got compilation result for " + uri, "info")
                 if (uri.startsWith("\"")) {
                     this.message("Found error in " + uri, "error")

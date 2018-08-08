@@ -33,6 +33,12 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
+import de.cau.cs.kieler.esterel.EsterelRuntimeModule
+import de.cau.cs.kieler.esterel.ide.EsterelIdeModule
+import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
+import de.cau.cs.kieler.lustre.ide.LustreIdeModule
+import de.cau.cs.kieler.lustre.LustreRuntimeModule
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -75,6 +81,18 @@ class LanguageServer implements IApplication {
             new SCTXIdeSetup {
                 override createInjector() {
                     Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new SCChartsServerModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            
+            new EsterelIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            
+            new LustreIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
                 }
             }.createInjectorAndDoEMFRegistration()
             

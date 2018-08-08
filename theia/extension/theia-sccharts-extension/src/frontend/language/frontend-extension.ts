@@ -75,6 +75,30 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         monaco.languages.setMonarchTokensProvider(Constants.annoId, monarchLanguage4)
     });
 
+    // register esterel
+    monaco.languages.register({ 
+        id: Constants.esterelId,
+        aliases: [Constants.esterelName, Constants.esterelId],
+        extensions: ['.' + Constants.esterelId],
+        mimetypes: ['text/' + Constants.esterelId]
+    })
+    monaco.languages.onLanguage(Constants.esterelId, () => {
+        monaco.languages.setLanguageConfiguration(Constants.esterelId, configuration4)
+        monaco.languages.setMonarchTokensProvider(Constants.esterelId, monarchLanguage4)
+    });
+
+    // register lustre
+    monaco.languages.register({ 
+        id: Constants.lustreId,
+        aliases: [Constants.lustreName, Constants.lustreId],
+        extensions: ['.' + Constants.lustreId],
+        mimetypes: ['text/' + Constants.lustreId]
+    })
+    monaco.languages.onLanguage(Constants.lustreId, () => {
+        monaco.languages.setLanguageConfiguration(Constants.lustreId, configuration4)
+        monaco.languages.setMonarchTokensProvider(Constants.lustreId, monarchLanguage4)
+    });
+
     // widgets
     bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
     bind(TextWidget).toSelf().inSingletonScope()

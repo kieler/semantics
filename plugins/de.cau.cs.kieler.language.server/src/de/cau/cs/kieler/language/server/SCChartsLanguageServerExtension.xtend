@@ -12,14 +12,18 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.gson.JsonPrimitive
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
+import de.cau.cs.kieler.klighd.IOffscreenRenderer
+import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.sccharts.impl.SCChartsImpl
 import de.cau.cs.kieler.scg.impl.SCGraphsImpl
+import java.io.ByteArrayOutputStream
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
@@ -27,17 +31,14 @@ import java.util.Map
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.lsp4j.ExecuteCommandParams
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
-import java.io.ByteArrayOutputStream
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.IOffscreenRenderer
-import de.cau.cs.kieler.kicool.environments.Errors
+import de.cau.cs.kieler.scl.impl.SCLProgramImpl
+import de.cau.cs.kieler.esterel.impl.EsterelProgramImpl
 
 /**
  * @author sdo
@@ -57,6 +58,8 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
 
     protected extension ILanguageServerAccess languageServerAccess
     
+    var Class<?> modelClassFilter
+    
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
@@ -64,21 +67,22 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         languageServerAccess
     }
     
-    override compile(ExecuteCommandParams params) {
-        val originalUri = (params.arguments.get(0) as JsonPrimitive).asString
+    override compile(String uri, String command) {
+        val originalUri = uri
         var string = originalUri
         
         this.snapshotMap.put(originalUri, new LinkedList)
         this.objectMap.put(originalUri, new LinkedList)
         
-        var compilationSystemId = (params.arguments.get(1) as JsonPrimitive).asString
+        var compilationSystemId = command
         if (string.startsWith("file://")) {
             string = string.substring(7) 
         }
-        var uri = URI.createFileURI(string)
         
-        var resourceSet = uri.xtextResourceSet 
-        val resource = resourceSet.getResource(uri, true)
+        var stringUri = URI.createFileURI(string)
+        
+        var resourceSet = stringUri.xtextResourceSet 
+        val resource = resourceSet.getResource(stringUri, true)
         
         var eobject = resource.getContents().head
         var context = compile(eobject, compilationSystemId)
@@ -113,8 +117,26 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 this.snapshotMap.get(uri).add(new Snapshot("scg", processorName, count))
                 count++
             }
+        } else if (impl instanceof SCLProgramImpl) {
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("scl", processorName, 0))
+            var count = 1
+            for (snapshot : snapshots) {
+                this.objectMap.get(uri).add(snapshot as EObject)
+                this.snapshotMap.get(uri).add(new Snapshot("scl", processorName, count))
+                count++
+            }
+        } else if (impl instanceof EsterelProgramImpl) {
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("esterel", processorName, 0))
+            var count = 1
+            for (snapshot : snapshots) {
+                this.objectMap.get(uri).add(snapshot as EObject)
+                this.snapshotMap.get(uri).add(new Snapshot("esterel", processorName, count))
+                count++
+            }
         } else {
-            println("Got something different than an EObject")
+            println("Got something I currently do not recognize")
         }
         
     }
@@ -141,4 +163,43 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
             svg
         ]
     }
+    
+    override getSystems(String stringUri, boolean filter) {
+        var string = stringUri
+        if (stringUri.startsWith("file://")) {
+            string = stringUri.substring(7) 
+        }
+        var uri = URI.createFileURI(string)
+        
+        var resourceSet = uri.xtextResourceSet 
+        val resource = resourceSet.getResource(uri, true)
+        
+        var eobject = resource.getContents().head
+        val model = if(filter) eobject
+        if (model !== null && model.class !== modelClassFilter) {
+            modelClassFilter = model.class
+        }
+        var systems = CompilerViewUtil.getSystemModels(true, modelClassFilter)
+        val systemDescriptions = getDescription(systems)
+        return requestManager.runRead[ cancelIndicator |
+            systemDescriptions
+        ]
+    }
+    
+    def EObject getEObjectFromURI(String stringUri) {
+        var uri = URI.createFileURI(stringUri)
+        var resourceSet = uri.xtextResourceSet
+        val resource = resourceSet.getResource(uri, true)
+
+        return resource.getContents().head
+    }
+    
+    def List<SystemDescribtion> getDescription(List<System> systems) {
+        var systemDescribtion = newLinkedList
+        for (system : systems) {
+            systemDescribtion.add(new SystemDescribtion(system.label, system.id))	
+        }
+        return systemDescribtion
+    }
+    
 }

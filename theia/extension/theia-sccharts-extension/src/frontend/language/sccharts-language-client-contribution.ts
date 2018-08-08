@@ -41,7 +41,9 @@ export class SCChartsLanguageClientContribution extends BaseLanguageClientContri
             '**/*.' + Constants.sctxId,
             '**/*.' + Constants.lang2Id,
             '**/*.' + Constants.lang3Id,
-            '**/*.' + Constants.annoId
+            '**/*.' + Constants.annoId,
+            '**/*.' + Constants.esterelId,
+            '**/*.' + Constants.lustreId
         ]
     }
 
@@ -53,7 +55,9 @@ export class SCChartsLanguageClientContribution extends BaseLanguageClientContri
             Constants.sctxId,
             Constants.lang2Id,
             Constants.lang3Id,
-            Constants.annoId
+            Constants.annoId,
+            Constants.esterelId,
+            Constants.lustreId
 
         ];
 }

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ui
+package de.cau.cs.kieler.kicool.ide
 
 import org.eclipse.core.runtime.Platform
 

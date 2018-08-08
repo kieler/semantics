@@ -171,3 +171,8 @@ export class Snapshots {
         this.snapshotIndex = snapshotIndex
     }
 }
+
+export class SystemDescribtion {
+    label: string
+    id: string
+}
