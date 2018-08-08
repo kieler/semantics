@@ -15,4 +15,3 @@ yangster-app-electron/webpack.config.js
 **/webpack.config.js
 workspace
 yarn-error.log
-yarn.lock
