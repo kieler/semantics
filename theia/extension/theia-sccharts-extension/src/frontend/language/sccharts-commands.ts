@@ -69,11 +69,13 @@ export class SCChartsCommandContribution implements CommandContribution {
                 }
                 const uri = editor.editor.uri.toString();
                 var index = this.indexMap.get(uri)
-                if (!index) {
+                if (index != 0 && !index) {
+                    this.message("Index is undefined", "error")
                     return false
                 }
                 var length = this.lengthMap.get(uri)
-                if (!length) {
+                if (length != 0 && !length) {
+                    this.message("Length is undefined", "error")
                     return false
                 }
                 this.show(uri, Math.min(index + 1, length - 1))
@@ -88,11 +90,8 @@ export class SCChartsCommandContribution implements CommandContribution {
                 }
                 const uri = editor.editor.uri.toString();
                 var index = this.indexMap.get(uri)
-                if (!index) {
-                    return false
-                }
-                var length = this.lengthMap.get(uri)
-                if (!length) {
+                if (index != 0 && !index) {
+                    this.message("Index is undefined", "error")
                     return false
                 }
                 this.show(uri, Math.max(index - 1, 0))

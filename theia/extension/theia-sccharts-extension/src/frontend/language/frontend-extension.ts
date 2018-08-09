@@ -16,6 +16,8 @@ import { configuration, monarchLanguage } from './sctx-monaco-language';
 import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './lang2-monaco-language';
 import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './lang3-monaco-language';
 import { configuration as configuration4, monarchLanguage as monarchLanguage4} from './lang4-monaco-language';
+import { configuration as configuration5, monarchLanguage as monarchLanguage5} from './strl-monaco-language';
+import { configuration as configuration6, monarchLanguage as monarchLanguage6} from './lus-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
 import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory } from '@theia/core/lib/browser';
 import { SCChartsLanguageClientContribution } from './sccharts-language-client-contribution';
@@ -83,8 +85,8 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         mimetypes: ['text/' + Constants.esterelId]
     })
     monaco.languages.onLanguage(Constants.esterelId, () => {
-        monaco.languages.setLanguageConfiguration(Constants.esterelId, configuration4)
-        monaco.languages.setMonarchTokensProvider(Constants.esterelId, monarchLanguage4)
+        monaco.languages.setLanguageConfiguration(Constants.esterelId, configuration5)
+        monaco.languages.setMonarchTokensProvider(Constants.esterelId, monarchLanguage5)
     });
 
     // register lustre
@@ -95,8 +97,8 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         mimetypes: ['text/' + Constants.lustreId]
     })
     monaco.languages.onLanguage(Constants.lustreId, () => {
-        monaco.languages.setLanguageConfiguration(Constants.lustreId, configuration4)
-        monaco.languages.setMonarchTokensProvider(Constants.lustreId, monarchLanguage4)
+        monaco.languages.setLanguageConfiguration(Constants.lustreId, configuration6)
+        monaco.languages.setMonarchTokensProvider(Constants.lustreId, monarchLanguage6)
     });
 
     // widgets
