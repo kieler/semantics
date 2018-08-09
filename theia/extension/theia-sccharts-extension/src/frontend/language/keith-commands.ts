@@ -10,8 +10,8 @@ import { CommandContribution, CommandRegistry, ResourceProvider, MessageService 
 import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
-import { SCChartsLanguageClientContribution } from "./sccharts-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./sccharts-menu-contribution";
+import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
+import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompileWidget } from "../widgets/compile-widget";
@@ -33,7 +33,7 @@ export class SCChartsCommandContribution implements CommandContribution {
         @inject(ResourceProvider) protected readonly resourceProvider: ResourceProvider,
         @inject(MessageService) protected readonly messageService: MessageService,
         @inject(FrontendApplication) public readonly front: FrontendApplication,
-        @inject(SCChartsLanguageClientContribution) public readonly client: SCChartsLanguageClientContribution,
+        @inject(KeithLanguageClientContribution) public readonly client: KeithLanguageClientContribution,
         @inject(OpenerService) protected readonly openerService: OpenerService,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager

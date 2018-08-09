@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "sccharts-app",
+    "name": "keith-app",
     "version": "0.1.0",
     "license": "EPL-1.0",
     "dependencies": {

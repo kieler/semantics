@@ -25,9 +25,16 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
  */
 @JsonSegment('sccharts')
 interface CommandExtension {
+    
+    /**
+     * Compiles file given by uri with compilationsystem given by command
+     */
     @JsonRequest('compile')
     def CompletableFuture<Object> compile(String uri, String command);
     
+    /**
+     * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled
+     */
     @JsonRequest('show')
     def CompletableFuture<Object> show(String uri, int index)
     

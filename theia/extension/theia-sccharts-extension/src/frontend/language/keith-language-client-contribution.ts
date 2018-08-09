@@ -18,7 +18,7 @@ import { ContextMenuCommands } from './dynamic-commands';
 import { Constants} from './../../common/constants'
 
 @injectable()
-export class SCChartsLanguageClientContribution extends BaseLanguageClientContribution {
+export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
 
     readonly id = Constants.sctxId
     readonly name = Constants.sctxName

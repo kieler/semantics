@@ -22,7 +22,7 @@ import { MonacoDiffNavigatorFactory } from '@theia/monaco/lib/browser/monaco-dif
 import { Constants } from '../../common/constants';
 
 @injectable()
-export class SCChartsMonacoEditorProvider extends MonacoEditorProvider {
+export class KeithMonacoEditorProvider extends MonacoEditorProvider {
 
     constructor(
         @inject(MonacoEditorService) protected readonly editorService: MonacoEditorService,

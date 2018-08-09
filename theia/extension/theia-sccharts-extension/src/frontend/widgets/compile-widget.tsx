@@ -5,7 +5,7 @@ import * as React from "react";
 import { Constants } from "../../common/constants";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
-import { SCChartsCommandContribution } from "../language/sccharts-commands";
+import { SCChartsCommandContribution } from "../language/keith-commands";
 
 @injectable()
 export class CompileWidget extends ReactWidget {

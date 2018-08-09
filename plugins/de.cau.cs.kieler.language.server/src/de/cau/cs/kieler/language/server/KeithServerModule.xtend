@@ -12,18 +12,18 @@
  */
 package de.cau.cs.kieler.language.server
 
+import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import org.eclipse.xtext.service.AbstractGenericModule
+
 /**
+ * Register additional classes
+ * 
  * @author sdo
  *
  */
-class SystemDescribtion {
+class KeithServerModule extends AbstractGenericModule {
     
-    String label
-    String id
-    
-    new (String label, String id) {
-        this.label = label
-        this.id = id
+    def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
+        KeithLanguageServerExtension
     }
-    
 }

@@ -22,9 +22,6 @@ export class Constants {
     static readonly netlistJava : string = 'de.cau.cs.kieler.sccharts.netlist.java'
     static readonly priorityJava : string = 'de.cau.cs.kieler.sccharts.priority.java'
     static readonly extendedCore : string = 'de.cau.cs.kieler.sccharts.extended.core'
-    static readonly netlistIndex : number = 0
-    static readonly netlistJavaIndex : number = 1
-    static readonly priorityJavaIndex : number = 2
 
     static readonly netlistCompilation : Compilation = {label : "Netlist", id : Constants.netlist}
     static readonly netlistJavaCompilation = {label : "Netlist Java", id : Constants.netlistJava}
@@ -32,8 +29,7 @@ export class Constants {
     static readonly compilerWidgetName = "compiler-widget"
     static readonly COMPILE: string = 'sccharts/compile'
     static readonly SHOW: string = 'sccharts/show'
-    static readonly GET_SYSTEMS: string = 'sccharts/get_ssystems'
-
+    static readonly GET_SYSTEMS: string = 'sccharts/get_systems'
 
     static readonly compilations : Compilation[] = [ Constants.netlistCompilation, Constants.netlistJavaCompilation, Constants.priorityJavaCompilation]
 }

@@ -85,7 +85,7 @@
   },
   "workspaces": [
     "theia-sccharts-extension",
-    "sccharts-app",
-    "sccharts-app-electron"
+    "keith-app",
+    "keith-app-electron"
   ]
 }

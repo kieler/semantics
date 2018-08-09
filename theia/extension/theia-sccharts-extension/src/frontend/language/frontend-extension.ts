@@ -7,25 +7,26 @@
 
 import { ContainerModule, interfaces} from 'inversify'
 import { CommandContribution, MenuContribution} from '@theia/core/lib/common'
-import { SCChartsCommandContribution} from './sccharts-commands'
+import { SCChartsCommandContribution} from './keith-commands'
 
 import '../../../src/frontend/widgets/style/index.css';
-import { SCChartsMenuContribution } from './sccharts-menu-contribution';
+import { SCChartsMenuContribution } from './keith-menu-contribution';
 import { Constants } from '../../common/constants';
 import { configuration, monarchLanguage } from './sctx-monaco-language';
-import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './lang2-monaco-language';
-import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './lang3-monaco-language';
-import { configuration as configuration4, monarchLanguage as monarchLanguage4} from './lang4-monaco-language';
+import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './scl-monaco-language';
+import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './kext-monaco-language';
+import { configuration as configuration4, monarchLanguage as monarchLanguage4} from './anno-monaco-language';
 import { configuration as configuration5, monarchLanguage as monarchLanguage5} from './strl-monaco-language';
 import { configuration as configuration6, monarchLanguage as monarchLanguage6} from './lus-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
 import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory } from '@theia/core/lib/browser';
-import { SCChartsLanguageClientContribution } from './sccharts-language-client-contribution';
+import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
 import { ContextMenuCommands } from './dynamic-commands';
 import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider';
-import { SCChartsMonacoEditorProvider } from '../monaco/sccharts-monaco-editor-provider';
-import { SCChartsKeybindingContext, SCChartsKeybindingContribution } from './sccharts-keybinding-context';
+import { KeithMonacoEditorProvider } from '../monaco/keith-monaco-editor-provider';
+import { KeithKeybindingContext, KeithKeybindingContribution } from './keith-keybinding-context';
+import { CompileWidget } from '../widgets/compile-widget';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
 
@@ -105,25 +106,25 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
     bind(TextWidget).toSelf().inSingletonScope()
     bind(WidgetFactory).toDynamicValue(context => ({
-        id: "compiler-widget",
-        createWidget: () => context.container.get<TextWidget>(TextWidget)
+        id: Constants.compilerWidgetName,
+        createWidget: () => context.container.get<CompileWidget>(CompileWidget)
     }));
 
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
 
     // languages
-    bind(SCChartsLanguageClientContribution).toSelf().inSingletonScope()
-    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(SCChartsLanguageClientContribution))
+    bind(KeithLanguageClientContribution).toSelf().inSingletonScope()
+    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithLanguageClientContribution))
     
     // apparently for command core.save
     bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
     // needed to open editor
-    rebind(MonacoEditorProvider).to(SCChartsMonacoEditorProvider).inSingletonScope()
+    rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
 
     // added for keybinding and commands
     bind(CommandContribution).to(SCChartsCommandContribution).inSingletonScope()
-    bind(SCChartsKeybindingContext).toSelf()
-    bind(KeybindingContext).toDynamicValue(context => context.container.get(SCChartsKeybindingContext));
-    bind(KeybindingContribution).to(SCChartsKeybindingContribution)
+    bind(KeithKeybindingContext).toSelf()
+    bind(KeybindingContext).toDynamicValue(context => context.container.get(KeithKeybindingContext));
+    bind(KeybindingContribution).to(KeithKeybindingContribution)
 
 })

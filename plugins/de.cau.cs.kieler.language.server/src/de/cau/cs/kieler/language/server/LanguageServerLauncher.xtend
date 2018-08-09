@@ -14,6 +14,12 @@ package de.cau.cs.kieler.language.server
 
 import com.google.inject.Guice
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.EsterelRuntimeModule
+import de.cau.cs.kieler.esterel.ide.EsterelIdeModule
+import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
+import de.cau.cs.kieler.lustre.LustreRuntimeModule
+import de.cau.cs.kieler.lustre.ide.LustreIdeModule
+import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
 import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeModule
 import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeSetup
 import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
@@ -51,17 +57,28 @@ class LanguageServerLauncher extends ServerLauncher {
         
 
         // register languages (sublanguages are also registered)
-        new SCLIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        
-        new SCTXIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new SCChartsServerModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
+            new SCLIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            new SCTXIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new KeithServerModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            
+            new EsterelIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
+            
+            new LustreIdeSetup {
+                override createInjector() {
+                    Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
+                }
+            }.createInjectorAndDoEMFRegistration()
         
         // Launch the server
         launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [

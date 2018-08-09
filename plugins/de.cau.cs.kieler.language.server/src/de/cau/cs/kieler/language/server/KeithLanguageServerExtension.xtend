@@ -40,14 +40,15 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import de.cau.cs.kieler.scl.impl.SCLProgramImpl
 import de.cau.cs.kieler.esterel.impl.EsterelProgramImpl
 import de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl
+import de.cau.cs.kieler.kexpressions.kext.impl.KextImpl
 
 /**
  * @author sdo
  * 
  */
-class SCChartsLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class KeithLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
-    protected static val LOG = Logger.getLogger(SCChartsLanguageServerExtension)
+    protected static val LOG = Logger.getLogger(KeithLanguageServerExtension)
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
     
@@ -143,6 +144,15 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 this.snapshotMap.get(uri).add(new Snapshot("lustre", processorName, count))
                 count++
             }
+        } else if (impl instanceof KextImpl) {
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("kext", processorName, 0))
+            var count = 1
+            for (snapshot : snapshots) {
+                this.objectMap.get(uri).add(snapshot as EObject)
+                this.snapshotMap.get(uri).add(new Snapshot("kext", processorName, count))
+                count++
+            }
         } else {
             println("Got something I currently do not recognize " + impl.class)
         }
@@ -202,12 +212,12 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         return resource.getContents().head
     }
     
-    def List<SystemDescribtion> getDescription(List<System> systems) {
-        var systemDescribtion = newLinkedList
+    def List<SystemDescription> getDescription(List<System> systems) {
+        var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescribtion.add(new SystemDescribtion(system.label, system.id))	
+            systemDescription.add(new SystemDescription(system.label, system.id))	
         }
-        return systemDescribtion
+        return systemDescription
     }
     
 }
