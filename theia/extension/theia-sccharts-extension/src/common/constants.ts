@@ -29,6 +29,10 @@ export class Constants {
     static readonly netlistCompilation : Compilation = {label : "Netlist", id : Constants.netlist}
     static readonly netlistJavaCompilation = {label : "Netlist Java", id : Constants.netlistJava}
     static readonly priorityJavaCompilation = {label : "Priorities Java", id : Constants.priorityJava}
+    static readonly compilerWidgetName = "compiler-widget"
+    static readonly COMPILE: string = 'sccharts/compile'
+    static readonly SHOW: string = 'sccharts/show'
+    static readonly GET_SYSTEMS: string = 'sccharts/get_ssystems'
 
 
     static readonly compilations : Compilation[] = [ Constants.netlistCompilation, Constants.netlistJavaCompilation, Constants.priorityJavaCompilation]

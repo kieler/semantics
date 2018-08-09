@@ -39,6 +39,7 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import de.cau.cs.kieler.scl.impl.SCLProgramImpl
 import de.cau.cs.kieler.esterel.impl.EsterelProgramImpl
+import de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl
 
 /**
  * @author sdo
@@ -68,13 +69,11 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
     }
     
     override compile(String uri, String command) {
-        val originalUri = uri
-        var string = originalUri
+        var string = uri
         
-        this.snapshotMap.put(originalUri, new LinkedList)
-        this.objectMap.put(originalUri, new LinkedList)
+        this.snapshotMap.put(uri, new LinkedList)
+        this.objectMap.put(uri, new LinkedList)
         
-        var compilationSystemId = command
         if (string.startsWith("file://")) {
             string = string.substring(7) 
         }
@@ -85,13 +84,13 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
         val resource = resourceSet.getResource(stringUri, true)
         
         var eobject = resource.getContents().head
-        var context = compile(eobject, compilationSystemId)
+        var context = compile(eobject, command)
         for (iResult : context.processorInstancesSequence) {
             // TODO , iResult.environment.errors
-            convertImpl(iResult.environment.model, iResult.environment.getProperty(Environment.SNAPSHOTS), originalUri, iResult.name)
+            convertImpl(iResult.environment.model, iResult.environment.getProperty(Environment.SNAPSHOTS), uri, iResult.name)
         }
         return requestManager.runRead[ cancelIndicator |
-            new CompilationResults(this.snapshotMap.get(originalUri))
+            new CompilationResults(this.snapshotMap.get(uri))
         ]
     }
     
@@ -135,8 +134,17 @@ class SCChartsLanguageServerExtension implements ILanguageServerExtension, Comma
                 this.snapshotMap.get(uri).add(new Snapshot("esterel", processorName, count))
                 count++
             }
+        }  else if (impl instanceof LustreProgramImpl) {
+            this.objectMap.get(uri).add(impl)
+            this.snapshotMap.get(uri).add(new Snapshot("lustre", processorName, 0))
+            var count = 1
+            for (snapshot : snapshots) {
+                this.objectMap.get(uri).add(snapshot as EObject)
+                this.snapshotMap.get(uri).add(new Snapshot("lustre", processorName, count))
+                count++
+            }
         } else {
-            println("Got something I currently do not recognize")
+            println("Got something I currently do not recognize " + impl.class)
         }
         
     }

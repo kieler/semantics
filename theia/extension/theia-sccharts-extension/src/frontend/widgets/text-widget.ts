@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { Message } from "@phosphor/messaging";
+import { Message } from "@theia/core/lib/browser";
 import { BaseWidget } from "@theia/core/lib/browser";
 import PerfectScrollbar from "perfect-scrollbar";
 import { MaybePromise } from "@theia/core";

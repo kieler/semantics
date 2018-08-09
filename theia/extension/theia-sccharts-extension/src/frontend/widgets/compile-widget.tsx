@@ -2,7 +2,7 @@ import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable } from "inversify";
 import { Message } from "@theia/core/lib/browser";
 import * as React from "react";
-import { Constants, Compilation } from "../../common/constants";
+import { Constants } from "../../common/constants";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
 import { SCChartsCommandContribution } from "../language/sccharts-commands";
@@ -10,11 +10,9 @@ import { SCChartsCommandContribution } from "../language/sccharts-commands";
 @injectable()
 export class CompileWidget extends ReactWidget {
 
-    systems : Compilation[] = []
-
-    protected render(): React.ReactNode {
+    render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
-        this.systems.forEach(system => {
+        this.commands.systems.forEach(system => {
             compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>);
         });
         if (compilationElements.length === 0) {
@@ -41,12 +39,9 @@ export class CompileWidget extends ReactWidget {
         this.title.iconClass = 'fa fa-play-circle';
         this.title.closable = true
         this.addClass('compiler-widget') // class for index.css
-
-        this.requestSystemDescribtions()
     }
 
     onActivateRequest(msg: Message): void {
-        this.requestSystemDescribtions()
         super.onActivateRequest(msg);
         this.update()
     }
@@ -89,8 +84,8 @@ export class CompileWidget extends ReactWidget {
         return <div id='compile-button'
             onClick={event => {
                 var selection = document.getElementById("compilation-list") as HTMLSelectElement;
-                if (this.systems.length > 0) {
-                    this.commands.compile(this.systems[selection.selectedIndex].id)
+                if (this.commands.systems.length > 0) {
+                    this.commands.compile(this.commands.systems[selection.selectedIndex].id)
                 } else {
                     this.commands.compile(Constants.compilations[selection.selectedIndex].id)
                 }
@@ -99,27 +94,11 @@ export class CompileWidget extends ReactWidget {
         </div>
     }
 
-    onAfterShow() {
-        this.update()
-    }
-
     onUpdateRequest(msg: Message): void {
-        this.requestSystemDescribtions()
-        super.onUpdateRequest(msg)
-
-    }
-
-    requestSystemDescribtions() {
-        const editor = this.commands.editorManager.currentEditor
-        if (!editor) {
-            this.commands.message("Editor is undefined", "error")
-            return;
-        }
-        const uri = editor.editor.uri.toString();
-        this.commands.client.languageClient.then(lclient => {
-            lclient.sendRequest("sccharts/get_systems", [uri, true]).then((systems : Compilation[]) => {
-                this.systems = systems
-            })
+        this.commands.requestSystemDescribtions().then(() => {
+            super.onUpdateRequest(msg)
+            this.render()
         })
+
     }
 }

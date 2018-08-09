@@ -15,10 +15,12 @@ import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, COMPILER
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompileWidget } from "../widgets/compile-widget";
-import { Workspace, WorkspaceEdit } from "@theia/languages/lib/browser";
+import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
+import { Compilation, Constants} from "../../common/constants";
 @injectable()
 export class SCChartsCommandContribution implements CommandContribution {
 
+    systems: Compilation[];
     isCompiled: Map<string, Boolean> = new Map
     sourceURI: Map<string, string> = new Map
     resultMap: Map<string, CodeContainer> = new Map
@@ -127,7 +129,7 @@ export class SCChartsCommandContribution implements CommandContribution {
      */
     public show(uri : string, index : number) {
         this.client.languageClient.then(lclient => {
-            lclient.sendRequest("sccharts/show", [uri, index]).then((svg: string) => {
+            lclient.sendRequest(Constants.SHOW, [uri, index]).then((svg: string) => {
                 var result = this.resultMap.get(uri)
                 if (result) {
 
@@ -171,7 +173,7 @@ export class SCChartsCommandContribution implements CommandContribution {
         const uri = editor.editor.uri.toString();
         console.log("Compiling " + uri)
         this.client.languageClient.then(lclient => {
-            lclient.sendRequest("sccharts/compile", [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
+            lclient.sendRequest(Constants.COMPILE, [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
                 this.message("Got compilation result for " + uri, "info")
                 if (uri.startsWith("\"")) {
                     this.message("Found error in " + uri, "error")
@@ -180,11 +182,35 @@ export class SCChartsCommandContribution implements CommandContribution {
                 this.resultMap.set(uri as string, snapshotsDescriptions)
                 this.indexMap.set(uri as string, -1)
                 this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
-                this.front.shell.activateWidget("compiler-widget")
+                this.front.shell.activateWidget(Constants.compilerWidgetName)
                 return true
             });
             return false
         })
         return false
+    }
+
+
+
+    async requestSystemDescribtions() : Promise<boolean> {
+        const editor = this.editorManager.currentEditor
+        if (!editor) {
+            this.message("Editor is undefined", "error")
+            return Promise.reject("Editor is undefined")
+        }
+        const uri = editor.editor.uri.toString();
+        try {
+            const lclient : ILanguageClient = await this.client.languageClient
+            const systems : Compilation[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as Compilation[]
+            this.systems = systems
+            this.front.shell.getWidgets("bottom").forEach(widget => {
+                if (widget.id == Constants.compilerWidgetName) {
+                    (widget as CompileWidget).render()
+                }
+            })
+            return Promise.resolve(true)
+        } catch(error) {
+            return Promise.reject("Communication with LS failed")
+        }
     }
 }
