@@ -43,7 +43,7 @@ export class ContextMenuCommands {
 
     private isDesiredEditor(widget: EditorWidget | undefined): widget is EditorWidget {
         if (widget)
-            return widget.editor.document.languageId === Constants.sctxId || widget.editor.document.languageId === Constants.lang2Id;
+            return widget.editor.document.languageId === Constants.sctxId || widget.editor.document.languageId === Constants.sclId;
         else
             return false;
     }

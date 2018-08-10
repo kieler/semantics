@@ -2,6 +2,7 @@ import { injectable, inject } from "inversify";
 import { EditorManager } from "@theia/editor/lib/browser";
 import { KeybindingContext, Keybinding, KeybindingContribution, KeybindingRegistry } from "@theia/core/lib/browser";
 import { SHOW_PREVIOUS, SHOW_NEXT, COMPILER} from "./keith-menu-contribution";
+import { Constants } from "../../common/constants";
 
 /**
  * Defines in which context keybindings for keith can be used
@@ -36,17 +37,17 @@ export class KeithKeybindingContribution implements KeybindingContribution {
              {
                  command: SHOW_PREVIOUS.id,
                  context: this.keithKeybindingContext.id,
-                 keybinding: "alt+g"
+                 keybinding: Constants.SHOW_PREVIOUS_KEYBINDING
              },
              {
                  command: SHOW_NEXT.id,                 
                  context: this.keithKeybindingContext.id,
-                 keybinding: "alt+j"
+                 keybinding: Constants.SHOW_NEXT_KEYBINDING
              },
              {
                  command: COMPILER.id,                 
                  context: this.keithKeybindingContext.id,
-                 keybinding: "ctrl+alt+c"
+                 keybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
              }
          ].forEach(binding => {
              keybindings.registerKeybinding(binding);

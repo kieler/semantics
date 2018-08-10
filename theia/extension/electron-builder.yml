@@ -28,7 +28,7 @@ win:
   
   target:
     - nsis
-  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
 mac:
   # copy ls
   extraResources:
@@ -41,7 +41,7 @@ mac:
       to: "app/kieler.app/Contents/Eclipse/kieler.ini"
   target:
     - tar.gz
-  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
+  icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
     # - dmg only possible on macOS
 linux:
   # copy ls
@@ -57,23 +57,23 @@ linux:
     # - deb
     - AppImage
   category: Development
-  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
+  icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
 
 nsis:
   menuCategory: true
   oneClick: false
   perMachine: true
-  installerHeaderIcon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
-  installerIcon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
-  uninstallerIcon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
-  installerSidebar: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp
-  uninstallerSidebar: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp
+  installerHeaderIcon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  installerIcon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  uninstallerIcon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
+  installerSidebar: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp
+  uninstallerSidebar: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp
   allowToChangeInstallationDirectory: true
   runAfterFinish: false
   artifactName: ${productName}-Installer-${version}.${ext}
 dmg:
-  background: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
-  icon: ../../build/de.cau.cs.kieler.semantics.product.repository/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
+  background: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
+  icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
   iconSize: 128
   contents:
     -

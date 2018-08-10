@@ -7,12 +7,7 @@
 
 import { inject, injectable} from 'inversify'
 import { FrontendApplication } from '@theia/core/lib/browser'
-import {
-    BaseLanguageClientContribution,
-    LanguageClientFactory,
-    Languages,
-    Workspace,
-} from '@theia/languages/lib/browser'
+import { BaseLanguageClientContribution, LanguageClientFactory, Languages, Workspace } from '@theia/languages/lib/browser'
 import { Disposable} from '@theia/core/lib/common';
 import { ContextMenuCommands } from './dynamic-commands';
 import { Constants} from './../../common/constants'
@@ -39,8 +34,8 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
     protected get globPatterns() {
         return [
             '**/*.' + Constants.sctxId,
-            '**/*.' + Constants.lang2Id,
-            '**/*.' + Constants.lang3Id,
+            '**/*.' + Constants.sclId,
+            '**/*.' + Constants.kextId,
             '**/*.' + Constants.annoId,
             '**/*.' + Constants.esterelId,
             '**/*.' + Constants.lustreId
@@ -53,8 +48,8 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
     protected get documentSelector(): string[] {
         return [
             Constants.sctxId,
-            Constants.lang2Id,
-            Constants.lang3Id,
+            Constants.sclId,
+            Constants.kextId,
             Constants.annoId,
             Constants.esterelId,
             Constants.lustreId

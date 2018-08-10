@@ -34,11 +34,12 @@ export class CompileWidget extends ReactWidget {
         protected readonly commands: SCChartsCommandContribution
     ) {
         super();
-        this.id = 'compiler-widget'
+        this.id = Constants.compilerWidgetId
         this.title.label = 'Compile'
         this.title.iconClass = 'fa fa-play-circle';
         this.title.closable = true
-        this.addClass('compiler-widget') // class for index.css
+        this.addClass(Constants.compilerWidgetId) // class for index.css
+        this.node.draggable = false
     }
 
     onActivateRequest(msg: Message): void {

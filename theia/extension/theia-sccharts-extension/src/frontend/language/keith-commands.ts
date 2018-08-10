@@ -11,12 +11,12 @@ import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, CodeContainer, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
+import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompileWidget } from "../widgets/compile-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
-import { Compilation, Constants} from "../../common/constants";
+import { Constants, Compilation, CodeContainer } from "../../common/constants";
 @injectable()
 export class SCChartsCommandContribution implements CommandContribution {
 
@@ -52,9 +52,9 @@ export class SCChartsCommandContribution implements CommandContribution {
         commands.registerCommand(COMPILER, {
             execute: () => {
                 if (this.front.shell.getWidgets("bottom").find((value, index) => {
-                    return value.id == 'compiler-widget'
+                    return value.id == Constants.compilerWidgetId
                 })) {
-                    this.front.shell.activateWidget('compiler-widget')
+                    this.front.shell.activateWidget(Constants.compilerWidgetId)
                 } else {
                     var compileWidget = new CompileWidget(this)
                     this.front.shell.addWidget(compileWidget, {area: "bottom"})
@@ -66,7 +66,7 @@ export class SCChartsCommandContribution implements CommandContribution {
             execute: () => {
                 const editor = this.editorManager.currentEditor
                 if (!editor) {
-                    this.message("Editor is undefined", "error")
+                    this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
                 const uri = editor.editor.uri.toString();
@@ -87,7 +87,7 @@ export class SCChartsCommandContribution implements CommandContribution {
             execute: () => {
                 const editor = this.editorManager.currentEditor
                 if (!editor) {
-                    this.message("Editor is undefined", "error")
+                    this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
                 const uri = editor.editor.uri.toString();
@@ -166,7 +166,7 @@ export class SCChartsCommandContribution implements CommandContribution {
         const editor = this.editorManager.currentEditor;
 
         if (!editor) {
-            this.message("Editor is undefined", "error")
+            this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
             return false;
         }
 
@@ -182,7 +182,7 @@ export class SCChartsCommandContribution implements CommandContribution {
                 this.resultMap.set(uri as string, snapshotsDescriptions)
                 this.indexMap.set(uri as string, -1)
                 this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
-                this.front.shell.activateWidget(Constants.compilerWidgetName)
+                this.front.shell.activateWidget(Constants.compilerWidgetId)
                 return true
             });
             return false
@@ -195,8 +195,8 @@ export class SCChartsCommandContribution implements CommandContribution {
     async requestSystemDescribtions() : Promise<boolean> {
         const editor = this.editorManager.currentEditor
         if (!editor) {
-            this.message("Editor is undefined", "error")
-            return Promise.reject("Editor is undefined")
+            this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
+            return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
         }
         const uri = editor.editor.uri.toString();
         try {
@@ -204,7 +204,7 @@ export class SCChartsCommandContribution implements CommandContribution {
             const systems : Compilation[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as Compilation[]
             this.systems = systems
             this.front.shell.getWidgets("bottom").forEach(widget => {
-                if (widget.id == Constants.compilerWidgetName) {
+                if (widget.id == Constants.compilerWidgetId) {
                     (widget as CompileWidget).render()
                 }
             })

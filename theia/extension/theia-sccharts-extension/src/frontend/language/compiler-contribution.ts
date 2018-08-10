@@ -8,13 +8,13 @@ export class CompilerContribution extends AbstractViewContribution<CompileWidget
 
     constructor() {
         super({
-            widgetId: Constants.compilerWidgetName,
+            widgetId: Constants.compilerWidgetId,
             widgetName: 'Compiler',
             defaultWidgetOptions: {
                 area: 'bottom'
             },
             toggleCommandId: 'compiler:toggle',
-            toggleKeybinding: 'ctrlcmd+alt+c'
+            toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
     }
 

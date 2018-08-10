@@ -10,7 +10,7 @@ import { CommandContribution, MenuContribution} from '@theia/core/lib/common'
 import { SCChartsCommandContribution} from './keith-commands'
 
 import '../../../src/frontend/widgets/style/index.css';
-import { SCChartsMenuContribution } from './keith-menu-contribution';
+import { KeithMenuContribution } from './keith-menu-contribution';
 import { Constants } from '../../common/constants';
 import { configuration, monarchLanguage } from './sctx-monaco-language';
 import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './scl-monaco-language';
@@ -44,26 +44,26 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
 
     // register scl
     monaco.languages.register({ 
-        id: Constants.lang2Id,
-        aliases: [Constants.lang2Name, Constants.lang2Id],
-        extensions: ['.' + Constants.lang2Id],
-        mimetypes: ['text/' + Constants.lang2Id]
+        id: Constants.sclId,
+        aliases: [Constants.sclName, Constants.sclId],
+        extensions: ['.' + Constants.sclId],
+        mimetypes: ['text/' + Constants.sclId]
     })
-    monaco.languages.onLanguage(Constants.lang2Id, () => {
-        monaco.languages.setLanguageConfiguration(Constants.lang2Id, configuration2)
-        monaco.languages.setMonarchTokensProvider(Constants.lang2Id, monarchLanguage2)
+    monaco.languages.onLanguage(Constants.sclId, () => {
+        monaco.languages.setLanguageConfiguration(Constants.sclId, configuration2)
+        monaco.languages.setMonarchTokensProvider(Constants.sclId, monarchLanguage2)
     });
 
     // register kext
     monaco.languages.register({ 
-        id: Constants.lang3Id,
-        aliases: [Constants.lang3Name, Constants.lang3Id],
-        extensions: ['.' + Constants.lang3Id],
-        mimetypes: ['text/' + Constants.lang3Id]
+        id: Constants.kextId,
+        aliases: [Constants.kextName, Constants.kextId],
+        extensions: ['.' + Constants.kextId],
+        mimetypes: ['text/' + Constants.kextId]
     })
-    monaco.languages.onLanguage(Constants.lang3Id, () => {
-        monaco.languages.setLanguageConfiguration(Constants.lang3Id, configuration3)
-        monaco.languages.setMonarchTokensProvider(Constants.lang3Id, monarchLanguage3)
+    monaco.languages.onLanguage(Constants.kextId, () => {
+        monaco.languages.setLanguageConfiguration(Constants.kextId, configuration3)
+        monaco.languages.setMonarchTokensProvider(Constants.kextId, monarchLanguage3)
     });
 
     // register anno
@@ -103,10 +103,10 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     });
 
     // widgets
-    bind(MenuContribution).to(SCChartsMenuContribution).inSingletonScope()
+    bind(MenuContribution).to(KeithMenuContribution).inSingletonScope()
     bind(TextWidget).toSelf().inSingletonScope()
     bind(WidgetFactory).toDynamicValue(context => ({
-        id: Constants.compilerWidgetName,
+        id: Constants.compilerWidgetId,
         createWidget: () => context.container.get<CompileWidget>(CompileWidget)
     }));
 

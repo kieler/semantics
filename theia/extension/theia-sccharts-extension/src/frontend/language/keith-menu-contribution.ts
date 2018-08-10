@@ -31,29 +31,11 @@ export const COMPILER: Command = {
 }
 
 @injectable()
-export class SCChartsMenuContribution implements MenuContribution {
+export class KeithMenuContribution implements MenuContribution {
 
     registerMenus(menus: MenuModelRegistry): void {
         menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
             commandId: COMPILER.id
         });
-    }
-}
-
-export interface CodeContainer {
-    files: Snapshots[]
-}
-
-/**
- * (name, snapshotId) should be unique. GroupId for bundling in phases. Value holds text
- */
-export class Snapshots {
-    groupId: string
-    name: string;
-    snapshotIndex: number;
-    constructor(groupId: string, name: string, snapshotIndex : number) {
-        this.groupId = groupId
-        this.name = name
-        this.snapshotIndex = snapshotIndex
     }
 }
