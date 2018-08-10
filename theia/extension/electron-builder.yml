@@ -23,7 +23,7 @@ win:
       to: "app/kieler/"
       filter: ["**/*", "!kieler.ini"]
     - 
-      from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/util/kieler.ini"
+      from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/util/kieler-win.ini"
       to: "app/kieler/kieler.ini"
   
   target:
