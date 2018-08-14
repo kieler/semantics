@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
 import { EditorManager } from "@theia/editor/lib/browser";
 import { KeybindingContext, Keybinding, KeybindingContribution, KeybindingRegistry } from "@theia/core/lib/browser";
-import { SHOW_PREVIOUS, SHOW_NEXT, COMPILER} from "./keith-menu-contribution";
+import { SHOW_PREVIOUS, SHOW_NEXT, COMPILER } from "./keith-menu-contribution";
 import { Constants } from "../../common/constants";
 
 /**

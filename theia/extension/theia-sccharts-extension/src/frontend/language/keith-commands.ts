@@ -14,7 +14,7 @@ import { KeithLanguageClientContribution } from "./keith-language-client-contrib
 import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
-import { CompileWidget } from "../widgets/compile-widget";
+import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, Compilation, CodeContainer } from "../../common/constants";
 @injectable()
@@ -56,7 +56,7 @@ export class SCChartsCommandContribution implements CommandContribution {
                 })) {
                     this.front.shell.activateWidget(Constants.compilerWidgetId)
                 } else {
-                    var compileWidget = new CompileWidget(this)
+                    var compileWidget = new CompilerWidget(this)
                     this.front.shell.addWidget(compileWidget, {area: "bottom"})
                     this.front.shell.activateWidget(compileWidget.id)
                 }
@@ -205,7 +205,7 @@ export class SCChartsCommandContribution implements CommandContribution {
             this.systems = systems
             this.front.shell.getWidgets("bottom").forEach(widget => {
                 if (widget.id == Constants.compilerWidgetId) {
-                    (widget as CompileWidget).render()
+                    (widget as CompilerWidget).render()
                 }
             })
             return Promise.resolve(true)

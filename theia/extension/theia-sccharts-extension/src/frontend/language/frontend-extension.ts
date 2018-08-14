@@ -19,14 +19,13 @@ import { configuration as configuration4, monarchLanguage as monarchLanguage4} f
 import { configuration as configuration5, monarchLanguage as monarchLanguage5} from './strl-monaco-language';
 import { configuration as configuration6, monarchLanguage as monarchLanguage6} from './lus-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
-import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory } from '@theia/core/lib/browser';
+import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory} from '@theia/core/lib/browser';
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
-import { ContextMenuCommands } from './dynamic-commands';
 import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider';
 import { KeithMonacoEditorProvider } from '../monaco/keith-monaco-editor-provider';
 import { KeithKeybindingContext, KeithKeybindingContribution } from './keith-keybinding-context';
-import { CompileWidget } from '../widgets/compile-widget';
+import { CompilerWidget } from '../widgets/compiler-widget';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
 
@@ -105,19 +104,17 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // widgets
     bind(MenuContribution).to(KeithMenuContribution).inSingletonScope()
     bind(TextWidget).toSelf().inSingletonScope()
+    bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
+    bind(CompilerWidget).toSelf().inSingletonScope()
     bind(WidgetFactory).toDynamicValue(context => ({
         id: Constants.compilerWidgetId,
-        createWidget: () => context.container.get<CompileWidget>(CompileWidget)
+        createWidget: () => context.container.get<CompilerWidget>(CompilerWidget)
     }));
-
-    bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
 
     // languages
     bind(KeithLanguageClientContribution).toSelf().inSingletonScope()
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithLanguageClientContribution))
     
-    // apparently for command core.save
-    bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
     // needed to open editor
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
 

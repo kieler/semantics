@@ -8,8 +8,6 @@
 import { inject, injectable} from 'inversify'
 import { FrontendApplication } from '@theia/core/lib/browser'
 import { BaseLanguageClientContribution, LanguageClientFactory, Languages, Workspace } from '@theia/languages/lib/browser'
-import { Disposable} from '@theia/core/lib/common';
-import { ContextMenuCommands } from './dynamic-commands';
 import { Constants} from './../../common/constants'
 
 @injectable()
@@ -21,8 +19,7 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
     constructor(
         @inject(Workspace) workspace: Workspace,
         @inject(Languages) languages: Languages,
-        @inject(LanguageClientFactory) languageClientFactory: LanguageClientFactory,
-        @inject(ContextMenuCommands) protected commands: ContextMenuCommands
+        @inject(LanguageClientFactory) languageClientFactory: LanguageClientFactory
     ) {
         super(workspace, languages, languageClientFactory)
     }
@@ -61,9 +58,5 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
         return Promise.race([
             super.waitForActivation(app)
         ])
-    }
-
-    registerCommand(id: string, callback: (...args: any[]) => any, thisArg?: any): Disposable {
-        return this.commands.registerCommand(id, callback, thisArg)
     }
 }

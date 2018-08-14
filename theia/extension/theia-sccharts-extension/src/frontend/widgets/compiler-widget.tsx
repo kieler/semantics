@@ -8,7 +8,7 @@ import "../../../src/frontend/widgets/style/compiler-widget.css";
 import { SCChartsCommandContribution } from "../language/keith-commands";
 
 @injectable()
-export class CompileWidget extends ReactWidget {
+export class CompilerWidget extends ReactWidget {
 
     render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
@@ -16,9 +16,7 @@ export class CompileWidget extends ReactWidget {
             compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>);
         });
         if (compilationElements.length === 0) {
-            Constants.compilations.forEach(system => {
-                compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>);
-            });
+            compilationElements.push(<option value="NONE" key="NONE">NONE</option>);
         }
         return <React.Fragment>
             <div id="compilation-panel">

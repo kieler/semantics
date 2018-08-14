@@ -1,10 +1,10 @@
 import { injectable } from "inversify";
 import { AbstractViewContribution } from '@theia/core/lib/browser/shell/view-contribution';
-import { CompileWidget } from "./../widgets/compile-widget";
+import { CompilerWidget } from "./../widgets/compiler-widget";
 import { Constants } from "../../common/constants";
 
 @injectable()
-export class CompilerContribution extends AbstractViewContribution<CompileWidget> {
+export class CompilerContribution extends AbstractViewContribution<CompilerWidget> {
 
     constructor() {
         super({
@@ -17,5 +17,4 @@ export class CompilerContribution extends AbstractViewContribution<CompileWidget
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
     }
-
 }
