@@ -7,7 +7,7 @@
 
 import { ContainerModule, interfaces} from 'inversify'
 import { CommandContribution, MenuContribution} from '@theia/core/lib/common'
-import { SCChartsCommandContribution} from './keith-commands'
+import { KeithCommandContribution} from './keith-commands'
 
 import '../../../src/frontend/widgets/style/index.css';
 import { KeithMenuContribution } from './keith-menu-contribution';
@@ -119,7 +119,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
 
     // added for keybinding and commands
-    bind(CommandContribution).to(SCChartsCommandContribution).inSingletonScope()
+    bind(CommandContribution).to(KeithCommandContribution).inSingletonScope()
     bind(KeithKeybindingContext).toSelf()
     bind(KeybindingContext).toDynamicValue(context => context.container.get(KeithKeybindingContext));
     bind(KeybindingContribution).to(KeithKeybindingContribution)

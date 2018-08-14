@@ -4,17 +4,17 @@ import { CommonMenus } from '@theia/core/lib/browser';
 
 
 /**
- * Show SCCharts references
+ * Show references
  */
-export const SHOW_SCCHARTS_REFERENCES: Command = {
-    id: 'sccharts.show.references'
+export const SHOW_REFERENCES: Command = {
+    id: 'show.references'
 };
 
 /**
  * Apply Workspace Edit
  */
 export const APPLY_WORKSPACE_EDIT: Command = {
-    id: 'sccharts.apply.workspaceEdit'
+    id: 'apply.workspaceEdit'
 };
 
 export const SHOW_NEXT: Command = {

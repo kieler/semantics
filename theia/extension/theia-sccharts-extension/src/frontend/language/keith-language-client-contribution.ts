@@ -5,10 +5,10 @@
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { inject, injectable} from 'inversify'
+import { inject, injectable } from 'inversify'
 import { FrontendApplication } from '@theia/core/lib/browser'
 import { BaseLanguageClientContribution, LanguageClientFactory, Languages, Workspace } from '@theia/languages/lib/browser'
-import { Constants} from './../../common/constants'
+import { Constants } from './../../common/constants'
 
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
@@ -52,7 +52,7 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
             Constants.lustreId
 
         ];
-}
+    }
 
     waitForActivation(app: FrontendApplication): Promise<any> {
         return Promise.race([

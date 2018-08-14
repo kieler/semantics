@@ -11,17 +11,17 @@ import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
-import { SHOW_SCCHARTS_REFERENCES, APPLY_WORKSPACE_EDIT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
+import { SHOW_REFERENCES, APPLY_WORKSPACE_EDIT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, Compilation, CodeContainer } from "../../common/constants";
 @injectable()
-export class SCChartsCommandContribution implements CommandContribution {
+export class KeithCommandContribution implements CommandContribution {
 
     systems: Compilation[];
-    isCompiled: Map<string, Boolean> = new Map
+    isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
     resultMap: Map<string, CodeContainer> = new Map
     indexMap: Map<string, number> = new Map
@@ -41,7 +41,7 @@ export class SCChartsCommandContribution implements CommandContribution {
     }
 
     registerCommands(commands: CommandRegistry): void {
-        commands.registerCommand(SHOW_SCCHARTS_REFERENCES, {
+        commands.registerCommand(SHOW_REFERENCES, {
             execute: (uri: string, position: Position, locations: Location[]) =>
                 commands.executeCommand(EditorCommands.SHOW_REFERENCES.id, uri, position, locations)
         });
@@ -175,6 +175,19 @@ export class SCChartsCommandContribution implements CommandContribution {
         this.client.languageClient.then(lclient => {
             lclient.sendRequest(Constants.COMPILE, [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
                 this.message("Got compilation result for " + uri, "info")
+                snapshotsDescriptions.files.forEach(snapshot => {
+                    if (snapshot.errors.length > 0) {
+                        this.message(snapshot.errors.reduce( (s1, s2) => s1 + " " + s2, ""), "error")
+                    }
+
+                    if (snapshot.warnings.length > 0) {
+                        this.message(snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, ""), "warn")
+                    }
+
+                    if (snapshot.infos.length > 0) {
+                        this.message(snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, ""), "info")
+                    }
+                });
                 if (uri.startsWith("\"")) {
                     this.message("Found error in " + uri, "error")
                 }

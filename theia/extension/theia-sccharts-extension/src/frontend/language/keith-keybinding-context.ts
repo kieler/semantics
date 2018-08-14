@@ -9,7 +9,9 @@ import { Constants } from "../../common/constants";
  */
 @injectable()
 export class KeithKeybindingContext implements KeybindingContext {
-    constructor( @inject(EditorManager) protected readonly editorService: EditorManager) { }
+    constructor(
+        @inject(EditorManager) protected readonly editorService: EditorManager
+    ) { }
 
     readonly id = 'keith.keybinding.context';
 
@@ -18,6 +20,9 @@ export class KeithKeybindingContext implements KeybindingContext {
      * @param arg keybinding to check
      */
     isEnabled(arg: Keybinding): boolean {
+        if (!this.editorService.currentEditor) {
+            return false
+        }
         return true
     }
 }

@@ -1,7 +1,7 @@
-    // editor configuration
+// editor configuration
 
 export namespace Constants {
-    export const autoSave : "off" | "on" = "off"
+    export const autoSave: "off" | "on" = "off"
     export const dragAndDrop = true
     export const autoIndent = true
     export const formatOnPaste = true
@@ -18,20 +18,20 @@ export namespace Constants {
     export const esterelName = 'Esterel'
     export const lustreId = 'lus'
     export const lustreName = 'Lustre'
-    export const netlist : string = 'de.cau.cs.kieler.sccharts.netlist'
-    export const netlistJava : string = 'de.cau.cs.kieler.sccharts.netlist.java'
-    export const priorityJava : string = 'de.cau.cs.kieler.sccharts.priority.java'
-    export const extendedCore : string = 'de.cau.cs.kieler.sccharts.extended.core'
+    export const netlist: string = 'de.cau.cs.kieler.sccharts.netlist'
+    export const netlistJava: string = 'de.cau.cs.kieler.sccharts.netlist.java'
+    export const priorityJava: string = 'de.cau.cs.kieler.sccharts.priority.java'
+    export const extendedCore: string = 'de.cau.cs.kieler.sccharts.extended.core'
 
-    export const netlistCompilation : Compilation = {label : "Netlist", id : netlist}
-    export const netlistJavaCompilation = {label : "Netlist Java", id : netlistJava}
-    export const priorityJavaCompilation = {label : "Priorities Java", id : priorityJava}
+    export const netlistCompilation: Compilation = { label: "Netlist", id: netlist }
+    export const netlistJavaCompilation = { label: "Netlist Java", id: netlistJava }
+    export const priorityJavaCompilation = { label: "Priorities Java", id: priorityJava }
     export const compilerWidgetId = "compiler-widget"
     export const COMPILE: string = 'sccharts/compile'
     export const SHOW: string = 'sccharts/show'
     export const GET_SYSTEMS: string = 'sccharts/get_systems'
 
-    export const compilations : Compilation[] = [ netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
+    export const compilations: Compilation[] = [netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
 
     export const OPEN_COMPILER_WIDGET_KEYBINDING = "ctrl+alt+c"
     export const SHOW_PREVIOUS_KEYBINDING = "alt+g"
@@ -42,8 +42,8 @@ export namespace Constants {
 
 
 export class Compilation {
-    label : string
-    id : string
+    label: string
+    id: string
 }
 
 export interface CodeContainer {
@@ -57,7 +57,10 @@ export class Snapshots {
     groupId: string
     name: string;
     snapshotIndex: number;
-    constructor(groupId: string, name: string, snapshotIndex : number) {
+    errors : string[];
+    warnings : string[];
+    infos : string[];
+    constructor(groupId: string, name: string, snapshotIndex: number) {
         this.groupId = groupId
         this.name = name
         this.snapshotIndex = snapshotIndex

@@ -5,7 +5,7 @@ import * as React from "react";
 import { Constants } from "../../common/constants";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
-import { SCChartsCommandContribution } from "../language/keith-commands";
+import { KeithCommandContribution } from "../language/keith-commands";
 
 @injectable()
 export class CompilerWidget extends ReactWidget {
@@ -29,7 +29,7 @@ export class CompilerWidget extends ReactWidget {
         </React.Fragment>
     }
     constructor(
-        protected readonly commands: SCChartsCommandContribution
+        protected readonly commands: KeithCommandContribution
     ) {
         super();
         this.id = Constants.compilerWidgetId
