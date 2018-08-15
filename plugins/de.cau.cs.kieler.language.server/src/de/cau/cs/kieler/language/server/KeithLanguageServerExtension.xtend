@@ -100,11 +100,6 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         var impl = environment.model
         var errors = environment.errors
         var warnings = environment.warnings
-        if (!warnings.empty) {
-            println("Test")
-            
-            var test = (warnings.get(null) as MessageObjectList)
-        }
         var infos = environment.infos
         if (impl instanceof CodeContainer) {
             this.objectMap.get(uri).add(impl)

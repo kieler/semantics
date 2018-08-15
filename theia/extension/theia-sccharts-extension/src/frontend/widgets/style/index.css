@@ -19,7 +19,6 @@ button, .show-button {
     border: none;
     border-radius: 0;
     color: var(--theia-ui-button-font-color);
-    background-color: var(--theia-ui-button-color);
     min-width: 5px;
     min-height: 5px;
     outline: none;
@@ -32,5 +31,14 @@ button, .show-button {
     border-radius: 1px;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 1px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px -2px rgba(0, 0, 0, 0.12);
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.show-button.red {
+    background-color: var(--theia-error-color1);
+}
+.show-button.yellow {
+    background-color: var(--theia-warn-color1);
+}
+.show-button.blue {
+    background-color: var(--theia-ui-button-color);
 }
 

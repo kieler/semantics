@@ -26,6 +26,7 @@ export class KeithCommandContribution implements CommandContribution {
     resultMap: Map<string, CodeContainer> = new Map
     indexMap: Map<string, number> = new Map
     lengthMap: Map<string, number> = new Map
+    infoMap: Map<string, string[]> = new Map
 
     constructor(
         @inject(Workspace) protected readonly workspace: Workspace,
@@ -131,13 +132,17 @@ export class KeithCommandContribution implements CommandContribution {
         this.client.languageClient.then(lclient => {
             lclient.sendRequest(Constants.SHOW, [uri, index]).then((svg: string) => {
                 var result = this.resultMap.get(uri)
+                var infoList = this.infoMap.get(uri)
+                var info = ""
+                if (infoList) {
+                    info = infoList[index]
+                }
                 if (result) {
-
                     var snapshotDescription = result.files[index];
                     if (this.front.shell.getWidgets("main").find((value, index) => {
                         if (value.id == uri) {
                             (value as TextWidget).updateContent("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
-                            snapshotDescription.snapshotIndex, svg)
+                            snapshotDescription.snapshotIndex, info  + svg)
                             return true
                         }
                         return false
@@ -145,7 +150,7 @@ export class KeithCommandContribution implements CommandContribution {
                         this.front.shell.activateWidget(uri)
                     } else {
                         this.front.shell.addWidget(new TextWidget("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
-                        snapshotDescription.snapshotIndex, svg, uri), { area: "main" })
+                        snapshotDescription.snapshotIndex, info + svg, uri), { area: "main" })
                         this.front.shell.activateWidget(uri)
                     }
                 } else {
@@ -175,19 +180,28 @@ export class KeithCommandContribution implements CommandContribution {
         this.client.languageClient.then(lclient => {
             lclient.sendRequest(Constants.COMPILE, [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
                 this.message("Got compilation result for " + uri, "info")
+                var infoList : string[] = []
                 snapshotsDescriptions.files.forEach(snapshot => {
+                    var error, warning, info
                     if (snapshot.errors.length > 0) {
-                        this.message(snapshot.errors.reduce( (s1, s2) => s1 + " " + s2, ""), "error")
+                        error = "ERROR: " +  snapshot.errors.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                        this.outputManager.getChannel("SCTX").appendLine(error)
                     }
 
                     if (snapshot.warnings.length > 0) {
-                        this.message(snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, ""), "warn")
+                        warning = "WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                        this.outputManager.getChannel("SCTX").appendLine("WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
+
                     }
 
                     if (snapshot.infos.length > 0) {
-                        this.message(snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, ""), "info")
+                        info = "INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                        this.outputManager.getChannel("SCTX").appendLine("INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
+
                     }
+                    infoList.push(((error) ? error + "<br>" : "") + ((warning) ? warning + "<br>" : "") + ((info) ? info + "<br>" : ""))
                 });
+                this.infoMap.set(uri as string, infoList)
                 if (uri.startsWith("\"")) {
                     this.message("Found error in " + uri, "error")
                 }

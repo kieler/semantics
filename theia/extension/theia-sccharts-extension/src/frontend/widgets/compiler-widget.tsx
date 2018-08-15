@@ -52,7 +52,7 @@ export class CompilerWidget extends ReactWidget {
         if (!editor) {
             return
         }
-        var uri = editor.getTargetUri()
+        var uri = editor.getResourceUri()
         if (!uri) {
             return
         }
@@ -60,11 +60,12 @@ export class CompilerWidget extends ReactWidget {
         if (!snapshots) {
             return
         }
-        snapshots.files.forEach((textDocument, index) => {
+        snapshots.files.forEach((snapshot, index) => {
 
             showButtons.push(
-                <div key={index} id={"showButton" + (index < 10 ? "0" + index : index)} className='show-button'
-                    title={textDocument.name}
+                <div key={index} id={"showButton" + (index < 10 ? "0" + index : index)} className={'show-button'.concat((snapshot.errors.length > 0) ? ' red' : 
+                    (snapshot.warnings.length > 0) ? ' yellow' : ' blue')}
+                    title={snapshot.name}
                     onClick={event => {
                         if (!uri) {
                             return
@@ -98,6 +99,5 @@ export class CompilerWidget extends ReactWidget {
             super.onUpdateRequest(msg)
             this.render()
         })
-
     }
 }
