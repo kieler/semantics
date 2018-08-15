@@ -222,7 +222,7 @@ export class KeithCommandContribution implements CommandContribution {
     async requestSystemDescribtions() : Promise<boolean> {
         const editor = this.editorManager.currentEditor
         if (!editor) {
-            this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
+            // this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
             return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
         }
         const uri = editor.editor.uri.toString();

@@ -2,17 +2,16 @@
 	font-size: var(--theia-ui-font-size1);
     padding: 6px;
     color: var(--theia-ui-font-color1);
+    display: grid;
+    grid-auto-rows: min-content;
 }
 
 #compiler-widget #compilation-panel {
-    float: right;
-    line-height: var(--theia-content-line-height);
-    font-size: var(--theia-ui-font-size1);
+    margin-top: 12px;
 }
 
 #compiler-widget #compilation-list {
     float: left;
-    right: 24px;
     line-height: var(--theia-content-line-height);
     font-size: var(--theia-ui-font-size1);
     border-width: 1px;
@@ -27,8 +26,6 @@
     background-position: calc(100% - 6px) 8px, calc(100% - 2px) 8px, 100% 0;
     background-size: 4px 5px;
     background-repeat: no-repeat;
-    padding-left: 3px;
-    padding-right: 15px;
 }
 
 #compiler-widget #compile-button {
@@ -37,12 +34,14 @@
     color: var(--theia-ui-button-font-color);
     background-color: var(--theia-ui-button-color);
     block-size: var(--theia-content-line-height);
-    min-width: var(--theia-content-line-height);
+    margin-left: calc(var(--theia-ui-padding)*2);
     line-height: var(--theia-content-line-height);
     border: none;
     border-radius: 0;
     outline: none;
     cursor: pointer;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 1px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px -2px rgba(0, 0, 0, 0.12);
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;padding-left: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
 }

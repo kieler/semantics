@@ -9,7 +9,7 @@ import { KeithCommandContribution } from "../language/keith-commands";
 
 @injectable()
 export class CompilerWidget extends ReactWidget {
-
+    
     render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
         this.commands.systems.forEach(system => {
@@ -63,8 +63,8 @@ export class CompilerWidget extends ReactWidget {
         snapshots.files.forEach((snapshot, index) => {
 
             showButtons.push(
-                <div key={index} id={"showButton" + (index < 10 ? "0" + index : index)} className={'show-button'.concat((snapshot.errors.length > 0) ? ' red' : 
-                    (snapshot.warnings.length > 0) ? ' yellow' : ' blue')}
+                <div key={index} id={"showButton" + (index < 10 ? "0" + index : index)} className={'show-button'.concat((snapshot.errors.length > 0) ? ' error' : 
+                    (snapshot.warnings.length > 0) ? ' warn' : (snapshot.infos.length > 0 ) ? ' info' : '')}
                     title={snapshot.name}
                     onClick={event => {
                         if (!uri) {
@@ -72,10 +72,11 @@ export class CompilerWidget extends ReactWidget {
                         }
                         this.commands.show(uri.toString(), index)
                     }}>
+                    {snapshot.snapshotIndex == 0 ? snapshot.name : ""}
                 </div >
             )
         });
-        return <div id="showButtonContainer0" className='buttonContainer flexcontainer'>
+        return <div id="showButtonContainer0" className='buttonContainer'>
             {showButtons}
         </div>
     }
