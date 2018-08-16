@@ -57,34 +57,38 @@ class LanguageServerLauncher extends ServerLauncher {
         
 
         // register languages (sublanguages are also registered)
-            new SCLIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
-            new SCTXIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new KeithServerModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
-            
-            new EsterelIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
-            
-            new LustreIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
+        bindAndRegisterLanguages()
         
         // Launch the server
         launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [
             bind(ServerLauncher).to(LanguageServerLauncher)
             bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
         ]))
+    }
+    
+    static def bindAndRegisterLanguages() {
+        new SCLIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
+        new SCTXIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new KeithServerModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
+        
+        new EsterelIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
+        
+        new LustreIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
     }
 
     @Inject LanguageServerImpl languageServer

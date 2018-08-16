@@ -1,5 +1,5 @@
 import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
-import { injectable } from "inversify";
+import { injectable, LazyServiceIdentifer, inject } from "inversify";
 import { Message } from "@theia/core/lib/browser";
 import * as React from "react";
 import { Constants } from "../../common/constants";
@@ -29,7 +29,7 @@ export class CompilerWidget extends ReactWidget {
         </React.Fragment>
     }
     constructor(
-        protected readonly commands: KeithCommandContribution
+        @inject(new LazyServiceIdentifer(() => KeithCommandContribution)) protected readonly commands: KeithCommandContribution
     ) {
         super();
         this.id = Constants.compilerWidgetId
@@ -52,7 +52,7 @@ export class CompilerWidget extends ReactWidget {
         if (!editor) {
             return
         }
-        var uri = editor.getResourceUri()
+        var uri = editor.editor.uri
         if (!uri) {
             return
         }

@@ -11,7 +11,7 @@ import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
 import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
 import { FileSystem } from "@theia/filesystem/lib/common";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
-import { SHOW_REFERENCES, APPLY_WORKSPACE_EDIT, COMPILER, SHOW_NEXT, SHOW_PREVIOUS} from "./keith-menu-contribution";
+import { SHOW_REFERENCES, APPLY_WORKSPACE_EDIT, SHOW_NEXT, SHOW_PREVIOUS, COMPILER } from "./keith-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";

@@ -41,7 +41,6 @@ import de.cau.cs.kieler.scl.impl.SCLProgramImpl
 import de.cau.cs.kieler.esterel.impl.EsterelProgramImpl
 import de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl
 import de.cau.cs.kieler.kexpressions.kext.impl.KextImpl
-import de.cau.cs.kieler.kicool.environments.MessageObjectList
 
 /**
  * @author sdo

@@ -11,9 +11,9 @@
             "program": "${workspaceRoot}/sccharts-app/src-gen/backend/main.js",
             "args": [
                 "--root-dir=./workspace",
-                "--LSP_PORT=5007",
+                "--LSP_PORT=5009",
                 "--loglevel=debug",
-                "--port=3000",
+                "--port=3001",
                 "--no-cluster"
             ],
             "env": {

@@ -19,7 +19,7 @@ import { configuration as configuration4, monarchLanguage as monarchLanguage4} f
 import { configuration as configuration5, monarchLanguage as monarchLanguage5} from './strl-monaco-language';
 import { configuration as configuration6, monarchLanguage as monarchLanguage6} from './lus-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
-import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory} from '@theia/core/lib/browser';
+import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory } from '@theia/core/lib/browser';
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
 import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider';
@@ -124,4 +124,5 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(KeybindingContext).toDynamicValue(context => context.container.get(KeithKeybindingContext));
     bind(KeybindingContribution).to(KeithKeybindingContribution)
 
+    // bindViewContribution(bind, CompilerContribution)
 })

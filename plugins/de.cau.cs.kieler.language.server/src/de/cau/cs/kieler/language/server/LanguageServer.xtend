@@ -73,28 +73,7 @@ class LanguageServer implements IApplication {
                
             // Start all language servers
             println("Starting language server socket")
-            new SCLIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
-            new SCTXIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new KeithServerModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
-            
-            new EsterelIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
-            
-            new LustreIdeSetup {
-                override createInjector() {
-                    Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
-                }
-            }.createInjectorAndDoEMFRegistration()
+            LanguageServerLauncher.bindAndRegisterLanguages()
             
             val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)

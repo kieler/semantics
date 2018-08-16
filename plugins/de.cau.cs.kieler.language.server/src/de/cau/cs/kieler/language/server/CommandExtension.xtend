@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.language.server
 
 import java.util.concurrent.CompletableFuture
-import org.eclipse.lsp4j.ExecuteCommandParams
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 
@@ -38,6 +37,9 @@ interface CommandExtension {
     @JsonRequest('show')
     def CompletableFuture<Object> show(String uri, int index)
     
+    /**
+     * Returns all compilation systems which are applicable for the file at given uri
+     */
     @JsonRequest('get_systems')
     def CompletableFuture<Object> getSystems(String uri, boolean filter)
 }

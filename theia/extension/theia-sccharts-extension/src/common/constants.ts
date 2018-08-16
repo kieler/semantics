@@ -33,7 +33,7 @@ export namespace Constants {
 
     export const compilations: Compilation[] = [netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
 
-    export const OPEN_COMPILER_WIDGET_KEYBINDING = "ctrl+alt+c"
+    export const OPEN_COMPILER_WIDGET_KEYBINDING = "ctrlcmd+alt+c"
     export const SHOW_PREVIOUS_KEYBINDING = "alt+g"
     export const SHOW_NEXT_KEYBINDING = "alt+j"
 
