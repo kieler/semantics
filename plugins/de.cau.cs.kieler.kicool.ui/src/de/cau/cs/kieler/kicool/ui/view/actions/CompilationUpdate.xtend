@@ -35,6 +35,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDa
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm
@@ -65,7 +66,7 @@ class CompilationUpdate extends KiCoolUIObserver {
             CompilationFinished: {
                     CompilationActionSimSalabim.simSalabim(notification)
                     
-                    if (view.forwardResultToggle.checked) {
+                    if (CompilerViewUtil.checkedForwardResultToggle) {
                         val editor = notification.compilationContext.inputEditor
                         var model = notification.environment.getProperty(Environment.MODEL)
                         view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
@@ -83,7 +84,7 @@ class CompilationUpdate extends KiCoolUIObserver {
                         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                     }
                     
-                    if (view.visualLayoutFeedbackToggle.checked) {
+                    if (CompilerViewUtil.checkedVisualLayoutFeedbackToggle) {
                         notification.postUpdateProcessors(view.viewContext.viewModel, view)    
                     }
                     

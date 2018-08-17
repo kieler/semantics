@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm
@@ -28,8 +29,6 @@ class VisualLayoutFeedbackToggle extends AbstractAction {
 
     /** The action for toggling debug mode. */
     @Accessors private IToolBarManager toolBar
-    
-    @Accessors boolean isChecked
     
     new(CompilerView view) {
         super(view, 
@@ -44,7 +43,7 @@ class VisualLayoutFeedbackToggle extends AbstractAction {
     }
     
     override void invoke() {
-        isChecked = action.checked
+        CompilerViewUtil.isCheckedVisualLayoutFeedbackToggle = action.checked
     }
 
     

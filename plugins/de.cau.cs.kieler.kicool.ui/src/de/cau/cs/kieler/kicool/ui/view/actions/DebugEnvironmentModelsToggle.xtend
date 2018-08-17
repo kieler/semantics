@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 import org.eclipse.jface.action.IAction
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm
@@ -24,8 +25,6 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 class DebugEnvironmentModelsToggle extends AbstractAction {
 
     private static val DEBUG_ENVIRONMENT_MODELS_TOGGLE_ACTION_DEFAULT = false
-
-    @Accessors boolean isChecked
 
     new(CompilerView view) {
         super(view, 
@@ -39,7 +38,7 @@ class DebugEnvironmentModelsToggle extends AbstractAction {
     }
     
     override void invoke() {
-        isChecked = action.isChecked
+        CompilerViewUtil.isCheckedDebugEnvironmentModelsToggle = action.isChecked
     }
     
 }

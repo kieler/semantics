@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import org.eclipse.ui.IEditorPart
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm
@@ -68,17 +69,17 @@ class CompilationAction {
         val cc = Compile.createCompilationContext(view.editPartSystemManager.activeSystem, model)
         cc.inputEditor = editor
         
-        if (view.compileInplaceToggle.checked) {
+        if (CompilerViewUtil.checkedCompileInplaceToggle) {
             cc.startEnvironment.setProperty(Environment.INPLACE, true)
         }
-        if (view.compileTracingToggle.checked) {
+        if (CompilerViewUtil.checkedCompileTracingToggle) {
             cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
         }
-        if (view.debugEnvironmentModelsToggle.checked) {
+        if (CompilerViewUtil.checkedDebugEnvironmentModelsToggle) {
             cc.startEnvironment.setProperty(Environment.DEBUG_ENVIRONMENT_MODELS, true)
             cc.startEnvironment.setProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM, true)
         }
-        if (view.developerToggle.checked) {
+        if (CompilerViewUtil.checkedDeveloperToggle) {
             cc.startEnvironment.setProperty(Environment.DEVELOPER_MODE, true)
         }
                 

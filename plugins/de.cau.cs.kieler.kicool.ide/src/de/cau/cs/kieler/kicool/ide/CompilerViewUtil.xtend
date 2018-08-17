@@ -16,12 +16,27 @@ import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.System
 import java.util.List
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author sdo
  *
  */
 class CompilerViewUtil {
+    
+    
+    public static val COMPILE_INPLACE_TOGGLE_ACTION_DEFAULT = false
+    
+    @Accessors static boolean isCheckedDeveloperToggle
+    @Accessors static boolean isCheckedFlattenSystemViewToggle
+    @Accessors static boolean isCheckedForwardResultToggle
+    @Accessors static boolean isCheckedAutoCompileToggle
+    @Accessors static boolean isCheckedVisualLayoutFeedbackToggle
+    @Accessors static boolean isCheckedCompileInplaceToggle
+    @Accessors static boolean isCheckedCompileTracingToggle
+    @Accessors static boolean isCheckedDebugEnvironmentModelsToggle
+    @Accessors static boolean isCheckedShowPrivateSystemsToggle
+    
     static def String getDefaultSystem(String editorId) {
 		return DefaultSystemAssociation.getDefaultSystem(editorId)
 	}

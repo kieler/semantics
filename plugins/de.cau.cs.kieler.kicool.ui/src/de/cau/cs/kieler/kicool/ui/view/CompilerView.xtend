@@ -44,6 +44,7 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -203,7 +204,7 @@ class CompilerView extends DiagramViewPart {
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
         properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
-            KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object)
+            KiCoolSynthesis.FLATTEN_SYSTEM -> ((CompilerViewUtil.checkedDeveloperToggle && CompilerViewUtil.checkedFlattenSystemViewToggle) as Object)
         })
                                 
         updateDiagram(editPartSystemManager.activeSystem, properties)

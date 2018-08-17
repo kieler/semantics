@@ -17,6 +17,7 @@ import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author als
@@ -30,8 +31,6 @@ class FlattenSystemViewToggle extends AbstractAction {
     public static final ImageDescriptor ICON = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kicool.ui", "icons/IMBC_flat.png");
 
-    @Accessors boolean isChecked
-
     new(CompilerView view) {
         super(view, 
             "FlattenSystemViewToggle", 
@@ -44,7 +43,7 @@ class FlattenSystemViewToggle extends AbstractAction {
     }
     
     override void invoke() {
-        isChecked = action.isChecked
+        CompilerViewUtil.isCheckedFlattenSystemViewToggle = action.isChecked
         view.updateView
     }
     

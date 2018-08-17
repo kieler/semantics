@@ -16,6 +16,7 @@ import org.eclipse.jface.action.IAction
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IToolBarManager
+import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm
@@ -28,8 +29,6 @@ class ForwardResultToggle extends AbstractAction {
 
     /** The action for toggling forward result mode. */
     @Accessors private IToolBarManager toolBar
-    
-    @Accessors boolean isChecked
     
     new(CompilerView view) {
         super(view, 
@@ -44,7 +43,7 @@ class ForwardResultToggle extends AbstractAction {
     }
     
     override void invoke() {
-        isChecked = action.isChecked
+        CompilerViewUtil.isCheckedForwardResultToggle = action.isChecked
     }
     
     
