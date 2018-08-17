@@ -413,14 +413,6 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val hasTrigger = transition.trigger !== null
         var indentationLength = indentation.length
         
-        if (index > 0) {
-            function.add(
-                "} else {", NL 
-//                "  " // for the comment
-            )
-            indentationLength += 2
-        }
-        
         val triggerEffect = transition.serializeHR
         val defaultTransition = transition.trigger === null || 
             (transition.trigger instanceof BoolValue && (transition.trigger as BoolValue).value == true)  
@@ -432,7 +424,20 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             if (transition.effects.size > 1 && effect.key < transition.effects.size - 1) {
                 effects += WS(9)
             } 
-        } 
+        }
+         
+        if (index > 0) {
+            function.add(
+//                "} else {", NL 
+                "  else", NL 
+//                "  " // for the comment
+            )
+            if (defaultTransition && isImmediate && !hasTrigger) {
+                function.add(" {", NL)
+            }
+            indentationLength += 2
+        }
+        
         function.add(
             MLCii(indentationLength, 2,
                 "Transition " + index + ": ",
