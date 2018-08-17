@@ -6,19 +6,18 @@
  */
 
 import { inject, injectable } from "inversify";
-import { CommandContribution, CommandRegistry, ResourceProvider, MessageService } from '@theia/core/lib/common';
+import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
 import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
-import { FrontendApplication, OpenerService} from "@theia/core/lib/browser";
-import { FileSystem } from "@theia/filesystem/lib/common";
+import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, FrontendApplicationContribution, CommonMenus } from "@theia/core/lib/browser";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
-import { SHOW_REFERENCES, APPLY_WORKSPACE_EDIT, SHOW_NEXT, SHOW_PREVIOUS, COMPILER } from "./keith-menu-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, Compilation, CodeContainer } from "../../common/constants";
+import { KeithKeybindingContext } from "./keith-keybinding-context";
 @injectable()
-export class KeithCommandContribution implements CommandContribution {
+export class KeithContribution extends AbstractViewContribution<CompilerWidget> implements FrontendApplicationContribution {
 
     systems: Compilation[];
     isCompiled: Map<string, boolean> = new Map
@@ -30,15 +29,54 @@ export class KeithCommandContribution implements CommandContribution {
 
     constructor(
         @inject(Workspace) protected readonly workspace: Workspace,
-        @inject(FileSystem) protected readonly fileSystem: FileSystem,
-        @inject(ResourceProvider) protected readonly resourceProvider: ResourceProvider,
         @inject(MessageService) protected readonly messageService: MessageService,
         @inject(FrontendApplication) public readonly front: FrontendApplication,
         @inject(KeithLanguageClientContribution) public readonly client: KeithLanguageClientContribution,
-        @inject(OpenerService) protected readonly openerService: OpenerService,
         @inject(EditorManager) public readonly editorManager: EditorManager,
-        @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager
+        @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager,
+        @inject(KeithKeybindingContext) protected readonly keithKeybindingContext: KeithKeybindingContext
     ) {
+        super({
+            widgetId: Constants.compilerWidgetId,
+            widgetName: 'Compiler',
+            defaultWidgetOptions: {
+                area: 'bottom'
+            },
+            toggleCommandId: COMPILER.id,
+            toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
+        });
+    }
+    
+    async initializeLayout(app: FrontendApplication): Promise<void> {
+        await this.openView();
+    }
+
+    registerKeybindings(keybindings: KeybindingRegistry): void {
+        [
+            {
+                command: SHOW_PREVIOUS.id,
+                context: this.keithKeybindingContext.id,
+                keybinding: Constants.SHOW_PREVIOUS_KEYBINDING
+            },
+            {
+                command: SHOW_NEXT.id,                 
+                context: this.keithKeybindingContext.id,
+                keybinding: Constants.SHOW_NEXT_KEYBINDING
+            },
+            {
+                command: COMPILER.id,                 
+                context: this.keithKeybindingContext.id,
+                keybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
+            }
+        ].forEach(binding => {
+            keybindings.registerKeybinding(binding);
+        });
+    }
+    
+    registerMenus(menus: MenuModelRegistry): void {
+        menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
+            commandId: COMPILER.id
+        });
     }
 
     registerCommands(commands: CommandRegistry): void {
@@ -52,10 +90,13 @@ export class KeithCommandContribution implements CommandContribution {
         });
         commands.registerCommand(COMPILER, {
             execute: () => {
-                if (this.front.shell.getWidgets("bottom").find((value, index) => {
-                    return value.id == Constants.compilerWidgetId
+                if (this.front.shell.getWidgets("bottom").find((widget, index) => {
+                    if (widget.id == Constants.compilerWidgetId) {
+                        widget.close()
+                    }
+                    return widget.id == Constants.compilerWidgetId
                 })) {
-                    this.front.shell.activateWidget(Constants.compilerWidgetId)
+                    
                 } else {
                     var compileWidget = new CompilerWidget(this)
                     this.front.shell.addWidget(compileWidget, {area: "bottom"})
@@ -241,3 +282,31 @@ export class KeithCommandContribution implements CommandContribution {
         }
     }
 }
+
+/**
+ * Show references
+ */
+export const SHOW_REFERENCES: Command = {
+    id: 'show.references'
+};
+
+/**
+ * Apply Workspace Edit
+ */
+export const APPLY_WORKSPACE_EDIT: Command = {
+    id: 'apply.workspaceEdit'
+};
+
+export const SHOW_NEXT: Command = {
+    id: 'show_next',
+    label: 'Show next'
+}
+export const SHOW_PREVIOUS: Command = {
+    id: 'show_previous',
+    label: 'Show previous'
+}
+export const COMPILER: Command = {
+    id: 'compiler:toggle',
+    label: 'Compiler'
+}
+

@@ -6,11 +6,10 @@
  */
 
 import { ContainerModule, interfaces} from 'inversify'
-import { CommandContribution, MenuContribution} from '@theia/core/lib/common'
-import { KeithCommandContribution} from './keith-commands'
+// import { MenuContribution} from '@theia/core/lib/common'
+import { KeithContribution} from './keith-contribution'
 
 import '../../../src/frontend/widgets/style/index.css';
-import { KeithMenuContribution } from './keith-menu-contribution';
 import { Constants } from '../../common/constants';
 import { configuration, monarchLanguage } from './sctx-monaco-language';
 import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './scl-monaco-language';
@@ -19,12 +18,12 @@ import { configuration as configuration4, monarchLanguage as monarchLanguage4} f
 import { configuration as configuration5, monarchLanguage as monarchLanguage5} from './strl-monaco-language';
 import { configuration as configuration6, monarchLanguage as monarchLanguage6} from './lus-monaco-language';
 import { TextWidget } from '../widgets/text-widget';
-import { BaseWidget, KeybindingContribution, KeybindingContext, WidgetFactory } from '@theia/core/lib/browser';
+import { BaseWidget, KeybindingContext, WidgetFactory, bindViewContribution } from '@theia/core/lib/browser';
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
 import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider';
 import { KeithMonacoEditorProvider } from '../monaco/keith-monaco-editor-provider';
-import { KeithKeybindingContext, KeithKeybindingContribution } from './keith-keybinding-context';
+import { KeithKeybindingContext } from './keith-keybinding-context';
 import { CompilerWidget } from '../widgets/compiler-widget';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
@@ -102,10 +101,9 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     });
 
     // widgets
-    bind(MenuContribution).to(KeithMenuContribution).inSingletonScope()
-    bind(TextWidget).toSelf().inSingletonScope()
+    bind(TextWidget).toSelf()
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
-    bind(CompilerWidget).toSelf().inSingletonScope()
+    bind(CompilerWidget).toSelf()
     bind(WidgetFactory).toDynamicValue(context => ({
         id: Constants.compilerWidgetId,
         createWidget: () => context.container.get<CompilerWidget>(CompilerWidget)
@@ -119,10 +117,8 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
 
     // added for keybinding and commands
-    bind(CommandContribution).to(KeithCommandContribution).inSingletonScope()
     bind(KeithKeybindingContext).toSelf()
     bind(KeybindingContext).toDynamicValue(context => context.container.get(KeithKeybindingContext));
-    bind(KeybindingContribution).to(KeithKeybindingContribution)
 
-    // bindViewContribution(bind, CompilerContribution)
+    bindViewContribution(bind, KeithContribution)
 })

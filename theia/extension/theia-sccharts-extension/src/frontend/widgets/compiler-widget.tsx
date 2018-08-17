@@ -5,7 +5,7 @@ import * as React from "react";
 import { Constants } from "../../common/constants";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
-import { KeithCommandContribution } from "../language/keith-commands";
+import { KeithContribution } from "../language/keith-contribution";
 
 @injectable()
 export class CompilerWidget extends ReactWidget {
@@ -29,7 +29,7 @@ export class CompilerWidget extends ReactWidget {
         </React.Fragment>
     }
     constructor(
-        @inject(new LazyServiceIdentifer(() => KeithCommandContribution)) protected readonly commands: KeithCommandContribution
+        @inject(new LazyServiceIdentifer(() => KeithContribution)) protected readonly commands: KeithContribution
     ) {
         super();
         this.id = Constants.compilerWidgetId

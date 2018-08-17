@@ -8,10 +8,10 @@
 
 #compiler-widget #compilation-panel {
     margin-top: 12px;
+    display: flex;
 }
 
 #compiler-widget #compilation-list {
-    float: left;
     line-height: var(--theia-content-line-height);
     font-size: var(--theia-ui-font-size1);
     border-width: 1px;
@@ -29,7 +29,6 @@
 }
 
 #compiler-widget #compile-button {
-    float: left;
     box-sizing: border-box;
     color: var(--theia-ui-button-font-color);
     background-color: var(--theia-ui-button-color);
