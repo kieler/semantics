@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.language.server
 
+import java.util.List
+
 /**
  * @author sdo
  *
@@ -26,4 +28,30 @@ class SystemDescription {
         this.id = id
     }
     
+}
+
+class CompilerConfiguration {
+    boolean isCheckedDeveloperToggle
+    boolean isCheckedFlattenSystemViewToggle
+    boolean isCheckedForwardResultToggle
+    boolean isCheckedAutoCompileToggle
+    boolean isCheckedVisualLayoutFeedbackToggle
+    boolean isCheckedCompileInplaceToggle
+    boolean isCheckedCompileTracingToggle
+    boolean isCheckedDebugEnvironmentModelsToggle
+    boolean isCheckedShowPrivateSystemsToggle
+    
+    new (boolean dev, boolean flattenSystem, boolean forwardResult, boolean autoCompile, boolean visualFeedback, 
+        boolean inplace, boolean tracing, boolean debugEnv, boolean showPrivate
+    ) {
+        this.isCheckedAutoCompileToggle = autoCompile
+        this.isCheckedCompileInplaceToggle = inplace
+        this.isCheckedCompileTracingToggle = tracing
+        this.isCheckedDebugEnvironmentModelsToggle = debugEnv
+        this.isCheckedDeveloperToggle = dev
+        this.isCheckedFlattenSystemViewToggle = flattenSystem
+        this.isCheckedForwardResultToggle = forwardResult
+        this.isCheckedShowPrivateSystemsToggle = showPrivate
+        this.isCheckedVisualLayoutFeedbackToggle = visualFeedback
+    }
 }

@@ -85,10 +85,7 @@ class SystemSelectionManager implements SelectionListener {
         }
         val systems = CompilerViewUtil.getSystemModels(filter, modelClassFilter)
         
-        for(system : systems.
-            filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && CompilerViewUtil.checkedShowPrivateSystemsToggle) ].
-            filter[ !developer || (view !== null && view.developerToggle !== null && CompilerViewUtil.checkedDeveloperToggle) ]
-        ) {
+        for(system : systems) {
             val id = system.id
             var name = system.label
             if (name.nullOrEmpty) name = id

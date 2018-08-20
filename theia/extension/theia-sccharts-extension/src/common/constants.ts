@@ -23,15 +23,16 @@ export namespace Constants {
     export const priorityJava: string = 'de.cau.cs.kieler.sccharts.priority.java'
     export const extendedCore: string = 'de.cau.cs.kieler.sccharts.extended.core'
 
-    export const netlistCompilation: Compilation = { label: "Netlist", id: netlist }
+    export const netlistCompilation: CompilationSystems = { label: "Netlist", id: netlist }
     export const netlistJavaCompilation = { label: "Netlist Java", id: netlistJava }
     export const priorityJavaCompilation = { label: "Priorities Java", id: priorityJava }
     export const compilerWidgetId = "compiler-widget"
     export const COMPILE: string = 'sccharts/compile'
     export const SHOW: string = 'sccharts/show'
     export const GET_SYSTEMS: string = 'sccharts/get_systems'
+    export const UPDATE_PREFERENCES : string = "sccharts/update-preferences"
 
-    export const compilations: Compilation[] = [netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
+    export const compilations: CompilationSystems[] = [netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
 
     export const OPEN_COMPILER_WIDGET_KEYBINDING = "ctrlcmd+alt+c"
     export const SHOW_PREVIOUS_KEYBINDING = "alt+g"
@@ -41,7 +42,7 @@ export namespace Constants {
 }
 
 
-export class Compilation {
+export class CompilationSystems {
     label: string
     id: string
 }
@@ -65,4 +66,16 @@ export class Snapshots {
         this.name = name
         this.snapshotIndex = snapshotIndex
     }
+}
+
+export class CompilerConfiguration {
+    isCheckedDeveloperToggle : boolean
+    isCheckedFlattenSystemViewToggle : boolean
+    isCheckedForwardResultToggle : boolean
+    isCheckedAutoCompileToggle : boolean
+    isCheckedVisualLayoutFeedbackToggle : boolean
+    isCheckedCompileInplaceToggle : boolean
+    isCheckedCompileTracingToggle : boolean
+    isCheckedDebugEnvironmentModelsToggle : boolean
+    isCheckedShowPrivateSystemsToggle : boolean
 }

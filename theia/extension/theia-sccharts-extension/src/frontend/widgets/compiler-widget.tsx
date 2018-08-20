@@ -1,29 +1,38 @@
 import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
-import { Message } from "@theia/core/lib/browser";
+import { Message, StatefulWidget } from "@theia/core/lib/browser";
 import * as React from "react";
-import { Constants } from "../../common/constants";
+import { Constants, CompilerConfiguration, CompilationSystems } from "../../common/constants";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
+import "../../../src/frontend/widgets/style/index.css";
 import { KeithContribution } from "../language/keith-contribution";
 
 @injectable()
-export class CompilerWidget extends ReactWidget {
+export class CompilerWidget extends ReactWidget implements StatefulWidget {
     
+    systems : CompilationSystems[]
+    configuration : CompilerConfiguration
+    // TODO send LS values on startup with selection items or save them in preferences?
+
+    storeState(): object {
+        throw new Error("Method not implemented.");
+    }
+    restoreState(oldState: object): void {
+        throw new Error("Method not implemented.");
+    }
     render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
-        this.commands.systems.forEach(system => {
+        this.systems.forEach(system => {
             compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>);
         });
-        if (compilationElements.length === 0) {
-            compilationElements.push(<option value="NONE" key="NONE">NONE</option>);
-        }
         return <React.Fragment>
             <div id="compilation-panel">
                 {this.renderCompileButton()}
                 <select id='compilation-list'>
                     {compilationElements}
                 </select>
+                {this.renderPrivateButton()}
             </div>
             {this.renderShowButtons()}
         </React.Fragment>
@@ -37,6 +46,19 @@ export class CompilerWidget extends ReactWidget {
         this.title.iconClass = 'fa fa-play-circle';
         this.title.closable = true
         this.addClass(Constants.compilerWidgetId) // class for index.css
+        this.configuration = {
+            isCheckedAutoCompileToggle : false,
+            isCheckedCompileInplaceToggle : false,
+            isCheckedCompileTracingToggle : false,
+            isCheckedDebugEnvironmentModelsToggle : false,
+            isCheckedDeveloperToggle : false,
+            isCheckedFlattenSystemViewToggle : false,
+            isCheckedForwardResultToggle : false,
+            isCheckedShowPrivateSystemsToggle : false,
+            isCheckedVisualLayoutFeedbackToggle : false
+
+        }
+        this.systems = [{id : "NONE", label : "NONE"}]
         this.node.draggable = false
     }
 
@@ -85,13 +107,24 @@ export class CompilerWidget extends ReactWidget {
         return <div id='compile-button'
             onClick={event => {
                 var selection = document.getElementById("compilation-list") as HTMLSelectElement;
-                if (this.commands.systems.length > 0) {
-                    this.commands.compile(this.commands.systems[selection.selectedIndex].id)
+                if (this.systems.length > 0) {
+                    this.commands.compile(this.systems[selection.selectedIndex].id)
                 } else {
                     this.commands.compile(Constants.compilations[selection.selectedIndex].id)
                 }
             }}>
             <div className='fa fa-play-circle'> </div>
+        </div>
+    }
+
+    renderPrivateButton(): React.ReactNode {
+        return <div key="private-button" id='compile-button'
+            onClick={event => {
+                this.commands.updatePreferences(!this.configuration.isCheckedShowPrivateSystemsToggle, "private", true).then(() => {
+                    this.update()
+                })
+            }}>
+            <div className={this.configuration.isCheckedShowPrivateSystemsToggle ? 'fa fa-unlock' : 'fa fa-lock'}> </div>
         </div>
     }
 

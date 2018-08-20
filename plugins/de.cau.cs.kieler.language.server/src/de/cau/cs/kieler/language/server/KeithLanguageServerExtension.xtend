@@ -224,4 +224,41 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         return systemDescription
     }
     
+    override updatePreferences(boolean bool, String name, boolean filter) {
+        if ("auto-compile".equals(name)) {
+            CompilerViewUtil.isCheckedAutoCompileToggle = bool   
+        }
+        if ("inplace".equals(name)) {
+            CompilerViewUtil.isCheckedCompileInplaceToggle = bool   
+        }
+        if ("tracing".equals(name)) {
+            CompilerViewUtil.isCheckedCompileTracingToggle = bool   
+        }
+        if ("debug-env".equals(name)) {
+            CompilerViewUtil.isCheckedDebugEnvironmentModelsToggle = bool   
+        }
+        if ("developer".equals(name)) {
+            CompilerViewUtil.isCheckedDeveloperToggle = bool   
+        }
+        if ("flatten-system".equals(name)) {
+            CompilerViewUtil.isCheckedFlattenSystemViewToggle = bool   
+        }
+        if ("forward-result".equals(name)) {
+            CompilerViewUtil.isCheckedForwardResultToggle = bool   
+        }
+        if ("private".equals(name)) {
+            CompilerViewUtil.isCheckedShowPrivateSystemsToggle = bool   
+        }
+        if ("visual-layout".equals(name)) {
+            CompilerViewUtil.isCheckedVisualLayoutFeedbackToggle = bool   
+        }
+        return requestManager.runRead[ cancelIndicator |
+            new CompilerConfiguration(CompilerViewUtil.checkedDeveloperToggle, CompilerViewUtil.checkedFlattenSystemViewToggle,
+                CompilerViewUtil.checkedForwardResultToggle, CompilerViewUtil.checkedAutoCompileToggle, CompilerViewUtil.checkedVisualLayoutFeedbackToggle,
+                CompilerViewUtil.checkedCompileInplaceToggle, CompilerViewUtil.checkedCompileTracingToggle, CompilerViewUtil.checkedDebugEnvironmentModelsToggle,
+                CompilerViewUtil.checkedShowPrivateSystemsToggle
+            )
+        ]
+    }
+    
 }

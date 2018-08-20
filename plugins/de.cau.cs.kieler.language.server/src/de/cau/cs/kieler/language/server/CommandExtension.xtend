@@ -42,4 +42,7 @@ interface CommandExtension {
      */
     @JsonRequest('get_systems')
     def CompletableFuture<Object> getSystems(String uri, boolean filter)
+    
+    @JsonRequest('update-preferences')
+    def CompletableFuture<Object> updatePreferences(boolean bool, String name, boolean filter)
 }

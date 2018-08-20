@@ -8,18 +8,17 @@
 import { inject, injectable } from "inversify";
 import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
 import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
-import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, FrontendApplicationContribution, CommonMenus } from "@theia/core/lib/browser";
+import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, CommonMenus } from "@theia/core/lib/browser";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
-import { Constants, Compilation, CodeContainer } from "../../common/constants";
+import { Constants, CompilationSystems, CodeContainer, CompilerConfiguration } from "../../common/constants";
 import { KeithKeybindingContext } from "./keith-keybinding-context";
 @injectable()
-export class KeithContribution extends AbstractViewContribution<CompilerWidget> implements FrontendApplicationContribution {
+export class KeithContribution extends AbstractViewContribution<CompilerWidget> {
 
-    systems: Compilation[];
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
     resultMap: Map<string, CodeContainer> = new Map
@@ -45,10 +44,6 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
             toggleCommandId: COMPILER.id,
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
-    }
-    
-    async initializeLayout(app: FrontendApplication): Promise<void> {
-        await this.openView();
     }
 
     registerKeybindings(keybindings: KeybindingRegistry): void {
@@ -269,10 +264,26 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         const uri = editor.editor.uri.toString();
         try {
             const lclient : ILanguageClient = await this.client.languageClient
-            const systems : Compilation[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as Compilation[]
-            this.systems = systems
+            const systems : CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
             this.front.shell.getWidgets("bottom").forEach(widget => {
                 if (widget.id == Constants.compilerWidgetId) {
+                    (widget as CompilerWidget).systems = systems,
+                    (widget as CompilerWidget).render()
+                }
+            })
+            return Promise.resolve(true)
+        } catch(error) {
+            return Promise.reject("Communication with LS failed")
+        }
+    }
+
+    async updatePreferences(bool : boolean, name : string, filter : boolean) : Promise<boolean> {
+        try {
+            const lclient : ILanguageClient = await this.client.languageClient
+            const configuration : CompilerConfiguration =  await lclient.sendRequest(Constants.UPDATE_PREFERENCES, [bool, name, filter]) as CompilerConfiguration
+            this.front.shell.getWidgets("bottom").forEach(widget => {
+                if (widget.id == Constants.compilerWidgetId) {
+                    (widget as CompilerWidget).configuration = configuration,
                     (widget as CompilerWidget).render()
                 }
             })
