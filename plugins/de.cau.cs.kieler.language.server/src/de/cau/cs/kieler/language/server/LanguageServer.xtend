@@ -14,12 +14,6 @@ package de.cau.cs.kieler.language.server
 
 import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeModule
-import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeSetup
-import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
-import de.cau.cs.kieler.scl.SCLRuntimeModule
-import de.cau.cs.kieler.scl.ide.SCLIdeModule
-import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
@@ -33,12 +27,6 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
-import de.cau.cs.kieler.esterel.EsterelRuntimeModule
-import de.cau.cs.kieler.esterel.ide.EsterelIdeModule
-import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
-import de.cau.cs.kieler.lustre.ide.LustreIdeModule
-import de.cau.cs.kieler.lustre.LustreRuntimeModule
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -71,7 +59,7 @@ class LanguageServer implements IApplication {
             println(args.toString)
             println("Connection via: " + socket)
                
-            // Start all language servers
+            // Register all languages
             println("Starting language server socket")
             LanguageServerLauncher.bindAndRegisterLanguages()
             

@@ -15,6 +15,8 @@ package de.cau.cs.kieler.language.server
 import java.util.List
 
 /**
+ * Description of a compilation system for select-box entries. Consist of label an id
+ * 
  * @author sdo
  *
  */
@@ -30,6 +32,10 @@ class SystemDescription {
     
 }
 
+/**
+ * Configuration options for the compiler, used for communication with Theia client
+ * 
+ */
 class CompilerConfiguration {
     boolean isCheckedDeveloperToggle
     boolean isCheckedFlattenSystemViewToggle

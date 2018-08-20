@@ -10,7 +10,7 @@ import { ContainerModule, interfaces} from 'inversify'
 import { KeithContribution} from './keith-contribution'
 
 import '../../../src/frontend/widgets/style/index.css';
-import { Constants } from '../../common/constants';
+import { Constants } from '../../common/util';
 import { configuration, monarchLanguage } from './sctx-monaco-language';
 import { configuration as configuration2, monarchLanguage as monarchLanguage2} from './scl-monaco-language';
 import { configuration as configuration3, monarchLanguage as monarchLanguage3} from './kext-monaco-language';

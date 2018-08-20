@@ -2,7 +2,7 @@ import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
 import { Message, StatefulWidget } from "@theia/core/lib/browser";
 import * as React from "react";
-import { Constants, CompilerConfiguration, CompilationSystems } from "../../common/constants";
+import { Constants, CompilerConfiguration, CompilationSystems } from "../../common/util";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
 import "../../../src/frontend/widgets/style/index.css";
@@ -104,7 +104,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     }
 
     renderCompileButton(): React.ReactNode {
-        return <div id='compile-button'
+        return <div id='compile-button' title="Compile"
             onClick={event => {
                 var selection = document.getElementById("compilation-list") as HTMLSelectElement;
                 if (this.systems.length > 0) {
@@ -116,9 +116,9 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
             <div className='fa fa-play-circle'> </div>
         </div>
     }
-
+    
     renderPrivateButton(): React.ReactNode {
-        return <div key="private-button" id='compile-button'
+        return <div title="Toggle show private Systems" key="private-button" id='compile-button'
             onClick={event => {
                 this.commands.updatePreferences(!this.configuration.isCheckedShowPrivateSystemsToggle, "private", true).then(() => {
                     this.update()

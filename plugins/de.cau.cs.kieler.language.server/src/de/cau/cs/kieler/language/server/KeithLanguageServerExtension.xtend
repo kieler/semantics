@@ -43,6 +43,8 @@ import de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl
 import de.cau.cs.kieler.kexpressions.kext.impl.KextImpl
 
 /**
+ * Implements methods to extend the LSP to allow compilation
+ * 
  * @author sdo
  * 
  */
@@ -55,11 +57,20 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
     @Inject
     Injector injector
     
-    protected Map<String, List<Snapshot>> snapshotMap = new HashMap<String, List<Snapshot>>
+    /**
+     * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
+     */
+    protected Map<String, List<SnapshotDescription>> snapshotMap = new HashMap<String, List<SnapshotDescription>>
+    /**
+     * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
+     */
     protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
 
     protected extension ILanguageServerAccess languageServerAccess
     
+    /**
+     * Used to filter the compilation system according to the compiler preferences
+     */
     var Class<?> modelClassFilter
     
     override initialize(ILanguageServerAccess access) {
@@ -94,6 +105,9 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         ]
     }
     
+    /**
+     * Add snapshot to list of snapshots for uri. Add description to be displayed in compiler view
+     */
     def convertImpl(Environment environment, String uri, String processorName) {
         var List<Object> snapshots = environment.getProperty(Environment.SNAPSHOTS)
         var impl = environment.model
@@ -102,59 +116,59 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         var infos = environment.infos
         if (impl instanceof CodeContainer) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("code", "generated", 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("code", "generated", 0, errors, warnings, infos))
         } else if (impl instanceof SCChartsImpl) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("sctx", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, 0, errors, warnings, infos))
             var count = 1
             for (snapshot : snapshots) {
                 this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new Snapshot("sctx", processorName, count, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, count, errors, warnings, infos))
                 count++
             }
         } else if (impl instanceof SCGraphsImpl) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("scg", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, 0, errors, warnings, infos))
             var count = 1
             for (snapshot : snapshots) {
                 this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new Snapshot("scg", processorName, count, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, count, errors, warnings, infos))
                 count++
             }
         } else if (impl instanceof SCLProgramImpl) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("scl", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, 0, errors, warnings, infos))
             var count = 1
             for (snapshot : snapshots) {
                 this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new Snapshot("scl", processorName, count, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, count, errors, warnings, infos))
                 count++
             }
         } else if (impl instanceof EsterelProgramImpl) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("esterel", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, 0, errors, warnings, infos))
             var count = 1
             for (snapshot : snapshots) {
                 this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new Snapshot("esterel", processorName, count, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, count, errors, warnings, infos))
                 count++
             }
         }  else if (impl instanceof LustreProgramImpl) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("lustre", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, 0, errors, warnings, infos))
             var count = 1
             for (snapshot : snapshots) {
                 this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new Snapshot("lustre", processorName, count, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, count, errors, warnings, infos))
                 count++
             }
         } else if (impl instanceof KextImpl) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new Snapshot("kext", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, 0, errors, warnings, infos))
             var count = 1
             for (snapshot : snapshots) {
                 this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new Snapshot("kext", processorName, count, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, count, errors, warnings, infos))
                 count++
             }
         } else {

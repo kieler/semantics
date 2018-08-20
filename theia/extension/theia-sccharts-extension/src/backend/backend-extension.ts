@@ -10,7 +10,7 @@ import { BaseLanguageServerContribution, LanguageServerContribution, IConnection
 import { createSocketConnection } from 'vscode-ws-jsonrpc/lib/server'
 import * as path from 'path';
 import * as net from 'net'
-import { Constants } from "../common/constants";
+import { Constants } from "../common/util";
 import { isWindows, isOSX } from "@theia/core";
 
 const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app' : '/kieler')

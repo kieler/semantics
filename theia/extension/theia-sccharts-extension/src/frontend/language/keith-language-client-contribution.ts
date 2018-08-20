@@ -8,7 +8,7 @@
 import { inject, injectable } from 'inversify'
 import { FrontendApplication } from '@theia/core/lib/browser'
 import { BaseLanguageClientContribution, LanguageClientFactory, Languages, Workspace } from '@theia/languages/lib/browser'
-import { Constants } from './../../common/constants'
+import { Constants } from './../../common/util'
 
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {

@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { AbstractViewContribution } from '@theia/core/lib/browser/shell/view-contribution';
 import { CompilerWidget } from "./../widgets/compiler-widget";
-import { Constants } from "../../common/constants";
+import { Constants } from "../../common/util";
 
 @injectable()
 export class CompilerContribution extends AbstractViewContribution<CompilerWidget> {

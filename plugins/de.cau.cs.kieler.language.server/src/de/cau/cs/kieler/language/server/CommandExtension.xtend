@@ -40,9 +40,12 @@ interface CommandExtension {
     /**
      * Returns all compilation systems which are applicable for the file at given uri
      */
-    @JsonRequest('get_systems')
+    @JsonRequest('get-systems')
     def CompletableFuture<Object> getSystems(String uri, boolean filter)
     
+    /**
+     * Set compilation preference and return current preferences
+     */
     @JsonRequest('update-preferences')
     def CompletableFuture<Object> updatePreferences(boolean bool, String name, boolean filter)
 }

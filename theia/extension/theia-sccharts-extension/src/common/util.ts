@@ -29,7 +29,7 @@ export namespace Constants {
     export const compilerWidgetId = "compiler-widget"
     export const COMPILE: string = 'sccharts/compile'
     export const SHOW: string = 'sccharts/show'
-    export const GET_SYSTEMS: string = 'sccharts/get_systems'
+    export const GET_SYSTEMS: string = 'sccharts/get-systems'
     export const UPDATE_PREFERENCES : string = "sccharts/update-preferences"
 
     export const compilations: CompilationSystems[] = [netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
@@ -41,12 +41,17 @@ export namespace Constants {
     export const EDITOR_UNDEFINED_MESSAGE = "Editor is undefined"
 }
 
-
+/**
+ * Description of a compilation system for selectbox in compiler widget
+ */
 export class CompilationSystems {
     label: string
     id: string
 }
 
+/**
+ * Equivalent to CodeContainer send by LS
+ */
 export interface CodeContainer {
     files: Snapshots[]
 }
@@ -68,6 +73,9 @@ export class Snapshots {
     }
 }
 
+/**
+ * Preferences of compiler widget
+ */
 export class CompilerConfiguration {
     isCheckedDeveloperToggle : boolean
     isCheckedFlattenSystemViewToggle : boolean
@@ -78,4 +86,13 @@ export class CompilerConfiguration {
     isCheckedCompileTracingToggle : boolean
     isCheckedDebugEnvironmentModelsToggle : boolean
     isCheckedShowPrivateSystemsToggle : boolean
+}
+
+/**
+ * Description of a compiler preference used to generate preference selectbox
+ */
+export class CompilerPreference {
+    label : string
+    key : string
+    longName : string        
 }

@@ -14,7 +14,7 @@ import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
-import { Constants, CompilationSystems, CodeContainer, CompilerConfiguration } from "../../common/constants";
+import { Constants, CompilationSystems, CodeContainer, CompilerConfiguration } from "../../common/util";
 import { KeithKeybindingContext } from "./keith-keybinding-context";
 @injectable()
 export class KeithContribution extends AbstractViewContribution<CompilerWidget> {

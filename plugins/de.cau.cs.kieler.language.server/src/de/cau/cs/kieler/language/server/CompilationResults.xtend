@@ -16,17 +16,19 @@ import java.util.List
 import java.util.LinkedList
 
 /**
+ * Utility class to send description of compilation snapshots to the Theia client.
+ * 
  * @author sdo
  *
  */
 class CompilationResults {
-    public List<Snapshot> files = new LinkedList
+    public List<SnapshotDescription> files = new LinkedList
     
     new() {
         this.files = new LinkedList
     }
     
-    new (List<Snapshot> files) {
+    new (List<SnapshotDescription> files) {
         this.files = files
     }
 }

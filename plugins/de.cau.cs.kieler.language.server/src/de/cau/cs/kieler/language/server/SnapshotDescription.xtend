@@ -27,7 +27,7 @@ import java.util.LinkedList
  * @author sdo
  * 
  */
-class Snapshot {
+class SnapshotDescription {
 
     public String groupId
     public String name

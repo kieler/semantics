@@ -48,6 +48,8 @@ import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
 
 /**
+ * Used to start language server via stdin/out connection.
+ * 
  * @author sdo
  *
  */
