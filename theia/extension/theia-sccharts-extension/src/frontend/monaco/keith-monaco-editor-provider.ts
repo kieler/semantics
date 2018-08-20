@@ -19,7 +19,7 @@ import { MonacoCommandServiceFactory } from "@theia/monaco/lib/browser/monaco-co
 import { MonacoQuickOpenService } from '@theia/monaco/lib/browser/monaco-quick-open-service';
 import { QuickOpenService } from '@theia/core/lib/browser/quick-open/quick-open-service';
 import { MonacoDiffNavigatorFactory } from '@theia/monaco/lib/browser/monaco-diff-navigator-factory';
-import { Constants } from '../../common/constants';
+import { Constants } from '../../common/util';
 
 @injectable()
 export class KeithMonacoEditorProvider extends MonacoEditorProvider {
