@@ -413,7 +413,7 @@ class ProcessorDataManager {
                     infoNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += infoNode 
                     
-                    val model = processorInstance.targetModel
+                    val model = if (infoKey === null) processorInstance.targetModel else infoKey
                     if (model instanceof EObject) {
                         val morModel = new MessageObjectListPair(infos.get(infoKey).fillUndefinedColors(INFO), 
                             if (infoKey === null) model else infoKey)

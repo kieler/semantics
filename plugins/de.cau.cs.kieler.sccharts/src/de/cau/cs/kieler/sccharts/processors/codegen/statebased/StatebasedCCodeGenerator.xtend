@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import java.util.Map
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kicool.environments.AnnotationModel
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * C Code Generator  Processor for the State-based pattern
@@ -28,12 +30,18 @@ import de.cau.cs.kieler.sccharts.State
  */
 class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel 
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.codegen.statebased"
     }
     
     override getName() {
         "State-based C Code"
+    }
+    
+    override preProcess(SCCharts rootModel) {
+        annotationModel = rootModel.createAnnotationModel        
     }
     
     override createModuleMap(SCCharts rootModel, Map<State, CodeGeneratorModule<SCCharts, State>> moduleMap) {

@@ -70,17 +70,19 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     
     override generate() {
         struct.generate
-        reset.generate
         logic.generate
+        reset.generate
         tick.generate
     }
     
     
     override generateDone() {
         struct.generateDone
-        reset.generateDone
         logic.generateDone
+        reset.generateDone
         tick.generateDone
+        
+        populateAnnotationModel
     }
     
     /**
@@ -133,5 +135,15 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
             sb.append("\n")
         }
     }  
+ 
+ 
+    protected def populateAnnotationModel() {
+        val annotationModel = (processorInstance as StatebasedCCodeGenerator).annotationModel
+        
+        for (object : (logic as StatebasedCCodeGeneratorLogicModule).objectFunctionMap.keySet) {
+            val sb = (logic as StatebasedCCodeGeneratorLogicModule).objectFunctionMap.get(object)
+            annotationModel.addInfo(object, sb.toString)
+        }        
+    }
     
 }

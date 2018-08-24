@@ -42,27 +42,31 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
     
     public static val STRUCT_NAME = "TickData"
-    public static val STRUCT_VARIABLE_NAME = "tickData"
+    public static val STRUCT_CONTEXT_NAME = "context"
     public static val STRUCT_PRE_PREFIX = "_p"
-    public static val STRUCT_INTERFACE_NAME = "Interface"
+    public static val STRUCT_INTERFACE_NAME = "Iface"
     
-    public static val ENUM_STATES_SUFFIX = "States"
-    public static val ENUM_STATES_NONE = "NONE"
+    public static val FUNCTION_INLINE_VOID = "static inline void"
+    
+    public static val ENUM_STATES_SUFFIX = "State"
     public static val ENUM_STATES_RUNNING = "RUNNING"
+    public static val ENUM_STATES_TRANSIENT = "STATE" 
     
     public static val THREAD_STATUS_ENUM = "ThreadStatus"
-    public static val THREAD_STATUS_INACTIVE = "TERMINATED"       // was EMPTY
+    public static val THREAD_STATUS_TERMINATED = "TERMINATED"       // was EMPTY
     public static val THREAD_STATUS_RUNNING = "RUNNING"
     public static val THREAD_STATUS_WAITING = "WAITING"         // was DISPATCHED
     public static val THREAD_STATUS_PAUSING = "PAUSING"
     
-    public static val REGION_DATA_NAME = "regionData"
-    public static val REGION_INTERFACE_NAME = "interface"
-    public static val REGION_ROOT_THREADSTATUS = "threadStatus"
-    public static val REGION_DATA_TYPE_SUFFIX = "Data"
+    public static val CONTEXT_DATA_NAME = "context"
+    public static val CONTEXT_TYPE_NAME = "Context"
+    public static val REGION_INTERFACE_NAME = "iface"
+    public static val REGION_ROOT_TERMINATED = "terminated"
+    public static val REGION_THREADSTATUS = "threadStatus"
+//    public static val REGION_DATA_TYPE_SUFFIX = "Data"
     public static val REGION_ACTIVE_STATE = "activeState"
-    public static val REGION_TICK_START_STATE = "tickStartState"
     public static val REGION_ACTIVE_PRIORITY = "activePriority"
+    public static val REGION_DELAYED_ENABLED = "delayedEnabled"
     
     @Accessors StringBuilder tickData = new StringBuilder
     @Accessors StringBuilder forwardDeclarations = new StringBuilder
@@ -73,16 +77,16 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     @Accessors List<ControlflowRegion> rootRegions = <ControlflowRegion> newLinkedList
     
     @Accessors Map<ControlflowRegion, String> regionNames = <ControlflowRegion, String> newHashMap
-    @Accessors Map<ControlflowRegion, String> noneState = <ControlflowRegion, String> newHashMap
-    
-    var noneCounter = 0
+    @Accessors Map<State, String> stateNames = <State, String> newHashMap
+    @Accessors Map<State, String> stateEnumNames = <State, String> newHashMap
+    @Accessors Map<ControlflowRegion, String> contextNames = <ControlflowRegion, String> newHashMap
     
     override getName() {
         STRUCT_NAME + baseName + suffix
     }
     
     def getVariableName() {
-        STRUCT_VARIABLE_NAME
+        STRUCT_CONTEXT_NAME
     }
     
     def protected separator() {
@@ -90,12 +94,17 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }    
     
     override generateInit() {
+        regionNames.clear
+        stateNames.clear
+        stateEnumNames.clear
+        contextNames.clear
+        
         code.addCLL(
             SLC("The chosen scheduling regime (IUR) uses four states to maintain the status of threads."),
             
             "typedef enum {", NL,
             "  ",
-            THREAD_STATUS_INACTIVE, 
+            THREAD_STATUS_TERMINATED, 
             ", ",
             LEC("thread is dead until spawned again (e.g. via fork)"), NL,
             
@@ -175,18 +184,18 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             STRUCT_INTERFACE_NAME,
             " ",
             REGION_INTERFACE_NAME,
-            ";", NL, NL,
-            "  ThreadStatus ",
-            REGION_ROOT_THREADSTATUS,
+            ";", NL, 
+            "  char ",
+            REGION_ROOT_TERMINATED,
             ";", NL
         )
         
         for (cfr : rootRegions) {
             tickData.add(
                 "  ",
-                getRegionName(cfr) + REGION_DATA_TYPE_SUFFIX,
+                getContextTypeName(cfr),
                 " ",
-                getRegionName(cfr),
+                getContextVariableName(cfr),
                 ";", NL
             )
         }
@@ -226,27 +235,19 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         
     }
     
-    def getRegionName(ControlflowRegion cfr) {
-        if (cfr.name.nullOrEmpty) "_region"+cfr.hashCode else cfr.name.hostcodeSafeName
-    }
     
-    def getStateName(State s, ControlflowRegion cfr) {
-         cfr.regionName + s.name.hostcodeSafeName
-    }
+
     
-    def getStateName(State s) {
-         s.name.hostcodeSafeName.toUpperCase
-    }
     
     def generateThreadData(ControlflowRegion cfr, List<ControlflowRegion> children) {
-        val name = cfr.regionName
-        val noneStateName = ENUM_STATES_NONE + noneCounter++
+        val regionName = cfr.getRegionName
+        val contextTypename = cfr.getContextTypeName
         
         val statesSB = new StringBuilder
         val commentSB = new StringBuilder
         
         for (state : cfr.states.indexed) {
-            val stateName = state.value.stateName
+            val stateName = state.value.getStateEnumName
             statesSB.append(stateName)
             commentSB.append(state.value.name)
             if (state.value.isHierarchical) {
@@ -264,15 +265,12 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         threadData.add(
             SLC("This enum contains all states of the " + name + " region,"),
             SLC("namely " + commentSB.toString + "."),
-            SLC(noneStateName + " indicates that no state in this region is active."), 
             
             "typedef enum {", NL,
             "  ",
-            noneStateName,
-            ", ",
             statesSB.toString,
             NL, "} ",
-            name + ENUM_STATES_SUFFIX,
+            regionName + ENUM_STATES_SUFFIX,
             ";", NL, NL
         )
         
@@ -280,44 +278,111 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             SLC("The thread data of " + name),
             
             "typedef struct {", NL,
-            indentation, name, ENUM_STATES_SUFFIX, " ", REGION_ACTIVE_STATE, ";", 
-            LEC("the active state"), NL,
-            
-            indentation, name, ENUM_STATES_SUFFIX, " ", REGION_TICK_START_STATE, ";", 
-            LEC("active state at the beginning of the tick"), NL,
-            
             indentation, THREAD_STATUS_ENUM, " threadStatus;", 
             LEC("status of the thread (see ThreadStatus enum)"), NL,
             
-            indentation, "int activePriority;", 
+            indentation, regionName, ENUM_STATES_SUFFIX, " ", REGION_ACTIVE_STATE, ";", 
+            LEC("the active state"), NL,
+            
+            indentation, "int ", REGION_ACTIVE_PRIORITY, ";", 
             LEC("active priority of the thread for scheduling"), NL,
             
-            indentation, STRUCT_INTERFACE_NAME, "* interface;", 
+            indentation, "char ", REGION_DELAYED_ENABLED, ";", 
+            LEC("active state at the beginning of the tick"), NL,
+            
+            indentation, STRUCT_INTERFACE_NAME, "* ", REGION_INTERFACE_NAME, ";", 
             LEC("pointer to the program interface for communication"), NL
         )
         
         if (children !== null && children.size > 0) {
             for (child : children) {
-                val childName = child.getRegionName
                 threadData.add(
-                    indentation, childName, REGION_DATA_TYPE_SUFFIX, " ", childName, ";", NL
+                    indentation, child.contextTypeName, " ", child.contextVariableName, ";", NL
                 )
             }
         }
         
         threadData.add(
             "} ",
-            name, REGION_DATA_TYPE_SUFFIX,
+            contextTypename,
             ";", NL, NL
         )
-        
-        regionNames.put(cfr, name)
-        noneState.put(cfr, noneStateName)
     }
     
-    def getNoneStateName(ControlflowRegion cfr) {
-        noneState.get(cfr)
+    def getRegionName(ControlflowRegion cfr) {
+        if (regionNames.keySet.contains(cfr)) {
+            return regionNames.get(cfr)
+        } else {
+            val name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName
+            regionNames.put(cfr, name)
+            return name
+        }
     }
+    
+    def getStateName(State s, ControlflowRegion cfr) {
+        if (stateNames.keySet.contains(s)) {
+            return stateNames.get(s)
+        } else {
+            var name = cfr.regionName + "_state" +s.name.hostcodeSafeName
+            var counter = 2
+            while (stateNames.values.contains(name)) {
+                name = cfr.regionName + "_state" +s.name.hostcodeSafeName + counter++
+            }            
+            stateNames.put(s, name)
+            return name
+        }
+    }
+    
+    def getStateName(State s) {
+        if (stateNames.keySet.contains(s)) {
+            return stateNames.get(s)
+        } else {
+            val cfr = s.eContainer
+            if (cfr instanceof ControlflowRegion) {
+                return s.getStateName(cfr)
+            }
+            val name = "state" + s.name.hostcodeSafeName
+            stateNames.put(s, name)
+            return name
+        }
+    }
+    
+    def getStateEnumName(State s) {
+        if (stateEnumNames.keySet.contains(s)) {
+            return stateEnumNames.get(s)
+        } else {
+            var counter = 2
+            var name = s.name.toUpperCase
+            while (stateEnumNames.values.contains(name)) {
+                name = s.name.toUpperCase + counter++
+            }
+            stateEnumNames.put(s, name)
+            return name
+        }
+    }
+    
+    def getStateNameRunning(State s) {
+        s.getStateName + ENUM_STATES_RUNNING.toLowerCase
+    }
+    
+    def getStateEnumNameRunning(State s) {
+        s.getStateEnumName + ENUM_STATES_RUNNING
+    }
+
+    def getContextTypeName(ControlflowRegion cfr) {
+        if (contextNames.keySet.contains(cfr)) {
+            return contextNames.get(cfr)
+        } else {
+            val name = cfr.name.hostcodeSafeName + CONTEXT_TYPE_NAME
+            val upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1)
+            contextNames.put(cfr, upperCaseName)
+            return upperCaseName
+        }
+    }  
+    
+    def getContextVariableName(ControlflowRegion cfr) {
+        cfr.getContextTypeName.toLowerCase
+    }  
     
     private val ANNOTATION_PRIORITY = "optPrioIDs"
 

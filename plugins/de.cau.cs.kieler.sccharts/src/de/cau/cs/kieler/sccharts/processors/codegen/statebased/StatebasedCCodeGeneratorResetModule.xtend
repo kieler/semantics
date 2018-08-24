@@ -17,6 +17,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
 import de.cau.cs.kieler.sccharts.State
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * C Code Generator Reset Module
@@ -36,6 +37,8 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     
     @Inject StatebasedCCodeGeneratorStructModule struct
     
+    @Accessors(PUBLIC_GETTER) var StringBuilder rootStateInit
+    
     override configure() {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
     }    
@@ -45,16 +48,13 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateInit() {
+        rootStateInit = new StringBuilder
+        
         code.add(
             MLC(getName + "() sets the program to its initial state.", 
                 "You should call " + getName + "() at least once at the start of the application.",
                 "Additionally, you can always reset the actual status to the initial configuration ",
-                "to restart the application.",
-                "",
-                "This includes the following steps:", 
-                " - the active states of the root level regions are set to their initial states",
-                " - the root level thread is set to WAITING", 
-                " - all region interface pointers are set to the interface of the program"
+                "to restart the application."
             ),
             
             "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
@@ -68,23 +68,17 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     }
     
     override generate() {
-        for (cfr : struct.rootRegions) {
-            var prefix = STRUCT_VARIABLE_NAME
+        for (cfr : rootState.regions.filter(ControlflowRegion)) {
+            var prefix = STRUCT_CONTEXT_NAME
             prefix += "->"
-            prefix += struct.getRegionName(cfr)
+            prefix += struct.getContextVariableName(cfr)
             prefix += "."
              
             setInterface(prefix, cfr)
-            val cfrName = struct.getRegionName(cfr)
-            val initialState = cfr.states.filter[ initial ].head
-            
-            code.add(
-                "  ", STRUCT_VARIABLE_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ",
-                struct.getStateName(initialState), ";", NL, 
-                "  ", STRUCT_VARIABLE_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
-                initialState.getStatePriority, ";", NL
-            )
         }
+        code.add("  ", STRUCT_CONTEXT_NAME, "->", REGION_ROOT_TERMINATED, " = 0;", NL)
+        
+        code.add(NL, rootStateInit)
     }
     
     override generateDone() {
@@ -99,7 +93,7 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
             prefix,
             REGION_INTERFACE_NAME,
             " = &(",
-            STRUCT_VARIABLE_NAME,
+            STRUCT_CONTEXT_NAME,
             "->",
             REGION_INTERFACE_NAME,
             ");", NL
@@ -108,14 +102,9 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
         val hierarchicalStates = cfr.states.filter[ isHierarchical ]
         for (cfr2 : hierarchicalStates.map[ regions ].flatten.filter(ControlflowRegion)) {
             var prefix2 = prefix
-            prefix2 += struct.getRegionName(cfr2) 
+            prefix2 += struct.getContextVariableName(cfr2) 
             prefix2 += "."
             setInterface(prefix2, cfr2)
         }
     }
-    
-    private def int getStatePriority(State state) {
-        return struct.getStatePriority(state)
-    }
-    
 }

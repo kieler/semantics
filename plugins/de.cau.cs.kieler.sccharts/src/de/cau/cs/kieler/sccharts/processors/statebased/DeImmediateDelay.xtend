@@ -74,12 +74,12 @@ class DeImmediateDelay extends SCChartsProcessor implements Traceable {
             // The pattern is identified as a state that has
             // - more than one transitions
             // - all transitions are immediate
-            // - at least one transition trigger is null (def transition)
+            // - at least one transition trigger is null (def transition), with also no effects
             // - all transitions that are not the def transition have a non-delayed transition variant with the same trigger
             //   at the target state of the def transition.
             if (state.outgoingTransitions.size > 1 && 
                 state.outgoingTransitions.forall[ immediate ] &&
-                state.outgoingTransitions.exists[ trigger === null ]
+                state.outgoingTransitions.exists[ trigger === null && effects.empty ]
             ) {
                 val oTDef = state.outgoingTransitions.filter[ trigger === null ].head
                 val tS = oTDef.targetState

@@ -17,7 +17,7 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.junit.Test
 
 /**
- * @author aas
+ * @author ssm
  *
  */
 class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
@@ -26,8 +26,13 @@ class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
         return createCSimulationBackend
     }
     
+    protected def isStatebasedSimulationText(TestModelData modelData) {
+        return modelData.isNetlistCompilationTests 
+//        && modelData.modelProperties.contains("statebased")
+    }
+    
     override filter(TestModelData modelData) {
-        return modelData.isNetlistCompilationTests
+        return modelData.isStatebasedSimulationText
         && modelData.isSCChartsTest
         && !modelData.modelProperties.contains("simulation-fails-netlist-c")
         && !modelData.modelProperties.contains("simulation-fails-statebased-c")
@@ -35,6 +40,6 @@ class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
     
     @Test
     def void testSimulationNetlistC(SCCharts scc, TestModelData modelData) {
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.processors.codegen.statebasedV2"], scc, modelData)
+        startSimulationTest(#["de.cau.cs.kieler.sccharts.statebased.woComments"], scc, modelData)
     }
 }

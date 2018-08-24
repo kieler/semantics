@@ -48,13 +48,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         code.add(
             MLC("The surrounding application should call " + getName + "() once per clock tick.",
                 "The interface inside the TickData struct should be used to communicate with the logic.",
-                "Set the inputs before you call " + getName + "() and read out the outputs afterwards.",
-                "",
-                "Invocation of the " + getName + "() includes the following steps:",
-                "  - Communication with the simulation interface for the inputs",
-                "  - Call of the logic function of the programm ",
-                "  - Communication with the simulation interface for the outputs",
-                "  - Additional tasks, such as register saves, if necessary"
+                "Set the inputs before you call " + getName + "() and read out the outputs afterwards."
             ),
             
             
@@ -70,7 +64,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         generateInitSetInputs(serializer)
 
         code.add(
-            indentation, logic.getName, "(", struct.getVariableName, ");", NL
+            indentation, struct.getStateNameRunning(rootState), "(", struct.getVariableName, ");", NL
         )
 
         generateInitSetOutputs(serializer)
@@ -81,13 +75,13 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             for (valuedObject : declaration.valuedObjects) {
                 code.add(
                     indentation, 
-                    STRUCT_VARIABLE_NAME,
+                    STRUCT_CONTEXT_NAME,
                     "->", 
                     REGION_INTERFACE_NAME,
                     ".",
                     valuedObject.name,
                     " = ",
-                    STRUCT_VARIABLE_NAME,
+                    STRUCT_CONTEXT_NAME,
                     "->",
                     valuedObject.name,
                     ";", NL
@@ -105,11 +99,11 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             for (valuedObject : declaration.valuedObjects) {
                 code.add(
                     indentation,
-                    STRUCT_VARIABLE_NAME,
+                    STRUCT_CONTEXT_NAME,
                     "->",
                     valuedObject.name,
                     " = ",
-                    STRUCT_VARIABLE_NAME,
+                    STRUCT_CONTEXT_NAME,
                     "->",
                     REGION_INTERFACE_NAME,
                     ".",

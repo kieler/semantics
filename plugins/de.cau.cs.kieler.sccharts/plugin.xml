@@ -207,6 +207,9 @@
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.interactiveScheduling.kico">
         </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.woComments.kico">
+        </TransformationSystem>
      </extension>
 
 
