@@ -39,7 +39,7 @@ class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
     }
     
     @Test
-    def void testSimulationNetlistC(SCCharts scc, TestModelData modelData) {
+    def void testSimulationStatebasedC(SCCharts scc, TestModelData modelData) {
         startSimulationTest(#["de.cau.cs.kieler.sccharts.statebased.woComments"], scc, modelData)
     }
 }

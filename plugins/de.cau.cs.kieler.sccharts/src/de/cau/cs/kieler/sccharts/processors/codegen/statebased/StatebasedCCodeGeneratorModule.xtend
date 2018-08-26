@@ -62,6 +62,11 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateInit() {
+        struct.printDebug = printDebug
+        reset.printDebug = printDebug
+        tick.printDebug = printDebug
+        logic.printDebug = printDebug
+        
         struct.generateInit
         reset.generateInit
         logic.generateInit

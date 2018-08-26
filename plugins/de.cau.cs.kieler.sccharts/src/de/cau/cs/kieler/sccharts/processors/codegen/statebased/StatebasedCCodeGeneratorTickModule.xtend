@@ -58,7 +58,8 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         struct.forwardDeclarations.append(code).append(";\n\n")
         
         code.add(
-            " {", NL
+            " {", NL,
+            IFC(printDebug, "  printf(\"\\nTICK \"); fflush(stdout);\n")
         )
         
         generateInitSetInputs(serializer)
@@ -120,6 +121,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     
     override generateDone() {
         code.add(
+            IFC(printDebug, "  printf(\"TICKEND \"); fflush(stdout);\n"),
             "}", NL
         ) 
     }

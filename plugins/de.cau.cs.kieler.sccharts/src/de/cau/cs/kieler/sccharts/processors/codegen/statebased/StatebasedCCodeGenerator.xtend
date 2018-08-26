@@ -19,6 +19,8 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 
 /**
  * C Code Generator  Processor for the State-based pattern
@@ -29,6 +31,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  */
 class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
+    
+    public static val IProperty<Boolean> PRINT_DEBUG_ENABLED = 
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.printDebug", false)    
     
     @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel 
     
@@ -49,6 +54,7 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
             val generatorModule = createCodeGenetatorModule.configure("", rootModel, rootState, this, moduleMap, rootState.name, null)
             moduleMap.put(rootState, generatorModule)
             generatorModule.suffix = hostcodeSafeName(rootState.name)
+            (generatorModule as StatebasedCCodeGeneratorModule).printDebug = environment.getProperty(PRINT_DEBUG_ENABLED)
         }
     }
     

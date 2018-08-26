@@ -202,7 +202,8 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                             
         function.add(
             SLC("Logic function of the superstate " + state.name + inRegionCommentString),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL);
+            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            IFC(printDebug, "  printf(\"SUPERSTATE " + state.name + " \"); fflush(stdout);\n"));
             
         function.add(
             SLC("Set the thread status to waiting for the upcomiong tick.")
@@ -351,7 +352,8 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                             
         function.add(
             SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL);
+            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            IFC(printDebug, "  printf(\"STATE " + state.name + " \"); fflush(stdout);\n"));
 
         struct.forwardDeclarationsLogic.add(
             SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
@@ -371,48 +373,57 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val contextName = struct.getContextTypeName(cfr)
         val function = createNewFunction(cfr)
         
+        val singleState = cfr.states.size == 1 && (!cfr.states.head.isHierarchical)
+        
         function.add(
             SLC("Function of region " + regionName), 
             
             "void ", regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            IFC(printDebug, "  printf(\"REGION " + regionName + " \"); fflush(stdout);\n"),
             
             SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
             "  while(", CONTEXT_DATA_NAME, "->threadStatus == RUNNING) {", NL,
-            "    switch(", CONTEXT_DATA_NAME, "->activeState) {", NL
+            IFC(!singleState, "    switch(", CONTEXT_DATA_NAME, "->activeState) {", NL)
         )
+        
         for (state : cfr.states) {
             val stateName = struct.getStateName(state)
             val stateEnumName = struct.getStateEnumName(state)
             
-            function.add(
-                "      case ", stateEnumName, ":", NL
-            )
+            if (!singleState) {
+                function.add(
+                    "      case ", stateEnumName, ":", NL
+                )
+            }
             
             state.generateState("        ")
             
             function.add(
-                "        ", stateName, "(", CONTEXT_DATA_NAME, ");", NL
+                IFC(!singleState, "    "),
+                "    ", stateName, "(", CONTEXT_DATA_NAME, ");", NL
             ) 
             
-            if (!state.isHierarchical) {
-                function.add(
-                    "        break;", NL, NL
-                )    
-            } else {
-                val stateNameRunning = struct.getStateNameRunning(state)
-                val stateEnumNameRunning = struct.getStateEnumNameRunning(state)
-                
-                function.add(NL,
-                    "      case ", stateEnumName + ENUM_STATES_RUNNING, ":", NL, 
-                    "        ", stateNameRunning, "(", CONTEXT_DATA_NAME, ");", NL,
-                    "        break;", NL, NL
-                )    
-                
+            if (!singleState) {
+                if (!state.isHierarchical) {
+                    function.add(
+                        "        break;", NL, NL
+                    )    
+                } else {
+                    val stateNameRunning = struct.getStateNameRunning(state)
+                    val stateEnumNameRunning = struct.getStateEnumNameRunning(state)
+                    
+                    function.add(NL,
+                        "      case ", stateEnumName + ENUM_STATES_RUNNING, ":", NL, 
+                        "        ", stateNameRunning, "(", CONTEXT_DATA_NAME, ");", NL,
+                        "        break;", NL, NL
+                    )    
+                    
+                }
             }
-            
         }
+        
         function.add(
-            "    }", NL,
+            IFC(!singleState, "    }"),
             "  }", NL,
             "}", NL, NL
         )
@@ -519,12 +530,14 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             }
             
             function.add(
-                scopeIndent, "  ", CONTEXT_DATA_NAME, "->", REGION_DELAYED_ENABLED, " == 0;", NL
+                scopeIndent, "  ", CONTEXT_DATA_NAME, "->", REGION_DELAYED_ENABLED, " = 0;", NL
             )                
 
-            function.add(
-                scopeIndent, "  ", CONTEXT_DATA_NAME, "->activeState = ", struct.getStateEnumName(transition.targetState), ";", NL
-            )
+            if (!isSelfLoop) {
+                function.add(
+                    scopeIndent, "  ", CONTEXT_DATA_NAME, "->activeState = ", struct.getStateEnumName(transition.targetState), ";", NL
+                )
+            }
             
             val sourcePrio = transition.sourceState.statePriority
             val targetPrio = transition.targetState.statePriority
