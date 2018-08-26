@@ -7,6 +7,7 @@
 
 // Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
+#include "../lib/usertime.h"
 #include "${compiled_model_loc}"
 
 // Determines if a simin file with the json object should be generated,
