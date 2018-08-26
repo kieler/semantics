@@ -7,6 +7,7 @@
 
 // Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
+#include "../lib/usertime.h"
 #include "${compiled_model_loc}"
 
 // Determines if a simin file with the json object should be generated,
@@ -70,7 +71,13 @@ ${sim_outputs}
     cJSON_Delete(root);
 }
 
+struct timespec start;
+struct timespec stop;  
+
 int main(int argc, const char* argv[]) {
+    double t;
+      
+    
     // Initialize 
     reset(&tickData);
     sendVariables();
@@ -79,6 +86,11 @@ int main(int argc, const char* argv[]) {
     // Initialize annotations
     ${decls}
     ${inits}
+    
+    FILE *f = fopen("../../../../results.csv", "a");
+    fprintf(f, "\n");
+    fprintf(f, "${model_name},");
+    fflush(f);
     
     // Tick loop
     while (1) {
@@ -89,7 +101,12 @@ int main(int argc, const char* argv[]) {
         ${inputs}
   
         // Reaction of model
+        clock_gettime(CLOCK_REALTIME, &start);
         tick(&tickData);
+        //sleep(1);
+        clock_gettime(CLOCK_REALTIME, &stop);
+        fprintf(f, "%d,%d,%d, ", start.tv_nsec, stop.tv_nsec, stop.tv_nsec - start.tv_nsec); 
+        fflush(f);
          
         // Update output annotations
         ${outputs}
@@ -100,4 +117,6 @@ int main(int argc, const char* argv[]) {
         // Update tick index
         nextTick++;
     }
+    
+    fclose(f);
 }
