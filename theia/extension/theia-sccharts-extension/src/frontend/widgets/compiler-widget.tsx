@@ -14,7 +14,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     systems : CompilationSystems[]
     configuration : CompilerConfiguration
     // TODO send LS values on startup with selection items or save them in preferences?
-
+    
     storeState(): object {
         throw new Error("Method not implemented.");
     }
@@ -68,25 +68,23 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
         }
         this.systems = [{id : "NONE", label : "NONE"}]
         this.node.draggable = false
+        this.setHidden(true)
     }
 
     onActivateRequest(msg: Message): void {
         super.onActivateRequest(msg);
+        this.setHidden(false)
         this.update()
     }
 
     renderShowButtons(): React.ReactNode {
 
         const showButtons: React.ReactNode[] = [];
-        var editor = this.commands.editorManager.currentEditor
-        if (!editor) {
-            return
-        }
-        var uri = editor.editor.uri
+        var uri = this.commands.getStringUriOfCurrentEditor()
         if (!uri) {
             return
         }
-        var snapshots = this.commands.resultMap.get(uri.toString())
+        var snapshots = this.commands.resultMap.get(uri)
         if (!snapshots) {
             return
         }
@@ -114,12 +112,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     renderCompileButton(): React.ReactNode {
         return <div id='compile-button' title="Compile"
             onClick={event => {
-                var selection = document.getElementById("compilation-list") as HTMLSelectElement;
-                if (this.systems.length > 0) {
-                    this.commands.compile(this.systems[selection.selectedIndex].id)
-                } else {
-                    this.commands.compile(Constants.compilations[selection.selectedIndex].id)
-                }
+                this.compileSelectedCompilationSystem()
             }}>
             <div className='fa fa-play-circle'> </div>
         </div>
@@ -217,6 +210,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
         return <div title="Auto compile" key="auto-compile-button" id='compile-button'
             onClick={event => {
                 this.configuration.isCheckedAutoCompileToggle = !this.configuration.isCheckedAutoCompileToggle
+                this.commands.shouldAutoCompile = this.configuration.isCheckedAutoCompileToggle
             }}>
             <div className={this.configuration.isCheckedAutoCompileToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
@@ -227,5 +221,19 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
             super.onUpdateRequest(msg)
             this.render()
         })
+    }
+
+    onCloseRequest(msg: Message): void {
+        super.onCloseRequest(msg)
+        this.setHidden(true)
+    }
+
+    public compileSelectedCompilationSystem(): void {
+        var selection = document.getElementById("compilation-list") as HTMLSelectElement;
+        if (this.systems.length > 0) {
+            this.commands.compile(this.systems[selection.selectedIndex].id)
+        } else {
+            this.commands.compile("")
+        }
     }
 }

@@ -7,7 +7,7 @@
 
 import { inject, injectable } from "inversify";
 import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
-import { EditorCommands, EditorManager } from "@theia/editor/lib/browser";
+import { EditorCommands, EditorManager, EditorWidget } from "@theia/editor/lib/browser";
 import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, CommonMenus } from "@theia/core/lib/browser";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
@@ -19,12 +19,17 @@ import { KeithKeybindingContext } from "./keith-keybinding-context";
 @injectable()
 export class KeithContribution extends AbstractViewContribution<CompilerWidget> {
 
+    shouldAutoCompile: boolean
+
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
     resultMap: Map<string, CodeContainer> = new Map
     indexMap: Map<string, number> = new Map
     lengthMap: Map<string, number> = new Map
     infoMap: Map<string, string[]> = new Map
+
+    editor : EditorWidget
+    compilerWidget : CompilerWidget
 
     constructor(
         @inject(Workspace) protected readonly workspace: Workspace,
@@ -44,6 +49,14 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
             toggleCommandId: COMPILER.id,
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
+        this.editorManager.onCurrentEditorChanged(this.onCurrentEditorChanged.bind(this))
+    }
+
+    onCurrentEditorChanged(editorWidget: EditorWidget | undefined): void {
+        if (editorWidget) {
+            this.editor = editorWidget
+        }
+        this.compilerWidget.update()
     }
 
     registerKeybindings(keybindings: KeybindingRegistry): void {
@@ -80,33 +93,33 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
                 commands.executeCommand(EditorCommands.SHOW_REFERENCES.id, uri, position, locations)
         });
         commands.registerCommand(APPLY_WORKSPACE_EDIT, {
-            execute: (changes: WorkspaceEdit) =>
-                !!this.workspace.applyEdit && this.workspace.applyEdit(changes)
+            execute: (changes: WorkspaceEdit) => 
+            !!this.workspace.applyEdit && this.workspace.applyEdit(changes)
         });
         commands.registerCommand(COMPILER, {
             execute: () => {
-                if (this.front.shell.getWidgets("bottom").find((widget, index) => {
-                    if (widget.id == Constants.compilerWidgetId) {
-                        widget.close()
+                if (this.compilerWidget) {
+                    if (this.compilerWidget.isHidden) {
+                        this.compilerWidget = new CompilerWidget(this)
+                        this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
+                        this.compilerWidget.activate()
+                    } else {
+                        this.compilerWidget.close()
                     }
-                    return widget.id == Constants.compilerWidgetId
-                })) {
-                    
                 } else {
-                    var compileWidget = new CompilerWidget(this)
-                    this.front.shell.addWidget(compileWidget, {area: "bottom"})
-                    this.front.shell.activateWidget(compileWidget.id)
+                    this.compilerWidget = new CompilerWidget(this)
+                    this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
+                    this.compilerWidget.activate()
                 }
             }
         })
         commands.registerCommand(SHOW_NEXT, {
             execute: () => {
-                const editor = this.editorManager.currentEditor
-                if (!editor) {
+                if (!this.editor) {
                     this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
-                const uri = editor.editor.uri.toString();
+                const uri = this.getStringUriOfCurrentEditor()
                 var index = this.indexMap.get(uri)
                 if (index != 0 && !index) {
                     this.message("Index is undefined", "error")
@@ -122,12 +135,11 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         })
         commands.registerCommand(SHOW_PREVIOUS, {
             execute: () => {
-                const editor = this.editorManager.currentEditor
-                if (!editor) {
+                if (!this.editor) {
                     this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
-                const uri = editor.editor.uri.toString();
+                const uri = this.getStringUriOfCurrentEditor()
                 var index = this.indexMap.get(uri)
                 if (index != 0 && !index) {
                     this.message("Index is undefined", "error")
@@ -204,14 +216,12 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
     }
 
     executeCompile(command: string) : boolean {
-        const editor = this.editorManager.currentEditor;
-
-        if (!editor) {
+        if (!this.editor) {
             this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
             return false;
         }
 
-        const uri = editor.editor.uri.toString();
+        const uri = this.getStringUriOfCurrentEditor()
         console.log("Compiling " + uri)
         this.client.languageClient.then(lclient => {
             lclient.sendRequest(Constants.COMPILE, [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
@@ -256,21 +266,16 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
 
 
     async requestSystemDescribtions() : Promise<boolean> {
-        const editor = this.editorManager.currentEditor
-        if (!editor) {
+        if (!this.editor) {
             // this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
             return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
         }
-        const uri = editor.editor.uri.toString();
+        const uri = this.getStringUriOfCurrentEditor()
         try {
             const lclient : ILanguageClient = await this.client.languageClient
             const systems : CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
-            this.front.shell.getWidgets("bottom").forEach(widget => {
-                if (widget.id == Constants.compilerWidgetId) {
-                    (widget as CompilerWidget).systems = systems,
-                    (widget as CompilerWidget).render()
-                }
-            })
+            this.compilerWidget.systems = systems,
+            this.compilerWidget.render()
             return Promise.resolve(true)
         } catch(error) {
             return Promise.reject("Communication with LS failed")
@@ -281,15 +286,20 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         try {
             const lclient : ILanguageClient = await this.client.languageClient
             const configuration : CompilerConfiguration =  await lclient.sendRequest(Constants.UPDATE_PREFERENCES, [bool, name, filter]) as CompilerConfiguration
-            this.front.shell.getWidgets("bottom").forEach(widget => {
-                if (widget.id == Constants.compilerWidgetId) {
-                    (widget as CompilerWidget).configuration = configuration,
-                    (widget as CompilerWidget).render()
-                }
-            })
+            this.compilerWidget.configuration = configuration,
+            this.compilerWidget.render()
             return Promise.resolve(true)
         } catch(error) {
             return Promise.reject("Communication with LS failed")
+        }
+    }
+    
+    getStringUriOfCurrentEditor() : string {
+        var uri = this.editor.getResourceUri()
+        if (uri) {
+            return uri.toString()
+        } else {
+            return ""
         }
     }
 }
@@ -306,6 +316,11 @@ export const SHOW_REFERENCES: Command = {
  */
 export const APPLY_WORKSPACE_EDIT: Command = {
     id: 'apply.workspaceEdit'
+};
+
+export const SAVE: Command = {
+    id: 'core.save',
+    label: 'Save'
 };
 
 export const SHOW_NEXT: Command = {
