@@ -99,6 +99,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         stateEnumNames.clear
         contextNames.clear
         
+        stateEnumNames.put(createState, THREAD_STATUS_TERMINATED)
+        stateEnumNames.put(createState, THREAD_STATUS_RUNNING)
+        stateEnumNames.put(createState, THREAD_STATUS_WAITING)
+        stateEnumNames.put(createState, THREAD_STATUS_PAUSING)
+        
         code.addCLL(
             SLC("The chosen scheduling regime (IUR) uses four states to maintain the status of threads."),
             
@@ -313,7 +318,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         if (regionNames.keySet.contains(cfr)) {
             return regionNames.get(cfr)
         } else {
-            val name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName
+            var name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName
+            var counter = 2
+            while (regionNames.values.contains(name)) {
+                name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName + counter++    
+            }
             regionNames.put(cfr, name)
             return name
         }
@@ -374,7 +383,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             return contextNames.get(cfr)
         } else {
             val name = cfr.name.hostcodeSafeName + CONTEXT_TYPE_NAME
-            val upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1)
+            var upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1)
+            var counter = 2
+            while (contextNames.values.contains(upperCaseName)) {
+                upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1) + counter++
+            }
             contextNames.put(cfr, upperCaseName)
             return upperCaseName
         }

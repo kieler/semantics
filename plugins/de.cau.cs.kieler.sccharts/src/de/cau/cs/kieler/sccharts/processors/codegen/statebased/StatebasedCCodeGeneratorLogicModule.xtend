@@ -204,6 +204,9 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             SLC("Logic function of the superstate " + state.name + inRegionCommentString),
             "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"SUPERSTATE " + state.name + " \"); fflush(stdout);\n"));
+        struct.forwardDeclarationsLogic.add(
+            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL
+        );
             
         function.add(
             SLC("Set the thread status to waiting for the upcomiong tick.")
@@ -478,7 +481,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             }
             val trigger = if (!isImmediate) 
                     (if (hasTrigger) 
-                    CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED + " && " + transitionTrigger
+                    CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED + " && (" + transitionTrigger + ")"
                     else CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED) 
                 else transitionTrigger
             if (isDefaultTransition && isImmediate) hasImplicitSelfLoop = false 
