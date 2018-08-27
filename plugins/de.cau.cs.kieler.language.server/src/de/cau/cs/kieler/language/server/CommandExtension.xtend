@@ -26,25 +26,25 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 interface CommandExtension {
     
     /**
-     * Compiles file given by uri with compilationsystem given by command
+     * Compiles file given by uri with compilationsystem given by command.
      */
     @JsonRequest('compile')
     def CompletableFuture<Object> compile(String uri, String command);
     
     /**
-     * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled
+     * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.
      */
     @JsonRequest('show')
     def CompletableFuture<Object> show(String uri, int index)
     
     /**
-     * Returns all compilation systems which are applicable for the file at given uri
+     * Returns all compilation systems which are applicable for the file at given uri.
      */
     @JsonRequest('get-systems')
     def CompletableFuture<Object> getSystems(String uri, boolean filter)
     
     /**
-     * Set compilation preference and return current preferences
+     * Set compilation preference and return current preferences.
      */
     @JsonRequest('update-preferences')
     def CompletableFuture<Object> updatePreferences(boolean bool, String name, boolean filter)

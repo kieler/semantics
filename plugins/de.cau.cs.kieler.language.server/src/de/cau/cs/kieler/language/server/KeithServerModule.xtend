@@ -16,13 +16,16 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.service.AbstractGenericModule
 
 /**
- * Register additional classes
+ * Module to register additional classes for language support.
  * 
  * @author sdo
  *
  */
 class KeithServerModule extends AbstractGenericModule {
     
+    /**
+     * Bind language server extension for keith.
+     */
     def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
         KeithLanguageServerExtension
     }

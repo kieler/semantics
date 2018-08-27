@@ -19,7 +19,6 @@ import java.util.LinkedList
  * Utility class to send description of compilation snapshots to the Theia client.
  * 
  * @author sdo
- *
  */
 class CompilationResults {
     public List<SnapshotDescription> files = new LinkedList

@@ -30,10 +30,14 @@ import org.eclipse.xtext.util.Modules2
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
- * Has to be started with "socket" and #port as arguments to connect via socket <br>
+ * Expects none or host and port as arguments. If none the language server is started via<br>
+ * stdin/out, otherwise it is started via a socket connection on specified host and port. If only one argument<br>
+ * is provided it will be interpreted as port and host will be localhost<br>
  * <br>
  * <b>Note:</b> On MacOS X make sure to add "-Djava.awt.headless=true" to the vmargs!
  * Otherwise the application will freeze! 
+ * 
+ * @see LanguageServerLauncher
  * 
  * @author als, sdo
  * @kieler.design proposed
@@ -43,21 +47,26 @@ class LanguageServer implements IApplication {
     
     static val LOG = Logger.getLogger(LanguageServer)
     
-    
+    /**
+     * Starts the language server.
+     */
     override start(IApplicationContext context) throws Exception {
-        var socket = ""
         var args = (context.arguments.get("application.args")) as String[]
         if (args.size > 0) {
-            socket = args.get(0)
-        }
-        if (socket == "socket") {
             // debug case, communicate via socket
-            if (args.size != 2) {
+            var host = "localhost"
+            var port = 5008
+            if (args.size > 2) {
                 throw new Exception("Wrong number of arguments")
             }
-            val port = Integer.parseInt(args.get(1))
+            if (args.size == 1) {
+                port = Integer.parseInt(args.get(0))
+            } else {
+                host = args.get(0)
+                port = Integer.parseInt(args.get(1))
+            }
             println(args.toString)
-            println("Connection via: " + socket)
+            println("Connection to: " + host + ":" + port)
                
             // Register all languages
             println("Starting language server socket")
@@ -67,7 +76,7 @@ class LanguageServer implements IApplication {
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
             ])) 
             println("Create injector and register emf")
-            this.run(injector, port)
+            this.run(injector, host, port)
             return EXIT_OK 
         } else {
             // product case, communicate via stdin/out
@@ -83,8 +92,8 @@ class LanguageServer implements IApplication {
     /**
      * Starts the language server (has to be separate method, since start method must have a "reachable" return
      */
-    def run(Injector injector, int port) {
-        val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress("localhost", port))
+    def run(Injector injector, String host,  int port) {
+        val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
             val socketChannel = serverSocket.accept.get

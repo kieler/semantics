@@ -12,18 +12,16 @@
  */
 package de.cau.cs.kieler.language.server
 
-import java.util.List
-
 /**
- * Description of a compilation system for select-box entries. Consist of label an id
+ * Description of a compilation system for select-box entries. Consist of label an id.
  * 
  * @author sdo
  *
  */
 class SystemDescription {
     
-    String label
-    String id
+    private String label
+    private String id
     
     new (String label, String id) {
         this.label = label
@@ -33,19 +31,19 @@ class SystemDescription {
 }
 
 /**
- * Configuration options for the compiler, used for communication with Theia client
+ * Configuration options for the compiler, used for communication with Theia client.
  * 
  */
 class CompilerConfiguration {
-    boolean isCheckedDeveloperToggle
-    boolean isCheckedFlattenSystemViewToggle
-    boolean isCheckedForwardResultToggle
-    boolean isCheckedAutoCompileToggle
-    boolean isCheckedVisualLayoutFeedbackToggle
-    boolean isCheckedCompileInplaceToggle
-    boolean isCheckedCompileTracingToggle
-    boolean isCheckedDebugEnvironmentModelsToggle
-    boolean isCheckedShowPrivateSystemsToggle
+    private boolean isCheckedDeveloperToggle
+    private boolean isCheckedFlattenSystemViewToggle
+    private boolean isCheckedForwardResultToggle
+    private boolean isCheckedAutoCompileToggle
+    private boolean isCheckedVisualLayoutFeedbackToggle
+    private boolean isCheckedCompileInplaceToggle
+    private boolean isCheckedCompileTracingToggle
+    private boolean isCheckedDebugEnvironmentModelsToggle
+    private boolean isCheckedShowPrivateSystemsToggle
     
     new (boolean dev, boolean flattenSystem, boolean forwardResult, boolean autoCompile, boolean visualFeedback, 
         boolean inplace, boolean tracing, boolean debugEnv, boolean showPrivate
