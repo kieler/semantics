@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
 
 // Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
-#include "../lib/usertime.h"
+//#include "../lib/usertime.h"
 #include "${compiled_model_loc}"
 
 // Determines if a simin file with the json object should be generated,
@@ -103,9 +104,8 @@ int main(int argc, const char* argv[]) {
         // Reaction of model
         clock_gettime(CLOCK_REALTIME, &start);
         tick(&tickData);
-        //sleep(1);
         clock_gettime(CLOCK_REALTIME, &stop);
-        fprintf(f, "%d,%d,%d, ", start.tv_nsec, stop.tv_nsec, stop.tv_nsec - start.tv_nsec); 
+        fprintf(f, "%d,", stop.tv_nsec - start.tv_nsec); 
         fflush(f);
          
         // Update output annotations
