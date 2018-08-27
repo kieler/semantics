@@ -239,9 +239,9 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
     }
     
     override updatePreferences(boolean bool, String name, boolean filter) {
-        if ("auto-compile".equals(name)) {
-            CompilerViewUtil.isCheckedAutoCompileToggle = bool   
-        }
+//        if ("auto-compile".equals(name)) { done on client
+//            CompilerViewUtil.isCheckedAutoCompileToggle = bool   
+//        }
         if ("inplace".equals(name)) {
             CompilerViewUtil.isCheckedCompileInplaceToggle = bool   
         }

@@ -14,7 +14,7 @@ export class KeithKeybindingContext implements KeybindingContext {
     readonly id = 'keith.keybinding.context';
 
     /**
-     * Checks whether a keybining of this context can be used in the current situtation.
+     * Checks whether a keybinding of this context can be used in the current situation.
      * @param arg keybinding to check
      */
     isEnabled(arg: Keybinding): boolean {
