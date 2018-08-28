@@ -28,7 +28,8 @@ class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
     
     protected def isStatebasedSimulationText(TestModelData modelData) {
         return modelData.isNetlistCompilationTests 
-        && modelData.modelProperties.contains("rbls")
+        && modelData.modelProperties.contains("statebased")
+//        && modelData.modelProperties.contains("rbls")
     }
     
     override filter(TestModelData modelData) {

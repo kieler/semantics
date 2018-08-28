@@ -16,6 +16,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /**
  * C Code Generator Tick Module
@@ -28,6 +30,8 @@ import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.
  * 
  */
 class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
+    
+    @Inject extension SCChartsStateExtensions
     
     protected static val TICK_NAME = "tick"
     
@@ -61,14 +65,6 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             " {", NL,
             IFC(printDebug, "  printf(\"\\nTICK \"); fflush(stdout);\n")
         )
-        
-        generateInitSetInputs(serializer)
-
-        code.add(
-            indentation, struct.getStateNameRunning(rootState), "(", struct.getVariableName, ");", NL
-        )
-
-        generateInitSetOutputs(serializer)
     }
     
     protected def void generateInitSetInputs(extension StatebasedCCodeSerializeHRExtensions serializer) {
@@ -116,8 +112,57 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     override generate() {
+        generateInitSetInputs(serializer)
+        
+        
+        for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
+            var prefix = STRUCT_CONTEXT_NAME
+            prefix += "->"
+            prefix += struct.getContextVariableName(cfr.value)
+            prefix += "."
+                        
+            setTickStart(prefix, cfr.value)
+        }        
+
+        code.add(NL, "  do {", NL)
+
+        code.add(
+            indentation, "  ", struct.getStateNameRunning(rootState), "(", struct.getVariableName, ");", NL
+        )
+
+        val conditionalBuilder = new StringBuilder
+        val regionCount = rootState.regions.filter(ControlflowRegion).size
+        for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
+            val contextName = struct.getContextVariableName(cfr.value)
+            conditionalBuilder.add(
+                CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING
+            )
+            if (cfr.key < regionCount-1) 
+                conditionalBuilder.add(" || ", NL, "    ")
+        }
+            
+        code.add("  } while (" + conditionalBuilder + ");", NL, NL);
+
+        generateInitSetOutputs(serializer)
 
     }
+    
+    protected def void setTickStart(String prefix, ControlflowRegion cfr) {
+        code.add(
+          "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
+          "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL, 
+          "    ", prefix, REGION_DELAYED_ENABLED, " = 1;", NL,
+          "  ",  "}", NL            
+        )
+        
+        val hierarchicalStates = cfr.states.filter[ isHierarchical ]
+        for (cfr2 : hierarchicalStates.map[ regions ].flatten.filter(ControlflowRegion)) {
+            var prefix2 = prefix
+            prefix2 += struct.getContextVariableName(cfr2) 
+            prefix2 += "."
+            setTickStart(prefix2, cfr2)
+        }
+    } 
     
     override generateDone() {
         code.add(

@@ -397,7 +397,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         cfr.getContextTypeName.toLowerCase
     }  
     
-    private val ANNOTATION_PRIORITY = "optPrioIDs"
+//    private val ANNOTATION_PRIORITY = "optPrioIDs"
+    private val ANNOTATION_PRIORITY = "nodePrios"
 
     def int getStatePriority(State state) {
         if (state.hasAnnotation(ANNOTATION_PRIORITY)) {

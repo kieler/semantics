@@ -250,11 +250,11 @@ abstract class SimulationTestBase<T extends EObject> extends AbstractXTextModelR
         } finally {
             SimulationManager.remove(this)
             try {
-//                project?.delete(true, true, null)
+                project?.delete(true, true, null)
             } catch(ResourceException e) {
                 // There is maybe still a lock on the resource (Windows). Give it a little bit more time and try again.
-//                Thread.sleep(3000)
-//                project?.delete(true, true, null)
+                Thread.sleep(3000)
+                project?.delete(true, true, null)
             }
         }
     }
