@@ -43,7 +43,7 @@ class CompileInplaceToggle extends AbstractAction {
     }
     
     override void invoke() {
-        CompilerViewUtil.isCheckedCompileInplaceToggle = action.isChecked
+        CompilerViewUtil.compileInplace = action.isChecked
     }
     
     

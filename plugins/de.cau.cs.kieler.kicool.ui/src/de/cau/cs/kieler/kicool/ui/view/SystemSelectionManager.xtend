@@ -85,7 +85,9 @@ class SystemSelectionManager implements SelectionListener {
         }
         val systems = CompilerViewUtil.getSystemModels(filter, modelClassFilter)
         
-        for(system : systems) {
+        for(system : systems.
+            filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ].
+            filter[ !developer || (view !== null && view.developerToggle !== null && view.developerToggle.checked) ]) {
             val id = system.id
             var name = system.label
             if (name.nullOrEmpty) name = id
@@ -147,7 +149,7 @@ class SystemSelectionManager implements SelectionListener {
     
     def setTemporarySystem(System system) {
         try {
-            CompilerViewUtil.temporarySystem = system   
+            KiCoolRegistration.registerTemporarySystem(system)  
         } catch (Exception e) {
             PromUIPlugin.showError(e)
         }

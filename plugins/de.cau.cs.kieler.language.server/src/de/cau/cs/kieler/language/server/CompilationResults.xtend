@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.language.server
 
-import java.util.List
 import java.util.LinkedList
+import java.util.List
 
 /**
  * Utility class to send description of compilation snapshots to the Theia client.
@@ -23,11 +23,8 @@ import java.util.LinkedList
 class CompilationResults {
     public List<SnapshotDescription> files = new LinkedList
     
-    new() {
-        this.files = new LinkedList
+    new(List<SnapshotDescription> descriptions) {
+        this.files = descriptions
     }
     
-    new (List<SnapshotDescription> files) {
-        this.files = files
-    }
 }

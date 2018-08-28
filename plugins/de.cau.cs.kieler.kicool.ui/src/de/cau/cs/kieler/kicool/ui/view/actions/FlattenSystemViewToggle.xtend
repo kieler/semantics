@@ -30,6 +30,8 @@ class FlattenSystemViewToggle extends AbstractAction {
 
     public static final ImageDescriptor ICON = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kicool.ui", "icons/IMBC_flat.png");
+            
+    @Accessors boolean isChecked
 
     new(CompilerView view) {
         super(view, 
@@ -43,7 +45,7 @@ class FlattenSystemViewToggle extends AbstractAction {
     }
     
     override void invoke() {
-        CompilerViewUtil.isCheckedFlattenSystemViewToggle = action.isChecked
+        isChecked = action.isChecked
         view.updateView
     }
     

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 import org.eclipse.jface.action.IAction
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm
@@ -25,6 +24,8 @@ import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 class ShowPrivateSystemsToggle extends AbstractAction {
 
     private static val SHOW_PRIVATE_SYSTEMS_TOGGLE_ACTION_DEFAULT = false
+    
+    @Accessors boolean isChecked
     
     new(CompilerView view) {
         super(view, 
@@ -38,7 +39,7 @@ class ShowPrivateSystemsToggle extends AbstractAction {
     }
     
     override void invoke() {
-        CompilerViewUtil.isCheckedShowPrivateSystemsToggle = action.isChecked
+        isChecked = action.isChecked
         if (view !== null && view.systemSelectionManager !== null)
             view.systemSelectionManager.updateSystemList
     }

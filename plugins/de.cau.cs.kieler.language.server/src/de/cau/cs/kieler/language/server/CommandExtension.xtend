@@ -29,7 +29,7 @@ interface CommandExtension {
      * Compiles file given by uri with compilationsystem given by command.
      */
     @JsonRequest('compile')
-    def CompletableFuture<Object> compile(String uri, String command);
+    def CompletableFuture<Object> compile(String uri, String command, boolean inplace);
     
     /**
      * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.
@@ -42,10 +42,4 @@ interface CommandExtension {
      */
     @JsonRequest('get-systems')
     def CompletableFuture<Object> getSystems(String uri, boolean filter)
-    
-    /**
-     * Set compilation preference and return current preferences.
-     */
-    @JsonRequest('update-preferences')
-    def CompletableFuture<Object> updatePreferences(boolean bool, String name, boolean filter)
 }

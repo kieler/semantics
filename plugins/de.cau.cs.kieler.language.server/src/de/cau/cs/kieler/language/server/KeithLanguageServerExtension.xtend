@@ -80,8 +80,10 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         languageServerAccess
     }
     
-    override compile(String uri, String command) {
+    override compile(String uri, String command, boolean inplace) {
         var string = uri
+        
+        CompilerViewUtil.compileInplace = inplace
         
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
@@ -236,40 +238,5 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
             systemDescription.add(new SystemDescription(system.label, system.id))	
         }
         return systemDescription
-    }
-    
-    override updatePreferences(boolean bool, String name, boolean filter) {
-        if ("inplace".equals(name)) {
-            CompilerViewUtil.isCheckedCompileInplaceToggle = bool   
-        }
-        if ("tracing".equals(name)) {
-            CompilerViewUtil.isCheckedCompileTracingToggle = bool   
-        }
-        if ("debug-env".equals(name)) {
-            CompilerViewUtil.isCheckedDebugEnvironmentModelsToggle = bool   
-        }
-        if ("developer".equals(name)) {
-            CompilerViewUtil.isCheckedDeveloperToggle = bool   
-        }
-        if ("flatten-system".equals(name)) {
-            CompilerViewUtil.isCheckedFlattenSystemViewToggle = bool   
-        }
-        if ("forward-result".equals(name)) {
-            CompilerViewUtil.isCheckedForwardResultToggle = bool   
-        }
-        if ("private".equals(name)) {
-            CompilerViewUtil.isCheckedShowPrivateSystemsToggle = bool   
-        }
-        if ("visual-layout".equals(name)) {
-            CompilerViewUtil.isCheckedVisualLayoutFeedbackToggle = bool   
-        }
-        return requestManager.runRead[ cancelIndicator |
-            new CompilerConfiguration(CompilerViewUtil.checkedDeveloperToggle, CompilerViewUtil.checkedFlattenSystemViewToggle,
-                CompilerViewUtil.checkedForwardResultToggle, CompilerViewUtil.checkedAutoCompileToggle, CompilerViewUtil.checkedVisualLayoutFeedbackToggle,
-                CompilerViewUtil.checkedCompileInplaceToggle, CompilerViewUtil.checkedCompileTracingToggle, CompilerViewUtil.checkedDebugEnvironmentModelsToggle,
-                CompilerViewUtil.checkedShowPrivateSystemsToggle
-            )
-        ]
-    }
-    
+    }    
 }

@@ -18,8 +18,6 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.Separator
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
-
 /**
  * @author ssm
  * @kieler.design 2017-05-12 proposed
@@ -31,6 +29,7 @@ class DeveloperToggle extends AbstractAction {
 
     /** The action for toggling debug mode. */
     @Accessors private IToolBarManager toolBar
+    @Accessors boolean isChecked
     
     private var Separator separator
     private var OpenSystemAction openSystemAction
@@ -50,7 +49,7 @@ class DeveloperToggle extends AbstractAction {
     }
     
     override void invoke() {
-        CompilerViewUtil.isCheckedDeveloperToggle = action.isChecked
+        isChecked = action.isChecked
         separator.visible = action.isChecked
         toolBar.find(openSystemAction.action.id).visible = action.isChecked
         toolBar.find(loadSystemAction.action.id).visible = action.isChecked

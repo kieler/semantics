@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.model.properties.Property
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * The EditPartSystemManager keeps track of the active editors and associated systems. 
@@ -95,7 +94,7 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     
     override onEditorSaved(IEditorPart editor) {
         removeAttachedContextFromEditor(editor)
-        if (CompilerViewUtil.checkedAutoCompileToggle) {
+        if (view.autoCompileToggle.checked) {
             view.compilationAction.invokeCompile
         }
     }

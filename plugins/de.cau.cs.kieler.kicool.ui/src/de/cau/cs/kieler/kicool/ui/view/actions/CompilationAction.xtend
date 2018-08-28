@@ -69,17 +69,17 @@ class CompilationAction {
         val cc = Compile.createCompilationContext(view.editPartSystemManager.activeSystem, model)
         cc.inputEditor = editor
         
-        if (CompilerViewUtil.checkedCompileInplaceToggle) {
+        if (CompilerViewUtil.compileInplace) {
             cc.startEnvironment.setProperty(Environment.INPLACE, true)
         }
-        if (CompilerViewUtil.checkedCompileTracingToggle) {
+        if (view.compileTracingToggle.checked) {
             cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
         }
-        if (CompilerViewUtil.checkedDebugEnvironmentModelsToggle) {
+        if (view.debugEnvironmentModelsToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEBUG_ENVIRONMENT_MODELS, true)
             cc.startEnvironment.setProperty(Environment.DYNAMIC_PROCESSOR_SYSTEM, true)
         }
-        if (CompilerViewUtil.checkedDeveloperToggle) {
+        if (view.developerToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEVELOPER_MODE, true)
         }
                 

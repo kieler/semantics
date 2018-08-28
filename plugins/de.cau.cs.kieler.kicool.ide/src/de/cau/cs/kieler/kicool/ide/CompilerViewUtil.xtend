@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.ide
 
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.System
-import java.util.List
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -23,34 +23,19 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  */
 class CompilerViewUtil {
+    
+    @Accessors static boolean compileInplace
 
     public static val COMPILE_INPLACE_TOGGLE_ACTION_DEFAULT = false
-
-    @Accessors static boolean isCheckedDeveloperToggle
-    @Accessors static boolean isCheckedFlattenSystemViewToggle
-    @Accessors static boolean isCheckedForwardResultToggle
-    @Accessors static boolean isCheckedAutoCompileToggle
-    @Accessors static boolean isCheckedVisualLayoutFeedbackToggle
-    @Accessors static boolean isCheckedCompileInplaceToggle
-    @Accessors static boolean isCheckedCompileTracingToggle
-    @Accessors static boolean isCheckedDebugEnvironmentModelsToggle
-    @Accessors static boolean isCheckedShowPrivateSystemsToggle
 
     static def String getDefaultSystem(String editorId) {
         return DefaultSystemAssociation.getDefaultSystem(editorId)
     }
 
-    static def setTemporarySystem(System system) {
-        KiCoolRegistration.registerTemporarySystem(system)
-//        updateSystemList TODO
-    }
-
     static def List<System> getSystemModels(boolean filter, Class<?> modelClassFilter) {
         val systems = newLinkedList
         systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
-        return systems.filter[!filter || hasInput(modelClassFilter)].filter [
-            public || CompilerViewUtil.checkedShowPrivateSystemsToggle
-        ].filter[!developer || CompilerViewUtil.checkedDeveloperToggle].toList
+        return systems.filter[!filter || hasInput(modelClassFilter)].toList
     }
 
     static private def hasInput(System sys, Class<?> modelClass) {

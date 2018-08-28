@@ -204,7 +204,7 @@ class CompilerView extends DiagramViewPart {
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
         properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
-            KiCoolSynthesis.FLATTEN_SYSTEM -> ((CompilerViewUtil.checkedDeveloperToggle && CompilerViewUtil.checkedFlattenSystemViewToggle) as Object)
+            KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object)
         })
                                 
         updateDiagram(editPartSystemManager.activeSystem, properties)

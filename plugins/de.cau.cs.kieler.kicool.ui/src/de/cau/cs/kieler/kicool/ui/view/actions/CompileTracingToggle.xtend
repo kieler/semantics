@@ -16,7 +16,6 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author als
@@ -29,6 +28,8 @@ class CompileTracingToggle extends AbstractAction {
 
     /** The action for toggling forward result mode. */
     @Accessors private IToolBarManager toolBar
+    
+    @Accessors boolean isChecked
     
     new(CompilerView view) {
         super(view, 
@@ -43,7 +44,7 @@ class CompileTracingToggle extends AbstractAction {
     }
     
     override void invoke() {
-        CompilerViewUtil.isCheckedCompileTracingToggle = action.isChecked
+        isChecked = action.isChecked
     }
     
     
