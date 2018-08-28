@@ -16,7 +16,6 @@ export class CompilerWidget extends ReactWidget {
     autoCompile: boolean
     compileInplace: boolean
     showPrivateSystems: boolean
-    // TODO send LS values on startup with selection items or save them in preferences?
     
     constructor(
         @inject(new LazyServiceIdentifer(() => KeithContribution)) protected readonly commands: KeithContribution
@@ -27,7 +26,7 @@ export class CompilerWidget extends ReactWidget {
         this.title.iconClass = 'fa fa-play-circle';
         this.title.closable = false
         this.addClass(Constants.compilerWidgetId) // class for index.css
-        this.systems = [{id: "NONE", label: "NONE"}]
+        this.systems = [{id: "NONE", label: "NONE", isPublic: true}]
         this.node.draggable = false
         this.show()
         this.node.focus()
@@ -40,7 +39,9 @@ export class CompilerWidget extends ReactWidget {
         const compilationElements: React.ReactNode[] = [];
         // TODO filter private systems if necessary
         this.systems.forEach(system => {
-            compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>);
+            if (this.showPrivateSystems || system.isPublic) {
+                compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>)
+            }
         });
         return <React.Fragment>
             <div id="compilation-panel">
@@ -106,6 +107,7 @@ export class CompilerWidget extends ReactWidget {
         return <div title="Show private Systems" key="private-button" id='compile-button'
             onClick={event => {
                 this.showPrivateSystems = !this.showPrivateSystems
+                this.update()
             }}>
             <div className={this.showPrivateSystems ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
@@ -115,6 +117,7 @@ export class CompilerWidget extends ReactWidget {
         return <div title="Inplace" key="inplace-button" id='compile-button'
             onClick={event => {
                 this.compileInplace = !this.compileInplace
+                this.update()
             }}>
             <div className={this.compileInplace ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
@@ -123,8 +126,8 @@ export class CompilerWidget extends ReactWidget {
     renderAutoCompileButton(): React.ReactNode {
         return <div title="Auto compile" key="auto-compile-button" id='compile-button'
             onClick={event => {
-                // TODO
                 this.autoCompile = !this.autoCompile
+                this.update()
             }}>
             <div className={this.autoCompile ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>

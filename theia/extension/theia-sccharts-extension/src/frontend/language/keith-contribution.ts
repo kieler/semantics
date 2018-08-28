@@ -200,7 +200,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
                 console.log("Adding new widget since old was not found")
                 
                 this.front.shell.addWidget(new TextWidget("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
-                snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right"}) // TODO via does the editor split on navigation??
+                snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right"})
             }
             this.front.shell.activateWidget(uri)
         } else {
@@ -224,7 +224,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         const uri = this.getStringUriOfCurrentEditor()
         console.log("Compiling " + uri)
         var lclient = await this.client.languageClient
-        var snapshotsDescriptions: CodeContainer = await lclient.sendRequest(Constants.COMPILE, [uri,command]) as CodeContainer
+        var snapshotsDescriptions: CodeContainer = await lclient.sendRequest(Constants.COMPILE, [uri,command, this.compilerWidget.compileInplace]) as CodeContainer
         this.message("Got compilation result for " + uri, "info")
         var infoList: string[] = []
         snapshotsDescriptions.files.forEach(snapshot => {
@@ -268,7 +268,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         const uri = this.getStringUriOfCurrentEditor()
         try {
             const lclient: ILanguageClient = await this.client.languageClient
-            const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true, this.compilerWidget.compileInplace]) as CompilationSystems[]
+            const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
             this.compilerWidget.systems = systems,
             this.compilerWidget.render()
             return Promise.resolve(true)

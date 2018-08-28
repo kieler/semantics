@@ -23,7 +23,6 @@ export namespace Constants {
     export const priorityJava: string = 'de.cau.cs.kieler.sccharts.priority.java'
     export const extendedCore: string = 'de.cau.cs.kieler.sccharts.extended.core'
 
-    export const netlistCompilation: CompilationSystems = { label: "Netlist", id: netlist }
     export const netlistJavaCompilation = { label: "Netlist Java", id: netlistJava }
     export const priorityJavaCompilation = { label: "Priorities Java", id: priorityJava }
     export const compilerWidgetId = "compiler-widget"
@@ -31,8 +30,6 @@ export namespace Constants {
     export const SHOW: string = 'sccharts/show'
     export const GET_SYSTEMS: string = 'sccharts/get-systems'
     export const UPDATE_PREFERENCES : string = "sccharts/update-preferences"
-
-    export const compilations: CompilationSystems[] = [netlistCompilation, netlistJavaCompilation, priorityJavaCompilation]
 
     export const OPEN_COMPILER_WIDGET_KEYBINDING = "ctrlcmd+alt+c"
     export const SHOW_PREVIOUS_KEYBINDING = "alt+g"
@@ -47,6 +44,7 @@ export namespace Constants {
 export class CompilationSystems {
     label: string
     id: string
+    isPublic: boolean
 }
 
 /**

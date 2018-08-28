@@ -235,7 +235,7 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
     def List<SystemDescription> getDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescription.add(new SystemDescription(system.label, system.id))	
+            systemDescription.add(new SystemDescription(system.label, system.id, system.public))	
         }
         return systemDescription
     }    
