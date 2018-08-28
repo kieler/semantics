@@ -72,8 +72,8 @@ ${sim_outputs}
     cJSON_Delete(root);
 }
 
-struct timespec start;
-struct timespec stop;  
+//struct timespec start;
+//struct timespec stop;  
 
 int main(int argc, const char* argv[]) {
     double t;
@@ -88,10 +88,10 @@ int main(int argc, const char* argv[]) {
     ${decls}
     ${inits}
     
-    FILE *f = fopen("../../../../results.csv", "a");
-    fprintf(f, "\n");
-    fprintf(f, "${model_name},");
-    fflush(f);
+//    FILE *f = fopen("../../../../results.csv", "a");
+//    fprintf(f, "\n");
+//    fprintf(f, "${model_name},");
+//    fflush(f);
     
     // Tick loop
     while (1) {
@@ -102,11 +102,11 @@ int main(int argc, const char* argv[]) {
         ${inputs}
   
         // Reaction of model
-        clock_gettime(CLOCK_REALTIME, &start);
+  //      clock_gettime(CLOCK_REALTIME, &start);
         tick(&tickData);
-        clock_gettime(CLOCK_REALTIME, &stop);
-        fprintf(f, "%d,", stop.tv_nsec - start.tv_nsec); 
-        fflush(f);
+//        clock_gettime(CLOCK_REALTIME, &stop);
+//        fprintf(f, "%d,", stop.tv_nsec - start.tv_nsec); 
+//        fflush(f);
          
         // Update output annotations
         ${outputs}
@@ -118,5 +118,5 @@ int main(int argc, const char* argv[]) {
         nextTick++;
     }
     
-    fclose(f);
+//    fclose(f);
 }

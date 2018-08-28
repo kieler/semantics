@@ -66,6 +66,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
 //    public static val REGION_DATA_TYPE_SUFFIX = "Data"
     public static val REGION_ACTIVE_STATE = "activeState"
     public static val REGION_ACTIVE_PRIORITY = "activePriority"
+    public static val REGION_PAUSE_PRIORITY = "pausePriority"
     public static val REGION_DELAYED_ENABLED = "delayedEnabled"
     
     @Accessors StringBuilder tickData = new StringBuilder
@@ -291,6 +292,9 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             
             indentation, "int ", REGION_ACTIVE_PRIORITY, ";", 
             LEC("active priority of the thread for scheduling"), NL,
+            
+//            indentation, "int ", REGION_PAUSE_PRIORITY, ";", NL,
+//            LEC("the priority the will be used for continuation in the next tick"),
             
             indentation, "char ", REGION_DELAYED_ENABLED, ";", 
             LEC("active state at the beginning of the tick"), NL,

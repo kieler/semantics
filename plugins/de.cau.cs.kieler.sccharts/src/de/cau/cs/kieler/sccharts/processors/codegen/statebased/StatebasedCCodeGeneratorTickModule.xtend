@@ -148,20 +148,39 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     protected def void setTickStart(String prefix, ControlflowRegion cfr) {
-        code.add(
-          "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
-          "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL, 
-          "    ", prefix, REGION_DELAYED_ENABLED, " = 1;", NL,
-          "  ",  "}", NL            
-        )
+        var ctxName = struct.getContextVariableName(cfr);
         
-        val hierarchicalStates = cfr.states.filter[ isHierarchical ]
+        val conditionalBuilder = new StringBuilder
+        val regionCount = rootState.regions.filter(ControlflowRegion).size
+
+        
+        val hierarchicalStates = cfr.states.filter[ isHierarchical ].toList
         for (cfr2 : hierarchicalStates.map[ regions ].flatten.filter(ControlflowRegion)) {
             var prefix2 = prefix
             prefix2 += struct.getContextVariableName(cfr2) 
             prefix2 += "."
             setTickStart(prefix2, cfr2)
+            
+            
+            conditionalBuilder.add(
+                "    ", "if (", prefix, struct.getContextVariableName(cfr2), ".activePriority > ",
+                  prefix, REGION_ACTIVE_PRIORITY, ") ", NL,
+                "      ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, struct.getContextVariableName(cfr2), ".activePriority;", NL 
+            )
         }
+        
+        code.add(
+          "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
+          "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL,
+//          "    ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, REGION_PAUSE_PRIORITY, ";", NL,
+          IFC(hierarchicalStates.size > 0, "    ", prefix, REGION_ACTIVE_PRIORITY, " = 0;"), NL,
+          conditionalBuilder.toString, 
+          IFC(printDebug, "  printf(\"APRIO " + ctxName +" %d \", " + prefix, "activePriority); fflush(stdout);\n"),
+//          "    ", prefix, REGION_PAUSE_PRIORITY, " = 0;", NL, 
+          "    ", prefix, REGION_DELAYED_ENABLED, " = 1;", NL,
+          "  ",  "}", NL            
+        )
+        
     } 
     
     override generateDone() {
