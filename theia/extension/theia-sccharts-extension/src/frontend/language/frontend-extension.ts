@@ -106,8 +106,9 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(CompilerWidget).toSelf()
     bind(WidgetFactory).toDynamicValue(context => ({
         id: Constants.compilerWidgetId,
+        area: "bottom",
         createWidget: () => context.container.get<CompilerWidget>(CompilerWidget)
-    }));
+    })).inSingletonScope()
 
     // languages
     bind(KeithLanguageClientContribution).toSelf().inSingletonScope()

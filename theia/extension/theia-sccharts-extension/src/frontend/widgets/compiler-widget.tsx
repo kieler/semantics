@@ -1,6 +1,6 @@
 import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
-import { Message, StatefulWidget } from "@theia/core/lib/browser";
+import { Message } from "@theia/core/lib/browser";
 import * as React from "react";
 import { Constants, CompilerConfiguration, CompilationSystems } from "../../common/util";
 
@@ -9,18 +9,39 @@ import "../../../src/frontend/widgets/style/index.css";
 import { KeithContribution } from "../language/keith-contribution";
 
 @injectable()
-export class CompilerWidget extends ReactWidget implements StatefulWidget {
+export class CompilerWidget extends ReactWidget {
     
-    systems : CompilationSystems[]
-    configuration : CompilerConfiguration
+    systems: CompilationSystems[]
+    configuration: CompilerConfiguration
     // TODO send LS values on startup with selection items or save them in preferences?
     
-    storeState(): object {
-        throw new Error("Method not implemented.");
+    constructor(
+        @inject(new LazyServiceIdentifer(() => KeithContribution)) protected readonly commands: KeithContribution
+    ) {
+        super();
+        this.id = Constants.compilerWidgetId
+        this.title.label = 'Compile'
+        this.title.iconClass = 'fa fa-play-circle';
+        this.title.closable = false
+        this.addClass(Constants.compilerWidgetId) // class for index.css
+        this.configuration = {
+            isCheckedAutoCompileToggle: false,
+            isCheckedCompileInplaceToggle: false,
+            isCheckedCompileTracingToggle: false,
+            isCheckedDebugEnvironmentModelsToggle: false,
+            isCheckedDeveloperToggle: false,
+            isCheckedFlattenSystemViewToggle: false,
+            isCheckedForwardResultToggle: false,
+            isCheckedShowPrivateSystemsToggle: false,
+            isCheckedVisualLayoutFeedbackToggle: false
+
+        }
+        this.systems = [{id: "NONE", label: "NONE"}]
+        this.node.draggable = false
+        this.show()
+        this.node.focus()
     }
-    restoreState(oldState: object): void {
-        throw new Error("Method not implemented.");
-    }
+
     render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
         this.systems.forEach(system => {
@@ -45,35 +66,9 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
             {this.renderShowButtons()}
         </React.Fragment>
     }
-    constructor(
-        @inject(new LazyServiceIdentifer(() => KeithContribution)) protected readonly commands: KeithContribution
-    ) {
-        super();
-        this.id = Constants.compilerWidgetId
-        this.title.label = 'Compile'
-        this.title.iconClass = 'fa fa-play-circle';
-        this.title.closable = true
-        this.addClass(Constants.compilerWidgetId) // class for index.css
-        this.configuration = {
-            isCheckedAutoCompileToggle : false,
-            isCheckedCompileInplaceToggle : false,
-            isCheckedCompileTracingToggle : false,
-            isCheckedDebugEnvironmentModelsToggle : false,
-            isCheckedDeveloperToggle : false,
-            isCheckedFlattenSystemViewToggle : false,
-            isCheckedForwardResultToggle : false,
-            isCheckedShowPrivateSystemsToggle : false,
-            isCheckedVisualLayoutFeedbackToggle : false
-
-        }
-        this.systems = [{id : "NONE", label : "NONE"}]
-        this.node.draggable = false
-        this.setHidden(true)
-    }
 
     onActivateRequest(msg: Message): void {
         super.onActivateRequest(msg);
-        this.setHidden(false)
         this.update()
     }
 
@@ -210,22 +205,16 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
         return <div title="Auto compile" key="auto-compile-button" id='compile-button'
             onClick={event => {
                 this.configuration.isCheckedAutoCompileToggle = !this.configuration.isCheckedAutoCompileToggle
-                this.commands.shouldAutoCompile = this.configuration.isCheckedAutoCompileToggle
             }}>
             <div className={this.configuration.isCheckedAutoCompileToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
     }
 
     onUpdateRequest(msg: Message): void {
-        this.commands.requestSystemDescribtions().then(() => {
+        this.commands.requestSystemDescriptions().then(() => {
             super.onUpdateRequest(msg)
             this.render()
         })
-    }
-
-    onCloseRequest(msg: Message): void {
-        super.onCloseRequest(msg)
-        this.setHidden(true)
     }
 
     public compileSelectedCompilationSystem(): void {

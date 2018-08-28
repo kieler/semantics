@@ -19,8 +19,6 @@ import { KeithKeybindingContext } from "./keith-keybinding-context";
 @injectable()
 export class KeithContribution extends AbstractViewContribution<CompilerWidget> {
 
-    shouldAutoCompile: boolean
-
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
     resultMap: Map<string, CodeContainer> = new Map
@@ -28,8 +26,8 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
     lengthMap: Map<string, number> = new Map
     infoMap: Map<string, string[]> = new Map
 
-    editor : EditorWidget
-    compilerWidget : CompilerWidget
+    editor: EditorWidget
+    compilerWidget: CompilerWidget
 
     constructor(
         @inject(Workspace) protected readonly workspace: Workspace,
@@ -97,20 +95,14 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
             !!this.workspace.applyEdit && this.workspace.applyEdit(changes)
         });
         commands.registerCommand(COMPILER, {
-            execute: () => {
-                if (this.compilerWidget) {
-                    if (this.compilerWidget.isHidden) {
-                        this.compilerWidget = new CompilerWidget(this)
-                        this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
-                        this.compilerWidget.activate()
-                    } else {
-                        this.compilerWidget.close()
-                    }
-                } else {
-                    this.compilerWidget = new CompilerWidget(this)
+            execute: async () => {
+                this.compilerWidget = await this.widgetManager.tryGetWidget(Constants.compilerWidgetId) as CompilerWidget
+                if (!this.compilerWidget) {
+                    this.compilerWidget = await this.widgetManager.getOrCreateWidget(Constants.compilerWidgetId) as CompilerWidget
                     this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
-                    this.compilerWidget.activate()
                 }
+                this.compilerWidget.activate()
+                this.compilerWidget.node.focus()
             }
         })
         commands.registerCommand(SHOW_NEXT, {
@@ -120,6 +112,10 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
                     return false;
                 }
                 const uri = this.getStringUriOfCurrentEditor()
+                if (!this.isCompiled.get(uri)) {
+                    this.message(uri + " was not compiled", "error")
+                    return false
+                }
                 var index = this.indexMap.get(uri)
                 if (index != 0 && !index) {
                     this.message("Index is undefined", "error")
@@ -140,6 +136,10 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
                     return false;
                 }
                 const uri = this.getStringUriOfCurrentEditor()
+                if (!this.isCompiled.get(uri)) {
+                    this.message(uri + " was not compiled", "error")
+                    return false
+                }
                 var index = this.indexMap.get(uri)
                 if (index != 0 && !index) {
                     this.message("Index is undefined", "error")
@@ -149,7 +149,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
             }
         })
     }
-    public message(message : string, type : string) {
+    public message(message: string, type: string) {
         switch (type) {
             case "error":
                 this.messageService.error(message)
@@ -163,7 +163,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
                 this.messageService.info(message)
                 this.outputManager.getChannel("SCTX").appendLine("INFO: " + message)
                 break;
-            default :
+            default:
                 this.messageService.log(message)
                 this.outputManager.getChannel("SCTX").appendLine("LOG: " + message)
                 break;
@@ -176,104 +176,95 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
      * @param id id of snapshot e.g. Signal
      * @param index index of snapshot
      */
-    public show(uri : string, index : number) {
-        this.client.languageClient.then(lclient => {
-            lclient.sendRequest(Constants.SHOW, [uri, index]).then((svg: string) => {
-                var result = this.resultMap.get(uri)
-                var infoList = this.infoMap.get(uri)
-                var info = ""
-                if (infoList) {
-                    info = infoList[index]
-                }
-                if (result) {
-                    var snapshotDescription = result.files[index];
-                    if (this.front.shell.getWidgets("main").find((value, index) => {
-                        if (value.id == uri) {
-                            (value as TextWidget).updateContent("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
-                            snapshotDescription.snapshotIndex, info  + svg)
-                            return true
-                        }
-                        return false
-                    })) {
-                        this.front.shell.activateWidget(uri)
-                    } else {
-                        this.front.shell.addWidget(new TextWidget("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
-                        snapshotDescription.snapshotIndex, info + svg, uri), { area: "main" })
-                        this.front.shell.activateWidget(uri)
-                    }
-                } else {
-                    this.message("File not compiled yet", "error")
-                }
-            });
-        })
+    public async show(uri: string, index: number) {
+        var lclient = await this.client.languageClient
+        var svg = await lclient.sendRequest(Constants.SHOW, [uri, index])
+        var result = this.resultMap.get(uri)
+        var infoList = this.infoMap.get(uri)
+        var info = ""
+        if (infoList) {
+            info = infoList[index]
+        }
+        if (result) {
+            var snapshotDescription = result.files[index];
+            console.log("Try to find widget with " + uri)
+            var textWidget = await this.widgetManager.tryGetWidget(uri) as TextWidget
+            if (textWidget) {
+                textWidget.updateContent("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
+                        snapshotDescription.snapshotIndex, info  + svg)
+            } else {
+                console.log("Adding new widget since old was not found")
+                
+                this.front.shell.addWidget(new TextWidget("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
+                snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right"}) // TODO via does the editor split on navigation??
+            }
+            this.front.shell.activateWidget(uri)
+        } else {
+            this.message("File not compiled yet", "error")
+        }
         this.indexMap.set(uri, index)
     }
 
 
-    public compile(command : string){
+    public compile(command: string) {
         this.message("Compiling with " + command, "info")
         this.executeCompile(command)
     }
 
-    executeCompile(command: string) : boolean {
+    async executeCompile(command: string): Promise<void> {
         if (!this.editor) {
             this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
-            return false;
+            return;
         }
 
         const uri = this.getStringUriOfCurrentEditor()
         console.log("Compiling " + uri)
-        this.client.languageClient.then(lclient => {
-            lclient.sendRequest(Constants.COMPILE, [uri,command]).then((snapshotsDescriptions: CodeContainer) => {
-                this.message("Got compilation result for " + uri, "info")
-                var infoList : string[] = []
-                snapshotsDescriptions.files.forEach(snapshot => {
-                    var error, warning, info
-                    if (snapshot.errors.length > 0) {
-                        error = "ERROR: " +  snapshot.errors.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                        this.outputManager.getChannel("SCTX").appendLine(error)
-                    }
+        var lclient = await this.client.languageClient
+        var snapshotsDescriptions: CodeContainer = await lclient.sendRequest(Constants.COMPILE, [uri,command]) as CodeContainer
+        this.message("Got compilation result for " + uri, "info")
+        var infoList: string[] = []
+        snapshotsDescriptions.files.forEach(snapshot => {
+            var error, warning, info
+            if (snapshot.errors.length > 0) {
+                error = "ERROR: " +  snapshot.errors.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine(error)
+            }
 
-                    if (snapshot.warnings.length > 0) {
-                        warning = "WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                        this.outputManager.getChannel("SCTX").appendLine("WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
+            if (snapshot.warnings.length > 0) {
+                warning = "WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine("WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
 
-                    }
+            }
 
-                    if (snapshot.infos.length > 0) {
-                        info = "INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                        this.outputManager.getChannel("SCTX").appendLine("INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
+            if (snapshot.infos.length > 0) {
+                info = "INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine("INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
 
-                    }
-                    infoList.push(((error) ? error + "<br>" : "") + ((warning) ? warning + "<br>" : "") + ((info) ? info + "<br>" : ""))
-                });
-                this.infoMap.set(uri as string, infoList)
-                if (uri.startsWith("\"")) {
-                    this.message("Found error in " + uri, "error")
-                }
-                this.isCompiled.set(uri as string, true)
-                this.resultMap.set(uri as string, snapshotsDescriptions)
-                this.indexMap.set(uri as string, -1)
-                this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
-                this.front.shell.activateWidget(Constants.compilerWidgetId)
-                return true
-            });
-            return false
-        })
-        return false
+            }
+            infoList.push(((error) ? error + "<br>" : "") + ((warning) ? warning + "<br>" : "") + ((info) ? info + "<br>" : ""))
+        });
+        this.infoMap.set(uri as string, infoList)
+        if (uri.startsWith("\"")) {
+            this.message("Found error in " + uri, "error")
+        }
+        this.isCompiled.set(uri as string, true)
+        this.resultMap.set(uri as string, snapshotsDescriptions)
+        this.indexMap.set(uri as string, -1)
+        this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
+        this.front.shell.activateWidget(Constants.compilerWidgetId)
     }
 
 
 
-    async requestSystemDescribtions() : Promise<boolean> {
+    async requestSystemDescriptions(): Promise<boolean> {
         if (!this.editor) {
             // this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
             return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
         }
         const uri = this.getStringUriOfCurrentEditor()
         try {
-            const lclient : ILanguageClient = await this.client.languageClient
-            const systems : CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
+            const lclient: ILanguageClient = await this.client.languageClient
+            const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
             this.compilerWidget.systems = systems,
             this.compilerWidget.render()
             return Promise.resolve(true)
@@ -282,10 +273,10 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         }
     }
 
-    async updatePreferences(bool : boolean, name : string, filter : boolean) : Promise<boolean> {
+    async updatePreferences(bool: boolean, name: string, filter: boolean): Promise<boolean> {
         try {
-            const lclient : ILanguageClient = await this.client.languageClient
-            const configuration : CompilerConfiguration =  await lclient.sendRequest(Constants.UPDATE_PREFERENCES, [bool, name, filter]) as CompilerConfiguration
+            const lclient: ILanguageClient = await this.client.languageClient
+            const configuration: CompilerConfiguration =  await lclient.sendRequest(Constants.UPDATE_PREFERENCES, [bool, name, filter]) as CompilerConfiguration
             this.compilerWidget.configuration = configuration,
             this.compilerWidget.render()
             return Promise.resolve(true)
@@ -294,7 +285,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         }
     }
     
-    getStringUriOfCurrentEditor() : string {
+    getStringUriOfCurrentEditor(): string {
         var uri = this.editor.getResourceUri()
         if (uri) {
             return uri.toString()
