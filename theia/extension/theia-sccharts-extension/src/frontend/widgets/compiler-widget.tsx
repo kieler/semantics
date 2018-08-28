@@ -32,12 +32,11 @@ export class CompilerWidget extends ReactWidget {
         this.node.focus()
         this.autoCompile = false
         this.showPrivateSystems = false
-        this.compileInplace
+        this.compileInplace = false
     }
 
     render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
-        // TODO filter private systems if necessary
         this.systems.forEach(system => {
             if (this.showPrivateSystems || system.isPublic) {
                 compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>)
@@ -145,7 +144,8 @@ export class CompilerWidget extends ReactWidget {
         if (this.systems.length > 0) {
             this.commands.compile(this.systems[selection.selectedIndex].id)
         } else {
-            this.commands.compile("")
+            this.commands.message("No compilation systems found", "error")
+            return
         }
     }
 }

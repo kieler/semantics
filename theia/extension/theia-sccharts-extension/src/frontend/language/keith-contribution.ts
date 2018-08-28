@@ -16,10 +16,9 @@ import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, CompilationSystems, CodeContainer } from "../../common/util";
 import { KeithKeybindingContext } from "./keith-keybinding-context";
+import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
 @injectable()
 export class KeithContribution extends AbstractViewContribution<CompilerWidget> {
-
-    compileInplace: boolean
 
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
@@ -38,7 +37,8 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         @inject(KeithLanguageClientContribution) public readonly client: KeithLanguageClientContribution,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager,
-        @inject(KeithKeybindingContext) protected readonly keithKeybindingContext: KeithKeybindingContext
+        @inject(KeithKeybindingContext) protected readonly keithKeybindingContext: KeithKeybindingContext,
+        @inject(FileSystemWatcher) protected readonly fileSystemWatcher: FileSystemWatcher
     ) {
         super({
             widgetId: Constants.compilerWidgetId,
@@ -50,7 +50,13 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
         this.editorManager.onCurrentEditorChanged(this.onCurrentEditorChanged.bind(this))
-        this.compileInplace = false
+        this.fileSystemWatcher.onFilesChanged(this.onFilesChanged.bind(this))
+    }
+
+    onFilesChanged(fileChange: FileChange) {
+        if (this.compilerWidget.autoCompile) {
+            this.compilerWidget.compileSelectedCompilationSystem()
+        }
     }
 
     onCurrentEditorChanged(editorWidget: EditorWidget | undefined): void {
