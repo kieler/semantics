@@ -14,10 +14,12 @@ import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
-import { Constants, CompilationSystems, CodeContainer, CompilerConfiguration } from "../../common/util";
+import { Constants, CompilationSystems, CodeContainer } from "../../common/util";
 import { KeithKeybindingContext } from "./keith-keybinding-context";
 @injectable()
 export class KeithContribution extends AbstractViewContribution<CompilerWidget> {
+
+    compileInplace: boolean
 
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
@@ -48,6 +50,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
         this.editorManager.onCurrentEditorChanged(this.onCurrentEditorChanged.bind(this))
+        this.compileInplace = false
     }
 
     onCurrentEditorChanged(editorWidget: EditorWidget | undefined): void {
@@ -187,8 +190,9 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         }
         if (result) {
             var snapshotDescription = result.files[index];
-            console.log("Try to find widget with " + uri)
-            var textWidget = await this.widgetManager.tryGetWidget(uri) as TextWidget
+            var textWidget = await this.front.shell.getWidgets("main").find((widget, index) => {
+                return widget.id == uri
+            }) as TextWidget
             if (textWidget) {
                 textWidget.updateContent("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
                         snapshotDescription.snapshotIndex, info  + svg)
@@ -264,20 +268,8 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         const uri = this.getStringUriOfCurrentEditor()
         try {
             const lclient: ILanguageClient = await this.client.languageClient
-            const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
+            const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true, this.compilerWidget.compileInplace]) as CompilationSystems[]
             this.compilerWidget.systems = systems,
-            this.compilerWidget.render()
-            return Promise.resolve(true)
-        } catch(error) {
-            return Promise.reject("Communication with LS failed")
-        }
-    }
-
-    async updatePreferences(bool: boolean, name: string, filter: boolean): Promise<boolean> {
-        try {
-            const lclient: ILanguageClient = await this.client.languageClient
-            const configuration: CompilerConfiguration =  await lclient.sendRequest(Constants.UPDATE_PREFERENCES, [bool, name, filter]) as CompilerConfiguration
-            this.compilerWidget.configuration = configuration,
             this.compilerWidget.render()
             return Promise.resolve(true)
         } catch(error) {

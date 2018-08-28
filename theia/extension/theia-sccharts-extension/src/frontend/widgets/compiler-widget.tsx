@@ -2,7 +2,7 @@ import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
 import { Message } from "@theia/core/lib/browser";
 import * as React from "react";
-import { Constants, CompilerConfiguration, CompilationSystems } from "../../common/util";
+import { Constants, CompilationSystems } from "../../common/util";
 
 import "../../../src/frontend/widgets/style/compiler-widget.css";
 import "../../../src/frontend/widgets/style/index.css";
@@ -12,7 +12,10 @@ import { KeithContribution } from "../language/keith-contribution";
 export class CompilerWidget extends ReactWidget {
     
     systems: CompilationSystems[]
-    configuration: CompilerConfiguration
+
+    autoCompile: boolean
+    compileInplace: boolean
+    showPrivateSystems: boolean
     // TODO send LS values on startup with selection items or save them in preferences?
     
     constructor(
@@ -24,26 +27,18 @@ export class CompilerWidget extends ReactWidget {
         this.title.iconClass = 'fa fa-play-circle';
         this.title.closable = false
         this.addClass(Constants.compilerWidgetId) // class for index.css
-        this.configuration = {
-            isCheckedAutoCompileToggle: false,
-            isCheckedCompileInplaceToggle: false,
-            isCheckedCompileTracingToggle: false,
-            isCheckedDebugEnvironmentModelsToggle: false,
-            isCheckedDeveloperToggle: false,
-            isCheckedFlattenSystemViewToggle: false,
-            isCheckedForwardResultToggle: false,
-            isCheckedShowPrivateSystemsToggle: false,
-            isCheckedVisualLayoutFeedbackToggle: false
-
-        }
         this.systems = [{id: "NONE", label: "NONE"}]
         this.node.draggable = false
         this.show()
         this.node.focus()
+        this.autoCompile = false
+        this.showPrivateSystems = false
+        this.compileInplace
     }
 
     render(): React.ReactNode {
         const compilationElements: React.ReactNode[] = [];
+        // TODO filter private systems if necessary
         this.systems.forEach(system => {
             compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>);
         });
@@ -55,12 +50,6 @@ export class CompilerWidget extends ReactWidget {
                 </select>
                 {this.renderPrivateButton()}
                 {this.renderInplaceButton()}
-                {this.renderTracingButton()}
-                {this.renderDebugEnvButton()}
-                {this.renderDevButton()}
-                {this.renderFlattenSystemViewButton()}
-                {this.renderForwardResultButton()}
-                {this.renderVisualLayoutButton()}
                 {this.renderAutoCompileButton()}
             </div>
             {this.renderShowButtons()}
@@ -116,97 +105,28 @@ export class CompilerWidget extends ReactWidget {
     renderPrivateButton(): React.ReactNode {
         return <div title="Show private Systems" key="private-button" id='compile-button'
             onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedShowPrivateSystemsToggle, "private", true).then(() => {
-                    this.update()
-                })
+                this.showPrivateSystems = !this.showPrivateSystems
             }}>
-            <div className={this.configuration.isCheckedShowPrivateSystemsToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
+            <div className={this.showPrivateSystems ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
     }
     
     renderInplaceButton(): React.ReactNode {
         return <div title="Inplace" key="inplace-button" id='compile-button'
             onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedCompileInplaceToggle, "inplace", true).then(() => {
-                    this.update()
-                })
+                this.compileInplace = !this.compileInplace
             }}>
-            <div className={this.configuration.isCheckedCompileInplaceToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
-        </div>
-    }
-    
-    renderTracingButton(): React.ReactNode {
-        return <div title="Tracing" key="tracing-button" id='compile-button'
-            onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedCompileTracingToggle, "tracing", true).then(() => {
-                    this.update()
-                })
-            }}>
-            <div className={this.configuration.isCheckedCompileTracingToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
-        </div>
-    }
-    
-    renderDebugEnvButton(): React.ReactNode {
-        return <div title="Debug environment models" key="debug-env-button" id='compile-button'
-            onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedDebugEnvironmentModelsToggle, "debug-env", true).then(() => {
-                    this.update()
-                })
-            }}>
-            <div className={this.configuration.isCheckedDebugEnvironmentModelsToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
-        </div>
-    }
-    
-    renderDevButton(): React.ReactNode {
-        return <div title="Developer" key="developer-button" id='compile-button'
-            onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedDeveloperToggle, "developer", true).then(() => {
-                    this.update()
-                })
-            }}>
-            <div className={this.configuration.isCheckedDeveloperToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
-        </div>
-    }
-    
-    renderFlattenSystemViewButton(): React.ReactNode {
-        return <div title="Flatten system view" key="flatten-system-button" id='compile-button'
-            onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedFlattenSystemViewToggle, "flatten-system", true).then(() => {
-                    this.update()
-                })
-            }}>
-            <div className={this.configuration.isCheckedFlattenSystemViewToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
-        </div>
-    }
-    
-    renderForwardResultButton(): React.ReactNode {
-        return <div title="Forward result" key="forward-result-button" id='compile-button'
-            onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedForwardResultToggle, "forward-result", true).then(() => {
-                    this.update()
-                })
-            }}>
-            <div className={this.configuration.isCheckedForwardResultToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
-        </div>
-    }
-    
-    renderVisualLayoutButton(): React.ReactNode {
-        return <div title="Visual Layout" key="visual-layout-button" id='compile-button'
-            onClick={event => {
-                this.commands.updatePreferences(!this.configuration.isCheckedVisualLayoutFeedbackToggle, "visual-layout", true).then(() => {
-                    this.update()
-                })
-            }}>
-            <div className={this.configuration.isCheckedVisualLayoutFeedbackToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
+            <div className={this.compileInplace ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
     }
     
     renderAutoCompileButton(): React.ReactNode {
         return <div title="Auto compile" key="auto-compile-button" id='compile-button'
             onClick={event => {
-                this.configuration.isCheckedAutoCompileToggle = !this.configuration.isCheckedAutoCompileToggle
+                // TODO
+                this.autoCompile = !this.autoCompile
             }}>
-            <div className={this.configuration.isCheckedAutoCompileToggle ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
+            <div className={this.autoCompile ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
         </div>
     }
 

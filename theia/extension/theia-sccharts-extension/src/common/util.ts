@@ -72,27 +72,3 @@ export class Snapshots {
         this.snapshotIndex = snapshotIndex
     }
 }
-
-/**
- * Preferences of compiler widget
- */
-export class CompilerConfiguration {
-    isCheckedDeveloperToggle : boolean
-    isCheckedFlattenSystemViewToggle : boolean
-    isCheckedForwardResultToggle : boolean
-    isCheckedAutoCompileToggle : boolean
-    isCheckedVisualLayoutFeedbackToggle : boolean
-    isCheckedCompileInplaceToggle : boolean
-    isCheckedCompileTracingToggle : boolean
-    isCheckedDebugEnvironmentModelsToggle : boolean
-    isCheckedShowPrivateSystemsToggle : boolean
-}
-
-/**
- * Description of a compiler preference used to generate preference selectbox
- */
-export class CompilerPreference {
-    label : string
-    key : string
-    longName : string        
-}

@@ -19,6 +19,7 @@ export class TextWidget extends BaseWidget {
         this.id = widgetId
         this.addClass('text_widget') // class for index.css
         this.node.innerHTML = "<div>" + text + "</div>"
+        this.node.draggable = false
     }
 
     onActivateRequest(msg: Message): void {
