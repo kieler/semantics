@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.scl
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class SCLStandaloneSetup extends SCLStandaloneSetupGenerated {
+    
+    static Injector injector
 
 	def static doSetup() {
-		return new SCLStandaloneSetup().createInjectorAndDoEMFRegistration()
+	    if (injector === null) {
+	        injector = new SCLStandaloneSetup().createInjectorAndDoEMFRegistration()
+	    }
+		return injector
 	}
 }
