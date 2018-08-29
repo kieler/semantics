@@ -17,7 +17,6 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimaps
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringPragma
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.io.File
@@ -40,11 +39,9 @@ import static org.eclipse.emf.common.util.URI.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.core.model.util.URIUtils.*
-import org.eclipse.emf.ecore.EReference
-import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer
-import org.eclipse.xtext.diagnostics.Severity
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -56,7 +53,7 @@ import de.cau.cs.kieler.sccharts.Transition
  */
 public class SCTXResource extends LazyLinkingResource {
 
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
 
     public static val FILE_EXTENSION = "sctx"
     private static val FILE_EXTENSION_INTERN = "." + FILE_EXTENSION

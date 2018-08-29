@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="keffects" nsURI="http://kieler.cs.cau.de/keffects/0.1.0" nsPrefix="keffects">
   <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true" interface="true"
-      eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable kexpressions.ecore#//Schedulable"/>
+      eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable kexpressions.ecore#//Schedulable #//Linkable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass kexpressions.ecore#//ValuedObjectReference"
         containment="true"/>
@@ -41,4 +41,29 @@
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//FunctionCall"/>
   <eClassifiers xsi:type="ecore:EClass" name="PrintCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//PrintCall"/>
   <eClassifiers xsi:type="ecore:EClass" name="RandomizeCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//RandomizeCall"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingLinks" upperBound="-1"
+        eType="#//Link" transient="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
+        eType="#//Link" transient="true" eOpposite="#//Link/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Link" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Linkable" transient="true" eOpposite="#//Linkable/incomingLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dependency" abstract="true" eSuperTypes="#//Link"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataDependencyType">
+    <eLiterals name="IGNORE" value="-2" literal="IGNORE"/>
+    <eLiterals name="UNKNOWN" value="-1" literal="UNKNOWN"/>
+    <eLiterals name="WRITE_WRITE"/>
+    <eLiterals name="WRITE_RELATIVEWRITE" value="1"/>
+    <eLiterals name="WRITE_READ" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataDependency" eSuperTypes="#//Dependency">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataDependencyType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="concurrent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="confluent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
 </ecore:EPackage>

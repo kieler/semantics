@@ -18,10 +18,10 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import java.util.Map
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * C Code Processor
@@ -33,7 +33,7 @@ import java.util.Map
  */
 class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject Injector injector
     
     public static val IProperty<Boolean> DEBUG_COMMENTS = 

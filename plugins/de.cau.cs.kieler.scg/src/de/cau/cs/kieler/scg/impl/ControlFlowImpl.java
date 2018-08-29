@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
 

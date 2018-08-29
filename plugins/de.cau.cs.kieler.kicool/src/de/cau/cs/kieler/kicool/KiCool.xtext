@@ -11,22 +11,30 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-grammar de.cau.cs.kieler.kicool.KiCool with  de.cau.cs.kieler.annotations.Annotations
+grammar de.cau.cs.kieler.kicool.KiCool with de.cau.cs.kieler.kexpressions.kext.KExt
 
 import "http://kieler.cs.cau.de/kicool/0.1.0" as kicool
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
 /**
- * @author ssm
+ * @author ssm, als
  * @kieler.design 2016-10-19 proposed 
  * @kieler.rating 2016-10-19 proposed yellow
  */
  
 System returns kicool::System:
-    public?='public'? developer?='developer'? 'system' id = QualifiedID 'version' version = INT 'label' label = EString
-    ('input' inputClass = ID)?
-    ('set' startsets += KVPair)*
+    pragmas+=Pragma*
+    annotations += Annotation*
+    public?='public'?
+    developer?='developer'?
+    simulation?='simulation'?
+    'system' id = QualifiedID
+    'label' label = EString
+    ('config' config=JsonObjectValue)?
     (intermediates += IntermediateReference)*
     processors = ProcessorGroup
 ;
@@ -54,15 +62,17 @@ ProcessorGroup returns kicool::ProcessorGroup:
 ;
 
 Processor returns kicool::ProcessorReference:
-    ('pre' 'set' presets += KVPair)*
     ('pre' 'process' preprocesses += CoProcessor)*
-    id = QualifiedID ('intermediate' metric = [kicool::IntermediateReference|QualifiedID])?
+    id = QualifiedID
+    ('config' preconfig = JsonObjectValue ('post' postconfig = JsonObjectValue)?)?
+    ('intermediate' metric = [kicool::IntermediateReference|QualifiedID])?
     ('post' 'process' postprocesses += CoProcessor)*
-    ('post' 'set' postsets += KVPair)*
 ;
 
 CoProcessor returns kicool::ProcessorReference: 
-    id = QualifiedID silent?='silent'? 
+    (silent?='silent')?
+    id = QualifiedID
+    ('config' preconfig = JsonObjectValue ('post' postconfig = JsonObjectValue)?)?
 ;
 
 ProcessorSystem returns kicool::ProcessorSystem:
@@ -77,8 +87,4 @@ ProcessorAlternativeGroup returns kicool::ProcessorAlternativeGroup:
     ('|'
         processors += ProcessorGroup)+
     )
-;
-
-KVPair returns kicool::KVPair:
-    key=EString isKeyValue?='key'? value=EStringAllTypes
 ;

@@ -127,7 +127,7 @@ class IOPreserverExtensions {
                     expression = createBoolValue(true)
                 ]
                 scg.nodes += termExitAsm
-                for (cf : entryNode.exit.incoming.immutableCopy) {
+                for (cf : entryNode.exit.incomingLinks.immutableCopy) {
                     cf.target = termExitAsm
                 }
                 termExitAsm.createControlFlow.target = entryNode.exit

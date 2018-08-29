@@ -85,7 +85,7 @@ class SCGLoopHook extends SynthesisHook {
         }
         val scc = model as State;
         val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
-        if (tracker == null) {
+        if (tracker === null) {
             throw new IllegalArgumentException("Missing source model tracker");
         }
         val newLoopElements = calculateSCGLoopElements(rootNode, scc, tracker);
@@ -113,7 +113,7 @@ class SCGLoopHook extends SynthesisHook {
                     // If no diagram element is associated with the given model element its container is used to find an appropriate representation
                     if (elements.empty) {
                         var next = obj;
-                        while (elements.empty && next != null) {
+                        while (elements.empty && next !== null) {
                             next = next.eContainer;
                             elements = tracking.getTargetElements(next);
                         }
@@ -125,7 +125,7 @@ class SCGLoopHook extends SynthesisHook {
                 val criticalSCGElements = <Object>newArrayList();
                 criticalSCGElements.addAll(loops.criticalNodes)
                 for (Node node : loops.criticalNodes) {
-                    criticalSCGElements.addAll(node.incoming.filter [
+                    criticalSCGElements.addAll(node.incomingLinks.filter [
                         loops.criticalNodes.contains(it.eContainer)
                     ]);
                 }

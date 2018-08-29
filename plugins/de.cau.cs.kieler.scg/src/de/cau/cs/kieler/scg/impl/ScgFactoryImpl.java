@@ -72,10 +72,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
             case ScgPackage.PREDECESSOR: return createPredecessor();
             case ScgPackage.GUARD: return createGuard();
-            case ScgPackage.LINK: return createLink();
             case ScgPackage.CONTROL_FLOW: return createControlFlow();
-            case ScgPackage.DEPENDENCY: return createDependency();
-            case ScgPackage.DATA_DEPENDENCY: return createDataDependency();
             case ScgPackage.CONTROL_DEPENDENCY: return createControlDependency();
             case ScgPackage.EXPRESSION_DEPENDENCY: return createExpressionDependency();
             case ScgPackage.GUARD_DEPENDENCY: return createGuardDependency();
@@ -95,8 +92,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
         switch (eDataType.getClassifierID()) {
             case ScgPackage.BRANCH_TYPE:
                 return createBranchTypeFromString(eDataType, initialValue);
-            case ScgPackage.DATA_DEPENDENCY_TYPE:
-                return createDataDependencyTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -112,8 +107,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
         switch (eDataType.getClassifierID()) {
             case ScgPackage.BRANCH_TYPE:
                 return convertBranchTypeToString(eDataType, instanceValue);
-            case ScgPackage.DATA_DEPENDENCY_TYPE:
-                return convertDataDependencyTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -204,16 +197,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Link createLink() {
-        LinkImpl link = new LinkImpl();
-        return link;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public SCGraph createSCGraph() {
         SCGraphImpl scGraph = new SCGraphImpl();
         return scGraph;
@@ -247,26 +230,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public ControlFlow createControlFlow() {
         ControlFlowImpl controlFlow = new ControlFlowImpl();
         return controlFlow;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Dependency createDependency() {
-        DependencyImpl dependency = new DependencyImpl();
-        return dependency;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DataDependency createDataDependency() {
-        DataDependencyImpl dataDependency = new DataDependencyImpl();
-        return dataDependency;
     }
 
     /**
@@ -370,26 +333,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     }
 
     /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public DataDependencyType createDataDependencyTypeFromString(EDataType eDataType, String initialValue) {
-        DataDependencyType result = DataDependencyType.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public String convertDataDependencyTypeToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
-
-				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.kicool.scoping;
 
-import de.cau.cs.kieler.annotations.scoping.AnnotationsScopeProvider;
+import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider;
 
-public abstract class AbstractKiCoolScopeProvider extends AnnotationsScopeProvider {
+public abstract class AbstractKiCoolScopeProvider extends KExtScopeProvider {
 }

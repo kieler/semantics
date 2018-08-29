@@ -67,16 +67,6 @@ public interface AnnotationsPackage extends EPackage {
     AnnotationsPackage eINSTANCE = de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.annotations.impl.AnnotatableImpl <em>Annotatable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.annotations.impl.AnnotatableImpl
-     * @see de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl#getAnnotatable()
-     * @generated
-     */
-    int ANNOTATABLE = 1;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.annotations.impl.NamedObjectImpl <em>Named Object</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -103,6 +93,16 @@ public interface AnnotationsPackage extends EPackage {
      * @ordered
      */
     int NAMED_OBJECT_FEATURE_COUNT = 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.annotations.impl.AnnotatableImpl <em>Annotatable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.annotations.impl.AnnotatableImpl
+     * @see de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl#getAnnotatable()
+     * @generated
+     */
+    int ANNOTATABLE = 1;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -483,7 +483,6 @@ public interface AnnotationsPackage extends EPackage {
      */
     int TYPED_STRING_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 1;
 
-
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.annotations.impl.CommentAnnotationImpl <em>Comment Annotation</em>}' class.
      * <!-- begin-user-doc -->
@@ -529,7 +528,6 @@ public interface AnnotationsPackage extends EPackage {
      * @ordered
      */
     int COMMENT_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 1;
-
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.annotations.impl.PragmaImpl <em>Pragma</em>}' class.
@@ -623,6 +621,7 @@ public interface AnnotationsPackage extends EPackage {
      * @ordered
      */
     int TAG_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 0;
+
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.

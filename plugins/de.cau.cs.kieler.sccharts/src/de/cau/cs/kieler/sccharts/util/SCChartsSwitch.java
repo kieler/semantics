@@ -19,6 +19,7 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.ecore.EObject;
@@ -145,6 +146,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 Region region = (Region)theEObject;
                 T result = caseRegion(region);
                 if (result == null) result = caseScope(region);
+                if (result == null) result = caseLinkable(region);
                 if (result == null) result = caseAnnotatable(region);
                 if (result == null) result = caseDeclarationScope(region);
                 if (result == null) result = caseNamedObject(region);
@@ -157,6 +159,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseControlflowRegion(controlflowRegion);
                 if (result == null) result = caseRegion(controlflowRegion);
                 if (result == null) result = caseScope(controlflowRegion);
+                if (result == null) result = caseLinkable(controlflowRegion);
                 if (result == null) result = caseAnnotatable(controlflowRegion);
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
                 if (result == null) result = caseNamedObject(controlflowRegion);
@@ -169,6 +172,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseDataflowRegion(dataflowRegion);
                 if (result == null) result = caseRegion(dataflowRegion);
                 if (result == null) result = caseScope(dataflowRegion);
+                if (result == null) result = caseLinkable(dataflowRegion);
                 if (result == null) result = caseAnnotatable(dataflowRegion);
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
                 if (result == null) result = caseNamedObject(dataflowRegion);
@@ -608,6 +612,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseCall(Call object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLinkable(Linkable object) {
         return null;
     }
 

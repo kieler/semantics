@@ -25,7 +25,16 @@ from reuse import *
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 
 def main(args):
-    print '- Checking Plugins -\n'
+    print '= Scanning Features ='
+    features = join(args.path, 'features')
+    if not isdir(features):
+        print 'No features directory found in ' + args.path
+        pause(args)
+    else:
+        pluginFeatures = readFeatures(features, args)
+        print 'Done'
+
+    print '\n= Checking Plugins ='
 
     for pluginFolder in ['plugins', 'test']:
         # check pluging path
@@ -40,6 +49,7 @@ def main(args):
                     try:
                         print project
                         checkBuildProperties(project_path, args)
+                        checkFeatureContainment(project, pluginFeatures, args)
                     except KeyboardInterrupt as ki:
                         raise ki
                     except Exception as ex:
@@ -47,6 +57,7 @@ def main(args):
                         print '-- %s' % ex
                         traceback.print_exc()
                         pause(args)
+    print 'Done'
 
     print '\n= Finished Sanity Checks ='
 
@@ -57,12 +68,39 @@ def checkBuildProperties(directory, args):
         with open(build_properties, 'r') as f:
             content = f.read()
             if isfile(join(directory, 'plugin.xml')) and 'plugin.xml' not in content:
-                print '- Build properties do not include the plugin.xml'
+                print '- Build properties: Missing include for plugin.xml'
                 pause(args)
+            else:
+                print '- Build properties: OK'
     else: 
-        print '- Build properties file does not exist'
+        print '- Build properties: file does not exist'
         pause(args)
 
+def checkFeatureContainment(plugin, featurePlugins, args):
+    if plugin in featurePlugins:
+        print '- Feature Containment: OK'
+        print '- Contained in %s' % featurePlugins[plugin] 
+    else:
+        print '- Feature Containment: Not contained'
+        pause(args)
+
+def readFeatures(features, args):
+    """Read feature into a dict"""
+    pluginFeatures = {}
+    for featureDir in sorted(os.listdir(features)):
+        feature = join(features, featureDir, 'feature.xml')
+        if isfile(feature):
+            xml = etree.parse(feature, parser = etree.XMLParser(remove_comments=False))
+            header = xml.find('.')
+            if header is not None:
+                featureID = header.attrib['id']
+                if featureID:
+                    for plugin in xml.findall('plugin'):
+                        pluginID = plugin.attrib['id']
+                        if not pluginID in pluginFeatures:
+                            pluginFeatures[pluginID] = []
+                        pluginFeatures[pluginID].append(featureID)
+    return pluginFeatures
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser(description='Check all plugins for some sanity citeria.')

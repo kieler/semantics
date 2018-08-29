@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.extensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -25,6 +24,8 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import java.util.HashMap
 import java.util.LinkedList
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * A class with extensions for the calculation of Strongly Connected Components
@@ -32,6 +33,9 @@ import java.util.LinkedList
  *
  */
 class SCCExtensions {
+    
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGDependencyExtensions
     
     /**
      * Creates a HashMap to find the SCC a node belongs to
@@ -73,37 +77,37 @@ class SCCExtensions {
         
         if(n instanceof Entry) {
             if(n.next !== null) {
-                neighbors.add(n.next.target)                
+                neighbors.add(n.next.targetNode)                
             }
         }
         
         if(n instanceof Exit) {
             if(n.next !== null) {
-                neighbors.add(n.next.target)
+                neighbors.add(n.next.targetNode)
             }
         }
         
         if(n instanceof Assignment) {
-            if (n.next !== null) neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.targetNode)
         }
         
         if(n instanceof Conditional) {
-            if (n.then !== null) neighbors.add(n.then.target)
-            if (n.^else !== null) neighbors.add(n.^else.target)
+            if (n.then !== null) neighbors.add(n.then.targetNode)
+            if (n.^else !== null) neighbors.add(n.^else.targetNode)
         }
         
         if(n instanceof Fork) {
             for(next : n.next) {
-                neighbors.add(next.target)
+                neighbors.add(next.targetNode)
             }
         }
         
         if(n instanceof Join) {
-            if (n.next !== null) neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.targetNode)
         }
         
         if(n instanceof Depth) {
-            if (n.next !== null) neighbors.add(n.next.target)
+            if (n.next !== null) neighbors.add(n.next.targetNode)
         }
         
         if(n instanceof Surface) {
@@ -125,7 +129,7 @@ class SCCExtensions {
     public def LinkedList<Node> getPredecessors(Node n) {
         var pred = <Node> newLinkedList
         if(!(n instanceof Depth)) {
-            for(inc : n.incoming) {
+            for(inc : n.incomingLinks) {
                 if(inc instanceof ControlFlow) {
                     pred.add(inc.eContainer as Node)
                 }
@@ -173,7 +177,7 @@ class SCCExtensions {
             if(dep instanceof DataDependency) {
                 if(dep.concurrent && !dep.confluent) {
                     if(dep.target !== null) {
-                        deps.add(dep.target)                        
+                        deps.add(dep.target as Node)                        
                     }
                 }
                 
@@ -194,7 +198,7 @@ class SCCExtensions {
      */
     public def LinkedList<Node> getIncomingDependencies(Node n) {
         var deps = <Node> newLinkedList
-        for(inc : n.incoming) {
+        for(inc : n.incomingLinks) {
             if(inc instanceof DataDependency) {
                 if(inc.concurrent && ! inc.confluent) {
                     deps.add(inc.eContainer as Node)

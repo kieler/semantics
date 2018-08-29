@@ -339,9 +339,9 @@ class KiCoModelCompiler extends ModelCompiler {
         if(result === null) {
             return;
         } else if(result instanceof CodeContainer) {
-            for (fileName : result.files.keySet) {
-                val String resultCode = result.get(fileName)
-                val codeTargetFile = targetFile.parent.getFile(new Path(fileName))
+            for (file : result.files) {
+                val String resultCode = file.code
+                val codeTargetFile = targetFile.parent.getFile(new Path(file.fileName))
                 saveCode(resultCode, codeTargetFile)
                 compilationResult.addCreatedFile(codeTargetFile)
                 // Update target file with new file name from compiler output

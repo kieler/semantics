@@ -69,5 +69,20 @@
             class="de.cau.cs.kieler.simulation.backends.JavaSimulationBackend">
       </simulationBackend>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.netlist.java.kico">
+      </TransformationSystem>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.JavaSimulationTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.CSimulationTemplateGenerator">
+      </Processor>
+   </extension>
 
 </plugin>

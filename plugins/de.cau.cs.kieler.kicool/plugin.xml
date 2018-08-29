@@ -16,7 +16,7 @@
             class="de.cau.cs.kieler.kicool.KiCoolPackage"
             genModel="model/KiCool.genmodel"/>
    </extension>
-   
+
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem
@@ -42,6 +42,15 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.kicool.processors.DynamicIdentity">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.ProjectSetup">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.JavaCompiler">
       </Processor>
    </extension>
    

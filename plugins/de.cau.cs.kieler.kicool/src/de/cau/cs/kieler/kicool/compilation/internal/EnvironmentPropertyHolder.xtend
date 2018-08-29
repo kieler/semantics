@@ -12,21 +12,29 @@
  */
 package de.cau.cs.kieler.kicool.compilation.internal
 
-import org.eclipse.emf.ecore.EObject
-import java.util.List
-import java.util.LinkedList
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
-import de.cau.cs.kieler.kicool.KVPair
-
-import static extension org.eclipse.xtext.EcoreUtil2.*
-import static extension de.cau.cs.kieler.kicool.environments.Environment.*
-import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
-import de.cau.cs.kieler.kicool.environments.Environment
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
+import de.cau.cs.kieler.kexpressions.JsonArrayValue
+import de.cau.cs.kieler.kexpressions.JsonObjectValue
+import de.cau.cs.kieler.kexpressions.NullValue
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import java.util.ArrayList
+import java.util.Collection
+import java.util.LinkedHashMap
+import java.util.LinkedList
+import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+
+import static de.cau.cs.kieler.kicool.environments.Environment.*
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Internal class for handling the processor environments.
@@ -84,7 +92,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                     copyValue(target, k, v, modelCopier)
                 }
                 
-                if (modelCopier != null) {
+                if (modelCopier !== null) {
                     if (v instanceof IKiCoolCloneable) {
                         if (ongoingWorkingCopy) {
                             (source.getProperty(k) as IKiCoolCloneable).resolveCopiedObjects(modelCopier)    
@@ -127,6 +135,8 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             } else if (v instanceof List<?>) {
                 if (k.equals(Environment.ERRORS)) {
                     target.propertyMap.put(k, new LinkedList<String>(v as List<String>))
+                } else {
+                    target.propertyMap.put(k, v)
                 }
             } else {
                 target.propertyMap.put(k, v)
@@ -136,31 +146,65 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         }  
     }
     
-    static def processEnvironmentSetter(Environment environment, List<KVPair> kvPairList) {
-        for(pair : kvPairList) {
-            var Object setTo = null
-            
-            if (pair.isIsKeyValue) {
-                setTo = environment.propertyMap.get(pair.value)
-            } else {
-                val v = pair.value
-                try {
-                    val myInt = Integer.parseInt(v)
-                    setTo = myInt
-                } catch (NumberFormatException e) {
-                    try {
-                        val myDouble = Double.parseDouble(v)
-                        setTo = myDouble
-                    } catch (NumberFormatException e2) {
-                        if (v.equalsIgnoreCase("true")) setTo = true
-                        else if (v.equalsIgnoreCase("false")) setTo = false
-                        else setTo = v
-                    }
-                } 
+    static def processEnvironmentConfig(Environment environment, JsonObjectValue json) {
+        if (json !== null) {
+            for(member : json.members) {
+                environment.setPropertyById(member.key, getValue(environment, member.key, member.value))
             }
-            
-            environment.setPropertyById(pair.key, setTo)
         }
+    }
+    
+    private static def Object getValue(Environment environment, String id, Value value) {
+        return switch(value) {
+            JsonArrayValue: {
+                val current = environment.getPropertyById(id)
+                if (current === null) {
+                    (new ArrayList).addToArray(value, environment, id)
+                } else if (current instanceof Collection<?>) {
+                    (current as Collection<Object>).addToArray(value, environment, id)
+                } else {
+                    environment.warnings.add("Can not parse array in configuration with id: " + id)
+                    null
+                }
+            }
+            JsonObjectValue: {
+                val current = environment.getPropertyById(id)
+                if (current === null) {
+                    (new LinkedHashMap).addToMap(value, environment, id)
+                } else if (current instanceof Map<?, ?>) {
+                    (current as Map<Object, Object>).addToMap(value, environment, id)
+                } else {
+                    environment.warnings.add("Can not parse object in configuration with id: " + id)
+                    null
+                }
+            }
+            NullValue: {
+                null
+            }
+            Value: {
+                val attr = value.eClass.EAttributes.findFirst["value".equals(name)]
+                if (attr !== null) {
+                    value.eGet(attr)
+                } else {
+                    environment.warnings.add("Can not parse value of configuration with id: " + id)
+                    null
+                }
+            }
+        }
+    }
+    
+    private static def Object addToArray(Collection<Object> coll, JsonArrayValue value, Environment environment, String id) {
+        for (entry : value.elements.indexed) {
+            coll.add(getValue(environment, id + "[" + entry.key + "]", entry.value))
+        }
+        return coll
+    }
+    
+    private static def Object addToMap(Map<Object, Object> map, JsonObjectValue value, Environment environment, String id) {
+        for (entry : value.members) {
+            map.put(entry.key.toString, getValue(environment, id + "[" + entry.key.toString + "]", entry.value))
+        }
+        return map
     }
     
     static def <T extends EObject> Pair<T, Copier> copyAndReturnCopier(T eObject, EnvironmentPropertyHolder eph) {

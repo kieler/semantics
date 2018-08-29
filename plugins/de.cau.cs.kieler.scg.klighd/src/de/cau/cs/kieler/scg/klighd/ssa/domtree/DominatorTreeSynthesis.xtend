@@ -178,16 +178,16 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
             lineWidth = 3
         ]
         val bbNode = tracker.getTargetElements(bb).filter(KNode).head
-        if (bbNode != null) {
+        if (bbNode !== null) {
             bbNode.outgoingEdges.removeIf[
                 val source = tracker.getSourceElement(target)
-                return source instanceof BasicBlock || source == null
+                return source instanceof BasicBlock || source === null
             ]
             node.children += bbNode
         } else {
             for (sb : bb.schedulingBlocks) {
                 val sbNode = tracker.getTargetElements(sb).filter(KNode).head
-                if (sbNode != null) {
+                if (sbNode !== null) {
                     if (sbNode.outgoingEdges.map[target].map[tracker.getSourceElement(it)].filter(SchedulingBlock).
                         exists[!bb.schedulingBlocks.contains(it)]) {
                         sbNode.outgoingEdges.clear
@@ -196,7 +196,7 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
                 } else {
                     for (n : sb.nodes) {
                         val nNode = tracker.getTargetElements(n).filter(KNode).head
-                        if (n.allNext.exists[target.basicBlock != bb]) {
+                        if (n.allNext.exists[targetNode.basicBlock != bb]) {
                             nNode.outgoingEdges.removeIf [ edge |
                                 !bb.schedulingBlocks.exists[nodes.contains(tracker.getSourceElement(edge.target))]
                             ]

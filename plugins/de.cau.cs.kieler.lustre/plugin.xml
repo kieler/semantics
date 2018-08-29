@@ -23,6 +23,9 @@
       <Processor
             class="de.cau.cs.kieler.lustre.transformations.LustreToSccTransformation">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.lustre.processors.SCCToLustre">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

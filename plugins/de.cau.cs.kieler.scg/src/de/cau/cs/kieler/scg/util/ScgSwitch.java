@@ -18,7 +18,10 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.scg.*;
 import org.eclipse.emf.ecore.EObject;
@@ -104,6 +107,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 T result = caseNode(node);
                 if (result == null) result = caseAnnotatable(node);
                 if (result == null) result = caseNamedObject(node);
+                if (result == null) result = caseLinkable(node);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -113,6 +117,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(conditional);
                 if (result == null) result = caseAnnotatable(conditional);
                 if (result == null) result = caseNamedObject(conditional);
+                if (result == null) result = caseLinkable(conditional);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -122,6 +127,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(surface);
                 if (result == null) result = caseAnnotatable(surface);
                 if (result == null) result = caseNamedObject(surface);
+                if (result == null) result = caseLinkable(surface);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -131,6 +137,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(depth);
                 if (result == null) result = caseAnnotatable(depth);
                 if (result == null) result = caseNamedObject(depth);
+                if (result == null) result = caseLinkable(depth);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -142,6 +149,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(assignment);
                 if (result == null) result = caseEffect(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
+                if (result == null) result = caseLinkable(assignment);
                 if (result == null) result = caseSchedulable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -152,6 +160,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(fork);
                 if (result == null) result = caseAnnotatable(fork);
                 if (result == null) result = caseNamedObject(fork);
+                if (result == null) result = caseLinkable(fork);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -161,6 +170,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(join);
                 if (result == null) result = caseAnnotatable(join);
                 if (result == null) result = caseNamedObject(join);
+                if (result == null) result = caseLinkable(join);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -170,6 +180,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(entry);
                 if (result == null) result = caseAnnotatable(entry);
                 if (result == null) result = caseNamedObject(entry);
+                if (result == null) result = caseLinkable(entry);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -179,6 +190,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNode(exit);
                 if (result == null) result = caseAnnotatable(exit);
                 if (result == null) result = caseNamedObject(exit);
+                if (result == null) result = caseLinkable(exit);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -208,14 +220,8 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(guard);
                 if (result == null) result = caseEffect(guard);
                 if (result == null) result = caseAnnotatable(guard);
+                if (result == null) result = caseLinkable(guard);
                 if (result == null) result = caseSchedulable(guard);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.LINK: {
-                Link link = (Link)theEObject;
-                T result = caseLink(link);
-                if (result == null) result = caseAnnotatable(link);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -224,23 +230,6 @@ public class ScgSwitch<T> extends Switch<T> {
                 T result = caseControlFlow(controlFlow);
                 if (result == null) result = caseLink(controlFlow);
                 if (result == null) result = caseAnnotatable(controlFlow);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.DEPENDENCY: {
-                Dependency dependency = (Dependency)theEObject;
-                T result = caseDependency(dependency);
-                if (result == null) result = caseLink(dependency);
-                if (result == null) result = caseAnnotatable(dependency);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.DATA_DEPENDENCY: {
-                DataDependency dataDependency = (DataDependency)theEObject;
-                T result = caseDataDependency(dataDependency);
-                if (result == null) result = caseDependency(dataDependency);
-                if (result == null) result = caseLink(dataDependency);
-                if (result == null) result = caseAnnotatable(dataDependency);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -405,21 +394,6 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Link</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Link</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseLink(Link object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>SC Graph</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -476,36 +450,6 @@ public class ScgSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseControlFlow(ControlFlow object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDependency(Dependency object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDataDependency(DataDependency object) {
         return null;
     }
 
@@ -690,6 +634,21 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLinkable(Linkable object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -735,6 +694,36 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
 				/**
+     * Returns the result of interpreting the object as an instance of '<em>Link</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Link</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLink(Link object) {
+        return null;
+    }
+
+                                                                /**
+     * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDependency(Dependency object) {
+        return null;
+    }
+
+                                                                /**
      * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;

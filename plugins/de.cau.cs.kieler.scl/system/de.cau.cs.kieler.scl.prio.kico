@@ -1,5 +1,4 @@
 public system de.cau.cs.kieler.scl.prio
-	version 1 
 	label "SCL Priority-based"
 
 de.cau.cs.kieler.scl.processors.transformators.scl2scg

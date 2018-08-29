@@ -315,5 +315,23 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
         }
         return super.eIsSet(featureID);
     }
+    
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer();
+        result.append("ValuedObjectReferenceImpl");
+        result.append("@");
+        result.append(String.format("%08x", this.hashCode()));
+        result.append(" ");
+        if (valuedObject == null) {
+            result.append("null");
+        } else {
+            result.append(valuedObject.getName());
+        }
+        return result.toString();
+    }
+    
 
 } //ValuedObjectReferenceImpl

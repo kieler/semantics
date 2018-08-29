@@ -108,7 +108,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     def Environment compile() {
         startEnvironment.addTracingProperty
         
-        val modelCopy = TracingIntegration.copy((originalModel as EObject), startEnvironment)
+        val modelCopy = if (originalModel instanceof EObject) {
+            TracingIntegration.copy((originalModel as EObject), startEnvironment)
+        } else {
+            originalModel
+        }
         startEnvironment.setProperty(MODEL, modelCopy)
         
         if (startEnvironment.getProperty(UNIQUE_NAME_CACHE_ENABLED)) {
@@ -155,7 +159,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
         
         // Set environment information that come from the outside, e.g. the system.
-        environment.processEnvironmentSetter(processorReference.presets)
+        environment.processEnvironmentConfig(processorReference.preconfig)
         
         val environmentPrime = environment.preparePrimeEnvironment
         
@@ -201,7 +205,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
         
         // Set post data that come from the outside, e.g. the system.
-        environmentPrime.processEnvironmentSetter(processorReference.postsets)
+        environmentPrime.processEnvironmentConfig(processorReference.postconfig)
         
         notify(new ProcessorFinished(this, processorReference, processorInstance))
         

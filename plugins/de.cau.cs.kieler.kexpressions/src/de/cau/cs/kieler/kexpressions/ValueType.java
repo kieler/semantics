@@ -139,7 +139,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    CLOCK(11, "CLOCK", "CLOCK");
+    CLOCK(11, "CLOCK", "CLOCK"), /**
+     * The '<em><b>JSON</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #JSON_VALUE
+     * @generated
+     * @ordered
+     */
+    JSON(12, "JSON", "JSON");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -324,6 +332,21 @@ public enum ValueType implements Enumerator {
     public static final int CLOCK_VALUE = 11;
 
     /**
+     * The '<em><b>JSON</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>JSON</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #JSON
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int JSON_VALUE = 12;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -343,6 +366,7 @@ public enum ValueType implements Enumerator {
             SCHEDULE,
             UNKNOWN,
             CLOCK,
+            JSON,
         };
 
     /**
@@ -411,6 +435,7 @@ public enum ValueType implements Enumerator {
             case SCHEDULE_VALUE: return SCHEDULE;
             case UNKNOWN_VALUE: return UNKNOWN;
             case CLOCK_VALUE: return CLOCK;
+            case JSON_VALUE: return JSON;
         }
         return null;
     }

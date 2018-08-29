@@ -20,7 +20,6 @@ import java.util.List
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
@@ -43,6 +42,9 @@ class KExpressionsValuedObjectExtensions {
     
     @Inject
     extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension EcoreUtilExtensions
     
     def Declaration getDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
@@ -133,6 +135,11 @@ class KExpressionsValuedObjectExtensions {
         if (!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isOutput
     }
+    
+    def boolean isLocal(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        !valuedObject.isInput && !valuedObject.isOutput
+    }    
 
     def boolean isStatic(ValuedObject valuedObject) {
         if (!valuedObject.isVariableReference) return false
@@ -186,6 +193,33 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.variableDeclaration.isSignal && valuedObject.type != ValueType::PURE
     }   
     
+    def boolean isInt(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.INT
+    }
+    
+    def boolean isBool(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.BOOL
+    }
+
+    def boolean isFloat(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.FLOAT
+    }
+
+    def boolean isString(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.STRING
+    }
+
+    def boolean isHost(ValuedObject valuedObject) {
+        if (!valuedObject.isVariableReference) return false
+        valuedObject.variableDeclaration.type == ValueType.HOST
+    }
+
+    
+    
     def ValuedObject createValuedObject() {
         KExpressionsFactory::eINSTANCE.createValuedObject()
     }
@@ -238,6 +272,21 @@ class KExpressionsValuedObjectExtensions {
         	}
         ]  
     }    
+    
+    def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
+        if (eObject === null) {
+            return <ValuedObjectReference> newArrayList
+        }
+        else if (eObject instanceof Expression) {
+            return eObject.allReferences
+        } else {
+            val l = <ValuedObjectReference> newArrayList
+            for (e : eObject.eAllContents.toIterable.filter(ValuedObjectReference)) {
+                l += e
+            }
+            return l
+        }
+    }
     
     def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration

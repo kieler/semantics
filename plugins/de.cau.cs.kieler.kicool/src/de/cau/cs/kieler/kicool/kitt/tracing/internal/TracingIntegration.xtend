@@ -13,19 +13,23 @@
  */
 package de.cau.cs.kieler.kicool.kitt.tracing.internal;
 
-import org.eclipse.emf.ecore.EObject
+import com.google.inject.Module
+import de.cau.cs.kieler.core.model.Pair
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.IntermediateProcessor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.core.model.Pair
-
-import static extension com.google.common.base.Preconditions.checkNotNull
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import static de.cau.cs.kieler.kicool.environments.Environment.*
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+
+import static com.google.common.base.Preconditions.*
+import static de.cau.cs.kieler.kicool.environments.Environment.*
+import com.google.inject.Binder
+import de.cau.cs.kieler.kexpressions.extensions.EcoreUtilExtensions
 
 /**
  * This class integrates Tracing into KiCo.
@@ -36,6 +40,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil
  *
  */
 public class TracingIntegration extends IntermediateProcessor<EObject, EObject> {
+    
+    public static val MODULE = new Module() {
+        
+        override configure(Binder binder) {
+            binder.bind(EcoreUtilExtensions).to(TracingEcoreUtilExtensions)
+        }
+        
+    }
     
     override String getId() {
         return "de.cau.cs.kieler.kicool.kitt.processor.tracing"
@@ -55,7 +67,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
     
     static def addTracingProperty(Environment environment) {
         if (!environment.isTracingActive) return;
-        
+
         environment.setProperty(Tracing.TRACING_DATA, new Tracing)
     }
     

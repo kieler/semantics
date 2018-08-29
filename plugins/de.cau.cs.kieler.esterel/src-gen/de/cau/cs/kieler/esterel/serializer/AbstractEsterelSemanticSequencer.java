@@ -88,7 +88,11 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonArrayValue;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
@@ -464,6 +468,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_ARRAY_VALUE:
+				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_MEMBER:
+				sequence_JsonObjectMember(context, (JsonObjectMember) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_VALUE:
+				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.NULL_VALUE:
+				sequence_NullValue(context, (NullValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getBoolExpressionRule()

@@ -17,7 +17,6 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -29,7 +28,6 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
@@ -55,6 +53,8 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -86,6 +86,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
@@ -196,7 +197,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
             val expr = if (node instanceof Assignment) node.expression else (node as Conditional).condition
             val refs = newArrayList(expr.allReferences)
             for (vor : refs) {
-                val concurrentNodes = node.incoming.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
+                val concurrentNodes = node.incomingLinks.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
                 val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, dt, environment.getProperty(SCHEDULE_MERGE_EXPRESSIONS))
                 vor.replace(mergeExp)
             }

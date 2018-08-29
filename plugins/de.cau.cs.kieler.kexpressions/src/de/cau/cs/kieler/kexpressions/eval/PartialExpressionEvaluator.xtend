@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.EcoreUtilExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -34,8 +35,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * @author als
@@ -51,6 +50,7 @@ class PartialExpressionEvaluator {
     @Inject extension KExpressionsCompareExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension EcoreUtilExtensions
     
     // -- Config --
     

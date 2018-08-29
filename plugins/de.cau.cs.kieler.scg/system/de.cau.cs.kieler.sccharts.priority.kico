@@ -1,5 +1,4 @@
 public system de.cau.cs.kieler.sccharts.priority
-    version 1 
     label "Priority-based Compilation (C)"
 
 system de.cau.cs.kieler.sccharts.extended.core

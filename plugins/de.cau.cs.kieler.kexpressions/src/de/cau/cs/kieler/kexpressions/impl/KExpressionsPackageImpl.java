@@ -18,8 +18,12 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonArrayValue;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
@@ -47,6 +51,8 @@ import de.cau.cs.kieler.kexpressions.VectorValue;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -233,6 +239,34 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass ignoreValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonObjectValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonObjectMemberEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonArrayValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass nullValueEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -930,6 +964,78 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getJsonObjectValue() {
+        return jsonObjectValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getJsonObjectValue_Members() {
+        return (EReference)jsonObjectValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getJsonObjectMember() {
+        return jsonObjectMemberEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getJsonObjectMember_Key() {
+        return (EAttribute)jsonObjectMemberEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getJsonObjectMember_Value() {
+        return (EReference)jsonObjectMemberEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getJsonArrayValue() {
+        return jsonArrayValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getJsonArrayValue_Elements() {
+        return (EReference)jsonArrayValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getNullValue() {
+        return nullValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getCall() {
         return callEClass;
     }
@@ -1047,6 +1153,18 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         ignoreValueEClass = createEClass(IGNORE_VALUE);
 
+        jsonObjectValueEClass = createEClass(JSON_OBJECT_VALUE);
+        createEReference(jsonObjectValueEClass, JSON_OBJECT_VALUE__MEMBERS);
+
+        jsonObjectMemberEClass = createEClass(JSON_OBJECT_MEMBER);
+        createEAttribute(jsonObjectMemberEClass, JSON_OBJECT_MEMBER__KEY);
+        createEReference(jsonObjectMemberEClass, JSON_OBJECT_MEMBER__VALUE);
+
+        jsonArrayValueEClass = createEClass(JSON_ARRAY_VALUE);
+        createEReference(jsonArrayValueEClass, JSON_ARRAY_VALUE__ELEMENTS);
+
+        nullValueEClass = createEClass(NULL_VALUE);
+
         operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
         createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
         createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
@@ -1161,6 +1279,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         stringValueEClass.getESuperTypes().add(this.getValue());
         vectorValueEClass.getESuperTypes().add(this.getValue());
         ignoreValueEClass.getESuperTypes().add(this.getValue());
+        jsonObjectValueEClass.getESuperTypes().add(this.getValue());
+        jsonArrayValueEClass.getESuperTypes().add(this.getValue());
+        nullValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
@@ -1209,6 +1330,26 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getVectorValue_Values(), this.getExpression(), null, "values", null, 1, -1, VectorValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(ignoreValueEClass, IgnoreValue.class, "IgnoreValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(jsonObjectValueEClass, JsonObjectValue.class, "JsonObjectValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getJsonObjectValue_Members(), this.getJsonObjectMember(), null, "members", null, 0, -1, JsonObjectValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        EOperation op = addEOperation(jsonObjectValueEClass, null, "getMembersMap", 1, 1, IS_UNIQUE, IS_ORDERED);
+        EGenericType g1 = createEGenericType(ecorePackage.getEMap());
+        EGenericType g2 = createEGenericType(ecorePackage.getEString());
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType(this.getValue());
+        g1.getETypeArguments().add(g2);
+        initEOperation(op, g1);
+
+        initEClass(jsonObjectMemberEClass, JsonObjectMember.class, "JsonObjectMember", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getJsonObjectMember_Key(), ecorePackage.getEString(), "key", null, 0, 1, JsonObjectMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getJsonObjectMember_Value(), this.getValue(), null, "value", null, 0, 1, JsonObjectMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(jsonArrayValueEClass, JsonArrayValue.class, "JsonArrayValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getJsonArrayValue_Elements(), this.getValue(), null, "elements", null, 0, -1, JsonArrayValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(nullValueEClass, NullValue.class, "NullValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOperatorExpression_Operator(), this.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1327,6 +1468,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.SCHEDULE);
         addEEnumLiteral(valueTypeEEnum, ValueType.UNKNOWN);
         addEEnumLiteral(valueTypeEEnum, ValueType.CLOCK);
+        addEEnumLiteral(valueTypeEEnum, ValueType.JSON);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);

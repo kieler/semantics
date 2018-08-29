@@ -54,12 +54,6 @@ class KiCoolUtils {
      */
     static def findInputClass(System system) {
         try {
-            val className = system.inputClass
-            if (!className.nullOrEmpty) {
-                return Class.forName(className)
-            }
-        } catch (Exception e) {}
-        try {
             val p = system.processors.firstProcessor
             if (p !== null) {
                 return p.sourceTargetTypes.source as Class<?>

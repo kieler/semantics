@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scl.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
@@ -83,7 +82,6 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     extension ScgFactory = ScgFactory::eINSTANCE
-    extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
     // -- Processor
@@ -191,7 +189,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         // Variable initialization
         program.declarations.forEach [
             for (valObj : valuedObjects) {
-                if (valObj.initialValue != null) {
+                if (valObj.initialValue !== null) {
                     program.statements.add(0,
                         SCLFactory::eINSTANCE.createAssignment => [
                             it.trace(valObj)
@@ -210,7 +208,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         for (conditional : scg.eAllContents.filter(typeof(Conditional)).toList) {
             if (conditional.^else.target == conditional.then.target) {
                 toDelete += conditional
-                for (previous : conditional.incoming.immutableCopy) {
+                for (previous : conditional.incomingLinks.immutableCopy) {
                     previous.target = conditional.^else.target
                 }
             }
@@ -249,9 +247,9 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
 
                 continuation = statement.transform(scg, cf)
 
-                if (continuation.label != null) {
+                if (continuation.label !== null) {
                     labelList.add(continuation.label)
-                } else if (!labelList.empty && continuation.node != null) {
+                } else if (!labelList.empty && continuation.node !== null) {
                     val node = continuation.node
                     labelList.forEach[labelMapping.put(it, node)]
                     labelList.clear
@@ -349,7 +347,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                     scg.nodes += it
                     it.controlFlowTarget(continuation.controlFlows)
                     it.createControlFlow.setTarget(join)
-                    if (continuation.label != null) {
+                    if (continuation.label !== null) {
                         labelMapping.put(continuation.label, it)
                     }
                     for (l : unmappedLabels)

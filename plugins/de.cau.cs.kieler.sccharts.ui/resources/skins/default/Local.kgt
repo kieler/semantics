@@ -1,0 +1,31 @@
+knode source {
+	size: width = 7.5 height = 25
+	properties:
+	org.eclipse.elk.portLabels.placement = INSIDE
+	org.eclipse.elk.portConstraints = FIXED_ORDER
+
+  kpolygon {
+  	points: 
+  					left 50%, top;
+  					right, top 6;
+  					right, bottom;
+  					left, bottom;
+  					left, top 6  
+		styles: lineStyle = solid
+    	      foreground = 190r, 190g, 190b 
+      	    background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
+      	    fontSize = 4pt
+  }
+
+  kport inout {
+    size: width = 2 height = 2
+    properties:
+    org.eclipse.elk.port.side = NORTH
+    
+    klabel "" { 
+    	ktext {
+    		styles: fontSize = 4pt
+    	}
+    }
+  }
+}

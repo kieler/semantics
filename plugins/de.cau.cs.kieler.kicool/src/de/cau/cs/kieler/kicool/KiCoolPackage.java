@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kicool;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -67,22 +69,31 @@ public interface KiCoolPackage extends EPackage {
     int SYSTEM = 0;
 
     /**
+     * The feature id for the '<em><b>Pragmas</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SYSTEM__PRAGMAS = AnnotationsPackage.PRAGMATABLE__PRAGMAS;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SYSTEM__ANNOTATIONS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SYSTEM__ID = 0;
-
-    /**
-     * The feature id for the '<em><b>Version</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SYSTEM__VERSION = 1;
+    int SYSTEM__ID = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -91,7 +102,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__LABEL = 2;
+    int SYSTEM__LABEL = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Processors</b></em>' containment reference.
@@ -100,7 +111,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__PROCESSORS = 3;
+    int SYSTEM__PROCESSORS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Intermediates</b></em>' containment reference list.
@@ -109,25 +120,16 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__INTERMEDIATES = 4;
+    int SYSTEM__INTERMEDIATES = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Input Class</b></em>' attribute.
+     * The feature id for the '<em><b>Config</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SYSTEM__INPUT_CLASS = 5;
-
-    /**
-     * The feature id for the '<em><b>Startsets</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SYSTEM__STARTSETS = 6;
+    int SYSTEM__CONFIG = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Public</b></em>' attribute.
@@ -136,7 +138,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__PUBLIC = 7;
+    int SYSTEM__PUBLIC = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Developer</b></em>' attribute.
@@ -145,7 +147,16 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM__DEVELOPER = 8;
+    int SYSTEM__DEVELOPER = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 7;
+
+    /**
+     * The feature id for the '<em><b>Simulation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SYSTEM__SIMULATION = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>System</em>' class.
@@ -154,16 +165,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SYSTEM_FEATURE_COUNT = 9;
-
-    /**
-     * The number of operations of the '<em>System</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SYSTEM_OPERATION_COUNT = 0;
+    int SYSTEM_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorEntryImpl <em>Processor Entry</em>}' class.
@@ -194,15 +196,6 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_ENTRY_FEATURE_COUNT = 1;
 
     /**
-     * The number of operations of the '<em>Processor Entry</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_ENTRY_OPERATION_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl <em>Processor Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -222,22 +215,22 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE__ID = PROCESSOR_ENTRY__ID;
 
     /**
-     * The feature id for the '<em><b>Presets</b></em>' containment reference list.
+     * The feature id for the '<em><b>Preconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__PRESETS = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
+    int PROCESSOR_REFERENCE__PRECONFIG = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Postsets</b></em>' containment reference list.
+     * The feature id for the '<em><b>Postconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__POSTSETS = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
+    int PROCESSOR_REFERENCE__POSTCONFIG = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Metric</b></em>' reference.
@@ -285,15 +278,6 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 6;
 
     /**
-     * The number of operations of the '<em>Processor Reference</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_REFERENCE_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorSystemImpl <em>Processor System</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -320,15 +304,6 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int PROCESSOR_SYSTEM_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
-
-    /**
-     * The number of operations of the '<em>Processor System</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_SYSTEM_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorGroupImpl <em>Processor Group</em>}' class.
@@ -377,15 +352,6 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_GROUP_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 2;
 
     /**
-     * The number of operations of the '<em>Processor Group</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_GROUP_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorAlternativeGroupImpl <em>Processor Alternative Group</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -432,15 +398,6 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_ALTERNATIVE_GROUP_FEATURE_COUNT = PROCESSOR_GROUP_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Processor Alternative Group</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_ALTERNATIVE_GROUP_OPERATION_COUNT = PROCESSOR_GROUP_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.IntermediateReferenceImpl <em>Intermediate Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -460,22 +417,22 @@ public interface KiCoolPackage extends EPackage {
     int INTERMEDIATE_REFERENCE__ID = PROCESSOR_REFERENCE__ID;
 
     /**
-     * The feature id for the '<em><b>Presets</b></em>' containment reference list.
+     * The feature id for the '<em><b>Preconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_REFERENCE__PRESETS = PROCESSOR_REFERENCE__PRESETS;
+    int INTERMEDIATE_REFERENCE__PRECONFIG = PROCESSOR_REFERENCE__PRECONFIG;
 
     /**
-     * The feature id for the '<em><b>Postsets</b></em>' containment reference list.
+     * The feature id for the '<em><b>Postconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_REFERENCE__POSTSETS = PROCESSOR_REFERENCE__POSTSETS;
+    int INTERMEDIATE_REFERENCE__POSTCONFIG = PROCESSOR_REFERENCE__POSTCONFIG;
 
     /**
      * The feature id for the '<em><b>Metric</b></em>' reference.
@@ -532,71 +489,6 @@ public interface KiCoolPackage extends EPackage {
     int INTERMEDIATE_REFERENCE_FEATURE_COUNT = PROCESSOR_REFERENCE_FEATURE_COUNT + 1;
 
     /**
-     * The number of operations of the '<em>Intermediate Reference</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_REFERENCE_OPERATION_COUNT = PROCESSOR_REFERENCE_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.KVPairImpl <em>KV Pair</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kicool.impl.KVPairImpl
-     * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getKVPair()
-     * @generated
-     */
-    int KV_PAIR = 7;
-
-    /**
-     * The feature id for the '<em><b>Key</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int KV_PAIR__KEY = 0;
-
-    /**
-     * The feature id for the '<em><b>Value</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int KV_PAIR__VALUE = 1;
-
-    /**
-     * The feature id for the '<em><b>Is Key Value</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int KV_PAIR__IS_KEY_VALUE = 2;
-
-    /**
-     * The number of structural features of the '<em>KV Pair</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int KV_PAIR_FEATURE_COUNT = 3;
-
-    /**
-     * The number of operations of the '<em>KV Pair</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int KV_PAIR_OPERATION_COUNT = 0;
-
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.System <em>System</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -616,17 +508,6 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      */
     EAttribute getSystem_Id();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.System#getVersion <em>Version</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Version</em>'.
-     * @see de.cau.cs.kieler.kicool.System#getVersion()
-     * @see #getSystem()
-     * @generated
-     */
-    EAttribute getSystem_Version();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.System#getLabel <em>Label</em>}'.
@@ -662,26 +543,15 @@ public interface KiCoolPackage extends EPackage {
     EReference getSystem_Intermediates();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kicool.System#getConfig <em>Config</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Input Class</em>'.
-     * @see de.cau.cs.kieler.kicool.System#getInputClass()
+     * @return the meta object for the containment reference '<em>Config</em>'.
+     * @see de.cau.cs.kieler.kicool.System#getConfig()
      * @see #getSystem()
      * @generated
      */
-    EAttribute getSystem_InputClass();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.System#getStartsets <em>Startsets</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Startsets</em>'.
-     * @see de.cau.cs.kieler.kicool.System#getStartsets()
-     * @see #getSystem()
-     * @generated
-     */
-    EReference getSystem_Startsets();
+    EReference getSystem_Config();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.System#isPublic <em>Public</em>}'.
@@ -704,6 +574,17 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      */
     EAttribute getSystem_Developer();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.System#isSimulation <em>Simulation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Simulation</em>'.
+     * @see de.cau.cs.kieler.kicool.System#isSimulation()
+     * @see #getSystem()
+     * @generated
+     */
+    EAttribute getSystem_Simulation();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.ProcessorEntry <em>Processor Entry</em>}'.
@@ -737,26 +618,26 @@ public interface KiCoolPackage extends EPackage {
     EClass getProcessorReference();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPresets <em>Presets</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreconfig <em>Preconfig</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Presets</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorReference#getPresets()
+     * @return the meta object for the containment reference '<em>Preconfig</em>'.
+     * @see de.cau.cs.kieler.kicool.ProcessorReference#getPreconfig()
      * @see #getProcessorReference()
      * @generated
      */
-    EReference getProcessorReference_Presets();
+    EReference getProcessorReference_Preconfig();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostsets <em>Postsets</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostconfig <em>Postconfig</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Postsets</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorReference#getPostsets()
+     * @return the meta object for the containment reference '<em>Postconfig</em>'.
+     * @see de.cau.cs.kieler.kicool.ProcessorReference#getPostconfig()
      * @see #getProcessorReference()
      * @generated
      */
-    EReference getProcessorReference_Postsets();
+    EReference getProcessorReference_Postconfig();
 
     /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.kicool.ProcessorReference#getMetric <em>Metric</em>}'.
@@ -876,49 +757,6 @@ public interface KiCoolPackage extends EPackage {
     EAttribute getIntermediateReference_Alias();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.KVPair <em>KV Pair</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>KV Pair</em>'.
-     * @see de.cau.cs.kieler.kicool.KVPair
-     * @generated
-     */
-    EClass getKVPair();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.KVPair#getKey <em>Key</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Key</em>'.
-     * @see de.cau.cs.kieler.kicool.KVPair#getKey()
-     * @see #getKVPair()
-     * @generated
-     */
-    EAttribute getKVPair_Key();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.KVPair#getValue <em>Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Value</em>'.
-     * @see de.cau.cs.kieler.kicool.KVPair#getValue()
-     * @see #getKVPair()
-     * @generated
-     */
-    EAttribute getKVPair_Value();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.KVPair#isIsKeyValue <em>Is Key Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Key Value</em>'.
-     * @see de.cau.cs.kieler.kicool.KVPair#isIsKeyValue()
-     * @see #getKVPair()
-     * @generated
-     */
-    EAttribute getKVPair_IsKeyValue();
-
-    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -960,14 +798,6 @@ public interface KiCoolPackage extends EPackage {
         EAttribute SYSTEM__ID = eINSTANCE.getSystem_Id();
 
         /**
-         * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SYSTEM__VERSION = eINSTANCE.getSystem_Version();
-
-        /**
          * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -992,20 +822,12 @@ public interface KiCoolPackage extends EPackage {
         EReference SYSTEM__INTERMEDIATES = eINSTANCE.getSystem_Intermediates();
 
         /**
-         * The meta object literal for the '<em><b>Input Class</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Config</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SYSTEM__INPUT_CLASS = eINSTANCE.getSystem_InputClass();
-
-        /**
-         * The meta object literal for the '<em><b>Startsets</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SYSTEM__STARTSETS = eINSTANCE.getSystem_Startsets();
+        EReference SYSTEM__CONFIG = eINSTANCE.getSystem_Config();
 
         /**
          * The meta object literal for the '<em><b>Public</b></em>' attribute feature.
@@ -1022,6 +844,14 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EAttribute SYSTEM__DEVELOPER = eINSTANCE.getSystem_Developer();
+
+        /**
+         * The meta object literal for the '<em><b>Simulation</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SYSTEM__SIMULATION = eINSTANCE.getSystem_Simulation();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorEntryImpl <em>Processor Entry</em>}' class.
@@ -1052,20 +882,20 @@ public interface KiCoolPackage extends EPackage {
         EClass PROCESSOR_REFERENCE = eINSTANCE.getProcessorReference();
 
         /**
-         * The meta object literal for the '<em><b>Presets</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Preconfig</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference PROCESSOR_REFERENCE__PRESETS = eINSTANCE.getProcessorReference_Presets();
+        EReference PROCESSOR_REFERENCE__PRECONFIG = eINSTANCE.getProcessorReference_Preconfig();
 
         /**
-         * The meta object literal for the '<em><b>Postsets</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Postconfig</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference PROCESSOR_REFERENCE__POSTSETS = eINSTANCE.getProcessorReference_Postsets();
+        EReference PROCESSOR_REFERENCE__POSTCONFIG = eINSTANCE.getProcessorReference_Postconfig();
 
         /**
          * The meta object literal for the '<em><b>Metric</b></em>' reference feature.
@@ -1162,40 +992,6 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_REFERENCE__ALIAS = eINSTANCE.getIntermediateReference_Alias();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.KVPairImpl <em>KV Pair</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kicool.impl.KVPairImpl
-         * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getKVPair()
-         * @generated
-         */
-        EClass KV_PAIR = eINSTANCE.getKVPair();
-
-        /**
-         * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute KV_PAIR__KEY = eINSTANCE.getKVPair_Key();
-
-        /**
-         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute KV_PAIR__VALUE = eINSTANCE.getKVPair_Value();
-
-        /**
-         * The meta object literal for the '<em><b>Is Key Value</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute KV_PAIR__IS_KEY_VALUE = eINSTANCE.getKVPair_IsKeyValue();
 
     }
 
