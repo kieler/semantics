@@ -4,7 +4,6 @@ import { Message } from "@theia/core/lib/browser";
 import * as React from "react";
 import { Constants, CompilationSystems } from "../../common/util";
 
-import "../../../src/frontend/widgets/style/compiler-widget.css";
 import "../../../src/frontend/widgets/style/index.css";
 import { KeithContribution } from "../language/keith-contribution";
 
@@ -33,7 +32,6 @@ export class CompilerWidget extends ReactWidget {
         this.autoCompile = false
         this.showPrivateSystems = false
         this.compileInplace = false
-        this.update()
     }
 
     render(): React.ReactNode {
@@ -44,14 +42,14 @@ export class CompilerWidget extends ReactWidget {
             }
         });
         return <React.Fragment>
-            <div id="compilation-panel">
-                {this.renderCompileButton()}
-                <select id='compilation-list'>
-                    {compilationElements}
-                </select>
+            <div className="compilation-panel">
                 {this.renderPrivateButton()}
                 {this.renderInplaceButton()}
                 {this.renderAutoCompileButton()}
+                <select id='compilation-list' className='compilation-list'>
+                    {compilationElements}
+                </select>
+                {this.renderCompileButton()}
             </div>
             {this.renderShowButtons()}
         </React.Fragment>
@@ -95,7 +93,7 @@ export class CompilerWidget extends ReactWidget {
     }
 
     renderCompileButton(): React.ReactNode {
-        return <div id='compile-button' title="Compile"
+        return <div className='compile-button' title="Compile"
             onClick={event => {
                 this.compileSelectedCompilationSystem()
             }}>
@@ -104,32 +102,32 @@ export class CompilerWidget extends ReactWidget {
     }
     
     renderPrivateButton(): React.ReactNode {
-        return <div title="Show private Systems" key="private-button" id='compile-button'
+        return <div title="Show private Systems" key="private-button" className={'preference-button' + (this.showPrivateSystems ? '': ' off')}
             onClick={event => {
                 this.showPrivateSystems = !this.showPrivateSystems
                 this.update()
             }}>
-            <div className={this.showPrivateSystems ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
+            <div className='fa fa-unlock-alt'> </div>
         </div>
     }
     
     renderInplaceButton(): React.ReactNode {
-        return <div title="Inplace" key="inplace-button" id='compile-button'
+        return <div title="Inplace" key="inplace-button" className={'preference-button' + (this.compileInplace ? '': ' off')}
             onClick={event => {
                 this.compileInplace = !this.compileInplace
                 this.update()
             }}>
-            <div className={this.compileInplace ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
+            <div className='fa fa-share'> </div>
         </div>
     }
     
     renderAutoCompileButton(): React.ReactNode {
-        return <div title="Auto compile" key="auto-compile-button" id='compile-button'
+        return <div title="Auto compile" key="auto-compile-button" className={'preference-button' + (this.autoCompile ? '': ' off')}
             onClick={event => {
                 this.autoCompile = !this.autoCompile
                 this.update()
             }}>
-            <div className={this.autoCompile ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}> </div>
+            <div className='fa fa-cog'> </div>
         </div>
     }
 
