@@ -67,7 +67,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         )
         
         code.add(
-            "  if (", STRUCT_CONTEXT_NAME, "->", REGION_ROOT_TERMINATED, ") return;"
+            "  if (", STRUCT_CONTEXT_NAME, "->", REGION_ROOT_TERMINATED, ") return;", NL
         )
     }
     
@@ -118,6 +118,9 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     override generate() {
         generateInitSetInputs(serializer)
         
+        code.add(
+            "  int newPriority;", NL, NL
+        )
         
         for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
             val cfrName = struct.getContextVariableName(cfr.value)
@@ -165,8 +168,12 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         val conditionalBuilder = new StringBuilder
         val regionCount = rootState.regions.filter(ControlflowRegion).size
 
-        
         val hierarchicalStates = cfr.states.filter[ isHierarchical ].toList
+//        if (hierarchicalStates.size > 0) {
+//            code.add(
+//                "  ", "newPriority = ", prefix, REGION_ACTIVE_PRIORITY, ";", NL
+//            )
+//        }
         for (cfr2 : hierarchicalStates.map[ regions ].flatten.filter(ControlflowRegion)) {
             var prefix2 = prefix
             prefix2 += struct.getContextVariableName(cfr2) 
@@ -175,14 +182,18 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             
             
             conditionalBuilder.add(
-                "    ", "if (", prefix, struct.getContextVariableName(cfr2), ".activePriority > ",
-                  prefix, REGION_ACTIVE_PRIORITY, ") ", NL,
+                "    ", "if ((", prefix, struct.getContextVariableName(cfr2), ".activePriority > ",
+                  prefix, REGION_ACTIVE_PRIORITY, ") &&", NL,
+                "      (", prefix, struct.getContextVariableName(cfr2), ".", REGION_THREADSTATUS, " == ", THREAD_STATUS_WAITING, "))", NL,   
+                
                 "      ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, struct.getContextVariableName(cfr2), ".activePriority;", NL 
             )
         }
         
-        
+      
         val conditional = conditionalBuilder.toString
+        
+        
         code.add(
           "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
           "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL,

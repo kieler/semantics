@@ -485,18 +485,25 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             
 
             
-            
+            val triggerPD = trigger.replaceAll(NL, "").replaceAll("\n", "")
             if (index == 0) { 
                 if (!trigger.nullOrEmpty) {
-                    function.add("  if (", trigger, ") {", NL)
+                    function.add("  if (", trigger, ") {", NL,
+                        IFC(printDebug, "  printf(\"TRIGGER " + triggerPD + " \"); fflush(stdout);\n")
+                    )
+                    
                     ifScopeIsOpen = true
                 }    
             } else {
                 if (!trigger.nullOrEmpty) {
-                    function.add("  } else if (", trigger, ") {", NL)
+                    function.add("  } else if (", trigger, ") {", NL,
+                        IFC(printDebug, "  printf(\"TRIGGER " + triggerPD + " \"); fflush(stdout);\n")
+                    )
                     ifScopeIsOpen = true
                 } else if (isDefaultTransition) {
-                    function.add("  } else {", NL)
+                    function.add("  } else {", NL
+//                        IFC(printDebug, "  printf(\"ELSETRIGGER \"); fflush(stdout);\n")
+                    )
                     hasImplicitSelfLoop = false
                     ifScopeIsOpen = true
                 }
@@ -524,7 +531,8 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             if (transition.effects.size > 0) {
                 for (effect : transition.effects) {
                     function.add(
-                        scopeIndent, "  ", effect.serializeHR, ";", NL
+                        scopeIndent, "  ", effect.serializeHR, ";", NL,
+                        IFC(printDebug, "  printf(\"EFFECT " + effect.serializeHR + " \"); fflush(stdout);\n")            
                     )
                 }
             }
