@@ -65,6 +65,10 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             " {", NL,
             IFC(printDebug, "  printf(\"\\nTICK \"); fflush(stdout);\n")
         )
+        
+        code.add(
+            "  if (", STRUCT_CONTEXT_NAME, "->", REGION_ROOT_TERMINATED, ") return;"
+        )
     }
     
     protected def void generateInitSetInputs(extension StatebasedCCodeSerializeHRExtensions serializer) {
@@ -116,12 +120,20 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         
         
         for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
+            val cfrName = struct.getContextVariableName(cfr.value)
             var prefix = STRUCT_CONTEXT_NAME
             prefix += "->"
-            prefix += struct.getContextVariableName(cfr.value)
+            prefix += cfrName
             prefix += "."
                         
             setTickStart(prefix, cfr.value)
+            
+            code.add(
+                "  if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
+                        CONTEXT_DATA_NAME, "->activePriority", ")", NL, 
+                "    ", CONTEXT_DATA_NAME, "->activePriority = ", 
+                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL
+            )
         }        
 
         code.add(NL, "  do {", NL)
@@ -169,14 +181,14 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             )
         }
         
+        
+        val conditional = conditionalBuilder.toString
         code.add(
           "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
           "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL,
-//          "    ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, REGION_PAUSE_PRIORITY, ";", NL,
-          IFC(hierarchicalStates.size > 0, "    ", prefix, REGION_ACTIVE_PRIORITY, " = 0;"), NL,
-          conditionalBuilder.toString, 
-          IFC(printDebug, "  printf(\"APRIO " + ctxName +" %d \", " + prefix, "activePriority); fflush(stdout);\n"),
-//          "    ", prefix, REGION_PAUSE_PRIORITY, " = 0;", NL, 
+//          IFC(hierarchicalStates.size > 0, "    ", prefix, REGION_ACTIVE_PRIORITY, " = 0;"), NL,
+          IFC(!conditional.nullOrEmpty, conditional), 
+          IFC(printDebug, "    printf(\"APRIO " + ctxName +" %d \", " + prefix, "activePriority); fflush(stdout);\n"),
           "    ", prefix, REGION_DELAYED_ENABLED, " = 1;", NL,
           "  ",  "}", NL            
         )

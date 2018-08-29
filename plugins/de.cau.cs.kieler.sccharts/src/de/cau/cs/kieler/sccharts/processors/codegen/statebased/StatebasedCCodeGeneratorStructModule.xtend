@@ -193,6 +193,9 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             ";", NL, 
             "  char ",
             REGION_ROOT_TERMINATED,
+            ";", NL,
+            "  int ",
+            REGION_ACTIVE_PRIORITY,
             ";", NL
         )
         

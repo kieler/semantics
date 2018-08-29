@@ -68,6 +68,8 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     }
     
     override generate() {
+        code.add("  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = 0;", NL)
+        
         for (cfr : rootState.regions.filter(ControlflowRegion)) {
             var prefix = STRUCT_CONTEXT_NAME
             prefix += "->"
