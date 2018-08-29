@@ -42,7 +42,7 @@ export class KeithMonacoEditorProvider extends MonacoEditorProvider {
     }
 
     protected createMonacoEditorOptions(model: MonacoEditorModel): MonacoEditor.IOptions {
-        //model.autoSave = Constants.autoSave
+        model.autoSave = Constants.autoSave
         const editorOptions = super.createMonacoEditorOptions(model);
         editorOptions.dragAndDrop = Constants.dragAndDrop
         editorOptions.autoIndent = Constants.autoIndent

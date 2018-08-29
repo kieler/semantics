@@ -53,7 +53,16 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         this.fileSystemWatcher.onFilesChanged(this.onFilesChanged.bind(this))
     }
 
+    // @postConstruct()
+    // init() {
+    //     this.widgetManager.getOrCreateWidget(Constants.compilerWidgetId).then(widget => {
+    //         this.compilerWidget = widget as CompilerWidget
+    //         this.compilerWidget.update()
+    //     })
+    // }
+
     onFilesChanged(fileChange: FileChange) {
+        console.log(fileChange)
         if (this.compilerWidget.autoCompile) {
             this.compilerWidget.compileSelectedCompilationSystem()
         }

@@ -33,6 +33,7 @@ export class CompilerWidget extends ReactWidget {
         this.autoCompile = false
         this.showPrivateSystems = false
         this.compileInplace = false
+        this.update()
     }
 
     render(): React.ReactNode {
@@ -141,8 +142,11 @@ export class CompilerWidget extends ReactWidget {
 
     public compileSelectedCompilationSystem(): void {
         var selection = document.getElementById("compilation-list") as HTMLSelectElement;
-        if (this.systems.length > 0) {
-            this.commands.compile(this.systems[selection.selectedIndex].id)
+        var systems = this.systems.filter(system => {
+            return this.showPrivateSystems || system.isPublic
+        })
+        if (systems.length > 0) {
+            this.commands.compile(systems[selection.selectedIndex].id)
         } else {
             this.commands.message("No compilation systems found", "error")
             return
