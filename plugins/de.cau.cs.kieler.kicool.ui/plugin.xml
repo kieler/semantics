@@ -3,7 +3,7 @@
 
 <plugin>
    <extension-point id="system" name="System Configuation" schema="schema/de.cau.cs.kieler.kicool.ui.system.exsd"/>
-   <extension-point id="kicoModelViewUIUpdateContributor" name="kicoModelViewUIUpdateContributor" schema="schema/kicoModelViewUIUpdateContributor.exsd"/>
+   <extension-point id="contribution" name="KiCo Model View Contribution" schema="schema/de.cau.cs.kieler.kicool.ui.contribution.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">

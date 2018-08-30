@@ -3,7 +3,7 @@
 <schema targetNamespace="de.cau.cs.kieler.kicool.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="de.cau.cs.kieler.kicool.ui" id="kicoModelUpdateContributor" name="kicoModelUpdateContributor"/>
+         <meta.schema plugin="de.cau.cs.kieler.kicool.ui" id="contribution" name="KiCo Model View Contribution"/>
       </appInfo>
       <documentation>
          Contributor for the Diagram View when using KiCo compatible models
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="kicoModelViewUIUpdateContributor" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="viewContribution" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="kicoModelViewUIUpdateContributor">
+   <element name="viewContribution">
       <complexType>
          <attribute name="class" type="string">
             <annotation>
