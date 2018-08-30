@@ -13,21 +13,25 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Sets
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.environments.Environment
+import java.util.Comparator
 import java.util.List
+import java.util.Map.Entry
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
-import com.google.common.collect.Sets
-import org.eclipse.xtend.lib.annotations.ToString
 
 /**
  * @author als
@@ -47,7 +51,7 @@ class VariableStore implements IKiCoolCloneable {
     public static val CONST = "const"
     public static val EXTERN = "extern"
         
-    static val DECL_FLAGS = #{
+    public static val DECL_FLAGS = #{
         VARIABLE_DECLARATION__INPUT -> INPUT,
         VARIABLE_DECLARATION__OUTPUT -> OUTPUT,
         VARIABLE_DECLARATION__STATIC -> STATIC,
@@ -55,14 +59,64 @@ class VariableStore implements IKiCoolCloneable {
         VARIABLE_DECLARATION__CONST -> CONST,
         VARIABLE_DECLARATION__EXTERN -> EXTERN
     }
+    
+    public static val COMMON_VALUE_TYPE_NAMES = #{
+        ValueType.BOOL.literal -> ValueType.BOOL,
+        ValueType.BOOL.getName -> ValueType.BOOL,
+        typeof(Boolean).name -> ValueType.BOOL,
+        typeof(Boolean).name.toLowerCase -> ValueType.BOOL,
+        ValueType.DOUBLE.literal -> ValueType.FLOAT,
+        ValueType.DOUBLE.getName -> ValueType.FLOAT,
+        typeof(Double).name -> ValueType.FLOAT,
+        typeof(Double).name.toLowerCase -> ValueType.FLOAT,
+        ValueType.FLOAT.literal -> ValueType.FLOAT,
+        ValueType.FLOAT.getName -> ValueType.FLOAT,
+        typeof(Float).name -> ValueType.FLOAT,
+        typeof(Float).name.toLowerCase -> ValueType.FLOAT,
+        ValueType.INT.literal -> ValueType.INT,
+        ValueType.INT.getName -> ValueType.INT,
+        typeof(Integer).name -> ValueType.INT,
+        typeof(Integer).name.toLowerCase -> ValueType.INT,
+        ValueType.STRING.literal -> ValueType.STRING,
+        ValueType.STRING.getName -> ValueType.STRING,
+        typeof(String).name -> ValueType.STRING,
+        typeof(String).name.toLowerCase -> ValueType.STRING
+    }
+    
+    public static val VARIABLE_ORDER = new Comparator<Pair<String, VariableInformation>>() {
+        
+        override compare(Pair<String, VariableInformation> o1, Pair<String, VariableInformation> o2) {
+            val info1 = o1.value
+            val info2 = o2.value
+            if (info1 !== null && info2 !== null) {
+                if (info1.input && info2.input) {
+                    if (info1.output && !info2.output) {
+                        return 1
+                    } else if (!info1.output && info2.output) {
+                        return -1
+                    }
+                } else if (info1.input){
+                    return -1
+                } else if (info2.input){
+                    return 1
+                } else if (info1.output && !info2.output) {
+                    return -1
+                } else if (!info1.output && info2.output) {
+                    return 1
+                }
+            }
+            return o1.key.compareTo(o2.key)
+        }
+        
+    }
 
     @Accessors
     val variables = HashMultimap.<String, VariableInformation>create
     
     
     static def getVariableStore(Environment env) {
-        var store = env.getProperty(STORE)
-        if (store === null) {
+        var store = env?.getProperty(STORE)
+        if (store === null && env !== null) {
             store = new VariableStore
             env.setProperty(STORE, store)
         }
@@ -84,6 +138,9 @@ class VariableStore implements IKiCoolCloneable {
 
     // Convenance for Valued Objects
     
+    /**
+     * Shoudl only be used for variables that are NOT yet contained in the store.
+     */
     def VariableInformation add(ValuedObject vo, String... properties) {
         update(vo, new VariableInformation, properties)
     }
@@ -108,7 +165,11 @@ class VariableStore implements IKiCoolCloneable {
         val decl = vo.eContainer
         
         info.valuedObject = vo
-        info.dimensions = vo.cardinalities.size
+        if (!vo.cardinalities.nullOrEmpty) {
+            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0]
+        } else {
+            info.dimensions.clear
+        }
         info.properties += properties
         
         if (decl instanceof VariableDeclaration) {
@@ -182,9 +243,7 @@ class VariableStore implements IKiCoolCloneable {
     
     override cloneObject() {
         val clone = new VariableStore
-        for (entry : variables.entries) {
-            clone.variables.put(entry.key, entry.value.clone)
-        }
+        clone.copyFrom(this)
         return clone
     }
     
@@ -199,8 +258,18 @@ class VariableStore implements IKiCoolCloneable {
         }
     }
     
+    protected def void copyFrom(VariableStore source) {
+        for (entry : source.variables.entries) {
+            variables.put(entry.key, entry.value.clone)
+        }
+    }
+    
     def isAmbiguous() {
         return variables.keySet.size != variables.entries.size
+    }
+    
+    def getOrderedVariableNames() {
+        return variables.entries.map[new Pair(key, value)].sortWith(VARIABLE_ORDER).map[key]
     }
     
 }
@@ -214,7 +283,7 @@ class VariableInformation {
     
     /** Dimensions if is array */
     @Accessors
-    var int dimensions = 0
+    var List<Integer> dimensions = newArrayList
     
     /** OPTIONAL value type */
     @Accessors
@@ -226,7 +295,7 @@ class VariableInformation {
     
     /** Characteristics of this variable */
     @Accessors
-    val List<String> properties = newArrayList
+    val Set<String> properties = newHashSet
     
     override VariableInformation clone() {
         val clone = new VariableInformation
@@ -239,7 +308,7 @@ class VariableInformation {
     }
     
     def isArray() {
-        return dimensions > 0
+        return !dimensions.empty
     }
     
     def setType(ValueType type) {
@@ -252,16 +321,18 @@ class VariableInformation {
     def inferType() {
         if (type !== null) {
             return type
-        }
-        if (!typeName.nullOrEmpty) {
-            val t = ValueType.get(typeName)
-            if (t !== null) {
-                return t
-            } else {
-                return ValueType.getByName(typeName)
-            }
+        } else if (!typeName.nullOrEmpty) {
+            return VariableStore.COMMON_VALUE_TYPE_NAMES.get(typeName)
         }
         return null
+    }
+    
+    def isInput() {
+        return properties.contains(VariableStore.INPUT)
+    }
+    
+    def isOutput() {
+        return properties.contains(VariableStore.OUTPUT)
     }
     
 }
