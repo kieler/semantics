@@ -33,6 +33,7 @@ import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
 import java.util.List
 import java.io.PrintStream
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * 
@@ -137,7 +138,7 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (modelFile !== null) {
                 name = modelFile.toString
-            } else if (modelFile instanceof NamedObject) {
+            } else if (modelFile instanceof Nameable) {
                 name = modelFile.name
             }
             name = name.replaceAll(Pattern.quote(File.separator), "-")
