@@ -83,5 +83,11 @@ class MessageObjectReferences extends HashMap<Object, MessageObjectList> impleme
         }
     }
     
-           
+    def getAllMessages() {
+        return values.flatten.toList
+    }
+    
+    def getAllRootMessages() {
+        return ROOT.get?:emptyList
+    }   
 }

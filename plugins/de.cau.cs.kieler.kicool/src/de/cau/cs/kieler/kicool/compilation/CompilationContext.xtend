@@ -110,6 +110,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         val modelCopy = if (originalModel instanceof EObject) {
             TracingIntegration.copy((originalModel as EObject), startEnvironment)
+        } else if (originalModel instanceof IKiCoolCloneable) {
+            originalModel.cloneObject
         } else {
             originalModel
         }
@@ -258,6 +260,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         return null
     }
     
+    def Environment getResult() {
+        processorInstancesSequence?.last?.environment
+    }
+    
     def Environment getResultForModel(Object model) {
         for (processor : processorInstancesSequence) {
             val p = processor.environment.getProperty(MODEL)
@@ -289,6 +295,26 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             
         }
         return null
+    }
+
+    def hasErrors() {
+        return !startEnvironment.errors.empty || processorInstancesSequence.map[environment?.errors].filterNull.exists[!empty]
+    }
+    
+    def getAllErrors() {
+        val errors = newLinkedHashSet(startEnvironment.errors)
+        errors += processorInstancesSequence.map[environment?.errors].filterNull
+        return errors.map[allMessages].flatten.toList
+    }
+    
+    def hasWarings() {
+        return !startEnvironment.errors.empty || processorInstancesSequence.map[environment?.errors].filterNull.exists[!empty]
+    }
+
+    def getWarningsErrors() {
+        val warnings = newLinkedHashSet(startEnvironment.warnings)
+        warnings += processorInstancesSequence.map[environment?.warnings].filterNull
+        return warnings.map[allMessages].flatten.toList
     }
     
     override cloneObject() {
