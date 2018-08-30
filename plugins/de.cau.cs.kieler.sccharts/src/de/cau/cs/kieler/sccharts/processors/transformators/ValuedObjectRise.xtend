@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * SCCharts ValuedObject Transformation transforming local variables into global ones.
@@ -82,10 +83,12 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
                 val oldName = valuedObject.name
                 valuedObject.name = "_" + hierarchicalScopeName + "_" + valuedObject.name
                 valuedObject.uniqueName
-                if (voStore.variables.containsKey(oldName)) {
-                    voStore.update(valuedObject)
-                } else {
-                    voStore.add(valuedObject)
+                if (declaration instanceof VariableDeclaration) {
+                    if (voStore.variables.containsKey(oldName)) {
+                        voStore.update(valuedObject)
+                    } else {
+                        voStore.add(valuedObject)
+                    }
                 }
             }
         }
