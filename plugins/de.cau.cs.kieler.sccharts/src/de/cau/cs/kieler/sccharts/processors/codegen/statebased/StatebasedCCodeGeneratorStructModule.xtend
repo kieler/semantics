@@ -55,7 +55,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val THREAD_STATUS_ENUM = "ThreadStatus"
     public static val THREAD_STATUS_TERMINATED = "TERMINATED"       // was EMPTY
     public static val THREAD_STATUS_RUNNING = "RUNNING"
-    public static val THREAD_STATUS_WAITING = "WAITING"         // was DISPATCHED
+    public static val THREAD_STATUS_WAITING = "READY"         // was DISPATCHED
     public static val THREAD_STATUS_PAUSING = "PAUSING"
     
     public static val CONTEXT_DATA_NAME = "context"
@@ -191,11 +191,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             " ",
             REGION_INTERFACE_NAME,
             ";", NL, 
-            "  char ",
-            REGION_ROOT_TERMINATED,
-            ";", NL,
             "  int ",
             REGION_ACTIVE_PRIORITY,
+            ";", NL,
+            "  ThreadStatus ",
+            REGION_THREADSTATUS,
             ";", NL
         )
         
@@ -295,9 +295,6 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             
             indentation, "int ", REGION_ACTIVE_PRIORITY, ";", 
             LEC("active priority of the thread for scheduling"), NL,
-            
-//            indentation, "int ", REGION_PAUSE_PRIORITY, ";", NL,
-//            LEC("the priority the will be used for continuation in the next tick"),
             
             indentation, "char ", REGION_DELAYED_ENABLED, ";", 
             LEC("active state at the beginning of the tick"), NL,

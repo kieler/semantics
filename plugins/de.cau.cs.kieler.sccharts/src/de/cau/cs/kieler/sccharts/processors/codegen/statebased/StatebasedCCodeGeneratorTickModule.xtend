@@ -67,7 +67,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         )
         
         code.add(
-            "  if (", STRUCT_CONTEXT_NAME, "->", REGION_ROOT_TERMINATED, ") return;", NL
+            "  if (!", STRUCT_CONTEXT_NAME, "->", REGION_THREADSTATUS, ") return;", NL
         )
     }
     
@@ -118,10 +118,6 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     override generate() {
         generateInitSetInputs(serializer)
         
-        code.add(
-            "  int newPriority;", NL, NL
-        )
-        
         for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
             val cfrName = struct.getContextVariableName(cfr.value)
             var prefix = STRUCT_CONTEXT_NAME
@@ -131,12 +127,12 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
                         
             setTickStart(prefix, cfr.value)
             
-            code.add(
-                "  if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
-                        CONTEXT_DATA_NAME, "->activePriority", ")", NL, 
-                "    ", CONTEXT_DATA_NAME, "->activePriority = ", 
-                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL
-            )
+//            code.add(
+//                "  if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
+//                        CONTEXT_DATA_NAME, "->activePriority", ")", NL, 
+//                "    ", CONTEXT_DATA_NAME, "->activePriority = ", 
+//                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL
+//            )
         }        
 
         code.add(NL, "  do {", NL)
@@ -165,7 +161,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     protected def void setTickStart(String prefix, ControlflowRegion cfr) {
         var ctxName = struct.getContextVariableName(cfr);
         
-        val conditionalBuilder = new StringBuilder
+//        val conditionalBuilder = new StringBuilder
         val regionCount = rootState.regions.filter(ControlflowRegion).size
 
         val hierarchicalStates = cfr.states.filter[ isHierarchical ].toList
@@ -181,24 +177,24 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             setTickStart(prefix2, cfr2)
             
             
-            conditionalBuilder.add(
-                "    ", "if ((", prefix, struct.getContextVariableName(cfr2), ".activePriority > ",
-                  prefix, REGION_ACTIVE_PRIORITY, ") &&", NL,
-                "      (", prefix, struct.getContextVariableName(cfr2), ".", REGION_THREADSTATUS, " == ", THREAD_STATUS_WAITING, "))", NL,   
-                
-                "      ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, struct.getContextVariableName(cfr2), ".activePriority;", NL 
-            )
+//            conditionalBuilder.add(
+//                "    ", "if ((", prefix, struct.getContextVariableName(cfr2), ".activePriority > ",
+//                  prefix, REGION_ACTIVE_PRIORITY, ") &&", NL,
+//                "      (", prefix, struct.getContextVariableName(cfr2), ".", REGION_THREADSTATUS, " == ", THREAD_STATUS_WAITING, "))", NL,   
+//                
+//                "      ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, struct.getContextVariableName(cfr2), ".activePriority;", NL 
+//            )
         }
         
       
-        val conditional = conditionalBuilder.toString
+//        val conditional = conditionalBuilder.toString
         
         
         code.add(
           "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
           "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL,
 //          IFC(hierarchicalStates.size > 0, "    ", prefix, REGION_ACTIVE_PRIORITY, " = 0;"), NL,
-          IFC(!conditional.nullOrEmpty, conditional), 
+//          IFC(!conditional.nullOrEmpty, conditional), 
           IFC(printDebug, "    printf(\"APRIO " + ctxName +" %d \", " + prefix, "activePriority); fflush(stdout);\n"),
           "    ", prefix, REGION_DELAYED_ENABLED, " = 1;", NL,
           "  ",  "}", NL            

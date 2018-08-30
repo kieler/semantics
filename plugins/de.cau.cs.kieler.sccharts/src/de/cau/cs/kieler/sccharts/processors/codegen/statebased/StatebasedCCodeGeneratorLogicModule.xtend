@@ -166,16 +166,23 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             val cfrName = struct.getContextVariableName(cfr)
             val initialState = cfr.states.filter[ initial ].head
             val initialStateName = struct.getStateEnumName(initialState)
+            val initialStatePriority = initialState.getStatePriority
             
             function.add(
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ", 
                     initialStateName, ";", NL,
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_DELAYED_ENABLED, " = 0;", NL,
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
-                    initialState.getStatePriority, ";", NL,
+                    initialStatePriority, ";", NL,
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS,  " = ",
                     THREAD_STATUS_WAITING, ";", NL
             )
+            
+            if (isRootState) {
+                if (initialStatePriority > reset.maxRootstatePriority) { 
+                    reset.maxRootstatePriority = initialStatePriority   
+                }                      
+            }
         }
               
         if (!isRootState) {  
@@ -236,6 +243,8 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
 //            }
             
             val conditionalBuilder = new StringBuilder
+            val pauseBuilder = new StringBuilder
+            val pauseActivityBuilder = new StringBuilder
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 cfr.value.generateControlflowRegion
             
@@ -279,6 +288,22 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                         "    "
                     )
                 }
+                pauseBuilder.add(
+                    CONTEXT_DATA_NAME, "->", contextName, ".threadStatus != ", THREAD_STATUS_WAITING
+                )
+                if (cfr.key < regionCount - 1) {
+                    pauseBuilder.add(
+                        " &&", NL, 
+                        "    "
+                    )
+                }
+                
+                pauseActivityBuilder.add(
+                    "    ", "if ((", CONTEXT_DATA_NAME, "->", contextName, ".activePriority > ", 
+                        CONTEXT_DATA_NAME, "->activePriority) && ", NL, 
+                    "      ", "(", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_PAUSING, "))", NL,
+                    "      ",  CONTEXT_DATA_NAME, "->activePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL
+                )
             }
             
 //            if (!isRootState) {
@@ -288,6 +313,13 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                      NL 
                 )
 //            }
+
+          
+            function.add(NL,
+                "  ", "if (", pauseBuilder.toString, ") {", NL,
+                pauseActivityBuilder.toString,
+                "  ", "}", NL
+            )
                 
         } else { // Single-threaded
             val cfr = state.regions.filter(ControlflowRegion).head
@@ -328,7 +360,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             }
             function.add(NL,
                 "  ", "if (", terminationBuilder.toString, ") {", NL,
-                "    ", CONTEXT_DATA_NAME, "->", REGION_ROOT_TERMINATED, " = 1;", NL,
+                "    ", CONTEXT_DATA_NAME, "->", REGION_THREADSTATUS, " = ", THREAD_STATUS_TERMINATED, ";", NL,
                 "  }", NL
             )
         }
@@ -530,9 +562,10 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
             if (transition.effects.size > 0) {
                 for (effect : transition.effects) {
+                    val effectText = "" //effect.serializeHR.toString.replaceAll("\"", "\\\"")
                     function.add(
                         scopeIndent, "  ", effect.serializeHR, ";", NL,
-                        IFC(printDebug, "  printf(\"EFFECT " + effect.serializeHR + " \"); fflush(stdout);\n")            
+                        IFC(printDebug, "  printf(\"EFFECT " + effectText + " \"); fflush(stdout);\n")            
                     )
                 }
             }

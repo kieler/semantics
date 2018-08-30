@@ -38,6 +38,7 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     @Inject StatebasedCCodeGeneratorStructModule struct
     
     @Accessors(PUBLIC_GETTER) var StringBuilder rootStateInit
+    @Accessors var int maxRootstatePriority = 0
     
     override configure() {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
@@ -68,8 +69,6 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     }
     
     override generate() {
-        code.add("  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = 0;", NL)
-        
         for (cfr : rootState.regions.filter(ControlflowRegion)) {
             var prefix = STRUCT_CONTEXT_NAME
             prefix += "->"
@@ -78,12 +77,13 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
              
             setInterface(prefix, cfr)
         }
-        code.add("  ", STRUCT_CONTEXT_NAME, "->", REGION_ROOT_TERMINATED, " = 0;", NL)
         
         code.add(NL, rootStateInit)
     }
     
     override generateDone() {
+        code.add("  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", maxRootstatePriority, ";", NL)
+        code.add("  ", STRUCT_CONTEXT_NAME, "->", REGION_THREADSTATUS, " = ", THREAD_STATUS_RUNNING, ";", NL)
         code.add(
             "}", NL
         )

@@ -39,5 +39,5 @@ de.cau.cs.kieler.sccharts.processors.deTriggerEffect config {
 }
 de.cau.cs.kieler.sccharts.processors.codegen.statebased config {
     "de.cau.cs.kieler.kicool.codegen.comments.enabled": false,
-    "de.cau.cs.kieler.kicool.codegen.statebased.printDebug" : true
+    "de.cau.cs.kieler.kicool.codegen.statebased.printDebug" : false
 }
