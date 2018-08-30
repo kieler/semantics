@@ -13,7 +13,9 @@
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import java.util.List
 import org.junit.Test
 
@@ -23,9 +25,8 @@ import org.junit.Test
  * @author aas
  *
  */
- /* No need to run this on the build server
-class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
-    
+class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
+
     private static val knownToFailTests = <String, List<TestModelData>>newHashMap
     
     private val knownToFailProperties = #["known-to-fail",
@@ -36,8 +37,10 @@ class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
                                           "simulation-fails-prio-java",
                                           "simulation-fails-prio-java-with-tts"]
     
-    override protected createSimulationBackend() {
-        return createCSimulationBackend
+    protected static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    
+    new() {
+        super(scchartsInjector)
     }
     
     override filter(TestModelData modelData) {
@@ -49,7 +52,7 @@ class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
         }
         return isKnownToFail
         && modelData.hasSimulationTrace
-        && modelData.isSCChartsTest
+        && modelData.modelProperties.contains("sccharts")
     }
     
     @Test
@@ -82,4 +85,3 @@ class KnownToFailStatisticsTest extends SCChartsSimulationTestBase {
         knownToFailTests.put(property, knownToFailList)
     }
 }
- */
