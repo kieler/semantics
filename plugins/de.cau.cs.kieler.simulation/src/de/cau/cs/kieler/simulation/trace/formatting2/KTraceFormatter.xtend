@@ -26,6 +26,7 @@ class KTraceFormatter extends KExtFormatter {
 		for (Pragma pragmas : tracefile.getPragmas()) {
 			format(pragmas, document);
 		}
+		tracefile.regionFor.keywords(";").forEach[ append[ newLine ] ]
 	}
 
 	def dispatch void format(Trace trace, extension IFormattableDocument document) {
@@ -38,6 +39,7 @@ class KTraceFormatter extends KExtFormatter {
 		}
 		
 		trace.regionFor.keywords(";").forEach[ append[ newLine ] ]
+		trace.regionFor.keywords("=>").forEach[ prepend[ newLine ] ]
 	}
 
 	def dispatch void format(Tick tick, extension IFormattableDocument document) {

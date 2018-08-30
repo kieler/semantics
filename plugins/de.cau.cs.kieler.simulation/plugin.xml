@@ -2,56 +2,6 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-   <extension-point id="dataHandler" name="DataHandler" schema="schema/dataHandler.exsd"/>
-   <extension-point id="simulationBackend" name="Simulation Backend" schema="schema/simulationBackend.exsd"/>
-
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.cau.de/cs/kieler/simulation/KiSim" 
-       class = "de.cau.cs.kieler.simulation.kisim.KisimPackage"
-       genModel = "model/generated/KiSim.genmodel" /> 
-	
-  </extension>
-  <extension
-        point="de.cau.cs.kieler.simulation.dataHandler">
-     <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.ExecutableSimulator"
-           name="sim">
-     </dataHandler>
-     <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.Redirect"
-           name="redirect">
-     </dataHandler>
-     <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler"
-           name="simin">
-     </dataHandler>
-     <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.SimulationOutputFileHandler"
-           name="simout">
-     </dataHandler>
-     <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.TraceHandler"
-           name="trace">
-     </dataHandler>
-     <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.SetterHandler"
-           name="setter">
-     </dataHandler>
-  </extension>
-  <extension
-        point="org.eclipse.debug.core.launchConfigurationTypes">
-     <launchConfigurationType
-           delegate="de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig"
-           id="de.cau.cs.kieler.simulation.simulationLaunchConfig"
-           modes="run,debug"
-           name="KIELER Simulation"
-           public="true">
-     </launchConfigurationType>
-  </extension>
-
-
-
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KTrace -->
@@ -61,21 +11,21 @@
             genModel="model/ktrace.genmodel"/>
    </extension>
    <extension
-         point="de.cau.cs.kieler.simulation.simulationBackend">
-      <simulationBackend
-            class="de.cau.cs.kieler.simulation.backends.CSimulationBackend">
-      </simulationBackend>
-      <simulationBackend
-            class="de.cau.cs.kieler.simulation.backends.JavaSimulationBackend">
-      </simulationBackend>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.tts.netlist.c.kico">
+      </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.simulation.netlist.java.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.netlist.c.kico">
+            system="system/de.cau.cs.kieler.simulation.tts.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.internal.simulation.kico">
       </TransformationSystem>
    </extension>
    <extension
@@ -85,6 +35,21 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.simulation.processor.CSimulationTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.SimulationContextBuilder">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.internal.processor.Step">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.internal.processor.ReadTrace">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.internal.processor.CheckTrace">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput">
       </Processor>
    </extension>
 

@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.SimulationModelWrapper
 
 /**
  * @author als
@@ -30,7 +31,7 @@ class SimulationContextBuilder extends Processor<ExecutableContainer, Simulation
     }
     
     override getName() {
-        "Build Simulation"
+        "Simulation Builder"
     }
     
     override getType() {
@@ -40,6 +41,13 @@ class SimulationContextBuilder extends Processor<ExecutableContainer, Simulation
     protected val logger = new Logger
     
     override process() {
+        // new context
+        val simCtx = new SimulationContext()
+        simCtx.startEnvironment.setProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT, compilationContext)
+        val simModel = new SimulationModelWrapper(sourceModel, environment)
+        simCtx.addModel(simModel)
+        
+        model = simCtx
     }
     
 }

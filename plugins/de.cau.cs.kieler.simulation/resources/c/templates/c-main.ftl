@@ -7,15 +7,11 @@
 // The data for the model
 ${tickdata_type} ${tickdata_name};
 
-// The next tick to be executed
-int nextTick = 0;
-
 <@inject position="body" />
 
 int main(int argc, const char* argv[]) {
     // Initialize 
     reset(&${tickdata_name});
-    nextTick = 1;
     
     <@inject position="init" /><#nt>
     
@@ -29,8 +25,5 @@ int main(int argc, const char* argv[]) {
          
         // Send outputs
         <@inject position="output" /><#nt>
-     
-        // Update tick index
-        nextTick++;
     }
 }

@@ -3,6 +3,50 @@
  */
 package de.cau.cs.kieler.simulation.trace.serializer
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
+import de.cau.cs.kieler.simulation.trace.services.KTraceGrammarAccess
+import org.eclipse.xtext.serializer.ISerializationContext
 
 class KTraceSemanticSequencer extends AbstractKTraceSemanticSequencer {
+    
+    @Inject
+    private KTraceGrammarAccess grammarAccess;
+    
+    /**
+     * Contexts:
+     *     TraceFile returns TraceFile
+     *
+     * Constraint:
+     *     (traces+=EsoTrace+ | (pragmas+=Pragma* traces+=KTrace traces+=KTrace*))
+     */
+    override sequence_EsoTraces_KTraces(ISerializationContext context, TraceFile semanticObject) {
+        if (semanticObject.eAllContents.exists[it instanceof Emission]) {
+            sequence_EsoTraces(context, semanticObject)
+        } else {
+            sequence_KTraces(context, semanticObject)
+        }
+    }
+
+    /**
+     * Contexts:
+     *     KTraces returns TraceFile
+     *
+     * Constraint:
+     *     (pragmas+=Pragma* traces+=KTrace traces+=KTrace*)
+     */
+    override sequence_KTraces(ISerializationContext context, TraceFile semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+        val g = grammarAccess.KTracesAccess
+        for (idxPragma : semanticObject.pragmas.indexed) {
+            feeder.accept(g.pragmasPragmaParserRuleCall_0_0, idxPragma.value, idxPragma.key)
+        }
+        feeder.accept(g.tracesKTraceParserRuleCall_2_0, semanticObject.traces.head, 0)
+        for (idxTrace : semanticObject.traces.drop(1).indexed) {
+            feeder.accept(g.tracesKTraceParserRuleCall_3_2_0, idxTrace.value, idxTrace.key + 1)
+        }
+        feeder.finish
+    }
+
 }

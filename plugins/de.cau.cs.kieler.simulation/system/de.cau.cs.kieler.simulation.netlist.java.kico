@@ -1,8 +1,6 @@
-developer simulation system de.cau.cs.kieler.sccharts.^simulation.netlist.java
-    label "Netlist-based Simulation (Java)"
+developer system de.cau.cs.kieler.sccharts.^simulation.netlist.java
+    label "Netlist-based Simulation (Java, No-TTS)"
 
-pre process de.cau.cs.kieler.kicool.deploy.variable.store.init 
-de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
 system de.cau.cs.kieler.sccharts.netlist.java
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
@@ -22,27 +20,4 @@ de.cau.cs.kieler.kicool.deploy.compiler.java config {
     "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.name": "Simulation.jar",
     "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.entry": "Main"
 }
-//de.cau.cs.kieler.simulation
-
-
-// Compile models to Java code
-//model compiler kico {
-//  outputFolder: kieler-gen
-//  outputFileExtension: java
-//  outputTemplate: assets/OutputTemplate.ftl
-//  compileChain: de.cau.cs.kieler.sccharts.netlist.java
-//  
-//  // Generate simulation from output of compilation
-//  process simulation template {
-//    file: assets/JavaSimulation.ftl
-//  }
-//}
-
-// Compile generated simulation code
-//simulation compiler java {
-//  libFolder: kieler-gen/org/json
-//  sjLibFolder: kieler-gen/de/cau/cs/kieler/scg/processors/transformators/priority
-//  outputFolder: kieler-gen/sim/bin
-//  command: "javac -cp kieler-gen -d bin \"${file_path}\" "
-//  jarCommand: "jar cvfe \"./${outputFolder}/${executable_name}\" sim.code.${file_basename} -C bin . "
-//}
+de.cau.cs.kieler.^simulation.context.build
