@@ -368,6 +368,7 @@
        <extension
              point="org.eclipse.ui.views">
           <view
+                category="de.cau.cs.kieler"
                 class="de.cau.cs.kieler.kicool.ui.view.CompilerView"
                 icon="icons/IMBC_gear.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler"
@@ -375,6 +376,7 @@
                 restorable="true">
           </view>
           <view
+                category="de.cau.cs.kieler"
                 class="de.cau.cs.kieler.kicool.ui.view.registry.CompilerRegistryView"
                 icon="icons/IMBC_key.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler.registry"
