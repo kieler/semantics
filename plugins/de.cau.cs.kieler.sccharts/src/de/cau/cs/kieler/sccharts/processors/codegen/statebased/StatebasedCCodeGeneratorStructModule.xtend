@@ -47,6 +47,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val STRUCT_INTERFACE_NAME = "Iface"
     
     public static val FUNCTION_INLINE_VOID = "static inline void"
+    public static val FUNCTION_INLINE_VOID_SP = "static inline void "
     
     public static val ENUM_STATES_SUFFIX = "State"
     public static val ENUM_STATES_RUNNING = "RUNNING"

@@ -72,7 +72,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         struct.forwardDeclarations.add(
             SLC(getName + "() contains the logic of the rootState of the statechart."),
             
-            "void ", getName, "(", struct.getName, " *", struct.getVariableName, ");",
+            FUNCTION_INLINE_VOID_SP, getName, "(", struct.getName, " *", struct.getVariableName, ");",
             NL, NL
         )
     }
@@ -145,14 +145,14 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
         if (!isRootState) {    
             struct.forwardDeclarationsLogic.add(
-                "void ", functionName, "(", contextDataName,
+                FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName,
                 " *", CONTEXT_DATA_NAME, ");",
                 LEC("State " + state.name + " " + inRegionCommentString + " logic"), NL ) 
 
             function.add(
                 SLC("Init function of superstate " + state.name + inRegionCommentString), 
                 
-                "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL
+                FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL
             )
             
             function.add(
@@ -209,10 +209,10 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                             
         function.add(
             SLC("Logic function of the superstate " + state.name + inRegionCommentString),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"SUPERSTATE " + state.name + " \"); fflush(stdout);\n"));
         struct.forwardDeclarationsLogic.add(
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL
         );
             
         function.add(
@@ -382,12 +382,12 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                             
         function.add(
             SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"STATE " + state.name + " \"); fflush(stdout);\n"));
 
         struct.forwardDeclarationsLogic.add(
             SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL);
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL);
             
         state.generateStateTransitions(function, indentation, serializer)
         
@@ -408,7 +408,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         function.add(
             SLC("Function of region " + regionName), 
             
-            "void ", regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            FUNCTION_INLINE_VOID_SP, regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"REGION " + regionName + " \"); fflush(stdout);\n"),
             
             SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
@@ -461,7 +461,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         )
         
         struct.forwardDeclarationsLogic.add(
-            "void ", regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ");",
+            FUNCTION_INLINE_VOID_SP, regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ");",
             LEC("Region " + regionName), 
             NL, NL
         ) 
