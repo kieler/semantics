@@ -123,15 +123,7 @@ class SystemSelectionManager implements SelectionListener {
         combo.pack()
         if (updateView) view.updateToolbar() // Prevent infinite invocation loops
     }
-    
-    private def hasInput(System sys, Class<?> modelClass) {
-        val input = sys.findInputClass
-        if (modelClass !== null && input !== null) {
-            return input.isAssignableFrom(modelClass)
-        }
-        return true
-    }
-   
+
     def System getSelectedSystem() {
         if (!combo.isDisposed && combo.selectionIndex != -1) {
             val systemId = getSelectedSystemId
