@@ -5,7 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.simulation.ui;singleton:=true
 Bundle-Version: 0.13.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 Bundle-Vendor: Kiel University
-Require-Bundle: de.cau.cs.kieler.simulation,
+Require-Bundle: de.cau.cs.kieler.simulation;visibility:=reexport,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kexpressions.ui,
  de.cau.cs.kieler.kicool,
@@ -34,9 +34,23 @@ Require-Bundle: de.cau.cs.kieler.simulation,
  com.google.gson;bundle-version="2.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.simulation.ui,
- de.cau.cs.kieler.simulation.ui.trace.contentassist,
- de.cau.cs.kieler.simulation.ui.trace.quickfix,
+Export-Package: de.cau.cs.kieler.simulation.ide.trace,
+ de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr,
  de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.internal,
- de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr
+ de.cau.cs.kieler.simulation.ui,
+ de.cau.cs.kieler.simulation.ui.internal,
+ de.cau.cs.kieler.simulation.ui.internal.processor,
+ de.cau.cs.kieler.simulation.ui.preferences,
+ de.cau.cs.kieler.simulation.ui.synthesis,
+ de.cau.cs.kieler.simulation.ui.synthesis.action,
+ de.cau.cs.kieler.simulation.ui.trace,
+ de.cau.cs.kieler.simulation.ui.trace.contentassist,
+ de.cau.cs.kieler.simulation.ui.trace.labeling,
+ de.cau.cs.kieler.simulation.ui.trace.outline,
+ de.cau.cs.kieler.simulation.ui.trace.quickfix,
+ de.cau.cs.kieler.simulation.ui.view,
+ de.cau.cs.kieler.simulation.ui.view.dataview,
+ de.cau.cs.kieler.simulation.ui.view.diagram,
+ de.cau.cs.kieler.simulation.ui.view.pool,
+ de.cau.cs.kieler.simulation.ui.visualization
 Import-Package: org.apache.log4j

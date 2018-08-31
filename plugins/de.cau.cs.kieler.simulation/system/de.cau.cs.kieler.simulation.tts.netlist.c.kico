@@ -1,4 +1,4 @@
-developer simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.c
+simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.c
     label "Netlist-based Simulation (C)"
 
 pre process de.cau.cs.kieler.kicool.deploy.variable.store.init 
