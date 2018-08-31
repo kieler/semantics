@@ -3,8 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
- * + Kiel University
+ * Copyright 2018
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 

@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.Separator
+
 /**
  * @author ssm
  * @kieler.design 2017-05-12 proposed
