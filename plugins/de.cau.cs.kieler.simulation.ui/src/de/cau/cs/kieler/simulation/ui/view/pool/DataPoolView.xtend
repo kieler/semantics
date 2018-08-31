@@ -80,6 +80,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 import org.eclipse.core.runtime.Path
+import org.eclipse.jface.viewers.IElementComparer
 
 /**
  * Displays the data of a running simulation.
@@ -483,7 +484,25 @@ class DataPoolView extends ViewPart implements SimulationListener {
         // Create viewer
         val viewer = new TableViewer(table)
         // Support objects that are "equal" yet two different objects in memory.
-        viewer.comparer = new IdentityComparer()
+        viewer.comparer = new IElementComparer() {
+            
+            override equals(Object a, Object b) {
+                if (a instanceof DataPoolEntry) {
+                    if (b instanceof DataPoolEntry) {
+                        return a.name.equals(b.name)
+                    }
+                }
+                return a === b
+            }
+            
+            override hashCode(Object element) {
+                if (element instanceof DataPoolEntry) {
+                    return element.name.hashCode
+                }
+                return element.hashCode
+            }
+            
+        }
         // Add filter to viewer
         filter = new DataPoolFilter
         viewer.addFilter(filter)
