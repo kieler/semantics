@@ -16,5 +16,5 @@ model compiler kico {
 simulation compiler c {
   libFolder: kieler-gen/sim/lib
   outputFolder: kieler-gen/sim/bin
-  command: "gcc -std=c99 -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
+  command: "gcc -lm -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
 }

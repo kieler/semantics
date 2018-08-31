@@ -289,7 +289,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         val newState = parentRegion.createState(surface.adoptName("state"))
 
         if (environment.getProperty(COPY_ANNOTATIONS)) {
-            surface.copyAnnotations(newState)
+            surface.depth.copyAnnotations(newState)
         }
         
         if (incoming !== null) {

@@ -28,7 +28,8 @@ class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
     
     protected def isStatebasedSimulationText(TestModelData modelData) {
         return modelData.isNetlistCompilationTests 
-//        && modelData.modelProperties.contains("statebased")
+        && modelData.modelProperties.contains("statebased")
+        && modelData.modelProperties.contains("rbls")
     }
     
     override filter(TestModelData modelData) {
@@ -41,5 +42,7 @@ class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
     @Test
     def void testSimulationStatebasedC(SCCharts scc, TestModelData modelData) {
         startSimulationTest(#["de.cau.cs.kieler.sccharts.statebased.woComments"], scc, modelData)
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist"], scc, modelData)
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority"], scc, modelData)
     }
 }

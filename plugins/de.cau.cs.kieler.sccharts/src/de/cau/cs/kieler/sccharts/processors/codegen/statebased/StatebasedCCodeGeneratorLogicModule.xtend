@@ -72,7 +72,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         struct.forwardDeclarations.add(
             SLC(getName + "() contains the logic of the rootState of the statechart."),
             
-            "void ", getName, "(", struct.getName, " *", struct.getVariableName, ");",
+            FUNCTION_INLINE_VOID_SP, getName, "(", struct.getName, " *", struct.getVariableName, ");",
             NL, NL
         )
     }
@@ -145,14 +145,14 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
         if (!isRootState) {    
             struct.forwardDeclarationsLogic.add(
-                "void ", functionName, "(", contextDataName,
+                FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName,
                 " *", CONTEXT_DATA_NAME, ");",
                 LEC("State " + state.name + " " + inRegionCommentString + " logic"), NL ) 
 
             function.add(
                 SLC("Init function of superstate " + state.name + inRegionCommentString), 
                 
-                "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL
+                FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL
             )
             
             function.add(
@@ -166,16 +166,23 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             val cfrName = struct.getContextVariableName(cfr)
             val initialState = cfr.states.filter[ initial ].head
             val initialStateName = struct.getStateEnumName(initialState)
+            val initialStatePriority = initialState.getStatePriority
             
             function.add(
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ", 
                     initialStateName, ";", NL,
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_DELAYED_ENABLED, " = 0;", NL,
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
-                    initialState.getStatePriority, ";", NL,
+                    initialStatePriority, ";", NL,
                 "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS,  " = ",
                     THREAD_STATUS_WAITING, ";", NL
             )
+            
+            if (isRootState) {
+                if (initialStatePriority > reset.maxRootstatePriority) { 
+                    reset.maxRootstatePriority = initialStatePriority   
+                }                      
+            }
         }
               
         if (!isRootState) {  
@@ -202,60 +209,52 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                             
         function.add(
             SLC("Logic function of the superstate " + state.name + inRegionCommentString),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"SUPERSTATE " + state.name + " \"); fflush(stdout);\n"));
+        struct.forwardDeclarationsLogic.add(
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL
+        );
             
         function.add(
             SLC("Set the thread status to waiting for the upcomiong tick.")
         )
             
-        for (cfr : state.regions.filter(ControlflowRegion).indexed) {
-            val cfrName = struct.getContextVariableName(cfr.value)
-            function.add(
-                "  ", "if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS, " == ",
-                    THREAD_STATUS_PAUSING, ") {", NL,
-                "    ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS, " = ", 
-                    THREAD_STATUS_WAITING, ";", NL, 
-                "    ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_DELAYED_ENABLED, " = 1;", NL,
-                "  ",  "}", NL
-            )
-        }
-            
-        function.add(NL)
-
         if (multiThreaded) {
-            function.add(
-                SLC(2, "Loop as long as at least one thread is still waiting to execute."), 
-                
-                "  ", "do {", NL
-            )
             
             function.add(
                 SLC(4, "Calculate the highest active priority."),
-                 "    ", "int activePriority = 0;", 
+                 "  int activePriority = "+ CONTEXT_DATA_NAME + "->" + REGION_ACTIVE_PRIORITY + ";", NL,
+                 "  ", "int newActivePriority = 0;", NL,
                  NL
             )
 
-            for (cfr : state.regions.filter(ControlflowRegion)) {
-                val cfrName = struct.getContextVariableName(cfr)
-                
-                function.add(
-                    "    ", "if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS, " == ",
-                        THREAD_STATUS_WAITING, " &&", NL,
-                    "      ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
-                        "activePriority", ") {", NL, 
-                        "      ", "activePriority = ", 
-                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL, 
-                        "    }", NL, NL 
-                )
-            }
+//            for (cfr : state.regions.filter(ControlflowRegion)) {
+//                val cfrName = struct.getContextVariableName(cfr)
+//                
+//                function.add(
+//                    "  ", "if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS, " == ",
+//                        THREAD_STATUS_WAITING, " &&", NL,
+//                    "    ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
+//                        "activePriority", ") {", NL, 
+//                    "    ", "activePriority = ", 
+//                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL, 
+//                    "  }", NL, NL 
+//                )
+//            }
             
             val conditionalBuilder = new StringBuilder
+            val pauseBuilder = new StringBuilder
+            val pauseActivityBuilder = new StringBuilder
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 cfr.value.generateControlflowRegion
             
                 val contextName = struct.getContextVariableName(cfr.value)
                 val regionName = struct.getRegionName(cfr.value)
+
+                function.add(                    
+                    "  ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", 
+                    THREAD_STATUS_WAITING, ") {", NL
+                );
             
                 function.add(
                     "    ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".", REGION_ACTIVE_PRIORITY, " == ",
@@ -263,20 +262,23 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 )
     
                 function.add(
-                    "      ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", 
-                        THREAD_STATUS_WAITING, ") {", NL,
-                    "        ", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus = ",
+                    "      ", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus = ",
                         THREAD_STATUS_RUNNING, ";", NL, 
                     SLC(6, "Call the logic code of thread " + regionName + "."), 
                     
-                    "        ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL,
-                    "      ", "}", NL 
+                    "      ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL
                 )
                 
                 function.add(
-                    "    }", NL, NL 
-                )    
-
+                    "    ", "}", NL,
+                    "    ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING, ") {", NL,
+                    "      ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".activePriority > newActivePriority) {", NL,
+                    "       ", "newActivePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL,
+                    "      ", "}", NL,
+                    "    ", "}", NL,
+                    "  ", "}", NL
+                )
+                
                 conditionalBuilder.add(
                     CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING
                 )
@@ -286,14 +288,39 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                         "    "
                     )
                 }
+                pauseBuilder.add(
+                    CONTEXT_DATA_NAME, "->", contextName, ".threadStatus != ", THREAD_STATUS_WAITING
+                )
+                if (cfr.key < regionCount - 1) {
+                    pauseBuilder.add(
+                        " &&", NL, 
+                        "    "
+                    )
+                }
+                
+                pauseActivityBuilder.add(
+                    "    ", "if ((", CONTEXT_DATA_NAME, "->", contextName, ".activePriority > ", 
+                        CONTEXT_DATA_NAME, "->activePriority) && ", NL, 
+                    "      ", "(", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_PAUSING, "))", NL,
+                    "      ",  CONTEXT_DATA_NAME, "->activePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL
+                )
             }
             
-            function.add(
-                "  ", "} while(", conditionalBuilder, ");", NL,
-                NL 
+//            if (!isRootState) {
+                function.add(NL,
+                    "  ", CONTEXT_DATA_NAME, "->", "activePriority = newActivePriority;", NL,
+                    IFC(printDebug, "  printf(\"APRIO %d \", " + CONTEXT_DATA_NAME, "->activePriority); fflush(stdout);\n"),
+                     NL 
+                )
+//            }
+
+          
+            function.add(NL,
+                "  ", "if (", pauseBuilder.toString, ") {", NL,
+                pauseActivityBuilder.toString,
+                "  ", "}", NL
             )
                 
-            
         } else { // Single-threaded
             val cfr = state.regions.filter(ControlflowRegion).head
             val contextName = struct.getContextVariableName(cfr)
@@ -301,19 +328,22 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             cfr.generateControlflowRegion
             
             function.add(
-                SLC(2, "Loop as long as the thread is active."), 
-                
-                "  ", "while (", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING, ") {", NL,
-                
                 "    ", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus = ",
                     THREAD_STATUS_RUNNING, ";", NL,
                                       
                 SLC(6, "Call the logic code of thread " + regionName + "."), 
                 
-                "    ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL,
-                "  ", "}", NL                 
+                "    ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL
             )
-            
+
+            if (!isRootState) {
+                function.add(
+                    "  ", CONTEXT_DATA_NAME, "->", "activePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL, 
+                    IFC(printDebug, "  printf(\"APRIO %d \", " + CONTEXT_DATA_NAME, "->activePriority); fflush(stdout);\n"),
+                    NL
+                )
+            }
+                
         }
             
         if (!isRootState) {
@@ -330,7 +360,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             }
             function.add(NL,
                 "  ", "if (", terminationBuilder.toString, ") {", NL,
-                "    ", CONTEXT_DATA_NAME, "->", REGION_ROOT_TERMINATED, " = 1;", NL,
+                "    ", CONTEXT_DATA_NAME, "->", REGION_THREADSTATUS, " = ", THREAD_STATUS_TERMINATED, ";", NL,
                 "  }", NL
             )
         }
@@ -352,12 +382,12 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                             
         function.add(
             SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"STATE " + state.name + " \"); fflush(stdout);\n"));
 
         struct.forwardDeclarationsLogic.add(
             SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
-            "void ", functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL);
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL);
             
         state.generateStateTransitions(function, indentation, serializer)
         
@@ -378,7 +408,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         function.add(
             SLC("Function of region " + regionName), 
             
-            "void ", regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            FUNCTION_INLINE_VOID_SP, regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ") {", NL,
             IFC(printDebug, "  printf(\"REGION " + regionName + " \"); fflush(stdout);\n"),
             
             SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
@@ -407,12 +437,14 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 if (!state.isHierarchical) {
                     function.add(
                         "        break;", NL, NL
-                    )    
+                    ) 
+    
                 } else {
                     val stateNameRunning = struct.getStateNameRunning(state)
                     val stateEnumNameRunning = struct.getStateEnumNameRunning(state)
                     
-                    function.add(NL,
+                    function.add(
+                        SLC(4, "It was a superstate reset, fall through."), NL,
                         "      case ", stateEnumName + ENUM_STATES_RUNNING, ":", NL, 
                         "        ", stateNameRunning, "(", CONTEXT_DATA_NAME, ");", NL,
                         "        break;", NL, NL
@@ -423,13 +455,13 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         }
         
         function.add(
-            IFC(!singleState, "    }"),
+            IFC(!singleState, "    }", NL),
             "  }", NL,
             "}", NL, NL
         )
         
         struct.forwardDeclarationsLogic.add(
-            "void ", regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ");",
+            FUNCTION_INLINE_VOID_SP, regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ");",
             LEC("Region " + regionName), 
             NL, NL
         ) 
@@ -478,25 +510,32 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             }
             val trigger = if (!isImmediate) 
                     (if (hasTrigger) 
-                    CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED + " && " + transitionTrigger
+                    CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED + " && (" + transitionTrigger + ")"
                     else CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED) 
                 else transitionTrigger
             if (isDefaultTransition && isImmediate) hasImplicitSelfLoop = false 
             
 
             
-            
+            val triggerPD = trigger.replaceAll(NL, "").replaceAll("\n", "")
             if (index == 0) { 
                 if (!trigger.nullOrEmpty) {
-                    function.add("  if (", trigger, ") {", NL)
+                    function.add("  if (", trigger, ") {", NL,
+                        IFC(printDebug, "  printf(\"TRIGGER " + triggerPD + " \"); fflush(stdout);\n")
+                    )
+                    
                     ifScopeIsOpen = true
                 }    
             } else {
                 if (!trigger.nullOrEmpty) {
-                    function.add("  } else if (", trigger, ") {", NL)
+                    function.add("  } else if (", trigger, ") {", NL,
+                        IFC(printDebug, "  printf(\"TRIGGER " + triggerPD + " \"); fflush(stdout);\n")
+                    )
                     ifScopeIsOpen = true
                 } else if (isDefaultTransition) {
-                    function.add("  } else {", NL)
+                    function.add("  } else {", NL
+//                        IFC(printDebug, "  printf(\"ELSETRIGGER \"); fflush(stdout);\n")
+                    )
                     hasImplicitSelfLoop = false
                     ifScopeIsOpen = true
                 }
@@ -523,8 +562,10 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         
             if (transition.effects.size > 0) {
                 for (effect : transition.effects) {
+                    val effectText = "" //effect.serializeHR.toString.replaceAll("\"", "\\\"")
                     function.add(
-                        scopeIndent, "  ", effect.serializeHR, ";", NL
+                        scopeIndent, "  ", effect.serializeHR, ";", NL,
+                        IFC(printDebug, "  printf(\"EFFECT " + effectText + " \"); fflush(stdout);\n")            
                     )
                 }
             }
@@ -576,11 +617,43 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                     if (implicitScope) "    " else "  ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_TERMINATED, ";", NL
                 )                    
             } else {
-                function.add(
-                    SLC(2, "The thread pauses after this state is done."),
+                if (state.isHierarchical) {
                     
-                    if (implicitScope) "    " else "  ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
-                )
+                    val conditionalBuilder = new StringBuilder
+                    val regionCount = state.regions.filter(ControlflowRegion).size
+                    for (cfr : state.regions.filter(ControlflowRegion).indexed) {
+                        val contextName = struct.getContextVariableName(cfr.value)
+                        conditionalBuilder.add(
+                            CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING
+                        )
+                        if (cfr.key < regionCount-1) 
+                            conditionalBuilder.add(" || ", NL, "      ")
+                    }                    
+
+                    function.add(
+                            if (implicitScope) "    " else "  ", 
+                            "if (", conditionalBuilder, ") {", NL,
+                            if (implicitScope) "      " else "    ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_WAITING, ";", NL,
+                            if (implicitScope) "    " else "  ", "} else {", NL, 
+                            if (implicitScope) "      " else "    ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
+                            if (implicitScope) "    " else "  ", " }", NL
+                    )
+                    
+                } else {
+                    function.add(
+                        SLC(2, "The thread pauses after this state is done."),
+                            
+                            if (implicitScope) "    " else "  ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
+                    )
+                    
+                    val contextName = struct.getContextVariableName(state.parentRegion)
+                    
+                    function.add(
+                        "    ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", 
+                            state.statePriority, ";", NL,
+                            IFC(printDebug, "    printf(\"PRIO " + contextName + " %d \", " + CONTEXT_DATA_NAME+"->"+REGION_ACTIVE_PRIORITY+ "); fflush(stdout);\n")
+                    )                    
+                }
             }
             if (implicitScope) { 
                 function.add("  }", NL)

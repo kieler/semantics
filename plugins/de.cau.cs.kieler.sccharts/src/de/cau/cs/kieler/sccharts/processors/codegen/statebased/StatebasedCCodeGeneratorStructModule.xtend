@@ -47,6 +47,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val STRUCT_INTERFACE_NAME = "Iface"
     
     public static val FUNCTION_INLINE_VOID = "static inline void"
+    public static val FUNCTION_INLINE_VOID_SP = "static inline void "
     
     public static val ENUM_STATES_SUFFIX = "State"
     public static val ENUM_STATES_RUNNING = "RUNNING"
@@ -55,7 +56,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val THREAD_STATUS_ENUM = "ThreadStatus"
     public static val THREAD_STATUS_TERMINATED = "TERMINATED"       // was EMPTY
     public static val THREAD_STATUS_RUNNING = "RUNNING"
-    public static val THREAD_STATUS_WAITING = "WAITING"         // was DISPATCHED
+    public static val THREAD_STATUS_WAITING = "READY"         // was DISPATCHED
     public static val THREAD_STATUS_PAUSING = "PAUSING"
     
     public static val CONTEXT_DATA_NAME = "context"
@@ -66,6 +67,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
 //    public static val REGION_DATA_TYPE_SUFFIX = "Data"
     public static val REGION_ACTIVE_STATE = "activeState"
     public static val REGION_ACTIVE_PRIORITY = "activePriority"
+    public static val REGION_PAUSE_PRIORITY = "pausePriority"
     public static val REGION_DELAYED_ENABLED = "delayedEnabled"
     
     @Accessors StringBuilder tickData = new StringBuilder
@@ -98,6 +100,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         stateNames.clear
         stateEnumNames.clear
         contextNames.clear
+        
+        stateEnumNames.put(createState, THREAD_STATUS_TERMINATED)
+        stateEnumNames.put(createState, THREAD_STATUS_RUNNING)
+        stateEnumNames.put(createState, THREAD_STATUS_WAITING)
+        stateEnumNames.put(createState, THREAD_STATUS_PAUSING)
         
         code.addCLL(
             SLC("The chosen scheduling regime (IUR) uses four states to maintain the status of threads."),
@@ -185,8 +192,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             " ",
             REGION_INTERFACE_NAME,
             ";", NL, 
-            "  char ",
-            REGION_ROOT_TERMINATED,
+            "  int ",
+            REGION_ACTIVE_PRIORITY,
+            ";", NL,
+            "  ThreadStatus ",
+            REGION_THREADSTATUS,
             ";", NL
         )
         
@@ -313,7 +323,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         if (regionNames.keySet.contains(cfr)) {
             return regionNames.get(cfr)
         } else {
-            val name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName
+            var name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName
+            var counter = 2
+            while (regionNames.values.contains(name)) {
+                name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName + counter++    
+            }
             regionNames.put(cfr, name)
             return name
         }
@@ -374,7 +388,11 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             return contextNames.get(cfr)
         } else {
             val name = cfr.name.hostcodeSafeName + CONTEXT_TYPE_NAME
-            val upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1)
+            var upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1)
+            var counter = 2
+            while (contextNames.values.contains(upperCaseName)) {
+                upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1) + counter++
+            }
             contextNames.put(cfr, upperCaseName)
             return upperCaseName
         }
@@ -384,7 +402,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         cfr.getContextTypeName.toLowerCase
     }  
     
-    private val ANNOTATION_PRIORITY = "optPrioIDs"
+//    private val ANNOTATION_PRIORITY = "optPrioIDs"
+    private val ANNOTATION_PRIORITY = "nodePrios"
 
     def int getStatePriority(State state) {
         if (state.hasAnnotation(ANNOTATION_PRIORITY)) {
