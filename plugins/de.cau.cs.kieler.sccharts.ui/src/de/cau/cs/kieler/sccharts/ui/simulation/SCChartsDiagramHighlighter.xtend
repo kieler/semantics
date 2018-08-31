@@ -10,18 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.prom
+package de.cau.cs.kieler.sccharts.ui.simulation
 
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.prom.build.PromBuildAdapter
-import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
-import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
-import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
-import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
-import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -30,14 +24,12 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.NDimensionalArray
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.StepState
-import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
-import de.cau.cs.kieler.simulation.ui.highlighting.Highlight
 import java.util.List
 import java.util.Set
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -47,7 +39,7 @@ import java.util.Set
  * These states are called "current states" in the context of this highlighter.
  * Note however, that their content might not have been executed, for instance because the state was suspended in this tick.
  * 
- * This class is instantiated via the simulationVisualizer extension point.
+ * FIXME This class is instantiated via bundle start!
  * 
  * @author aas
  *
@@ -100,148 +92,89 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      */
     private var takenTransitionArraySize = 0
 
-    /**
-     * The model compilation and template processing listener
-     * that adds the internal variable for the taken transition signaling, which is created during compilation.
-     */
-    // The build listener is added in its constructor, so the warning that it is not used can be ignored.
-    private val buildListener = new PromBuildAdapter() {
-        /**
-         * Add the taken transition array to the simulation interface.
-         * 
-         * @param processor The potential simulation template processor
-         */
-        override beforeProcessing(TemplateProcessor processor) {
-            if(takenTransitionArraySize > 0) {
-                if(processor instanceof SimulationTemplateProcessor) {
-                    // Add the variables to the simulation template processor
-                    if(processor.additionalVariables.value == null) {
-                        processor.additionalVariables.value = newHashMap
-                    }
-                    processor.putAdditionalVariable(VariableInterfaceType.INTERNAL.name, "int", "_taken_transitions["+takenTransitionArraySize+"]")
-                }
-            }
-        }
-        
-        /**
-         * Resets the taken transition array size.
-         */
-        override beforeCompilation(ModelCompiler compiler) {
-            takenTransitionArraySize = 0
-        }
-        
-        /**
-         * Searches for register variables in the compilation result of the context.
-         * 
-         * @param compiler The potential KiCoModelCompiler
-         */
-        override afterIntermediateCompilation(ModelCompiler compiler) {
-            if(compiler instanceof KiCoModelCompiler) {
-                for (iResult : compiler.context.processorInstancesSequence) {
-                    // In case the taken transition signaling was used,
-                    // the created array has to be added to the simulation interface as additional variable
-                    if(takenTransitionArraySize <= 0) {
-                        takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
-                    }
-                }
-            }
-        }
-    }
 
-    /**
-     * Constructor
-     */
-    new() {
-        super()
-        // Remove old instance if any
-        if(instance !== null) {
-            SimulationManager.remove(instance.simulationListener)
+    private new() {}
+    static def create() {
+        if(instance === null) {
+            instance = new SCChartsDiagramHighlighter
         }
-        // Remember single instance
-        instance = this
+        instance
     }
     
     /**
      * {@inheritDoc}
      */
     override getName() {
-        return "SCChart Highlighter"
+        return "SCCharts Highlighter"
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    override isSupported(Object model) {
-        return model instanceof SCCharts
+    
+    def isSupported(SimulationContext ctx) {
+        val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        return compileCtx !== null && compileCtx.originalModel instanceof SCCharts
     }
     
     /**
      * {@inheritDoc}
      */
-    override initialize(DataPool pool) {
-        super.initialize(pool)
+    override initialize(SimulationContext ctx) {
+        super.initialize(ctx)
         currentStates = null
+        update(ctx)
     }
     
     /**
      * {@inheritDoc}
      */
-    override stop() {
-        super.stop()
-        unhighlightDiagram
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override update(DataPool pool) {
-        super.update(pool)
+    override update(SimulationContext ctx) {
+        super.update(ctx)
+        val pool = ctx.dataPool
         
         // Remove highlighting
-        unhighlightDiagram        
-        // Calculate the simulation controlflow to determine what must be highlighted
-        calculateSimulationControlFlow(pool)
-        // If there is no control flow then there is nothing to highlight
-        if(traversedTransitions.isNullOrEmpty && traversedStates.isNullOrEmpty && currentStates.isNullOrEmpty) {
-            return
-        }
-        // Find the graph elements in the diagram for the EObjects that should be highlighted
-        val traversedGraphHighlighting = getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
-        val currentGraphHighlighting = if(!currentStates.isNullOrEmpty)
-                                           getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
-                                       else
-                                           newArrayList
-                                           
-        val currentDataflowHighlighting = if (currentActiveDataflowRegions.nullOrEmpty) newArrayList
-                                            else getHighlighting(#[] + currentActiveDataflowRegions, CURRENT_ELEMENT_STYLE)
-        val currentWireHighlighting = <Highlight> newArrayList
-        if (!currentDataflowHighlighting.empty) {
-            for (highlight : currentDataflowHighlighting) {
-                highlight.element.eAllContents.filter(KEdge).forEach[
-                    currentWireHighlighting.add(new Highlight(it, CURRENT_ELEMENT_STYLE))
-                ]
-            }
-        }
-                                            
-                                           
-        // Create highlighting with the corresponding styles
-        val highlighting = traversedGraphHighlighting + currentGraphHighlighting + 
-            currentDataflowHighlighting + currentWireHighlighting
-        highlightDiagram(highlighting)
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override loadFormerState(StepState state) {
-        super.loadFormerState(state)
+        unhighlightDiagram      
         
-        // Fetch old current states from highlighting history
-        val oldHighlighting = highlightingHistory.get(state.actionIndex)
-        if(oldHighlighting != null) {
-            currentStates = oldHighlighting.filter[it.foreground == CURRENT_ELEMENT_STYLE && it.eObject instanceof State].map[it.eObject as State].toList
+        // If is supported
+        if (pool !== null && ctx.isSupported) {
+            // Calculate the simulation controlflow to determine what must be highlighted
+            calculateSimulationControlFlow(ctx)
+            // If there is no control flow then there is nothing to highlight
+            if(traversedTransitions.isNullOrEmpty && traversedStates.isNullOrEmpty && currentStates.isNullOrEmpty) {
+                return
+            }
+            // Find the graph elements in the diagram for the EObjects that should be highlighted
+            val traversedGraphHighlighting = getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
+            val currentGraphHighlighting = if(!currentStates.isNullOrEmpty)
+                                               getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
+                                           else
+                                               newArrayList
+                                               
+            val currentDataflowHighlighting = if (currentActiveDataflowRegions.nullOrEmpty) newArrayList
+                                                else getHighlighting(#[] + currentActiveDataflowRegions, CURRENT_ELEMENT_STYLE)
+            val currentWireHighlighting = <Highlighting> newArrayList
+            if (!currentDataflowHighlighting.empty) {
+                for (highlight : currentDataflowHighlighting) {
+                    highlight.element.eAllContents.filter(KEdge).forEach[
+                        currentWireHighlighting.add(new Highlighting(it, CURRENT_ELEMENT_STYLE))
+                    ]
+                }
+            }
+                                                
+                                               
+            // Create highlighting with the corresponding styles
+            val highlighting = traversedGraphHighlighting + currentGraphHighlighting + 
+                currentDataflowHighlighting + currentWireHighlighting
+            highlightDiagram(highlighting)
         }
     }
+
+//    override loadFormerState(StepState state) {
+//        super.loadFormerState(state)
+//        
+//        // Fetch old current states from highlighting history
+//        val oldHighlighting = highlightingHistory.get(state.actionIndex)
+//        if(oldHighlighting != null) {
+//            currentStates = oldHighlighting.filter[it.foreground == CURRENT_ELEMENT_STYLE && it.eObject instanceof State].map[it.eObject as State].toList
+//        }
+//    }
     
     /**
      * Creates the highlighting style for traversed elements.
@@ -268,7 +201,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * 
      * @param pool The pool
      */
-    private def void calculateSimulationControlFlow(DataPool pool) {
+    private def void calculateSimulationControlFlow(SimulationContext ctx) {
+        val pool = ctx.dataPool
         // Reset traversed elements
         traversedTransitions.clear
         traversedStates.clear
@@ -276,11 +210,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         if(pool == null) {
             return
         }
-        val transitionArrayVariable = pool.getVariable(TakenTransitionSignaling.transitionArrayName)
-        if(transitionArrayVariable == null || !(transitionArrayVariable.value instanceof NDimensionalArray)) {
+        val transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
+        if(transitionArrayVariable === null || !transitionArrayVariable.rawValue.isJsonArray) {
             return
         }
-        val transitionArray = transitionArrayVariable.value as NDimensionalArray
+        val transitionArray = transitionArrayVariable.rawValue.asJsonArray
         
         // Get the transitions in the SCChart in the same manner as the taken transition signaling
         var State rootState
@@ -297,10 +231,10 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         // For an emitted transition in the transition array,
         // look for the transition in the model with the corresponding index.
         var index = 0
-        for(transitionArrayElement : transitionArray.elements) {
+        for(transitionArrayElement : transitionArray) {
             // The array contains the number of times that the transition has been taken in this tick
-            val value = transitionArrayElement.value
-            if(value instanceof Integer) {
+            if(transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
+                val value = transitionArrayElement.asInt
                 if(value > 0) {
                     // The transition has been taken at least once
                     try {
@@ -330,8 +264,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         }
         
         // Calculate current states
-        val isInitialTickDone = SimulationManager.instance.currentMacroTickNumber == 1 && SimulationManager.instance.currentSubTickNumber == 0
-        if(isInitialTickDone) {
+        if(currentStates === null) {
             currentStates = newArrayList()
             val directInitialStates = getInitialStates(rootState)
             for(state : directInitialStates) {
@@ -449,3 +382,4 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     }
     
 }
+							

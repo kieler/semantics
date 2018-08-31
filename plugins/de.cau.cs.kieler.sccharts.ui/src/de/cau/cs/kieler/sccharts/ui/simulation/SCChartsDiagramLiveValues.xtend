@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.prom
+package de.cau.cs.kieler.sccharts.ui.simulation
 
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -19,9 +19,6 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.sccharts.State
@@ -33,8 +30,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.DataPool
 
 /**
+ * FIXME This class is instantiated via bundle start!
  * 
  * @author ssm
  * @kieler.design 2017-10-05 proposed
@@ -46,6 +47,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     extension SCChartsScopeExtensions sccScopeExtensions = new SCChartsScopeExtensions
     extension KExpressionsValuedObjectExtensions kexpressionsValuedObjectRExtensions = new KExpressionsValuedObjectExtensions
     extension SCChartsSerializeHRExtensions serializeHRExtension = new SCChartsSerializeHRExtensions
+    public static val SCTXInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     
     private static var SCChartsDiagramLiveValues instance
     
@@ -65,28 +67,25 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     
     private var long lastUpdateTime
     
-    new() {
-        super()
-        // Remove old instance if any
-        if(instance !== null) {
-            SimulationManager.remove(instance.simulationListener)
+    private new() {}
+    static def create() {
+        if(instance === null) {
+            instance = new SCChartsDiagramLiveValues
         }
-        // Remember single instance
-        instance = this
-    }
-    
-    override isSupported(Object model) {
-        model instanceof SCCharts
+        instance
     }
     
     override getName() {
-        return "SCChart Live Values"
+        return "SCCharts Live Values"
     }
     
-    public static val SCTXInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    def isSupported(SimulationContext ctx) {
+        val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        return compileCtx !== null && compileCtx.originalModel instanceof SCCharts
+    }
     
-    override initialize(DataPool pool) {
-        super.initialize(pool)
+    override initialize(SimulationContext ctx) {
+        super.initialize(ctx)
         
         val model = diagramViewContext.inputModel as SCCharts
         val allScopes = model.rootStates.head.allScopes
@@ -148,15 +147,15 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         }
         
         lastUpdateTime = System.currentTimeMillis
-        update(pool)
+        update(ctx)
         
         layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
         layoutConfig.zoomStyle(ZoomStyle.NONE)
         layoutConfig.performLayout
     }    
     
-    override stop() {
-        super.stop()
+    override stop(SimulationContext ctx) {
+        super.stop(ctx)
         
         null.insertLiveTransitionValues
         null.insertLiveDeclarationValues
@@ -166,12 +165,13 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         layoutConfig?.performLayout
     }    
     
-    override update(DataPool pool) {
-        super.update(pool)
+    override update(SimulationContext ctx) {
+        super.update(ctx)
+        val pool = ctx.dataPool
         
         // Only show the values of the current data pool in the simulation.
         // From time to time perform an update anyway.
-        if(pool === SimulationManager.instance.currentPool || System.currentTimeMillis > (lastUpdateTime+MAX_UPDATE_PAUSE)) {
+        if(System.currentTimeMillis > (lastUpdateTime+MAX_UPDATE_PAUSE)) {
             pool.insertLiveTransitionValues
             pool.insertLiveDeclarationValues
             pool.insertLiveActionValues
@@ -222,9 +222,9 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
                     triggerStringIntermediateEnd
                 
                 if (pool !== null) {
-                    val variable = pool.getVariable(serialization)   
-                    if (variable !== null) {                 
-                        val variableValue = variable.value.toString
+                    val variable = pool.entries.get(serialization)   
+                    if (variable !== null) {        
+                        val variableValue = variable.rawValue.toString
                         triggerString = triggerStringFront + " (" + variableValue + ")" + triggerStringEnd
                     }
                 } else {
@@ -236,3 +236,4 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     } 
     
 }
+															
