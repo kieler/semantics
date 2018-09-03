@@ -68,6 +68,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -94,6 +95,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
@@ -321,8 +323,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             val source = cfrs.first.getEdgeableParent
             val target = cfrs.second.getEdgeableParent
             val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
-            edge.source = source.node
-            edge.target = target.node
+//            edge.source = source.node
+//            edge.target = target.node
             edge.associateWith(dependency)
         }
     }
@@ -344,11 +346,26 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         } else {
             // Create edge
             dependency.annotations += createTagAnnotation("nolayout")
-            edge = dependency.createDependencyEdge(source.node, target.node)
+            if (source instanceof State && target instanceof State) {
+                edge = dependency.createDependencyEdge(source.node, target.node)
+            }
+            
+            if (source instanceof Transition && target instanceof Transition) {
+                edge = dependency.createDependencyEdge((source.eContainer as State).getRootState.node, (source.eContainer as State).getRootState.node)
+                val kedge = edge
+                edge.data += createKCustomRendering => [
+                    val edgeNode = new TracingEdgeNode(source.edge, target.edge, (source.eContainer as State).getRootState.node);
+                    edgeNode.setIgnoreFirstCollapsibleParent(ignoreFirstCollapsibleParent, ignoreFirstCollapsibleParent)
+                    it.figureObject = edgeNode
+                    val poly = it.addChild(kedge.data.findFirst[it instanceof KPolyline] as KPolyline)
+                    poly.addAction(Trigger::SINGLECLICK, ToggleDependencyAction.ID)
+                ];
+            }
+            
             edges.put(sourceTargetPair, edge);
             edge.setProperty(CoreOptions.NO_LAYOUT, true);
             
-            edge.getContainer.addAction(Trigger::SINGLECLICK, ToggleDependencyAction.ID)
+//            edge.getContainer.
             edge.setProperty(ToggleDependencyAction.DATA_DEPENDENCY, dependency)
         }
         edge
@@ -361,8 +378,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             return eObject as ControlflowRegion
         if (eObject instanceof State) 
             return eObject as State
-//        if (eObject instanceof Transition) 
-//            return eObject as Transition
+        if (eObject instanceof Transition) 
+            return eObject as Transition
         else if (eObject.eContainer === null) 
             return null
         else 
