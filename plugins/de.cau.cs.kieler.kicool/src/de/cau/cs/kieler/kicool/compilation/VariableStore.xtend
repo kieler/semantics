@@ -50,6 +50,8 @@ class VariableStore implements IKiCoolCloneable {
     public static val SIGNAL = "signal"
     public static val CONST = "const"
     public static val EXTERN = "extern"
+    // A floating point value representing time in seconds
+    public static val TIME_FLOAT_SEC = "time"
         
     public static val DECL_FLAGS = #{
         VARIABLE_DECLARATION__INPUT -> INPUT,

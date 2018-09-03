@@ -94,6 +94,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
      * The id of the view from the plugin.xml
      */
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
+    public static val TIME_FORMAT = "%.4f"
 
     /**
      * The single instance
@@ -158,7 +159,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
      */
     @Accessors(PUBLIC_GETTER)
     private val Map<String, JsonElement> userValues = Collections.synchronizedMap(newHashMap)
-
+    
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
      */
@@ -586,7 +587,11 @@ class DataPoolView extends ViewPart implements SimulationListener {
         valueColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
             override String getText(Object element) {
                 if (element instanceof DataPoolEntry) {
-                    return element.rawValue.toString
+                    if (element.combinedProperties.contains(VariableStore.TIME_FLOAT_SEC) && element.rawValue.isJsonPrimitive && element.rawValue.asJsonPrimitive.isNumber) {
+                        return String.format(TIME_FORMAT, element.rawValue.asJsonPrimitive.asNumber.doubleValue)
+                    } else {
+                        return element.rawValue.toString
+                    }
                 }
                 return ""
             }
@@ -617,7 +622,11 @@ class DataPoolView extends ViewPart implements SimulationListener {
                             if (entry !== null) {
                                 val value = entry.rawValue
                                 if (value !== null) {
-                                    return value.toString
+                                    if (element.combinedProperties.contains(VariableStore.TIME_FLOAT_SEC) && value.isJsonPrimitive && value.asJsonPrimitive.isNumber) {
+                                        return String.format(TIME_FORMAT, value.asJsonPrimitive.asNumber.doubleValue)
+                                    } else {
+                                        return value.toString
+                                    }
                                 }
                             }
                             return "null"

@@ -42,6 +42,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.core.model.DynamicTicks
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * SCCharts Timed Automata Transformation.
@@ -119,7 +120,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 } else {
                     environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
-                voStore.update(vo, DynamicTicks.TAG)
+                voStore.update(vo, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
                 vo
             } else {
                 val vo = createValuedObject(DELTA_T_NAME)
@@ -129,7 +130,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     input = true
                     valuedObjects += vo
                 ]
-                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
                 vo
             }
             
@@ -143,7 +144,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 } else {
                     environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                 }
-                voStore.update(vo, DynamicTicks.TAG)
+                voStore.update(vo, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
                 vo
             } else {
                 val vo = createValuedObject(SLEEP_T_NAME)
@@ -154,7 +155,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         output = true
                         valuedObjects += vo
                     ]
-                    voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                    voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
                 }
                 vo
             }
@@ -180,7 +181,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
                 for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
                     clock.declaration.asVariableDeclaration.type = ValueType.get(DynamicTicks.TYPE)
-                    voStore.update(clock, SCCHARTS_GENERATED)
+                    voStore.update(clock, SCCHARTS_GENERATED, VariableStore.TIME_FLOAT_SEC)
                     if (clock.initialValue === null) clock.initialValue = createFloatValue(0)
                     
                     var region = state.controlflowRegions.head
@@ -300,7 +301,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 thresholds.sortInplace
                                 for (threshold : thresholds.indexed) {
                                     val during = subState.createImmediateDuringAction
-                                    if (thresholds.size > 1) during.trigger = createLEExpression(clock.reference, createFloatValue(threshold.value))
+                                    during.trigger = createLEExpression(clock.reference, createFloatValue(threshold.value))
                                     during.createAssignment(sleepT, createSubExpression(createFloatValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
                                 }
                             }
