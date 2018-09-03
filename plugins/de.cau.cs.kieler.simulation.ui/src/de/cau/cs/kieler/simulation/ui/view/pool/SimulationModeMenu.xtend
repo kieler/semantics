@@ -154,6 +154,8 @@ class SimulationModeMenu implements SelectionListener {
     def updateToolbarVisibility() {
         periodicContrib.visible = false
         dynamicContrib.visible = false
+        // This update is impoertant
+        DataPoolView.instance?.updateToolbar
         
         switch(currentMode) {
             case SimulationModes.PERIODIC: {
