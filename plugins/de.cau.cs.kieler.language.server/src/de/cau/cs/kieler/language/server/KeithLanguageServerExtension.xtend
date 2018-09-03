@@ -207,12 +207,18 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
             modelClassFilter = model.class
         }
         var systems = CompilerViewUtil.getSystemModels(true, modelClassFilter)
-        val systemDescriptions = getDescription(systems)
+        val systemDescriptions = getSystemDescription(systems)
         return requestManager.runRead[ cancelIndicator |
             systemDescriptions
         ]
     }
     
+    /**
+     * Gets EObject for resource specified by given uri as String
+     * 
+     * @param stringUri uri as String for resource to get EObject from
+     * @return EObject of specified resource
+     */
     def EObject getEObjectFromURI(String stringUri) {
         var uri = URI.createFileURI(stringUri)
         var resourceSet = uri.xtextResourceSet
@@ -221,7 +227,14 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         return resource.getContents().head
     }
     
-    def List<SystemDescription> getDescription(List<System> systems) {
+    /**
+     * Converts systems returned from language server to system description containing the information the Theia client
+     * needs to display the available compilation systems
+     * 
+     * @param systems list of compilation systems
+     * @return list of system description usable by Theia client
+     */
+    def List<SystemDescription> getSystemDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
             systemDescription.add(new SystemDescription(system.label, system.id, system.public))	

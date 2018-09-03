@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.kicool.environments.MessageObjectList
 import java.util.LinkedList
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Description of a Snapshot. Used by client to generate snapshot selection view.
@@ -29,12 +30,12 @@ import java.util.LinkedList
  */
 class SnapshotDescription {
 
-    public String groupId
-    public String name
-    public int snapshotIndex
-    public List<String> errors
-    public List<String> warnings
-    public List<String> infos
+    @Accessors String groupId
+    @Accessors String name
+    @Accessors int snapshotIndex
+    @Accessors List<String> errors
+    @Accessors List<String> warnings
+    @Accessors List<String> infos
     
     new (String groupId, String name, int snapshotIndex, Errors errors, Warnings warnings, Infos infos) {
         this.errors = new LinkedList

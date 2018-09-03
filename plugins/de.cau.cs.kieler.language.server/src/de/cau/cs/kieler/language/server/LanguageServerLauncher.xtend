@@ -54,10 +54,11 @@ import org.eclipse.xtext.util.Modules2
  *
  */
 class LanguageServerLauncher extends ServerLauncher {
+
+    @Inject LanguageServerImpl languageServer
     
     def static void main(String[] args) {
-        
-
+    
         // register languages (sublanguages are also registered)
         bindAndRegisterLanguages()
         
@@ -92,8 +93,6 @@ class LanguageServerLauncher extends ServerLauncher {
             }
         }.createInjectorAndDoEMFRegistration()
     }
-
-    @Inject LanguageServerImpl languageServer
     
     override start(LaunchArgs args) {
         val executorService = Executors.newCachedThreadPool
@@ -131,6 +130,9 @@ class LanguageServerLauncher extends ServerLauncher {
         ]
     }
     
+    /**
+     * Asynchronous string appender used for logging
+     */
     @Data static class LanguageClientAppender extends AppenderSkeleton {
         LanguageClient client
         
