@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
+import de.cau.cs.kieler.kivis.Variable
 import de.cau.cs.kieler.kivis.animations.IAnimationHandler
 import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.kivis.kivis.Animation
@@ -22,8 +23,7 @@ import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.kibuild.TextValue
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.DataPool
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
@@ -210,16 +210,17 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
             if(literal.value instanceof TextValue) {
                 val String text = (literal.value as TextValue).value
                 if(text != "true" && text != "false") {
-                    // Separate variable name and array index part
-                    val variablePart = DataPool.getVariableName(text)
-                    val variable = pool.getVariable(variablePart)
-                    if(variable != null) {
-                        usedVariables.add(variable)
-                        val arrayIndices = DataPool.getArrayIndices(text)
-                        return pool.getVariableValue(variable, arrayIndices, animateUserValues)
-                    } else {
-                        // The text value does not seem to be a variable reference.
-                    }
+                    throw new UnsupportedOperationException("Code is no longer working.")
+//                    // Separate variable name and array index part
+//                    val variablePart = DataPool.getVariableName(text)
+//                    val variable = pool.getVariable(variablePart)
+//                    if(variable != null) {
+//                        usedVariables.add(variable)
+//                        val arrayIndices = DataPool.getArrayIndices(text)
+//                        return pool.getVariableValue(variable, arrayIndices, animateUserValues)
+//                    } else {
+//                        // The text value does not seem to be a variable reference.
+//                    }
                 }
             }
             // If all values are mapped to a constant, return this constant value.

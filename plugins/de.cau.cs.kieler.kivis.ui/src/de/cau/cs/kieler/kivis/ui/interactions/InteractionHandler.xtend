@@ -17,8 +17,8 @@ import de.cau.cs.kieler.kivis.kivis.DOMEvent
 import de.cau.cs.kieler.kivis.kivis.Interaction
 import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kivis.ui.views.KiVisView
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.ui.SimulationUI
 import org.w3c.dom.svg.SVGDocument
 
 /**
@@ -96,8 +96,8 @@ class InteractionHandler {
      * Performs the actions of this instance if it is active in the current simulation pool.
      */
     public def void performActions() {
-        val pool = SimulationManager.instance?.currentPool
-        if(pool != null && isActive(pool)) {
+        val pool = SimulationUI.currentSimulation?.dataPool
+        if(pool != null) {
             for(action : interaction.actions) {
                 action.perform(pool)
             }

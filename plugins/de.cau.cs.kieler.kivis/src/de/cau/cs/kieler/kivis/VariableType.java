@@ -10,21 +10,23 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kivis.animations
+package de.cau.cs.kieler.kivis;
 
-import de.cau.cs.kieler.simulation.DataPool
+import com.google.gson.annotations.SerializedName;
 
 /**
- * Interface for animation handlers.
+ * Possible types for variables
  * 
  * @author aas
  *
  */
-interface IAnimationHandler {
-    /**
-     * Apply the animation for the given data pool.
-     * 
-     * @param pool The pool which should be visualized
-     */
-    def void apply(DataPool pool)
+public enum VariableType {
+    @SerializedName("int")
+    INT,
+    @SerializedName("bool")
+    BOOL,
+    @SerializedName("float")
+    FLOAT,
+    @SerializedName("string")
+    STRING
 }
