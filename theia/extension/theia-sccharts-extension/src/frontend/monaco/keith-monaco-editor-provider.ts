@@ -1,8 +1,14 @@
 /*
- * Copyright (C) 2017 TypeFox and others.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * Licensed under the Apache License, Version 2.0 (the "License") you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright 2018 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
 import { injectable, inject } from 'inversify';
@@ -21,6 +27,9 @@ import { QuickOpenService } from '@theia/core/lib/browser/quick-open/quick-open-
 import { MonacoDiffNavigatorFactory } from '@theia/monaco/lib/browser/monaco-diff-navigator-factory';
 import { Constants } from '../../common/util';
 
+/**
+ * Class to configure editorOptions of monaco editor
+ */
 @injectable()
 export class KeithMonacoEditorProvider extends MonacoEditorProvider {
 
