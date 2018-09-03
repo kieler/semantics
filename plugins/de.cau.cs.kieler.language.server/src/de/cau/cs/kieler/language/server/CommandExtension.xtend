@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -39,7 +39,10 @@ interface CommandExtension {
     
     /**
      * Returns all compilation systems which are applicable for the file at given uri.
+     * 
+     * @param uri URI as string to get compilation systems for
+     * @param filter boolean indicating whether compilation systems should be filtered
      */
     @JsonRequest('get-systems')
-    def CompletableFuture<Object> getSystems(String uri, boolean filter)
+    def CompletableFuture<Object> getSystems(String uri, boolean filterSystems)
 }

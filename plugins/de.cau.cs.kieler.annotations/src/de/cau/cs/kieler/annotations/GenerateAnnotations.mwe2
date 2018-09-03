@@ -40,11 +40,7 @@ Workflow {
                 createEclipseMetaData = true
                 genericIde = {
                     enabled = true
-                }
-//                web = {
-//                    enabled = true
-//                    name = "de.cau.cs.kieler.annotations.ide"
-//                }    
+                } 
             }
             
             code = {

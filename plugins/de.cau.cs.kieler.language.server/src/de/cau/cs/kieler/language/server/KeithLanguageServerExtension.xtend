@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -61,6 +61,7 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
      */
     protected Map<String, List<SnapshotDescription>> snapshotMap = new HashMap<String, List<SnapshotDescription>>
+    
     /**
      * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
      */
@@ -77,22 +78,22 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         this.languageServerAccess = access
     }
     def ILanguageServerAccess getLanguageServerAccess() {
-        languageServerAccess
+        return languageServerAccess
     }
     
     override compile(String uri, String command, boolean inplace) {
-        var string = uri
+        var fileUri = uri
         
         CompilerViewUtil.compileInplace = inplace
         
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
         
-        if (string.startsWith("file://")) {
-            string = string.substring(7) 
+        if (fileUri.startsWith("file://")) {
+            fileUri = fileUri.substring(7) 
         }
         
-        var stringUri = URI.createFileURI(string)
+        var stringUri = URI.createFileURI(fileUri)
         
         var resourceSet = stringUri.xtextResourceSet 
         val resource = resourceSet.getResource(stringUri, true)
@@ -122,56 +123,44 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         } else if (impl instanceof SCChartsImpl) {
             this.objectMap.get(uri).add(impl)
             this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, 0, errors, warnings, infos))
-            var count = 1
-            for (snapshot : snapshots) {
-                this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, count, errors, warnings, infos))
-                count++
+            for (snapshot : snapshots.indexed) {
+                this.objectMap.get(uri).add(snapshot.value as EObject)
+                this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, snapshot.key, errors, warnings, infos))
             }
         } else if (impl instanceof SCGraphsImpl) {
             this.objectMap.get(uri).add(impl)
             this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, 0, errors, warnings, infos))
-            var count = 1
-            for (snapshot : snapshots) {
-                this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, count, errors, warnings, infos))
-                count++
+            for (snapshot : snapshots.indexed) {
+                this.objectMap.get(uri).add(snapshot.value as EObject)
+                this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, snapshot.key, errors, warnings, infos))
             }
         } else if (impl instanceof SCLProgramImpl) {
             this.objectMap.get(uri).add(impl)
             this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, 0, errors, warnings, infos))
-            var count = 1
-            for (snapshot : snapshots) {
-                this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, count, errors, warnings, infos))
-                count++
+            for (snapshot : snapshots.indexed) {
+                this.objectMap.get(uri).add(snapshot.value as EObject)
+                this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, snapshot.key, errors, warnings, infos))
             }
         } else if (impl instanceof EsterelProgramImpl) {
             this.objectMap.get(uri).add(impl)
             this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, 0, errors, warnings, infos))
-            var count = 1
-            for (snapshot : snapshots) {
-                this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, count, errors, warnings, infos))
-                count++
+            for (snapshot : snapshots.indexed) {
+                this.objectMap.get(uri).add(snapshot.value as EObject)
+                this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, snapshot.key, errors, warnings, infos))
             }
         }  else if (impl instanceof LustreProgramImpl) {
             this.objectMap.get(uri).add(impl)
             this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, 0, errors, warnings, infos))
-            var count = 1
-            for (snapshot : snapshots) {
-                this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, count, errors, warnings, infos))
-                count++
+            for (snapshot : snapshots.indexed) {
+                this.objectMap.get(uri).add(snapshot.value as EObject)
+                this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, snapshot.key, errors, warnings, infos))
             }
         } else if (impl instanceof KextImpl) {
             this.objectMap.get(uri).add(impl)
             this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, 0, errors, warnings, infos))
-            var count = 1
-            for (snapshot : snapshots) {
-                this.objectMap.get(uri).add(snapshot as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, count, errors, warnings, infos))
-                count++
+            for (snapshot : snapshots.indexed) {
+                this.objectMap.get(uri).add(snapshot.value as EObject)
+                this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, snapshot.key, errors, warnings, infos))
             }
         } else {
             println("Got something I currently do not recognize " + impl.class)
@@ -202,15 +191,15 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         ]
     }
     
-    override getSystems(String stringUri, boolean filter) {
-        var string = stringUri
-        if (stringUri.startsWith("file://")) {
-            string = stringUri.substring(7) 
+    override getSystems(String uri, boolean filter) {
+        var fileUri = uri
+        if (fileUri.startsWith("file://")) {
+            fileUri = fileUri.substring(7) 
         }
-        var uri = URI.createFileURI(string)
+        var uriObject = URI.createFileURI(fileUri)
         
-        var resourceSet = uri.xtextResourceSet 
-        val resource = resourceSet.getResource(uri, true)
+        var resourceSet = uriObject.xtextResourceSet 
+        val resource = resourceSet.getResource(uriObject, true)
         
         var eobject = resource.getContents().head
         val model = if(filter) eobject
@@ -218,12 +207,18 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
             modelClassFilter = model.class
         }
         var systems = CompilerViewUtil.getSystemModels(true, modelClassFilter)
-        val systemDescriptions = getDescription(systems)
+        val systemDescriptions = getSystemDescription(systems)
         return requestManager.runRead[ cancelIndicator |
             systemDescriptions
         ]
     }
     
+    /**
+     * Gets EObject for resource specified by given uri as String
+     * 
+     * @param stringUri uri as String for resource to get EObject from
+     * @return EObject of specified resource
+     */
     def EObject getEObjectFromURI(String stringUri) {
         var uri = URI.createFileURI(stringUri)
         var resourceSet = uri.xtextResourceSet
@@ -232,7 +227,14 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         return resource.getContents().head
     }
     
-    def List<SystemDescription> getDescription(List<System> systems) {
+    /**
+     * Converts systems returned from language server to system description containing the information the Theia client
+     * needs to display the available compilation systems
+     * 
+     * @param systems list of compilation systems
+     * @return list of system description usable by Theia client
+     */
+    def List<SystemDescription> getSystemDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
             systemDescription.add(new SystemDescription(system.label, system.id, system.public))	

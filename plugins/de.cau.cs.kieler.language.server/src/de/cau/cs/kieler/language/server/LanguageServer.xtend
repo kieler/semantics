@@ -45,6 +45,9 @@ import org.eclipse.xtext.util.Modules2
  */
 class LanguageServer implements IApplication {
     
+    static val defaultHost = "localhost"
+    static val defaultPort = 5008
+    
     static val LOG = Logger.getLogger(LanguageServer)
     
     /**
@@ -54,18 +57,27 @@ class LanguageServer implements IApplication {
         var args = (context.arguments.get("application.args")) as String[]
         if (args.size > 0) {
             // debug case, communicate via socket
-            var host = "localhost"
-            var port = 5008
+            var host = defaultHost
+            var port = defaultPort
             if (args.size > 2) {
-                throw new Exception("Wrong number of arguments")
+                throw new Exception("Too many arguments: Expecting host and port or only port as arguments")
             }
-            if (args.size == 1) {
-                port = Integer.parseInt(args.get(0))
-            } else {
-                host = args.get(0)
-                port = Integer.parseInt(args.get(1))
+            try {
+                if (args.size == 1) {
+                    port = Integer.parseInt(args.get(0))
+                } else {
+                    host = args.get(0)
+                    port = Integer.parseInt(args.get(1))
+                }
+            } catch (NumberFormatException e) {
+                if (args.size == 1) {
+                    println("Expected port, but got " + args.get(0))
+                } else {
+                    println("Expected port, but got " + args.get(1))
+                }
+                println(e.stackTrace)
+                return 1
             }
-            println(args.toString)
             println("Connection to: " + host + ":" + port)
                
             // Register all languages
@@ -74,8 +86,7 @@ class LanguageServer implements IApplication {
             
             val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-            ])) 
-            println("Create injector and register emf")
+            ]))
             this.run(injector, host, port)
             return EXIT_OK 
         } else {
@@ -86,7 +97,7 @@ class LanguageServer implements IApplication {
     }
     
     override stop() {
-        // not implemented
+        // implementation not needed
     }
     
     /**

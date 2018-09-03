@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -27,12 +27,14 @@ import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
 import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
 
 /**
- * Generates syntax highlighting for Monaco editor
+ * Generates syntax highlighting for Monaco editor.
  * 
  * @author sdo
  * 
  */
 class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
+    
+    @Inject FileAccessFactory fileAccessFactory
 
     String highlightingModuleName
 
@@ -53,7 +55,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
     }
 
     package String keywordsFilter = "\\w+"
-    @Inject FileAccessFactory fileAccessFactory
 
     def void generateHighlighting(String langId) {
         val Set<String> allKeywords = GrammarUtil.getAllKeywords(this.getGrammar())
