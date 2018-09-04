@@ -141,7 +141,7 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
             "        { open: '\\'', close: '\\'', notIn: ['string', 'comment'] },\n" +
             "        { open: '{', close: '}', notIn: ['string', 'comment'] },\n" +
             "        { open: '[', close: ']', notIn: ['string', 'comment'] },\n" +
-            "        { open: '(', close: ')', notIn: ['string', 'comment'] }\n" + "    ]\n" + "};"
+            "        { open: '(', close: ')', notIn: ['string', 'comment'] }\n" + "    ]\n" + "};\n"
     }
     
     def generateMonarchLanguagePrefix(String langId) {
@@ -175,7 +175,7 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
     }
     
     def generateHexDigitHighlighting() {
-        return "    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,"
+        return "    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,\n"
     }
     
     def generateAnnotationHighlighting() {
