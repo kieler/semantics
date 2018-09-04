@@ -38,6 +38,7 @@ import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
+@ToString
 class VariableStore implements IKiCoolCloneable {
     
     public static val IProperty<VariableStore> STORE = 
@@ -114,7 +115,6 @@ class VariableStore implements IKiCoolCloneable {
 
     @Accessors
     val variables = HashMultimap.<String, VariableInformation>create
-    
     
     static def getVariableStore(Environment env) {
         var store = env?.getProperty(STORE)
