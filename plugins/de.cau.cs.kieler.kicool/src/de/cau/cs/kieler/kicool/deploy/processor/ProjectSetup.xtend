@@ -30,6 +30,9 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 
 import static com.google.common.base.Preconditions.*
+import java.util.List
+import java.util.Comparator
+import java.nio.file.Path
 
 /**
  * @author als
@@ -37,12 +40,12 @@ import static com.google.common.base.Preconditions.*
  * @kieler.rating proposed yellow
  */
 class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
+
+    public static val IProperty<List<String>> CLEAR = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.deploy.setup.clear", null)
     
     public static val IProperty<Map<String, String>> COPY = 
         new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.setup.copy", null)
-
-    public static val IProperty<Map<String, String>> COPY_OVERRIDE = 
-        new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.setup.copy.override", null)
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.setup"
@@ -63,6 +66,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         
         // Tasks
         infra.saveCode(logger)      
+        infra.clearTask(logger)    
         infra.copyTask(logger)
         
         // refresh project
@@ -105,55 +109,68 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     
     protected def copyTask(ProjectInfrastructure infra, PrintStream logger) {
         val copyMap = environment.getProperty(COPY)?:emptyMap
-        val overrideMap = environment.getProperty(COPY_OVERRIDE)?:emptyMap
-        if (!copyMap.empty || !overrideMap.empty) {
+        if (!copyMap.empty) {
             logger.println("== Copy Environment ==")
-            
-            var overrideNext = false
-            var overrideRun = false
-            while (!overrideRun) {
-                overrideRun = overrideNext
-                for (entry : (if (overrideRun) overrideMap else copyMap).entrySet) {
-                    val target = new File(infra.generadedCodeFolder, entry.key)
-                    logger.println(if (overrideRun) "Copying (override)" else "Copying" + " from " + entry.value + " to " + infra.getProjectRelativeFile(target))
-                    var URI source = null
-                    try {
-                        source = URI.createURI(entry.value)
-                    } catch (Exception e) {
-                        environment.errors.add("Can not parse source URI in copy task", e)
-                        logger.print("ERROR: Can not parse source URI in copy task")
-                        e.printStackTrace(logger)
-                    }
-                    
-                    try {
-                        if (source.file) {
-                            val sourceFile = new File(source.toFileString)
-                            val success = if (sourceFile.file) {
-                                sourceFile.copyFile(target, logger, overrideRun)
-                            } else {
-                                sourceFile.copyFolder(target, logger, overrideRun)
-                            }
-                            if (!success) environment.errors.add("Copying file(s) was not successful!")
-                        } else if (source.platformPlugin) {
-                            val success = if (source.fileExtension.nullOrEmpty) {
-                                source.copyFolder(target, logger, overrideRun)
-                            } else {
-                                source.copyFile(target, logger, overrideRun)
-                            }
-                            if (!success) environment.errors.add("Copying file(s) was not successful!")
-                        } else {
-                            target.mkdirs
-                            environment.errors.add("Source URI format is not supported")
-                            logger.print("ERROR: Source URI format is not supported")
-                        }
-                    } catch (Exception e) {
-                        environment.errors.add("Error while copying file(s)", e)
-                        logger.print("ERROR: Exception while copying file(s)")
-                        e.printStackTrace(logger)
-                    }
-                    logger.println
+
+            for (entry : copyMap.entrySet) {
+                val target = new File(infra.generadedCodeFolder, entry.value)
+                logger.println("Copying from " + entry.key + " to " + infra.getProjectRelativeFile(target))
+                var URI source = null
+                try {
+                    source = URI.createURI(entry.key)
+                } catch (Exception e) {
+                    environment.errors.add("Can not parse source URI in copy task", e)
+                    logger.print("ERROR: Can not parse source URI in copy task")
+                    e.printStackTrace(logger)
                 }
-                overrideNext = true
+                
+                try {
+                    if (source.file) {
+                        val sourceFile = new File(source.toFileString)
+                        val success = if (sourceFile.file) {
+                            sourceFile.copyFile(target, logger, true)
+                        } else {
+                            sourceFile.copyFolder(target, logger, true)
+                        }
+                        if (!success) environment.errors.add("Copying file(s) was not successful!")
+                    } else if (source.platformPlugin) {
+                        val success = if (source.fileExtension.nullOrEmpty) {
+                            source.copyFolder(target, logger, true)
+                        } else {
+                            source.copyFile(target, logger, true)
+                        }
+                        if (!success) environment.errors.add("Copying file(s) was not successful!")
+                    } else {
+                        target.mkdirs
+                        environment.errors.add("Source URI format is not supported")
+                        logger.print("ERROR: Source URI format is not supported")
+                    }
+                } catch (Exception e) {
+                    environment.errors.add("Error while copying file(s)", e)
+                    logger.print("ERROR: Exception while copying file(s)")
+                    e.printStackTrace(logger)
+                }
+                logger.println
+            }
+            
+            logger.println
+        }
+    }
+    
+    // -------------------
+    // -- CLEAR FILE(S) --
+    // -------------------    
+    
+    protected def clearTask(ProjectInfrastructure infra, PrintStream logger) {
+        val clearList = environment.getProperty(CLEAR)?:emptyList
+        if (!clearList.empty) {
+            logger.println("== Clear Environment ==")
+            
+            for (entry : clearList) {
+                val target = new File(infra.generadedCodeFolder, entry)
+                val success = target.deleteRecursively(logger)
+                if (!success) environment.errors.add("Error while clearing file(s)")
+                logger.println
             }
             
             logger.println
@@ -307,5 +324,37 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
             output?.close();
         }
                 
+    }
+    
+    /**
+     * Deletes a file/folder recursively.
+     * 
+     * @param src The source folder
+     * @param dest The destination folder
+     */
+    static def boolean deleteRecursively(File target, PrintStream logger) {
+        // Checks
+        checkNotNull(target, "Target is null")
+
+        try {
+            if (target.file) {
+                logger.println("Deleting file: " + target)
+                target.delete
+            } else if (target.directory) {
+                Files.walk(target.toPath).sorted(Comparator.reverseOrder).map[toFile].forEach[
+                    if (isDirectory) {
+                        logger.println("Deleting folder: " + it)
+                    } else if (isFile) {
+                        logger.println("Deleting file: " + it)
+                    }
+                    delete
+                ]
+            }
+            return true
+        } catch (Exception e) {
+            logger.print("ERROR: Exception while clearing file(s)")
+            e.printStackTrace(logger)
+            return false
+        }
     }
 }

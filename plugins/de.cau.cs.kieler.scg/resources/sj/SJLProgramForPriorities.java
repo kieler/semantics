@@ -11,12 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.processors.transformators.priority;
-
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
-
+ 
 /**
  * The SJLProgram implements a light version of SynchronousJava (SJ) Programs for the priority 
  * based compilation approach.
@@ -63,7 +59,13 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
     public SJLProgramForPriorities<?> clone() throws CloneNotSupportedException {
         @SuppressWarnings("rawtypes")
         SJLProgramForPriorities clone = (SJLProgramForPriorities<?>) super.clone();
-        clone.coarseProgramCounter =  (ArrayList<State>)coarseProgramCounter.clone();
+//        clone.coarseProgramCounter =  (ArrayList<State>)coarseProgramCounter.clone();
+        // The clone method does not exist in the leJOS NXT implementation.
+        // So we make a shallow copy of the list manually
+        clone.coarseProgramCounter = new ArrayList<State>();
+        for(State s : coarseProgramCounter) {
+            clone.coarseProgramCounter.add(s);
+        }
         clone.alive = alive.clone();
         clone.active = active.clone();
         clone.currentThread = currentThread;
@@ -146,55 +148,6 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
      */
     public void setupTick() {
         setCopyFrom(active, alive);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Do a benchmarked tick with a specific number of runs.
-     * 
-     * @param number
-     *            the number
-     * @return true, if successful
-     */
-    public boolean doTick(int number) {
-        // Clear debugMessage
-        if (debug) {
-            debugMessage = "";
-        }
-        // Clone the alive threads means making all alive threads enabled
-        setCopyFrom(active, alive);
-        // Clone the SJLProgram number of times
-        SJLProgramForPriorities<?>[] programs = new SJLProgramForPriorities[number];
-        for (int i = 0; i < number; i++) {
-            Object o;
-            try {
-                o = this.clone();
-                if (o instanceof SJLProgramForPriorities) {
-                    programs[i] = ((SJLProgramForPriorities<?>) o);
-                }
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-        }
-        // Start the benchmark, get nanoseconds
-        long t1 = getUserTime();
-        for (int i = 0; i < number; i++) {
-            // Run the tick() method ith time in the benchmark
-            programs[i].tick();
-        }
-        // End the benchmark, get nanoseconds
-        long t2 = getUserTime();
-        // Run the tick() method
-        tick();
-        // Norm taken time to the number of runs
-        lastTickTime = (t2 - t1) / number;
-        // Print debug message
-        if (debug) {
-            //debugMessage += "\n" + getDebugAliveThreads();
-        }
-        // Return whether the program terminated
-        return isTerminated();
     }
 
     // -------------------------------------------------------------------------
@@ -534,18 +487,6 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
         return debugMessage;
     }
 
-    // -------------------------------------------------------------------------
-
-
-    /**
-     * Get user time in nanoseconds.
-     * 
-     * @return the user time
-     */
-    protected long getUserTime() {
-        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-        return bean.isCurrentThreadCpuTimeSupported() ? bean.getCurrentThreadCpuTime() : 0L;
-    }
 
     // -------------------------------------------------------------------------
 

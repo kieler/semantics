@@ -94,8 +94,8 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         val templates = environment.getProperty(TEMPLATES)?:emptyMap
         for (entry : templates.entrySet) {
-            val target = new File(infra.generadedCodeFolder, entry.key)
-            val relativeTemplatePath = entry.value
+            val target = new File(infra.generadedCodeFolder, entry.value)
+            val relativeTemplatePath = entry.key
             val template = new File(infra.generadedCodeFolder, relativeTemplatePath)
             
             logger.println("Processing template: " + template)
@@ -117,9 +117,9 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 templateEnvironment.putAll(generalTemplateEnvironment)
                 
                 var Map<String, Object> additionalTemplateEnvironment = newHashMap
-                if (additionalTemplateEnvironments.containsKey(entry.key)) {
+                if (additionalTemplateEnvironments.containsKey(entry.value)) {
                     if (additionalTemplateEnvironment instanceof Map<?, ?>) {
-                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.key)
+                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
                     } else if (additionalTemplateEnvironment !== null) {
                         logger.println("WARNING: Additional template environment is specified but not of type Map<String, String> but " + additionalTemplateEnvironment.class.name)
                     }

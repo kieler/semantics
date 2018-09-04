@@ -131,10 +131,22 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             jar += "cvfe"
             jar += targetJarPath
             jar += entryPoint
-            jar += sourceFiles.map[
-                val path = infra.generadedCodeFolder.toPath.relativize(it.toPath).toString
-                if (it.file) path.replace(".java", ".class") else path
-            ]
+            for (sourceFile : sourceFiles) {
+                val path = infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
+                if (sourceFile.isFile) {
+                    jar += path.replace(".java", ".class")
+                    // Find anonymous inner classes
+                    val innerClassPrefix = sourceFile.name.substring(0, sourceFile.name.length - 5)+ "$"
+                    for (siblingPath : Files.find(binFolder.toPath, 1, [ filePath, fileAttr |
+                        val name = filePath.fileName.toString
+                        return fileAttr.regularFile && name.startsWith(innerClassPrefix) && name.endsWith(".class")
+                    ]).iterator.toIterable) {
+                        jar += binFolder.toPath.relativize(siblingPath).toString
+                    }
+                } else {
+                    jar += path
+                }
+            }
             
             // Run javac compiler
             success = jar.invoke(binFolder)?:-1 == 0

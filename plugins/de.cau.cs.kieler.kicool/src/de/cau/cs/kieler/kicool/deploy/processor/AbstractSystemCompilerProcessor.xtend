@@ -31,7 +31,7 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
  * @kieler.rating proposed yellow
  */
 abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
-    
+        
     public static val IProperty<Boolean> INCLUDE_GENERATED_FILES = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.sources.include-generated", true)
 
@@ -40,6 +40,9 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         
     public static val IProperty<String> BIN_FOLDER = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.folder.bin", "bin")
+    
+    public static val IProperty<Boolean> BIN_CLEAN = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.folder.bin.clean", true)
         
     public static val IProperty<String> ADDITIONAL_OPTIONS = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.options", "")
@@ -57,9 +60,17 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         val binFolder = new File(infra.generadedCodeFolder, environment.getProperty(BIN_FOLDER)?:BIN_FOLDER.^default)
         logger.println("Binary output folder: " + binFolder)
         if (binFolder.exists) {
-            if (!binFolder.directory) {
-                environment.errors.add("Binary output folder exists and is not a directory")
-                logger.println("ERROR: Binary output folder exists and is not a directory")
+            if (environment.getProperty(BIN_CLEAN)) {
+                logger.println("\n== Clearing Binary Output Folder ==")
+                ProjectSetup.deleteRecursively(binFolder, logger)
+                logger.println()
+                
+                binFolder.mkdirs
+            } else {
+                if (!binFolder.directory) {
+                    environment.errors.add("Binary output folder exists and is not a directory")
+                    logger.println("ERROR: Binary output folder exists and is not a directory")
+                }
             }
         } else {
             binFolder.mkdirs

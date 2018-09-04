@@ -1,10 +1,11 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.netlist.java
-    label "Netlist-based Simulation (Java, No-TTS)"
+developer system de.cau.cs.kieler.sccharts.^simulation.prio.java
+    label "Priority-based Simulation (Java, No-TTS)"
 
-system de.cau.cs.kieler.sccharts.netlist.java
+system de.cau.cs.kieler.sccharts.priority.java
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "platform:/plugin/de.cau.cs.kieler.scg/resources/sj/SJLProgramForPriorities.java": "SJLProgramForPriorities.java",
         "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/libs/org/json": "org/json",
         "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/templates/java-main.ftl": "templates/java-main.ftl",
         "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
@@ -17,7 +18,7 @@ de.cau.cs.kieler.kicool.deploy.templates config {
     }
 }
 de.cau.cs.kieler.kicool.deploy.compiler.java config {
-    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main.java", "org/json"],
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main.java", "SJLProgramForPriorities.java", "org/json"],
     "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.name": "Simulation.jar",
     "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.entry": "Main"
 }
