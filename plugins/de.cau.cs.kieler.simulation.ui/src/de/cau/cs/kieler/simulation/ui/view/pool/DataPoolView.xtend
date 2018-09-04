@@ -768,8 +768,10 @@ class DataPoolView extends ViewPart implements SimulationListener {
                     case START,
                     case STEP:
                         dataPool = e.context.dataPool
-                    case STOP:
+                    case STOP: {
                         dataPool = null
+                        userValues.clear
+                    }
                     default: { // nothing
                     }
                 }
