@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -40,6 +41,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
+import de.cau.cs.kieler.sccharts.text.SCTXResource
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
@@ -60,6 +62,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension PragmaExtensions
     
     protected var Dataflow dataflowProcessor = null
     
@@ -105,6 +108,8 @@ class Reference extends SCChartsProcessor implements Traceable {
         for (var i = 1; i < model.rootStates.size; i++) {
             model.rootStates.remove(1)
         }
+        
+        model.pragmas.removeIf[SCTXResource.PRAGMA_IMPORT.equals(name)]
     }   
     
     /** Expands one referenced state and keeps track of the replacement stack. */
