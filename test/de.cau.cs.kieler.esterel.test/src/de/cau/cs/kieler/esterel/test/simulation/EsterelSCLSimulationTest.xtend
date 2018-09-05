@@ -43,40 +43,45 @@ class EsterelSCLSimulationTest extends AbstractSimulationTest<EsterelProgram> {
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
     }
-
+    
     @Test
     def void testSimulationNetlistC(EsterelProgram esterel, TestModelData modelData) {
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c"))
-        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
-        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
-        
-        startSimulationTest(NETLIST_C_SYSTEM, esterel, modelData, "EsterelSimulationNetlistC")
-    }
-    
-    @Test
-    def void testSimulationNetlistJava(EsterelProgram esterel, TestModelData modelData) {
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-java"))
-        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
-        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
-        
-        startSimulationTest(NETLIST_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationNetlistJava")
+        assumeTrue("TODO Esterel simulation tests", false)
     }
 
-    @Test
-    def void testSimulationPrioC(EsterelProgram esterel, TestModelData modelData) {
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c"))
-        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
-        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
-        
-        startSimulationTest(PRIO_C_SYSTEM, esterel, modelData, "EsterelSimulationPrioC")
-    }
-    
-    @Test
-    def void testSimulationPrioJava(EsterelProgram esterel, TestModelData modelData) {
-        assumeFalse("Skip this test property", modelData.modelProperties.contains("simulation-fails-prio-java"))
-        assumeFalse("Has not-IASC property", modelData.modelProperties.contains("not-iasc"))
-        assumeFalse("Has not-SIASC property", modelData.modelProperties.contains("not-siasc"))
-        
-        startSimulationTest(PRIO_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationPrioJava")
-    }
+//    @Test
+//    def void testSimulationNetlistC(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
+//        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
+//        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+//        
+//        startSimulationTest(NETLIST_C_SYSTEM, esterel, modelData, "EsterelSimulationNetlistC")
+//    }
+//    
+//    @Test
+//    def void testSimulationNetlistJava(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-java") || modelData.modelProperties.contains("simulation-fails-java"))
+//        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
+//        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+//        
+//        startSimulationTest(NETLIST_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationNetlistJava")
+//    }
+//
+//    @Test
+//    def void testSimulationPrioC(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
+//        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
+//        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+//        
+//        startSimulationTest(PRIO_C_SYSTEM, esterel, modelData, "EsterelSimulationPrioC")
+//    }
+//    
+//    @Test
+//    def void testSimulationPrioJava(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Skip this test property", modelData.modelProperties.contains("simulation-fails-prio-java") || modelData.modelProperties.contains("simulation-fails-java"))
+//        assumeFalse("Has not-IASC property", modelData.modelProperties.contains("not-iasc"))
+//        assumeFalse("Has not-SIASC property", modelData.modelProperties.contains("not-siasc"))
+//        
+//        startSimulationTest(PRIO_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationPrioJava")
+//    }
 }
