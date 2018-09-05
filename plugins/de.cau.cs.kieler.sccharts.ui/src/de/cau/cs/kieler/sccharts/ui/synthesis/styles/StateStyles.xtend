@@ -31,6 +31,24 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.PortConstraints
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.kgraph.KPort
+import org.eclipse.elk.core.options.PortSide
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import org.eclipse.elk.core.options.PortLabelPlacement
+import java.util.EnumSet
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Styles for {@link State}.
@@ -43,17 +61,15 @@ import de.cau.cs.kieler.sccharts.extensions.TextFormat
 @ViewSynthesisShared
 class StateStyles {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension KContainerRenderingExtensions
-
-    @Inject
-    extension ColorStore
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KPortExtensions
+    @Inject extension KLabelExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension ColorStore
+    @Inject extension AnnotationsExtensions
     
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
@@ -378,4 +394,60 @@ class StateStyles {
      def setBaseLineWidth(int width) {
          baseLineWidth = width;
      }
+     
+    
+    def createDependencyEdge(Dependency dependency, KNode sourceNode, KNode targetNode) {
+        createNewEdge() => [ edge |
+            edge.source = sourceNode
+            edge.target = targetNode
+            if (dependency instanceof DataDependency) {
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    if (dependency.type == DataDependencyType.WRITE_READ) {
+                        it.foreground = DEPENDENCY_ABSWRITEREAD.color
+                    } else  if (dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) { 
+                        it.foreground = DEPENDENCY_ABSWRITERELWRITE.color
+                    } else if (dependency.type == DataDependencyType.WRITE_WRITE) {
+                        it.foreground = DEPENDENCY_ABSWRITEABSWRITE.color
+                    }
+                    it.lineStyle = LineStyle::DASH
+                    it.addArrowDecorator
+                ]
+            }
+            
+            // If dependency edges are layouted, use the dependency ports to attach the edges.
+            if (!dependency.hasAnnotation("nolayout")) {            
+                val reference = if (dependency.reference === null) edge.hashCode.toString else dependency.reference
+                val name = if (dependency === null) "" else (dependency.reference as ValuedObject).name
+                  
+                edge.sourcePort = sourceNode.addHelperPort(reference, "output", name, PortSide::EAST)
+                edge.targetPort = targetNode.addHelperPort(reference, "input", name, PortSide::WEST)
+                sourceNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+                sourceNode.addLayoutParam(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+                sourceNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS))
+                sourceNode.addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)
+                targetNode.addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)
+            } else {
+                // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
+                // drawing.
+                edge.addLayoutParam(CoreOptions::NO_LAYOUT, true)
+            }
+        ]
+    }    
+    
+    private def KPort addHelperPort(KNode node, Object mapping, Object source, String name, PortSide side) {
+        val port = node.createPort(mapping, source) => [
+            it.addLayoutParam(CoreOptions::PORT_SIDE, side);
+            node.ports += it
+            setPortSize(4, 4)
+            addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -4d)
+            addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)
+        ]
+        
+        if (!name.nullOrEmpty && port.labels.empty) {
+            port.createLabel().configureInsidePortLabel(name, 10)
+        }
+        
+        return port
+    }
+    
 }

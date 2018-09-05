@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kicool;
 
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -13,8 +14,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPresets <em>Presets</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostsets <em>Postsets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreconfig <em>Preconfig</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostconfig <em>Postconfig</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getMetric <em>Metric</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreprocesses <em>Preprocesses</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostprocesses <em>Postprocesses</em>}</li>
@@ -27,36 +28,56 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ProcessorReference extends ProcessorEntry {
     /**
-     * Returns the value of the '<em><b>Presets</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kicool.KVPair}.
+     * Returns the value of the '<em><b>Preconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Presets</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Preconfig</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Presets</em>' containment reference list.
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Presets()
+     * @return the value of the '<em>Preconfig</em>' containment reference.
+     * @see #setPreconfig(JsonObjectValue)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Preconfig()
      * @model containment="true"
      * @generated
      */
-    EList<KVPair> getPresets();
+    JsonObjectValue getPreconfig();
 
     /**
-     * Returns the value of the '<em><b>Postsets</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kicool.KVPair}.
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreconfig <em>Preconfig</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Preconfig</em>' containment reference.
+     * @see #getPreconfig()
+     * @generated
+     */
+    void setPreconfig(JsonObjectValue value);
+
+    /**
+     * Returns the value of the '<em><b>Postconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Postsets</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Postconfig</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Postsets</em>' containment reference list.
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Postsets()
+     * @return the value of the '<em>Postconfig</em>' containment reference.
+     * @see #setPostconfig(JsonObjectValue)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Postconfig()
      * @model containment="true"
      * @generated
      */
-    EList<KVPair> getPostsets();
+    JsonObjectValue getPostconfig();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostconfig <em>Postconfig</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Postconfig</em>' containment reference.
+     * @see #getPostconfig()
+     * @generated
+     */
+    void setPostconfig(JsonObjectValue value);
 
     /**
      * Returns the value of the '<em><b>Metric</b></em>' reference.

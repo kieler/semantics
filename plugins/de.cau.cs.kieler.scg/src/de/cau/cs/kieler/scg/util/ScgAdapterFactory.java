@@ -18,7 +18,10 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.scg.*;
 import org.eclipse.emf.common.notify.Adapter;
@@ -145,20 +148,8 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createGuardAdapter();
             }
             @Override
-            public Adapter caseLink(Link object) {
-                return createLinkAdapter();
-            }
-            @Override
             public Adapter caseControlFlow(ControlFlow object) {
                 return createControlFlowAdapter();
-            }
-            @Override
-            public Adapter caseDependency(Dependency object) {
-                return createDependencyAdapter();
-            }
-            @Override
-            public Adapter caseDataDependency(DataDependency object) {
-                return createDataDependencyAdapter();
             }
             @Override
             public Adapter caseControlDependency(ControlDependency object) {
@@ -193,6 +184,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationScopeAdapter();
             }
             @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
+            }
+            @Override
             public Adapter caseSchedulable(Schedulable object) {
                 return createSchedulableAdapter();
             }
@@ -203,6 +198,14 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object) {
                 return createKEffects_AssignmentAdapter();
+            }
+            @Override
+            public Adapter caseLink(Link object) {
+                return createLinkAdapter();
+            }
+            @Override
+            public Adapter caseDependency(Dependency object) {
+                return createDependencyAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -337,13 +340,13 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Link <em>Link</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Link <em>Link</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Link
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link
      * @generated
      */
     public Adapter createLinkAdapter() {
@@ -407,30 +410,16 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Dependency <em>Dependency</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Dependency <em>Dependency</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Dependency
+     * @see de.cau.cs.kieler.kexpressions.keffects.Dependency
      * @generated
      */
     public Adapter createDependencyAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.DataDependency <em>Data Dependency</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.DataDependency
-     * @generated
-     */
-    public Adapter createDataDependencyAdapter() {
         return null;
     }
 
@@ -599,6 +588,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationScopeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
+     * @generated
+     */
+    public Adapter createLinkableAdapter() {
         return null;
     }
 

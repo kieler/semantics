@@ -22,6 +22,7 @@ import java.util.Map
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * C Code Generator Struct Module
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
  */
 class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
     @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
@@ -49,7 +51,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val ENUM_STATES_RUNNING = "RUNNING"
     
     public static val THREAD_STATUS_ENUM = "ThreadStatus"
-    public static val THREAD_STATUS_INACTIVE = "INACTIVE"       // was EMPTY
+    public static val THREAD_STATUS_INACTIVE = "TERMINATED"       // was EMPTY
     public static val THREAD_STATUS_RUNNING = "RUNNING"
     public static val THREAD_STATUS_WAITING = "WAITING"         // was DISPATCHED
     public static val THREAD_STATUS_PAUSING = "PAUSING"
@@ -75,7 +77,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     var noneCounter = 0
     
-    def getName() {
+    override getName() {
         STRUCT_NAME + baseName + suffix
     }
     
@@ -89,13 +91,13 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     override generateInit() {
         code.addCLL(
-            SLC("The chosen scheduling regime uses four states to maintain the status of threads."),
+            SLC("The chosen scheduling regime (IUR) uses four states to maintain the status of threads."),
             
             "typedef enum {", NL,
             "  ",
             THREAD_STATUS_INACTIVE, 
             ", ",
-            LEC("thread is deactivated until activated again (e.g. fork)"), NL,
+            LEC("thread is dead until spawned again (e.g. via fork)"), NL,
             
             "  ",
             THREAD_STATUS_RUNNING,
@@ -105,7 +107,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             "  ", 
             THREAD_STATUS_WAITING,
             ", ",
-            LEC("thread is waiting to be select as running"), NL, 
+            LEC("thread is waiting to be selected as running"), NL, 
             
             "  ", 
             THREAD_STATUS_PAUSING, 
@@ -134,6 +136,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }
     
     protected def generate(extension StatebasedCCodeSerializeHRExtensions serializer) {
+        
+        val codeList = <String> newLinkedList
         // Add the declarations of the model.
         for (declaration : rootState.declarations) {
             for (valuedObject : declaration.valuedObjects) {
@@ -151,13 +155,18 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
                             s += "[" + cardinality.serializeHR + "]"
                         }
                     }
-                    s += ";\n"
+                    s += ";"
                     
-                    code.add(s)
+                    codeList += s
+                    if (declaration.input) codeList += LEC("Input")
+                    if (declaration.output) codeList += LEC("Output") 
+                    codeList += NL
                     tickData.add(s)
                 }
             }
         }
+        
+        code.addCLL(codeList.toArray)
     }
     
     override generateDone() {
@@ -233,33 +242,39 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         val name = cfr.regionName
         val noneStateName = ENUM_STATES_NONE + noneCounter++
         
-        threadData.add(
-            SLC("This enum contains all states of the " + name + " region."), 
-            SLC(noneStateName + " indicated that no state in this region is active."), 
-            
-            "typedef enum {", NL,
-            "  ",
-            noneStateName,
-            ", "
-        )
+        val statesSB = new StringBuilder
+        val commentSB = new StringBuilder
         
         for (state : cfr.states.indexed) {
             val stateName = state.value.stateName
-            threadData.append(stateName)
+            statesSB.append(stateName)
+            commentSB.append(state.value.name)
             if (state.value.isHierarchical) {
-                threadData.add(
+                statesSB.add(
                     ", ", 
                     stateName + ENUM_STATES_RUNNING
                 )
             }
-            if (state.key < cfr.states.size - 1) threadData.add(", ")
+            if (state.key < cfr.states.size - 1) {
+                statesSB.add(", ")
+                commentSB.add(", ")
+            }
         }
         
         threadData.add(
+            SLC("This enum contains all states of the " + name + " region,"),
+            SLC("namely " + commentSB.toString + "."),
+            SLC(noneStateName + " indicates that no state in this region is active."), 
+            
+            "typedef enum {", NL,
+            "  ",
+            noneStateName,
+            ", ",
+            statesSB.toString,
             NL, "} ",
             name + ENUM_STATES_SUFFIX,
             ";", NL, NL
-        ) 
+        )
         
         threadData.addCLL(
             SLC("The thread data of " + name),
@@ -303,4 +318,14 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     def getNoneStateName(ControlflowRegion cfr) {
         noneState.get(cfr)
     }
+    
+    private val ANNOTATION_PRIORITY = "optPrioIDs"
+
+    def int getStatePriority(State state) {
+        if (state.hasAnnotation(ANNOTATION_PRIORITY)) {
+            return state.getAnnotation(ANNOTATION_PRIORITY).asIntAnnotation.value
+        } else {
+            return 0
+        }
+    }    
 }

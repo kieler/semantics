@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kicool" nsURI="http://kieler.cs.cau.de/kicool/0.1.0" nsPrefix="kicool">
-  <eClassifiers xsi:type="ecore:EClass" name="System">
+  <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragmatable ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="processors" eType="#//ProcessorEntry"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intermediates" upperBound="-1"
         eType="#//IntermediateReference" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inputClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="startsets" upperBound="-1"
-        eType="#//KVPair" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="config" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//JsonObjectValue"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="public" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="developer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="simulation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorEntry" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorReference" eSuperTypes="#//ProcessorEntry">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="presets" upperBound="-1"
-        eType="#//KVPair" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="postsets" upperBound="-1"
-        eType="#//KVPair" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preconfig" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//JsonObjectValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="postconfig" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//JsonObjectValue"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="metric" eType="#//IntermediateReference"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preprocesses" upperBound="-1"
         eType="#//ProcessorReference" containment="true"/>
@@ -39,10 +38,5 @@
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorAlternativeGroup" eSuperTypes="#//ProcessorGroup"/>
   <eClassifiers xsi:type="ecore:EClass" name="IntermediateReference" eSuperTypes="#//ProcessorReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="alias" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="KVPair">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isKeyValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

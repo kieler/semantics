@@ -38,6 +38,15 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.core.options.Direction
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -52,10 +61,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject extension KNodeExtensionsReplacement
     @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsCoreExtensions
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
@@ -77,7 +88,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.name])
         }
         
-        configureLayout(node);
+        // configure region dependency layout config if an appropriate result is present.
+        val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+        val regionDependencies = (compilationContext !== null) && (compilationContext.result !== null) &&
+            compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES) !== null &&
+            compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES).object == state.SCCharts
+        if (regionDependencies) {
+            configureLayoutRegionDependencies(node)
+        } else {
+            configureLayout(node)
+        }
 
         //pre-evaluate type
         val isConnector = state.isConnector
@@ -180,6 +200,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 DataflowRegion: node.children += region.transform
             }
         }
+        
+        if (regionDependencies) {
+            state.drawRegionDependencies
+        }
 
         // Add reference region
         if (state.isReferencedState) {
@@ -197,18 +221,60 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return returnNodes
     }
     
+    
     /** Configures the default layout of children (regions in the state) */
-    def static void configureLayout(KNode node) {
+    private def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
+    
+    private def static void configureLayoutRegionDependencies(KNode node) {
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10));
+        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
+        node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0);
+        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 20.0);
+    }    
 
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
         return state.controlflowRegionsContainStates || state.containsDataflowRegions || !state.actions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
+    
+    /** Draw all region dependencies that are present in this state. */
+    private def drawRegionDependencies(State state) {
+        val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+        if (compilationContext === null) return;
+        
+        val result = compilationContext.getResultForModel(state.SCCharts)
+        if (result === null) return;
+        
+        // Fetch the least common ancestor fork (lcaf) data from the compilation environment. 
+        val lcafMap = result.getProperty(RegionDependencies.REGION_LCAF_MAP) 
+        val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(DataDependency).toList
+        
+        for (dependency : dependencies.filter(DataDependency)) {
+            dependency.synthesizeDataDependency(lcafMap)
+        }
+    }
+    
+    /** Synthesize one dependency using the least common ancestor fork (lcaf) data. */
+    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap) {
+        // Don't show confluent dependencies.
+        if (dependency.type == DataDependencyType.WRITE_WRITE && dependency.confluent) return;
+        
+        // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
+        val cfrs = regionLCAFMap.levelRegions(dependency)
+        val sourceNode = cfrs.first.node
+        val targetNode = cfrs.second.node
+
+        dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+    }
+    
     
 }

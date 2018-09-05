@@ -40,6 +40,7 @@ import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
 import java.util.Stack
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -48,12 +49,13 @@ import java.util.Stack
  */
 class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     
-     @Inject extension AnnotationsExtensions
-     @Inject extension SCG2JavaSerializeHRExtensions
-     @Inject extension SCGThreadExtensions
-     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCG2JavaSerializeHRExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SCGControlFlowExtensions
      
-     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
+    extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     
     /** Memorizes the labels/case-statements to nodes if they already exist */
     private var labeledNodes = <Node, String> newHashMap
@@ -169,7 +171,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         program.appendInd("}\n")
         program.toString
         
-        code.add(scg.name + ".java", program.toString)
+        code.addJavaCode(scg.name + ".java", program.toString)
     }
     
     /** 
@@ -369,7 +371,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             
         } else if(!labeledNodes.containsKey(node)) {
             // If a node has multiple incoming control flows, create a gotoB label
-            val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+            val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
             if(incomingControlFlows.size > 1) {
                 val newLabel = "_L_" + labelNr++
                 labeledNodes.put(node, newLabel)
@@ -423,7 +425,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         sb.append(ass.serializeHR)
         sb.append(";\n")
         
-        sb.transformNode(ass.next.target)
+        sb.transformNode(ass.next.targetNode)
     }
     
     /**
@@ -457,12 +459,12 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             // Create goto and label
             ifLabel = "_L_" + labelNr++
             sb.appendInd("gotoB(" + ifLabel + ");\n")
-            labeledNodes.put(cond.then.target, ifLabel)  
+            labeledNodes.put(cond.then.targetNode, ifLabel)  
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("} ")
     
             // Translate if-case
-            ifSB.transformNode(cond.then.target)
+            ifSB.transformNode(cond.then.targetNode)
             
         }
         
@@ -483,12 +485,12 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             // Create goto and label
             elseLabel = "_L_" + labelNr++
             sb.appendInd("gotoB(" + elseLabel + ");\n")      
-            labeledNodes.put(cond.^else.target, elseLabel)  
+            labeledNodes.put(cond.^else.targetNode, elseLabel)  
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("}\n")
     
             // Translate else-case
-            elseSB.transformNode(cond.^else.target)
+            elseSB.transformNode(cond.^else.targetNode)
         }
         // Create break
         sb.appendInd("if (true) break;\n\n")
@@ -519,7 +521,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
      */
     private def void transformNode(StringBuilder sb, Fork fork) {
         // Find Thread with highest entry priority and lowest exit priority
-        val children = fork.next.map[n | n.target]
+        val children = fork.next.map[ targetNode ]
         var childrenStringBuilders = <StringBuilder> newLinkedList
         val sortedChildrenByEntry = (children.sortBy[n | ((n as Entry).getAnnotation(PriorityAuxiliaryData.
                                                         OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation)
@@ -651,7 +653,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         // Create the following state
         sb.addCase(nextLabel)
         previousNode.push(join)
-        sb.transformNode(join.next.target)
+        sb.transformNode(join.next.targetNode)
         previousNode.pop
     }
     
@@ -669,7 +671,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         maxPriority = Math.max(prio, maxPriority)
         
         var threadPrios = new ArrayList<Integer>
-        if(!entry.incoming.empty && entry.hasAnnotation("exitPrio")) {
+        if(!entry.incomingLinks.empty && entry.hasAnnotation("exitPrio")) {
             val exitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value
             if(prio < exitPrio) {
                 threadPrios.add(prio)
@@ -677,7 +679,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         }
         threadPriorities.put(entry, threadPrios)
         
-        sb.transformNode(entry.next.target)
+        sb.transformNode(entry.next.targetNode)
     }
     
     /**
@@ -693,7 +695,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         // the fork/join does this
         if(exit.next !== null) {
             threadPriorities.get(exit.entry).add((exit.getAnnotation("optPrioIDs") as IntAnnotation).value)
-            threadPriorities.get(exit.next.target.threadEntry).addAll(threadPriorities.get(exit.threadEntry))
+            threadPriorities.get(exit.next.targetNode.threadEntry).addAll(threadPriorities.get(exit.threadEntry))
         }
         
         if(!exit.entry.hasAnnotation("joinThread")) {
@@ -708,7 +710,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
                     newLabel = labeledNodes.get(join)
                 } else {
                     newLabel = "_L_" + labelNr++
-                    labeledNodes.put(exit.next.target, newLabel)                
+                    labeledNodes.put(exit.next.targetNode, newLabel)                
                 }
                 
                 sb.appendInd("gotoB(" + newLabel + ");\n")
@@ -766,7 +768,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         maxPriority = Math.max(prio, maxPriority)
         // Build the label
         sb.addCase(labeledNodes.get(dep))
-        sb.transformNode(dep.next.target)
+        sb.transformNode(dep.next.targetNode)
     }
  
  //----------------------------------------------------------------------------------------------------------------

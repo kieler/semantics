@@ -24,8 +24,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -36,7 +34,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
@@ -53,14 +50,9 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
-import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
-import de.cau.cs.kieler.scg.processors.analyzer.ThreadData
-import de.cau.cs.kieler.scg.processors.analyzer.LoopData
-import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -93,6 +85,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions

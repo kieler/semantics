@@ -40,7 +40,6 @@ import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -49,6 +48,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * @author ssm
@@ -59,8 +59,8 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
-    @Inject extension SCGCacheExtensions    
-    @Inject extension SCGDependencyExtensions
+    @Inject extension SCGCacheExtensions
+    @Inject extension SCGDependencyExtensions    
     @Inject extension KExpressionsDeclarationExtensions       
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
@@ -178,7 +178,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
                     for(node : sb.nodes) {
                         if (node instanceof Entry)
-                        if (node.incoming.filter(ControlFlow).empty) 
+                        if (node.incomingLinks.filter(ControlFlow).empty) 
                             mainThreadEntries.put(assignment, node.name)
                         if (node instanceof Exit)
                         if (node.next === null) 

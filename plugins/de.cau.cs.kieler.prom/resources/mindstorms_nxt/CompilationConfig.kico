@@ -1,7 +1,5 @@
 system de.cau.cs.kieler.sccharts.netlist.simple.java.transitions
-  version 1
   label "Netlist-based and taken transitions (Java)"
-
 
 // Enable taken transition signaling for diagram highlighting in the simulation.
 // Note be aware that this increases the program size and can impact performance on the mindstorms.  

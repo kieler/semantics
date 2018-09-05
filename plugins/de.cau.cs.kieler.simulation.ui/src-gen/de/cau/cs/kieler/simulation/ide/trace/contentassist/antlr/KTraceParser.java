@@ -61,6 +61,7 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 					put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
+					put(grammarAccess.getJsonValueAccess().getAlternatives(), "rule__JsonValue__Alternatives");
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getPragmaAccess().getAlternatives(), "rule__Pragma__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
@@ -232,6 +233,14 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVectorValueAccess().getGroup(), "rule__VectorValue__Group__0");
 					put(grammarAccess.getVectorValueAccess().getGroup_2(), "rule__VectorValue__Group_2__0");
 					put(grammarAccess.getIgnoreValueAccess().getGroup(), "rule__IgnoreValue__Group__0");
+					put(grammarAccess.getJsonObjectValueAccess().getGroup(), "rule__JsonObjectValue__Group__0");
+					put(grammarAccess.getJsonObjectValueAccess().getGroup_2(), "rule__JsonObjectValue__Group_2__0");
+					put(grammarAccess.getJsonObjectValueAccess().getGroup_2_1(), "rule__JsonObjectValue__Group_2_1__0");
+					put(grammarAccess.getJsonObjectMemberAccess().getGroup(), "rule__JsonObjectMember__Group__0");
+					put(grammarAccess.getJsonArrayValueAccess().getGroup(), "rule__JsonArrayValue__Group__0");
+					put(grammarAccess.getJsonArrayValueAccess().getGroup_2(), "rule__JsonArrayValue__Group_2__0");
+					put(grammarAccess.getJsonArrayValueAccess().getGroup_2_1(), "rule__JsonArrayValue__Group_2_1__0");
+					put(grammarAccess.getNullValueAccess().getGroup(), "rule__NullValue__Group__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
 					put(grammarAccess.getPragmaTagAccess().getGroup(), "rule__PragmaTag__Group__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
@@ -455,6 +464,12 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
 					put(grammarAccess.getVectorValueAccess().getValuesAssignment_1(), "rule__VectorValue__ValuesAssignment_1");
 					put(grammarAccess.getVectorValueAccess().getValuesAssignment_2_1(), "rule__VectorValue__ValuesAssignment_2_1");
+					put(grammarAccess.getJsonObjectValueAccess().getMembersAssignment_2_0(), "rule__JsonObjectValue__MembersAssignment_2_0");
+					put(grammarAccess.getJsonObjectValueAccess().getMembersAssignment_2_1_1(), "rule__JsonObjectValue__MembersAssignment_2_1_1");
+					put(grammarAccess.getJsonObjectMemberAccess().getKeyAssignment_0(), "rule__JsonObjectMember__KeyAssignment_0");
+					put(grammarAccess.getJsonObjectMemberAccess().getValueAssignment_2(), "rule__JsonObjectMember__ValueAssignment_2");
+					put(grammarAccess.getJsonArrayValueAccess().getElementsAssignment_2_0(), "rule__JsonArrayValue__ElementsAssignment_2_0");
+					put(grammarAccess.getJsonArrayValueAccess().getElementsAssignment_2_1_1(), "rule__JsonArrayValue__ElementsAssignment_2_1_1");
 					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 					put(grammarAccess.getCommentAnnotatonSLAccess().getValuesAssignment(), "rule__CommentAnnotatonSL__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");

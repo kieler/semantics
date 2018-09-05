@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * Serialization of KExpressions.
@@ -403,6 +404,10 @@ class KExpressionsSerializeExtensions {
         }
 
         return new Pair(keywords, content);
+    }
+    
+    def dispatch CharSequence serialize(NamedObject namedObject) {
+        "NamedObject \"" + namedObject.name + "\""
     }
   
   

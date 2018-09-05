@@ -18,7 +18,6 @@ import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -54,7 +53,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import com.google.common.collect.Multimap
-import com.google.common.collect.HashBiMap
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -353,7 +351,7 @@ class SSATransformationExtensions {
         for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
             val bb = node.basicBlock
             val parameter = node.expression.eContents.filter(Parameter).toList
-            for (entry : (bb.firstNode.incoming.groupBy[(it.eContainer as Node).basicBlock] => [entrySet.removeIf[!parameterMapping.containsKey(key)]]).entrySet) {
+            for (entry : (bb.firstNode.incomingLinks.groupBy[(it.eContainer as Node).basicBlock] => [entrySet.removeIf[!parameterMapping.containsKey(key)]]).entrySet) {
                 val link = entry.value.head
                 val linkBB = entry.key
                 val linkNode = (link.eContainer as Node)

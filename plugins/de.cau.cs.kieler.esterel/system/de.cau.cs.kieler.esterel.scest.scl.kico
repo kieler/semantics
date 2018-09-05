@@ -1,6 +1,4 @@
 public system de.cau.cs.kieler.esterel.scest.scl
-    version 1 
     label "Esterel/SCEst to SCL"
-    input Object
     
 de.cau.cs.kieler.esterel.processors.scestintermediateprocessor

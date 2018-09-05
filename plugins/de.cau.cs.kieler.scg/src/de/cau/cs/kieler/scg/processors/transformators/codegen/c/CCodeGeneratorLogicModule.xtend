@@ -36,6 +36,8 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.PrintCall
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
 
 /**
  * C Code Generator Logic Module
@@ -52,6 +54,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGControlFlowExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     static val LOGIC_NAME = "logic"
@@ -71,7 +74,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         tick = (parent as CCodeGeneratorModule).tick as CCodeGeneratorTickModule
     }
     
-    def getName() {
+    override getName() {
         LOGIC_NAME + baseName + suffix
     }
     
@@ -128,6 +131,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             } else if (assignment.expression instanceof RandomizeCall) {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
+            } else if (assignment.expression instanceof FunctionCall) {
+                indent(conditionalStack.size + 1)
+                code.append((assignment.expression as FunctionCall).serialize).append(";\n")
             } else {
                 throw new NullPointerException("Assigned valued object is null")
             }
@@ -156,7 +162,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }
         
         // If a new statement follows, add it to the node list.
-        if (assignment.next !== null) nodes.push(assignment.next.target)
+        if (assignment.next !== null) nodes.push(assignment.next.targetNode)
     }
         
     protected def dispatch void generate(Conditional conditional, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
@@ -175,8 +181,8 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         
         conditionalStack.push(conditional)
         
-        if (conditional.^else !== null) nodes.push(conditional.^else.target)        
-        if (conditional.^then !== null) nodes.push(conditional.^then.target)
+        if (conditional.^else !== null) nodes.push(conditional.^else.targetNode)        
+        if (conditional.^then !== null) nodes.push(conditional.^then.targetNode)
     }
     
     protected def void handleConditionalNesting(Node node) {
@@ -184,7 +190,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         // the actual branch joins with the else branch of the conditional directly. 
         // (In the latter case we can omit the "else" in C.)
         val conditional = conditionalStack.peek
-        val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+        val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
         if (conditional.^else !== null && conditional.^else.target == node) {
             if (incomingControlFlows.size == 1) {
                 // Apparently, it is the first assignment of a dedicated else branch. Handle it. 
@@ -201,7 +207,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
     
     protected def dispatch void generate(Entry entry, List<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
-        nodes += entry.next?.target
+        nodes += entry.next?.targetNode
     }
     
     protected def dispatch void generate(Exit exit, List<Node> nodes, extension CCodeSerializeHRExtensions serializer) {

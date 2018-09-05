@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.scg.Dependency;
+import de.cau.cs.kieler.kexpressions.keffects.Dependency;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.ScgPackage;

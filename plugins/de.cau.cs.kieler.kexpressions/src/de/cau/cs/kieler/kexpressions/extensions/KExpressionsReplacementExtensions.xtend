@@ -61,5 +61,15 @@ class KExpressionsReplacementExtensions {
         expression
     }    
     
-    
+    def void replace(EObject rootObject, ValuedObject valuedObject, ValuedObject newValuedObject) {
+        if (rootObject === null) {
+            return
+        } else if (rootObject instanceof ValuedObjectReference) {
+            if ((rootObject as ValuedObjectReference).valuedObject == valuedObject) {
+                rootObject.valuedObject = newValuedObject
+            }
+        } else {
+            rootObject.eAllContents.filter(ValuedObjectReference).forEach [ it.replace(valuedObject, newValuedObject) ]  
+        }
+    }       
 }

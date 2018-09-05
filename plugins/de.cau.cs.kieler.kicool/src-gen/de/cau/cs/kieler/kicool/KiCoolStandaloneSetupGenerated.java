@@ -5,7 +5,7 @@ package de.cau.cs.kieler.kicool;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.cau.cs.kieler.annotations.AnnotationsStandaloneSetup;
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.IResourceFactory;
@@ -16,7 +16,7 @@ public class KiCoolStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		AnnotationsStandaloneSetup.doSetup();
+		KExtStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

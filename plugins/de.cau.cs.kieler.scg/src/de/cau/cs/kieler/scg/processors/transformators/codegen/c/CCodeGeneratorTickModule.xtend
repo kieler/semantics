@@ -37,7 +37,7 @@ class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
         logic = (parent as CCodeGeneratorModule).logic as CCodeGeneratorLogicModule
     }
     
-    def getName() {
+    override getName() {
         TICK_NAME + baseName + suffix
     }
     

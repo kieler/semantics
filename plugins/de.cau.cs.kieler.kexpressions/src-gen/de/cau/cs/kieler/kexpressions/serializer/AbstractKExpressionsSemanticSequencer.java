@@ -17,7 +17,11 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonArrayValue;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
@@ -128,6 +132,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_ARRAY_VALUE:
+				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_MEMBER:
+				sequence_JsonObjectMember(context, (JsonObjectMember) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_VALUE:
+				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.NULL_VALUE:
+				sequence_NullValue(context, (NullValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
@@ -379,6 +395,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BoolValue returns BoolValue
 	 *     VectorValueMember returns BoolValue
 	 *     AnyValue returns BoolValue
+	 *     JsonValue returns BoolValue
 	 *
 	 * Constraint:
 	 *     value=BOOLEAN
@@ -439,6 +456,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     FloatValue returns FloatValue
 	 *     VectorValueMember returns FloatValue
 	 *     AnyValue returns FloatValue
+	 *     JsonValue returns FloatValue
 	 *
 	 * Constraint:
 	 *     value=FLOAT
@@ -565,6 +583,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     IntValue returns IntValue
 	 *     VectorValueMember returns IntValue
 	 *     AnyValue returns IntValue
+	 *     JsonValue returns IntValue
 	 *
 	 * Constraint:
 	 *     value=INT
@@ -577,6 +596,66 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0(), semanticObject.getValue());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonArrayValue returns JsonArrayValue
+	 *     JsonValue returns JsonArrayValue
+	 *
+	 * Constraint:
+	 *     (elements+=JsonValue elements+=JsonValue*)?
+	 */
+	protected void sequence_JsonArrayValue(ISerializationContext context, JsonArrayValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonObjectMember returns JsonObjectMember
+	 *
+	 * Constraint:
+	 *     (key=STRING value=JsonValue)
+	 */
+	protected void sequence_JsonObjectMember(ISerializationContext context, JsonObjectMember semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.JSON_OBJECT_MEMBER__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.JSON_OBJECT_MEMBER__KEY));
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.JSON_OBJECT_MEMBER__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.JSON_OBJECT_MEMBER__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJsonObjectMemberAccess().getKeySTRINGTerminalRuleCall_0_0(), semanticObject.getKey());
+		feeder.accept(grammarAccess.getJsonObjectMemberAccess().getValueJsonValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonObjectValue returns JsonObjectValue
+	 *     JsonValue returns JsonObjectValue
+	 *
+	 * Constraint:
+	 *     (members+=JsonObjectMember members+=JsonObjectMember*)?
+	 */
+	protected void sequence_JsonObjectValue(ISerializationContext context, JsonObjectValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonValue returns NullValue
+	 *     NullValue returns NullValue
+	 *
+	 * Constraint:
+	 *     {NullValue}
+	 */
+	protected void sequence_NullValue(ISerializationContext context, NullValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -817,6 +896,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     StringValue returns StringValue
 	 *     VectorValueMember returns StringValue
 	 *     AnyValue returns StringValue
+	 *     JsonValue returns StringValue
 	 *
 	 * Constraint:
 	 *     value=STRING

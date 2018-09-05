@@ -1,5 +1,4 @@
 public system de.cau.cs.kieler.lustre.sccharts.netlist.c
-	version 1 
 	label "Lustre SCCharts Netlist-based"
 
 de.cau.cs.kieler.lustre.processors.lustre2sccharts

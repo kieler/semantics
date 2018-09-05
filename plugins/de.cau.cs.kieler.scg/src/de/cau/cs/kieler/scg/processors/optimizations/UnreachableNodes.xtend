@@ -50,7 +50,7 @@ class UnreachableNodes implements Traceable {
         
         // Collect unreachable nodes
         deleteNodes += scg.nodes.filter[ 
-            (it.incoming.empty && !(it instanceof Depth) && !(it instanceof Entry) && !(it instanceof Exit))
+            (it.incomingLinks.empty && !(it instanceof Depth) && !(it instanceof Entry) && !(it instanceof Exit))
         ]
         
         // Collect cross references
@@ -90,7 +90,7 @@ class UnreachableNodes implements Traceable {
         
         // Remove control flow
         for (node : scg.nodes) {
-            removeControlFlows.forEach[ node.incoming.remove(it) ]
+            removeControlFlows.forEach[ node.incomingLinks.remove(it) ]
         }
         
         scg as EObject

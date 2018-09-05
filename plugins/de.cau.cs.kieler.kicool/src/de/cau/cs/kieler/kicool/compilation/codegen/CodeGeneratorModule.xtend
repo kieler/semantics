@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * CodeGeneratorModule allows specific configuration for SCG code generators.
@@ -58,6 +59,16 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     
     def void configure() {
         // override for convenient user defined configurations.
+    }
+    
+    override getName() {
+        if (moduleObject instanceof NamedObject) {
+            return moduleObject.name
+        } else if (moduleObject !== null) {
+            return moduleObject.class.name
+        } else {
+            return ""
+        }
     }
     
     /**

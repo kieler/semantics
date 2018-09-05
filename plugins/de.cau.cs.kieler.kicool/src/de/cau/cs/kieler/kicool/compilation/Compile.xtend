@@ -48,7 +48,10 @@ class Compile {
             it.originalModel = sourceModel
             it.populateContext
             // configure start environment
-            EnvironmentPropertyHolder.processEnvironmentSetter(it.startEnvironment, system.startsets)
+            for (subSystem : subContexts.values.map[originalSystem]) {
+                EnvironmentPropertyHolder.processEnvironmentConfig(it.startEnvironment, subSystem.config)
+            }
+            EnvironmentPropertyHolder.processEnvironmentConfig(it.startEnvironment, system.config)
 //            RuntimeSystems.add(it.getSystem, it)
         ]
     }

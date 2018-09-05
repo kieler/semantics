@@ -21,10 +21,9 @@ import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.labels.inline.DirectionalArrowsDecorator
-import de.cau.cs.kieler.klighd.labels.inline.InlineLabelConfigurator
-import de.cau.cs.kieler.klighd.labels.inline.LinesDecorator
-import de.cau.cs.kieler.klighd.labels.inline.RectangleDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.DirectionalArrowsDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.LinesDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.RectangleDecorator
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
@@ -35,6 +34,7 @@ import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.klighd.labels.decoration.LabelDecorationConfigurator
 
 /**
  * Allows users to choose a label side. They may also switch to on-edge labels, either with or without
@@ -92,7 +92,7 @@ class LabelPlacementSideHook extends SynthesisHook {
         val background = new Color(255, 255, 255, 220);
         
         // Create and properly configure an inline label configurator that will do most of our work for us
-        val inlineLabelConfigurator = InlineLabelConfigurator.create()
+        val inlineLabelConfigurator = LabelDecorationConfigurator.create.withInlineLabels(true)
             .withLabelTextRenderingProvider([ container, label | createTextRendering(container, label) ])
             .addDecoratorRenderingProvider(
                 RectangleDecorator.create()

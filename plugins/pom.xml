@@ -22,8 +22,6 @@
     <module>de.cau.cs.kieler.annotations.ide</module>
     <module>de.cau.cs.kieler.annotations.ui</module>
     <module>de.cau.cs.kieler.annotations</module>
-    <module>de.cau.cs.kieler.circuit.klighd</module>
-    <module>de.cau.cs.kieler.circuit</module>
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.perspectives</module> 
     <module>de.cau.cs.kieler.core.product</module>
@@ -53,11 +51,9 @@
     <module>de.cau.cs.kieler.sccharts.legacy</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
-    <module>de.cau.cs.kieler.sccharts.timing</module>
     <module>de.cau.cs.kieler.sccharts.ui</module>
     <module>de.cau.cs.kieler.sccharts.ide</module>
     <module>de.cau.cs.kieler.sccharts</module>
-    <module>de.cau.cs.kieler.scg.circuit</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg</module>
     <module>de.cau.cs.kieler.scl.ide</module>

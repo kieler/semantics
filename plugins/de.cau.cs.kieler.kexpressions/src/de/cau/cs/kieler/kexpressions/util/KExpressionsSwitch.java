@@ -160,6 +160,39 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.JSON_OBJECT_VALUE: {
+                JsonObjectValue jsonObjectValue = (JsonObjectValue)theEObject;
+                T result = caseJsonObjectValue(jsonObjectValue);
+                if (result == null) result = caseValue(jsonObjectValue);
+                if (result == null) result = caseExpression(jsonObjectValue);
+                if (result == null) result = caseSchedulable(jsonObjectValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.JSON_OBJECT_MEMBER: {
+                JsonObjectMember jsonObjectMember = (JsonObjectMember)theEObject;
+                T result = caseJsonObjectMember(jsonObjectMember);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.JSON_ARRAY_VALUE: {
+                JsonArrayValue jsonArrayValue = (JsonArrayValue)theEObject;
+                T result = caseJsonArrayValue(jsonArrayValue);
+                if (result == null) result = caseValue(jsonArrayValue);
+                if (result == null) result = caseExpression(jsonArrayValue);
+                if (result == null) result = caseSchedulable(jsonArrayValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.NULL_VALUE: {
+                NullValue nullValue = (NullValue)theEObject;
+                T result = caseNullValue(nullValue);
+                if (result == null) result = caseValue(nullValue);
+                if (result == null) result = caseExpression(nullValue);
+                if (result == null) result = caseSchedulable(nullValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.OPERATOR_EXPRESSION: {
                 OperatorExpression operatorExpression = (OperatorExpression)theEObject;
                 T result = caseOperatorExpression(operatorExpression);
@@ -687,6 +720,66 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIgnoreValue(IgnoreValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Json Object Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Json Object Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseJsonObjectValue(JsonObjectValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Json Object Member</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Json Object Member</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseJsonObjectMember(JsonObjectMember object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Json Array Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Json Array Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseJsonArrayValue(JsonArrayValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Null Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Null Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNullValue(NullValue object) {
         return null;
     }
 

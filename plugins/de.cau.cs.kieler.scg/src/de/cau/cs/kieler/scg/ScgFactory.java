@@ -105,15 +105,6 @@ public interface ScgFactory extends EFactory {
     Join createJoin();
 
     /**
-     * Returns a new object of class '<em>Link</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Link</em>'.
-     * @generated
-     */
-    Link createLink();
-
-    /**
      * Returns a new object of class '<em>SC Graph</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -148,24 +139,6 @@ public interface ScgFactory extends EFactory {
      * @generated
      */
     ControlFlow createControlFlow();
-
-    /**
-     * Returns a new object of class '<em>Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Dependency</em>'.
-     * @generated
-     */
-    Dependency createDependency();
-
-    /**
-     * Returns a new object of class '<em>Data Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Data Dependency</em>'.
-     * @generated
-     */
-    DataDependency createDataDependency();
 
     /**
      * Returns a new object of class '<em>Control Dependency</em>'.

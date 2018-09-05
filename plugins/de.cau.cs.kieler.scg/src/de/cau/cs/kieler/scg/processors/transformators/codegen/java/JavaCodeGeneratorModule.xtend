@@ -14,10 +14,10 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorModule
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Root C Code Generator Module
@@ -31,7 +31,7 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorMo
  */
 class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension JavaCodeSerializeHRExtensions
     
     @Inject Injector injector
@@ -66,7 +66,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         
         cFile.append("}\n")
 
-        codeContainer.add(cFilename, cFile.toString)         
+        codeContainer.addJavaCode(cFilename, cFile.toString)        
     }    
     
     override def void addHeader(StringBuilder sb) {

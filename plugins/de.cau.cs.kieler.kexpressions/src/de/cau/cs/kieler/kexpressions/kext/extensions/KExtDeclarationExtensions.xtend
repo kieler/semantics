@@ -12,24 +12,21 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.extensions
 
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.common.util.EList
-
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.EcoreUtilExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -42,6 +39,7 @@ class KExtDeclarationExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension EcoreUtilExtensions
     
     def DeclarationScope asDeclarationScope(EObject eObject) {
         eObject as DeclarationScope
@@ -156,7 +154,7 @@ class KExtDeclarationExtensions {
         DeclarationScope source, DeclarationScope target) {
         val map = new ValuedObjectMapping
         for (declaration : source.declarations) {
-            val newDeclaration = createDeclaration(declaration).trace(declaration)
+            val newDeclaration = createDeclaration(declaration)
             declaration.valuedObjects.forEach[ 
                 map.put(it, <ValuedObject> newLinkedList(it.copyValuedObject(newDeclaration)))
             ]

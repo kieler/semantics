@@ -40,7 +40,7 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
     @Accessors StringBuilder forwardDeclarations = new StringBuilder
   
-    def getName() {
+    override getName() {
         STRUCT_NAME + baseName + suffix
     }
     

@@ -38,6 +38,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * @author ssm
@@ -52,6 +53,7 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension SCGControlFlowExtensions
     
     public static val TICK_LOGIC_FUNCTION_NAME = "tickLogic"
     public static val TICK_FUNCTION_NAME = "tick"
@@ -106,7 +108,7 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
         parameterMapping.clear
         val mainEntry = scg.getStringAnnotationValue("main")
         for(tickStart : tickStarts) {
-            if (tickStart.name == null || tickStart.name.equals(mainEntry)) {
+            if (tickStart.name === null || tickStart.name.equals(mainEntry)) {
                 entryMapping.put(tickStart.name, "")
             } else {
                 entryMapping.put(tickStart.name, suffixCounter.toString)
@@ -141,7 +143,7 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
 
     protected def addTick(Entry tickEntry, StringBuilder initSB, StringBuilder implSB, SCGraph scg,
         String functionSuffix) {
-        var Node node = tickEntry.next.target
+        var Node node = tickEntry.next.targetNode
         val tickLogicFunction = new StringBuilder
         val resetFunction = new StringBuilder
         val resetCallee = new StringBuilder
@@ -174,13 +176,13 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
         
         prePrefix = DEFAULT_PRE_PREFIX 
         
-        while (node != null && !(node instanceof Exit)) {
+        while (node !== null && !(node instanceof Exit)) {
             var Expression expression = null
             val VOs = <ValuedObject> newHashSet      
             val PREs = <ValuedObject> newHashSet      
             
             if (node instanceof Assignment) {
-                val incomingControlFlows = node.incoming.filter(ControlFlow).filter[ it.eContainer != null ].toList
+                val incomingControlFlows = node.incomingLinks.filter(ControlFlow).filter[ it.eContainer !== null ].toList
                 if (incomingControlFlows.size>1) {
                     val conditional = conditionalStack.pop
                     
@@ -234,19 +236,19 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
                     tickLogicFunction.append(indent).append(node.serializeHR).append(";\n")
                     VOs += node.valuedObject
                 }                
-                node = node.next?.target
+                node = node.next?.targetNode
             } else if (node instanceof Conditional) {
                 valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
                 tickLogicFunction.append(indent).append("if (").append(node.condition.serializeHR).append(") {\n")
                 indent = indent + DEFAULT_INDENTATION
                 conditionalStack.push(node) 
                 expression = node.condition                
-                node = node.then?.target
+                node = node.then?.targetNode
             } else {
                 throw new Exception("C code generation backend cannot handle nodes that are not of type assignment or conditional.")
             }
             
-            if (expression != null) {
+            if (expression !== null) {
                 expression.getAllReferences.forEach[VOs += it.valuedObject]
                 if (expression instanceof OperatorExpression) {
                     if (expression.operator == OperatorType.PRE) {
@@ -255,7 +257,7 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
                 }
             }
             
-            for(vo : VOs.filter[ !VOSet.contains(it) ].filter[ it != null ]) {
+            for(vo : VOs.filter[ !VOSet.contains(it) ].filter[ it !== null ]) {
                 valuedObjectPrefix = ""
                 tickStruct.append(DEFAULT_INDENTATION)
                 if (vo.declaration instanceof ReferenceDeclaration) {

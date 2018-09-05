@@ -16,10 +16,10 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Injector
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Root C Code Generator Module
@@ -33,7 +33,7 @@ import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
  */
 class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     
-    @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension StatebasedCCodeSerializeHRExtensions
     
     @Inject Injector injector

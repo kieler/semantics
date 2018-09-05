@@ -2040,6 +2040,193 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//StringValue
 		public RuleCall getStringValueParserRuleCall_3() { return cStringValueParserRuleCall_3; }
 	}
+	public class JsonObjectValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cJsonObjectValueAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cMembersAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cMembersJsonObjectMemberParserRuleCall_2_0_0 = (RuleCall)cMembersAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cMembersAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cMembersJsonObjectMemberParserRuleCall_2_1_1_0 = (RuleCall)cMembersAssignment_2_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//// -------------------- //
+		////  JSON                // 
+		//// -------------------- //
+		//JsonObjectValue:
+		//	{JsonObjectValue}
+		//	'{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{JsonObjectValue} '{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)? '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{JsonObjectValue}
+		public Action getJsonObjectValueAction_0() { return cJsonObjectValueAction_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//(members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//members+=JsonObjectMember
+		public Assignment getMembersAssignment_2_0() { return cMembersAssignment_2_0; }
+		
+		//JsonObjectMember
+		public RuleCall getMembersJsonObjectMemberParserRuleCall_2_0_0() { return cMembersJsonObjectMemberParserRuleCall_2_0_0; }
+		
+		//(',' members+=JsonObjectMember)*
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//','
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
+		
+		//members+=JsonObjectMember
+		public Assignment getMembersAssignment_2_1_1() { return cMembersAssignment_2_1_1; }
+		
+		//JsonObjectMember
+		public RuleCall getMembersJsonObjectMemberParserRuleCall_2_1_1_0() { return cMembersJsonObjectMemberParserRuleCall_2_1_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
+	}
+	public class JsonObjectMemberElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectMember");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cKeySTRINGTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueJsonValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//JsonObjectMember:
+		//	key=STRING ':' value=JsonValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//key=STRING ':' value=JsonValue
+		public Group getGroup() { return cGroup; }
+		
+		//key=STRING
+		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
+		
+		//STRING
+		public RuleCall getKeySTRINGTerminalRuleCall_0_0() { return cKeySTRINGTerminalRuleCall_0_0; }
+		
+		//':'
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+		
+		//value=JsonValue
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		
+		//JsonValue
+		public RuleCall getValueJsonValueParserRuleCall_2_0() { return cValueJsonValueParserRuleCall_2_0; }
+	}
+	public class JsonArrayValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.JsonArrayValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cJsonArrayValueAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cElementsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cElementsJsonValueParserRuleCall_2_0_0 = (RuleCall)cElementsAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cElementsAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cElementsJsonValueParserRuleCall_2_1_1_0 = (RuleCall)cElementsAssignment_2_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//JsonArrayValue:
+		//	{JsonArrayValue}
+		//	'[' (elements+=JsonValue (',' elements+=JsonValue)*)?
+		//	']';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{JsonArrayValue} '[' (elements+=JsonValue (',' elements+=JsonValue)*)? ']'
+		public Group getGroup() { return cGroup; }
+		
+		//{JsonArrayValue}
+		public Action getJsonArrayValueAction_0() { return cJsonArrayValueAction_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+		
+		//(elements+=JsonValue (',' elements+=JsonValue)*)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//elements+=JsonValue
+		public Assignment getElementsAssignment_2_0() { return cElementsAssignment_2_0; }
+		
+		//JsonValue
+		public RuleCall getElementsJsonValueParserRuleCall_2_0_0() { return cElementsJsonValueParserRuleCall_2_0_0; }
+		
+		//(',' elements+=JsonValue)*
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//','
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
+		
+		//elements+=JsonValue
+		public Assignment getElementsAssignment_2_1_1() { return cElementsAssignment_2_1_1; }
+		
+		//JsonValue
+		public RuleCall getElementsJsonValueParserRuleCall_2_1_1_0() { return cElementsJsonValueParserRuleCall_2_1_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
+	}
+	public class JsonValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.JsonValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cJsonObjectValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cJsonArrayValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cNullValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cAnyValueParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//JsonValue Value:
+		//	JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//JsonObjectValue | JsonArrayValue | NullValue | AnyValue
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//JsonObjectValue
+		public RuleCall getJsonObjectValueParserRuleCall_0() { return cJsonObjectValueParserRuleCall_0; }
+		
+		//JsonArrayValue
+		public RuleCall getJsonArrayValueParserRuleCall_1() { return cJsonArrayValueParserRuleCall_1; }
+		
+		//NullValue
+		public RuleCall getNullValueParserRuleCall_2() { return cNullValueParserRuleCall_2; }
+		
+		//AnyValue
+		public RuleCall getAnyValueParserRuleCall_3() { return cAnyValueParserRuleCall_3; }
+	}
+	public class NullValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.NullValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cNullValueAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cNullKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//NullValue:
+		//	{NullValue}
+		//	'null';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{NullValue} 'null'
+		public Group getGroup() { return cGroup; }
+		
+		//{NullValue}
+		public Action getNullValueAction_0() { return cNullValueAction_0; }
+		
+		//'null'
+		public Keyword getNullKeyword_1() { return cNullKeyword_1; }
+	}
 	
 	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.CompareOperator");
@@ -2638,6 +2825,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ValueTypeElements eValueType;
 	private final HostTypeElements eHostType;
 	private final CombineOperatorElements eCombineOperator;
+	private final JsonObjectValueElements pJsonObjectValue;
+	private final JsonObjectMemberElements pJsonObjectMember;
+	private final JsonArrayValueElements pJsonArrayValue;
+	private final JsonValueElements pJsonValue;
+	private final NullValueElements pNullValue;
 	private final TerminalRule tHOSTCODE;
 	
 	private final Grammar grammar;
@@ -2723,6 +2915,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.eValueType = new ValueTypeElements();
 		this.eHostType = new HostTypeElements();
 		this.eCombineOperator = new CombineOperatorElements();
+		this.pJsonObjectValue = new JsonObjectValueElements();
+		this.pJsonObjectMember = new JsonObjectMemberElements();
+		this.pJsonArrayValue = new JsonArrayValueElements();
+		this.pJsonValue = new JsonValueElements();
+		this.pNullValue = new NullValueElements();
 		this.tHOSTCODE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
 	}
 	
@@ -3623,6 +3820,64 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
+	}
+	
+	//// -------------------- //
+	////  JSON                // 
+	//// -------------------- //
+	//JsonObjectValue:
+	//	{JsonObjectValue}
+	//	'{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
+	//	'}';
+	public JsonObjectValueElements getJsonObjectValueAccess() {
+		return pJsonObjectValue;
+	}
+	
+	public ParserRule getJsonObjectValueRule() {
+		return getJsonObjectValueAccess().getRule();
+	}
+	
+	//JsonObjectMember:
+	//	key=STRING ':' value=JsonValue;
+	public JsonObjectMemberElements getJsonObjectMemberAccess() {
+		return pJsonObjectMember;
+	}
+	
+	public ParserRule getJsonObjectMemberRule() {
+		return getJsonObjectMemberAccess().getRule();
+	}
+	
+	//JsonArrayValue:
+	//	{JsonArrayValue}
+	//	'[' (elements+=JsonValue (',' elements+=JsonValue)*)?
+	//	']';
+	public JsonArrayValueElements getJsonArrayValueAccess() {
+		return pJsonArrayValue;
+	}
+	
+	public ParserRule getJsonArrayValueRule() {
+		return getJsonArrayValueAccess().getRule();
+	}
+	
+	//JsonValue Value:
+	//	JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+	public JsonValueElements getJsonValueAccess() {
+		return pJsonValue;
+	}
+	
+	public ParserRule getJsonValueRule() {
+		return getJsonValueAccess().getRule();
+	}
+	
+	//NullValue:
+	//	{NullValue}
+	//	'null';
+	public NullValueElements getNullValueAccess() {
+		return pNullValue;
+	}
+	
+	public ParserRule getNullValueRule() {
+		return getNullValueAccess().getRule();
 	}
 	
 	//terminal HOSTCODE:

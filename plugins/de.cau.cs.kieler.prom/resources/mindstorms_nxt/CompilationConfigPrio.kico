@@ -1,5 +1,4 @@
 system de.cau.cs.kieler.sccharts.priority.java.transitions
-    version 1 
     label "Priority-based and taken transitions (Java)"
 
 // Enable taken transition signaling for diagram highlighting in the simulation.

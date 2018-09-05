@@ -14,7 +14,6 @@ package de.cau.cs.kieler.annotations.registry
 
 import java.util.List
 import java.util.Set
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Data
 import com.google.inject.Singleton
 import de.cau.cs.kieler.annotations.Pragma

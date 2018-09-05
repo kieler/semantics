@@ -70,6 +70,10 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
         return defaultValue
     }
     
+    def protected Object getPropertyById(String id) {
+        return propertyMap.get(new Property(id))
+    }
+    
     /**
      * {@inheritDoc}
      */

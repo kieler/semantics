@@ -1,6 +1,6 @@
 '!'=23
 '!='=51
-'#'=82
+'#'=83
 '%'=26
 '&&'=30
 '&'=22
@@ -25,16 +25,16 @@
 '>>'=32
 '>>>'=33
 '?'=34
-'@'=81
+'@'=82
 '['=74
 '\''=76
 ']'=75
 '^'=20
 '_'=80
-'after tick'=83
+'after tick'=84
 'animate'=54
 'apply'=66
-'before tick'=84
+'before tick'=85
 'click'=38
 'compiler'=70
 'extern'=79
@@ -46,8 +46,9 @@
 'mousedown'=39
 'mousemove'=41
 'mouseup'=40
+'null'=81
 'on'=58
-'others'=86
+'others'=87
 'pause'=44
 'perform'=57
 'play'=45
@@ -61,7 +62,7 @@
 'template'=72
 'using'=67
 'val'=28
-'value'=85
+'value'=86
 'wrapper'=73
 '{'=55
 '|'=21
@@ -151,3 +152,4 @@ T__83=83
 T__84=84
 T__85=85
 T__86=86
+T__87=87
