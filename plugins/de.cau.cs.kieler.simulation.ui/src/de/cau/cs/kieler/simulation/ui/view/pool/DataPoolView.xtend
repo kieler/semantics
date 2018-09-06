@@ -95,6 +95,10 @@ class DataPoolView extends ViewPart implements SimulationListener {
      */
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
     public static val TIME_FORMAT = "%.4f"
+    /**
+     * The max number of history entries to be displayed. 
+     */
+    public static val SHOWN_HISTORY_LENGTH = 20
 
     /**
      * The single instance
@@ -609,15 +613,10 @@ class DataPoolView extends ViewPart implements SimulationListener {
         }
         historyColumn = viewer.createTableColumn("History", 200, true)
         historyColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
-            /**
-             * The max number of history entries to be displayed. 
-             */
-            public static val MAX_HISTORY_LENGTH = 6
-            
             override String getText(Object element) {
                 if(element instanceof DataPoolEntry) {
                     if (SimulationUI.currentSimulation !== null && !SimulationUI.currentSimulation.history.empty) {
-                        val values = SimulationUI.currentSimulation.history.take(MAX_HISTORY_LENGTH).map[
+                        val values = SimulationUI.currentSimulation.history.take(SHOWN_HISTORY_LENGTH).map[
                             val entry = entries.get(element.name)
                             if (entry !== null) {
                                 val value = entry.rawValue
@@ -631,7 +630,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
                             }
                             return "null"
                         ]
-                        return values.join(", ") + if (SimulationUI.currentSimulation.history.size > MAX_HISTORY_LENGTH) " ..." else ""
+                        return values.join(", ") + if (SimulationUI.currentSimulation.history.size > SHOWN_HISTORY_LENGTH) " ..." else ""
                     }
                 }
                 return ""
