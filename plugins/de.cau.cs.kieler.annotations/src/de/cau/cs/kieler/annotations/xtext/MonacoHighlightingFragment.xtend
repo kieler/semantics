@@ -42,6 +42,8 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
 
     @Accessors(PUBLIC_GETTER)
     val generateAnnotation = new BooleanGeneratorOption(true)
+    
+    package String keywordsFilter = "\\w+"
 
     override void generate() {
         if (highlightingModuleName !== null && highlightingModuleName.endsWith('.ts')) {
@@ -54,7 +56,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
         this.generateHighlighting(langId)
     }
 
-    package String keywordsFilter = "\\w+"
 
     def void generateHighlighting(String langId) {
         val Set<String> allKeywords = GrammarUtil.getAllKeywords(this.getGrammar())

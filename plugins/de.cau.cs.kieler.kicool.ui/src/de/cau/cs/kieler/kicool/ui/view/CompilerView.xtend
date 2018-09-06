@@ -44,7 +44,6 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
