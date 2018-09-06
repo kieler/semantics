@@ -39,6 +39,7 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
 
 /**
  * C Code Generator Logic Module
@@ -132,6 +133,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             } else if (assignment.expression instanceof RandomizeCall) {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
+            } else if (assignment.expression instanceof FunctionCall) {
+                indent(conditionalStack.size + 1)
+                code.append((assignment.expression as FunctionCall).serialize).append(";\n")
             } else {
                 throw new NullPointerException("Assigned valued object is null")
             }
