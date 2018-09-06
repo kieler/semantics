@@ -19,6 +19,9 @@ import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
 import java.util.concurrent.Executors
 import org.apache.log4j.Logger
+import org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider
+import org.eclipse.elk.core.util.persistence.ElkGraphResourceFactory
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher
@@ -27,6 +30,10 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import java.util.function.Consumer
+import com.google.gson.GsonBuilder
+import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
+import io.typefox.sprotty.layout.ElkLayoutEngine
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -80,6 +87,11 @@ class LanguageServer implements IApplication {
             }
             println("Connection to: " + host + ":" + port)
                
+               
+            // Initialize ELK
+            ElkLayoutEngine.initialize(new LayeredMetaDataProvider)
+            Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put('elkg', new ElkGraphResourceFactory)
+        
             // Register all languages
             println("Starting language server socket")
             LanguageServerLauncher.bindAndRegisterLanguages()
@@ -110,8 +122,11 @@ class LanguageServer implements IApplication {
             val socketChannel = serverSocket.accept.get
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
+            val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
+                KGraphTypeAdapterUtil.configureGson(gsonBuilder)
+            ]
             val languageServer = injector.getInstance(LanguageServerImpl)
-            val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it])
+            val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it], configureGson)
             languageServer.connect(launcher.remoteProxy)
             launcher.startListening
             LOG.info("Started language server for client " + socketChannel.remoteAddress)
