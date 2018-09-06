@@ -71,6 +71,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     static def create() {
         if(instance === null) {
             instance = new SCChartsDiagramLiveValues
+            instance.enabled = false
         }
         instance
     }

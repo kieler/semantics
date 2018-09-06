@@ -38,6 +38,8 @@ class SimulationController implements SimulationControls {
     
     @Accessors(PUBLIC_GETTER)
     var boolean running = false
+    @Accessors(PUBLIC_GETTER)
+    var boolean asynchronous = false
     
     @Accessors(PUBLIC_GETTER)
     var SimulationMode mode
@@ -91,7 +93,8 @@ class SimulationController implements SimulationControls {
         if (running) {
             throw new IllegalStateException("Simulation already running")
         }
-        running = true
+        this.running = true
+        this.asynchronous = async
         
         context.initialize()
         context.models.forEach[initialize(context, context.dataPool)]
@@ -113,7 +116,7 @@ class SimulationController implements SimulationControls {
         context.models.forEach[stop]
         mode.stop()
         
-        if (asyncJob.state !== Job.NONE) {
+        if (asynchronous) {
             asyncJob.cancel
             asyncJobQueue.offer(new SimulationControlEvent(context, SimulationOperation.STOP))
         }
@@ -127,8 +130,6 @@ class SimulationController implements SimulationControls {
      * May fail if running and some models do not support a reset.
      */
     override reset() {
-        mode = SimulationModes.MANUAL
-        
         context.resetState
         if (running) {
             val success = context.models.fold(true)[success, model | model.reset && success]
@@ -151,45 +152,50 @@ class SimulationController implements SimulationControls {
             
         }).getInstance(m)
         context.notify(new SimulationControlEvent(context, SimulationOperation.MODE))
-        if (running) mode.start(isAsynchronousSimulation)
+        if (running) mode.start(asynchronous)
     }
     
     override play() {
-        mode.play
-        context.notify(new SimulationControlEvent(context, SimulationOperation.PLAY))
-    }
-    
-    override isPlaying() {
-        mode.isPlaying
-    }
-    
-    override pause() {
-        mode.pause
-        context.notify(new SimulationControlEvent(context, SimulationOperation.PAUSE))
-    }
-    
-    override isPaused() {
-        mode.isPaused
-    }
-    
-    override step() {
-        mode.step
-    }
-    
-    def boolean performInternalStep() {
-        val event = new SimulationControlEvent(context, SimulationOperation.STEP)
-        if (isAsynchronousSimulation) {
-            return asyncJobQueue.offer(event)
-        } else {
-            context.performInternalStep
-            context.notify(event)
-            return true
+        if (running) {
+            mode.play
+            context.notify(new SimulationControlEvent(context, SimulationOperation.PLAY))
         }
     }
     
-    def boolean isAsynchronousSimulation() {
-        return asyncJob.state !== Job.NONE
+    override isPlaying() {
+        if (running) mode.isPlaying else false
     }
+    
+    override pause() {
+        if (running) {
+            mode.pause
+            context.notify(new SimulationControlEvent(context, SimulationOperation.PAUSE))
+        }
+    }
+    
+    override isPaused() {
+        if (running) mode.isPaused else false
+    }
+    
+    override step() {
+        if (running) mode.step else false
+    }
+    
+    def boolean performInternalStep() {
+        if (running) {
+            val event = new SimulationControlEvent(context, SimulationOperation.STEP)
+            if (asynchronous) {
+                return asyncJobQueue.offer(event)
+            } else {
+                context.performInternalStep
+                context.notify(event)
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+
 }
 
 interface SimulationControls {
@@ -199,6 +205,7 @@ interface SimulationControls {
     def void stop()
     def void reset()
     def boolean isRunning()
+    def boolean isAsynchronous()
     
     // Modes
     def void setMode(Class<? extends SimulationMode> m)

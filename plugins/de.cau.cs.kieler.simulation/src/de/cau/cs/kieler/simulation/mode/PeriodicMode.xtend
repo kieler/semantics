@@ -28,6 +28,7 @@ class PeriodicMode extends TimedSimulationMode {
     public static var DEFAULT = 100
     
     private var boolean playing = false
+    private var boolean paused = false
     @Accessors(PUBLIC_GETTER)
     private var long period = DEFAULT
     
@@ -38,15 +39,19 @@ class PeriodicMode extends TimedSimulationMode {
     override start(boolean async) {
         super.start(async)
         remainingTime.set(period)
+        playing = false
+        paused = false
     }
     
     override stop() {
         super.stop
         playing = false
+        paused = false
     }
     
     override play() {
         playing = true
+        paused = false
     }
     
     override isPlaying() {
@@ -59,10 +64,11 @@ class PeriodicMode extends TimedSimulationMode {
     
     override pause() {
         playing = false
+        paused = true
     }
     
     override isPaused() {
-        return !playing
+        return paused
     }
     
     override supportsPausing() {

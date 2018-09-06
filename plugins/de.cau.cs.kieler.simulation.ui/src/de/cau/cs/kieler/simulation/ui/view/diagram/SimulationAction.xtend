@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.simulation.ui.SimulationUI
+import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
+import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.ActionContributionItem
 import org.eclipse.jface.action.IAction
@@ -24,8 +26,6 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Menu
 
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
-import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
-import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 
 /**
  * @author als
@@ -42,6 +42,7 @@ class SimulationAction extends Action implements IMenuCreator {
     private var String lastSelectedSystem
     private var Class<?> filter
     private var Menu fMenu
+    
 
     new(KiCoModelUpdateController muc) {
         this.muc = muc

@@ -34,6 +34,7 @@ class DynamicTickMode extends TimedSimulationMode implements SimulationListener 
     
     private var boolean async = false
     private var boolean playing = false
+    private var boolean paused = false
     private var boolean fire = false
     @Accessors(PUBLIC_GETTER)
     private var long sleepT = 0
@@ -56,12 +57,15 @@ class DynamicTickMode extends TimedSimulationMode implements SimulationListener 
         if (async) {
             context.addObserver(this)
         }
+        playing = false
+        paused = false
     }
     
     override stop() {
         super.stop
         if (deltaT.running) deltaT.stop
         playing = false
+        paused = false
         // Remove dynamic tick input provider
         val root = context.system.processors as ProcessorGroup
         root.processors.removeIf[DynamicTickInput.ID.equals(id)]
@@ -72,6 +76,7 @@ class DynamicTickMode extends TimedSimulationMode implements SimulationListener 
     
     override play() {
         playing = true
+        paused = false
         fire = true
         deltaT.start
     }
@@ -87,10 +92,11 @@ class DynamicTickMode extends TimedSimulationMode implements SimulationListener 
     override pause() {
         if (deltaT.running) deltaT.stop
         playing = false
+        paused = true
     }
     
     override isPaused() {
-        return !playing
+        return paused
     }
     
     override supportsPausing() {

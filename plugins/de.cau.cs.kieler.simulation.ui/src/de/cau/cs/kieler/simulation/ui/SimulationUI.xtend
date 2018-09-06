@@ -12,15 +12,20 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
 import de.cau.cs.kieler.core.model.ui.console.Consoles
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.ui.internal.processor.UserValues
+import de.cau.cs.kieler.simulation.ui.preferences.SimulationPreferences
+import de.cau.cs.kieler.simulation.ui.view.SimulationControlButtons
+import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
+import de.cau.cs.kieler.simulation.ui.view.pool.SimulationModeMenu
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
@@ -29,10 +34,6 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.ui.preferences.SimulationPreferences
-import de.cau.cs.kieler.simulation.ui.view.pool.SimulationModeMenu
 
 /**
  * Handles the one simulation that should be shown in the UI.
@@ -76,15 +77,52 @@ class SimulationUI {
         
     }
     
-    private static val listeners = <SimulationListener>newHashSet(errorReporter)
+    
+    private static val cleaner = new SimulationListener() {
+        
+        override update(SimulationContext context, SimulationEvent e) {
+            if (e instanceof SimulationControlEvent) {
+                switch (e.operation) {
+                    case STOP: {
+                        context.reset
+                    }
+                    default: { //nothing
+                    }
+                }
+            }
+        }
+        
+        override getName() {
+            "Clean up"
+        }
+        
+        override canBeDisabled() {
+            return false
+        }
+        
+    }
+    
+    private static val listeners = <SimulationListener>newHashSet(cleaner, errorReporter)
+    @Accessors
+    private static var boolean canRestartSimulation = false
     
     // ---------------------------------------------------------------------------
     
-    static def stopSimulation() {
+    static def setCanRestartSimulation(boolean enableRestart) {
+        canRestartSimulation = enableRestart
+        updateUI[
+            SimulationControlButtons.instances.forEach[updateButtons(null)]
+            DataPoolView.instance?.updateToolbar
+        ]
+    }
+    
+    static def stopAndRemoveSimulation() {
         // Stop
-        if (currentSimulation !== null && currentSimulation.running) {
-            currentSimulation.stop
-            
+        if (currentSimulation !== null) {
+            if (currentSimulation.running) {
+                currentSimulation.stop
+            }
+        
             // Remove Listeners
             for (listener : listeners) {
                 currentSimulation.deleteObserver(listener)
@@ -92,10 +130,11 @@ class SimulationUI {
         }
         
         currentSimulation = null
+        canRestartSimulation = false
     }
     
     static def startSimulation(SimulationContext context) {
-        stopSimulation
+        stopAndRemoveSimulation
         
         currentSimulation = context
         
@@ -117,6 +156,7 @@ class SimulationUI {
             id = UserValues.ID
         ])
         
+        canRestartSimulation = true
         currentSimulation.start(true)
     }
     

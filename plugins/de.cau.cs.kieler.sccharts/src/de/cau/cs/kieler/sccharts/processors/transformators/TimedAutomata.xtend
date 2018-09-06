@@ -88,6 +88,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     // Global var names
     public static val DELTA_T_NAME = DynamicTicks.DELTA_T
     public static val SLEEP_T_NAME = DynamicTicks.SLEEP_T
+    public static val DEVIATION_NAME = "deviation"
 
     // Experimental Switches
     public static val NO_SLEEP_NAME = "NoSleep"
@@ -95,6 +96,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val MAX_SLEEP_DEFAULT = 1000//Float.MAX_VALUE
     public static val SIMULATE_TIME_NAME = "SimulateSleep"
     public static val SIMULATE_TIME_DEFAULT = false
+    public static val DEVIATION_OUTPUT_NAME = "DeviationOutput"
+    public static val DEVIATION_OUTPUT_DEFAULT = false
 //    public static val CATCH_UP_NAME = "CatchUp"
 //    public static val CATCH_UP_DEFAULT = false
 
@@ -107,6 +110,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equals(name)]
         val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equals(name)]) Float.parseFloat(allAnnotations.findFirst[MAX_SLEEP_NAME.equals(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
         val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equals(name)]) true else SIMULATE_TIME_DEFAULT
+        val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equals(name)]) true else DEVIATION_OUTPUT_DEFAULT
         
         if (rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]) {
             // Create time vars
@@ -158,6 +162,23 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
                 }
                 vo
+            }
+            
+            // DeviationOutput
+            if(deviationOutput && !noSleep) {
+                val vo = createValuedObject(DEVIATION_NAME).uniqueName
+                vo.initialValue = createFloatValue(0)
+                rootState.declarations += createDeclaration => [
+                    type = ValueType.get(DynamicTicks.TYPE)
+                    output = true
+                    valuedObjects += vo
+                ]
+                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
+                
+                rootState.createDuringAction => [
+                    // calculate deviation
+                    effects += createAssignment(vo, createSubExpression(deltaT.reference, createPreExpression(sleepT.reference)))
+                ]
             }
             
             // Global sleep time handling

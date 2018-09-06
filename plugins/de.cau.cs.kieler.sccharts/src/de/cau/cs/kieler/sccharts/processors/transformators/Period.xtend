@@ -80,8 +80,9 @@ class Period extends SCChartsProcessor implements Traceable {
     static public final String PERIOD_REGION_NAME = GENERATED_PREFIX + "Period"
     
     // Annotaion switches
-    public static val SOFT_RESET_DEFAULT = false
+    public static val SOFT_RESET_DEFAULT = true
     public static val SOFT_RESET_NAME = "SoftReset"
+    public static val HARD_RESET_NAME = "HardReset"
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
@@ -158,7 +159,11 @@ class Period extends SCChartsProcessor implements Traceable {
                     val period = pi.value
                     val clock = clocks.get(pi.key)
                     val tick = ticks.get(pi.key)
-                    val softReset = if (period.hasAnnotation(SOFT_RESET_NAME)) true else SOFT_RESET_DEFAULT
+                    val softReset = if (SOFT_RESET_DEFAULT) {
+                        if (period.hasAnnotation(HARD_RESET_NAME)) false else SOFT_RESET_DEFAULT
+                    } else {
+                        if (period.hasAnnotation(SOFT_RESET_NAME)) true else SOFT_RESET_DEFAULT
+                    }
                     
                     state.createControlflowRegion(if (pi.key > 0) PERIOD_REGION_NAME + pi.key else PERIOD_REGION_NAME) => [
                         val s = it.createInitialState("_s") => [label = ""]

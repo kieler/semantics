@@ -62,6 +62,7 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
 import de.cau.cs.kieler.kicool.registration.ResourceExtension
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -149,12 +150,14 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     // -- Model --
 
     /** Model extracted from editor. */
+    @Accessors(PUBLIC_GETTER)
     private var EObject sourceModel
 
     /** Indicates if the source model has error markers. */
     private var boolean sourceModelHasErrorMarkers = false
 
     /** The compiled model. */
+    @Accessors(PUBLIC_GETTER)
     private var Object compiledModel = null
     
     // -- Visual --
@@ -264,6 +267,10 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         return ID
     }
     
+    def boolean showsCompiledModel() {
+        return compilerToggleAction.isChecked
+    }
+    
     // -- Activation
     // -------------------------------------------------------------------------
 
@@ -293,8 +300,13 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onEditorSaved(IEditorPart editor) {
         if (syncEditorToggleAction.isChecked() &&
-            (!compilerToggleAction.isChecked() || compiledModel == null)) {
+            (!compilerToggleAction.isChecked() || compiledModel === null)) {
             update(ChangeEvent.EDITOR)
+        }
+        if (sourceModel instanceof EObject) {
+            if (sourceModel.eResource !== null) {
+                sourceModel.eResource.timeStamp = System.currentTimeMillis
+            }
         }
     }
     
@@ -302,7 +314,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     override void refresh() {
-        if (!compilerToggleAction.isChecked() || compiledModel == null) {
+        if (!compilerToggleAction.isChecked() || compiledModel === null) {
             update(ChangeEvent.EDITOR)
         } else {
             diagramView.updateDiagram

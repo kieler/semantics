@@ -34,9 +34,13 @@ interface SimulationListener extends Observer {
     def setEnabled(boolean enabled) {
         if (enabled) {
             disabledListeners.remove(this)
-        } else {
+        } else if (canBeDisabled) {
             disabledListeners.add(this)
         }
+    }
+    
+    def boolean canBeDisabled() {
+        return true
     }
 
     override update(Observable o, Object arg) {
