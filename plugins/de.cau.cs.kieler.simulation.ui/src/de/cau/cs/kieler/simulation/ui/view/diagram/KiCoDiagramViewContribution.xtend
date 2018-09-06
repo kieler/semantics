@@ -19,6 +19,8 @@ import java.util.WeakHashMap
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
+import de.cau.cs.kieler.simulation.ui.SimulationUI
+import de.cau.cs.kieler.simulation.SimulationContext
 
 /**
  * @author als
@@ -40,6 +42,17 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor {
     
     override contributeDiagramWarnings(KiCoModelUpdateController muc, Object model, KlighdSynthesisProperties properties) {
         simulateActions.get(muc)?.update(model)
+        
+        if (SimulationUI.currentSimulation !== null) {
+            val simCC = SimulationUI.currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+            val input = simCC?.originalModel
+            if (input !== null) {
+                val inputIsShown = if (muc.showsCompiledModel && muc.compiledModel !== null) input == muc.compiledModel else input == muc.sourceModel
+                SimulationUI.canRestartSimulation = inputIsShown
+            } else {
+                SimulationUI.canRestartSimulation = false
+            }
+        }
         return null
     }
     

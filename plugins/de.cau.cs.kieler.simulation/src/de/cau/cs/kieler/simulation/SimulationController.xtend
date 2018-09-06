@@ -38,6 +38,8 @@ class SimulationController implements SimulationControls {
     
     @Accessors(PUBLIC_GETTER)
     var boolean running = false
+    @Accessors(PUBLIC_GETTER)
+    var boolean asynchronous = false
     
     @Accessors(PUBLIC_GETTER)
     var SimulationMode mode
@@ -91,7 +93,8 @@ class SimulationController implements SimulationControls {
         if (running) {
             throw new IllegalStateException("Simulation already running")
         }
-        running = true
+        this.running = true
+        this.asynchronous = async
         
         context.initialize()
         context.models.forEach[initialize(context, context.dataPool)]
@@ -113,7 +116,7 @@ class SimulationController implements SimulationControls {
         context.models.forEach[stop]
         mode.stop()
         
-        if (asyncJob.state !== Job.NONE) {
+        if (asynchronous) {
             asyncJob.cancel
             asyncJobQueue.offer(new SimulationControlEvent(context, SimulationOperation.STOP))
         }
@@ -127,8 +130,6 @@ class SimulationController implements SimulationControls {
      * May fail if running and some models do not support a reset.
      */
     override reset() {
-        mode = SimulationModes.MANUAL
-        
         context.resetState
         if (running) {
             val success = context.models.fold(true)[success, model | model.reset && success]
@@ -151,7 +152,7 @@ class SimulationController implements SimulationControls {
             
         }).getInstance(m)
         context.notify(new SimulationControlEvent(context, SimulationOperation.MODE))
-        if (running) mode.start(isAsynchronousSimulation)
+        if (running) mode.start(asynchronous)
     }
     
     override play() {
@@ -178,7 +179,7 @@ class SimulationController implements SimulationControls {
     
     def boolean performInternalStep() {
         val event = new SimulationControlEvent(context, SimulationOperation.STEP)
-        if (isAsynchronousSimulation) {
+        if (asynchronous) {
             return asyncJobQueue.offer(event)
         } else {
             context.performInternalStep
@@ -186,10 +187,7 @@ class SimulationController implements SimulationControls {
             return true
         }
     }
-    
-    def boolean isAsynchronousSimulation() {
-        return asyncJob.state !== Job.NONE
-    }
+
 }
 
 interface SimulationControls {
@@ -199,6 +197,7 @@ interface SimulationControls {
     def void stop()
     def void reset()
     def boolean isRunning()
+    def boolean isAsynchronous()
     
     // Modes
     def void setMode(Class<? extends SimulationMode> m)

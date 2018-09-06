@@ -4,7 +4,9 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
+import java.util.Set
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
@@ -29,6 +31,8 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
     private static val STEP_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/stepIcon.png")
     private static val STOP_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/stopIcon.png")
     
+    public static val Set<SimulationControlButtons> instances = newHashSet
+    
     val Action playpause
     val Action step
     val Action stop
@@ -39,15 +43,23 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
     
     new(String id, boolean listen) {
         super(id)
+        instances += this
         
         // -- Create Controls --
         // Play/Pause
         playpause = new Action("Play/Pause Simulation", IAction.AS_PUSH_BUTTON) {
             override run() {
-                if (currentSimulation?.isPlaying) {
-                    currentSimulation?.pause()
-                } else {
-                    currentSimulation?.play()
+                if (currentSimulation !== null) {
+                    if (currentSimulation.running) {
+                        if (currentSimulation.isPlaying) {
+                            currentSimulation.pause()
+                        } else {
+                            currentSimulation.play()
+                        }
+                    } else if (SimulationUI.canRestartSimulation) {
+                        currentSimulation.start(currentSimulation.isAsynchronous)
+                        currentSimulation.play()
+                    }
                 }
             }
         }
@@ -57,10 +69,15 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
         step = new Action("Single Simulation Step", IAction.AS_PUSH_BUTTON) {
             override run() {
                 if (currentSimulation !== null) {
-                    val success = currentSimulation.step()
-                    if (!success) {
-                        StatusManager.getManager().handle(new Status(IStatus.ERROR, SimulationUIPlugin.PLUGIN_ID,
-                            "Could not perform step!"), StatusManager.SHOW)
+                    if (!currentSimulation.running && SimulationUI.canRestartSimulation) {
+                        currentSimulation.start(currentSimulation.isAsynchronous)
+                    }
+                    if (currentSimulation.running) {
+                        val success = currentSimulation.step()
+                        if (!success) {
+                            StatusManager.getManager().handle(new Status(IStatus.ERROR, SimulationUIPlugin.PLUGIN_ID,
+                                "Could not perform step!"), StatusManager.SHOW)
+                        }
                     }
                 }
             }
@@ -93,21 +110,27 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
         }
     }
     
-    private def updateButtons(SimulationControlEvent.SimulationOperation op) {
+    def updateButtons(SimulationControlEvent.SimulationOperation op) {
         val sim = currentSimulation
         if (sim !== null) {
-            switch (op) {
-                case START,
-                case MODE: {
-                    playpause.enabled = sim.mode.supportsPlaying
-                    step.enabled = sim.mode.supportsStepping
-                    stop.enabled = true
+            if (op !== null) {
+                switch (op) {
+                    case START,
+                    case MODE: {
+                        playpause.enabled = sim.mode.supportsPlaying
+                        step.enabled = sim.mode.supportsStepping
+                        stop.enabled = true
+                    }
+                    case STOP: {
+                        playpause.enabled = SimulationUI.canRestartSimulation
+                        step.enabled = SimulationUI.canRestartSimulation
+                        stop.enabled = false
+                    }
                 }
-                case STOP: {
-                    playpause.enabled = false
-                    step.enabled = false
-                    stop.enabled = false
-                }
+            }
+            if (!sim.running) {
+                playpause.enabled = SimulationUI.canRestartSimulation
+                step.enabled = SimulationUI.canRestartSimulation
             }
             if (sim.playing && sim.mode.supportsPausing) {
                 playpause.imageDescriptor = PAUSE_ICON
@@ -120,6 +143,8 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
             playpause.enabled = false
             step.enabled = false
             stop.enabled = false
+            
+            playpause.imageDescriptor = PLAY_ICON
         }
     }
     
