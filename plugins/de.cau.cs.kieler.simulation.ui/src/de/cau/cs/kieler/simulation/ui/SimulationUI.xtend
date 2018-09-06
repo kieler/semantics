@@ -96,6 +96,10 @@ class SimulationUI {
             "Clean up"
         }
         
+        override canBeDisabled() {
+            return false
+        }
+        
     }
     
     private static val listeners = <SimulationListener>newHashSet(cleaner, errorReporter)
@@ -152,6 +156,7 @@ class SimulationUI {
             id = UserValues.ID
         ])
         
+        canRestartSimulation = true
         currentSimulation.start(true)
     }
     

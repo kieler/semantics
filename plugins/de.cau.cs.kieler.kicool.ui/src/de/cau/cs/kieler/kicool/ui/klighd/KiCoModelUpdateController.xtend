@@ -300,8 +300,13 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onEditorSaved(IEditorPart editor) {
         if (syncEditorToggleAction.isChecked() &&
-            (!compilerToggleAction.isChecked() || compiledModel == null)) {
+            (!compilerToggleAction.isChecked() || compiledModel === null)) {
             update(ChangeEvent.EDITOR)
+        }
+        if (sourceModel instanceof EObject) {
+            if (sourceModel.eResource !== null) {
+                sourceModel.eResource.timeStamp = System.currentTimeMillis
+            }
         }
     }
     
@@ -309,7 +314,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     override void refresh() {
-        if (!compilerToggleAction.isChecked() || compiledModel == null) {
+        if (!compilerToggleAction.isChecked() || compiledModel === null) {
             update(ChangeEvent.EDITOR)
         } else {
             diagramView.updateDiagram

@@ -371,7 +371,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
                 // Remove old actions
                 menuSimulationListenersSubmenu.removeAll
                 // Create new actions
-                for (listener : SimulationUI.observers) {
+                for (listener : SimulationUI.observers.filter[canBeDisabled].sortBy[name]) {
                     val action = new Action(listener.name, IAction.AS_CHECK_BOX) {
                         override run() {
                             listener.enabled = checked

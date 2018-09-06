@@ -156,35 +156,43 @@ class SimulationController implements SimulationControls {
     }
     
     override play() {
-        mode.play
-        context.notify(new SimulationControlEvent(context, SimulationOperation.PLAY))
+        if (running) {
+            mode.play
+            context.notify(new SimulationControlEvent(context, SimulationOperation.PLAY))
+        }
     }
     
     override isPlaying() {
-        mode.isPlaying
+        if (running) mode.isPlaying else false
     }
     
     override pause() {
-        mode.pause
-        context.notify(new SimulationControlEvent(context, SimulationOperation.PAUSE))
+        if (running) {
+            mode.pause
+            context.notify(new SimulationControlEvent(context, SimulationOperation.PAUSE))
+        }
     }
     
     override isPaused() {
-        mode.isPaused
+        if (running) mode.isPaused else false
     }
     
     override step() {
-        mode.step
+        if (running) mode.step else false
     }
     
     def boolean performInternalStep() {
-        val event = new SimulationControlEvent(context, SimulationOperation.STEP)
-        if (asynchronous) {
-            return asyncJobQueue.offer(event)
+        if (running) {
+            val event = new SimulationControlEvent(context, SimulationOperation.STEP)
+            if (asynchronous) {
+                return asyncJobQueue.offer(event)
+            } else {
+                context.performInternalStep
+                context.notify(event)
+                return true
+            }
         } else {
-            context.performInternalStep
-            context.notify(event)
-            return true
+            return false
         }
     }
 

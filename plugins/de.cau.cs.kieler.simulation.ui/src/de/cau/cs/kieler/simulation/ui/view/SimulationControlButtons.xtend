@@ -28,6 +28,7 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
     private static val PLAY_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/runIcon.png")
     private static val PAUSE_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/pauseIcon.png")
     private static val RESUME_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/resumeIcon.png")
+    private static val RESTART_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/restartIcon.png")
     private static val STEP_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/stepIcon.png")
     private static val STOP_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/stopIcon.png")
     
@@ -58,7 +59,6 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
                         }
                     } else if (SimulationUI.canRestartSimulation) {
                         currentSimulation.start(currentSimulation.isAsynchronous)
-                        currentSimulation.play()
                     }
                 }
             }
@@ -69,9 +69,6 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
         step = new Action("Single Simulation Step", IAction.AS_PUSH_BUTTON) {
             override run() {
                 if (currentSimulation !== null) {
-                    if (!currentSimulation.running && SimulationUI.canRestartSimulation) {
-                        currentSimulation.start(currentSimulation.isAsynchronous)
-                    }
                     if (currentSimulation.running) {
                         val success = currentSimulation.step()
                         if (!success) {
@@ -100,6 +97,10 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
         "Simulation Controls (Toolbar Buttons)"
     }
     
+    override canBeDisabled() {
+        return false
+    }
+    
     override update(SimulationContext ctx, SimulationEvent e) {
         if (ctx !== null) {
             if (e instanceof SimulationControlEvent) {
@@ -123,21 +124,24 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
                     }
                     case STOP: {
                         playpause.enabled = SimulationUI.canRestartSimulation
-                        step.enabled = SimulationUI.canRestartSimulation
+                        step.enabled = false
                         stop.enabled = false
                     }
                 }
             }
             if (!sim.running) {
                 playpause.enabled = SimulationUI.canRestartSimulation
-                step.enabled = SimulationUI.canRestartSimulation
-            }
-            if (sim.playing && sim.mode.supportsPausing) {
+                playpause.imageDescriptor = RESTART_ICON
+                playpause.toolTipText = "Restart Simulation"
+            } else if (sim.playing && sim.mode.supportsPausing) {
                 playpause.imageDescriptor = PAUSE_ICON
+                playpause.toolTipText = "Pause Simulation"
             } else if (sim.paused && sim.mode.supportsPausing) {
                 playpause.imageDescriptor = RESUME_ICON
+                playpause.toolTipText = "Resume Simulation"
             } else {
                 playpause.imageDescriptor = PLAY_ICON
+                playpause.toolTipText = "Play Simulation"
             }
         } else {
             playpause.enabled = false
@@ -145,6 +149,7 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
             stop.enabled = false
             
             playpause.imageDescriptor = PLAY_ICON
+            playpause.toolTipText = "Play Simulation"
         }
     }
     
