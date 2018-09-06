@@ -134,14 +134,12 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <parallel>suitesAndClasses</parallel>
-          <threadCount>4</threadCount>
           <argLine>-ea</argLine>
           <includes>
-            <include>**/Test*.java</include>
-            <include>**/*Test.java</include>
-            <include>**/*Tests.java</include>
-            <include>**/*TestCase.java</include>
+           <include>**/Test*.java</include>
+           <include>**/*Test.java</include>
+           <include>**/*Tests.java</include>
+           <include>**/*TestCase.java</include>
           </includes>
           <excludes>
             <exclude>**/Abstract*.java</exclude>
