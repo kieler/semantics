@@ -1,0 +1,225 @@
+/*
+ * Copyright (C) 2017 TypeFox and others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+.module circle.tag,
+.module .comp text.classHeader {
+    fill: #FFE9BE   
+}
+.module .comp rect,
+.module text.tag {
+    fill: #000000
+}
+.module {
+    fill: #FFE9BE
+}
+.module .comp .text.label {
+    fill: #000000
+}
+.moduleNode {
+    stroke: #ffffff
+}
+
+.list circle.tag,
+.list .comp text.classHeader {
+    fill: #9AB6B6
+}
+.list .comp rect,
+.list text.tag {
+    fill: #000000
+}
+.list {
+    fill: #9AB6B6
+}
+.list .comp .text.label {
+    fill: #000000
+}
+.list {
+    stroke: #ffffff
+}
+
+.container circle.tag,
+.container .comp text.classHeader {
+    fill: #9AB6B6
+}
+.container .comp rect,
+.container text.tag {
+    fill: #000000
+}
+.container {
+    fill: #9AB6B6
+}
+.container .comp .text.label {
+    fill: #000000
+}
+.container {
+    stroke: #ffffff
+}
+
+.augment circle.tag,
+.augment .comp text.classHeader {
+    fill: #578B8B  
+}
+.augment .comp rect,
+.augment text.tag {
+    fill: #000000
+}
+.augment {
+    fill: #578B8B
+}
+.augment .comp .text.label {
+    fill: #000000
+}
+.augment {
+    stroke: #ffffff
+}
+
+.grouping circle.tag,
+.grouping .comp text.classHeader {
+    fill: #578B8B   
+}
+.grouping .comp rect,
+.grouping text.tag {
+    fill: #000000
+}
+.grouping {
+    fill: #578B8B
+}
+.grouping .comp .text.label {
+    fill: #000000
+}
+.grouping {
+    stroke: #ffffff
+}
+
+.choice,
+.case {
+    fill: #E79292;
+    stroke: #ffffff;
+}
+
+.rpc text {
+    fill: #FFE9BE
+}
+.rpc rect {
+    fill: #000000
+}
+.rpc {
+    stroke: #ffffff
+}
+
+.action text {
+    fill: #FFE9BE  
+}
+.action rect {
+    fill: #000000
+}
+.action {
+    stroke: #ffffff
+}
+
+.input circle.tag,
+.input .comp text.classHeader {
+    fill: #FFE9BE 
+}
+.input .comp rect,
+.input text.tag {
+    fill: #000000
+}
+.input {
+    fill: #FFE9BE
+}
+.input .comp .text.label {
+    fill: #000000
+}
+.input {
+    stroke: #ffffff
+}
+
+
+.output circle.tag,
+.output .comp text.classHeader {
+    fill: #FFE9BE 
+}
+.output .comp rect,
+.output text.tag {
+    fill: #000000
+}
+.output {
+    fill: #FFE9BE
+}
+.output .comp .text.label {
+    fill: #000000
+}
+.output {
+    stroke: #ffffff
+}
+
+.output text.tag,
+.input text.tag {
+    font-size: 0.6em;
+}
+
+.notification circle.tag,
+.notification .comp text.classHeader {
+    fill: #CE6868   
+}
+.notification .comp rect,
+.notification text.tag {
+    fill: #000000
+}
+.notification {
+    fill: #CE6868
+}
+.notification .comp .text.label {
+    fill: #000000
+}
+.notification {
+    stroke: #ffffff
+}
+
+.uses {
+    fill: #9AB6B6;
+    stroke: #ffffff;
+}
+
+.identity circle.tag,
+.identity .comp text.classHeader {
+    fill: #AD976B 
+}
+.identity .comp rect,
+.identity text.tag {
+    fill: #000000
+}
+.identity {
+    stroke: #ffffff
+}
+
+.typedef circle.tag,
+.typedef .comp text.classHeader {
+    fill: #99BB99  
+}
+.typedef .comp rect,
+.typedef text.tag {
+    fill: #000000
+}
+.typedef {
+    stroke: #ffffff
+}
+
+text.classHeader {
+    font-size: 0.8em;
+}
+
+.label {
+    font-size: 0.6em;
+}
+
+.tag {
+    font-size: 0.9em;
+    font-weight: bold;
+    stroke: none;
+}

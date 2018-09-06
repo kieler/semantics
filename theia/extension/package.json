@@ -36,6 +36,7 @@
     "update": "git pull origin master && git submodule foreach git pull origin master"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free" : "^5.2.0",
     "@theia/core": "next",
     "@theia/editor": "next",
     "@theia/editorconfig": "next",
@@ -57,12 +58,16 @@
     "@theia/userstorage": "next",
     "@theia/variable-resolver": "next",
     "@theia/workspace": "next",
-    "theia-sccharts-extension": "0.1.0",
-    "yargs": "^9.0.1",
-    "xterm": "^2.9.2",
+    "@types/node": "^8.0.14",
+    "sprotty": "^0.4.2",
+    "theia-sprotty": "0.1.19",
+    "keith-sprotty": "0.1.0",
+    "monaco-editor-core": "^0.14.6",
+    "theia-keith-extension": "0.1.0",
     "vscode-jsonrpc": "^3.6.2",
     "vscode-nsfw": "^1.0.17",
-    "@fortawesome/fontawesome-free" : "^5.2.0"
+    "xterm": "^2.9.2",
+    "yargs": "^9.0.1"
   },
   "devDependencies": {
     "@theia/cli": "next",
@@ -84,8 +89,10 @@
     "webpack":"^4.16.1"
   },
   "workspaces": [
-    "theia-sccharts-extension",
-    "keith-app",
-    "keith-app-electron"
+    "sprotty/client",
+    "theia-sprotty",
+    "keith-sprotty",
+    "theia-keith-extension",
+    "keith-app"
   ]
 }

@@ -2,8 +2,10 @@
     "private": true,
     "name": "keith-app",
     "version": "0.1.0",
+    "author": "Kiel University <rt-kieler-devel@informatik.uni-kiel.de>",
     "license": "EPL-1.0",
     "dependencies": {
+        "@fortawesome/fontawesome-free" : "^5.2.0",
         "@theia/core": "next",
         "@theia/editor": "next",
         "@theia/editorconfig": "next",
@@ -25,19 +27,18 @@
         "@theia/userstorage": "next",
         "@theia/variable-resolver": "next",
         "@theia/workspace": "next",
-        "theia-sccharts-extension": "0.1.0",
+        "theia-keith-extension": "0.1.0",
         "vscode-jsonrpc": "^3.6.2",
-        "vscode-nsfw": "^1.0.17",
-        "@fortawesome/fontawesome-free" : "^5.2.0"
+        "vscode-nsfw": "^1.0.17"
     },
     "devDependencies": {
         "@theia/cli": "next",
         "reflect-metadata": "^0.1.12"
     },
     "scripts": {
-        "prepare": "theia build",
+        "prepare": "theia build --mode development",
         "start": "theia start --root-dir=../workspace",
-        "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5009 --port=3001 --loglevel=debug",
+        "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5007 --port=3000 --loglevel=debug",
         "watch": "theia build --watch"
     },
     "theia": {

@@ -1,0 +1,41 @@
+{
+  "name": "theia-keith-extension",
+  "version": "0.1.0",
+  "description": "An extension for Theia connection language support for Keith RiCharts",
+  "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
+  "license": "EPL-1.0",
+  "keywords": [
+    "theia-extension"
+  ],
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "lint": "tslint -c ../tslint.json --project ./tsconfig.json",
+    "build": "tsc && yarn lint",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "sprotty": "^0.4.2",
+    "theia-sprotty": "0.1.19",
+    "keith-sprotty": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/chai-as-promised": "0.0.31",
+    "@types/mocha": "^2.2.41",
+    "mocha": "^3.4.2",
+    "ts-node": "^3.2.0",
+    "typescript": "^2.5.2"
+  },
+  "files": [
+    "lib",
+    "src",
+    "build"
+  ],
+  "theiaExtensions": [
+    {
+      "frontend": "lib/frontend/language/frontend-extension",
+      "backend": "lib/backend/backend-extension"
+    }
+  ]
+}
