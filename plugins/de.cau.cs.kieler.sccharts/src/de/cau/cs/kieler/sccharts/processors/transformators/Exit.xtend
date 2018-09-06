@@ -191,6 +191,7 @@ class Exit extends SCChartsProcessor implements Traceable {
                 if (stateOutgoingTransitions > 1) {
                     memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).
                         uniqueName(nameCache)
+                    voStore.add(memory, SCCHARTS_GENERATED)
                 }
                 val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
                 val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName(nameCache).

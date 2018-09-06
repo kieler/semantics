@@ -381,7 +381,7 @@
     <extension
           point="org.eclipse.ui.views">
        <view
-             category="de.cau.cs.kieler.sim"
+             category="de.cau.cs.kieler"
              class="de.cau.cs.kieler.kivis.ui.views.KiVisView"
              icon="icons/viewIcon.png"
              id="de.cau.cs.kieler.kivis.ui.kivisView"

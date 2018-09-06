@@ -31,21 +31,21 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	public class TraceFileElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.trace.KTrace.TraceFile");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEsoTracesParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cKTracesParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cKTracesParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cEsoTracesParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//TraceFile ktrace::TraceFile:
-		//	EsoTraces | KTraces;
+		//	KTraces | EsoTraces;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//EsoTraces | KTraces
+		//KTraces | EsoTraces
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//EsoTraces
-		public RuleCall getEsoTracesParserRuleCall_0() { return cEsoTracesParserRuleCall_0; }
-		
 		//KTraces
-		public RuleCall getKTracesParserRuleCall_1() { return cKTracesParserRuleCall_1; }
+		public RuleCall getKTracesParserRuleCall_0() { return cKTracesParserRuleCall_0; }
+		
+		//EsoTraces
+		public RuleCall getEsoTracesParserRuleCall_1() { return cEsoTracesParserRuleCall_1; }
 	}
 	public class EsoTracesElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.trace.KTrace.EsoTraces");
@@ -355,11 +355,11 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//KTick ktrace::Tick:
-		//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment*)?
+		//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)?
 		//	'pause'? ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment*)? 'pause'? ';'
+		//{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)? 'pause'? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//{ktrace::Tick}
@@ -371,13 +371,13 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		//Assignment
 		public RuleCall getInputsAssignmentParserRuleCall_1_0() { return cInputsAssignmentParserRuleCall_1_0; }
 		
-		//('=>' outputs+=Assignment*)?
+		//('=>' outputs+=Assignment+)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_2_0() { return cEqualsSignGreaterThanSignKeyword_2_0; }
 		
-		//outputs+=Assignment*
+		//outputs+=Assignment+
 		public Assignment getOutputsAssignment_2_1() { return cOutputsAssignment_2_1; }
 		
 		//Assignment
@@ -479,7 +479,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//TraceFile ktrace::TraceFile:
-	//	EsoTraces | KTraces;
+	//	KTraces | EsoTraces;
 	public TraceFileElements getTraceFileAccess() {
 		return pTraceFile;
 	}
@@ -556,7 +556,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//KTick ktrace::Tick:
-	//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment*)?
+	//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)?
 	//	'pause'? ';';
 	public KTickElements getKTickAccess() {
 		return pKTick;

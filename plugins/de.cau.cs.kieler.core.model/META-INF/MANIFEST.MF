@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.ui.console;bundle-version="3.7.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.core.model,
@@ -33,6 +34,7 @@ Export-Package: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.model.test,
  de.cau.cs.kieler.core.model.transformations,
  de.cau.cs.kieler.core.model.ui,
+ de.cau.cs.kieler.core.model.ui.console,
  de.cau.cs.kieler.core.model.util,
  de.cau.cs.kieler.core.model.validation
 Bundle-Vendor: Kiel University

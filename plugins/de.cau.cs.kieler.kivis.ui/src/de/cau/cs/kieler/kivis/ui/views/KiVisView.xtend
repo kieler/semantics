@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kivis.ui.views
 
 import com.google.common.io.Files
+import de.cau.cs.kieler.kivis.Variable
 import de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration
 import de.cau.cs.kieler.kivis.ui.KiVisUiModule
 import de.cau.cs.kieler.kivis.ui.animations.AnimationHandler
@@ -22,19 +23,14 @@ import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.console.ConsoleStyle
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.Variable
-import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
-import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationListener
-import de.cau.cs.kieler.simulation.core.events.SimulationOperation
-import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.SimulationListener
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.awt.geom.AffineTransform
@@ -87,6 +83,8 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
+import de.cau.cs.kieler.simulation.ui.SimulationUI
+import de.cau.cs.kieler.simulation.SimulationContext
 
 /**
  * The KiVis View.
@@ -280,7 +278,7 @@ class KiVisView extends ViewPart {
         createStatusLine
         
         // Add simulation listener
-        SimulationManager.add(simulationListener)
+        SimulationUI.registerObserver(simulationListener)
     }
 
     /**
@@ -288,7 +286,7 @@ class KiVisView extends ViewPart {
      */
     override dispose() {
         super.dispose()
-        SimulationManager.remove(simulationListener)
+        simulationListener.enabled = false
         instance = null
     }
 
@@ -329,9 +327,9 @@ class KiVisView extends ViewPart {
         } else {
             // Only update the view with the state of the pool, when the pool changed
             // and the data pool contains valid data, i.e., all variables have been initialized in the first macro tick
-            val sim = SimulationManager.instance
+            val sim = SimulationUI.currentSimulation
             var poolChanged = (pool != lastPool)
-            var afterFirstTick = (sim != null && sim.currentMacroTickNumber > 0)
+            var afterFirstTick = (sim != null && sim.stepNumber > 0)
             if(force || (poolChanged && afterFirstTick)) {
                 lastPool = pool
                 updateInteractions(false)
@@ -362,7 +360,7 @@ class KiVisView extends ViewPart {
         // As this is invoked later in another thread,
         // the pool that should be visualized might already be outdated.
         // In this case we don't animate anything here.
-        if(force || pool == SimulationManager.instance.currentPool) {
+        if(force || pool == SimulationUI.currentSimulation.dataPool) {
             try {
                 // Safe reference to animation handlers in case the reference changes concurrently
                 val handlers = animationHandlers
@@ -390,11 +388,11 @@ class KiVisView extends ViewPart {
         }
         
         asyncExecSvgUpdate [
-            val sim = SimulationManager.instance
+            val sim = SimulationUI.currentSimulation
             if(!initialized || sim == null) {
                 return
             }
-            updateAnimations(variable.model.pool, false, variable)
+            updateAnimations(variable.pool, false, variable)
         ]
     }
     
@@ -694,45 +692,37 @@ class KiVisView extends ViewPart {
      * @return The simulation listener
      */
     private static def SimulationListener createSimulationListener() {
-        val listener = new SimulationAdapter("KiVis View") {
+        val listener = new SimulationListener() {
+            
+            override getName() {
+                return "KiVis View"
+            }
+            
             var KiVisView kiVisView 
-            override update(SimulationEvent e) {
+            override update(SimulationContext ctx, SimulationEvent e) {
                 kiVisView = KiVisView.instance
                 if(kiVisView == null || !kiVisView.linkWithSimulation) {
                     return
                 }
-                super.update(e)
-            }
-            
-            override onUserValueChanged(VariableUserValueEvent e) {
-                if(!kiVisView.ignoreVariableEvents) {
-                    kiVisView.update(e.variable)
-                }
-            }
-            
-            override onSimulationControlEvent(SimulationControlEvent e) {
-                val simMan = SimulationManager.instance
-                if(simMan == null || kiVisView == null) {
-                    return
-                }
-                
-                switch(e.operation) {
-                    case BEFORE_STEPPING : {
-                        kiVisView.updateInteractions(true)
-                    }
-                    default : {
-                        kiVisView.update(simMan.currentPool, false)
-                        if(e.operation == SimulationOperation.STOP) {
-                            // Move focus away as workaround for KISEMA-1266
-                            // TODO: Remove if not needed anymore
-                            PromUIPlugin.asyncExecInUI[
-                                if(kiVisView.showSimulationStoppedDialog) {
-                                    val dialog = new MessageBox(kiVisView.control.shell)
-                                    dialog.message = "Simulation stopped.\nReleasing focus of Simulation Visualization View."
-                                    dialog.open
-                                }
-                            ]
-                        }    
+                if (e instanceof SimulationControlEvent) {
+                    switch(e.operation) {
+                        case STEP : {
+                            kiVisView.updateInteractions(true)
+                        }
+                        default : {
+                            kiVisView.update(ctx.dataPool, false)
+                            if(e.operation == SimulationOperation.STOP) {
+                                // Move focus away as workaround for KISEMA-1266
+                                // TODO: Remove if not needed anymore
+                                PromUIPlugin.asyncExecInUI[
+                                    if(kiVisView.showSimulationStoppedDialog) {
+                                        val dialog = new MessageBox(kiVisView.control.shell)
+                                        dialog.message = "Simulation stopped.\nReleasing focus of Simulation Visualization View."
+                                        dialog.open
+                                    }
+                                ]
+                            }    
+                        }
                     }
                 }
             }
@@ -811,10 +801,10 @@ class KiVisView extends ViewPart {
                         lastRenderingTransform = null
                     }
                     // Update visualization with running simulation
-                    if(SimulationManager.instance != null
-                        && !SimulationManager.instance.isStopped
-                        && SimulationManager.instance.currentPool != null) {
-                        update(SimulationManager.instance.currentPool, false)
+                    if(SimulationUI.currentSimulation != null
+                        && SimulationUI.currentSimulation.running
+                        && SimulationUI.currentSimulation.dataPool != null) {
+                        update(SimulationUI.currentSimulation.dataPool, false)
                     }
                 }
             }
@@ -957,8 +947,8 @@ class KiVisView extends ViewPart {
             override run() {
                 linkWithSimulation = !linkWithSimulation
                 firePropertyChange(CHECKED, Boolean.valueOf(!linkWithSimulation), Boolean.valueOf(linkWithSimulation));
-                if(linkWithSimulation && SimulationManager.instance != null) {
-                    update(SimulationManager.instance?.currentPool, true)    
+                if(linkWithSimulation && SimulationUI.currentSimulation != null) {
+                    update(SimulationUI.currentSimulation?.dataPool, true)    
                 }
             }
         })

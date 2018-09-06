@@ -30,7 +30,8 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.annotations.ui,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.simulation.ui,
- org.antlr.runtime
+ org.antlr.runtime,
+ de.cau.cs.kieler.kicool;bundle-version="0.13.0"
 Export-Package: de.cau.cs.kieler.kivis.ui.animations,
  de.cau.cs.kieler.kivis.ui.contentassist,
  de.cau.cs.kieler.kivis.ui.quickfix,

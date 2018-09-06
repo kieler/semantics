@@ -30,7 +30,9 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.kicool,
  org.eclipse.elk.alg.force,
  de.cau.cs.kieler.klighd.kgraph,
- de.cau.cs.kieler.sccharts.ide
+ de.cau.cs.kieler.sccharts.ide,
+ de.cau.cs.kieler.simulation.ui,
+ com.google.gson;bundle-version="2.7.0"
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,

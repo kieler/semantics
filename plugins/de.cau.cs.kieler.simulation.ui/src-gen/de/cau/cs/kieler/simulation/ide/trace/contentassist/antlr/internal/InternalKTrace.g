@@ -2929,15 +2929,15 @@ rule__TraceFile__Alternatives
 	}
 :
 	(
-		{ before(grammarAccess.getTraceFileAccess().getEsoTracesParserRuleCall_0()); }
-		ruleEsoTraces
-		{ after(grammarAccess.getTraceFileAccess().getEsoTracesParserRuleCall_0()); }
+		{ before(grammarAccess.getTraceFileAccess().getKTracesParserRuleCall_0()); }
+		ruleKTraces
+		{ after(grammarAccess.getTraceFileAccess().getKTracesParserRuleCall_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getTraceFileAccess().getKTracesParserRuleCall_1()); }
-		ruleKTraces
-		{ after(grammarAccess.getTraceFileAccess().getKTracesParserRuleCall_1()); }
+		{ before(grammarAccess.getTraceFileAccess().getEsoTracesParserRuleCall_1()); }
+		ruleEsoTraces
+		{ after(grammarAccess.getTraceFileAccess().getEsoTracesParserRuleCall_1()); }
 	)
 ;
 finally {
@@ -5351,9 +5351,16 @@ rule__KTick__Group_2__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
-	(rule__KTick__OutputsAssignment_2_1)*
-	{ after(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
+	(
+		{ before(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
+		(rule__KTick__OutputsAssignment_2_1)
+		{ after(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
+	)
+	(
+		{ before(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
+		(rule__KTick__OutputsAssignment_2_1)*
+		{ after(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
+	)
 )
 ;
 finally {

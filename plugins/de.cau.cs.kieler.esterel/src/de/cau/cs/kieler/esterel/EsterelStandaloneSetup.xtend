@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.esterel
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class EsterelStandaloneSetup extends EsterelStandaloneSetupGenerated {
+    
+    static var Injector injector
 
 	def static doSetup() {
-		return new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration()
+	    if (injector === null) {
+		  injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration()
+		}
+		return injector
 	}
 }

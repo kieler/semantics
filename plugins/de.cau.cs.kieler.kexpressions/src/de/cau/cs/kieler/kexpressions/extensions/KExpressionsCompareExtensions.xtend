@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * @author ssm
@@ -149,6 +150,16 @@ class KExpressionsCompareExtensions {
         
         return expression1.value.equals(expression2.value)
     }
+    
+    def dispatch boolean equals2(VectorValue expression1, VectorValue expression2) {
+        if (expression1 === expression2) { // same object or both null
+            return true
+        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
+            return false
+        }
+        
+        return expression1.values.size == expression2.values.size && (0..<expression1.values.size).forall[expression1.values.get(it).equals2(expression2.values.get(it))]
+    }    
         
     def dispatch boolean equals2(Expression expression1, Expression expression2) {
         if (expression1 === expression2) { // same object or both null

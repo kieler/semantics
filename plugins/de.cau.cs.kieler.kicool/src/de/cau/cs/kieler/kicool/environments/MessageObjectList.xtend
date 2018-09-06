@@ -42,6 +42,10 @@ class MessageObjectList extends LinkedList<MessageObjectLink> implements IKiCool
         add(new MessageObjectLink(msg, null, true, null, null, null))
     }
     
+    def add(String msg, Exception exception) {
+        add(new MessageObjectLink(msg, null, false, null, exception, null))
+    }
+    
     def add(String msg, Object object) {
         add(new MessageObjectLink(msg, object, true, null, null, null))
     }

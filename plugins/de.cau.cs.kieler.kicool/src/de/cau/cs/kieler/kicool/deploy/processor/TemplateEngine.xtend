@@ -68,6 +68,12 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         // Defaults
         generalTemplateEnvironment.putAll(CommonTemplateVariables.DEFAULTS)
+        val sourceFile = infra.sourceCode.files.head
+        if (sourceFile !== null) {
+            generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, sourceFile.fileName)
+            val name = if (sourceFile.fileName.contains(".")) sourceFile.fileName.substring(0, sourceFile.fileName.lastIndexOf(".")) else sourceFile.fileName
+            generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, name)
+        }
         // Environment
         generalTemplateEnvironment.putAll(environment.getProperty(GENRAL_ENVIRONMENT)?:newHashMap)
         // Genral
@@ -88,8 +94,8 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         val templates = environment.getProperty(TEMPLATES)?:emptyMap
         for (entry : templates.entrySet) {
-            val target = new File(infra.generadedCodeFolder, entry.key)
-            val relativeTemplatePath = entry.value
+            val target = new File(infra.generadedCodeFolder, entry.value)
+            val relativeTemplatePath = entry.key
             val template = new File(infra.generadedCodeFolder, relativeTemplatePath)
             
             logger.println("Processing template: " + template)
@@ -111,9 +117,9 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 templateEnvironment.putAll(generalTemplateEnvironment)
                 
                 var Map<String, Object> additionalTemplateEnvironment = newHashMap
-                if (additionalTemplateEnvironments.containsKey(entry.key)) {
+                if (additionalTemplateEnvironments.containsKey(entry.value)) {
                     if (additionalTemplateEnvironment instanceof Map<?, ?>) {
-                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.key)
+                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
                     } else if (additionalTemplateEnvironment !== null) {
                         logger.println("WARNING: Additional template environment is specified but not of type Map<String, String> but " + additionalTemplateEnvironment.class.name)
                     }

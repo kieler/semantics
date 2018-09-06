@@ -197,6 +197,7 @@ class Pre extends SCChartsProcessor implements Traceable {
         v.declaration2.copyAttributes(source.declaration2)
         v.declaration2.input = false
         v.declaration2.output = false
+        voStore.add(v, SCCHARTS_GENERATED, "pre")
         return v
     }
     

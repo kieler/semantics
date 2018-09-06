@@ -33,6 +33,7 @@ import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
 import java.util.List
 import java.io.PrintStream
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * 
@@ -52,7 +53,7 @@ class ProjectInfrastructure {
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.use", true)
 
     public static val IProperty<String> TEMPORARY_PROJECT_NAME = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.name", "Temporary KIELER Project")
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.name", "KIELER-Temp")
         
     public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
@@ -122,7 +123,7 @@ class ProjectInfrastructure {
             if (inputModel instanceof EObject) {
                 resource = inputModel.eResource
                 if (resource !== null) {
-                    modelFile = WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
+                    modelFile = resource.findResourceLocation
                 }
             }
         }
@@ -137,7 +138,7 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (modelFile !== null) {
                 name = modelFile.toString
-            } else if (modelFile instanceof NamedObject) {
+            } else if (modelFile instanceof Nameable) {
                 name = modelFile.name
             }
             name = name.replaceAll(Pattern.quote(File.separator), "-")
@@ -203,6 +204,10 @@ class ProjectInfrastructure {
         logger.println("Base folder: " + modelFolder)
         logger.println("Generated code folder: " + generadedCodeFolder)
         logger.println
+    }
+    
+    def findResourceLocation(Resource resource) {
+        return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
     }
     
 }

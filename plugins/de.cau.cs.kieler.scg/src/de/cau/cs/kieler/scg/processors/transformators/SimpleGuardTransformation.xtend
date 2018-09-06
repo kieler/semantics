@@ -40,6 +40,7 @@ import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -48,7 +49,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * @author ssm
@@ -59,8 +60,8 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
-    @Inject extension SCGCacheExtensions
-    @Inject extension SCGDependencyExtensions    
+    @Inject extension SCGCacheExtensions    
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsDeclarationExtensions       
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
@@ -135,7 +136,15 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         val mainThreadEntries = <Assignment, String> newHashMap
         val mainThreadExits = <Assignment> newHashSet
         
+        // Fix VO association in VariableStore
+        val voStore = VariableStore.get(environment)
+        valuedObjectMap.entrySet.forEach[ entry |
+            val info = voStore.variables.get(entry.key.name).findFirst[valuedObject == entry.key]
+            if (info !== null) info.valuedObject = entry.value.head
+        ]
+        
         val termVO = newSCG.createTERMSignal
+        voStore.add(termVO, "term")
         val termAssignment = ScgFactory::eINSTANCE.createAssignment => [ valuedObject = termVO ]    
         val termSet = <Assignment> newHashSet    
 

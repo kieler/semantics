@@ -14,11 +14,8 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
-import java.nio.charset.StandardCharsets
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.deploy.Logger
 
 /**
  * @author als
@@ -26,16 +23,11 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
  * @kieler.rating proposed yellow
  */
 abstract class AbstractDeploymentProcessor<I> extends Processor<I, CodeContainer> {
-    
-    static val charset = StandardCharsets.UTF_8
-    val log = new ByteArrayOutputStream
-    protected val logger = new PrintStream(log, true, charset.name())
+
+    protected val logger = new Logger
     
     protected def saveLog(String logFileName) {
-        val cc = new CodeContainer => [add(logFileName, new String(log.toByteArray, charset))]
-        model = cc
-        logger.close
-        log.close
+        model = logger.closeLog(logFileName)
     }
     
     override getType() {
