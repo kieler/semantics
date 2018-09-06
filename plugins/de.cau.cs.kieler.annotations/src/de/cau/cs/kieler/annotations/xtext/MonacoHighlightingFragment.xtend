@@ -42,6 +42,8 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
 
     @Accessors(PUBLIC_GETTER)
     val generateAnnotation = new BooleanGeneratorOption(true)
+    
+    package String keywordsFilter = "\\w+"
 
     override void generate() {
         if (highlightingModuleName !== null && highlightingModuleName.endsWith('.ts')) {
@@ -54,7 +56,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
         this.generateHighlighting(langId)
     }
 
-    package String keywordsFilter = "\\w+"
 
     def void generateHighlighting(String langId) {
         val Set<String> allKeywords = GrammarUtil.getAllKeywords(this.getGrammar())
@@ -141,7 +142,7 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
             "        { open: '\\'', close: '\\'', notIn: ['string', 'comment'] },\n" +
             "        { open: '{', close: '}', notIn: ['string', 'comment'] },\n" +
             "        { open: '[', close: ']', notIn: ['string', 'comment'] },\n" +
-            "        { open: '(', close: ')', notIn: ['string', 'comment'] }\n" + "    ]\n" + "};"
+            "        { open: '(', close: ')', notIn: ['string', 'comment'] }\n" + "    ]\n" + "};\n"
     }
     
     def generateMonarchLanguagePrefix(String langId) {
@@ -175,7 +176,7 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
     }
     
     def generateHexDigitHighlighting() {
-        return "    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,"
+        return "    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,\n"
     }
     
     def generateAnnotationHighlighting() {
