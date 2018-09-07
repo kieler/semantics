@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.compilation
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kexpressions.IntValue
@@ -24,7 +25,6 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.util.Comparator
 import java.util.List
-import java.util.Map.Entry
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
@@ -44,6 +44,8 @@ class VariableStore implements IKiCoolCloneable {
     public static val IProperty<VariableStore> STORE = 
         new Property<VariableStore>("de.cau.cs.kieler.kicool.compilation.variables.store", null)
         
+    public static val PRINT_FORMAT_ANNOTAION = "PrintFormat"
+        
     // Common variable properties
     public static val INPUT = "input"
     public static val OUTPUT = "output"
@@ -51,8 +53,6 @@ class VariableStore implements IKiCoolCloneable {
     public static val SIGNAL = "signal"
     public static val CONST = "const"
     public static val EXTERN = "extern"
-    // A floating point value representing time in seconds
-    public static val TIME_FLOAT_SEC = "time"
         
     public static val DECL_FLAGS = #{
         VARIABLE_DECLARATION__INPUT -> INPUT,
@@ -187,6 +187,20 @@ class VariableStore implements IKiCoolCloneable {
                 info.type = decl.type
                 info.typeName = decl.type.literal
             }
+            
+            // Add print format
+            var String format = null
+            if (decl.annotations.exists[PRINT_FORMAT_ANNOTAION.equals(name)]) {
+                val value = decl.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equals(name)].values?.head
+                if (!value.nullOrEmpty) format = value
+            }
+            if (vo.annotations.exists[PRINT_FORMAT_ANNOTAION.equals(name)]) {
+                val value = vo.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equals(name)].values?.head
+                if (!value.nullOrEmpty) format = value
+            }
+            if (!format.nullOrEmpty) {
+                info.format = format
+            }
         }
         
         variables.put(vo.name, info)
@@ -295,6 +309,10 @@ class VariableInformation {
     @Accessors
     var String typeName
     
+    /** The value formatting rule */
+    @Accessors
+    var String format    
+    
     /** Characteristics of this variable */
     @Accessors
     val Set<String> properties = newHashSet
@@ -305,6 +323,7 @@ class VariableInformation {
         clone.dimensions = dimensions
         clone.type = type
         clone.typeName = typeName
+        clone.format = format
         clone.properties.addAll(properties)
         return clone
     }

@@ -43,6 +43,7 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.core.model.DynamicTicks
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.annotations.StringAnnotation
 
 /**
  * SCCharts Timed Automata Transformation.
@@ -83,8 +84,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = ""
-
+    public static final String GENERATED_PREFIX = ""
+    
     // Global var names
     public static val DELTA_T_NAME = DynamicTicks.DELTA_T
     public static val SLEEP_T_NAME = DynamicTicks.SLEEP_T
@@ -98,6 +99,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val SIMULATE_TIME_DEFAULT = false
     public static val DEVIATION_OUTPUT_NAME = "DeviationOutput"
     public static val DEVIATION_OUTPUT_DEFAULT = false
+    public static val TIME_FORMAT_NAME = "TimePrintFormat"
+    public static val TIME_FORMAT_DEFAULT = "%.4f"
 //    public static val CATCH_UP_NAME = "CatchUp"
 //    public static val CATCH_UP_DEFAULT = false
 
@@ -111,6 +114,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equals(name)]) Float.parseFloat(allAnnotations.findFirst[MAX_SLEEP_NAME.equals(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
         val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equals(name)]) true else SIMULATE_TIME_DEFAULT
         val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equals(name)]) true else DEVIATION_OUTPUT_DEFAULT
+        val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equals(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equals(name)].values.head else TIME_FORMAT_DEFAULT
         
         if (rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]) {
             // Create time vars
@@ -124,7 +128,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 } else {
                     environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
-                voStore.update(vo, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
+                if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
+                    vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                }
+                voStore.update(vo, DynamicTicks.TAG)
                 vo
             } else {
                 val vo = createValuedObject(DELTA_T_NAME)
@@ -134,7 +141,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     input = true
                     valuedObjects += vo
                 ]
-                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
+                vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                 vo
             }
             
@@ -148,7 +156,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 } else {
                     environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                 }
-                voStore.update(vo, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
+                if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
+                    vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                }
+                voStore.update(vo, DynamicTicks.TAG)
                 vo
             } else {
                 val vo = createValuedObject(SLEEP_T_NAME)
@@ -159,7 +170,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         output = true
                         valuedObjects += vo
                     ]
-                    voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
+                    vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                    voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                 }
                 vo
             }
@@ -173,7 +185,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     output = true
                     valuedObjects += vo
                 ]
-                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG, VariableStore.TIME_FLOAT_SEC)
+                vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                 
                 rootState.createDuringAction => [
                     // calculate deviation
@@ -202,7 +215,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
                 for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
                     clock.declaration.asVariableDeclaration.type = ValueType.get(DynamicTicks.TYPE)
-                    voStore.update(clock, SCCHARTS_GENERATED, VariableStore.TIME_FLOAT_SEC)
+                    if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
+                        clock.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                    }
+                    voStore.update(clock, SCCHARTS_GENERATED)
                     if (clock.initialValue === null) clock.initialValue = createFloatValue(0)
                     
                     var region = state.controlflowRegions.head

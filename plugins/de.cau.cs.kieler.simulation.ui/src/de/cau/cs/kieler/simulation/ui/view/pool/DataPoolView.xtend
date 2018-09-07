@@ -94,7 +94,6 @@ class DataPoolView extends ViewPart implements SimulationListener {
      * The id of the view from the plugin.xml
      */
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
-    public static val TIME_FORMAT = "%.4f"
     /**
      * The max number of history entries to be displayed. 
      */
@@ -591,8 +590,10 @@ class DataPoolView extends ViewPart implements SimulationListener {
         valueColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
             override String getText(Object element) {
                 if (element instanceof DataPoolEntry) {
-                    if (element.combinedProperties.contains(VariableStore.TIME_FLOAT_SEC) && element.rawValue.isJsonPrimitive && element.rawValue.asJsonPrimitive.isNumber) {
-                        return String.format(TIME_FORMAT, element.rawValue.asJsonPrimitive.asNumber.doubleValue)
+                    val value = element.rawValue
+                    if (!element.variableInformation.nullOrEmpty && !element.variableInformation.head.format.nullOrEmpty) {
+                        val format = element.variableInformation.head.format
+                        return value.toFormattedString(format)
                     } else {
                         return element.rawValue.toString
                     }
@@ -621,8 +622,9 @@ class DataPoolView extends ViewPart implements SimulationListener {
                             if (entry !== null) {
                                 val value = entry.rawValue
                                 if (value !== null) {
-                                    if (element.combinedProperties.contains(VariableStore.TIME_FLOAT_SEC) && value.isJsonPrimitive && value.asJsonPrimitive.isNumber) {
-                                        return String.format(TIME_FORMAT, value.asJsonPrimitive.asNumber.doubleValue)
+                                    if (!element.variableInformation.nullOrEmpty && !element.variableInformation.head.format.nullOrEmpty) {
+                                        val format = element.variableInformation.head.format
+                                        return value.toFormattedString(format)
                                     } else {
                                         return value.toString
                                     }
@@ -705,7 +707,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
 
         return viewer
     }
-
+    
     /**
      * Creates a column for a table viewer with the given title and width.
      * 
@@ -741,6 +743,33 @@ class DataPoolView extends ViewPart implements SimulationListener {
             column.resizable = false
         }
         return viewerColumn
+    }
+    
+    private static def String toFormattedString(JsonElement elem, String format) {
+        if (elem.isJsonArray) {
+            return elem.asJsonArray.join("[",",","]")[it.toFormattedString(format)]
+        } else if (elem.isJsonPrimitive) {
+            val primi = elem.asJsonPrimitive
+            if (primi.isString) {
+                return primi.toString
+            } else {
+                val Number number = if (primi.isNumber) {
+                    primi.asNumber
+                } else if (primi.isBoolean) {
+                    Integer.valueOf(if (primi.asBoolean) 1 else 0) as Number
+                }
+                try {
+                    return String.format(format, number.doubleValue)
+                } catch (Exception e1) {
+                    try {
+                        return String.format(format, number.longValue)
+                    } catch (Exception e2) {
+                        // Formatting not possible
+                    }
+                }
+            }
+        }
+        return elem.toString
     }
 
     private def List<DataPoolEntry> getSelectedVariables() {
