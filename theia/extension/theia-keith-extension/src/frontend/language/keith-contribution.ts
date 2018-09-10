@@ -13,13 +13,13 @@
 
 import { inject, injectable } from "inversify";
 import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
-import { EditorCommands, EditorManager, EditorWidget } from "@theia/editor/lib/browser";
+import { EditorManager, EditorWidget } from "@theia/editor/lib/browser";
 import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, CommonMenus } from "@theia/core/lib/browser";
 import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
-import { Workspace, WorkspaceEdit, ILanguageClient } from "@theia/languages/lib/browser";
+import { Workspace, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, CompilationSystems, CodeContainer } from "../../common/util";
 import { KeithKeybindingContext } from "./keith-keybinding-context";
 import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
@@ -74,7 +74,9 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         if (editorWidget) {
             this.editor = editorWidget
         }
-        this.compilerWidget.update()
+        if (this.compilerWidget) {
+            this.compilerWidget.update()
+        }
     }
 
     registerKeybindings(keybindings: KeybindingRegistry): void {
@@ -106,14 +108,6 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
     }
 
     registerCommands(commands: CommandRegistry): void {
-        commands.registerCommand(SHOW_REFERENCES, {
-            execute: (uri: string, position: Position, locations: Location[]) =>
-                commands.executeCommand(EditorCommands.SHOW_REFERENCES.id, uri, position, locations)
-        });
-        commands.registerCommand(APPLY_WORKSPACE_EDIT, {
-            execute: (changes: WorkspaceEdit) =>
-            !!this.workspace.applyEdit && this.workspace.applyEdit(changes)
-        });
         commands.registerCommand(COMPILER, {
             execute: async () => {
                 this.compilerWidget = await this.widgetManager.tryGetWidget(Constants.compilerWidgetId) as CompilerWidget
@@ -302,20 +296,6 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         }
     }
 }
-
-/**
- * Show references
- */
-export const SHOW_REFERENCES: Command = {
-    id: 'show.references'
-};
-
-/**
- * Apply Workspace Edit
- */
-export const APPLY_WORKSPACE_EDIT: Command = {
-    id: 'apply.workspaceEdit'
-};
 
 export const SAVE: Command = {
     id: 'core.save',
