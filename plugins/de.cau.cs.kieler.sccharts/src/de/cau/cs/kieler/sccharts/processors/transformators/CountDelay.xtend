@@ -40,6 +40,8 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 
 /**
  * SCCharts CountDelay Transformation.
@@ -49,6 +51,9 @@ import de.cau.cs.kieler.sccharts.DelayType
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class CountDelay extends SCChartsProcessor implements Traceable {
+
+    public static val IProperty<Boolean> COUNT_DELAY_ENABLE_STRUCTUREBASED = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.countDelay.structurebased", false)   
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -114,7 +119,9 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     def void transformCountDelay(Transition transition, State targetRootState) {
         if (transition.triggerDelay > 1) {
             
-            if (transition.sourceState.simple && transition.sourceState.outgoingTransitions.filter[ triggerDelay > 1].size == 1) {
+            if (environment.getProperty(COUNT_DELAY_ENABLE_STRUCTUREBASED) && 
+                transition.sourceState.simple && transition.sourceState.outgoingTransitions.filter[ triggerDelay > 1].size == 1
+            ) {
                 transition.transformCountDelayStructurally(targetRootState)
                 return
             }

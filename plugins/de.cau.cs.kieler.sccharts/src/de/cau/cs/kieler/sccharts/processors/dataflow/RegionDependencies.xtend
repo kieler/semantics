@@ -155,7 +155,7 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
         ValuedObjectAccessors valuedObjectAccessors) {
             
         if (transition.trigger !== null) {
-            state.parentRegion.processExpressionReader(transition.trigger, forkStack, valuedObjectAccessors)
+            transition.processExpressionReader(transition.trigger, forkStack, valuedObjectAccessors)
         }
         
         for (effect : transition.effects) {
