@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -46,6 +48,7 @@ import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KText;
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.viewers.ContextViewer;
 
@@ -123,6 +126,9 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             }
         }
     };
+    
+    /** If set this strategy will always fall back to SimpleUpdateStrategy */ 
+    public static IProperty<Boolean> ALWAYS_FALLBACK_TO_SIMPLE_UPDATE_STRATEGY = new Property<Boolean>("de.cau.cs.kieler.kicool.ui.kitt.update.alwaysSimple", false);
 
     /** Delegate update strategy to perform normal behavior. */
     private IUpdateStrategy delegate;
@@ -158,7 +164,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             }
         } else {
             lastInputModel.put(viewContext, viewContext.getInputModel());
-            return getDelegate().requiresDiagramSynthesisReRun(viewContext);
+            return getDelegate(viewContext).requiresDiagramSynthesisReRun(viewContext);
         }
     }
 
@@ -169,7 +175,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         // Normal behavior
         if (baseModel != newModel) {
             // Assumption: KGraphElement References stay valid (no copy)
-            getDelegate().update(baseModel, newModel, viewContext);
+            getDelegate(viewContext).update(baseModel, newModel, viewContext);
         }
 
         if (baseModel != null && !baseModel.getChildren().isEmpty()) {
@@ -266,7 +272,10 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
     /**
      * @return the delegate update strategy.
      */
-    private IUpdateStrategy getDelegate() {
+    private IUpdateStrategy getDelegate(ViewContext viewContext) {
+        if (viewContext.getProperty(ALWAYS_FALLBACK_TO_SIMPLE_UPDATE_STRATEGY)) {
+            return KlighdDataManager.getInstance().getUpdateStrategyById(SimpleUpdateStrategy.ID);
+        }
         if (delegate == null) {
             delegate = KlighdDataManager.getInstance().getHighestPriorityUpdateStrategy();
             if (delegate == this) {
