@@ -134,7 +134,7 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <parallel>suitesAndClasses</parallel>
+          <parallel>classes</parallel>
           <threadCount>4</threadCount>
           <argLine>-ea</argLine>
           <includes>
