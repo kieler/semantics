@@ -125,6 +125,9 @@ class ProjectInfrastructure {
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
                 }
+                if (modelFile === null && resource !== null && resource.URI !== null) {
+                    modelFile = new File(resource.URI.toFileString)
+                }
             }
         }
         
