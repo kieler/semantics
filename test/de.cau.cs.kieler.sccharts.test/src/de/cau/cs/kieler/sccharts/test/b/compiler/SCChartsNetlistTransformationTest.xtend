@@ -86,10 +86,9 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
     
     private def compile(SCCharts scc) {        
         val context = Compile.createCompilationContext(compilationSystemID, scc)
-        println(context)
         context.startEnvironment.setProperty(Environment.INPLACE, false)
         context.processorInstances.findFirst[id.equals("de.cau.cs.kieler.scg.processors.codegen.c")]?.environment.setProperty(Environment.CANCEL_COMPILATION, true)
-        println(context.processorInstances)
+
         context.compile
         
         return context
