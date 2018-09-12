@@ -10,7 +10,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>1.2.0</tycho-version>
-    <xtend-version>2.12.0</xtend-version>
+    <xtend-version>2.14.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -134,7 +134,7 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <parallel>classes</parallel>
+          <parallel>suitesAndClasses</parallel>
           <threadCount>4</threadCount>
           <argLine>-ea</argLine>
           <includes>

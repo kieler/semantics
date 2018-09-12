@@ -13,23 +13,25 @@
       </description>
   </category-def>
   <!-- KIELER SEMANTICS -->
-  <feature url="features/de.cau.cs.kieler.esterel.feature_0.13.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.13.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.esterel.feature_0.14.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.14.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.esterel.feature.source_0.13.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.13.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.esterel.feature.source_0.14.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.14.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.sccharts.feature_0.13.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.13.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.sccharts.feature_0.14.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.14.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_0.13.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.13.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_0.14.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.14.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
   <!-- Repository references to associated sites -->
-  <repository-reference location="http://download.eclipse.org/releases/neon" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository/" enabled="true"/>
-  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-03/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.2.2/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/releases/photon" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.14.0/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.4.1/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2018-06.U2/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.4.0/" enabled="true"/>
   <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
 </site>
