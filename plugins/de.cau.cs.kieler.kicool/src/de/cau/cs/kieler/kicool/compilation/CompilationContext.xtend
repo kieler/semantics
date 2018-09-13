@@ -260,10 +260,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         return null
     }
     
-    def Environment getResult() {
-        processorInstancesSequence?.last?.environment
-    }
-    
     def Environment getResultForModel(Object model) {
         for (processor : processorInstancesSequence) {
             val p = processor.environment.getProperty(MODEL)
