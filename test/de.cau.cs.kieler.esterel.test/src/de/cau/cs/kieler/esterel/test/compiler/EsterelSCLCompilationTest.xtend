@@ -86,7 +86,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=15000)
+    @Test(timeout=20000)
     @StopOnFailure
     def void testValidation(EsterelProgram est, TestModelData modelData) {
         assumeFalse(true); // Do nothing !!
@@ -127,7 +127,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         }        
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=20000)
     def void testSerializability(EsterelProgram est, TestModelData modelData) {
         assumeFalse(true); // Do nothing !!
         
