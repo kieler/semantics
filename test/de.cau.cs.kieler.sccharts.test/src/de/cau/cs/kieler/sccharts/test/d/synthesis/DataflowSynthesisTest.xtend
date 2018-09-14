@@ -37,7 +37,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = SCTXStandaloneSetup.doSetup
     
     extension AnnotationsExtensions annotationsExtensions= new AnnotationsExtensions
     

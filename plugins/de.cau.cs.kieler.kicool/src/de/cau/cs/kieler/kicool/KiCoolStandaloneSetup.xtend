@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.kicool
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class KiCoolStandaloneSetup extends KiCoolStandaloneSetupGenerated {
 
-	def static doSetup() {
-		return new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    private static volatile var Injector injector
+
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

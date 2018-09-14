@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.kexpressions.kext
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class KExtStandaloneSetup extends KExtStandaloneSetupGenerated {
 
-	def static doSetup() {
-		return new KExtStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    private static volatile var Injector injector
+
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new KExtStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

@@ -10,12 +10,12 @@ import com.google.inject.Injector
  */
 class EsterelStandaloneSetup extends EsterelStandaloneSetupGenerated {
     
-    static var Injector injector
+    private static volatile var Injector injector
 
-	def static doSetup() {
-	    if (injector === null) {
-		  injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration()
-		}
-		return injector
-	}
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

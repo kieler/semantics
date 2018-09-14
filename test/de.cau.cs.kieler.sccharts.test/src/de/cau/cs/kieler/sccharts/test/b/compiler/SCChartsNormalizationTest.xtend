@@ -54,7 +54,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
     private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = SCTXStandaloneSetup.doSetup
     
     //-----------------------------------------------------------------------------------------------------------------
     

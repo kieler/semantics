@@ -42,7 +42,7 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
     //-----------------------------------------------------------------------------------------------------------------
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = SCTXStandaloneSetup.doSetup
     
     /**
      * Constructor

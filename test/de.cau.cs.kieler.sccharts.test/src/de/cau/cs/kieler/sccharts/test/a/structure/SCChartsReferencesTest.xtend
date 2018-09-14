@@ -37,7 +37,7 @@ import static org.junit.Assert.*
 class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = SCTXStandaloneSetup.doSetup
     /** The SCCharts grammar */
     static val grammar = resourceSetInjector.getInstance(SCTXGrammarAccess)
     

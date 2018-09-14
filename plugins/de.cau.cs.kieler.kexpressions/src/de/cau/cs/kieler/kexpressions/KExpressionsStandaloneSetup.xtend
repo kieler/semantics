@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.kexpressions
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class KExpressionsStandaloneSetup extends KExpressionsStandaloneSetupGenerated {
 
-	def static doSetup() {
-		return new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    private static volatile var Injector injector
+
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

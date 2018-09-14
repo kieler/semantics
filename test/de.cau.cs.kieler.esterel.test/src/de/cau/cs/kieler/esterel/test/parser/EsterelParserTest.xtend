@@ -54,7 +54,7 @@ class EsterelParserTest extends AbstractXTextModelRepositoryTest<EsterelProgram>
     private val compilationSystemID = "de.cau.cs.kieler.kicool.identity"
         
     /** Sct Parser Injector */
-    static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val esterelInjector = EsterelStandaloneSetup.doSetup
     
     //-----------------------------------------------------------------------------------------------------------------
     

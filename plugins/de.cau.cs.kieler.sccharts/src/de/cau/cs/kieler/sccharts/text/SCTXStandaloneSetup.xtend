@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.sccharts.text
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated {
+    
+    private static volatile var Injector injector
 
-	def static doSetup() {
-		return new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

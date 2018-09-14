@@ -40,7 +40,7 @@ import org.eclipse.xtext.util.Strings
  */
 public class AnnotationsValueConverter extends DefaultTerminalConverters {
 
-    static val Injector injector = new AnnotationsStandaloneSetup().createInjectorAndDoEMFRegistration();
+    static val Injector injector = AnnotationsStandaloneSetup.doSetup
 
     /**
      * Provides comment annotation converter dropping/attaching the leading/trailing characters.

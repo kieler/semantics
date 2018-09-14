@@ -31,7 +31,7 @@ class EsterelSCLSimulationTest extends AbstractSimulationTest<EsterelProgram> {
     public static val String PRIO_C_SYSTEM = null
     public static val String PRIO_JAVA_SYSTEM = null
     
-    static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val esterelInjector = EsterelStandaloneSetup.doSetup
     
     new() {
         super(esterelInjector)

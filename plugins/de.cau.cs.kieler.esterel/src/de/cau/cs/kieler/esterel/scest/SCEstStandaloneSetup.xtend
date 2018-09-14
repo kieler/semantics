@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.esterel.scest
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class SCEstStandaloneSetup extends SCEstStandaloneSetupGenerated {
 
-	def static doSetup() {
-		return new SCEstStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    private static volatile var Injector injector
+
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new SCEstStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

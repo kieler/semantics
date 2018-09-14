@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.lustre
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class LustreStandaloneSetup extends LustreStandaloneSetupGenerated {
+    
+    private static volatile var Injector injector
 
-	def static doSetup() {
-		return new LustreStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

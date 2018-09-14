@@ -37,7 +37,7 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
     public static val String PRIO_JAVA_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.prio.java"
     public static val String PRIO_JAVA_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.prio.java"
         
-    public static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    public static val scchartsInjector = SCTXStandaloneSetup.doSetup
     
     new() {
         super(scchartsInjector)

@@ -3,13 +3,19 @@
  */
 package de.cau.cs.kieler.simulation.trace
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class KTraceStandaloneSetup extends KTraceStandaloneSetupGenerated {
+    
+    private static volatile var Injector injector
 
-	def static doSetup() {
-		return new KTraceStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    static synchronized def doSetup() {
+        if (injector === null) {
+          injector = new KTraceStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
 }

@@ -75,7 +75,7 @@ public class KExtTest {
      */
     @ModelCollectionTestRunner.ResourceSet
     public static def ResourceSet getResourceSet() {
-        return new KExtStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(typeof(XtextResourceSet))
+        return KExtStandaloneSetup.doSetup.getInstance(typeof(XtextResourceSet))
     }
     
     @Test
