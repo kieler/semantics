@@ -54,8 +54,10 @@ class ModelsRepository {
      * Returns an unmodifiable view on the models of the repositories.
      */
     public static def getRepositories() {
-        if (ModelsRepository.repositories.empty) {
-            findRepositories()
+        synchronized (repositories) {
+            if (ModelsRepository.repositories.empty) {
+                findRepositories()
+            }
         }
         return ModelsRepository.repositories.unmodifiableView
     }
@@ -102,8 +104,10 @@ class ModelsRepository {
      * Returns an unmodifiable view on the test models of the repository
      */
     public static def getModels() {
-        if (ModelsRepository.models.empty) {
-            findModels()
+        synchronized (repositories) { // because find models uses repositories
+            if (ModelsRepository.models.empty) {
+                findModels()
+            }
         }
         return ModelsRepository.models.unmodifiableView
     }
