@@ -56,7 +56,7 @@ import static extension java.lang.String.format
 class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram> {
     
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.esterel.scc"
+    static val compilationSystemID = "de.cau.cs.kieler.esterel.scc"
     
     /** Parser Injector */
     static val sclInjector = SCLStandaloneSetup.doSetup
@@ -158,6 +158,7 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         } catch (AssertionError ae) {
             throw ae
         } catch (Exception e) {
+            e.printStackTrace
             throw new Exception("Error while serializing %s caused by: %s".format(estResult.id, e.message), e)
         }
     }
