@@ -62,7 +62,7 @@ class MessageObjectReferences extends HashMap<Object, MessageObjectList> impleme
         add(sourceModelReference, msg, object, object !== null, null, null, payload)
     }
     
-    def void  add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
+    def void add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
         var mol = get(sourceModelReference)
         if (mol === null) {
             put(sourceModelReference, new MessageObjectList())

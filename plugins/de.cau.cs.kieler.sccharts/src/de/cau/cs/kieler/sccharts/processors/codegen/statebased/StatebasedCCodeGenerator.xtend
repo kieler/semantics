@@ -36,7 +36,9 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
        new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.printDebug", false)    
     
     
-    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel 
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModelStates 
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModelStatesAndRegions  
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.codegen.statebased"
@@ -47,7 +49,9 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     }
     
     override preProcess(SCCharts rootModel) {
-        annotationModel = rootModel.createAnnotationModel        
+        annotationModel = rootModel.createAnnotationModel
+        annotationModelStates = rootModel.createAnnotationModel
+        annotationModelStatesAndRegions = rootModel.createAnnotationModel        
     }
     
     override createModuleMap(SCCharts rootModel, Map<State, CodeGeneratorModule<SCCharts, State>> moduleMap) {
