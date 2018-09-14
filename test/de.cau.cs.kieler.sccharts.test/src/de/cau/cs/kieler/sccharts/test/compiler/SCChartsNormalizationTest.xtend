@@ -141,7 +141,9 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
                 resource.getContents().add(iResult.model as SCCharts)
 
                 // save
-                resource.save(outputStream, saveOptions)
+                synchronized(this.class) { // Xtext serialization seems not thread-safe
+                    resource.save(outputStream, saveOptions)
+                }
                 
                 assertTrue("Serialized %s is empty".format(name), outputStream.size > 0)
             } catch (AssertionError ae) {

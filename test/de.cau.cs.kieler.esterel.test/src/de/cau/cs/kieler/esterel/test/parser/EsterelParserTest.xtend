@@ -118,7 +118,9 @@ class EsterelParserTest extends AbstractXTextModelRepositoryTest<EsterelProgram>
             }
 
             // save
-            resource.save(outputStream, saveOptions)
+            synchronized(this.class) {// Xtext serialization seems not thread-safe
+                resource.save(outputStream, saveOptions)
+            }
             
             assertTrue("Serialized result is empty", outputStream.size > 0)
         } catch (AssertionError ae) {

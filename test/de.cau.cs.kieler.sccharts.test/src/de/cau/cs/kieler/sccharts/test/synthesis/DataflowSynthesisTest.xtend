@@ -78,7 +78,9 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             if (knodes > -1) knodes += KNODE_BASE_COUNT
             if (kedges > -1) kedges += KEDGE_BASE_COUNT
             
-            val viewContext = scc.invokeSynthesis
+            val viewContext = synchronized(this.class) { // Synthesis seems to be not thread-safe
+                scc.invokeSynthesis
+            }
             var nodes = 0
             var edges = 0
             for (node : viewContext.viewModel.eAllContents.filter(KNode).toIterable) {

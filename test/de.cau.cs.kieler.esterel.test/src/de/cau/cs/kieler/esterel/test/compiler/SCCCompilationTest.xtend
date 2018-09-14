@@ -123,7 +123,7 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         try {
             // Serialize
             val outputStream = new ByteArrayOutputStream(25000)
-            synchronized(this.class) { // Xtext serialization seem not thread-safe
+            synchronized(this.class) { // Xtext serialization seems not thread-safe
                 resource.save(outputStream, saveOptions)
             }
             
@@ -154,7 +154,7 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         try {
             // Serialize
             val outputStream = new ByteArrayOutputStream(25000);
-            synchronized(this.class) { // Xtext serialization seem not thread-safe
+            synchronized(this.class) { // Xtext serialization seems not thread-safe
                 resource.save(outputStream, saveOptions)
             }
             
