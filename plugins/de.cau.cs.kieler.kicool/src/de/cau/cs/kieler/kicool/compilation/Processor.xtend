@@ -249,6 +249,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         new AnnotationModel(c.first, c.second, this)
     }
     
+    override toString() {
+        return id
+    }
+    
     
     /**
      * ID of the processor.
