@@ -27,8 +27,8 @@ class PeriodicMode extends TimedSimulationMode {
     public static val MAXIMUM = Integer.MAX_VALUE
     public static var DEFAULT = 100
     
-    private var boolean playing = false
-    private var boolean paused = false
+    private var volatile boolean playing = false
+    private var volatile boolean paused = false
     @Accessors(PUBLIC_GETTER)
     private var long period = DEFAULT
     

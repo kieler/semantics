@@ -33,9 +33,9 @@ import de.cau.cs.kieler.core.model.DynamicTicks
 class DynamicTickMode extends TimedSimulationMode implements SimulationListener {
     
     private var boolean async = false
-    private var boolean playing = false
-    private var boolean paused = false
-    private var boolean fire = false
+    private var volatile boolean playing = false
+    private var volatile boolean paused = false
+    private var volatile boolean fire = false
     @Accessors(PUBLIC_GETTER)
     private var long sleepT = 0
     private val deltaT = Stopwatch.createUnstarted
