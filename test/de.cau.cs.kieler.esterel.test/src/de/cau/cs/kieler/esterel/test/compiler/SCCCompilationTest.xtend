@@ -108,9 +108,10 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
       
         // Validate
         // Create resource
-        var uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + ".scl")
+        var uri = URI.createURI("dummy:/test/" + this.class.simpleName + "/" + modelData.modelPath.fileName.toString + ".scl")
         var resourceSet = sclInjector.getInstance(XtextResourceSet)
         var resource = resourceSet.createResource(uri) as XtextResource
+        assertNotNull("Could not create resource for uri: " + uri, resource)
         resource.getContents().add(sclResult.targetModel as SCLProgram)
         
         // Check if validator marks no errors
@@ -136,9 +137,10 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
       
         // Validate
         // Create resource
-        uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
+        uri = URI.createURI("dummy:/test/" + this.class.simpleName + "/" + modelData.modelPath.fileName.toString)
         resourceSet = uri.xtextResourceSet as XtextResourceSet
         resource = resourceSet.createResource(uri) as XtextResource
+        assertNotNull("Could not create resource for uri: " + uri, resource)
         resource.getContents().add(estResult.targetModel as EsterelProgram)
         
         // Check if validator marks no errors

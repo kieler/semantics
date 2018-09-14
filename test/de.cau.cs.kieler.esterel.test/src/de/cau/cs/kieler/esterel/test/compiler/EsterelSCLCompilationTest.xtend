@@ -153,6 +153,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
                 
                 // create model resource
                 val resource = resourceSet.createResource(uri) as XtextResource
+                assertNotNull("Could not create resource for uri: " + uri, resource)
                 resource.getContents().add(iResult.model as EObject)
 
                 // save
