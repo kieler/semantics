@@ -122,8 +122,10 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         // Serialize
         try {
             // Serialize
-            val outputStream = new ByteArrayOutputStream(25000);
-            resource.save(outputStream, saveOptions)
+            val outputStream = new ByteArrayOutputStream(25000)
+            synchronized(this.class) { // Xtext serialization seem not thread-safe
+                resource.save(outputStream, saveOptions)
+            }
             
             assertTrue("Serialized %s is empty".format(sclResult.id), outputStream.size > 0)
         } catch (AssertionError ae) {
@@ -152,13 +154,14 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         try {
             // Serialize
             val outputStream = new ByteArrayOutputStream(25000);
-            resource.save(outputStream, saveOptions)
+            synchronized(this.class) { // Xtext serialization seem not thread-safe
+                resource.save(outputStream, saveOptions)
+            }
             
             assertTrue("Serialized %s is empty".format(estResult.id), outputStream.size > 0)
         } catch (AssertionError ae) {
             throw ae
         } catch (Exception e) {
-            e.printStackTrace
             throw new Exception("Error while serializing %s caused by: %s".format(estResult.id, e.message), e)
         }
     }
