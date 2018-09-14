@@ -82,7 +82,7 @@ class SCCCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=30000)
+    @Test(timeout=60000)
     def void testCompilation(EsterelProgram est, TestModelData modelData) {
         assumeTrue("Program is not in kernel esterel form", est.isKernel)
         val context = est.compile
