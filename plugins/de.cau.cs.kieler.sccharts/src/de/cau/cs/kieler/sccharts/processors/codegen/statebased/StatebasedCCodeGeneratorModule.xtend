@@ -147,8 +147,10 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         
         for (object : (logic as StatebasedCCodeGeneratorLogicModule).objectFunctionMap.keySet) {
             val sb = (logic as StatebasedCCodeGeneratorLogicModule).objectFunctionMap.get(object)
-            annotationModel.addInfo(object, sb.toString)
+            annotationModel.addInfo(object, sb.toString.trim)
         }        
     }
+    
+    
     
 }

@@ -35,6 +35,7 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     public static val IProperty<Boolean> PRINT_DEBUG_ENABLED = 
        new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.printDebug", false)    
     
+    
     @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel 
     
     override getId() {
