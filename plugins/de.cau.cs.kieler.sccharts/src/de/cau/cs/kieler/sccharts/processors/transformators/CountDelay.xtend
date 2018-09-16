@@ -110,7 +110,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
         nameCache.clear
         // Traverse all transitions
         for (targetTransition : rootState.getAllContainedTransitions.toList) {
-            targetTransition.transformCountDelay_NoPre(rootState);
+            targetTransition.transformCountDelay(rootState);
         }
         rootState
     }
