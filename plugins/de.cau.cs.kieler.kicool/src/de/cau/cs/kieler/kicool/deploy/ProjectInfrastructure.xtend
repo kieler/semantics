@@ -97,12 +97,15 @@ class ProjectInfrastructure {
     static def IProject getTemporaryProject(Environment environment) {
         val root = ResourcesPlugin.getWorkspace.getRoot
         val name = if (environment !== null) environment.getProperty(TEMPORARY_PROJECT_NAME) else TEMPORARY_PROJECT_NAME.^default
-        val project = root.getProject(name)
-        if (!project.exists) {
-            project.create(null)
-        }
-        if(!project.open) {
-            project.open(null)
+        var IProject project
+        synchronized (ProjectInfrastructure) {
+            project = root.getProject(name)
+            if (!project.exists) {
+                project.create(null)
+            }
+            if(!project.open) {
+                project.open(null)
+            }
         }
         return project
     }
