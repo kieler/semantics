@@ -119,7 +119,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
         }        
     }
     
-    @Test(timeout=60000)
+    @Test(timeout=120000)
     def void testSerializability(SCCharts scc, TestModelData modelData) {
         val result = scc.compile
         
