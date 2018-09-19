@@ -91,8 +91,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
-        
-        val inheritance = if (SHOW_INHERITANCE.booleanValue) state.allInherited else null
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
@@ -188,7 +186,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
-            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(inheritance.declarations)
+            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(state.allInheritedDeclarations)
             for (declaration : declarations) {
                 node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
@@ -199,7 +197,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
-            if (SHOW_INHERITANCE.booleanValue) actions.addAll(inheritance.actions)
+            if (SHOW_INHERITANCE.booleanValue) actions.addAll(state.allInheritedActions)
             for (action : actions) {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
@@ -212,7 +210,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             if (state.controlflowRegionsContainStates
                 || state.containsDataflowRegions
                 || state.isReferencedState
-                || (SHOW_INHERITANCE.booleanValue && !inheritance.regions.empty)
+                || (SHOW_INHERITANCE.booleanValue && !state.allInheritedRegions.empty)
             ) {
                 node.addRegionsArea;
             }
@@ -233,7 +231,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Transform regions
         val regions = new ArrayList<Region>(state.regions)
-        if (SHOW_INHERITANCE.booleanValue) regions.addAll(inheritance.regions)
+        if (SHOW_INHERITANCE.booleanValue) regions.addAll(state.allInheritedRegions)
         for (region : regions) {
             switch region {
                 ControlflowRegion: node.children += region.transform

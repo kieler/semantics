@@ -12,13 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import com.google.common.collect.LinkedHashMultimap
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import org.eclipse.xtend.lib.annotations.ToString
-import org.eclipse.xtend.lib.annotations.Data
-import de.cau.cs.kieler.sccharts.Action
 
 /**
  * @author als
@@ -26,58 +20,34 @@ import de.cau.cs.kieler.sccharts.Action
  */
 class SCChartsInheritanceExtensions {
     
-    def getAllInherited(State state) {
-        val inherited = new Inheritace
+    def getAllInheritedStates(State state) {
+        val allBaseStates = newLinkedHashSet
         val work = newLinkedList
-        work.addAll(state.baseStates)
+        work.addAll(state.baseStates.toSet)
+        work.removeIf[it == state]
         
         while (!work.empty) {
             val s = work.pop
-            inherited.declarationsMap.putAll(s, s.declarations)
-            inherited.regionsMap.putAll(s, s.regions)
-            for (base : s.baseStates) {
-                if (!work.contains(base) &&
-                    !inherited.declarationsMap.containsKey(base) &&
-                    !inherited.regionsMap.containsKey(base) &&
-                    !inherited.actionsMap.containsKey(base)
-                ) {
-                    work.add(base)
+            allBaseStates += s
+            for (base : s.baseStates.reverseView) { // Depth first
+                if (base != state && !work.contains(base) && !allBaseStates.contains(base)) {
+                    work.push(base)
                 }
             }
         }
-        return inherited
+        return allBaseStates
     }
     
     def getAllInheritedDeclarations(State state) {
-        return state.allInherited.declarations
-    }
-    
-    def getAllInheritedRegions(State state) {
-        return state.allInherited.regions
+        return state.getAllInheritedStates.map[it.declarations].flatten
     }
     
     def getAllInheritedActions(State state) {
-        return state.allInherited.actions
-    }
-}
-
-@ToString
-@Data
-class Inheritace {
-    
-    val declarationsMap = LinkedHashMultimap.<State, Declaration>create
-    val regionsMap = LinkedHashMultimap.<State, Region>create
-    val actionsMap = LinkedHashMultimap.<State, Action>create
-    
-    def getDeclarations() {
-        return declarationsMap.values
+        return state.getAllInheritedStates.map[it.actions].flatten
     }
     
-    def getRegions() {
-        return regionsMap.values
+    def getAllInheritedRegions(State state) {
+        return state.getAllInheritedStates.map[it.regions].flatten
     }
     
-    def getActions() {
-        return actionsMap.values
-    }
 }
