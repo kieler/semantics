@@ -95,6 +95,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 SCCharts scCharts = (SCCharts)theEObject;
                 T result = caseSCCharts(scCharts);
                 if (result == null) result = casePragmatable(scCharts);
+                if (result == null) result = caseNameable(scCharts);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

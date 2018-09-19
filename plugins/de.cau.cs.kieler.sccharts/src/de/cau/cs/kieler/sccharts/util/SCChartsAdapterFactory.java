@@ -165,16 +165,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createPragmatableAdapter();
             }
             @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
             @Override
             public Adapter caseDeclarationScope(DeclarationScope object) {
                 return createDeclarationScopeAdapter();
-            }
-            @Override
-            public Adapter caseNameable(Nameable object) {
-                return createNameableAdapter();
             }
             @Override
             public Adapter caseNamedObject(NamedObject object) {

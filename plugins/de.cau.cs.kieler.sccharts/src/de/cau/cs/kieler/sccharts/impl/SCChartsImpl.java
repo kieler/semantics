@@ -92,6 +92,17 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     */
+    public String getName() {
+        if (rootStates != null && !rootStates.isEmpty()) {
+            return rootStates.get(0).getName();
+        }
+        return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */

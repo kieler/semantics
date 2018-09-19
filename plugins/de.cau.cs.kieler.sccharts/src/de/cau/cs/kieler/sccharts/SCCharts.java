@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.Pragmatable;
 
 import org.eclipse.emf.common.util.EList;
@@ -33,7 +34,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SCCharts extends Pragmatable {
+public interface SCCharts extends Pragmatable, Nameable {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
