@@ -22,6 +22,9 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.xtext.scoping.Scopes
 import de.cau.cs.kieler.sccharts.Region
+import com.google.common.collect.HashMultimap
+import de.cau.cs.kieler.kexpressions.Declaration
+import com.google.common.collect.LinkedHashMultimap
 
 /**
  * This class contains custom scoping description.
@@ -63,9 +66,9 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
     }
     
     protected def IScope getScopeForState(State state, EReference reference) {
-        if (reference.name.equals("scope")) {
+        if (reference.name.equals("scope") || reference.name.equals("baseStates")) {
             val eResource = state.eResource
-            if (eResource != null) {
+            if (eResource !== null) {
                 val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
                 val eResourceSet = eResource.resourceSet
                 if (eResourceSet !== null) {
@@ -85,7 +88,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
         if (reference.name.equals("scope")) {
             val eResource = scopeCall.eResource
-            if (eResource != null) {
+            if (eResource !== null) {
                 val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
                 val eResourceSet = eResource.resourceSet
                 if (eResourceSet !== null) {
@@ -159,9 +162,38 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
                 }
             }
             
+            if (declarationScope instanceof State) {
+                if (!declarationScope.baseStates.nullOrEmpty) {
+                    for (decl : declarationScope.allInheritedDeclarations) {
+                        for(VO : decl.valuedObjects) {
+                            candidates += VO
+                        }
+                    }
+                }
+            }
+            
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
+    }
+    
+    def getAllInheritedDeclarations(State state) {
+        val decls = LinkedHashMultimap.<State, Declaration>create
+        val work = newLinkedList
+        work.addAll(state.baseStates)
+        
+        while (!work.empty) {
+            val s = work.pop
+            decls.putAll(s, s.declarations)
+            for (base : s.baseStates) {
+                if (!decls.containsKey(base) && !work.contains(base)) {
+                    work.add(base)
+                }
+            }
+        }
+        
+        decls.entries.removeIf[value === null]
+        return decls.values
     }
 
 }

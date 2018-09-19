@@ -25,6 +25,7 @@ SCCharts returns sccharts::SCCharts:
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
+	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
@@ -43,6 +44,7 @@ State returns sccharts::State:
 	    'is' reference = ScopeCall
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
+	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
 		declarations+=DeclarationWOSemicolon*

@@ -32,7 +32,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_ScopeCall___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_1__q;
-	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_8_1_1_RightCurlyBracketKeyword_8_1_5__q;
+	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -47,7 +47,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_ScopeCall___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getScopeCallAccess().getLeftParenthesisKeyword_1_1_0()), new TokenAlias(false, false, grammarAccess.getScopeCallAccess().getRightParenthesisKeyword_1_1_1()));
-		match_State___LeftCurlyBracketKeyword_8_1_1_RightCurlyBracketKeyword_8_1_5__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_8_1_1()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_1_5()));
+		match_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_8_1_2()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_1_6()));
 	}
 	
 	@Override
@@ -82,8 +82,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ScopeCall___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_1__q.equals(syntax))
 				emit_ScopeCall___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_State___LeftCurlyBracketKeyword_8_1_1_RightCurlyBracketKeyword_8_1_5__q.equals(syntax))
-				emit_State___LeftCurlyBracketKeyword_8_1_1_RightCurlyBracketKeyword_8_1_5__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q.equals(syntax))
+				emit_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -249,7 +249,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     name=ID (ambiguity) (rule end)
 	 *     name=ID (ambiguity) outgoingTransitions+=Transition
 	 */
-	protected void emit_State___LeftCurlyBracketKeyword_8_1_1_RightCurlyBracketKeyword_8_1_5__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

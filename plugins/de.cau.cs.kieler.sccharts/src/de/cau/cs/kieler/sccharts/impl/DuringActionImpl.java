@@ -168,7 +168,7 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (reset: ");
         result.append(reset);
         result.append(')');

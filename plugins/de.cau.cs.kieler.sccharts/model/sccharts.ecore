@@ -57,6 +57,8 @@
         eType="#//Transition" containment="true" eOpposite="#//Transition/sourceState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/targetState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="baseStates" upperBound="-1"
+        eType="#//State"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" abstract="true" eSuperTypes="#//Scope ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Linkable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"

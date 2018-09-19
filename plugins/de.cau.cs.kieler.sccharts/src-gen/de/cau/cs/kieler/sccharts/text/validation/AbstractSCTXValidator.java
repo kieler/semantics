@@ -21,5 +21,4 @@ public abstract class AbstractSCTXValidator extends KExtValidator {
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
-	
 }

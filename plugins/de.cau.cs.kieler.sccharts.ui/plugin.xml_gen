@@ -204,6 +204,15 @@
 			</activeWhen>
 		</handler>
 	</extension>
+    <extension point="org.eclipse.core.contenttype.contentTypes">
+        <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="sctx"
+            id="de.cau.cs.kieler.sccharts.text.SCTX.contenttype"
+            name="SCTX File"
+            priority="normal">
+        </content-type>
+    </extension>
 	<!-- adding resource factories -->
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
@@ -239,6 +248,15 @@
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="de.cau.cs.kieler.sccharts.text.SCTX"
+			class="de.cau.cs.kieler.sccharts.ui.text.SCTXExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="de.cau.cs.kieler.sccharts.text.SCTX.validator.preferencePage"
+			name="Errors/Warnings">
+			<keywordReference id="de.cau.cs.kieler.sccharts.ui.text.keyword_SCTX"/>
+		</page>
 	</extension>
 	<!-- Quick Outline -->
 	<extension
