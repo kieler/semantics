@@ -71,7 +71,11 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
                                  " * http://rtsys.informatik.uni-kiel.de/kieler \n" +
                                  " */ \n\n")
         wrapperFileString.append("#include \"" + modelName + ".c\" \n\n")
-        wrapperFileString.append("void wrapper_" + modelName + "(")
+        
+        wrapperFileString.append("static TickData_" + modelName + " d_" + modelName + "; \n")
+        wrapperFileString.append("static char init_" + modelName + " = true; \n\n")
+        
+        wrapperFileString.append("static inline void wrapper_" + modelName + "(")
         for (input : inputs) {
             val inputName = input.name
             wrapperFileString.append("double " + inputName + ", ")
@@ -83,19 +87,18 @@ class SimulinkProcessor extends InplaceProcessor<CodeContainer> {
             else{wrapperFileString.append(", ")}  
         }
         wrapperFileString.append("{ \n\n" +
-                                 "  TickData d; \n\n" +
-                                 "  reset(&d); \n")                      
+                                 "  if(init_" + modelName + ") { \n" +
+                                 "      reset_" + modelName + "(&d_" + modelName + "); \n" +
+                                 "      init_" + modelName + " = false;  \n" +
+                                 "  } \n")                    
         for (input : inputs) {
             val inputName = input.name
-            val inputType = input.getVariableDeclaration.type
-            wrapperFileString.append("  d." + inputName + " = (" + inputType.toString + ") " + inputName + "; \n")
+            wrapperFileString.append("  d_" + modelName + "." + inputName + " = " + inputName + "; \n")
         }                         
-        // wrapperFileString.append("  d._pg3 = 1; \n")  // TODO look if manual setting is ever necessary
-        wrapperFileString.append("  tick(&d);\n\n");
+        wrapperFileString.append("  tick_" + modelName + "(&d_" + modelName + ");\n\n")
         for (output : outputs) {
-            val outputType = output.getVariableDeclaration.type
             val outputName = output.name
-            wrapperFileString.append("  *" + outputName + " = (" + outputType + ") d." + outputName + "; \n")         
+            wrapperFileString.append("  *" + outputName + " = d_" + modelName + "." + outputName + "; \n")         
         }
         wrapperFileString.append("\n}")
         
