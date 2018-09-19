@@ -3,28 +3,26 @@
  */
 package de.cau.cs.kieler.sccharts.text.scoping
 
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.EReference
-import de.cau.cs.kieler.sccharts.Transition
-import org.eclipse.xtext.scoping.IScope
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.kexpressions.Declaration
-import com.google.common.collect.LinkedHashMultimap
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
 
 /**
  * This class contains custom scoping description.
@@ -33,9 +31,10 @@ import com.google.common.collect.LinkedHashMultimap
  * on how and when to use it.
  *
  */
-class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider {
+class SCTXScopeProvider extends KExtScopeProvider {
     
     @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsInheritanceExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
     
@@ -175,25 +174,6 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
-    }
-    
-    def getAllInheritedDeclarations(State state) {
-        val decls = LinkedHashMultimap.<State, Declaration>create
-        val work = newLinkedList
-        work.addAll(state.baseStates)
-        
-        while (!work.empty) {
-            val s = work.pop
-            decls.putAll(s, s.declarations)
-            for (base : s.baseStates) {
-                if (!decls.containsKey(base) && !work.contains(base)) {
-                    work.add(base)
-                }
-            }
-        }
-        
-        decls.entries.removeIf[value === null]
-        return decls.values
     }
 
 }

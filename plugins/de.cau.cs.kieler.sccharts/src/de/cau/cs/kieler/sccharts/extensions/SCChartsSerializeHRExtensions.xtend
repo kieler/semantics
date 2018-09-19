@@ -97,8 +97,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr) {
-        val components = <Pair<CharSequence, TextFormat>> newArrayList
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         if (action.delay == DelayType.IMMEDIATE) {
             components.addKeyword("immediate");
@@ -142,8 +142,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
-        val components = <Pair<CharSequence, TextFormat>> newArrayList
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         // Modifiers
         if (declaration instanceof VariableDeclaration) {
@@ -237,15 +237,15 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return components;
     }
     
-    private def addKeyword(List<Pair<CharSequence, TextFormat>> list, CharSequence text) {
+    private def addKeyword(List<Pair<? extends CharSequence, TextFormat>> list, CharSequence text) {
         list += new Pair(text, TextFormat.KEYWORD)
     }
     
-    private def addHighlight(List<Pair<CharSequence, TextFormat>> list, CharSequence text) {
+    private def addHighlight(List<Pair<? extends CharSequence, TextFormat>> list, CharSequence text) {
         list += new Pair(text, TextFormat.HIGHLIGHT)
     }
     
-    private def addText(List<Pair<CharSequence, TextFormat>> list, CharSequence text) {
+    private def addText(List<Pair<? extends CharSequence, TextFormat>> list, CharSequence text) {
         list += new Pair(text, TextFormat.TEXT)
     }
     
