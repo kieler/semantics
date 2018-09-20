@@ -180,6 +180,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.DeLoopRegions">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Inheritance">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

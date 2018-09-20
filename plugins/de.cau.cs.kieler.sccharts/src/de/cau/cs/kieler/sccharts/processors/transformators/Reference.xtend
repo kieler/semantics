@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Scope
@@ -65,6 +66,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension PragmaExtensions
     
     protected var Dataflow dataflowProcessor = null
+    protected var Inheritance inheritanceProcessor = null
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -79,14 +81,17 @@ class Reference extends SCChartsProcessor implements Traceable {
     override process() {
         replacedWithLiterals.clear
         dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.dataflow") as Dataflow
-        if (dataflowProcessor !== null) {
-            dataflowProcessor.setEnvironment(sourceEnvironment, environment)
-        }
+        dataflowProcessor?.setEnvironment(sourceEnvironment, environment)
+        inheritanceProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.inheritance") as Inheritance
+        inheritanceProcessor?.setEnvironment(sourceEnvironment, environment)
         
         val model = getModel
         
         // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
         for(rootState : newArrayList(model.rootStates.head)) {
+            // Inherit from base states
+            inheritanceProcessor?.inheritBaseStates(rootState)
+            
             val statesWithReferences = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
@@ -124,6 +129,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                  annotations += annotation.copy
             }
         ]
+        
+        // Inherit from base states
+        inheritanceProcessor?.inheritBaseStates(newState)
         
         // Push all declarations of the state with the reference onto the replacement stack and search for
         // similar valued objects in the copy.  
@@ -210,10 +218,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : state.actions + state.outgoingTransitions) {
-            action.trigger?.replaceReferences(replacements)
-            for (effect : action.effects) {
-                effect.replaceReferences(replacements)
-            }
+            action.replaceValuedObjectReferencesInAction(replacements)
         }
 
         // If the state is also a referenced state, process the parameters and expand this state, too.
@@ -228,6 +233,14 @@ class Reference extends SCChartsProcessor implements Traceable {
         // Delegate the region replacement.
         for (region : state.regions) {
             region.replaceValuedObjectReferences(replacements)
+        }
+    }
+    
+    /** Replaces valued object references inside the given action. */
+    protected def replaceValuedObjectReferencesInAction(Action action, Replacements replacements) {
+        action.trigger?.replaceReferences(replacements)
+        for (effect : action.effects) {
+            effect.replaceReferences(replacements)
         }
     }
     
