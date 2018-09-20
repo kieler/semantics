@@ -99,7 +99,7 @@ class TakenTransitionSignaling extends SCChartsProcessor {
                 environment.setProperty(ARRAY_SIZE, transitions.size)
                 // Create new root state to encapsule the behavior of the original model
                 val newRootState = rootState.encapsuleInSuperstate
-                model.rootStates.add(newRootState)
+                model.rootStates.add(0, newRootState)
                                 
                 // Create transition array
                 val transitionArrayDecl = createIntDeclaration
