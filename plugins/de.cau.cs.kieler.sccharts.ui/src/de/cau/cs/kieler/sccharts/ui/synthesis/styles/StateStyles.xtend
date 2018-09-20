@@ -232,16 +232,15 @@ class StateStyles {
      * Adds a title label to a macro state figure.
      */
     def KRectangle addMacroStateLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
-        node.contentContainer.addRectangle => [
-            setProperty(IS_LAYOUT_ELEMENT, true)
-            invisible = true
-            
+        node.contentContainer.addKeywordLabel(components) => [
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
-            
-            // Add text
-            addKeywordLabel(components)
+                
             eAllContents.filter(KText).forEach[fontSize = stateLabelTextSize]
+
+            children.head => [
+                setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
+            ]
         ]
     }
     
