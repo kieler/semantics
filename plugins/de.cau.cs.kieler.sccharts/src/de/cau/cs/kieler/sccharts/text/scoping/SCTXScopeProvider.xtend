@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.sccharts.SCChartsPackage
 
 /**
  * This class contains custom scoping description.
@@ -65,7 +66,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     protected def IScope getScopeForState(State state, EReference reference) {
-        if (reference.name.equals("scope") || reference.name.equals("baseStates")) {
+        if (reference.name.equals("scope") || reference == SCChartsPackage.Literals.STATE__BASE_STATES) {
             val eResource = state.eResource
             if (eResource !== null) {
                 val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)

@@ -24,6 +24,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.diagnostics.IDiagnosticProducer;
 import org.eclipse.xtext.linking.impl.Linker;
 
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.State;
+
 
 /**
  * A customized Xtext linker linking textual SCCharts models.
@@ -45,6 +48,12 @@ public class SCTXLinker extends Linker {
     @Override
     public void beforeEnsureIsLinked(EObject obj, EReference ref, IDiagnosticProducer producer) {
         checkUncontainedOpposites(obj, ref);
+        // Fix linking bug in Xtext
+        if (obj instanceof State) {
+            if (ref == SCChartsPackage.Literals.STATE__BASE_STATES) {
+                ((State) obj).getBaseStates().clear();
+            }
+        }
     }
 
     /**
