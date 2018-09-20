@@ -145,10 +145,10 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return context.getScopeHierarchical(reference)
     }       
 
-    override def IScope getScopeHierarchical(EObject context, EReference reference) {
+    override IScope getScopeHierarchical(EObject context, EReference reference) {
         val candidates = <ValuedObject> newArrayList
         var declarationScope = context.nextDeclarationScope
-        while (declarationScope != null) {
+        while (declarationScope !== null) {
             for(declaration : declarationScope.declarations) {
                 for(VO : declaration.valuedObjects) {
                     candidates += VO
@@ -157,7 +157,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             
             // Add for regions counter variable            
             if (declarationScope instanceof Region) {
-                if (declarationScope.counterVariable != null) {
+                if (declarationScope.counterVariable !== null) {
                     candidates += declarationScope.counterVariable
                 }
             }
