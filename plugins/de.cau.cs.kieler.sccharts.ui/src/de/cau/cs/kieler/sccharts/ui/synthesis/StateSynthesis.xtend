@@ -186,7 +186,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
-            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(state.allInheritedDeclarations)
+            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allInheritedDeclarations.toList)
             for (declaration : declarations) {
                 node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
@@ -197,7 +197,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
-            if (SHOW_INHERITANCE.booleanValue) actions.addAll(state.allInheritedActions)
+            if (SHOW_INHERITANCE.booleanValue) actions.addAll(0, state.allInheritedActions.toList)
             for (action : actions) {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
@@ -231,7 +231,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Transform regions
         val regions = new ArrayList<Region>(state.regions)
-        if (SHOW_INHERITANCE.booleanValue) regions.addAll(state.allInheritedRegions)
+        if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allInheritedRegions.toList)
         for (region : regions) {
             switch region {
                 ControlflowRegion: node.children += region.transform
