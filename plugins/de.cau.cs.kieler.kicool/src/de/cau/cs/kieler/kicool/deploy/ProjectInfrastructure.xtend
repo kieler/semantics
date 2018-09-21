@@ -141,7 +141,7 @@ class ProjectInfrastructure {
             } else if (modelFile instanceof Nameable) {
                 name = modelFile.name
             }
-            name = name.replaceAll(Pattern.quote(File.separator), "-")
+            name = name.replaceAll("/", "-")
             name = name.replaceAll(" |\\.", "-")
             
             // Create Folder
