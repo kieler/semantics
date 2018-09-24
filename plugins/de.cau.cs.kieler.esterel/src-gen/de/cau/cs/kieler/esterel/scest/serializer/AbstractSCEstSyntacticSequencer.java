@@ -403,7 +403,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     function=[Function|ID] (ambiguity) (rule end)
@@ -485,11 +485,11 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     task=[Task|ID] (ambiguity) '(' valueParameters+=Expression
-	 *     task=[Task|ID] (ambiguity) ('()' | ('(' ')')) 'return' returnSignal=[Signal|ID]
+	 *     task=[Task|ID] (ambiguity) (('(' ')') | '()') 'return' returnSignal=[Signal|ID]
 	 */
 	protected void emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -497,11 +497,11 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     referenceParameters+=[Variable|ID] ')' (ambiguity) 'return' returnSignal=[Signal|ID]
-	 *     task=[Task|ID] ('()' | ('(' ')')) (ambiguity) 'return' returnSignal=[Signal|ID]
+	 *     task=[Task|ID] (('(' ')') | '()') (ambiguity) 'return' returnSignal=[Signal|ID]
 	 */
 	protected void emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_2_1_or___LeftParenthesisKeyword_2_0_2_0_0_RightParenthesisKeyword_2_0_2_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -618,11 +618,11 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     procedure=[Procedure|ID] (ambiguity) '(' valueArguments+=Expression
-	 *     procedure=[Procedure|ID] (ambiguity) ('()' | ('(' ')')) (rule end)
+	 *     procedure=[Procedure|ID] (ambiguity) (('(' ')') | '()') (rule end)
 	 */
 	protected void emit_ProcedureCall_LeftParenthesisRightParenthesisKeyword_3_1_or___LeftParenthesisKeyword_3_0_0_RightParenthesisKeyword_3_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -630,10 +630,10 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     procedure=[Procedure|ID] ('()' | ('(' ')')) (ambiguity) (rule end)
+	 *     procedure=[Procedure|ID] (('(' ')') | '()') (ambiguity) (rule end)
 	 *     referenceArguments+=[Variable|ID] ')' (ambiguity) (rule end)
 	 */
 	protected void emit_ProcedureCall_LeftParenthesisRightParenthesisKeyword_4_1_or___LeftParenthesisKeyword_4_0_0_RightParenthesisKeyword_4_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

@@ -37,6 +37,11 @@ public enum ValueType implements Enumerator {
      * The '<em><b>PURE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Default value is the PURE type which means that the
+     * ValuedObject does not contain any value at all (only
+     * makes sense for Signals).
+     * <!-- end-model-doc -->
      * @see #PURE_VALUE
      * @generated
      * @ordered
@@ -83,6 +88,11 @@ public enum ValueType implements Enumerator {
      * The '<em><b>HOST</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * HOST means that no actual type is given but the
+     * type in the hostType attribute should be used 
+     * instead.
+     * <!-- end-model-doc -->
      * @see #HOST_VALUE
      * @generated
      * @ordered

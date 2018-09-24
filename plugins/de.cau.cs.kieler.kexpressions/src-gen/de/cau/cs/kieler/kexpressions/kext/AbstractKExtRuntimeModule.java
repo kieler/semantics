@@ -14,6 +14,7 @@ import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSyntacticSequencer;
 import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
+import de.cau.cs.kieler.kexpressions.kext.validation.KExtConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link KExtRuntimeModule}.
@@ -135,6 +137,11 @@ public abstract class AbstractKExtRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends KExtValidator> bindKExtValidator() {
 		return KExtValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return KExtConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

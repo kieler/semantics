@@ -19,21 +19,24 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.Replacements
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.ArrayList
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * 
  * @author als
  */
-class Inheritance extends Reference {
+class Inheritance extends SCChartsProcessor implements Traceable {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -43,6 +46,8 @@ class Inheritance extends Reference {
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsInheritanceExtensions
+    
+    public static val GENERATED_PREFIX = "_"
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.inheritance"
@@ -66,7 +71,7 @@ class Inheritance extends Reference {
             state.annotations.addAll(allBaseStates.map[annotations.map[copy]].flatten)
             
             // copy declarations
-            val replacements = new Replacements
+            val replacements = newHashMap
             val names = HashMultimap.<String, ValuedObject>create
             for (decl : state.declarations) {
                 for (vo : decl.valuedObjects) {
@@ -76,23 +81,21 @@ class Inheritance extends Reference {
             val newDecls = newArrayList
             for (baseDelc : allBaseStates.map[declarations].flatten) {
                 var newDecl = baseDelc.copy
+                
+                if (newDecl.private) { // rename
+                    for (vo : newDecl.valuedObjects) {
+                        vo.name = GENERATED_PREFIX + (baseDelc.eContainer as State).name + "_" + vo.name
+                    }
+                }
 
                 for (baseVoIdx : baseDelc.valuedObjects.indexed) {
                     val baseVO = baseVoIdx.value
                     val newVO = newDecl.valuedObjects.get(baseVoIdx.key)
                     if (names.containsKey(newVO.name)) {
-                        val effectiveVO = names.get(newVO.name).head
-                        val effectiveDecl = effectiveVO.declaration
-                        // merge
-                        if (newDecl.isMergeableDeclaration(effectiveDecl)) {
-                            newDecl.annotations.addAll(effectiveDecl.annotations.map[copy])
-                            environment.infos.add("Merged duplicate variable declaration with name " + newVO.name + " in inheritance hierarchy.", effectiveVO, true)
-                        } else {
-                            environment.errors.add("Conflicting variable declaration with name " + newVO.name + " in inheritance hierarchy.", effectiveVO, true)
-                        }
-                        replacements.push(baseVO, effectiveVO.reference)
+                        environment.errors.add("Conflicting variable declaration with name " + newVO.name + " in inheritance hierarchy.", baseVO, true)
                     } else {
-                        replacements.push(baseVO, newVO.reference)
+                        replacements.put(baseVO, newVO)
+                        voStore.add(newVO, "inherited")
                     }
                     names.put(newVO.name, newVO)
                 }
@@ -107,19 +110,25 @@ class Inheritance extends Reference {
             state.actions.addAll(0, allBaseStates.map[actions.map[copy]].flatten.toList)
             
             // replace references in state actions
-            state.actions.forEach[replaceValuedObjectReferencesInAction(replacements)]
+            state.actions.forEach[replaceVOR(replacements)]
             
             // copy regions
-            state.regions.addAll(0, state.allInheritedRegions.map[copy].toList)
+            state.regions.addAll(0, state.allVisibleInheritedRegions.map[copy].toList)
             // TODO overriding and conflicts!
 //            for (conflict : allBaseStates.allConflictingInheritedRegions) {
 //            }
 
             // replace references in state regions
-            state.regions.forEach[replaceValuedObjectReferences(replacements)]
+            state.regions.forEach[replaceVOR(replacements)]
 
             // remove base states
             state.baseStates.clear
+        }
+    }
+    
+    def replaceVOR(EObject object, java.util.Map<ValuedObject, ValuedObject> replacements) {
+        for (vor: object.eAllContents.filter(ValuedObjectReference).filter[replacements.containsKey(valuedObject)].toList) {
+            vor.valuedObject = replacements.get(vor.valuedObject)
         }
     }
 }

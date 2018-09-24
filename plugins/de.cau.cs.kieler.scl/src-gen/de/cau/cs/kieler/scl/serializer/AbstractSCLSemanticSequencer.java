@@ -53,7 +53,6 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
-import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
@@ -374,7 +373,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
 			case SCLPackage.MODULE:
-				sequence_Module(context, (Module) semanticObject); 
+				sequence_Module(context, (de.cau.cs.kieler.scl.Module) semanticObject); 
 				return; 
 			case SCLPackage.MODULE_CALL:
 				sequence_ModuleCall(context, (ModuleCall) semanticObject); 
@@ -529,7 +528,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 * Constraint:
 	 *     (annotations+=Annotation* name=ID declarations+=Declaration* statements+=Statement*)
 	 */
-	protected void sequence_Module(ISerializationContext context, Module semanticObject) {
+	protected void sequence_Module(ISerializationContext context, de.cau.cs.kieler.scl.Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

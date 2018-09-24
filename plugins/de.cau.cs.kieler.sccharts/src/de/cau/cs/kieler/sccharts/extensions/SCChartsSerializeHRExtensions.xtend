@@ -147,6 +147,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
 
         // Modifiers
         if (declaration instanceof VariableDeclaration) {
+            if (declaration.isPrivate) {
+                components.addKeyword("private")
+            }
             if (declaration.isExtern) {
                 components.addKeyword("extern")
             }

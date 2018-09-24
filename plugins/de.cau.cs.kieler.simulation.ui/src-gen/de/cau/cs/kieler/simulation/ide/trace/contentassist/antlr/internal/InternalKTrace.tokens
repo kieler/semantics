@@ -53,13 +53,13 @@
 'combine'=91
 'conflict'=40
 'confluent'=41
-'const'=103
+'const'=104
 'expression'=83
 'extern'=86
 'float'=68
 'global'=88
 'host'=36
-'input'=104
+'input'=105
 'int'=67
 'max'=71
 'max='=55
@@ -67,10 +67,11 @@
 'min='=54
 'none'=70
 'null'=100
-'output'=105
+'output'=106
 'pause'=78
 'pre'=17
 'print'=95
+'private'=103
 'pure'=64
 'random'=98
 'randomize'=96
@@ -78,8 +79,8 @@
 'reset'=73
 'schedule'=87
 'scope'=80
-'signal'=107
-'static'=106
+'signal'=108
+'static'=107
 'string'=69
 'unsigned'=66
 'val'=28
@@ -110,6 +111,7 @@ T__104=104
 T__105=105
 T__106=106
 T__107=107
+T__108=108
 T__17=17
 T__18=18
 T__19=19

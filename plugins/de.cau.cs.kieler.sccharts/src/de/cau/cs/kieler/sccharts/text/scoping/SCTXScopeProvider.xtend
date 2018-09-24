@@ -164,7 +164,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             
             if (declarationScope instanceof State) {
                 if (!declarationScope.baseStates.nullOrEmpty) {
-                    for (decl : declarationScope.allInheritedDeclarations) {
+                    for (decl : declarationScope.allVisibleInheritedDeclarations) {
                         for(VO : decl.valuedObjects) {
                             candidates += VO
                         }

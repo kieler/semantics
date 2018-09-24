@@ -113,6 +113,7 @@
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//Declaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Declaration/valuedObjects"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/private"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//VariableDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//VariableDeclaration/type"/>

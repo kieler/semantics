@@ -16,6 +16,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.Declaration#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getDeclaration()
@@ -38,5 +39,31 @@ public interface Declaration extends Annotatable {
      * @generated
      */
     EList<ValuedObject> getValuedObjects();
+
+    /**
+     * Returns the value of the '<em><b>Private</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Private</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Private</em>' attribute.
+     * @see #setPrivate(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getDeclaration_Private()
+     * @model required="true"
+     * @generated
+     */
+    boolean isPrivate();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Private</em>' attribute.
+     * @see #isPrivate()
+     * @generated
+     */
+    void setPrivate(boolean value);
 
 } // Declaration

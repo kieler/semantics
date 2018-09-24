@@ -14,6 +14,7 @@ import de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider;
 import de.cau.cs.kieler.esterel.serializer.EsterelSemanticSequencer;
 import de.cau.cs.kieler.esterel.serializer.EsterelSyntacticSequencer;
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
+import de.cau.cs.kieler.esterel.validation.EsterelConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.esterel.validation.EsterelValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link EsterelRuntimeModule}.
@@ -135,6 +137,11 @@ public abstract class AbstractEsterelRuntimeModule extends DefaultRuntimeModule 
 	@SingletonBinding(eager=true)
 	public Class<? extends EsterelValidator> bindEsterelValidator() {
 		return EsterelValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return EsterelConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

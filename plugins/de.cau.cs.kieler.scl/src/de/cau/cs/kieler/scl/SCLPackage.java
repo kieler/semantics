@@ -431,6 +431,24 @@ public interface SCLPackage extends EPackage {
     int ASSIGNMENT__SCHEDULE = KEffectsPackage.ASSIGNMENT__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__OUTGOING_LINKS = KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__INCOMING_LINKS = KEffectsPackage.ASSIGNMENT__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

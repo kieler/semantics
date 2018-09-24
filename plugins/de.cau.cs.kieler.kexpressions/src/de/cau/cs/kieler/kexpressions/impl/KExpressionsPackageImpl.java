@@ -338,7 +338,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link KExpressionsPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -352,7 +352,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         if (isInited) return (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
         // Obtain or create and register package
-        KExpressionsPackageImpl theKExpressionsPackage = (KExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KExpressionsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KExpressionsPackageImpl());
+        Object registeredKExpressionsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        KExpressionsPackageImpl theKExpressionsPackage = registeredKExpressionsPackage instanceof KExpressionsPackageImpl ? (KExpressionsPackageImpl)registeredKExpressionsPackage : new KExpressionsPackageImpl();
 
         isInited = true;
 
@@ -368,7 +369,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         // Mark meta-data to indicate it can't be changed
         theKExpressionsPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(KExpressionsPackage.eNS_URI, theKExpressionsPackage);
         return theKExpressionsPackage;
@@ -579,6 +579,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     public EReference getDeclaration_ValuedObjects() {
         return (EReference)declarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDeclaration_Private() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1174,6 +1183,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         declarationEClass = createEClass(DECLARATION);
         createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
+        createEAttribute(declarationEClass, DECLARATION__PRIVATE);
 
         variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
@@ -1360,6 +1370,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(declarationEClass, Declaration.class, "Declaration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeclaration_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Private(), ecorePackage.getEBoolean(), "private", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getVariableDeclaration_Type(), this.getValueType(), "type", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

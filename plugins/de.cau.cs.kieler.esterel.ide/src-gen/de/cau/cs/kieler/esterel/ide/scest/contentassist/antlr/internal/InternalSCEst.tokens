@@ -55,7 +55,7 @@
 'combine'=85
 'conflict'=57
 'confluent'=58
-'const'=162
+'const'=163
 'constant'=89
 'copymodule'=133
 'do'=112
@@ -105,6 +105,7 @@
 'pre'=17
 'present'=108
 'print'=152
+'private'=162
 'procedure'=91
 'pure'=47
 'randomize'=153
@@ -118,7 +119,7 @@
 'sensor'=97
 'set'=82
 'signal'=130
-'static'=163
+'static'=164
 'string'=53
 'suspend'=124
 'sustain'=106
@@ -222,6 +223,7 @@ T__160=160
 T__161=161
 T__162=162
 T__163=163
+T__164=164
 T__17=17
 T__18=18
 T__19=19

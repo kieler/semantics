@@ -12,10 +12,8 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.sccharts.State
+import java.util.Set
 
 /**
  * @author als
@@ -23,9 +21,10 @@ import de.cau.cs.kieler.sccharts.State
  */
 class SCChartsInheritanceExtensions {
     
-    @Inject extension KExpressionsCompareExtensions
-    
-    def getAllInheritedStates(State state) {
+    /**
+     * Returns a set of all states contained in the inheritance hierarchy of the given state.
+     */
+    def Set<State> getAllInheritedStates(State state) {
         val allBaseStates = newLinkedHashSet
         val work = newLinkedList
         work.addAll(state.baseStates.toSet)
@@ -43,19 +42,26 @@ class SCChartsInheritanceExtensions {
         return allBaseStates
     }
     
-    def getAllInheritedDeclarations(State state) {
-        return state.getAllInheritedStates.map[it.declarations].flatten
+    /**
+     * Returns an iterator of all visible (no private) declarations of all states contained in the inheritance hierarchy of the given state.
+     * Conflicting duplicates will be included.
+     */
+    def getAllVisibleInheritedDeclarations(State state) {
+        return state.getAllInheritedStates.map[it.declarations].flatten.filter[!private]
     }
     
-    def boolean isMergeableDeclaration(Declaration d1, Declaration d2) {
-        return d1.sameType(d2)
-    }
-    
-    def getAllInheritedActions(State state) {
+    /**
+     * Returns an iterator of all actions of all states contained in the inheritance hierarchy of the given state.
+     */
+    def getAllVisibleInheritedActions(State state) {
         return state.getAllInheritedStates.map[it.actions].flatten
     }
     
-    def getAllInheritedRegions(State state) {
+    /**
+     * Returns an iterator of all visible (override region will hide overridden ones) regions of all states contained in the inheritance hierarchy of the given state.
+     * Conflicting duplicates will be included.
+     */
+    def getAllVisibleInheritedRegions(State state) {
         // TODO override
         return state.getAllInheritedStates.map[it.regions].flatten
     }

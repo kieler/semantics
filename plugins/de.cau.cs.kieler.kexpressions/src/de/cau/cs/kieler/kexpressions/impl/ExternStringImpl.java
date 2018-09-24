@@ -154,7 +154,7 @@ public class ExternStringImpl extends AnnotatableImpl implements ExternString {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (code: ");
         result.append(code);
         result.append(')');

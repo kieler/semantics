@@ -386,6 +386,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         private?='private'? 
 	 *         (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
@@ -405,6 +406,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         private?='private'? 
 	 *         (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
@@ -436,6 +438,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         private?='private'? 
 	 *         name=STRING? 
 	 *         global=PriorityProtocol? 
 	 *         (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
@@ -457,6 +460,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         private?='private'? 
 	 *         name=STRING? 
 	 *         global=PriorityProtocol? 
 	 *         (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
@@ -514,6 +518,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         private?='private'? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
@@ -538,6 +543,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         private?='private'? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 

@@ -16,5 +16,4 @@ public abstract class AbstractAnnotationsValidator extends AbstractDeclarativeVa
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
-	
 }
