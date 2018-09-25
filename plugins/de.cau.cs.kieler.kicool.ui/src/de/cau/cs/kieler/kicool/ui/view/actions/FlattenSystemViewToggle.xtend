@@ -17,7 +17,6 @@ import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author als
