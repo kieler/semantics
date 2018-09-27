@@ -49,6 +49,8 @@ import org.eclipse.xtext.validation.CheckType
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import com.google.common.collect.HashMultimap
 
 //import org.eclipse.xtext.validation.Check
 
@@ -66,6 +68,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsFixExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsInheritanceExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     
@@ -117,7 +120,94 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String LAYOUT_ANNOTATION_VALUE = "Invalid layout option value.\nThe given value can not be parsed into a valid value for the given layout option."
     static val String LAYOUT_ANNOTATION_FORMAT = "Layout annotations must have the format '@layout[id] value'"
     
-    static val String REGION_ACTION_EXPERIMENTAL = "Actions in regions are highly experimental and may not produce the expected results."    
+    static val String REGION_ACTION_EXPERIMENTAL = "Actions in regions are highly experimental and may not produce the expected results."  
+    
+    static val String BASESTATES_INHERITANCE_CYCLE = "Inconsistent inheritance hierarchy! Cycle including base state: "
+    static val String BASESTATES_INHERITANCE_NAME_REUSE = "This variable name is already used in a base state."  
+    static val String BASESTATES_INHERITANCE_NAME_CLASH = "There is a name clash between declared valued object in inheritance hierarchy. Valued object with name %s is declared multiple times (%s)."  
+
+    /**
+     * Checks for inconsistencies/conflicts in inheritance hierarchy.
+     */
+    @Check
+    def void checkInheritanceHierarchy(de.cau.cs.kieler.sccharts.State state) {
+        if (!state.baseStates.nullOrEmpty) {
+            // DFS with checks if new child already exists in path to root.
+            val path = newLinkedList(state)
+            val indexes = newLinkedList(-1)
+            while (!path.empty) {
+                val s = path.peek
+                val idx = indexes.pop + 1
+                if (s.baseStates === null || s.baseStates.size <= idx) {
+                    path.pop
+                } else {
+                    indexes.push(idx)
+                    val base = s.baseStates.get(idx)
+                    // check cycle
+                    if (path.contains(base)) {
+                        warning(BASESTATES_INHERITANCE_CYCLE + base.name, state, SCChartsPackage.eINSTANCE.state_BaseStates, indexes.last)
+                    } else {
+                        path.push(base)
+                        indexes.push(-1)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks for name clashed between inherited states.
+     */
+    @Check
+    def void checkInheritedVONameClash(de.cau.cs.kieler.sccharts.State state) {
+        if (!state.baseStates.nullOrEmpty) {
+            val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
+            for (base : state.allInheritedStates) {
+                base.declarations.filter[!private].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
+            }
+            val clashes = names.keySet.filter[names.get(it).size > 1].toSet
+            if (!clashes.empty) {
+                val indirectClashes = state.baseStates.indexed.toMap([key], [value.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet])
+                for (clash : clashes) {
+                    val states = names.get(clash)
+                    val marked = newHashSet
+                    for (s : states) {
+                        if (state.baseStates.contains(s)) {
+                            if (!marked.contains(s)) {
+                                marked += s
+                                warning(BASESTATES_INHERITANCE_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, state.baseStates.indexOf(s))
+                            }
+                        } else { // indirect
+                            for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
+                                val markState = state.baseStates.get(match.key)
+                                if (!marked.contains(markState)) {
+                                    marked += markState
+                                    warning(BASESTATES_INHERITANCE_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, match.key)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Checks for reusing vo names of vos in inherited states.
+     */
+    @Check
+    def void checkInheritedVONameReuse(de.cau.cs.kieler.sccharts.State state) {
+        if (!state.baseStates.nullOrEmpty) {
+            val names = state.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet
+            for (decl : state.declarations) {
+                for (vo : decl.valuedObjects) {
+                    if (names.contains(vo.name)) {
+                        warning(BASESTATES_INHERITANCE_NAME_REUSE, vo, null)
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Checks if given layout annotation uses an existing unique layout option id (suffix).
