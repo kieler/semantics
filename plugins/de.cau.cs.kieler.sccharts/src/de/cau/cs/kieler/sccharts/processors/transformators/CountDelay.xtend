@@ -123,7 +123,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
             val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName(nameCache)
-            voStore.add(counter, SCCHARTS_GENERATED)
+            voStore.update(counter, SCCHARTS_GENERATED)
 
             //Add entry action
             val entryAction = sourceState.createEntryAction

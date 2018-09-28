@@ -118,7 +118,7 @@ class Period extends SCChartsProcessor implements Traceable {
                     type = ValueType.CLOCK
                     valuedObjects += clocks
                 ]
-                clocks.forEach[voStore.add(it, SCCHARTS_GENERATED)]
+                clocks.forEach[voStore.update(it, SCCHARTS_GENERATED)]
                 
                 // Create tick guards
                 val ticks = newArrayList
@@ -132,7 +132,7 @@ class Period extends SCChartsProcessor implements Traceable {
                 state.declarations += createBoolDeclaration => [
                     valuedObjects += ticks
                 ]
-                ticks.forEach[voStore.add(it, SCCHARTS_GENERATED)]
+                ticks.forEach[voStore.update(it, SCCHARTS_GENERATED)]
                 
                 // Guard regions
                 for (tick : ticks) {

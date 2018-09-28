@@ -182,7 +182,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
             if (!allStatesFinal) {
                 val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
                     uniqueName(nameCache)
-                voStore.add(termVariable, SCCHARTS_GENERATED)
+                voStore.update(termVariable, SCCHARTS_GENERATED)
                 state.createEntryAction.addAssignment(termVariable.createAssignment(FALSE))    
                 //termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {

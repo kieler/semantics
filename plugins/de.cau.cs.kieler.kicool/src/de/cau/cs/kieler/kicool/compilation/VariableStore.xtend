@@ -133,20 +133,13 @@ class VariableStore implements IKiCoolCloneable {
     def initialize(EObject root) {
         for (decl : root.eAllContents.filter(VariableDeclaration).toIterable) {
             for (vo : decl.valuedObjects) {
-                add(vo)
+                update(vo)
             }
         }
     }
 
-    // Convenance for Valued Objects
-    
-    /**
-     * Shoudl only be used for variables that are NOT yet contained in the store.
-     */
-    def VariableInformation add(ValuedObject vo, String... properties) {
-        update(vo, new VariableInformation, properties)
-    }
-    
+    // -- Convenance for Valued Objects --
+        
     def VariableInformation update(ValuedObject vo, String... properties) {
         var info = variables.get(vo.name).findFirst[valuedObject == vo]
         if (info === null) {
@@ -158,7 +151,8 @@ class VariableStore implements IKiCoolCloneable {
             info = entry?.value
         }
         if (info === null) {
-            throw new IllegalArgumentException("ValuedObject with name " + vo.name + " was not previously registered! Use add(..) to register.")
+            // ValuedObject not previously registered
+            info = new VariableInformation
         }
         update(vo, info, properties)
     }

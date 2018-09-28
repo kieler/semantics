@@ -126,7 +126,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             // add a during action in the state to reset it to FALSE
             val deferVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "deferred", createBoolDeclaration).
                 uniqueName(nameCache)
-            voStore.add(deferVariable, SCCHARTS_GENERATED)
+            voStore.update(deferVariable, SCCHARTS_GENERATED)
             deferVariable.setInitialValue(FALSE)
             val resetDeferSignalAction = state.createDuringAction
             resetDeferSignalAction.addEffect(deferVariable.createAssignment(FALSE))

@@ -247,7 +247,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                                 // strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                                 val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                                     GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
-                                voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
+                                voStore.update(transitionTriggerVariable, SCCHARTS_GENERATED)
                                 state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                                 transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                                 strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(
@@ -278,7 +278,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                             // Create a new _transitionTrigger valuedObject
                             val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                                 GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
-                            voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
+                            voStore.update(transitionTriggerVariable, SCCHARTS_GENERATED)
                             state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                             weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(

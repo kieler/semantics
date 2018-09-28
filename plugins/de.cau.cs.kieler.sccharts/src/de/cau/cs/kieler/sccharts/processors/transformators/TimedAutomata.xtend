@@ -142,7 +142,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     valuedObjects += vo
                 ]
                 vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
-                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                 vo
             }
             
@@ -171,7 +171,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         valuedObjects += vo
                     ]
                     vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
-                    voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                    voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                 }
                 vo
             }
@@ -186,7 +186,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     valuedObjects += vo
                 ]
                 vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
-                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                 
                 rootState.createDuringAction => [
                     // calculate deviation

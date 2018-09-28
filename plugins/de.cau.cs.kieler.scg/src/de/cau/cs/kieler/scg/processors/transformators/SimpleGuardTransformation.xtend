@@ -144,7 +144,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         ]
         
         val termVO = newSCG.createTERMSignal
-        voStore.add(termVO, "term")
+        voStore.update(termVO, "term")
         val termAssignment = ScgFactory::eINSTANCE.createAssignment => [ valuedObject = termVO ]    
         val termSet = <Assignment> newHashSet    
 

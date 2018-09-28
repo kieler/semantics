@@ -182,7 +182,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
                 conditionalGuards.put(conditional, newGuard)
                 conditionalDeclaration.valuedObjects += newVO
-                voStore.add(newVO, "guard", "conditionalGuard")
+                voStore.update(newVO, "guard", "conditionalGuard")
                 SCGPlugin.log(
                     "Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " +
                         newGuard.expression.serialize + ", " + newGuard.valuedObject, Level.FINE)
@@ -494,7 +494,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         // Add empty guards to VariableStore
         val voStore = VariableStore.get(environment)
         synchronizer.newGuards.forEach[
-            voStore.add(it.valuedObject, "guard", "emptyGuard")
+            voStore.update(it.valuedObject, "guard", "emptyGuard")
         ]
 
 //        val newGuards = synchronizer.newGuards

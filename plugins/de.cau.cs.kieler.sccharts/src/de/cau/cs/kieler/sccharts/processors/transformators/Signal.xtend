@@ -174,8 +174,8 @@ class Signal extends SCChartsProcessor implements Traceable {
                 valueDecl.setOutput(signal.isOutput)
                 valueVariable.applyAttributes(signal)
 
-                voStore.add(valueVariable, SCCHARTS_GENERATED, "signal-value", variableValueExtension)
-                voStore.add(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
+                voStore.update(valueVariable, SCCHARTS_GENERATED, "signal-value", variableValueExtension)
+                voStore.update(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
                 
                 // Add an immediate during action that updates the value (in case of an emission)
                 // to the current value

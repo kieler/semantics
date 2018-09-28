@@ -113,7 +113,7 @@ class TakenTransitionSignaling extends SCChartsProcessor {
                 rootState.createResetRegion(transitionArray)
                 
                 // Regiser in VO Store
-                voStore.add(transitionArray, SCCHARTS_GENERATED, "simulation")
+                voStore.update(transitionArray, SCCHARTS_GENERATED, "simulation")
             }
         }
     }

@@ -127,7 +127,7 @@ class Suspend extends SCChartsProcessor implements Traceable {
 
         // One unique suspend flag
         val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName(nameCache)
-        voStore.add(suspendFlag, SCCHARTS_GENERATED)
+        voStore.update(suspendFlag, SCCHARTS_GENERATED)
 
         // Do not consider other suspends as actions
         val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction)).toList

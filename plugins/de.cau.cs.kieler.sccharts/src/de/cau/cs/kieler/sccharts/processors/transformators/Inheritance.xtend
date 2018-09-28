@@ -95,7 +95,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                         environment.errors.add("Conflicting variable declaration with name " + newVO.name + " in inheritance hierarchy.", baseVO, true)
                     } else {
                         replacements.put(baseVO, newVO)
-                        voStore.add(newVO, "inherited")
+                        voStore.update(newVO, "inherited")
                     }
                     names.put(newVO.name, newVO)
                 }
