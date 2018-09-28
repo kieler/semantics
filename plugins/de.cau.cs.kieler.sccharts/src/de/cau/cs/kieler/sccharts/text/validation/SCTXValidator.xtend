@@ -52,6 +52,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 
 //import org.eclipse.xtext.validation.Check
 
@@ -85,6 +86,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String STATE_NOT_REACHABLE = "The state is not reachable.";
     static val String NO_REGION = "A state with a termination transition must have inner behaviour.";
     static val String DUPLICATE_REGION = "There are multiple regions with the same name.";
+    static val String DUPLICATE_ROOTSTATE = "There are multiple root states with the same name.";
     
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
@@ -255,11 +257,11 @@ class SCTXValidator extends AbstractSCTXValidator {
         } else if (!region.parentState.baseStates.nullOrEmpty) {
             val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(true)
             if (inheritedRegions.exists[region.name.equals(name)]) {
-                warning(REGION_OVERRIDE_MISSING, region, null)
+                warning(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
             }
         }
     }    
-
+    
     /**
      * Checks if given layout annotation uses an existing unique layout option id (suffix).
      */
@@ -417,7 +419,26 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
         }
     }
-
+    
+    /**
+     * Root state names must be unique
+     *
+     */
+    @Check
+    def void checkDuplicateRootStateNames(SCCharts scc) {
+        val names = <String> newHashSet
+        for(r : scc.rootStates) {
+            val name = r.name
+            if(!name.isNullOrEmpty) {
+                if(names.contains(name)) {
+                    warning(DUPLICATE_ROOTSTATE+" '"+name+"'", r, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
+                } else {
+                    names.add(name)
+                }    
+            }
+        }
+    }
+    
     // -------------------------------------------------------------------------    
 
     /**
