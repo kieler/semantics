@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getScope <em>Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#isSuper <em>Super</em>}</li>
  * </ul>
  *
  * @generated
@@ -88,6 +89,26 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * @ordered
      */
     protected Scope scope;
+
+    /**
+     * The default value of the '{@link #isSuper() <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSuper()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SUPER_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSuper() <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSuper()
+     * @generated
+     * @ordered
+     */
+    protected boolean super_ = SUPER_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -175,6 +196,27 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isSuper() {
+        return super_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSuper(boolean newSuper) {
+        boolean oldSuper = super_;
+        super_ = newSuper;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE_CALL__SUPER, oldSuper, super_));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -201,6 +243,8 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
             case SCChartsPackage.SCOPE_CALL__SCOPE:
                 if (resolve) return getScope();
                 return basicGetScope();
+            case SCChartsPackage.SCOPE_CALL__SUPER:
+                return isSuper();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -225,6 +269,9 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
             case SCChartsPackage.SCOPE_CALL__SCOPE:
                 setScope((Scope)newValue);
                 return;
+            case SCChartsPackage.SCOPE_CALL__SUPER:
+                setSuper((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -246,6 +293,9 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
             case SCChartsPackage.SCOPE_CALL__SCOPE:
                 setScope((Scope)null);
                 return;
+            case SCChartsPackage.SCOPE_CALL__SUPER:
+                setSuper(SUPER_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -264,8 +314,26 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
                 return parameters != null && !parameters.isEmpty();
             case SCChartsPackage.SCOPE_CALL__SCOPE:
                 return scope != null;
+            case SCChartsPackage.SCOPE_CALL__SUPER:
+                return super_ != SUPER_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (super: ");
+        result.append(super_);
+        result.append(')');
+        return result.toString();
     }
 
 } //ScopeCallImpl

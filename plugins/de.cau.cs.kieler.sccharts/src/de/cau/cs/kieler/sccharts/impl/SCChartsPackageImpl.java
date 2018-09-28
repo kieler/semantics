@@ -480,6 +480,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getRegion_Override() {
+        return (EAttribute)regionEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getControlflowRegion() {
         return controlflowRegionEClass;
     }
@@ -635,6 +644,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      */
     public EReference getScopeCall_Scope() {
         return (EReference)scopeCallEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getScopeCall_Super() {
+        return (EAttribute)scopeCallEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -810,6 +828,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         scopeCallEClass = createEClass(SCOPE_CALL);
         createEReference(scopeCallEClass, SCOPE_CALL__SCOPE);
+        createEAttribute(scopeCallEClass, SCOPE_CALL__SUPER);
 
         actionEClass = createEClass(ACTION);
         createEReference(actionEClass, ACTION__EFFECTS);
@@ -838,6 +857,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(regionEClass, REGION__COUNTER_VARIABLE);
         createEReference(regionEClass, REGION__FOR_START);
         createEReference(regionEClass, REGION__FOR_END);
+        createEAttribute(regionEClass, REGION__OVERRIDE);
 
         controlflowRegionEClass = createEClass(CONTROLFLOW_REGION);
         createEReference(controlflowRegionEClass, CONTROLFLOW_REGION__STATES);
@@ -944,6 +964,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(scopeCallEClass, ScopeCall.class, "ScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getScopeCall_Scope(), this.getScope(), null, "scope", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScopeCall_Super(), ecorePackage.getEBoolean(), "super", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(actionEClass, Action.class, "Action", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAction_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -972,6 +993,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getRegion_CounterVariable(), theKExpressionsPackage.getValuedObject(), null, "counterVariable", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getRegion_ForStart(), theKExpressionsPackage.getExpression(), null, "forStart", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getRegion_ForEnd(), theKExpressionsPackage.getExpression(), null, "forEnd", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRegion_Override(), ecorePackage.getEBoolean(), "override", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(controlflowRegionEClass, ControlflowRegion.class, "ControlflowRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getControlflowRegion_States(), this.getState(), this.getState_ParentRegion(), "states", null, 0, -1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

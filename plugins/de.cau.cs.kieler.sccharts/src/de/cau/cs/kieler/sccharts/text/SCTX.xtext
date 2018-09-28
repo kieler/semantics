@@ -61,7 +61,8 @@ ImplicitState returns sccharts::State:
 
 	
 ScopeCall returns sccharts::ScopeCall:
-    scope = [sccharts::State|ID]
+    super?='super.'?
+    scope = [sccharts::Scope|ID]
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
@@ -123,6 +124,7 @@ ImplicitControlflowRegion returns sccharts::ControlflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
+    override?='override'?
     final?='final'?
     'region' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
@@ -145,6 +147,7 @@ ControlflowRegion returns sccharts::ControlflowRegion:
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
+    override?='override'?
     'dataflow' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
     ('schedule' schedule+=ScheduleObjectReference+)?

@@ -13,38 +13,26 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.LinkedHashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * 
  * @author als
  */
 class Inheritance extends SCChartsProcessor implements Traceable {
-    
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExtDeclarationExtensions    
-    @Inject extension SCChartsScopeExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension SCChartsReferenceExtensions
-    @Inject extension SCChartsActionExtensions
+
     @Inject extension SCChartsInheritanceExtensions
     
     public static val GENERATED_PREFIX = "_"
@@ -72,10 +60,10 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             
             // copy declarations
             val replacements = newHashMap
-            val names = HashMultimap.<String, ValuedObject>create
+            val voNames = HashMultimap.<String, ValuedObject>create
             for (decl : state.declarations) {
                 for (vo : decl.valuedObjects) {
-                    names.put(vo.name, vo)
+                    voNames.put(vo.name, vo)
                 }
             }
             val newDecls = newArrayList
@@ -91,15 +79,15 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 for (baseVoIdx : baseDelc.valuedObjects.indexed) {
                     val baseVO = baseVoIdx.value
                     val newVO = newDecl.valuedObjects.get(baseVoIdx.key)
-                    if (names.containsKey(newVO.name)) {
+                    if (voNames.containsKey(newVO.name)) {
                         environment.errors.add("Conflicting variable declaration with name " + newVO.name + " in inheritance hierarchy.", baseVO, true)
                     } else {
                         replacements.put(baseVO, newVO)
                         voStore.update(newVO, "inherited")
                     }
-                    names.put(newVO.name, newVO)
+                    voNames.put(newVO.name, newVO)
                 }
-                newDecl.valuedObjects.removeIf[names.get(it.name).size > 1]
+                newDecl.valuedObjects.removeIf[voNames.get(it.name).size > 1]
                 if (!newDecl.valuedObjects.empty) {
                     newDecls += newDecl 
                 }
@@ -114,9 +102,18 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             
             // copy regions
             state.regions.addAll(0, state.allVisibleInheritedRegions.map[copy].toList)
-            // TODO overriding and conflicts!
-//            for (conflict : allBaseStates.allConflictingInheritedRegions) {
-//            }
+            // conflicts
+            val regionNames = LinkedHashMultimap.<String, Region>create
+            for (r : state.regions) {
+                if (!r.name.nullOrEmpty) {
+                    regionNames.put(r.name, r)
+                }
+            }
+            for (conflict : regionNames.keySet.filter[regionNames.get(it).size > 1]) {
+                for (r : regionNames.get(conflict)) {
+                    environment.errors.add("Conflicting region with name " + r.name + " in inheritance hierarchy.", r, true)
+                }
+            }
 
             // replace references in state regions
             state.regions.forEach[replaceVOR(replacements)]

@@ -14,6 +14,11 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import de.cau.cs.kieler.sccharts.State
 import java.util.Set
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.sccharts.Region
+import com.google.common.collect.HashMultimap
+import java.util.List
 
 /**
  * @author als
@@ -46,14 +51,14 @@ class SCChartsInheritanceExtensions {
      * Returns an iterator of all visible (no private) declarations of all states contained in the inheritance hierarchy of the given state.
      * Conflicting duplicates will be included.
      */
-    def getAllVisibleInheritedDeclarations(State state) {
+    def Iterable<Declaration> getAllVisibleInheritedDeclarations(State state) {
         return state.getAllInheritedStates.map[it.declarations].flatten.filter[!private]
     }
     
     /**
      * Returns an iterator of all actions of all states contained in the inheritance hierarchy of the given state.
      */
-    def getAllVisibleInheritedActions(State state) {
+    def Iterable<LocalAction> getAllVisibleInheritedActions(State state) {
         return state.getAllInheritedStates.map[it.actions].flatten
     }
     
@@ -61,23 +66,89 @@ class SCChartsInheritanceExtensions {
      * Returns an iterator of all visible (override region will hide overridden ones) regions of all states contained in the inheritance hierarchy of the given state.
      * Conflicting duplicates will be included.
      */
-    def getAllVisibleInheritedRegions(State state) {
-        // TODO override
-        return state.getAllInheritedStates.map[it.regions].flatten
+    def Iterable<Region> getAllVisibleInheritedRegions(State state) {
+        return state.getAllVisibleInheritedRegions(true)
     }
     
-//    def allConflictingInheritedRegions(State state) {
-//        return state.getAllInheritedStates.allConflictingInheritedRegions
-//    }
-//    
-//    def allConflictingInheritedRegions(state, Collection<State> baseState) {
-//            val idRegionMap = LinkedHashMultimap.<String, Region>create
-//            for (r : state.regions) {
-//                idRegionMap.put(r.name, r)
-//            }
-//            if (idRegionMap.keySet.size != idRegionMap.values.size) {
-//                // we have a conflict
-//            }
-//        return state.getAllInheritedStates.map[it.regions].flatten
-//    }
+    /**
+     * Returns an iterator of all visible (override region will hide overridden ones) regions of all states contained in the inheritance hierarchy of the given state.
+     * Conflicting duplicates will be included.
+     * @param directOverride if true the given state also contributed as overrider.
+     *
+     */
+    def Iterable<Region> getAllVisibleInheritedRegions(State state, boolean directOverride) {
+        if (!state.baseStates.nullOrEmpty) {
+            val regions = newLinkedHashSet
+            val path = newLinkedList(state)
+            val indexes = newLinkedList(-1)
+            val overrides = <List<Region>>newLinkedList
+            if (directOverride) {
+                overrides.push(state.regions.filter[!name.nullOrEmpty && override].toList)
+            } else {
+                overrides.push(emptyList)
+            }
+            
+            while (!path.empty) {
+                val s = path.peek
+                val idx = indexes.pop + 1
+                if (idx == 0 && s != state) {
+                    regions += s.regions.filter[ r | r.name.nullOrEmpty || !overrides.flatten.exists[r.name.equals(name)]]
+                    overrides.push(s.regions.filter[!name.nullOrEmpty && override].toList)
+                }
+                if (s.baseStates === null || s.baseStates.size <= idx) {
+                    path.pop
+                    overrides.pop
+                } else {
+                    indexes.push(idx)
+                    val base = s.baseStates.get(idx)
+                    // check cycle
+                    if (!path.contains(base)) {
+                        path.push(base)
+                        indexes.push(-1)
+                    }
+                }
+            }
+            
+            return regions
+        }
+        return emptyList
+    }
+    
+    /**
+     * Returns true if the given state has an acyclic hierarchy.
+     */
+    def hasAcyclicHierarchy(State state) {
+        return state.hierarchyCycles.empty
+    }
+    
+    /**
+     * Returns states that are included in hierarchy cycles, values id the index of the baseState of the given state which includes the cycle.
+     */
+    def getHierarchyCycles(State state) {
+        val cycles = HashMultimap.<State, Integer>create
+        if (!state.baseStates.nullOrEmpty) {
+            // DFS with checks if new child already exists in path to root.
+            val path = newLinkedList(state)
+            val indexes = newLinkedList(-1)
+            while (!path.empty) {
+                val s = path.peek
+                val idx = indexes.pop + 1
+                if (s.baseStates === null || s.baseStates.size <= idx) {
+                    path.pop
+                } else {
+                    indexes.push(idx)
+                    val base = s.baseStates.get(idx)
+                    // check cycle
+                    if (path.contains(base)) {
+                        cycles.put(base, indexes.last)
+                    } else {
+                        path.push(base)
+                        indexes.push(-1)
+                    }
+                }
+            }
+        }
+        return cycles
+    }
+
 }

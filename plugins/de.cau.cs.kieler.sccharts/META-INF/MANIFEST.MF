@@ -50,7 +50,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.mwe2.launch,
  org.eclipse.xtext.util,
  org.eclipse.emf.common,
- org.antlr.runtime,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.apache.commons.logging
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: de.cau.cs.kieler.sccharts.SCChartsPlugin

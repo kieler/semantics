@@ -1202,6 +1202,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         override?='override'? 
 	 *         final?='final'? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
@@ -1244,6 +1245,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         override?='override'? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
@@ -1389,7 +1391,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ScopeCall returns ScopeCall
 	 *
 	 * Constraint:
-	 *     (scope=[State|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 *     (super?='super.'? scope=[Scope|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
 	 */
 	protected void sequence_ScopeCall(ISerializationContext context, ScopeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
