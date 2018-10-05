@@ -30,19 +30,17 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class SnapshotDescription {
 
-    @Accessors String groupId
     @Accessors String name
     @Accessors int snapshotIndex
     @Accessors List<String> errors
     @Accessors List<String> warnings
     @Accessors List<String> infos
     
-    new (String groupId, String name, int snapshotIndex, Errors errors, Warnings warnings, Infos infos) {
+    new (String name, int snapshotIndex, Errors errors, Warnings warnings, Infos infos) {
         this.errors = new LinkedList
         this.warnings = new LinkedList
         this.infos = new LinkedList
         
-        this.groupId = groupId
         this.name = name
         this.snapshotIndex = snapshotIndex
 

@@ -204,12 +204,12 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
                 return widget.id === uri
             }) as TextWidget
             if (textWidget) {
-                textWidget.updateContent("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
+                textWidget.updateContent("Diagram: " + snapshotDescription.name + " " +
                         snapshotDescription.snapshotIndex, info  + svg)
             } else {
                 console.log("Adding new widget since old was not found")
 
-                this.front.shell.addWidget(new TextWidget("Diagram: " + snapshotDescription.groupId + ": " + snapshotDescription.name + " " +
+                this.front.shell.addWidget(new TextWidget("Diagram:" + snapshotDescription.name + " " +
                 snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right"})
             }
             this.front.shell.activateWidget(uri)
@@ -221,7 +221,9 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
 
 
     public compile(command: string) {
-        this.message("Compiling with " + command, "info")
+        if (!this.compilerWidget.autoCompile) {
+            this.message("Compiling with " + command, "info")
+        }
         this.executeCompile(command)
     }
 
@@ -235,7 +237,9 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         console.log("Compiling " + uri)
         const lclient = await this.client.languageClient
         const snapshotsDescriptions: CodeContainer = await lclient.sendRequest(Constants.COMPILE, [uri, command, this.compilerWidget.compileInplace]) as CodeContainer
-        this.message("Got compilation result for " + uri, "info")
+        if (!this.compilerWidget.autoCompile) {
+            this.message("Got compilation result for " + uri, "info")
+        }
         let infoList: string[] = []
         snapshotsDescriptions.files.forEach(snapshot => {
             let error, warning, info

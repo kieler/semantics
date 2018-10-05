@@ -60,14 +60,12 @@ export interface CodeContainer {
  * (name, snapshotId) should be unique. GroupId for bundling in phases
  */
 export class Snapshots {
-    groupId: string
     name: string;
     snapshotIndex: number;
     errors: string[];
     warnings: string[];
     infos: string[];
     constructor(groupId: string, name: string, snapshotIndex: number) {
-        this.groupId = groupId
         this.name = name
         this.snapshotIndex = snapshotIndex
     }

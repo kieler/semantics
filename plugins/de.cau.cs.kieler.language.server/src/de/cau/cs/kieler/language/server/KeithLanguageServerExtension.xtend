@@ -21,8 +21,6 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 import de.cau.cs.kieler.klighd.IOffscreenRenderer
 import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.sccharts.impl.SCChartsImpl
-import de.cau.cs.kieler.scg.impl.SCGraphsImpl
 import java.io.ByteArrayOutputStream
 import java.util.HashMap
 import java.util.LinkedList
@@ -37,10 +35,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.scl.impl.SCLProgramImpl
-import de.cau.cs.kieler.esterel.impl.EsterelProgramImpl
-import de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl
-import de.cau.cs.kieler.kexpressions.kext.impl.KextImpl
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -119,48 +113,13 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         var infos = environment.infos
         if (impl instanceof CodeContainer) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("code", "generated", 0, errors, warnings, infos))
-        } else if (impl instanceof SCChartsImpl) {
+            this.snapshotMap.get(uri).add(new SnapshotDescription("generated", 0, errors, warnings, infos))
+        } else if (impl instanceof EObject) {
             this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, 0, errors, warnings, infos))
+            this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
             for (snapshot : snapshots.indexed) {
                 this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("sctx", processorName, snapshot.key, errors, warnings, infos))
-            }
-        } else if (impl instanceof SCGraphsImpl) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, 0, errors, warnings, infos))
-            for (snapshot : snapshots.indexed) {
-                this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("scg", processorName, snapshot.key, errors, warnings, infos))
-            }
-        } else if (impl instanceof SCLProgramImpl) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, 0, errors, warnings, infos))
-            for (snapshot : snapshots.indexed) {
-                this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("scl", processorName, snapshot.key, errors, warnings, infos))
-            }
-        } else if (impl instanceof EsterelProgramImpl) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, 0, errors, warnings, infos))
-            for (snapshot : snapshots.indexed) {
-                this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("esterel", processorName, snapshot.key, errors, warnings, infos))
-            }
-        }  else if (impl instanceof LustreProgramImpl) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, 0, errors, warnings, infos))
-            for (snapshot : snapshots.indexed) {
-                this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("lustre", processorName, snapshot.key, errors, warnings, infos))
-            }
-        } else if (impl instanceof KextImpl) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, 0, errors, warnings, infos))
-            for (snapshot : snapshots.indexed) {
-                this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription("kext", processorName, snapshot.key, errors, warnings, infos))
+                this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
             }
         } else {
             println("Got something I currently do not recognize " + impl.class)
