@@ -20,28 +20,28 @@ import org.junit.Test
  * @author ssm
  *
  */
-class SCChartsStatebasedCSimulationTest extends SCChartsSimulationTestBase {
+class SCChartsStatebasedCSimulationTest {
     
-    override protected createSimulationBackend() {
-        return createCSimulationBackend
-    }
+//    override protected createSimulationBackend() {
+//        return createCSimulationBackend
+//    }
+//    
+//    protected def isStatebasedSimulationText(TestModelData modelData) {
+//        return modelData.isNetlistCompilationTests 
+//        && modelData.modelProperties.contains("statebased")
+//        && modelData.modelProperties.contains("rbls")
+//    }
+//    
+//    override filter(TestModelData modelData) {
+//        return modelData.isStatebasedSimulationText
+//        && modelData.isSCChartsTest
+//        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
+//        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
+//    }
     
-    protected def isStatebasedSimulationText(TestModelData modelData) {
-        return modelData.isNetlistCompilationTests 
-        && modelData.modelProperties.contains("statebased")
-        && modelData.modelProperties.contains("rbls")
-    }
-    
-    override filter(TestModelData modelData) {
-        return modelData.isStatebasedSimulationText
-        && modelData.isSCChartsTest
-        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
-        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
-    }
-    
-    @Test
+//    @Test
     def void testSimulationStatebasedC(SCCharts scc, TestModelData modelData) {
-        startSimulationTest(#["de.cau.cs.kieler.sccharts.statebased.woComments"], scc, modelData)
+//        startSimulationTest(#["de.cau.cs.kieler.sccharts.statebased.woComments"], scc, modelData)
 //        startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist"], scc, modelData)
 //        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority"], scc, modelData)
     }
