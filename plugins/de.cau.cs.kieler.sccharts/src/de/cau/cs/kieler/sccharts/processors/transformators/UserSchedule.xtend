@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Schedulable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /**
  * 
@@ -32,7 +33,7 @@ import de.cau.cs.kieler.kexpressions.Schedulable
  * @kieler.design 2017-12-12 proposed
  * @kieler.rating 2017-12-12 proposed yellow  
  */
-class UserSchedule extends SCChartsProcessor {
+class UserSchedule extends SCChartsProcessor implements Traceable {
     
     @Inject extension SCChartsStateExtensions
     

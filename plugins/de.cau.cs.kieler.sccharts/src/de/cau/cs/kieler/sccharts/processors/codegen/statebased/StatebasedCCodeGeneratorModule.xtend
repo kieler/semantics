@@ -20,6 +20,9 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.Region
 
 /**
  * Root C Code Generator Module
@@ -34,6 +37,7 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     
     @Inject extension PragmaExtensions
+    @Inject extension SCChartsStateExtensions
     @Inject extension StatebasedCCodeSerializeHRExtensions
     
     @Inject Injector injector
@@ -144,11 +148,25 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
  
     protected def populateAnnotationModel() {
         val annotationModel = (processorInstance as StatebasedCCodeGenerator).annotationModel
+        val annotationModelStates = (processorInstance as StatebasedCCodeGenerator).annotationModel
+        val annotationModelStatesAndRegions = (processorInstance as StatebasedCCodeGenerator).annotationModel
         
         for (object : (logic as StatebasedCCodeGeneratorLogicModule).objectFunctionMap.keySet) {
             val sb = (logic as StatebasedCCodeGeneratorLogicModule).objectFunctionMap.get(object)
-            annotationModel.addInfo(object, sb.toString)
+            val code = sb.toString.trim
+//            annotationModel.addInfo(object, code)
+            
+            if (object instanceof State) {
+                if (!object.isSuperstate) {
+//                    annotationModelStates.addInfo(object, code)
+                    annotationModelStatesAndRegions.addInfo(object, code)
+                }
+            } else if (object instanceof Region) {
+                annotationModelStatesAndRegions.addInfo(object, code)
+            }
         }        
     }
+    
+    
     
 }

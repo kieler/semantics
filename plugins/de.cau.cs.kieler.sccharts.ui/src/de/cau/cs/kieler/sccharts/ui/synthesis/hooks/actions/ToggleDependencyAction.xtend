@@ -93,8 +93,8 @@ class ToggleDependencyAction implements IAction {
 
                 if (sSchedule !== null && tSchedule !== null) {    
                     if (sSchedule.priority == tSchedule.priority) {
-                        sSchedule.priority = 1
-                        tSchedule.priority = 2
+                        sSchedule.priority = 0
+                        tSchedule.priority = 1
                     } else {         
                         val d = sSchedule.priority
                         sSchedule.priority = tSchedule.priority
