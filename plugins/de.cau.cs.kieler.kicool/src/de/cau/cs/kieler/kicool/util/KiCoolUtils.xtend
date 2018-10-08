@@ -49,6 +49,16 @@ class KiCoolUtils {
         processor.id + "#" + processor.hashCode
     }
     
+    
+    static def hasInput(System sys, Class<?> modelClass) {
+        val input = sys.findInputClass
+        if (modelClass !== null && input !== null) {
+            return input.isAssignableFrom(modelClass)
+        }
+        return true
+    }
+   
+    
     /**
      * Retrieves the input class for a system
      */

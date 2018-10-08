@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.Platform
  */
 class KiCoModelViewUIContributorRegistry {
     
-    public static val KICO_MODEL_VIEW_UI_CONTRIBUTOR_ID = "de.cau.cs.kieler.kicool.ui.kicoModelViewUIUpdateContributor"
+    public static val KICO_MODEL_VIEW_UI_CONTRIBUTOR_ID = "de.cau.cs.kieler.kicool.ui.contribution"
     
     private static var List<KiCoModelViewUIContributor> contributors
     

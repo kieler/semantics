@@ -59,7 +59,8 @@ class PartialExpressionEvaluator {
     
     // -- Vars --
     
-    @Accessors protected val Map<ValuedObject, Value> values
+    @Accessors var Map<ValuedObject, Value> values
+    @Accessors var (ValuedObjectReference) => Value valueCallback
     
     new() {
         this(emptyMap)
@@ -71,7 +72,13 @@ class PartialExpressionEvaluator {
             injector.injectMembers(this)
         }
         this.values = values
+        this.valueCallback = null
     }
+    
+    new((ValuedObjectReference) => Value valueCallback) {
+        this(emptyMap)
+        this.valueCallback = valueCallback
+    } 
     
     def Expression evaluate(Expression expression) {
         var Expression parEval = expression?.eval
@@ -109,9 +116,14 @@ class PartialExpressionEvaluator {
     
     protected dispatch def Expression eval(ValuedObjectReference vor) {
         if (vor.indices.nullOrEmpty && vor.subReference === null) { // Cannot handle valued object references with indices or sub-references
-            if (values.containsKey(vor.valuedObject)) {
-                return values.get(vor.valuedObject).copy
+            var Value value = null
+            if (values !== null && values.containsKey(vor.valuedObject)) {
+                value = values.get(vor.valuedObject).copy
             }
+            if (value === null && valueCallback !== null) {
+                value = valueCallback.apply(vor)
+            }
+            return value
         }
         return if (inplace) vor else vor.copy//valuedObject.reference
     }

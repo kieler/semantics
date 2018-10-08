@@ -18,29 +18,55 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.scg.PatternType
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -51,42 +77,17 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import java.util.HashMap
 import java.util.Set
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
-import de.cau.cs.kieler.kexpressions.PrintCall
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.scg.PatternType
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.RandomCall
-import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
-import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -116,7 +117,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     private static val Injector i = SCTXStandaloneSetup::doSetup();
     private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
 
-    private val stateTypeCache = <State, Set<de.cau.cs.kieler.sccharts.scg.PatternType>>newHashMap
+    private val stateTypeCache = <State, Set<PatternType>>newHashMap
     private val uniqueNameCache = new UniqueNameCache
 
     private static val String ANNOTATION_REGIONNAME = "regionName"
@@ -237,12 +238,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     }
     
     def SCGraph transformSCG(State rootState) {
-
+        val voStore = VariableStore.get(environment)
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
-
-        // Expose local variables
-        scopeList.transformLocalValuedObjectCached(rootState, uniqueNameCache)
 
         // Clear mappings
         resetMapping
@@ -267,10 +265,14 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         // }
         for (declaration : rootState.declarations) {
             val newDeclaration = createDeclaration(declaration).trace(declaration)
-            declaration.valuedObjects.forEach [
-                val newValuedObject = it.copy
+            declaration.valuedObjects.forEach [ oldVO |
+                val newValuedObject = oldVO.copy
                 newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.map(it)
+                newValuedObject.map(oldVO)
+                
+                // Fix VO association in VariableStore
+                val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
+                if (info !== null) info.valuedObject = newValuedObject
             ]
             sCGraph.declarations += newDeclaration
         }
@@ -286,7 +288,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         stateList.add(rootState)
 
         for (s : stateList) {
-            val stateTypeSet = <de.cau.cs.kieler.sccharts.scg.PatternType>newHashSet
+            val stateTypeSet = <PatternType>newHashSet
             if (s.isPause)
                 stateTypeSet += PatternType::PAUSE
             else if (s.isConditional)

@@ -3,7 +3,7 @@
 
 <plugin>
    <extension-point id="system" name="System Configuation" schema="schema/de.cau.cs.kieler.kicool.ui.system.exsd"/>
-   <extension-point id="kicoModelViewUIUpdateContributor" name="kicoModelViewUIUpdateContributor" schema="schema/kicoModelViewUIUpdateContributor.exsd"/>
+   <extension-point id="contribution" name="KiCo Model View Contribution" schema="schema/de.cau.cs.kieler.kicool.ui.contribution.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">
@@ -360,10 +360,15 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis"
             id="de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainerSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainer">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">
           <view
+                category="de.cau.cs.kieler"
                 class="de.cau.cs.kieler.kicool.ui.view.CompilerView"
                 icon="icons/IMBC_gear.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler"
@@ -371,6 +376,7 @@
                 restorable="true">
           </view>
           <view
+                category="de.cau.cs.kieler"
                 class="de.cau.cs.kieler.kicool.ui.view.registry.CompilerRegistryView"
                 icon="icons/IMBC_key.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler.registry"
@@ -415,6 +421,10 @@
           <action
                 class="de.cau.cs.kieler.kicool.ui.view.registry.DeFocusNodeAction"
                 id="de.cau.cs.kieler.ui.view.registry.deFocusNode">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction"
+                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction">
           </action>
        </extension>
        <extension

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.esterel.compiler.processors.EsterelCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.esterel.compiler.processors.XESCompiler">
+      </Processor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.compiler.inria.xes.kico">
+      </TransformationSystem>
+   </extension>
+
+</plugin>

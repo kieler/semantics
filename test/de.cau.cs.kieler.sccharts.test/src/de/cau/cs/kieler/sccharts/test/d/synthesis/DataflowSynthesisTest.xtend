@@ -93,8 +93,7 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             if (kedges > -1 && edges != kedges) {
                 fail("The synthesized number of kedges is not equal to the expected count of knodes. Synthesized: " 
                     + edges + ", Expected: " + kedges + " (base count: " + KEDGE_BASE_COUNT + ")")
-            } 
-             
+            }
         }
     }
     

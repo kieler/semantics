@@ -14,63 +14,83 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
- * SCCharts ValuedObject Transformation. Rises valued objects declared in regions to its
- * parent states.
+ * SCCharts ValuedObject Transformation transforming local variables into global ones.
  * 
- * @author cmot
+ * @author cmot, als
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class ValuedObjectRise {
+class ValuedObjectRise extends SCChartsProcessor implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        "de.cau.cs.kieler.sccharts.processors.voRise"
+    }
+    
+    override getName() {
+        "Valued Object Rise"
+    }
+ 
+    override process() {
+        setModel(model.transform)
+    }
 
     // -------------------------------------------------------------------------
     @Inject extension SCChartsScopeExtensions
-    @Inject extension SCChartsTransformationExtension
-
+    @Inject extension SCChartsCoreExtensions
+    
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-
-    // -------------------------------------------------------------------------
-    // --                            VALUED OBJECT                           --
-    // -------------------------------------------------------------------------
-    // TODO: for inputs no during action!
-    // TODO: relative writes!!
-    public static val String variableValueExtension = GENERATED_PREFIX + "val";
-    private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
-
-    // Transforming a signal to a variable. 
-    def State transformValuedObjectRise(State rootState) {
-        val targetRootState = rootState
+   
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [rootStates.forEach[transform]]
+    }
+    
+    
+    def void transform(State rootState) {
+        val voStore = VariableStore.getVariableStore(environment)
         
         // Traverse all states
-        targetRootState.allContainedControlflowRegions.forEach [ targetState |
-            targetState.transformValuedObjectRise(targetRootState);
-        ]
-        targetRootState;
+        for (scope : rootState.allScopes.toIterable) {
+            scope.transformExposeLocalValuedObjectCached(rootState, voStore);
+        }
     }
 
-    // Traverse all states and transform outgoing normal termination transitions into weak aborts
-    def void transformValuedObjectRise(ControlflowRegion region, State targetRootState) {
-        if (!region.declarations.nullOrEmpty) {
-            
-            val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region)
-            
-            for (valuedObject : region.valuedObjects) {
-                valuedObject.setName(regionId + GENERATED_PREFIX +
-                    valuedObject.name)
+    // Traverse all states and transform possible local valuedObjects.
+    def void transformExposeLocalValuedObjectCached(Scope scope, Scope targetScope, VariableStore voStore) {
+        // Exclude the top level state
+        if (scope == targetScope) {
+            return;
+        }
+
+        var hierarchicalScopeName = targetScope.getHierarchicalName("local")
+        for(declaration : scope.declarations.immutableCopy) {
+            targetScope.declarations.add(declaration)
+            for(valuedObject : declaration.valuedObjects) {
+                val oldName = valuedObject.name
+                valuedObject.name = "_" + hierarchicalScopeName + "_" + valuedObject.name
+                valuedObject.uniqueName
+                if (declaration instanceof VariableDeclaration) {
+                    if (voStore.variables.containsKey(oldName)) {
+                        voStore.update(valuedObject)
+                    } else {
+                        voStore.add(valuedObject)
+                    }
+                }
             }
-            
-            region.parentState.declarations.addAll(region.declarations)
         }
     }
 

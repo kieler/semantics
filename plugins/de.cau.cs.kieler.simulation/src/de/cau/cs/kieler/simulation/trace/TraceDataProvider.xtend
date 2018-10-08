@@ -12,33 +12,28 @@
  */
 package de.cau.cs.kieler.simulation.trace
 
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.FloatValue
+import com.google.common.collect.HashMultimap
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonNull
+import com.google.gson.JsonPrimitive
+import com.google.inject.Guice
+import com.google.inject.Injector
 import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.StringValue
-import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.NDimensionalArray
-import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.trace.ktrace.Tick
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
-import java.util.ArrayList
-import java.util.List
-import org.eclipse.core.resources.IFile
-import org.eclipse.emf.common.util.URI
+import javax.inject.Inject
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtext.resource.XtextResourceSet
 
 import static com.google.common.base.Preconditions.*
+
+import static extension de.cau.cs.kieler.simulation.util.JsonUtil.*
 
 /**
  * @author als
@@ -46,183 +41,230 @@ import static com.google.common.base.Preconditions.*
  * @kieler.rating proposed yellow
  */
 class TraceDataProvider {
-
-    @Accessors(PUBLIC_GETTER) val IFile sourceFile;
-    val List<DataPool> tracePool
-
-    @Accessors(PUBLIC_GETTER)
-    var traceSemantics = TraceSemantics.EMISSION
-
-    new(IFile file, int traceNumber) {
-        this.sourceFile = file
-
-        val traceFile = file.loadTraceFile
-        checkArgument(traceNumber >= 0 && traceNumber < traceFile.traces.size)
-        val trace = traceFile.traces.get(traceNumber)
-        this.tracePool = new ArrayList(trace.ticks.size)
-        trace.fillTracePool
-    }
-
-    new(TraceFile traceFile, int traceNumber) {
-        this.sourceFile = null
-
-        checkArgument(traceNumber >= 0 && traceNumber < traceFile.traces.size)
-        val trace = traceFile.traces.get(traceNumber)
-        this.tracePool = new ArrayList(trace.ticks.size)
-        trace.fillTracePool
+    
+    @Accessors
+    val Trace trace
+    @Accessors
+    val TraceFile tracefile
+    
+    @Accessors
+    val boolean signalSemantics
+    
+    var int inputTick = -1
+    var int outputTick = -1   
+    val DataPool state = new DataPool
+    val inputNames = <String>newHashSet
+    val outputNames = <String>newHashSet
+    
+    @Inject Injector injector
+    @Inject extension PartialExpressionEvaluator
+       
+    // -----------------------------------------------------------------------------------------
+    
+    new(Trace trace) {
+        this.trace = trace
+        this.tracefile = trace.eContainer as TraceFile
+        checkNotNull(tracefile, "Trace is not contained in a TraceFile")
+        this.signalSemantics = if (trace.eResource !== null && trace.eResource.URI !== null) {
+            val fileExt = trace.eResource.URI.fileExtension
+            "eso".equals(fileExt) || "esi".equals(fileExt)
+        } else {
+            trace.eAllContents.filter(Assignment).empty
+        }
+        if (injector === null) {
+            injector = Guice.createInjector
+            injector.injectMembers(this)
+        }   
+        compute = true
+        reset()
     }
     
-    static def loadTraceFile(IFile file) {
-        val resourceSet = KTraceStandaloneSetup.doSetup.getInstance(XtextResourceSet)
-        val uri = URI.createPlatformResourceURI(file.fullPath.toOSString, true)
-        val resource = resourceSet.getResource(uri, true)
-        return resource.getContents().head as TraceFile
+    def reset() {
+        inputTick = -1
+        outputTick = -1
+        state.clear
+        inputNames.clear
+        outputNames.clear  
     }
-
-    private def fillTracePool(Trace trace) {
-        for (Tick t : trace.ticks) {
-            val pool = new DataPool()
-            val model = new Model("Model")
-            pool.addModel(model)
-            // Add inputs
-            for (Effect e : t.inputs) {
-                val variable = e.convert(pool)
-                variable.setIsInput(true)
-                model.addVariable(variable)
-            }
-            // Add outputs
-            for (Effect e : t.outputs) {
-                val variable = e.convert(pool)
-                variable.setIsOutput(true)
-                model.addVariable(variable)
-            }
-            tracePool.add(pool)
+    
+    def applyTraceInputs(int tick) {
+        checkArgument(tick >= 0 && tick < trace.ticks.size, "Current tick number out of trace range")
+        checkArgument(inputTick + 1 == tick, "Trace and simulation out of sync")
+        trace.ticks.get(tick).applyTickEffects(true)
+        inputTick++
+    }
+        
+    def applyTraceOutputs(int tick) {
+        checkArgument(tick >= 0 && tick < trace.ticks.size, "Current tick number out of trace range")
+        checkArgument(outputTick + 1 == tick, "Trace and simulation out of sync")
+        trace.ticks.get(tick).applyTickEffects(false)
+        outputTick++
+    }
+    
+    private def void applyTickEffects(Tick tick, boolean applyInputs) {
+        val effects = if (applyInputs) {
+            tick.inputs
+        } else {
+            tick.outputs
         }
-    }
-
-    private def Variable convert(Effect e, DataPool pool) {
-        switch(e) {
-            Emission: {
-                traceSemantics = TraceSemantics.EMISSION
-                val varName = e.reference.valuedObject.name
-                var v = pool.getVariable(varName)
-                if(v === null) {
-                    v = new Variable(varName)
-                }
-                if (e.newValue !== null) {
-                    v.setValue(e.newValue.convert)
-                } else {
-                    v.setValue(true)
-                }
-                return v
+        if (signalSemantics) {
+            if (applyInputs) {
+                // Reset all signals
+                val reset = tracefile.aggregatedValuedObjects.toMap([
+                    name
+                ],[
+                    new JsonPrimitive(false) as JsonElement
+                ])
+                state.setValues(reset)
             }
-            Assignment: {
-                traceSemantics = TraceSemantics.ASSIGNMENT
-                val valuedObject = e.reference.valuedObject
-                val varName = valuedObject.name
-                var v = pool.getVariable(varName)
-                if(v === null) {
-                    v = new Variable(varName)
-                }
-                // Set the variable value
-                val arrayIndices = e.reference.indices
-                val newValue = e.expression.convert
-                if(arrayIndices.nullOrEmpty) {
-                    v.setValue(newValue)
+            
+            // Set emmited signals
+            val inputs = effects.filter(Emission).toMap([
+                reference.valuedObject.name
+            ],[
+                newValue
+            ])
+            for (input : inputs.entrySet) {
+                val name = input.key
+                if (applyInputs) {
+                    inputNames += name
                 } else {
-                    val convertedArrayIndices = <Integer>newArrayList
-                    for(card : arrayIndices) {
-                        if(card instanceof IntValue) {
-                            convertedArrayIndices.add(card.value)
-                        } else {
-                            throw new Exception("Only integers are supported for array indices in traces at the moment.")
+                    outputNames += name
+                }
+                val value = input.value
+                
+                state.setValue(name, new JsonPrimitive(true))
+                if (value !== null) { // FIXME name magic
+                    state.setValue(name + "_val", value.toJsonValue)
+                }
+            }
+        } else {
+            for (input : effects.filter(Assignment)) {
+                var vor = input.reference
+                val name = vor.valuedObject.name
+                if (applyInputs) {
+                    inputNames += name
+                } else {
+                    outputNames += name
+                }
+                var value = input.expression.toJsonValue
+                
+                if (!vor.indices.nullOrEmpty) {
+                    var idx = 0
+                    val entry = state.entries.get(name)
+                    var JsonArray array = if (entry !== null && entry.rawValue?.isJsonArray) {
+                        entry.rawValue.asJsonArray
+                    } else {
+                        new JsonArray
+                    }
+                    state.setValue(name, array)
+                    val iter = vor.indices.iterator
+                    do {
+                        idx = (iter.next as IntValue).value
+                        if (array.size <= idx) {
+                            for (var i = array.size; i <= idx; i++) {
+                                array.add(JsonNull.INSTANCE)
+                            }
+                            if (iter.hasNext) {
+                                array.set(idx, new JsonArray)
+                            }
                         }
-                    } 
-                    setArrayValueDynamically(v, convertedArrayIndices, newValue)
+                        if (iter.hasNext) {
+                            array = array.get(idx).asJsonArray
+                        }
+                    } while (iter.hasNext)
+                    array.set(idx, value)
+                } else {
+                    state.setValue(name, value)
                 }
-                return v    
             }
         }
     }
     
-    private def void setArrayValueDynamically(Variable v, List<Integer> index, Object value) {
-        val cardinalities = index.map[it+1]
-        if(v.value === null || !(v.value instanceof NDimensionalArray)) {
-            val arr = NDimensionalArray.create(cardinalities)
-            arr.set(index, value)
-            v.value = arr
-        } else {
-            val arr = v.value as NDimensionalArray
-            // Check if the index that should be set actually fits into the current array of the variable.
-            var fits = true
-            for(var dimension=0; dimension < index.size; dimension++) {
-                // +1 here, because the array cardinalities are the ones of a declaration,
-                // whereas the others are the ones from a usage (i.e. int x[3][2]   vs   x[2][1]=3)
-                if(arr.cardinalities.get(dimension) < (index.get(dimension)+1) ) {
-                    fits = false
+    public def void passInputs(DataPool pool) {
+        val names = pool.entries.entrySet.filter[value.isInput].map[key].toSet
+        names.addAll(inputNames)
+        if (signalSemantics) {
+            for (input : names) {
+                val traceEntry = state.entries.get(input)
+                if (traceEntry !== null) {
+                    val valName = input + "_val"// FIXME name magic
+                    if (state.entries.containsKey(valName) && !pool.entries.containsKey(valName) && !pool.isSignal(input)) {
+                        pool.setValue(input, state.entries.get(valName).rawValue.cloneJson)
+                    } else {
+                        pool.setValue(input, traceEntry.rawValue.cloneJson)
+                    }
+                } else {
+                    // Input that was not specified in trace but must be resetted
+                    inputNames += input
+                    state.setValue(input, new JsonPrimitive(false))
+                    state.setValue(input + "_val", new JsonPrimitive(0))
                 }
             }
-            if(fits) {
-                arr.set(index, value)
-            } else {
-                // The current array does not have the field that should be set.
-                // Thus we create a new one that has this filed and copy the old array values.
-                val newCardinalities = <Integer> newArrayList
-                for(var dimension=0; dimension < index.size; dimension++) {
-                    newCardinalities.add(Math.max(arr.cardinalities.get(dimension), (index.get(dimension)+1) ))
+        } else {
+            for (input : names) {
+                val traceEntry = state.entries.get(input)
+                if (traceEntry !== null) {
+                    pool.setValue(input, traceEntry.rawValue.cloneJson)
                 }
-                val newOneDimArraySize = newCardinalities.fold(1, [a,b | a*b])
-                val newArr = new NDimensionalArray(newArrayOfSize(newOneDimArraySize).toList, newCardinalities)
-                // Copy old values
-                for(e : arr.elements) {
-                    newArr.set(e.index, e.value)
-                }
-                // Set new value
-                newArr.set(index, value)
-                v.value = newArr
             }
         }
     }
     
-    private def Object convert(Expression e) {
-        if (e instanceof Value) {
-            switch(e) {
-                BoolValue: return e.value
-                IntValue: return e.value
-                FloatValue: return e.value
-                DoubleValue: return e.value
-                StringValue: return e.value
-            }
-        } else if (e instanceof OperatorExpression){
-            if (e.operator == OperatorType.SUB && e.subExpressions.size == 1) {
-                val value = e.subExpressions.head.convert
-                switch (value) {
-                    Integer,: return -value
-                    Float: return -value
-                    default: throw new UnsupportedOperationException("Cannot negate non number value.")
+    public def mismatches(DataPool pool) {
+        val mm = HashMultimap.<DataPoolEntry, DataPoolEntry>create
+        val names = pool.entries.entrySet.filter[value.isOutput].map[key].toSet
+        names.addAll(outputNames)
+        for (output : names) {
+            var traceEntry = state.entries.get(output)
+            val poolEntry = pool.entries.get(output)
+            if (traceEntry !== null) {
+                if (poolEntry !== null) {
+                    if (signalSemantics) {
+                        val valName = output + "_val"// FIXME name magic
+                        if (state.entries.containsKey(valName)
+                            && !pool.entries.containsKey(valName)
+                            && !pool.isSignal(output)) {
+                            traceEntry = state.entries.get(valName)
+                        }
+                    }
+                    if (traceEntry.mismatch(poolEntry)) {
+                        mm.put(poolEntry, traceEntry)
+                    }
+                } else {
+                    mm.put(null, traceEntry)
                 }
+            }
+        }
+        return mm
+    }
+    
+    private def boolean mismatch(DataPoolEntry traceEntry, DataPoolEntry poolEntry) {
+        val pool = poolEntry.rawValue
+        val trace = traceEntry.rawValue
+        if (trace.isJsonPrimitive
+            && trace.asJsonPrimitive.isBoolean) {
+            return trace.asJsonPrimitive.asBoolean.booleanValue.xor(pool.isTruthy)
+        } else if (signalSemantics // Legacy boolean encoding as numbers in eso
+            && pool.isJsonPrimitive
+            && pool.asJsonPrimitive.isBoolean
+            && trace.isJsonPrimitive
+            && trace.asJsonPrimitive.isNumber) {
+            val num = trace.asJsonPrimitive.asNumber
+            if (num.doubleValue == 0.0) {
+                return pool.asJsonPrimitive.asBoolean.booleanValue.xor(false)
+            } else if (num.doubleValue == 1.0) {
+                return pool.asJsonPrimitive.asBoolean.booleanValue.xor(true)
             } else {
-                throw new UnsupportedOperationException("Not yet supported.")
+                return true
             }
         } else {
-            throw new UnsupportedOperationException("Not yet supported.")
+            return !pool.equals(trace)
         }
     }
-
-    def getDataPool(int number) {
-        tracePool.get(number)
+    
+    private def isSignal(DataPool pool, String name) {
+        // FIXME keyword magic
+        return pool.outputs.keySet.map[variableInformation].filterNull.map[variables.get(name)].filterNull.flatten.filterNull.exists[properties.contains("signal")]
     }
-
-    def traceLength() {
-        tracePool.size
-    }
-
-    def getFilePath() {
-        if (sourceFile !== null) {
-            return sourceFile.projectRelativePath.toOSString
-        } else {
-            return "unknown file location"
-        }
-    }
-
 }

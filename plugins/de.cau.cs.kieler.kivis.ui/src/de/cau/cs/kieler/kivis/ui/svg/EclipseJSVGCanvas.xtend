@@ -14,7 +14,7 @@
  
 package de.cau.cs.kieler.kivis.ui.svg
 
-import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.awt.event.ActionEvent
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
@@ -174,7 +174,7 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
                 if (gvtRoot == null) {
                     return;
                 }
-                SimulationManager.instance?.stepMacroTick
+                SimulationUI.currentSimulation?.step
             }
         }
         val playSimulationAction = new AbstractAction() {
@@ -182,7 +182,7 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
                 if (gvtRoot == null) {
                     return;
                 }
-                val sim = SimulationManager.instance
+                val sim = SimulationUI.currentSimulation
                 if(sim != null) {
                     if(sim.isPlaying) {
                         sim.pause

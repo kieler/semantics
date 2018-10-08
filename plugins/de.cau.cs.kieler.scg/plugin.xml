@@ -166,22 +166,13 @@
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.netlist.tts.kico">
-      </TransformationSystem>
-      <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.netlist.java.tts.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.priority.java.tts.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.sccp.kico">

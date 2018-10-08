@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.List
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * @author aas
@@ -86,13 +87,20 @@ class TakenTransitionSignaling extends SCChartsProcessor {
         // Just consider the root state. Otherwise, the taken takenTransition interface will not be bound properly 
         // across reference states.          
         for (rootState : newArrayList(model.rootStates.head)) {
+            // rename existing tt signals
+            val nameCollisions = rootState.allScopes.toIterable.map[declarations].flatten.map[valuedObjects].flatten.filter[transitionArrayName.equals(name)]
+            for (nameCollision : nameCollisions) {
+                nameCollision.uniqueName
+                voStore.update(nameCollision)
+            }
+            
             val transitions = rootState.getTransitions
             if(transitions.size > 0) {
                 environment.setProperty(ARRAY_SIZE, transitions.size)
                 // Create new root state to encapsule the behavior of the original model
                 val newRootState = rootState.encapsuleInSuperstate
                 model.rootStates.add(newRootState)
-                
+                                
                 // Create transition array
                 val transitionArrayDecl = createIntDeclaration
                 val transitionArray = newRootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
@@ -100,6 +108,9 @@ class TakenTransitionSignaling extends SCChartsProcessor {
                 rootState.createEmitForTakenTransitions(transitions, transitionArray)
                 // Create reset region
                 newRootState.createResetRegion(transitionArray)
+                
+                // Regiser in VO Store
+                voStore.add(transitionArray, SCCHARTS_GENERATED, "simulation")
             }
         }
     }

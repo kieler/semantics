@@ -87,11 +87,11 @@ ruleTraceFile returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getTraceFileAccess().getEsoTracesParserRuleCall_0());
+			newCompositeNode(grammarAccess.getTraceFileAccess().getKTracesParserRuleCall_0());
 		}
-		this_EsoTraces_0=ruleEsoTraces
+		this_KTraces_0=ruleKTraces
 		{
-			$current = $this_EsoTraces_0.current;
+			$current = $this_KTraces_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -99,11 +99,11 @@ ruleTraceFile returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getTraceFileAccess().getKTracesParserRuleCall_1());
+			newCompositeNode(grammarAccess.getTraceFileAccess().getEsoTracesParserRuleCall_1());
 		}
-		this_KTraces_1=ruleKTraces
+		this_EsoTraces_1=ruleEsoTraces
 		{
-			$current = $this_KTraces_1.current;
+			$current = $this_EsoTraces_1.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
@@ -645,7 +645,7 @@ ruleKTick returns [EObject current=null]
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)*
+			)+
 		)?
 		(
 			otherlv_4='pause'

@@ -160,6 +160,7 @@ class Termination extends SCChartsProcessor implements Traceable {
             // should be taken.
             val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
                 setTypeBool.uniqueName(nameCache)
+            voStore.add(finishedValuedObject, SCCHARTS_GENERATED)
             val resetFinished = state.createEntryAction
             resetFinished.effects.add(finishedValuedObject.createAssignment(FALSE))
 
@@ -207,6 +208,7 @@ class Termination extends SCChartsProcessor implements Traceable {
                  finishedValuedObject.name = finishedValuedObject.name + "D"
             }
             finishedValuedObject.uniqueName(nameCache)
+             voStore.update(finishedValuedObject)
             
             if (triggerExpression == null) {
                 triggerExpression = finishedValuedObject.reference;

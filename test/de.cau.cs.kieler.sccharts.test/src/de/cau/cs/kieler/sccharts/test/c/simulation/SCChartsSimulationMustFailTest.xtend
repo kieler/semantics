@@ -13,8 +13,11 @@
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
+import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
 
@@ -25,26 +28,84 @@ import static org.junit.Assert.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SCChartsSimulationMustFailTest extends SCChartsSimulationTestBase {
+@RunWith(ModelsRepositoryTestRunner)
+class SCChartsSimulationMustFailTest extends AbstractSimulationTest<SCCharts> {
+
+    val SCChartsSimulationTest delegate = new SCChartsSimulationTest()
     
-    override protected createSimulationBackend() {
-        return super.createCSimulationBackend
+    new() {
+        super(SCChartsSimulationTest.scchartsInjector)
     }
     
     override filter(TestModelData modelData) {
-        return !modelData.tracePaths.empty
-        && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
+        return modelData.hasSimulationTrace
         && modelData.modelProperties.contains("sccharts")
         && modelData.modelProperties.contains("must-fail")
         && !modelData.modelProperties.contains("causality-problem")
     }
     
     @Test
-    def void testSimulation(SCCharts scc, TestModelData modelData) {
-        val context = createSimulationContext
+    def void testSimulationNetlistC(SCCharts scc, TestModelData modelData) {
         var failed = false
         try {
-            compileModelAndStartSimulationTest(context, scc, modelData)
+            delegate.testSimulationNetlistC(scc, modelData)
+        } catch (AssertionError e) {
+            // The test failed and it must-fail.
+            // This means everything is peachy.
+            failed = true
+        }
+        
+        if(!failed) {
+            // The test did not fail, but must fail.
+            // Thus we throw a new error
+            fail("A test that must fail did succeed. Other test results may be invalid!\n"
+               + modelData.modelPath)
+        }
+    }
+    
+    @Test
+    def void testSimulationNetlistJava(SCCharts scc, TestModelData modelData) {
+        var failed = false
+        try {
+            delegate.testSimulationNetlistJava(scc, modelData)
+        } catch (AssertionError e) {
+            // The test failed and it must-fail.
+            // This means everything is peachy.
+            failed = true
+        }
+        
+        if(!failed) {
+            // The test did not fail, but must fail.
+            // Thus we throw a new error
+            fail("A test that must fail did succeed. Other test results may be invalid!\n"
+               + modelData.modelPath)
+        }
+    }
+
+    @Test
+    def void testSimulationPrioC(SCCharts scc, TestModelData modelData) {
+        var failed = false
+        try {
+            delegate.testSimulationPrioC(scc, modelData)
+        } catch (AssertionError e) {
+            // The test failed and it must-fail.
+            // This means everything is peachy.
+            failed = true
+        }
+        
+        if(!failed) {
+            // The test did not fail, but must fail.
+            // Thus we throw a new error
+            fail("A test that must fail did succeed. Other test results may be invalid!\n"
+               + modelData.modelPath)
+        }
+    }
+    
+    @Test
+    def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
+        var failed = false
+        try {
+            delegate.testSimulationPrioJava(scc, modelData)
         } catch (AssertionError e) {
             // The test failed and it must-fail.
             // This means everything is peachy.

@@ -153,9 +153,12 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
                 assignmentText = (assignment.expression as TextExpression).serializeHR
             }
             var String assignmentStr
+            val isComplex = assignment.expression instanceof OperatorExpression
             if (assignment.operator == AssignOperator::ASSIGNMIN) {
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
                 assignmentStr = valuedObjectName + " = (" + valuedObjectName + " < " + assignmentText + ") ? " + valuedObjectName + " : " + assignmentText
             } else if (assignment.operator == AssignOperator::ASSIGNMAX) {
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
                 assignmentStr = valuedObjectName + " = (" + valuedObjectName + " > " + assignmentText + ") ? " + valuedObjectName + " : " + assignmentText
             } else {
                 assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText

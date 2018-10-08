@@ -94,11 +94,5 @@
          <enablement></enablement>
       </commonWizard>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.prom.modelAnalyzer">
-      <analyzer
-            class="de.cau.cs.kieler.esterel.prom.EsterelAnalyzer">
-      </analyzer>
-   </extension>
 
 </plugin>
