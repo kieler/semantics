@@ -113,8 +113,8 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)
 
-        codeContainer.add(cFilename, cFile.toString)         
-        codeContainer.add(hFilename, hFile.toString)
+        codeContainer.addCCode(cFilename, cFile.toString, StatebasedCCodeGeneratorStructModule.STRUCT_NAME)         
+        codeContainer.addCHeader(hFilename, hFile.toString, StatebasedCCodeGeneratorStructModule.STRUCT_NAME)
     }    
     
     /**

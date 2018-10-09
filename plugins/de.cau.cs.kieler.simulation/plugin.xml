@@ -39,6 +39,12 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.internal.simulation.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.statebased.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.tts.statebased.c.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">
