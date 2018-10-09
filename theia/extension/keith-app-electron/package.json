@@ -37,7 +37,7 @@
         "reflect-metadata": "^0.1.12"
     },
     "scripts": {
-        "prepare": "theia build --mode development",
+        "prepare": "theia build",
         "start": "theia start --root-dir=../workspace",
         "watch": "theia build --watch"
     },

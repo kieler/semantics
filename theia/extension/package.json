@@ -59,9 +59,6 @@
     "@theia/variable-resolver": "next",
     "@theia/workspace": "next",
     "@types/node": "^8.0.14",
-    "sprotty": "^0.4.2",
-    "theia-sprotty": "0.1.19",
-    "keith-sprotty": "0.1.0",
     "monaco-editor-core": "^0.14.6",
     "theia-keith-extension": "0.1.0",
     "vscode-jsonrpc": "^3.6.2",
@@ -89,9 +86,6 @@
     "webpack":"^4.16.1"
   },
   "workspaces": [
-    "sprotty/client",
-    "theia-sprotty",
-    "keith-sprotty",
     "theia-keith-extension",
     "keith-app"
   ]

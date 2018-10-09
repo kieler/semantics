@@ -14,11 +14,6 @@
     "build": "tsc && yarn lint",
     "watch": "tsc -w"
   },
-  "dependencies": {
-    "sprotty": "^0.4.2",
-    "theia-sprotty": "0.1.19",
-    "keith-sprotty": "0.1.0"
-  },
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/chai-as-promised": "0.0.31",

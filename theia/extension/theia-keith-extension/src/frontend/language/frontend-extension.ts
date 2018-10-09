@@ -10,12 +10,12 @@ import { KeithContribution} from './keith-contribution'
 import { CommandContribution } from '@theia/core/lib/common'
 import { LanguageClientContribution } from '@theia/languages/lib/browser'
 import { KeithLanguageClientContribution } from './keith-language-client-contribution'
-import { DiagramConfiguration } from 'theia-sprotty/lib'
-import { KeithDiagramConfiguration } from '../keithdiagram/di.config'
-import { DiagramManager, DiagramManagerProvider } from 'theia-sprotty/lib'
-import { KeithDiagramManager } from '../keithdiagram/keith-diagram-manager'
-import { BaseWidget, KeybindingContext, FrontendApplicationContribution, OpenHandler,
-    WidgetFactory, bindViewContribution, createTreeContainer, TreeWidget } from '@theia/core/lib/browser'
+// import { DiagramConfiguration } from 'theia-sprotty/lib'
+// import { KeithDiagramConfiguration } from '../keithdiagram/di.config'
+// import { DiagramManager, DiagramManagerProvider } from 'theia-sprotty/lib'
+// import { KeithDiagramManager } from '../keithdiagram/keith-diagram-manager'
+import { BaseWidget, KeybindingContext/*, FrontendApplicationContribution, OpenHandler*/,
+    WidgetFactory, bindViewContribution/*, createTreeContainer, TreeWidget */} from '@theia/core/lib/browser'
 import { Constants } from '../../common/util'
 import { configuration as kgtConfiguration, monarchLanguage as kgtMonarchLanguage} from './kgt-monaco-language'
 import { configuration as sctxConfiguration, monarchLanguage as sctxMonarchLanguage } from './sctx-monaco-language';
@@ -29,13 +29,13 @@ import { KeithCommandContribution } from './keith-commands'
 import { MonacoEditorProvider } from '@theia/monaco/lib/browser/monaco-editor-provider'
 import { KeithMonacoEditorProvider } from "../monaco/keith-monaco-editor-provider"
 import '../../../src/frontend/widgets/style/index.css'
-import 'sprotty/css/sprotty.css'
-import 'theia-sprotty/css/theia-sprotty.css'
+// import 'sprotty/css/sprotty.css'
+// import 'theia-sprotty/css/theia-sprotty.css'
 import { ContextMenuCommands } from './dynamic-commands'
-import { ThemeManager } from '../keithdiagram/theme-manager'
-import { DiagramOptionsViewWidgetFactory, DiagramOptionsViewWidget } from '../diagramoptions/diagramoptions-view-widget'
-import { DiagramOptionsViewService } from '../diagramoptions/diagramoptions-view-service'
-import { DiagramOptionsViewContribution } from '../diagramoptions/diagramoptions-view-contribution'
+// import { ThemeManager } from '../keithdiagram/theme-manager'
+// import { DiagramOptionsViewWidgetFactory, DiagramOptionsViewWidget } from '../diagramoptions/diagramoptions-view-widget'
+// import { DiagramOptionsViewService } from '../diagramoptions/diagramoptions-view-service'
+// import { DiagramOptionsViewContribution } from '../diagramoptions/diagramoptions-view-contribution'
 import { KeithKeybindingContext } from './keith-keybinding-context'
 import { CompilerWidget } from '../widgets/compiler-widget'
 
@@ -141,34 +141,34 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(KeithLanguageClientContribution).toSelf().inSingletonScope()
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithLanguageClientContribution))
 
-    // diagram
-    bind(DiagramConfiguration).to(KeithDiagramConfiguration).inSingletonScope()
-    bind(DiagramManagerProvider).toProvider<DiagramManager>(context => {
-        return () => {
-            return new Promise<DiagramManager>((resolve) =>
-                resolve(context.container.get(KeithDiagramManager))
-            )
-        }
-    }).whenTargetNamed('keith-diagram')
-    bind(KeithDiagramManager).toSelf().inSingletonScope()
-    bind(FrontendApplicationContribution).toDynamicValue(context => context.container.get(KeithDiagramManager))
-    bind(OpenHandler).toDynamicValue(context => context.container.get(KeithDiagramManager))
+    // // diagram
+    // bind(DiagramConfiguration).to(KeithDiagramConfiguration).inSingletonScope()
+    // bind(DiagramManagerProvider).toProvider<DiagramManager>(context => {
+    //     return () => {
+    //         return new Promise<DiagramManager>((resolve) =>
+    //             resolve(context.container.get(KeithDiagramManager))
+    //         )
+    //     }
+    // }).whenTargetNamed('keith-diagram')
+    // bind(KeithDiagramManager).toSelf().inSingletonScope()
+    // bind(FrontendApplicationContribution).toDynamicValue(context => context.container.get(KeithDiagramManager))
+    // bind(OpenHandler).toDynamicValue(context => context.container.get(KeithDiagramManager))
     bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
 
     // needed to open editor
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
-    bind(ThemeManager).toSelf().inSingletonScope()
+    // bind(ThemeManager).toSelf().inSingletonScope()
 
-    // Diagram options bindings
-    bindViewContribution(bind, DiagramOptionsViewContribution);
-    bind(FrontendApplicationContribution).toService(DiagramOptionsViewContribution);
+    // // Diagram options bindings
+    // bindViewContribution(bind, DiagramOptionsViewContribution);
+    // bind(FrontendApplicationContribution).toService(DiagramOptionsViewContribution);
 
-    bind(DiagramOptionsViewWidgetFactory).toFactory(ctx =>
-        () => createDiagramOptionsViewWidget(ctx.container)
-    )
+    // bind(DiagramOptionsViewWidgetFactory).toFactory(ctx =>
+    //     () => createDiagramOptionsViewWidget(ctx.container)
+    // )
 
-    bind(DiagramOptionsViewService).toSelf().inSingletonScope();
-    bind(WidgetFactory).toDynamicValue(context => context.container.get(DiagramOptionsViewService));
+    // bind(DiagramOptionsViewService).toSelf().inSingletonScope();
+    // bind(WidgetFactory).toDynamicValue(context => context.container.get(DiagramOptionsViewService));
 
     // added for keybinding and commands
     bind(KeithKeybindingContext).toSelf()
@@ -178,11 +178,11 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
 })
 
 
-function createDiagramOptionsViewWidget(parent: interfaces.Container): DiagramOptionsViewWidget {
-    const child = createTreeContainer(parent);
+// function createDiagramOptionsViewWidget(parent: interfaces.Container): DiagramOptionsViewWidget {
+//     const child = createTreeContainer(parent);
 
-    child.unbind(TreeWidget);
-    child.bind(DiagramOptionsViewWidget).toSelf();
+//     child.unbind(TreeWidget);
+//     child.bind(DiagramOptionsViewWidget).toSelf();
 
-    return child.get(DiagramOptionsViewWidget);
-}
+//     return child.get(DiagramOptionsViewWidget);
+// }

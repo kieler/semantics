@@ -41,7 +41,7 @@ mac:
       from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/util/kieler-mac.ini"
       to: "app/kieler.app/Contents/Eclipse/kieler.ini"
   target:
-    - zip
+    - tar.gz
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
     # - dmg only possible on macOS
 linux:
