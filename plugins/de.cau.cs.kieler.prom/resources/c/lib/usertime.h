@@ -53,11 +53,7 @@ void resetusertime()
 }
 
 
-<<<<<<< HEAD
 double getusertime()
-=======
-double getusertime2()
->>>>>>> ssm/sbeval
 {
 #ifdef WIN32
 // Windows case
@@ -75,11 +71,9 @@ double getusertime2()
 	struct timespec now;
 	double diff;
 	
-<<<<<<< HEAD
     clock_gettime(CLOCK_REALTIME, &now);
 	
 	diff = ((double)(now.tv_nsec - remembered_spec.tv_nsec)) / 1000000;
-=======
     if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
         return -1.0;
     }
@@ -88,7 +82,6 @@ double getusertime2()
 	diff = ( now.tv_sec - remembered_spec.tv_sec )
           + ( now.tv_nsec - remembered_spec.tv_nsec )
             / 1;
->>>>>>> ssm/sbeval
 
     return diff;
 

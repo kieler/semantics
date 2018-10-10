@@ -63,7 +63,7 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     @Test(timeout=10000)
     def void testDataflowSynthesis(SCCharts scc, TestModelData modelData) {
-        assumeFalse(true)
+//        assumeFalse(true)
         
         for (rootState : scc.rootStates) {
             val kNodesStr = rootState.getStringAnnotationValue(ANNOTATION_KNODES)

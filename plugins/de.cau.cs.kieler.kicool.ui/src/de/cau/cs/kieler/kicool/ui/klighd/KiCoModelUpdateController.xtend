@@ -76,8 +76,9 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
  */
 class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
-    override selectionChanged(SelectionChangedEvent event) {
-    }
+//    ssm: Workaround for the SBE with SDs
+//    override selectionChanged(SelectionChangedEvent event) {
+//    }
 
     /**
      * Events that can cause an update of displayed model.
