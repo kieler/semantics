@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.codegen.statebased
+package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
@@ -35,6 +35,8 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     public static val IProperty<Boolean> PRINT_DEBUG_ENABLED = 
        new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.printDebug", false)    
     
+    public static val IProperty<Boolean> LEAN_MODE = 
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.leanMode", false)    
     
     @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel
     @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModelStates 

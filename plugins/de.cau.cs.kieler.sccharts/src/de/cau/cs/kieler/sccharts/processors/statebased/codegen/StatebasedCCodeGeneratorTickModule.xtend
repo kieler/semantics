@@ -10,12 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.codegen.statebased
+package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
