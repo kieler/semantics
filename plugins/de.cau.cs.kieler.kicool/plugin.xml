@@ -61,6 +61,9 @@
       <Processor
             class="de.cau.cs.kieler.kicool.deploy.processor.CCompiler">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.Snapshot">
+      </Processor>
    </extension>
    
 </plugin>

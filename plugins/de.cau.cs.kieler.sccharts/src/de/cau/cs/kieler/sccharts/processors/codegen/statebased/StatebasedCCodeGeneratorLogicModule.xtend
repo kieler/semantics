@@ -26,6 +26,7 @@ import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.BoolValue
+import org.eclipse.emf.ecore.EObject
 
 /**
  * C Code Generator Logic Module
@@ -59,48 +60,37 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     }
     
     override getName() {
-        LOGIC_NAME + baseName + suffix
+        struct.getStateName(rootState) + baseName + suffix
     }
     
     @Accessors val functions = <StringBuilder> newLinkedList
+    @Accessors val objectFunctionMap = <EObject, StringBuilder> newHashMap
     
     override generateInit() {
         init(serializer)
         indent(0)
-        code.add(
-            MLC(getName + "() contains the logic of the modelled statechart without additional tasks",
-                "such as communication with the simulation interface or register saves.",
-                "It takes the actual interface together with current state of the state machine and",
-                "calculates exactly one macro step of the system."
-            ),
+        struct.forwardDeclarations.add(
+            SLC(getName + "() contains the logic of the rootState of the statechart."),
             
-            "void ", getName, "(", struct.getName, " *", struct.getVariableName, ")"
-        )
-        
-        struct.forwardDeclarations.append(code).append(";\n\n")
-        
-        code.add(
-            " {", NL
+            FUNCTION_INLINE_VOID_SP, getName, "(", struct.getName, " *", struct.getVariableName, ");",
+            NL, NL
         )
     }
     
     override generate() {
-        val function = new StringBuilder
-        
-        rootState.generateState(function, "")
-        
-        code.append(function)
+        rootState.generateState("")
     }
     
     override generateDone() {
-        indent(0)
-        code.add(
-            "}", NL, NL 
-        )
-        
         for (function : functions) {
             code.append(function)
         }
+    }
+    
+    def createNewFunction(EObject association) {
+        val sb = new StringBuilder => [ functions += it ]
+        objectFunctionMap.put(association, sb)
+        return sb
     }
     
     
@@ -125,212 +115,172 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             
             if (!(state.eContainer instanceof ControlflowRegion)) {
                 struct.rootRegions += cfr
-                
-                reset.code.add(
-                    "  ", STRUCT_VARIABLE_NAME, "->", struct.getRegionName(cfr), ".threadStatus = ", 
-                        THREAD_STATUS_PAUSING, ";", NL
-                )
             }      
         }
     }
     
     
-    def void generateState(State state, StringBuilder parentFunction, String indentation) {
-        val isNested = state.eContainer instanceof ControlflowRegion
-        val function = if (isNested)
-            new StringBuilder => [ functions += it ]
-            else parentFunction
-        val regionDataName = if (!isNested) 
-            STRUCT_VARIABLE_NAME
-            else REGION_DATA_NAME
+    
+    
+    
+    
+    def void generateState(State state, String indentation) {
+        if (state.isHierarchical) {
+            generateSuperstateInit(state, indentation)
+            generateSuperstateBody(state, indentation)
+        } else {
+            generateSimpleStateBody(state, indentation)            
+        }
+    }
+    
+    def generateSuperstateInit(State state, String indentation) {
+        val parentCfr = state.eContainer
+        val isRootState = if (parentCfr instanceof ControlflowRegion) false else true
+        val function = if (isRootState) reset.rootStateInit else createNewFunction(state)
+        val functionName = struct.getStateName(state)
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+        val inRegionCommentString = if (state.eContainer instanceof ControlflowRegion) 
+            " in region " + struct.getRegionName(state.eContainer as ControlflowRegion) 
+            else ""
         
-        val stateName = struct.getStateName(state)
-        
-        if (isNested) {
-            val parentCfr = state.eContainer as ControlflowRegion
-            val functionName = struct.getStateName(state, parentCfr)
-            val parentCfrName = struct.getRegionName(parentCfr)
-            
-            parentFunction.add(
-                indentation, functionName, "(", regionDataName, ");", NL 
+        if (!isRootState) {    
+            struct.forwardDeclarationsLogic.add(
+                FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName,
+                " *", CONTEXT_DATA_NAME, ");",
+                LEC("State " + state.name + " " + inRegionCommentString + " logic"), NL ) 
+
+            function.add(
+                SLC("Init function of superstate " + state.name + inRegionCommentString), 
+                
+                FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL
             )
-            
-            if (state.isHierarchical) {
-                parentFunction.add(
-                    NL, "      ", "case ", 
-                    stateName, ENUM_STATES_RUNNING, 
-                    ":", NL,
-                    indentation, functionName, ENUM_STATES_RUNNING.toLowerCase, "(", regionDataName, ");", NL
-                )
-                
-                struct.forwardDeclarationsLogic.add(
-                    "void ", functionName, ENUM_STATES_RUNNING.toLowerCase, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX,
-                     " *", regionDataName, ");",
-                     LEC("State " + state.name + " in region " + parentCfrName + " logic"), 
-                     NL
-                 ) 
-                
-            }             
             
             function.add(
-                SLC("Function of state " + state.name + " in region " + parentCfrName), 
-                IFC(state.isHierarchical, SLC("This is a superstate.") + 
-                    SLC("The function will initialize its children and ") +  
-                    SLC("commits control to its logic function " + functionName + ENUM_STATES_RUNNING.toLowerCase + " afterwards.")
-                ),
-                
-                "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ") {", NL
+                "  ", CONTEXT_DATA_NAME, "->activeState = ", struct.getStateEnumNameRunning(state), ";", NL
             )
-            
-            struct.forwardDeclarationsLogic.add(
-                "void ", functionName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ");",
-                LEC("State " + state.name + " in region " + parentCfrName),
-                NL
-            ) 
-
-            if (state.isHierarchical) {
-                val runningName = functionName + ENUM_STATES_RUNNING.toLowerCase
-                
-                function.add(
-                    "  ", REGION_DATA_NAME, "->activeState = ", struct.getStateName(state), ENUM_STATES_RUNNING, ";", NL
-                )
-                
-                for (cfr : state.regions.filter(ControlflowRegion)) {
-                    val cfrName = struct.getRegionName(cfr)
-                    val initialState = cfr.states.filter[ initial ].head
-                    val initialStateName = struct.getStateName(initialState)
-                    val noneStateName = struct.getNoneStateName(cfr)
-                    
-                    function.add(
-                        "  ", REGION_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ", 
-                            initialStateName, ";", NL,
-                        "  ", REGION_DATA_NAME, "->", cfrName, ".", REGION_TICK_START_STATE, " = ", 
-                            noneStateName, ";", NL,
-                        "  ", REGION_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
-                            initialState.getStatePriority, ";", NL,
-                        "  ", regionDataName, "->", cfrName, ".", REGION_ROOT_THREADSTATUS,  " = ",
-                            THREAD_STATUS_WAITING, ";", NL
-                    )
-                }
-                
-                function.add(
-                    "}", NL, NL 
-                )
-                
-                function.add(
-                    SLC("Logic function of the superstate " + state.name + " in region " + parentCfrName),
-                    SLC("Function " + functionName + " will initialize its children and then, proceeds here."), 
-                    
-                    "void ", runningName, "(", parentCfrName, REGION_DATA_TYPE_SUFFIX, " *", regionDataName, ") {", NL
-                )
-            }
         }
         
-        if (state.isHierarchical) {
-            val regionCount = state.regions.filter(ControlflowRegion).size
-            var indentation2 = ""
+            
+                
+        for (cfr : state.regions.filter(ControlflowRegion)) {
+            val cfrName = struct.getContextVariableName(cfr)
+            val initialState = cfr.states.filter[ initial ].head
+            val initialStateName = struct.getStateEnumName(initialState)
+            val initialStatePriority = initialState.getStatePriority
             
             function.add(
-                MLCi(2, "Set the tick start state of all contained paused threads and", 
-                    "set the thread status to waiting for the upcomiong tick."
-                )
+                "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_STATE, " = ", 
+                    initialStateName, ";", NL,
+                "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_DELAYED_ENABLED, " = 0;", NL,
+                "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " = ",
+                    initialStatePriority, ";", NL,
+                "  ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS,  " = ",
+                    THREAD_STATUS_WAITING, ";", NL
             )
             
-            for (cfr : state.regions.filter(ControlflowRegion).indexed) {
-                val cfrName = struct.getRegionName(cfr.value)
-                function.add(
-                    "  ", "if (", regionDataName, "->", cfrName, ".threadStatus == ",
-                        THREAD_STATUS_PAUSING, ") {", NL
-                )
-                
-                function.add(
-                    "    ", indentation2, regionDataName, "->", cfrName, ".", REGION_TICK_START_STATE, " = ",
-                        regionDataName, "->", cfrName, ".", REGION_ACTIVE_STATE, ";", NL
-                )
-                
-                function.add(
-                    "    ", indentation2, regionDataName, "->", cfrName, ".threadStatus = ", 
-                        THREAD_STATUS_WAITING, ";", NL, "  ", indentation2, "}", NL
-                )
+            if (isRootState) {
+                if (initialStatePriority > reset.maxRootstatePriority) { 
+                    reset.maxRootstatePriority = initialStatePriority   
+                }                      
             }
+        }
+              
+        if (!isRootState) {  
+            function.add(
+                "}", NL, NL 
+            )
+        }
+    }
+    
+    
+    def generateSuperstateBody(State state, String indentation) {
+        val function = createNewFunction(state)
+        val functionName = struct.getStateNameRunning(state)
+        val parentCfr = state.eContainer
+        val isRootState = !(parentCfr instanceof ControlflowRegion)
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+        val regionCount = state.regions.filter(ControlflowRegion).size
+        val multiThreaded = regionCount > 1
+        val inRegionCommentString = if (state.eContainer instanceof ControlflowRegion) 
+            " in region " + struct.getRegionName(state.eContainer as ControlflowRegion) 
+            else ""
+        
+            
+                            
+        function.add(
+            SLC("Logic function of the superstate " + state.name + inRegionCommentString),
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            IFC(printDebug, "  printf(\"SUPERSTATE " + state.name + " \"); fflush(stdout);\n"));
+        struct.forwardDeclarationsLogic.add(
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL
+        );
+            
+        function.add(
+            SLC("Set the thread status to waiting for the upcomiong tick.")
+        )
+            
+        if (multiThreaded) {
             
             function.add(
-                NL
+                SLC(4, "Calculate the highest active priority."),
+                 "  int activePriority = "+ CONTEXT_DATA_NAME + "->" + REGION_ACTIVE_PRIORITY + ";", NL,
+                 "  ", "int newActivePriority = 0;", NL,
+                 NL
             )
-            
-            val multiThreaded = regionCount > 1
-            function.add(
-                SLC(2, "Loop as long as at least one thread is still waiting to execute."), 
-                
-                "  ", "do {", NL
-            )
-            indentation2 += "  "
-            if (multiThreaded) {
-                
-                function.add(
-                    MLCi(4, "Calculate the highest active priority.", 
-                        "Therefore, look at every thread that is waiting and compare the priorities.",
-                        "Afterwards, all threads with an active priority equal to the highest priority are", 
-                        "eligible to run."
-                    ),
-                    
-                    "    ",
-                    "int activePriority = 0;", 
-                    NL
-                )
-                for (cfr : state.regions.filter(ControlflowRegion)) {
-                    val cfrName = struct.getRegionName(cfr)
-                    
-                    function.add(
-                        "    ", "if (", regionDataName, "->", cfrName, ".", REGION_ROOT_THREADSTATUS, " == ",
-                            THREAD_STATUS_WAITING, " &&", NL,
-                        "      ", regionDataName, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
-                            "activePriority", ") {", NL, 
-                            "      ", "activePriority = ", 
-                                regionDataName, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL, 
-                            "    }", NL, NL 
-                    )
-                }
-            }
-            
-            
 
+//            for (cfr : state.regions.filter(ControlflowRegion)) {
+//                val cfrName = struct.getContextVariableName(cfr)
+//                
+//                function.add(
+//                    "  ", "if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_THREADSTATUS, " == ",
+//                        THREAD_STATUS_WAITING, " &&", NL,
+//                    "    ", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
+//                        "activePriority", ") {", NL, 
+//                    "    ", "activePriority = ", 
+//                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL, 
+//                    "  }", NL, NL 
+//                )
+//            }
+            
             val conditionalBuilder = new StringBuilder
+            val pauseBuilder = new StringBuilder
+            val pauseActivityBuilder = new StringBuilder
             for (cfr : state.regions.filter(ControlflowRegion).indexed) {
                 cfr.value.generateControlflowRegion
-                
-                val cfrName = struct.getRegionName(cfr.value)
-                
-                if (multiThreaded) {
-                    function.add(
-                        "    ", "if (", regionDataName, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " == ",
-                            "activePriority) {", NL
-                    )
-                    indentation2 += "  "
-                }
+            
+                val contextName = struct.getContextVariableName(cfr.value)
+                val regionName = struct.getRegionName(cfr.value)
 
+                function.add(                    
+                    "  ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", 
+                    THREAD_STATUS_WAITING, ") {", NL
+                );
+            
                 function.add(
-                    "  ", indentation2, "if (", regionDataName, "->", cfrName, ".threadStatus == ", 
-                        THREAD_STATUS_WAITING, ") {", NL,
-                    "    ", indentation2, regionDataName, "->", cfrName, ".threadStatus = ",
+                    "    ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".", REGION_ACTIVE_PRIORITY, " == ",
+                        "activePriority) {", NL
+                )
+    
+                function.add(
+                    "      ", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus = ",
                         THREAD_STATUS_RUNNING, ";", NL, 
-                    "  ", indentation2, "}", NL 
-                )
-                
-                function.add(NL, 
-                    SLC(2 + indentation2.length, "Call the logic code of thread " + cfrName + "."), 
+                    SLC(6, "Call the logic code of thread " + regionName + "."), 
                     
-                    "  ", indentation2, cfrName, "(&", regionDataName, "->", cfrName, ");", NL
+                    "      ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL
                 )
                 
-                if (multiThreaded) {
-                    function.add(
-                        "    }", NL, NL 
-                    )    
-                }
+                function.add(
+                    "    ", "}", NL,
+                    "    ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING, ") {", NL,
+                    "      ", "if (", CONTEXT_DATA_NAME, "->", contextName, ".activePriority > newActivePriority) {", NL,
+                    "       ", "newActivePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL,
+                    "      ", "}", NL,
+                    "    ", "}", NL,
+                    "  ", "}", NL
+                )
                 
                 conditionalBuilder.add(
-                    regionDataName, "->", cfrName, ".threadStatus == ", THREAD_STATUS_WAITING
+                    CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING
                 )
                 if (cfr.key < regionCount - 1) {
                     conditionalBuilder.add(
@@ -338,210 +288,296 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                         "    "
                     )
                 }
-            }
-            
-            function.add(
-                "  ", "} while(", conditionalBuilder, ");", NL,
-                NL 
-            )
-        } 
-        
-        // Transitions
-        val hasDelayed = state.outgoingTransitions.exists[ !immediate ]
-        if (hasDelayed) {
-            function.add(
-                SLC(2, "inDepth becomes true if this state was already active at the beginning of the actual tick instance."), 
-                
-                "  char inDepth = ", regionDataName, "->tickStartState == ", stateName, ";", NL, NL
-            )
-        }
-        val allDelayed = if (!hasDelayed) false else
-            state.outgoingTransitions.forall[ !immediate && sourceState == targetState ] 
-        
-        for (transition : state.outgoingTransitions.indexed) {
-            transition.value.generateTransition(transition.key, function, allDelayed, "  ", serializer)
-        }
-        
-        val handleImplicitTransitions =
-            (state.outgoingTransitions.forall[trigger !== null]) || 
-            (state.outgoingTransitions.forall[ !immediate ])
-            
-        if (handleImplicitTransitions) {
-            if (state.outgoingTransitions.size > 0) {
-                if (allDelayed) {
-                    function.add(NL, 
-                        SLC(2, "The thread will enter a pause after this state is done."),  
-                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
-                    )
-                } else {
-                    function.add(
-                        "  else", NL, 
-                        "  {", NL,
-                        SLC(4, "Implicitly wait one tick if no transition was taken."),  
-                        "    ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
-                        "  }", NL
-                    )
-                }
-            } else {
-                if (state.final) {
-                    function.add(
-                        SLC(2, "The thread becomes inactive after this state is done."),
-                        
-                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_INACTIVE, ";", NL
-                    )                    
-                } else {
-                    function.add(
-                        SLC(2, "The thread pauses after this state is done."),
-                        
-                        "  ", regionDataName, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
-                    )
-                }
-            }
-        } 
-        
-        if (state.eContainer instanceof ControlflowRegion) {
-            function.add(
-                "}", NL, NL 
-            )
-        }         
-    }
-    
-    def void generateTransition(Transition transition, int index,
-        StringBuilder function, boolean allDelayed, String indentation, extension StatebasedCCodeSerializeHRExtensions serializer
-    ) {
-        val isImmediate = transition.immediate
-        val hasTrigger = transition.trigger !== null
-        var indentationLength = indentation.length
-        
-        if (index > 0) {
-            function.add(
-                "} else {", NL 
-//                "  " // for the comment
-            )
-            indentationLength += 2
-        }
-        
-        val triggerEffect = transition.serializeHR
-        val defaultTransition = transition.trigger === null || 
-            (transition.trigger instanceof BoolValue && (transition.trigger as BoolValue).value == true)  
-        val transitionTrigger = if (defaultTransition) "" else transition.trigger.serializeHR
-        val selfLoop = transition.sourceState == transition.targetState
-        var effects = ""
-        for (effect : transition.effects.indexed) {
-            effects += effect.value.serializeHR + NL
-            if (transition.effects.size > 1 && effect.key < transition.effects.size - 1) {
-                effects += WS(9)
-            } 
-        } 
-        function.add(
-            MLCii(indentationLength, 2,
-                "Transition " + index + ": ",
-                IFC(selfLoop, "It is a self-loop back to " + transition.targetState.name + "."),
-                IFC(!selfLoop, "The target of this transition is state " + transition.targetState.name + "."),
-                IFC(!defaultTransition, "Trigger: " + transitionTrigger),
-                IFC(defaultTransition, "This is the default transition, the trigger is always true."),
-                IFC(!transition.effects.empty, "Effects: " + effects),
-                IFC(transition.immediate, "The transition is immediate.")
-            )
-        )
-        struct.forwardDeclarationsLogic.add(
-            MLCii(2, 2,
-                "Transition " + index + ": ",
-                IFC(selfLoop, "It is a self-loop back to " + transition.targetState.name + "."),
-                IFC(!selfLoop, "The target of this transition is state " + transition.targetState.name + "."),
-                IFC(!defaultTransition, "Trigger: " + transitionTrigger),
-                IFC(defaultTransition, "This is the default transition, the trigger is always true."),
-                IFC(!transition.effects.empty, "Effects: " + effects),
-                IFC(transition.immediate, "The transition is immediate.") 
-            ), NL
-        )
-        
-        function.add(indentation)
-        if (hasTrigger) {
-            function.add("if ")
-            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.add("(")
-            if (!isImmediate) function.add("inDepth && ")
-            valuedObjectPrefix = REGION_DATA_NAME + "->" + REGION_INTERFACE_NAME + "->" 
-            function.add(transition.trigger.serialize)
-            valuedObjectPrefix = ""
-            if (!isImmediate || transition.trigger instanceof ValuedObjectReference) function.add(")")
-            function.add(
-                " {", NL
-            )
-        } else if (!isImmediate) {
-            function.add(
-                "if (inDepth) {", NL
-            )
-        }
-        
-        if (transition.effects.size > 0) {
-            valuedObjectPrefix = REGION_DATA_NAME + "->" + 
-                REGION_INTERFACE_NAME + "->"
-                
-            for (effect : transition.effects) {
-                function.add(
-                    indentation, "  ", effect.serializeHR, ";", NL
-                )
-            }
-            
-            valuedObjectPrefix = ""
-        }
-        
-        if (transition.isTermination) {
-            val state = transition.sourceState
-            val conditionalBuilder = new StringBuilder
-            
-            val regionCount = state.regions.filter(ControlflowRegion).size
-            for (cfr : state.regions.filter(ControlflowRegion).indexed) {
-                val cfrName = struct.getRegionName(cfr.value)
-                               
-                conditionalBuilder.add(
-                    REGION_DATA_NAME, "->", cfrName, ".threadStatus == ", THREAD_STATUS_INACTIVE
+                pauseBuilder.add(
+                    CONTEXT_DATA_NAME, "->", contextName, ".threadStatus != ", THREAD_STATUS_WAITING
                 )
                 if (cfr.key < regionCount - 1) {
-                    conditionalBuilder.add(
+                    pauseBuilder.add(
                         " &&", NL, 
                         "    "
                     )
                 }
+                
+                pauseActivityBuilder.add(
+                    "    ", "if ((", CONTEXT_DATA_NAME, "->", contextName, ".activePriority > ", 
+                        CONTEXT_DATA_NAME, "->activePriority) && ", NL, 
+                    "      ", "(", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_PAUSING, "))", NL,
+                    "      ",  CONTEXT_DATA_NAME, "->activePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL
+                )
             }
             
+//            if (!isRootState) {
+                function.add(NL,
+                    "  ", CONTEXT_DATA_NAME, "->", "activePriority = newActivePriority;", NL,
+                    IFC(printDebug, "  printf(\"APRIO %d \", " + CONTEXT_DATA_NAME, "->activePriority); fflush(stdout);\n"),
+                     NL 
+                )
+//            }
+
+          
+            function.add(NL,
+                "  ", "if (", pauseBuilder.toString, ") {", NL,
+                pauseActivityBuilder.toString,
+                "  ", "}", NL
+            )
+                
+        } else { // Single-threaded
+            val cfr = state.regions.filter(ControlflowRegion).head
+            val contextName = struct.getContextVariableName(cfr)
+            val regionName = struct.getRegionName(cfr)
+            cfr.generateControlflowRegion
+            
             function.add(
-                "if (", conditionalBuilder.toString, ") {", NL, 
-                "  "
+                "    ", CONTEXT_DATA_NAME, "->", contextName, ".threadStatus = ",
+                    THREAD_STATUS_RUNNING, ";", NL,
+                                      
+                SLC(6, "Call the logic code of thread " + regionName + "."), 
+                
+                "    ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL
+            )
+
+            if (!isRootState) {
+                function.add(
+                    "  ", CONTEXT_DATA_NAME, "->", "activePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL, 
+                    IFC(printDebug, "  printf(\"APRIO %d \", " + CONTEXT_DATA_NAME, "->activePriority); fflush(stdout);\n"),
+                    NL
+                )
+            }
+                
+        }
+            
+        if (!isRootState) {
+            state.generateStateTransitions(function, indentation, serializer)
+        } else {
+            val terminationBuilder = new StringBuilder
+            for (cfr : state.regions.filter(ControlflowRegion).indexed) {
+                val contextName = struct.getContextVariableName(cfr.value)
+                terminationBuilder.add(
+                    CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_TERMINATED
+                )
+                if (cfr.key < regionCount-1) 
+                    terminationBuilder.add(" && ", NL, "    ")
+            }
+            function.add(NL,
+                "  ", "if (", terminationBuilder.toString, ") {", NL,
+                "    ", CONTEXT_DATA_NAME, "->", REGION_THREADSTATUS, " = ", THREAD_STATUS_TERMINATED, ";", NL,
+                "  }", NL
             )
         }
-
+        
         function.add(
-            indentation
+            "}",
+            NL, NL
+        )
+    } 
+        
+    
+    def generateSimpleStateBody(State state, String indentation) {
+        val function = createNewFunction(state)
+        val functionName = struct.getStateName(state)
+        val parentCfr = state.eContainer as ControlflowRegion
+        val parentCfrName = struct.getRegionName(parentCfr)
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+
+                            
+        function.add(
+            SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            IFC(printDebug, "  printf(\"STATE " + state.name + " \"); fflush(stdout);\n"));
+
+        struct.forwardDeclarationsLogic.add(
+            SLC("Logic function of the simple state " + state.name + " in region " + parentCfrName),
+            FUNCTION_INLINE_VOID_SP, functionName, "(", contextDataName, " *", CONTEXT_DATA_NAME, ");", NL);
+            
+        state.generateStateTransitions(function, indentation, serializer)
+        
+        function.add(
+            "}", NL, 
+            NL
+        )
+    }
+    
+    
+    def void generateControlflowRegion(ControlflowRegion cfr) {
+        val regionName = struct.getRegionName(cfr)
+        val contextName = struct.getContextTypeName(cfr)
+        val function = createNewFunction(cfr)
+        
+        val singleState = cfr.states.size == 1 && (!cfr.states.head.isHierarchical)
+        
+        function.add(
+            SLC("Function of region " + regionName), 
+            
+            FUNCTION_INLINE_VOID_SP, regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ") {", NL,
+            IFC(printDebug, "  printf(\"REGION " + regionName + " \"); fflush(stdout);\n"),
+            
+            SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
+            "  while(", CONTEXT_DATA_NAME, "->threadStatus == RUNNING) {", NL,
+            IFC(!singleState, "    switch(", CONTEXT_DATA_NAME, "->activeState) {", NL)
         )
         
-        if (transition.targetState == transition.sourceState) {
-            if (!transition.immediate) {
-                if (allDelayed) {
+        for (state : cfr.states) {
+            val stateName = struct.getStateName(state)
+            val stateEnumName = struct.getStateEnumName(state)
+            
+            if (!singleState) {
+                function.add(
+                    "      case ", stateEnumName, ":", NL
+                )
+            }
+            
+            state.generateState("        ")
+            
+            function.add(
+                IFC(!singleState, "    "),
+                "    ", stateName, "(", CONTEXT_DATA_NAME, ");", NL
+            ) 
+            
+            if (!singleState) {
+                if (!state.isHierarchical) {
                     function.add(
-                        "}", NL
-                    )
+                        "        break;", NL, NL
+                    ) 
+    
                 } else {
+                    val stateNameRunning = struct.getStateNameRunning(state)
+                    val stateEnumNameRunning = struct.getStateEnumNameRunning(state)
+                    
                     function.add(
-                        "  ", REGION_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
-                        "  }", NL
+                        SLC(4, "It was a superstate reset, fall through."), NL,
+                        "      case ", stateEnumName + ENUM_STATES_RUNNING, ":", NL, 
+                        "        ", stateNameRunning, "(", CONTEXT_DATA_NAME, ");", NL,
+                        "        break;", NL, NL
+                    )    
+                    
+                }
+            }
+        }
+        
+        function.add(
+            IFC(!singleState, "    }", NL),
+            "  }", NL,
+            "}", NL, NL
+        )
+        
+        struct.forwardDeclarationsLogic.add(
+            FUNCTION_INLINE_VOID_SP, regionName, "(", contextName, " *", CONTEXT_DATA_NAME, ");",
+            LEC("Region " + regionName), 
+            NL, NL
+        ) 
+    }
+        
+    
+    def generateStateTransitions(State state, StringBuilder function, String indentation, 
+        extension StatebasedCCodeSerializeHRExtensions serializer
+    ) {
+        val parentCfr = state.eContainer
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+             
+        val transitionCount = state.outgoingTransitions.size             
+                
+        var hasImplicitSelfLoop = true //!state.isHierarchical
+        var ifScopeIsOpen = false
+        var scopeIndent = ""
+        
+      
+        for (t : state.outgoingTransitions.indexed) {
+            val index = t.key
+            val transition = t.value
+            
+            var effects = ""
+            for (effect : transition.effects.indexed) {
+                effects += effect.value.serializeHR + NL
+                if (transition.effects.size > 1 && effect.key < transition.effects.size - 1) {
+                    effects += WS(2)
+                } 
+            }            
+
+            valuedObjectPrefix = CONTEXT_DATA_NAME + "->" + REGION_INTERFACE_NAME + "->"              
+            val isImmediate = transition.immediate
+            val isSelfLoop = transition.sourceState == transition.targetState
+            val hasTrigger = transition.trigger !== null
+            val isDefaultTransition = (!hasTrigger || 
+                (transition.trigger instanceof BoolValue && (transition.trigger as BoolValue).value == true))
+                && (!transition.isTermination)  
+            var transitionTrigger = ""
+            if (!isDefaultTransition) { 
+                if (transition.isTermination) {
+                    transitionTrigger = state.createTerminationTrigger
+                } else {
+                    transitionTrigger = transition.trigger.serializeHR as String
+                } 
+            }
+            val trigger = if (!isImmediate) 
+                    (if (hasTrigger) 
+                    CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED + " && (" + transitionTrigger + ")"
+                    else CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED) 
+                else transitionTrigger
+            if (isDefaultTransition && isImmediate) hasImplicitSelfLoop = false 
+            
+
+            
+            val triggerPD = trigger.replaceAll(NL, "").replaceAll("\n", "")
+            if (index == 0) { 
+                if (!trigger.nullOrEmpty) {
+                    function.add("  if (", trigger, ") {", NL,
+                        IFC(printDebug, "  printf(\"TRIGGER " + triggerPD + " \"); fflush(stdout);\n")
+                    )
+                    
+                    ifScopeIsOpen = true
+                }    
+            } else {
+                if (!trigger.nullOrEmpty) {
+                    function.add("  } else if (", trigger, ") {", NL,
+                        IFC(printDebug, "  printf(\"TRIGGER " + triggerPD + " \"); fflush(stdout);\n")
+                    )
+                    ifScopeIsOpen = true
+                } else if (isDefaultTransition) {
+                    function.add("  } else {", NL
+//                        IFC(printDebug, "  printf(\"ELSETRIGGER \"); fflush(stdout);\n")
+                    )
+                    hasImplicitSelfLoop = false
+                    ifScopeIsOpen = true
+                }
+            }           
+            if (ifScopeIsOpen) scopeIndent = "  "
+        
+         
+            function.add(
+                MLCii(4, 2,
+                    IFC(transition.immediate, "Immediate "),
+                    "Transition " + index + ": ", transition.targetState.name, " to ", transition.targetState.name, NL,
+                    IFC(!transitionTrigger.nullOrEmpty, "Trigger: " + transitionTrigger), 
+                    IFC(!transition.effects.empty, "Effects: " + effects)
+                )
+            )
+            struct.forwardDeclarationsLogic.add(
+                MLCii(2, 2,
+                        IFC(transition.immediate, "Immediate "),
+                        "Transition " + index + ": ", transition.targetState.name, " to ", transition.targetState.name, NL,
+                        IFC(!transitionTrigger.nullOrEmpty, "Trigger: " + transitionTrigger), 
+                        IFC(!transition.effects.empty, "Effects: " + effects)
+                ), NL
+            )
+        
+            if (transition.effects.size > 0) {
+                for (effect : transition.effects) {
+                    val effectText = "" //effect.serializeHR.toString.replaceAll("\"", "\\\"")
+                    function.add(
+                        scopeIndent, "  ", effect.serializeHR, ";", NL,
+                        IFC(printDebug, "  printf(\"EFFECT " + effectText + " \"); fflush(stdout);\n")            
                     )
                 }
             }
-        } else {
-            if (hasTrigger || !isImmediate) function.add("  ")
-            function.add(
-                REGION_DATA_NAME, "->activeState = ", struct.getStateName(transition.targetState), ";", NL
-            )
             
-            if (!isImmediate) {
-                val parentCfr = transition.sourceState.parentRegion
-                
+            function.add(
+                scopeIndent, "  ", CONTEXT_DATA_NAME, "->", REGION_DELAYED_ENABLED, " = 0;", NL
+            )                
+
+            if (!isSelfLoop) {
                 function.add(
-                    "    ", REGION_DATA_NAME, "->", REGION_TICK_START_STATE, " = ", 
-                        struct.getNoneStateName(parentCfr), ";", NL
-                )                
+                    scopeIndent, "  ", CONTEXT_DATA_NAME, "->activeState = ", struct.getStateEnumName(transition.targetState), ";", NL
+                )
             }
             
             val sourcePrio = transition.sourceState.statePriority
@@ -549,74 +585,113 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             
             if (targetPrio != sourcePrio) {
                 function.add(
-                    "    ", REGION_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", 
+                    "    ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", 
                         targetPrio, ";", NL
                 )
                 
                 if (targetPrio < sourcePrio) {
                     function.add(
-                        "    ", REGION_DATA_NAME, "->threadStatus = ", THREAD_STATUS_WAITING, ";", NL
+                        "    ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_WAITING, ";", NL
                     )
                 }
             } 
+            valuedObjectPrefix = ""        
+        }
+        
+        val allDelayed = state.outgoingTransitions.forall[ !isImmediate && !isTermination ]
+        val implicitScope = ifScopeIsOpen// && !allDelayed
+        
+        if (ifScopeIsOpen) {
+            if (hasImplicitSelfLoop) {
+                function.add("  } else {", NL)
+            } else {
+                function.add("  }", NL)
+            }
+        }
             
-            if (hasTrigger || !isImmediate || index > 0) function.add("  }\n")
+        if (hasImplicitSelfLoop) {
+            if (state.final) {
+                function.add(
+                    SLC(2, "The thread becomes inactive after this state is done."),
+                    
+                    if (implicitScope) "    " else "  ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_TERMINATED, ";", NL
+                )                    
+            } else {
+                if (state.isHierarchical) {
+                    
+                    val conditionalBuilder = new StringBuilder
+                    val regionCount = state.regions.filter(ControlflowRegion).size
+                    for (cfr : state.regions.filter(ControlflowRegion).indexed) {
+                        val contextName = struct.getContextVariableName(cfr.value)
+                        conditionalBuilder.add(
+                            CONTEXT_DATA_NAME, "->", contextName, ".threadStatus == ", THREAD_STATUS_WAITING
+                        )
+                        if (cfr.key < regionCount-1) 
+                            conditionalBuilder.add(" || ", NL, "      ")
+                    }                    
+
+                    function.add(
+                            if (implicitScope) "    " else "  ", 
+                            "if (", conditionalBuilder, ") {", NL,
+                            if (implicitScope) "      " else "    ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_WAITING, ";", NL,
+                            if (implicitScope) "    " else "  ", "} else {", NL, 
+                            if (implicitScope) "      " else "    ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL,
+                            if (implicitScope) "    " else "  ", " }", NL
+                    )
+                    
+                } else {
+                    function.add(
+                        SLC(2, "The thread pauses after this state is done."),
+                            
+                            if (implicitScope) "    " else "  ", CONTEXT_DATA_NAME, "->threadStatus = ", THREAD_STATUS_PAUSING, ";", NL
+                    )
+                    
+                    val contextName = struct.getContextVariableName(state.parentRegion)
+                    
+                    function.add(
+                        "    ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", 
+                            state.statePriority, ";", NL,
+                            IFC(printDebug, "    printf(\"PRIO " + contextName + " %d \", " + CONTEXT_DATA_NAME+"->"+REGION_ACTIVE_PRIORITY+ "); fflush(stdout);\n")
+                    )                    
+                }
+            }
+            if (implicitScope) { 
+                function.add("  }", NL)
+            }
         }
-        
-        if (transition.isTermination) {
-            function.add(
-                indentation, "}", NL,
-                indentation, "else", NL, 
-                "  {", NL,
-                indentation, "  ", REGION_DATA_NAME, "->", REGION_ROOT_THREADSTATUS, " = ", THREAD_STATUS_PAUSING, ";", NL, 
-                "  }", NL
-            )
-        }
-        
-//        function.add(
-//            SLC(2, "End of transition " + index + " code (" + transition.serialize + ")")
-//        )
-        
     }
     
-    def void generateControlflowRegion(ControlflowRegion cfr) {
-        val cfrName = struct.getRegionName(cfr)
-        val function = new StringBuilder => [ functions += it ]
+    
+    def createTerminationTrigger(State state) {
+        val conditionalBuilder = new StringBuilder
         
-        function.add(
-            SLC("Function of region " + cfrName), 
-            
-            "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ") {", NL,
-            
-            SLC(2, "Cycle through the states of the region as long as this thread is set to RUNNING."), 
-            "  while(", REGION_DATA_NAME, "->threadStatus == RUNNING) {", NL,
-            "    switch(", REGION_DATA_NAME, "->activeState) {", NL
-        )
-        for (state : cfr.states) {
-            val stateName = struct.getStateName(state)
-            
-            function.add(
-                "      case ", stateName, ":", NL
+        val regionCount = state.regions.filter(ControlflowRegion).size
+        for (cfr : state.regions.filter(ControlflowRegion).indexed) {
+            val cfrName = struct.getContextVariableName(cfr.value)
+                           
+            conditionalBuilder.add(
+                CONTEXT_DATA_NAME, "->", cfrName, ".threadStatus == ", THREAD_STATUS_TERMINATED
             )
-            
-            state.generateState(function, "        ")
-            
-            function.add(
-                "        break;", NL, NL
-            )    
+            if (cfr.key < regionCount - 1) {
+                conditionalBuilder.add(
+                    " &&", NL, 
+                    "    "
+                )
+            }
         }
-        function.add(
-            "    }", NL,
-            "  }", NL,
-            "}", NL, NL
-        )
         
-        struct.forwardDeclarationsLogic.add(
-            "void ", cfrName, "(", cfrName, REGION_DATA_TYPE_SUFFIX, " *", REGION_DATA_NAME, ");",
-            LEC("Region " + cfrName), 
-            NL, NL
-        ) 
-    }
+        return conditionalBuilder.toString
+    }    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
  
     private def int getStatePriority(State state) {
         return struct.getStatePriority(state)

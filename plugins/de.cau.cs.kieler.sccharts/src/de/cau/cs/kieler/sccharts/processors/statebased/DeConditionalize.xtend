@@ -23,6 +23,9 @@ import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.StatebasedUtil.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import java.util.List
 
 /**
  * @author ssm
@@ -54,6 +57,7 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsSerializeHRExtensions
     
     protected def void transformSuperstate(State state) {
         for (cfr : state.regions.filter(ControlflowRegion)) {
@@ -73,7 +77,9 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
             // - 2 outgoing transitions
             // - both are immediate
             // - the trigger of the first transition is not null
-            // - the trigger of the second transition is null.
+            // - the trigger of the second transition is null
+            // - The target state may not have other incoming transitions
+            // - there is no delayed feedback transition.
             // Additionally, if a final state is target of the second (else) transition, skip it, because the 
             // merger would form a complex final state.
             if (state.outgoingTransitions.size == 2) {
@@ -82,6 +88,8 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
                 if (oT1.isImmediate && oT2.isImmediate) {
                     if (oT1.trigger !== null && oT2.trigger === null &&
                         !oT2.targetState.final // We don't want to get complex final states.
+                        && oT2.targetState.incomingTransitions.forall[ it.sourceState == state ]
+                        && !oT2.targetState.outgoingTransitions.exists[ it.targetState == state ]
                     ) {
                         condStates += state 
                         annotationModel.addInfo(state, "Conditional Pattern")
@@ -90,9 +98,11 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
             }
         }
         
-        for (state : condStates) {
+        while (!condStates.empty) {
+            val state = condStates.pop
             // oT2 is the transition without trigger (the second from the former search).
             val oT2 = state.outgoingTransitions.filter[ trigger === null ].head
+            if (state.outgoingTransitions.size == 2 && oT2 !== null && oT2.targetState !== null) {
             val tS = oT2.targetState
             
             // If all outgoing transitions of the target state are immediate, we can perform the merger.
@@ -103,28 +113,61 @@ class DeConditionalize extends SCChartsProcessor implements Traceable {
             // - preserve the initial flag if necessary
             // - remove oT2
             // - remove the state.
-            if (!tS.outgoingTransitions.exists[ !it.isImmediate ]) {
+//            if (tS.outgoingTransitions.forall[ it.isImmediate ]) {
                 for (t : state.outgoingTransitions.immutableCopy.filter[ it != oT2 ].toList.reverse) {
                     t.sourceState = oT2.targetState 
                     t.setSpecificPriority = 1
                 }
                 for (t : state.incomingTransitions.immutableCopy) {
-                    t.targetState = oT2.targetState
+//                    if (t.sourceState != tS) {
+                        t.targetState = oT2.targetState
+//                    } else {
+//                        t.remove
+//                    }
                 }
                 
                 oT2.targetState.initial = oT2.targetState.initial || state.initial
                 
                 oT2.sourceState = null
                 oT2.remove
+                tS.adaptName(state)
                 state.remove
                 snapshot
-            } else {
-                // If we cannot merge, because the outgoing transitions of the target state permit this,
-                // we adjust the priority of oT2 (the else transition) to the lowest priority, because the actual 
-                // state might have been the target of a previous merger. 
-                oT2.setSpecificPriority = state.outgoingTransitions.size
+                
+                tS.mergeSuccessorState(condStates)
+//            } else {
+//                // If we cannot merge, because the outgoing transitions of the target state permit this,
+//                // we adjust the priority of oT2 (the else transition) to the lowest priority, because the actual 
+//                // state might have been the target of a previous merger. 
+//                oT2.setSpecificPriority = state.outgoingTransitions.size
+//            }
             }
         }         
+    }
+    
+    def protected mergeSuccessorState(State state, List<State> condStates) {
+      if (state.outgoingTransitions.size != 2) return;
+      val oT1 = state.outgoingTransitions.filter[ trigger !== null ].head
+      val oT2 = state.outgoingTransitions.filter[ trigger === null ].head
+      val tS = oT2.targetState
+      if (tS.isHierarchical) return;
+      
+      if (tS.outgoingTransitions.size != 2) return;
+      if (tS.outgoingTransitions.exists[ !immediate ]) return;
+      val tT1 = tS.outgoingTransitions.filter[ trigger !== null ].head
+      val tT2 = tS.outgoingTransitions.filter[ trigger === null ].head
+      
+      if (tT1.targetState !== oT1.targetState) return;
+      if (tT1.trigger.serialize != oT1.trigger.serialize) return;
+      
+      oT2.targetState = tT2.targetState
+      tT2.sourceState = null
+      tT2.remove
+      tT1.sourceState = null
+      tT1.remove
+      condStates.remove(tS)
+      tS.remove
+      snapshot
     }
     
 }

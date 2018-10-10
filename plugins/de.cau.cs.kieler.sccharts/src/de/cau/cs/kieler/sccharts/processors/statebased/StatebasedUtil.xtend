@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.sccharts.processors.statebased
 
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.Annotatable
 
 /**
  * @author ssm
@@ -36,4 +38,18 @@ class StatebasedUtil {
         }
     } 
     
+    static extension AnnotationsExtensions aExt = new AnnotationsExtensions 
+    
+    static private val nodePriorityAnnotation = "nodePrios"
+    
+    static public def saveNodePriority(Annotatable a1, Annotatable a2) {
+        if (!a1.hasAnnotation(nodePriorityAnnotation) || ! a2.hasAnnotation(nodePriorityAnnotation)) return;
+        val n1 = a1.getAnnotation(nodePriorityAnnotation).asIntAnnotation.value
+        val n2 = a2.getAnnotation(nodePriorityAnnotation).asIntAnnotation.value
+        if (n1 > n2) {
+            a2.getAnnotation(nodePriorityAnnotation).asIntAnnotation.value = n1
+        } else if (n2 > n1) {
+            a1.getAnnotation(nodePriorityAnnotation).asIntAnnotation.value = n2
+        }
+    }    
 }

@@ -75,7 +75,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         if (!environment.isTracingActive) return;
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
-        checkNotNull(Tracing)
+        checkNotNull(tracing)
         val processor = environment.getProperty(PROCESSOR_INSTANCE)
         val exogenous = processor.type == ProcessorType.EXOGENOUS_TRANSFORMATOR
         

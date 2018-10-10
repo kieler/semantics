@@ -40,6 +40,7 @@ import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.ScheduleDependency;
 import de.cau.cs.kieler.scg.SchedulingBlock;
 import de.cau.cs.kieler.scg.Surface;
+import de.cau.cs.kieler.scg.TickBoundaryDependency;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -188,6 +189,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	private EClass scheduleDependencyEClass = null;
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass tickBoundaryDependencyEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -810,6 +818,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getTickBoundaryDependency() {
+        return tickBoundaryDependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -935,6 +952,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         scheduleDependencyEClass = createEClass(SCHEDULE_DEPENDENCY);
 
+        tickBoundaryDependencyEClass = createEClass(TICK_BOUNDARY_DEPENDENCY);
+
         // Create enums
         branchTypeEEnum = createEEnum(BRANCH_TYPE);
     }
@@ -996,6 +1015,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         expressionDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
         guardDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
         scheduleDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
+        tickBoundaryDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scGraphsEClass, SCGraphs.class, "SCGraphs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1078,6 +1098,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(guardDependencyEClass, GuardDependency.class, "GuardDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(scheduleDependencyEClass, ScheduleDependency.class, "ScheduleDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(tickBoundaryDependencyEClass, TickBoundaryDependency.class, "TickBoundaryDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(branchTypeEEnum, BranchType.class, "BranchType");

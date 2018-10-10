@@ -63,6 +63,8 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
+import org.eclipse.jface.viewers.SelectionChangedEvent
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -73,6 +75,10 @@ import org.eclipse.xtext.util.StringInputStream
  * 
  */
 class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
+
+//    ssm: Workaround for the SBE with SDs
+//    override selectionChanged(SelectionChangedEvent event) {
+//    }
 
     /**
      * Events that can cause an update of displayed model.

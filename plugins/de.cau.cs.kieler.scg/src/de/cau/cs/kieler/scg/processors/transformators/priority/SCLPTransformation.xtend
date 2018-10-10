@@ -194,8 +194,6 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      * 
      */
     protected def void addProgram(StringBuilder sb, SCGraph scg) {
-        
-        
         sb.appendInd("void reset("+TICK_DATA+"* d) {}\n\n")
         sb.appendInd("int tick("+TICK_DATA+"* d) {\n\n")
         currentIndentation += DEFAULT_INDENTATION
@@ -304,6 +302,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      *              The node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Node node) {
+//        valuedObjectPrefix = "";
         
         // If the node is a Join, we don't want it to be called within the controlFlow. It is supposed to be 
         //   called from the Fork-Node. This guarantees that a Join will not get a label.

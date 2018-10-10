@@ -17,6 +17,10 @@ import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import java.util.Map
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kicool.environments.AnnotationModel
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 
 /**
  * C Code Generator  Processor for the State-based pattern
@@ -28,6 +32,14 @@ import de.cau.cs.kieler.sccharts.State
  */
 class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     
+    public static val IProperty<Boolean> PRINT_DEBUG_ENABLED = 
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.printDebug", false)    
+    
+    
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModel
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModelStates 
+    @Accessors(PUBLIC_GETTER) var AnnotationModel<SCCharts> annotationModelStatesAndRegions  
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.codegen.statebased"
     }
@@ -36,11 +48,18 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
         "State-based C Code"
     }
     
+    override preProcess(SCCharts rootModel) {
+        annotationModel = rootModel.createAnnotationModel
+        annotationModelStates = rootModel.createAnnotationModel
+        annotationModelStatesAndRegions = rootModel.createAnnotationModel        
+    }
+    
     override createModuleMap(SCCharts rootModel, Map<State, CodeGeneratorModule<SCCharts, State>> moduleMap) {
         for (rootState : rootModel.rootStates) {
             val generatorModule = createCodeGenetatorModule.configure("", rootModel, rootState, this, moduleMap, rootState.name, null)
             moduleMap.put(rootState, generatorModule)
             generatorModule.suffix = hostcodeSafeName(rootState.name)
+            (generatorModule as StatebasedCCodeGeneratorModule).printDebug = environment.getProperty(PRINT_DEBUG_ENABLED)
         }
     }
     
