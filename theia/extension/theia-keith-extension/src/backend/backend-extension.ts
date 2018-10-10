@@ -43,15 +43,15 @@ function getLsPath(): string | undefined {
 @injectable()
 class KeithLanguageServerContribution extends BaseLanguageServerContribution {
 
-    readonly id = 'kgt'
-    readonly name = 'KGraph'
+    readonly id = 'sctx'
+    readonly name = 'SCTX'
 
     readonly description = {
-        id: 'kgt',
-        name: 'KGraph',
-        documentSelector: [Constants.annoId, Constants.esterelId, Constants.kextId, Constants.kgtId, Constants.lustreId, Constants.sclId, Constants.sctxId],
+        id: 'sctx',
+        name: 'SCTX',
+        documentSelector: [Constants.annoId, Constants.esterelId, Constants.kextId, Constants.lustreId, Constants.sclId, Constants.sctxId],
         fileEvents: [
-            '**/*.' + Constants.kgtId,
+            // '**/*.' + Constants.kgtId,
             '**/*.' + Constants.sctxId,
             '**/*.' + Constants.sclId,
             '**/*.' + Constants.kextId,

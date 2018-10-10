@@ -22,8 +22,8 @@ import { Constants } from '../../common/util';
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
 
-    readonly id = 'kgt'
-    readonly name = 'KGraph'
+    readonly id = 'sctx'
+    readonly name = 'SCTX'
 
     constructor(
         @inject(Workspace) workspace: Workspace,
@@ -43,7 +43,7 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
      */
     protected get globPatterns() {
         return [
-            '**/*.' + Constants.kgtId,
+            // '**/*.' + Constants.kgtId,
             '**/*.' + Constants.sctxId,
             '**/*.' + Constants.sclId,
             '**/*.' + Constants.kextId,
@@ -58,7 +58,7 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
      */
     protected get documentSelector(): string[] {
         return [
-            Constants.kgtId,
+            // Constants.kgtId,
             Constants.sctxId,
             Constants.sclId,
             Constants.kextId,
