@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -31,6 +31,12 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.common.util.URI
 import org.eclipse.swt.widgets.Display
 
+/**
+ * @author mek
+ *
+ * This class represents the entry point for a headless application
+ * to render a set of sccharts into their graphical representation.
+ */
 class SCChartFileRenderingApplication implements IApplication {
     
     // states for handling command line input
@@ -55,7 +61,19 @@ class SCChartFileRenderingApplication implements IApplication {
     // a reference to the resource set to load a SCChart, so it is created only once
     var XtextResourceSet resourceSet = null
     
+    // A flag to indicate if the application is requested to stop.
+    var boolean shouldStop = false;
+    // A flag to indicate if the application is stopped.
+    var boolean stopped = false;
+    
     override start(IApplicationContext context) throws Exception {
+        // Mark application internally as running and make sure no stop handler is waiting.
+        synchronized(this) {
+            shouldStop = false;
+            stopped = false;
+            notifyAll();
+        }
+        
         // mark this application as running
         context.applicationRunning
         
@@ -70,63 +88,69 @@ class SCChartFileRenderingApplication implements IApplication {
         
         // read parameters and execute their meaning (in order)
         for (param : args) {
-            switch (inpState){
-                case NONE: {
-                    var lowerParam = param.toLowerCase(Locale.ROOT)
-                    if (lowerParam == "-help") {
-                        // help is requested
-                        println("This is a program to render SCCharts into files. (default: SVG)")
-                        println("Parameter:")
-                        println("  -help      : shows this help")
-                        println("  -svg       : all following files are rendered to SVG")
-                        println("  -png       : all following files are rendered to PNG")
-                        println("  -bmp       : all following files are rendered to BMP")
-                        println("  -jpeg      : all following files are rendered to JPEG")
-                        println("  -in -      : reads a list of SCCharts file paths to render from input")
-                        println("  -in <file> : reads a list of SCCharts file paths to render from specified file")
-                        println("  <file>     : a SCCharts file path to render")
-                        println("Any parameter may be used multiple times.")
-                        println("Using a folder as a SCChrat file results in a recursive search")
-                        println("for SCChart files to render.")
-                        println("The Output-File is saved in the same location as the SCChart file")
-                        println("with a different file name extension.")
-                        println("If no parameter for this application is specified, then the parameter")
-                        println("\"-in -\" is assumed")
-                    } else if (lowerParam == "-in") {
-                        // next parameter is a file to read target SCCharts from
-                        inpState = InputState.INPUT_FILE
-                    } else if (lowerParam == "-svg") {
-                        format = OutputFormat.SVG
-                    } else if (lowerParam == "-png") {
-                        format = OutputFormat.PNG
-                    } else if (lowerParam == "-bmp") {
-                        format = OutputFormat.BMP
-                    } else if (lowerParam == "-jpeg") {
-                        format = OutputFormat.JPEG
-                    } else {
-                        // use this parameter as one file specifier for SCCharts to render
-                        handleSpecifiers(Stream.of(param), true, format)
+            // Interpret parameters as long as the application should not stop.
+            if (!shouldStop) {
+                
+                switch (inpState){
+                    case NONE: {
+                        var lowerParam = param.toLowerCase(Locale.ROOT)
+                        if (lowerParam == "-help") {
+                            // help is requested
+                            println("This is a program to render SCCharts into files. (default: SVG)")
+                            println("Parameter:")
+                            println("  -help      : shows this help")
+                            println("  -svg       : all following files are rendered to SVG")
+                            println("  -png       : all following files are rendered to PNG")
+                            println("  -bmp       : all following files are rendered to BMP")
+                            println("  -jpeg      : all following files are rendered to JPEG")
+                            println("  -in -      : reads a list of SCCharts file paths to render from input")
+                            println("  -in <file> : reads a list of SCCharts file paths to render from specified file")
+                            println("  <file>     : a SCCharts file path to render")
+                            println("Any parameter may be used multiple times.")
+                            println("Using a folder as a SCChrat file results in a recursive search")
+                            println("for SCChart files to render.")
+                            println("The Output-File is saved in the same location as the SCChart file")
+                            println("with a different file name extension.")
+                            println("If no parameter for this application is specified, then the parameter")
+                            println("\"-in -\" is assumed")
+                        } else if (lowerParam == "-in") {
+                            // next parameter is a file to read target SCCharts from
+                            inpState = InputState.INPUT_FILE
+                        } else if (lowerParam == "-svg") {
+                            format = OutputFormat.SVG
+                        } else if (lowerParam == "-png") {
+                            format = OutputFormat.PNG
+                        } else if (lowerParam == "-bmp") {
+                            format = OutputFormat.BMP
+                        } else if (lowerParam == "-jpeg") {
+                            format = OutputFormat.JPEG
+                        } else {
+                            // use this parameter as one file specifier for SCCharts to render
+                            handleSpecifiers(Stream.of(param), true, format)
+                        }
                     }
-                }
-                case INPUT_FILE: {
-                    inpState = InputState.NONE
-                    // Current parameter specifies a file to read SCCHarts specifier from
-                    var InputStreamReader reader = null
-                    if (param == "-") {
-                        // input file is stdIn
-                        reader = new InputStreamReader(System.in)
-                    } else {
-                        // input file is a file
-                        var file = new File(param)
-                        if (!file.exists) System.err.println("Could not find file: "+param)
-                        else if (!file.canRead) System.err.println("File is not readable: "+param)
-                        else reader = new FileReader(file)
+                    case INPUT_FILE: {
+                        inpState = InputState.NONE
+                        // Current parameter specifies a file to read SCCHarts specifier from
+                        var InputStreamReader reader = null
+                        if (param == "-") {
+                            // input file is stdIn
+                            reader = new InputStreamReader(System.in)
+                        } else {
+                            // input file is a file
+                            var file = new File(param)
+                            if (!file.exists) System.err.println("Could not find file: "+param)
+                            else if (!file.canRead) System.err.println("File is not readable: "+param)
+                            else reader = new FileReader(file)
+                        }
+                        // use each line as one SCCHarts specifier
+                        if (reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true, format)
                     }
-                    // use each line as one SCCHarts specifier
-                    if (reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true, format)
                 }
             }
         }
+        
+        stopped = true;
         
         return IApplication.EXIT_OK
     }
@@ -137,6 +161,8 @@ class SCChartFileRenderingApplication implements IApplication {
      */
     def void handleSpecifiers(Stream<String> selectors, boolean isDirect, OutputFormat format) {
         selectors.forEach([selector |
+            // Skip file(s) if application should stop
+            if (shouldStop) return;
             // check file
             var file = new File(selector)
             if (!file.exists) System.err.println("Could not find file or directory: "+selector)
@@ -160,6 +186,17 @@ class SCChartFileRenderingApplication implements IApplication {
     }
     
     /**
+     * this method gets the default output file for a input file and the specified output format
+     */
+    def File getOutputFile(File inputFile, OutputFormat format) {
+        val absPath = inputFile.absolutePath
+        return new File(
+            absPath.substring(0, absPath.length-SCCHART_FILE_EXTENSION.length)
+                + getExtension(format)
+            )
+    }
+    
+    /**
      * This method initializes the resource set and Display for rendering.
      */
     def void init() {
@@ -175,13 +212,20 @@ class SCChartFileRenderingApplication implements IApplication {
      * The target file type is specified by the OutputFormat format.
      */
     def void renderSCChart(File file, OutputFormat format) {
+        renderSCChart(file, format, getOutputFile(file, format))
+    }
+    
+    /**
+     * this method takes a file pointing to a SCChart file which should be rendered.
+     * The result gets saved in the specified outputFile.
+     * The target file type is specified by the OutputFormat format.
+     */
+    def void renderSCChart(File file, OutputFormat format, File outputFile) {
         println("Rendering file: "+file.path)
         
         // get output file path
         val absPath = file.absolutePath
-        val targetFile =
-                absPath.substring(0, absPath.length-SCCHART_FILE_EXTENSION.length)
-                + getExtension(format)
+        val targetFile = outputFile.absolutePath;
         
         // initialize resource set if not done already
         if (resourceSet === null) {
@@ -197,7 +241,6 @@ class SCChartFileRenderingApplication implements IApplication {
               scchart
             , getRenderingTargetType(format)
             , targetFile
-            //, null
         );
         
         // check if rendering was successful
@@ -233,6 +276,14 @@ class SCChartFileRenderingApplication implements IApplication {
         }
     }
     
-    override stop() {}
+    override stop() {
+        synchronized(this) {
+            // Request application to stop and wait until application is stopped.
+            while (!stopped) {
+                shouldStop = true;
+                wait();
+            }
+        }
+    }
     
 }
