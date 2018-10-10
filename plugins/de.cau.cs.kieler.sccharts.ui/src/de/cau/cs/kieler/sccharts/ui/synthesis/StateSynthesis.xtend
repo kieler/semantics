@@ -108,6 +108,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
     
     // als magic: this should never reach the master (11.09.2018)! ;-)
+    // but probably will. (10.10.2018) ;-)
     private val actionRectangleMap = <Action, KRectangle> newHashMap 
     
     override getDisplayedSynthesisOptions() {
