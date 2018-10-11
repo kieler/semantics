@@ -62,16 +62,16 @@ class SCChartFileRenderingApplication implements IApplication {
     var XtextResourceSet resourceSet = null
     
     // A flag to indicate if the application is requested to stop.
-    var boolean shouldStop = false;
+    var boolean shouldStop = false
     // A flag to indicate if the application is stopped.
-    var boolean stopped = false;
+    var boolean stopped = false
     
     override start(IApplicationContext context) throws Exception {
         // Mark application internally as running and make sure no stop handler is waiting.
         synchronized(this) {
-            shouldStop = false;
-            stopped = false;
-            notifyAll();
+            shouldStop = false
+            stopped    = false
+            notifyAll()
         }
         
         // mark this application as running
@@ -150,7 +150,10 @@ class SCChartFileRenderingApplication implements IApplication {
             }
         }
         
-        stopped = true;
+        synchronized(this) {
+            stopped = true
+            notifyAll()
+        }
         
         return IApplication.EXIT_OK
     }
@@ -280,8 +283,8 @@ class SCChartFileRenderingApplication implements IApplication {
         synchronized(this) {
             // Request application to stop and wait until application is stopped.
             while (!stopped) {
-                shouldStop = true;
-                wait();
+                shouldStop = true
+                wait()
             }
         }
     }
