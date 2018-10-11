@@ -66,7 +66,7 @@ class LanguageServer implements IApplication {
         println(System.getProperty("port"))
         if (portArg !== null) {
             // debug case, communicate via socket
-            if (host !== null) {
+            if (host === null) {
                 host = defaultHost
             }
             var port = 0

@@ -19,7 +19,7 @@ win:
   # copy ls
   extraResources:
     - 
-      from: "../../build/de.cau.cs.kieler.semantics.product.repository/target/products/de.cau.cs.kieler.product/win32/win32/x86_64/kieler"
+      from: "../../language-server/kieler"
       to: "app/kieler/"
       filter: ["**/*", "!kieler.ini"]
     - 
@@ -28,6 +28,7 @@ win:
   
   target:
     - nsis
+    - zip
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
 mac:
   # copy ls
@@ -58,6 +59,7 @@ linux:
   target:
     # - deb
     - AppImage
+    - zip
   category: Development
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
 
