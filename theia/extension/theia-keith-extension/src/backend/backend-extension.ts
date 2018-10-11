@@ -14,7 +14,7 @@ import * as path from 'path'
 import { isWindows, isOSX } from "@theia/core";
 import { Constants } from '../common/util';
 
-const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app' : '/kieler')
+const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app/Contents/MacOs/kieler' : '/kieler')
 
 // path to language server for product for the different operating systems
 export const productLsPath:  string = './../../../../kieler' + osExtension;
