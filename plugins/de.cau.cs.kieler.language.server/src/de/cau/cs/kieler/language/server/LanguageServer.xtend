@@ -62,8 +62,6 @@ class LanguageServer implements IApplication {
     override start(IApplicationContext context) throws Exception {
         var host = System.getProperty("host")
         var portArg = System.getProperty("port")
-        println(System.getProperty("host"))
-        println(System.getProperty("port"))
         if (portArg !== null) {
             // debug case, communicate via socket
             if (host === null) {
@@ -114,7 +112,6 @@ class LanguageServer implements IApplication {
             return EXIT_OK 
         } else {
             // product case, communicate via stdin/out
-            println("Connecting via stdin/out")
             LanguageServerLauncher.main(#[])
             return EXIT_OK
         }
