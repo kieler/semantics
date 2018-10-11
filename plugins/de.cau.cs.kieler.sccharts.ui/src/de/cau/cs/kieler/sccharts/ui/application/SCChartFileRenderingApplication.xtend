@@ -30,19 +30,26 @@ import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.common.util.URI
 import org.eclipse.swt.widgets.Display
+import java.util.Map
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import java.io.PrintWriter
+import java.io.IOException
 
 /**
  * @author mek
  *
  * This class represents the entry point for a headless application
- * to render a set of sccharts into their graphical representation.
+ * to render and/or compile a set of sccharts into their graphical representation/code files.
  */
 class SCChartFileRenderingApplication implements IApplication {
     
     // states for handling command line input
     private enum InputState {
         NONE,
-        INPUT_FILE
+        INPUT_FILE,
+        SYSTEM_SELECTION
     }
     
     enum OutputFormat {
@@ -58,6 +65,8 @@ class SCChartFileRenderingApplication implements IApplication {
     val String PNG_FILE_EXTENSION = ".png"
     val String JPEG_FILE_EXTENSION = ".jpeg"
     
+    val String DEFAULT_COMPILER_SYSTEM_ID = "de.cau.cs.kieler.sccharts.netlist"
+    
     // a reference to the resource set to load a SCChart, so it is created only once
     var XtextResourceSet resourceSet = null
     
@@ -65,6 +74,18 @@ class SCChartFileRenderingApplication implements IApplication {
     var boolean shouldStop = false
     // A flag to indicate if the application is stopped.
     var boolean stopped = false
+    
+    // The system to use for compilation
+    var de.cau.cs.kieler.kicool.System system = null;
+    
+    // The format to use when rendering
+    var OutputFormat renderFormat = OutputFormat.SVG;
+    
+    // A flag to indicate if files should be rendered.
+    var boolean shouldRender = true
+    
+    // A flag to indicate of files should be compiled
+    var boolean shouldCompile = false
     
     override start(IApplicationContext context) throws Exception {
         // Mark application internally as running and make sure no stop handler is waiting.
@@ -74,12 +95,18 @@ class SCChartFileRenderingApplication implements IApplication {
             notifyAll()
         }
         
+        // initialize state
+        shouldRender  = true
+        renderFormat  = OutputFormat.SVG
+        
+        shouldCompile = false
+        system        = KiCoolRegistration.getSystemById(DEFAULT_COMPILER_SYSTEM_ID)
+        
         // mark this application as running
         context.applicationRunning
         
         var args = context.arguments.get(IApplicationContext.APPLICATION_ARGS) as String[]
         var inpState = InputState.NONE // no special meaning of next parameter
-        var OutputFormat format = OutputFormat.SVG
         
         // read from stdIn if no parameters are specified
         if (args.length == 0) {
@@ -96,19 +123,26 @@ class SCChartFileRenderingApplication implements IApplication {
                         var lowerParam = param.toLowerCase(Locale.ROOT)
                         if (lowerParam == "-help") {
                             // help is requested
-                            println("This is a program to render SCCharts into files. (default: SVG)")
+                            println("This is a program to render/compile SCCharts into files. (default: SVG,no compilation)")
                             println("Parameter:")
                             println("  -help      : shows this help")
-                            println("  -svg       : all following files are rendered to SVG")
-                            println("  -png       : all following files are rendered to PNG")
-                            println("  -bmp       : all following files are rendered to BMP")
-                            println("  -jpeg      : all following files are rendered to JPEG")
-                            println("  -in -      : reads a list of SCCharts file paths to render from input")
-                            println("  -in <file> : reads a list of SCCharts file paths to render from specified file")
-                            println("  <file>     : a SCCharts file path to render")
+                            println("  Rendering:")
+                            println("    -svg       : following files are rendered to SVG")
+                            println("    -png       : following files are rendered to PNG")
+                            println("    -bmp       : following files are rendered to BMP")
+                            println("    -jpeg      : following files are rendered to JPEG")
+                            println("    -norender  : Don't render following files")
+                            println("  Compilation: (default system-id: "+DEFAULT_COMPILER_SYSTEM_ID+")")
+                            println("    -compile   : (re-)enables compilation for following files")
+                            println("    -system <compilation system-id>")
+                            println("               : compiles following files with the given compilation system")
+                            println("    -nocompile : Don't compile following files")
+                            println("  -in -      : reads a list of SCCharts file paths to render/compile from input")
+                            println("  -in <file> : reads a list of SCCharts file paths to render/compile from specified file")
+                            println("  <file>     : a (SCCharts) file path to render/compile")
                             println("Any parameter may be used multiple times.")
-                            println("Using a folder as a SCChrat file results in a recursive search")
-                            println("for SCChart files to render.")
+                            println("Using a folder as a SCChart file results in a recursive search")
+                            println("for SCChart files to render/compile.")
                             println("The Output-File is saved in the same location as the SCChart file")
                             println("with a different file name extension.")
                             println("If no parameter for this application is specified, then the parameter")
@@ -117,16 +151,32 @@ class SCChartFileRenderingApplication implements IApplication {
                             // next parameter is a file to read target SCCharts from
                             inpState = InputState.INPUT_FILE
                         } else if (lowerParam == "-svg") {
-                            format = OutputFormat.SVG
+                            shouldRender = true
+                            renderFormat = OutputFormat.SVG
                         } else if (lowerParam == "-png") {
-                            format = OutputFormat.PNG
+                            shouldRender = true
+                            renderFormat = OutputFormat.PNG
                         } else if (lowerParam == "-bmp") {
-                            format = OutputFormat.BMP
+                            shouldRender = true
+                            renderFormat = OutputFormat.BMP
                         } else if (lowerParam == "-jpeg") {
-                            format = OutputFormat.JPEG
+                            shouldRender = true
+                            renderFormat = OutputFormat.JPEG
+                        } else if (lowerParam == "-norender") {
+                            shouldRender = false
+                        } else if (lowerParam == "-compile") {
+                            if (system !== null) {
+                                shouldCompile = true
+                            } else {
+                                System.err.println("Error: could not enable compilation, since no valid system is loaded")
+                            }
+                        } else if (lowerParam == "-system") {
+                            inpState = InputState.SYSTEM_SELECTION
+                        } else if (lowerParam == "-nocompile") {
+                            shouldCompile = false
                         } else {
                             // use this parameter as one file specifier for SCCharts to render
-                            handleSpecifiers(Stream.of(param), true, format)
+                            handleSpecifiers(Stream.of(param), true)
                         }
                     }
                     case INPUT_FILE: {
@@ -144,7 +194,16 @@ class SCChartFileRenderingApplication implements IApplication {
                             else reader = new FileReader(file)
                         }
                         // use each line as one SCCHarts specifier
-                        if (reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true, format)
+                        if (reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true)
+                    }
+                    case SYSTEM_SELECTION: {
+                        inpState = InputState.NONE
+                        // load compilation system
+                        system = KiCoolRegistration.getSystemById(param)
+                        if (system === null) {
+                            System.err.println("Error: could not load compilation system \""+param+"\"")
+                        }
+                        shouldCompile = (system !== null)
                     }
                 }
             }
@@ -161,8 +220,12 @@ class SCChartFileRenderingApplication implements IApplication {
     /**
      * This method takes a stream of file-path-strings and recurses into folders rendering SCChart files.
      * The target file type is specified by the OutputFormat format.
+     * Errors are printed to std-err.
+     * 
+     * @param selectors a Stream of paths to handle
+     * @param isDirect true if an error should be printed on file extension miss-match
      */
-    def void handleSpecifiers(Stream<String> selectors, boolean isDirect, OutputFormat format) {
+    private def void handleSpecifiers(Stream<String> selectors, boolean isDirect) {
         selectors.forEach([selector |
             // Skip file(s) if application should stop
             if (shouldStop) return;
@@ -176,14 +239,13 @@ class SCChartFileRenderingApplication implements IApplication {
                         .filter([p|Files::isRegularFile(p)])
                         .map([path|path.toString])
                     , false
-                    , format
                 )
             } else {
                 if (!file.name.toLowerCase(Locale.ROOT).endsWith(SCCHART_FILE_EXTENSION)) {
                     if (isDirect) System.err.println("File is not a SCCharts file: "+selector)
                 }
                 else if (!file.canRead) System.err.println("File is not readable: "+selector)
-                else renderSCChart(file, format)
+                else handleFile(file)
             }
         ])
     }
@@ -202,7 +264,7 @@ class SCChartFileRenderingApplication implements IApplication {
     /**
      * This method initializes the resource set and Display for rendering.
      */
-    def void init() {
+    private def void initResourceSet() {
         val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
         resourceSet = scchartsInjector.getInstance(XtextResourceSet);
         // initialize some display for rendering
@@ -210,49 +272,108 @@ class SCChartFileRenderingApplication implements IApplication {
     }
     
     /**
-     * this method takes a file pointing to a SCChart file which should be rendered.
+     * This method loads a model based on the SCTX-EMF-ResourceSet
+     */
+    def loadModel(File file) {
+        // get output file path
+        val absPath = file.absolutePath
+        
+        // initialize resource set if not done already
+        if (resourceSet === null) {
+            initResourceSet
+        }
+        
+        // get the SCChart
+        val resource = resourceSet.getResource(URI.createFileURI(absPath), true)
+        return resource.getContents().head
+    }
+    
+    /**
+     * This method takes a file pointing to a SCChart file which should be rendered.
      * The result gets saved in the same place as the SCChart with different file extension.
      * The target file type is specified by the OutputFormat format.
+     * Errors are printed to std-err.
      */
     def void renderSCChart(File file, OutputFormat format) {
         renderSCChart(file, format, getOutputFile(file, format))
     }
     
     /**
-     * this method takes a file pointing to a SCChart file which should be rendered.
+     * This method takes a file pointing to a SCChart file which should be rendered.
      * The result gets saved in the specified outputFile.
      * The target file type is specified by the OutputFormat format.
+     * Errors are printed to std-err.
      */
     def void renderSCChart(File file, OutputFormat format, File outputFile) {
         println("Rendering file: "+file.path)
         
-        // get output file path
-        val absPath = file.absolutePath
-        val targetFile = outputFile.absolutePath;
+        // get model
+        val scchart = loadModel(file) as SCCharts
         
-        // initialize resource set if not done already
-        if (resourceSet === null) {
-            init
+        // and render it
+        renderModel("file: "+file.path, scchart, format, outputFile.absolutePath)
+    }
+    
+    /**
+     * This method renders and compiles a file according to the current state.
+     * Errors are printed to std-err.
+     */
+    private def handleFile(File file) {
+        println("Handling file: "+file.path)
+        
+        // get model
+        val model = loadModel(file)
+        
+        // and render model if requested
+        if (shouldRender) {
+            renderModel(
+                    "file: "+file.path,
+                    model as SCCharts,
+                    renderFormat,
+                    getOutputFile(file, renderFormat).absolutePath
+            )
         }
         
-        // get the SCChart
-        val resource = resourceSet.getResource(URI.createFileURI(absPath), true)
-        val scchart = resource.getContents().head as SCCharts
-        
+        // Handle Compilation if requested.
+        if (shouldCompile) {
+            val cc = Compile.createCompilationContext(system, model)
+            val resultEnv = cc.compile
+            // Save files inside a CodeContainer.
+            if (resultEnv.model instanceof CodeContainer) {
+                val codeContainer = resultEnv.model as CodeContainer
+                for (codeFileEntry : codeContainer.files) {
+                    try {
+                        // Write code into file.
+                        val codeFile = new File(file.parent + "/" + codeFileEntry.fileName)
+                        val PrintWriter out = new PrintWriter(codeFile)
+                        out.print(codeFileEntry.code)
+                        out.close
+                    } catch (IOException e) {
+                        System.err.print("Error saving compilation result: "+e.message)
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * This method renders a given model into the targetFile in the given format.
+     * Errors are printed to std-err.
+     */
+    def renderModel(String modelSrcDescription, Object model, OutputFormat format, String targetFile) {
         // render the SCChart
         val IStatus result = LightDiagramServices.renderOffScreen(
-              scchart
+              model
             , getRenderingTargetType(format)
             , targetFile
         );
         
         // check if rendering was successful
         if (!result.OK) {
-            System.err.println("Error Rendering file: "+file.path)
+            System.err.println("Error Rendering "+modelSrcDescription)
             System.err.println(result)
             result.exception.printStackTrace
         }
-        
     }
     
     /**
