@@ -108,6 +108,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.TickBoundaryDependency
+import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -217,6 +219,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     public static val SCC_PROPERTY = new Property<Boolean>("scgPriority.SCCPriority", false)
     
     public static val PRIO_STATEMENTS_PROPERTY = new Property<Boolean>("scgPriority.PrioStatements", false)
+    
+    public static val GRAPH_DEPENDENCY = new Property<Dependency>("graph.dependency", null)
     
     // Text constants for the dependency types filter
     private static val DEPENDENCYFILTERSTRING_WRITE_WRITE = "write - write"
@@ -330,6 +334,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 168; it.green = 128; it.blue = 96;]
     private static val KColor DEPENDENCY_GUARD = RENDERING_FACTORY.createKColor() =>
         [it.red = 240; it.green = 128; it.blue = 128;]
+    private static val KColor DEPENDENCY_TICKBOUNDARY = RENDERING_FACTORY.createKColor() =>
+        [it.red = 128; it.green = 128; it.blue = 128;]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     public static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
@@ -379,6 +385,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
     private static val int NODEGROUPING_GUARDBLOCK = 3
     private static val int NODEGROUPING_SCHEDULE = 4
+    private static val int NODEGROUPING_SCC = 5
 
     /** Constants for the graph orientation */
     private static val int ORIENTATION_PORTRAIT = 0
@@ -720,6 +727,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             }
             
+            if (isGuardSCG) {
+                scg.synthesizeSCCInGuardSCG
+            }
+            
             // Draw strongly connected components
             if(scc !== null) {
                 for(component : scc) {
@@ -770,20 +781,22 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             scg.synthesizeScheduleGroups
             
             if (SHOW_HIERARCHY.booleanValue) {
-                scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
+                scg.nodes.filter(Node).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
                 	val allNodes = it.dependencies.filter(GuardDependency).map[ targetNode ].toList
                 	val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
-                	for(edge : kContainer.outgoingEdges.immutableCopy) {
+                	
+                	for(edge : kContainer.outgoingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].toList) {
                 		edge.targetPort.remove
                 		edge.remove
                 	}
-                	while(kContainer.incomingEdges.size > 1) {
-                		val edge = kContainer.incomingEdges.get(1)
+                	while(kContainer.incomingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].size > 1) {
+                		val edge = kContainer.incomingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].get(1)
                 		edge.targetPort.remove
                 		kContainer.incomingEdges -= edge
                 		edge.remove
                 	}
-                	kContainer.incomingEdges.head.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
+                	kContainer.incomingEdges.filter[ getProperty(GRAPH_DEPENDENCY) instanceof GuardDependency ].head?.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
+                	
                 ]
             }
         ]
@@ -816,12 +829,20 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                 ]
             ]
+            
             // Add ports for control-flow and dependency routing.
             if (isGuardSCG) {
             	node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
             } else {
 	            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
+            
+            if (isGuardSCG) {
+                if (assignment.incomingLinks.empty || assignment.incomingLinks.forall[ it instanceof TickBoundaryDependency ]) {
+                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                }
+            }
+            
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
@@ -1713,8 +1734,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         	        it.foreground = DEPENDENCY_GUARD.copy
                 	it.lineStyle = LineStyle::DASHDOTDOT
                 	it.addArrowDecorator
-            	]            	
+            	]   
+            	edge.setProperty(GRAPH_DEPENDENCY, dependency);         	
             }
+            else if (dependency instanceof TickBoundaryDependency) {
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    it.foreground = DEPENDENCY_TICKBOUNDARY.copy
+                    it.lineStyle = LineStyle::DOT
+                    it.addArrowDecorator
+                ]               
+            }
+            
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG) || (isGuardSCG)) {
             	if (isGuardSCG) {
@@ -1843,6 +1874,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background = SCCHARTSBLUE.copy;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
+        if (nodeGrouping == NODEGROUPING_SCC) {
+            kContainer.addRoundedRectangle(1, 1, 2) => [
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
+            ]
+            kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(196f)
+            kContainer.KRendering.background = SCCHARTSBLUE.copy;
+            kContainer.KRendering.background.alpha = Math.round(0f)
+        }
         
         // Add the nodes to the container.
         // They will be removed from the original parent!
@@ -1892,6 +1933,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.foreground = ne.KRendering.foreground
             ]
             newEdge.labels.addAll(ne.labels)
+            
+            // Save edge properties
+            if (ne.getProperty(GRAPH_DEPENDENCY) !== null) {
+                newEdge.setProperty(GRAPH_DEPENDENCY, ne.getProperty(GRAPH_DEPENDENCY))
+            }
+            
         }
         kContainer
     }
@@ -2063,6 +2110,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //        scg.analyses.forEach[visualize(it, this)]
 
         if (pilNodes.empty) return;
+        if (isGuardSCG) return;
         
         for (n : pilNodes.filter[ it !== null]) {
             val nextFlows = n.allNext
@@ -2084,6 +2132,33 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     } 
                 }
             }            
+        }
+    }
+    
+    
+    private def void synthesizeSCCInGuardSCG(SCGraph scg) {
+        val rootModel = scg.eContainer
+        var LoopData ld = null;
+        
+        val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+        if (compilationContext !== null) {
+            val scgs = scg.eContainer
+            if (scgs !== null) {
+                ld = compilationContext.getResultForModel(scgs)?.getProperty(LoopAnalyzerV2.LOOP_DATA, rootModel)
+            }
+        }        
+        
+        if (ld === null) return;
+        
+        for (l : ld.loops) {
+            val guardedNodes = <Node> newHashSet
+            for (n : l.criticalNodes.filter[ it !== null ]) {
+                for (gd : n.dependencies.filter(GuardDependency)) {
+                    guardedNodes += gd.target as Node
+                }
+            }
+
+            createHierarchy((l.criticalNodes + guardedNodes).toList, NODEGROUPING_SCC, scg)
         }
     }
 

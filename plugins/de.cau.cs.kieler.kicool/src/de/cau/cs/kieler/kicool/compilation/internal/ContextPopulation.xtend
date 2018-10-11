@@ -31,7 +31,10 @@ class ContextPopulation {
     /**
      * Create instances for all processors (including metrics).
      */
-     static def void populateContext(CompilationContext cc) {
+    static def void populateContext(CompilationContext cc) {
+        cc.processorMap.clear
+        cc.processorInstancesSequence.clear
+        cc.subContexts.clear
         cc.system.processors.populate(cc)     
         cc.system.intermediates.forEach[ it.populate(cc) ]
     }

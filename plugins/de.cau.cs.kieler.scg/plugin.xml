@@ -135,6 +135,24 @@
       <Processor
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.PersistentStateOptimizer">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.PartialAssignmentEvaluation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.GuardTickBoundaryProcessor">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.IneffectiveGuardRemover">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.optimizer.UnobservableGuardRemover">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardOptimization">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -148,22 +166,13 @@
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.netlist.tts.kico">
-      </TransformationSystem>
-      <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.netlist.java.tts.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.priority.java.tts.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.sccp.kico">
@@ -173,6 +182,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.scg.priority.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico">
       </TransformationSystem>
    </extension>
 

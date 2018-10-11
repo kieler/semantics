@@ -109,6 +109,19 @@ class Environment extends EnvironmentPropertyHolder {
     new() {
     }
     
+    def <T> T getProperty(IProperty<T> property, Object snapshotModel) {
+        val snapshots = getProperty(SNAPSHOTS)
+        val snapshot = snapshots.getModelSnapshot(snapshotModel)
+        
+        if (snapshot !== null) {
+            if (snapshot.environment.propertyExists(property)) {
+                return snapshot.environment.getProperty(property)
+            }                
+        }
+        
+        return property.getProperty
+    }    
+    
     def getErrors() {
         getProperty(ERRORS)
     }

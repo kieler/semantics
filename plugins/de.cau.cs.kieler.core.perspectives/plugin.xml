@@ -165,5 +165,12 @@
          </enablement>
       </commonWizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="de.cau.cs.kieler"
+            name="KIELER">
+      </category>
+   </extension>
   
 </plugin>

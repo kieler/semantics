@@ -308,7 +308,7 @@ class KExpressionsCreateExtensions {
             setValue(value)
         ]
     }
-
+    
     // Create a boolean value.
     def BoolValue createBoolValue(boolean value) {
         KExpressionsFactory::eINSTANCE.createBoolValue() => [

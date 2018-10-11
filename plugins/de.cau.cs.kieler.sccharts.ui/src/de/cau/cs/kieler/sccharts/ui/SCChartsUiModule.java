@@ -3,13 +3,30 @@
  */
 package de.cau.cs.kieler.sccharts.ui;
 
+import org.osgi.framework.BundleContext;
+
 import de.cau.cs.kieler.sccharts.ui.internal.SCTXActivator;
+import de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramHighlighter;
+import de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramLiveValues;
 
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class SCChartsUiModule extends SCTXActivator {
     
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.ui"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.ui";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        
+        // FIXME magic registration
+        SCChartsDiagramHighlighter.create();
+        SCChartsDiagramLiveValues.create();
+    } //$NON-NLS-1$
+    
     
 }

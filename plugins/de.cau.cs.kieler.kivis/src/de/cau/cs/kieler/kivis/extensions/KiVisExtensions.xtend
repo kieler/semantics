@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kivis.extensions
 
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kivis.Variable
 import de.cau.cs.kieler.kivis.interactions.FunctionHandler
 import de.cau.cs.kieler.kivis.kivis.Action
 import de.cau.cs.kieler.kivis.kivis.AndExpression
@@ -26,10 +27,8 @@ import de.cau.cs.kieler.kivis.kivis.Mapping
 import de.cau.cs.kieler.kivis.kivis.SimulationOperation
 import de.cau.cs.kieler.kivis.kivis.VariableReference
 import de.cau.cs.kieler.prom.configurable.AttributeExtensions
-import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.NDimensionalArray
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.ui.SimulationUI
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -57,11 +56,11 @@ class KiVisExtensions {
         val modelName = ref.model?.name
         val variableName = ref.name
         // Get variable in pool
-        val variable = pool.getVariable(modelName, variableName)
+        val variable = pool.entries.get(variableName)
         if(variable == null) {
             throw new Exception("'"+variableName+"' was not found in the data pool.")
         }
-        return variable
+        return new Variable(variable, pool)
     }
     
     /**
@@ -83,14 +82,14 @@ class KiVisExtensions {
                            else
                                variable.value
         // Get value of an array element
-        if(value instanceof NDimensionalArray) {
-            val arrayIndex = ref.arrayIndex?.indices
-            val array = value as NDimensionalArray
-            if(arrayIndex.isNullOrEmpty) {
-                throw new Exception("Trying to access array "+ref.name+" without index.")
-            }
-            value = array.get(arrayIndex, userValue)
-        }
+//        if(value instanceof NDimensionalArray) {
+//            val arrayIndex = ref.arrayIndex?.indices
+//            val array = value as NDimensionalArray
+//            if(arrayIndex.isNullOrEmpty) {
+//                throw new Exception("Trying to access array "+ref.name+" without index.")
+//            }
+//            value = array.get(arrayIndex, userValue)
+//        }
         return value
     }
     
@@ -280,11 +279,11 @@ class KiVisExtensions {
      * @param operation The operation
      */
     public def void perform(SimulationOperation operation) {
-        val simulation = SimulationManager.instance
-        if(simulation != null && !simulation.isStopped) {
+        val simulation = SimulationUI.currentSimulation
+        if(simulation != null && simulation.running) {
             switch(operation) {
                 case SimulationOperation.STEP : {
-                    simulation.stepMacroTick
+                    simulation.step
                 }
                 case SimulationOperation.PLAY : {
                     simulation.play
@@ -313,21 +312,21 @@ class KiVisExtensions {
         if(variable != null) {
             val currentValue = variable.value
             // Set value of array element
-            if(currentValue instanceof NDimensionalArray) {
-                if(variable.userValue == null) {
-                    variable.userValue = currentValue.clone
-                }
-                val newValue = variable.userValue as NDimensionalArray
-                val index = variableReference.arrayIndex.indices
-                if(index.isNullOrEmpty) {
-                    throw new Exception("Trying to set the array '"+variableReference.name+"' without index.")
-                }
-                val arrayElement = newValue.getElement(index)
-                arrayElement.setUserValue(primitive)
-                variable.userValue = newValue
-            } else {
+//            if(currentValue instanceof NDimensionalArray) {
+//                if(variable.userValue == null) {
+//                    variable.userValue = currentValue.clone
+//                }
+//                val newValue = variable.userValue as NDimensionalArray
+//                val index = variableReference.arrayIndex.indices
+//                if(index.isNullOrEmpty) {
+//                    throw new Exception("Trying to set the array '"+variableReference.name+"' without index.")
+//                }
+//                val arrayElement = newValue.getElement(index)
+//                arrayElement.setUserValue(primitive)
+//                variable.userValue = newValue
+//            } else {
                 variable.userValue = primitive
-            }
+//            }
         }
     }
     

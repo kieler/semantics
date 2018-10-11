@@ -44,8 +44,8 @@ public class SCChartsPromPlugin extends AbstractUIPlugin {
 		plugin = this;
 		
 		// Instantiate the single instance diagram highlighters
-		new SCChartsDiagramHighlighter();
-		new SCChartsDiagramLiveValues();
+//		new SCChartsDiagramHighlighter();
+//		new SCChartsDiagramLiveValues();
 	}
 
 	/*

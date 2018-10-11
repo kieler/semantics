@@ -13,36 +13,32 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Abort Transformation.
@@ -90,7 +86,6 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension AnnotationsExtensions
-    @Inject extension Termination
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsTransformationExtension
     @Inject extension SCChartsScopeExtensions
@@ -99,6 +94,7 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_A"
@@ -112,7 +108,7 @@ class Abort extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     // Transforming Aborts.
     def State transform(State rootState) {
-
+        termTrans.setEnvironment(environments.source, environments.target)
         nameCache.clear
 
         // Traverse all states
@@ -251,6 +247,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                                 // strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                                 val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                                     GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                                voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
                                 state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                                 transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                                 strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(
@@ -281,6 +278,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                             // Create a new _transitionTrigger valuedObject
                             val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                                 GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                            voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
                             state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                             weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(

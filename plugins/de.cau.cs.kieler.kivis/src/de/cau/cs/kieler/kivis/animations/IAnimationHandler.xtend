@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kivis.animations
 
-import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.DataPool
 
 /**
  * Interface for animation handlers.

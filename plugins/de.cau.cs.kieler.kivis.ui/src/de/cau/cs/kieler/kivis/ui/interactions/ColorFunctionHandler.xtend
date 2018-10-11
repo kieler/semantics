@@ -27,7 +27,6 @@ import org.apache.batik.transcoder.TranscoderOutput
 import org.apache.batik.transcoder.image.ImageTranscoder
 import org.w3c.dom.Document
 import org.w3c.dom.svg.SVGDocument
-import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * Adds functions to get the color of a given pixel in the svg document.
@@ -137,9 +136,8 @@ class ColorFunctionHandler extends FunctionHandler {
     private def int getARGB(int x, int y, boolean rasterizeEveryFrame) {
         // Update the pixel graphic to fetch the color value from
         val doc = KiVisView.instance.SVGDocument
-        val currentActionIndex = SimulationManager.instance.currentState.actionIndex
         if(doc != svgDoc
-            || (rasterizeEveryFrame && lastActionIndex != currentActionIndex)) {
+            || (rasterizeEveryFrame)) {
             svgDoc = doc
             // Rasterize the clone of the svg document to a buffered image.
             // If not using the cloned svg, animations do not work anymore for some reason.
@@ -163,7 +161,6 @@ class ColorFunctionHandler extends FunctionHandler {
                 }
                 override writeImage(BufferedImage img, TranscoderOutput out) throws TranscoderException {
                     image = img
-                    lastActionIndex = SimulationManager.instance.currentState.actionIndex
                 }
             }
             t.transcode(input, null)

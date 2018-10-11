@@ -40,6 +40,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.processors.transformators.For
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -84,6 +85,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // Do not set! This is handled by the ExpandCollapseHook
         // node.initiallyExpand
+        
+        // This node does not support comment boxes on the same layer, because regions are layouted by the box layouter.
+        node.setProperty(MessageObjectReferencesManager.SUPPORTS_COMMENT_BOXES, false)
         
         // User schedules
         val sLabel = new StringBuilder

@@ -49,7 +49,9 @@ class SelectIntermediateAction implements IAction {
         } else if (model instanceof CodeContainer) {
 //            model = new CodePlaceHolder(editor.title + ".c", model.head) 
         } else if (model instanceof MessageObjectReferences) {
-            model = new Container<String>(model.get(null).join("\n"))
+            if (model.get(null) !== null) {
+                model = new Container<String>(model.get(null).join("\n"))
+            }
         }
         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
         view.editPartSystemManager.intermediateSelection = 
@@ -57,5 +59,5 @@ class SelectIntermediateAction implements IAction {
         
         ActionResult.createResult(false).dontAnimateLayout()
     }
-    
+        
 }

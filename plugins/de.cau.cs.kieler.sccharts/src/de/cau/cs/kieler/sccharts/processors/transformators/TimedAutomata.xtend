@@ -40,6 +40,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.core.model.DynamicTicks
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.annotations.StringAnnotation
 
 /**
  * SCCharts Timed Automata Transformation.
@@ -80,59 +84,118 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = ""
-
+    public static final String GENERATED_PREFIX = ""
+    
     // Global var names
-    public static val DELTA_T_NAME = GENERATED_PREFIX + "deltaT"
-    public static val SLEEP_T_NAME = GENERATED_PREFIX + "sleepT"
+    public static val DELTA_T_NAME = DynamicTicks.DELTA_T
+    public static val SLEEP_T_NAME = DynamicTicks.SLEEP_T
+    public static val DEVIATION_NAME = "deviation"
 
     // Experimental Switches
-    public static val DYNAMIC_TICKS_NAME = "DynamicTicks"
-    public static val DYNAMIC_TICKS_DEFAULT = false
+    public static val NO_SLEEP_NAME = "NoSleep"
     public static val MAX_SLEEP_NAME = "DefaultSleep"
     public static val MAX_SLEEP_DEFAULT = 1000//Float.MAX_VALUE
     public static val SIMULATE_TIME_NAME = "SimulateSleep"
     public static val SIMULATE_TIME_DEFAULT = false
+    public static val DEVIATION_OUTPUT_NAME = "DeviationOutput"
+    public static val DEVIATION_OUTPUT_DEFAULT = false
+    public static val TIME_FORMAT_NAME = "TimePrintFormat"
+    public static val TIME_FORMAT_DEFAULT = "%.4f"
 //    public static val CATCH_UP_NAME = "CatchUp"
 //    public static val CATCH_UP_DEFAULT = false
-    
-    // External Annotations
-    public static val DELTA_TIME_ANNOTATION = "InputDeltaTime"
-    public static val SLEEP_TIME_ANNOTATION = "OutputSleepTime"
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
     }
 
     def void transform(State rootState) {
-        val dynamicTicks = if (rootState.hasAnnotation(DYNAMIC_TICKS_NAME)) true else DYNAMIC_TICKS_DEFAULT
-        val maxSleep = if (rootState.hasAnnotation(MAX_SLEEP_NAME)) Float.parseFloat(rootState.getAnnotation(MAX_SLEEP_NAME).asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
-        val simulateTime = if (rootState.hasAnnotation(SIMULATE_TIME_NAME)) true else SIMULATE_TIME_DEFAULT
+        val allAnnotations = rootState.eAllContents.filter(Annotation).toList
+        val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equals(name)]
+        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equals(name)]) Float.parseFloat(allAnnotations.findFirst[MAX_SLEEP_NAME.equals(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
+        val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equals(name)]) true else SIMULATE_TIME_DEFAULT
+        val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equals(name)]) true else DEVIATION_OUTPUT_DEFAULT
+        val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equals(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equals(name)].values.head else TIME_FORMAT_DEFAULT
         
         if (rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]) {
             // Create time vars
-            val deltaT = createValuedObject(DELTA_T_NAME).uniqueName
-            deltaT.initialValue = createFloatValue(0)
-            rootState.declarations += createDeclaration => [
-                type = ValueType.FLOAT
-                input = true
-                annotations += createTagAnnotation(DELTA_TIME_ANNOTATION)
-                valuedObjects += deltaT
-            ]
-            
-            val sleepT = createValuedObject(SLEEP_T_NAME).uniqueName
-            if (dynamicTicks) {
-                sleepT.initialValue = createFloatValue(0)
+            val deltaT = if (rootState.valuedObjectsList.exists[DELTA_T_NAME.equals(name)]) {
+                val vo = rootState.valuedObjectsList.findFirst[DELTA_T_NAME.equals(name)]
+                if (vo.initialValue === null) {
+                    vo.initialValue = createFloatValue(0)
+                }
+                if (!vo.input || !vo.type.toString.equals(DynamicTicks.TYPE)) {
+                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + DynamicTicks.TYPE)
+                } else {
+                    environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
+                }
+                if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
+                    vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                }
+                voStore.update(vo, DynamicTicks.TAG)
+                vo
+            } else {
+                val vo = createValuedObject(DELTA_T_NAME)
+                vo.initialValue = createFloatValue(0)
                 rootState.declarations += createDeclaration => [
-                    type = ValueType.FLOAT
+                    type = ValueType.get(DynamicTicks.TYPE)
+                    input = true
+                    valuedObjects += vo
+                ]
+                vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                vo
+            }
+            
+            val sleepT = if (rootState.valuedObjectsList.exists[SLEEP_T_NAME.equals(name)]) {
+                val vo = rootState.valuedObjectsList.findFirst[SLEEP_T_NAME.equals(name)]
+                if (vo.initialValue === null) {
+                    vo.initialValue = createFloatValue(0)
+                }
+                if (!vo.input || vo.type.toString.equals(DynamicTicks.TYPE)) {
+                    environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + DynamicTicks.TYPE)
+                } else {
+                    environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
+                }
+                if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
+                    vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                }
+                voStore.update(vo, DynamicTicks.TAG)
+                vo
+            } else {
+                val vo = createValuedObject(SLEEP_T_NAME)
+                if (!noSleep) {
+                    vo.initialValue = createFloatValue(0)
+                    rootState.declarations += createDeclaration => [
+                        type = ValueType.get(DynamicTicks.TYPE)
+                        output = true
+                        valuedObjects += vo
+                    ]
+                    vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                    voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                }
+                vo
+            }
+            
+            // DeviationOutput
+            if(deviationOutput && !noSleep) {
+                val vo = createValuedObject(DEVIATION_NAME).uniqueName
+                vo.initialValue = createFloatValue(0)
+                rootState.declarations += createDeclaration => [
+                    type = ValueType.get(DynamicTicks.TYPE)
                     output = true
-                    annotations += createTagAnnotation(SLEEP_TIME_ANNOTATION)
-                    valuedObjects += sleepT
+                    valuedObjects += vo
+                ]
+                vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                voStore.add(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
+                
+                rootState.createDuringAction => [
+                    // calculate deviation
+                    effects += createAssignment(vo, createSubExpression(deltaT.reference, createPreExpression(sleepT.reference)))
                 ]
             }
             
             // Global sleep time handling
-            if (dynamicTicks) {
+            if (!noSleep) {
                 rootState.createImmediateDuringAction => [
                     // start sleep time collection
                     effects += createAssignment(sleepT, createFloatValue(maxSleep))
@@ -151,7 +214,11 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             // Handle clock
             for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
                 for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
-                    clock.declaration.asVariableDeclaration.type = ValueType.FLOAT
+                    clock.declaration.asVariableDeclaration.type = ValueType.get(DynamicTicks.TYPE)
+                    if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
+                        clock.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
+                    }
+                    voStore.update(clock, SCCHARTS_GENERATED)
                     if (clock.initialValue === null) clock.initialValue = createFloatValue(0)
                     
                     var region = state.controlflowRegions.head
@@ -189,7 +256,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         ]
                         
                         // sleep time
-                        if (dynamicTicks) {
+                        if (!noSleep) {
                             val constraints = HashMultimap.<Transition, OperatorExpression>create
                             for (trans : subState.outgoingTransitions.filter[trigger !== null]) {
                                 for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
@@ -271,7 +338,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 thresholds.sortInplace
                                 for (threshold : thresholds.indexed) {
                                     val during = subState.createImmediateDuringAction
-                                    if (thresholds.size > 1) during.trigger = createLEExpression(clock.reference, createFloatValue(threshold.value))
+                                    during.trigger = createLEExpression(clock.reference, createFloatValue(threshold.value))
                                     during.createAssignment(sleepT, createSubExpression(createFloatValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
                                 }
                             }

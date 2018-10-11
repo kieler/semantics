@@ -33,12 +33,14 @@ import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * @author ssm
@@ -105,6 +107,13 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
+        
+        // Fix VO association in VariableStore
+        val voStore = VariableStore.get(environment)
+        valuedObjectMap.entrySet.forEach[ entry |
+            val info = voStore.variables.get(entry.key.name).findFirst[valuedObject == entry.key]
+            if (info !== null) info.valuedObject = entry.value.head
+        ]
         
         val entryNodes = <Entry> newArrayList
         val exitNodes = <Exit> newArrayList

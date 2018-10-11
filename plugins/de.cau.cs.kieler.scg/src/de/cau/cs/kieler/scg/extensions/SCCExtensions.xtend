@@ -26,6 +26,7 @@ import java.util.HashMap
 import java.util.LinkedList
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import java.util.List
 
 /**
  * A class with extensions for the calculation of Strongly Connected Components
@@ -72,7 +73,7 @@ class SCCExtensions {
      * @return 
      *          The following neighbor(s) of the node
      */
-    public def LinkedList<Node> getNeighbors(Node n) {
+    public def List<Node> getNeighbors(Node n) {
         var neighbors = <Node> newLinkedList
         
         if(n instanceof Entry) {
@@ -126,7 +127,7 @@ class SCCExtensions {
      * @return
      *          A list of nodes whose neighbors contain the node n
      */
-    public def LinkedList<Node> getPredecessors(Node n) {
+    public def List<Node> getPredecessors(Node n) {
         var pred = <Node> newLinkedList
         if(!(n instanceof Depth)) {
             for(inc : n.incomingLinks) {
@@ -150,7 +151,7 @@ class SCCExtensions {
      * @return 
      *          The following neighbor(s) of the node
      */
-    public def LinkedList<Node> getAllNeighbors(Node n) {
+    public def List<Node> getAllNeighbors(Node n) {
         
         var neighbors = <Node> newLinkedList
         if(n instanceof Surface) {
@@ -170,7 +171,7 @@ class SCCExtensions {
      * @return 
      *          The outgoing dependencies of the node
      */
-    public def LinkedList<Node> getConcurrentDependencies(Node n) {
+    public def List<Node> getConcurrentDependencies(Node n) {
         var deps = <Node> newLinkedList
         // Get only concurrent dependencies!!
         for(dep : n.dependencies) {
@@ -196,7 +197,7 @@ class SCCExtensions {
      * @return
      *          The nodes that are the origins for the incoming dependencies of n
      */
-    public def LinkedList<Node> getIncomingDependencies(Node n) {
+    public def List<Node> getIncomingDependencies(Node n) {
         var deps = <Node> newLinkedList
         for(inc : n.incomingLinks) {
             if(inc instanceof DataDependency) {
@@ -220,13 +221,21 @@ class SCCExtensions {
      * @return 
      *          The following neighbor(s) of the node
      */
-    public def LinkedList<Node> getNeighborsAndDependencies(Node n) {
+    public def List<Node> getNeighborsAndDependencies(Node n) {
         System.out.flush
         var neighbors = <Node> newLinkedList
         neighbors.addAll(n.neighbors)
         neighbors.addAll(n.concurrentDependencies)
         neighbors
     }
+    
+    public def List<Node> getNeighborsAndAllDependencies(Node n) {
+        System.out.flush
+        var neighbors = <Node> newLinkedList
+        neighbors.addAll(n.neighbors)
+        neighbors.addAll(n.dependencies.map[ target ].filter(Node))
+        neighbors
+    }    
     
     
     /**
@@ -238,7 +247,7 @@ class SCCExtensions {
      * @return
      *          The neighboring nodes of scc
      */
-    public def LinkedList<Node> findNeighborsOfSCC(LinkedList<Node> scc) {
+    public def List<Node> findNeighborsOfSCC(LinkedList<Node> scc) {
         var neighbors = <Node> newLinkedList
         for(node : scc) {
             for(neighbor : node.neighbors) {
@@ -260,7 +269,7 @@ class SCCExtensions {
      * @return
      *          The predecessors of scc
      */
-    public def LinkedList<Node> findPredecessorsOfSCC(LinkedList<Node> scc) {
+    public def List<Node> findPredecessorsOfSCC(LinkedList<Node> scc) {
         var pred = <Node> newLinkedList
         for(node : scc) {
             for(predecessor : node.predecessors) {
@@ -281,7 +290,7 @@ class SCCExtensions {
      * @return
      *          The dependent nodes
      */
-    public def LinkedList<Node> findAllDependenciesOfScc(LinkedList<Node> scc) {
+    public def List<Node> findAllDependenciesOfScc(LinkedList<Node> scc) {
         var dependencies = <Node> newLinkedList
         for(node : scc) {
             for(dep : node.concurrentDependencies) {
@@ -294,9 +303,9 @@ class SCCExtensions {
         
     }
     
-    private HashMap<LinkedList<Node>, LinkedList<Node>> externalDependencies = newHashMap
+    private HashMap<LinkedList<Node>, List<Node>> externalDependencies = newHashMap
     
-    public def LinkedList<Node> findAllExternalDependenciesOfScc(LinkedList<Node> scc, HashMap<Node, Integer> sccMap) {
+    public def List<Node> findAllExternalDependenciesOfScc(LinkedList<Node> scc, HashMap<Node, Integer> sccMap) {
         var dependencies = <Node> newLinkedList
         var originalScc = -1
         if(externalDependencies.containsKey(scc)) {
@@ -326,7 +335,7 @@ class SCCExtensions {
      * @return
      *          The nodes that have outgoing dependencies on the nodes in the given SCC
      */
-    public def LinkedList<Node> findAllIncomingDependenciesOfScc(LinkedList<Node> scc) {
+    public def List<Node> findAllIncomingDependenciesOfScc(LinkedList<Node> scc) {
         var incDep = <Node> newLinkedList
         for(node : scc) {
             for(inc : node.incomingDependencies) {

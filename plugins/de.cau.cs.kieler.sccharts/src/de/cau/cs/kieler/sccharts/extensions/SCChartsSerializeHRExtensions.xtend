@@ -201,7 +201,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }          
         } else if (declaration instanceof ScheduleDeclaration) {
             components.addKeyword("schedule")
-            components.addHighlight(declaration.name)
+            if (!declaration.name.nullOrEmpty) {
+                components.addHighlight(declaration.name)
+            }
         }
 
         // Content

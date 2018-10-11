@@ -79,9 +79,16 @@ public class AnnotationsSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
+            case AnnotationsPackage.NAMEABLE: {
+                Nameable nameable = (Nameable)theEObject;
+                T result = caseNameable(nameable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case AnnotationsPackage.NAMED_OBJECT: {
                 NamedObject namedObject = (NamedObject)theEObject;
                 T result = caseNamedObject(namedObject);
+                if (result == null) result = caseNameable(namedObject);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -101,6 +108,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 Annotation annotation = (Annotation)theEObject;
                 T result = caseAnnotation(annotation);
                 if (result == null) result = caseNamedObject(annotation);
+                if (result == null) result = caseNameable(annotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -109,6 +117,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseStringAnnotation(stringAnnotation);
                 if (result == null) result = caseAnnotation(stringAnnotation);
                 if (result == null) result = caseNamedObject(stringAnnotation);
+                if (result == null) result = caseNameable(stringAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -117,6 +126,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseReferenceAnnotation(referenceAnnotation);
                 if (result == null) result = caseAnnotation(referenceAnnotation);
                 if (result == null) result = caseNamedObject(referenceAnnotation);
+                if (result == null) result = caseNameable(referenceAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -125,6 +135,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseBooleanAnnotation(booleanAnnotation);
                 if (result == null) result = caseAnnotation(booleanAnnotation);
                 if (result == null) result = caseNamedObject(booleanAnnotation);
+                if (result == null) result = caseNameable(booleanAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -133,6 +144,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseIntAnnotation(intAnnotation);
                 if (result == null) result = caseAnnotation(intAnnotation);
                 if (result == null) result = caseNamedObject(intAnnotation);
+                if (result == null) result = caseNameable(intAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -141,6 +153,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseFloatAnnotation(floatAnnotation);
                 if (result == null) result = caseAnnotation(floatAnnotation);
                 if (result == null) result = caseNamedObject(floatAnnotation);
+                if (result == null) result = caseNameable(floatAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -149,6 +162,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseContainmentAnnotation(containmentAnnotation);
                 if (result == null) result = caseAnnotation(containmentAnnotation);
                 if (result == null) result = caseNamedObject(containmentAnnotation);
+                if (result == null) result = caseNameable(containmentAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -157,6 +171,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseImportAnnotation(importAnnotation);
                 if (result == null) result = caseAnnotation(importAnnotation);
                 if (result == null) result = caseNamedObject(importAnnotation);
+                if (result == null) result = caseNameable(importAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -166,6 +181,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStringAnnotation(typedStringAnnotation);
                 if (result == null) result = caseAnnotation(typedStringAnnotation);
                 if (result == null) result = caseNamedObject(typedStringAnnotation);
+                if (result == null) result = caseNameable(typedStringAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -176,6 +192,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(commentAnnotation);
                 if (result == null) result = caseAnnotation(commentAnnotation);
                 if (result == null) result = caseNamedObject(commentAnnotation);
+                if (result == null) result = caseNameable(commentAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -183,6 +200,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 Pragma pragma = (Pragma)theEObject;
                 T result = casePragma(pragma);
                 if (result == null) result = caseNamedObject(pragma);
+                if (result == null) result = caseNameable(pragma);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -191,6 +209,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseStringPragma(stringPragma);
                 if (result == null) result = casePragma(stringPragma);
                 if (result == null) result = caseNamedObject(stringPragma);
+                if (result == null) result = caseNameable(stringPragma);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -199,11 +218,27 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 T result = caseTagAnnotation(tagAnnotation);
                 if (result == null) result = caseAnnotation(tagAnnotation);
                 if (result == null) result = caseNamedObject(tagAnnotation);
+                if (result == null) result = caseNameable(tagAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             default: return defaultCase(theEObject);
         }
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
+        return null;
     }
 
     /**

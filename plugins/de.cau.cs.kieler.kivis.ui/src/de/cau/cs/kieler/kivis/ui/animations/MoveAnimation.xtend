@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.kivis.ui.animations
 
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
-import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.DataPool
 import org.apache.batik.dom.svg.SVGOMPoint
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable

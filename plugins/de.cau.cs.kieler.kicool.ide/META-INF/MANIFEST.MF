@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool IDE
 Bundle-SymbolicName: de.cau.cs.kieler.kicool.ide
-Bundle-Version: 0.13.0.qualifier
+Bundle-Version: 0.14.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.kicool.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

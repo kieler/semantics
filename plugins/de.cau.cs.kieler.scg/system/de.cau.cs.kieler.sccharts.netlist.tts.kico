@@ -1,5 +1,0 @@
-system de.cau.cs.kieler.sccharts.netlist.tts
-	label "Netlist-based Compilation with TTS"
-	
-de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
-system de.cau.cs.kieler.sccharts.netlist

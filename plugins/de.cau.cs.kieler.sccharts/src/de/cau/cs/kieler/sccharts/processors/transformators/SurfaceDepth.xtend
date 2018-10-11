@@ -14,26 +14,25 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts SurfaceDepth Transformation.

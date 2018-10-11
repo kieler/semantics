@@ -14,9 +14,10 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import java.util.Map
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.compilation.ExecutableJarContainer
 import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
 
@@ -25,8 +26,14 @@ import java.nio.file.Files
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class JavaCompiler extends AbstractSystemCompilerProcessor {
-    
+class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContainer> {
+
+    public static val IProperty<String> JAVAC_PATH = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.path", "javac")
+
+    public static val IProperty<String> JAR_PATH = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar.path", "jar")
+            
     public static val IProperty<Boolean> JAR = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar", true)
         
@@ -54,17 +61,8 @@ class JavaCompiler extends AbstractSystemCompilerProcessor {
         }
         
         // Bin folder
-        val binFolder = new File(infra.generadedCodeFolder, environment.getProperty(BIN_FOLDER)?:BIN_FOLDER.^default)
+        val binFolder = infra.createBinFolder
         val binPath = infra.generadedCodeFolder.toPath.relativize(binFolder.toPath).toString
-        logger.println("Binary output folder: " + binFolder)
-        if (binFolder.exists) {
-            if (!binFolder.directory) {
-                environment.errors.add("Binary output folder exists and is not a directory")
-                logger.println("ERROR: Binary output folder exists and is not a directory")
-            }
-        } else {
-            binFolder.mkdirs
-        }
         
         // javac
         logger.println
@@ -76,10 +74,10 @@ class JavaCompiler extends AbstractSystemCompilerProcessor {
             sources.addAll(infra.sourceCode.files.filter(JavaCodeFile).map[fileName])
         }
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
+        val sourceFiles = sources.map[new File(infra.generadedCodeFolder, it)].toList
         
         logger.println("Files:")
-        for (source : sources) {
-            val sourceFile = new File(infra.generadedCodeFolder, source)
+        for (sourceFile : sourceFiles) {
             if (sourceFile.file) {
                 sourcePaths += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
@@ -95,7 +93,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor {
         }
         sourcePaths.forEach[logger.println("  " + it)]
         
-        val javac = newArrayList("javac")
+        val javac = newArrayList(environment.getProperty(JAVAC_PATH)?:JAVAC_PATH.^default)
         javac += "-verbose"
         javac += "-cp"
         javac += "."
@@ -129,12 +127,25 @@ class JavaCompiler extends AbstractSystemCompilerProcessor {
             val entryPoint = environment.getProperty(JAR_ENTRY)?:JAR_ENTRY.^default
             logger.println("Jar entry point: " + entryPoint)            
             
-            val jar = newArrayList("jar")
+            val jar = newArrayList(environment.getProperty(JAR_PATH)?:JAR_PATH.^default)
             jar += "cvfe"
             jar += targetJarPath
             jar += entryPoint
-            for (s : sourcePaths) {
-                jar += s.replace(".java", ".class")
+            for (sourceFile : sourceFiles) {
+                val path = infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
+                if (sourceFile.isFile) {
+                    jar += path.replace(".java", ".class")
+                    // Find anonymous inner classes
+                    val innerClassPrefix = sourceFile.name.substring(0, sourceFile.name.length - 5)+ "$"
+                    for (siblingPath : Files.find(binFolder.toPath, 1, [ filePath, fileAttr |
+                        val name = filePath.fileName.toString
+                        return fileAttr.regularFile && name.startsWith(innerClassPrefix) && name.endsWith(".class")
+                    ]).iterator.toIterable) {
+                        jar += binFolder.toPath.relativize(siblingPath).toString
+                    }
+                } else {
+                    jar += path
+                }
             }
             
             // Run javac compiler
@@ -143,10 +154,14 @@ class JavaCompiler extends AbstractSystemCompilerProcessor {
                 environment.errors.add("Compiler did not return success (exit value != 0)")
                 logger.println("Compilation failed")
             }
+            
+            model = new ExecutableJarContainer(targetJar)
+        } else {
+            model = new ExecutableContainer(new File(sources.head))
         }
         
         // report
-        saveLog("java-compiler-report.log")
+        logger.closeLog("java-compiler-report.log").snapshot
         infra.refresh
     }
 

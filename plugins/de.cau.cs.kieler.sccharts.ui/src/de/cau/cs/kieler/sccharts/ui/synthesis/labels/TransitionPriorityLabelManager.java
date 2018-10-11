@@ -19,10 +19,10 @@ import java.util.regex.Pattern;
 import org.eclipse.elk.graph.ElkLabel;
 import org.eclipse.emf.ecore.EObject;
 
+import de.cau.cs.kieler.klighd.krendering.KRenderingOptions;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
-import de.cau.cs.kieler.klighd.krendering.KRenderingOptions;
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef;
 import de.cau.cs.kieler.klighd.labels.management.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.sccharts.Transition;

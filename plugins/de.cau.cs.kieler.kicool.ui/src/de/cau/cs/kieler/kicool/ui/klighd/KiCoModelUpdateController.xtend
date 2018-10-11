@@ -13,9 +13,10 @@
 package de.cau.cs.kieler.kicool.ui.klighd
 
 import de.cau.cs.kieler.core.model.util.ModelUtil
-import de.cau.cs.kieler.kicool.KiCoolActivator
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
@@ -59,9 +60,11 @@ import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.statushandlers.StatusManager
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
 import de.cau.cs.kieler.kicool.registration.ResourceExtension
+import org.eclipse.jface.viewers.SelectionChangedEvent
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -72,6 +75,10 @@ import de.cau.cs.kieler.kicool.registration.ResourceExtension
  * 
  */
 class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
+
+//    ssm: Workaround for the SBE with SDs
+//    override selectionChanged(SelectionChangedEvent event) {
+//    }
 
     /**
      * Events that can cause an update of displayed model.
@@ -145,16 +152,22 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /** The action for toggling chain display mode. */
     private var Action chainToggleAction
     private static final boolean CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false
-    
+
+    /** The action for toggling forced simple update strategy mode. */
+    private var Action simpleUpdateToggleAction
+    private static final boolean SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE = false
+        
     // -- Model --
 
     /** Model extracted from editor. */
+    @Accessors(PUBLIC_GETTER)
     private var EObject sourceModel
 
     /** Indicates if the source model has error markers. */
     private var boolean sourceModelHasErrorMarkers = false
 
     /** The compiled model. */
+    @Accessors(PUBLIC_GETTER)
     private var Object compiledModel = null
     
     // -- Visual --
@@ -252,6 +265,18 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 "Shows tracing chain in side-by-side mode if tracing data is available.")
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN)
         chainToggleAction.setChecked(CHAIN_TOGGLE_ACTION_DEFAULT_STATE)
+        
+        // force simple update
+        simpleUpdateToggleAction = new Action("", IAction.AS_CHECK_BOX) {
+            override void run() {
+                update(ChangeEvent.DISPLAY_MODE)
+            }
+        }
+        simpleUpdateToggleAction.setId("simpleUpdateToggleAction")
+        simpleUpdateToggleAction.setText("Force Simple Update Strategy")
+        simpleUpdateToggleAction.setToolTipText(
+                "Forces this view to always use the simple update strategy (no incremental update)")
+        simpleUpdateToggleAction.setChecked(SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE)
     }
 
     // -- Controller
@@ -262,6 +287,10 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override String getID() {
         return ID
+    }
+    
+    def boolean showsCompiledModel() {
+        return compilerToggleAction.isChecked
     }
     
     // -- Activation
@@ -293,8 +322,13 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onEditorSaved(IEditorPart editor) {
         if (syncEditorToggleAction.isChecked() &&
-            (!compilerToggleAction.isChecked() || compiledModel == null)) {
+            (!compilerToggleAction.isChecked() || compiledModel === null)) {
             update(ChangeEvent.EDITOR)
+        }
+        if (sourceModel instanceof EObject) {
+            if (sourceModel.eResource !== null) {
+                sourceModel.eResource.timeStamp = System.currentTimeMillis
+            }
         }
     }
     
@@ -302,7 +336,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     override void refresh() {
-        if (!compilerToggleAction.isChecked() || compiledModel == null) {
+        if (!compilerToggleAction.isChecked() || compiledModel === null) {
             update(ChangeEvent.EDITOR)
         } else {
             diagramView.updateDiagram
@@ -326,6 +360,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(syncEditorToggleAction)
         menu.add(diagramPlaceholderToggleAction)
         menu.add(chainToggleAction)
+        menu.add(simpleUpdateToggleAction)
         
         val externalUIContributors = KiCoModelViewUIContributorRegistry.contributors
         externalUIContributors.forEach[it.contributeControls(this, toolBar, menu)]
@@ -391,6 +426,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             sideBySideToggleAction.setChecked(source.sideBySideToggleAction.isChecked())
             diagramPlaceholderToggleAction.setChecked(source.diagramPlaceholderToggleAction.isChecked())
             chainToggleAction.setChecked(source.chainToggleAction.isChecked())
+            simpleUpdateToggleAction.setChecked(source.simpleUpdateToggleAction.isChecked())
         }
     }
 
@@ -406,6 +442,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         sideBySideToggleAction.setChecked(SIDE_BY_SIDE_TOGGLE_ACTION_DEFAULT_STATE)
         diagramPlaceholderToggleAction.setChecked(DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE)
         chainToggleAction.setChecked(CHAIN_TOGGLE_ACTION_DEFAULT_STATE)
+        simpleUpdateToggleAction.setChecked(SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE)
         getProperties().getAllProperties().clear()
     }
 
@@ -424,6 +461,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         memento.putBoolean("diagramPlaceholderToggleAction", diagramPlaceholderToggleAction.isChecked())
         
         memento.putBoolean("chainToggleAction", chainToggleAction.isChecked())
+
+        memento.putBoolean("simpleUpdateToggleAction", simpleUpdateToggleAction.isChecked())
     }
 
     /**
@@ -460,6 +499,13 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         if (chainToggleActionValue != null) {
             if (chainToggleAction != null) {
                 chainToggleAction.setChecked(chainToggleActionValue)
+            }
+        }
+        
+        val simpleUpdateToggleActionValue = memento.getBoolean("simpleUpdateToggleAction")
+        if (simpleUpdateToggleActionValue != null) {
+            if (simpleUpdateToggleAction != null) {
+                simpleUpdateToggleAction.setChecked(simpleUpdateToggleActionValue)
             }
         }
     }
@@ -619,6 +665,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     public def void update(ChangeEvent change) {
         if (isActive()) {
+            if (diagramView.viewContext !== null) {
+                diagramView.viewContext.setProperty(TracingVisualizationUpdateStrategy.ALWAYS_FALLBACK_TO_SIMPLE_UPDATE_STRATEGY, simpleUpdateToggleAction.isChecked())
+            }
             // Read the model if necessary
             if (change == ChangeEvent.EDITOR) {
                 sourceModel = readModel(getEditor())
@@ -667,14 +716,14 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     val tracing = if (cc !== null && cc.startEnvironment.getProperty(Tracing.ACTIVE_TRACING)) {
                         cc.startEnvironment.getProperty(Tracing.TRACING_DATA)
                     }
-                    if (chainToggleAction.isChecked && compilerToggleAction.isChecked && tracing != null) {
+                    if (chainToggleAction.isChecked && compilerToggleAction.isChecked && tracing !== null) {
                         model = new ModelChain(tracing, getEditor().getTitle(), null)
-                    } else if (compilerToggleAction.isChecked && compilerToggleAction.isChecked && compiledModel != null) {
+                    } else if (compilerToggleAction.isChecked && compilerToggleAction.isChecked && compiledModel !== null) {
                         model = new ModelChain(sourceModel, compiledModel)
                     } else {
                         model = new ModelChain(sourceModel, sourceModel)
                     }
-                } else if (compilerToggleAction.isChecked && compiledModel != null) {
+                } else if (compilerToggleAction.isChecked && compiledModel !== null) {
                     model = compiledModel
                 } else {
                     model = sourceModel
