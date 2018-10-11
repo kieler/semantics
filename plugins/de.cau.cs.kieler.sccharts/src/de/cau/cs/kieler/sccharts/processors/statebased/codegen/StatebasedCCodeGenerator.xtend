@@ -53,7 +53,7 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     override preProcess(SCCharts rootModel) {
         annotationModel = rootModel.createAnnotationModel
         annotationModelStates = rootModel.createAnnotationModel
-        annotationModelStatesAndRegions = rootModel.createAnnotationModel        
+        annotationModelStatesAndRegions = rootModel.createAnnotationModel
     }
     
     override createModuleMap(SCCharts rootModel, Map<State, CodeGeneratorModule<SCCharts, State>> moduleMap) {
@@ -62,6 +62,7 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
             moduleMap.put(rootState, generatorModule)
             generatorModule.suffix = hostcodeSafeName(rootState.name)
             (generatorModule as StatebasedCCodeGeneratorModule).printDebug = environment.getProperty(PRINT_DEBUG_ENABLED)
+            (generatorModule as StatebasedCCodeGeneratorModule).leanMode = environment.getProperty(LEAN_MODE)
         }
     }
     

@@ -187,39 +187,24 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     override generateDone() {
         tickData.add(
-            NL, "  ", 
-            STRUCT_INTERFACE_NAME,
-            " ",
-            REGION_INTERFACE_NAME,
-            ";", NL, 
-            "  int ",
-            REGION_ACTIVE_PRIORITY,
-            ";", NL,
-            "  ThreadStatus ",
-            REGION_THREADSTATUS,
-            ";", NL
+            NL, 
+            "  ", STRUCT_INTERFACE_NAME, " ", REGION_INTERFACE_NAME, ";", NL, 
+            IFC(!leanMode, "  int ", REGION_ACTIVE_PRIORITY, ";", NL),
+            "  ThreadStatus ", REGION_THREADSTATUS, ";", NL
         )
         
         for (cfr : rootRegions) {
             tickData.add(
-                "  ",
-                getContextTypeName(cfr),
-                " ",
-                getContextVariableName(cfr),
-                ";", NL
+                "  ", getContextTypeName(cfr), " ", getContextVariableName(cfr), ";", NL
             )
         }
         
         tickData.add(
-            "} ",
-            getName,
-            ";", NL
+            "} ", getName, ";", NL
         )
         
         code.add(
-            "} ",
-            STRUCT_INTERFACE_NAME,
-            ";", NL
+            "} ", STRUCT_INTERFACE_NAME, ";", NL
         )
         
         if (threadData.length > 0) code.nl
@@ -277,9 +262,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             SLC("namely " + commentSB.toString + "."),
             
             "typedef enum {", NL,
-            "  ",
-            statesSB.toString,
-            NL, "} ",
+            "  ", statesSB.toString, NL, 
+            "} ",
             regionName + ENUM_STATES_SUFFIX,
             ";", NL, NL
         )
@@ -294,8 +278,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             indentation, regionName, ENUM_STATES_SUFFIX, " ", REGION_ACTIVE_STATE, ";", 
             LEC("the active state"), NL,
             
-            indentation, "int ", REGION_ACTIVE_PRIORITY, ";", 
-            LEC("active priority of the thread for scheduling"), NL,
+            IFC(!leanMode, indentation, "int ", REGION_ACTIVE_PRIORITY, ";", 
+                LEC("active priority of the thread for scheduling"), NL),
             
             indentation, "char ", REGION_DELAYED_ENABLED, ";", 
             LEC("active state at the beginning of the tick"), NL,
@@ -403,7 +387,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }  
     
 //    private val ANNOTATION_PRIORITY = "optPrioIDs"
-    private val ANNOTATION_PRIORITY = "nodePrios"
+    val ANNOTATION_PRIORITY = "nodePrios"
 
     def int getStatePriority(State state) {
         if (state.hasAnnotation(ANNOTATION_PRIORITY)) {

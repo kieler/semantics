@@ -82,7 +82,7 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateDone() {
-        code.add("  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", maxRootstatePriority, ";", NL)
+        code.add(IFC(!leanMode, "  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", maxRootstatePriority, ";", NL))
         code.add("  ", STRUCT_CONTEXT_NAME, "->", REGION_THREADSTATUS, " = ", THREAD_STATUS_RUNNING, ";", NL)
         code.add(
             "}", NL

@@ -28,6 +28,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 abstract class SCChartsCodeGeneratorModule extends CodeGeneratorModule<SCCharts, State> {
     
     @Accessors var boolean printDebug    
+    @Accessors var boolean leanMode
     
     def SCCharts getSCCharts() {
         return rootObject

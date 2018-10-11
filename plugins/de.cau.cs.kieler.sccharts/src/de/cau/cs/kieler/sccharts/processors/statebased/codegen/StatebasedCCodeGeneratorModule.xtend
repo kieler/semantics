@@ -70,6 +70,10 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         reset.printDebug = printDebug
         tick.printDebug = printDebug
         logic.printDebug = printDebug
+        struct.leanMode = leanMode
+        reset.leanMode = leanMode
+        tick.leanMode = leanMode
+        logic.leanMode = leanMode
         
         struct.generateInit
         reset.generateInit
