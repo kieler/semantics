@@ -116,7 +116,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     override generate() {
-        generateInitSetInputs(serializer)
+//        generateInitSetInputs(serializer)
         
         for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
             val cfrName = struct.getContextVariableName(cfr.value)
@@ -147,8 +147,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             
         code.add(IFC(!leanMode, "  } while (" + conditionalBuilder + ");", NL, NL));
 
-        generateInitSetOutputs(serializer)
-
+//        generateInitSetOutputs(serializer)
     }
     
     protected def void setTickStart(String prefix, ControlflowRegion cfr) {
