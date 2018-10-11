@@ -156,20 +156,22 @@ class ExpandCollapseHook extends SynthesisHook {
     }
 
     override processRegion(Region region, KNode node) {
-        if (INITIALLY_COLLAPSE_ALL.booleanValue) {
-            node.initiallyCollapse
-        } else if (MEMORIZE_EXPANSION_STATES.booleanValue && region.expansionState !== null) {
-            if (region.expansionState) {
+        if (region.reference === null && region.parentState.reference === null) {
+            if (INITIALLY_COLLAPSE_ALL.booleanValue) {
+                node.initiallyCollapse
+            } else if (MEMORIZE_EXPANSION_STATES.booleanValue && region.expansionState !== null) {
+                if (region.expansionState) {
+                    node.initiallyExpand
+                } else {
+                    node.initiallyCollapse
+                }
+            } else if (region.annotations.exists[COLLAPSE_ANNOTATION.equalsIgnoreCase(name)]) {
+                node.initiallyCollapse
+            } else if (region.annotations.exists[EXPAND_ANNOTATION.equalsIgnoreCase(name)]) {
                 node.initiallyExpand
             } else {
-                node.initiallyCollapse
+                node.initiallyExpand
             }
-        } else if (region.annotations.exists[COLLAPSE_ANNOTATION.equalsIgnoreCase(name)]) {
-            node.initiallyCollapse
-        } else if (region.annotations.exists[EXPAND_ANNOTATION.equalsIgnoreCase(name)]) {
-            node.initiallyExpand
-        } else {
-            node.initiallyExpand
         }
     }
     

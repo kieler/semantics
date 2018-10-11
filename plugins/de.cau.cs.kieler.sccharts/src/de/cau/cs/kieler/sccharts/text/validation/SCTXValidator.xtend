@@ -606,6 +606,9 @@ class SCTXValidator extends AbstractSCTXValidator {
                         || parentState.getRegions().head.name.equals(""))) {
                 foundInitial = 1;
             }
+            if (region.reference !== null) {
+                foundInitial = 1
+            }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
                 if (state.isInitial()) {
                     foundInitial = foundInitial + 1;
@@ -805,7 +808,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
                     "The referencing binding is erroneous!\n" + errorMessage);
-            } else if (implicitMessage != "") {
+            } else if (implicitMessage != "" && scopeCall.eContainer instanceof State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 

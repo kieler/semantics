@@ -54,6 +54,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
+
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
  * 
@@ -79,15 +80,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension DataflowRegionSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
-    
-    /** Scope call parameters synthesis option */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
-    /** inherited declarations and regions synthesis option */
-    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inherited Parts", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
-    
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_INHERITANCE, SHOW_BINDINGS)
-    }
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)

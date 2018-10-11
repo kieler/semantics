@@ -127,21 +127,27 @@ ControlflowRegion returns sccharts::ControlflowRegion:
     override?='override'?
     final?='final'?
     'region' name=ExtendedID? label=STRING?
-    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
-    ('schedule' schedule+=ScheduleObjectReference+)?
     ((
-        ':'
-        declarations+=DeclarationWOSemicolon*
-        actions+=LocalAction*
-        states+=State*
+        'is'
+        reference = ScopeCall
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('schedule' schedule+=ScheduleObjectReference+)?
     )|(
-        '{'
-        declarations+=DeclarationWOSemicolon*
-        actions+=LocalAction*
-        (states+=ImplicitState | states+=State+)
-        '}'
-    ))  
-    ;
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('schedule' schedule+=ScheduleObjectReference+)?
+        ((
+            ':'
+            declarations+=DeclarationWOSemicolon*
+            actions+=LocalAction*
+            states+=State*
+        )|(
+            '{'
+            declarations+=DeclarationWOSemicolon*
+            actions+=LocalAction*
+            (states+=ImplicitState | states+=State+)
+            '}'
+        ))
+    ));
 
     
 DataflowRegion returns sccharts::DataflowRegion:

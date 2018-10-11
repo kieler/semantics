@@ -24,6 +24,9 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import de.cau.cs.kieler.sccharts.SCChartsPackage
+import org.eclipse.emf.ecore.resource.Resource
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * This class contains custom scoping description.
@@ -47,6 +50,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
         switch(context) {
             Transition: return getScopeForTransition(context, reference)
             State: return getScopeForState(context, reference)
+            Region: return getScopeForRegion(context, reference)
             ScopeCall: return getScopeForScopeCall(context, reference)  
         }
         
@@ -67,36 +71,26 @@ class SCTXScopeProvider extends KExtScopeProvider {
     
     protected def IScope getScopeForState(State state, EReference reference) {
         if (reference.name.equals("scope") || reference == SCChartsPackage.Literals.STATE__BASE_STATES) {
-            val eResource = state.eResource
-            if (eResource !== null) {
-                val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
-                val eResourceSet = eResource.resourceSet
-                if (eResourceSet !== null) {
-                    eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
-                        scchartsInScope += it
-                    ]
-                }
-                return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
-            }
-            
-            return IScope.NULLSCOPE
+            return state.eResource.allAvailableRootStates
         }
         
         return super.getScope(state, reference)
     }
     
+    protected def IScope getScopeForRegion(Region region, EReference reference) {
+        if (reference.name.equals("scope")) {
+            return SCTXScopes.scopeFor(region.nextSuperStateWithBaseStates.allVisibleInheritedRegions)
+        }
+        
+        return super.getScope(region, reference)
+    }
+    
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
         if (reference.name.equals("scope")) {
-            val eResource = scopeCall.eResource
-            if (eResource !== null) {
-                val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
-                val eResourceSet = eResource.resourceSet
-                if (eResourceSet !== null) {
-                    eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
-                        scchartsInScope += it
-                    ]
-                }
-                return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+            if (scopeCall.eContainer instanceof State) {
+                return scopeCall.eResource.allAvailableRootStates
+            } else if (scopeCall.eContainer instanceof Region) {
+                return SCTXScopes.scopeFor((scopeCall.eContainer as Scope).nextSuperStateWithBaseStates.getAllVisibleInheritedRegions(!scopeCall.super))
             }
             
             return IScope.NULLSCOPE
@@ -105,14 +99,21 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return super.getScope(scopeCall as EObject, reference)
     }
         
-    override def IScope getScopeForParameter(Parameter parameter, EReference reference) {        
+    override IScope getScopeForParameter(Parameter parameter, EReference reference) {        
         if (reference.name.equals("explicitBinding")) {
             val voCandidates = <ValuedObject> newArrayList
             
             val scopeCall = parameter.eContainer as ScopeCall
-            if (scopeCall != null && scopeCall.scope != null) {
-                for (declaration : scopeCall.scope.variableDeclarations.filter[ input || output ]) {
+            if (scopeCall !== null && scopeCall.scope !== null) {
+                val scope = scopeCall.scope
+                for (declaration : scope.variableDeclarations.filter[ input || output ]) {
                     voCandidates += declaration.valuedObjects
+                }
+                // Inherited Decls
+                if (scope instanceof State) {
+                    for (declaration : scope.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
+                        voCandidates += declaration.valuedObjects
+                    }
                 }
             }
             
@@ -127,19 +128,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
-                val eResource = declaration.eResource
-                if (eResource != null) {
-                    val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
-                    val eResourceSet = eResource.resourceSet
-                    if (eResourceSet !== null) {
-                        eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
-                            scchartsInScope += it
-                        ]
-                    }
-                    return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
-                }   
-                
-                return IScope.NULLSCOPE
+                return declaration.eResource.allAvailableRootStates
             }
         } 
         return context.getScopeHierarchical(reference)
@@ -162,6 +151,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 }
             }
             
+            // Inherited VOs
             if (declarationScope instanceof State) {
                 if (!declarationScope.baseStates.nullOrEmpty) {
                     for (decl : declarationScope.allVisibleInheritedDeclarations) {
@@ -175,6 +165,20 @@ class SCTXScopeProvider extends KExtScopeProvider {
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
+    }
+    
+    protected def getAllAvailableRootStates(Resource eResource) {
+        if (eResource !== null) {
+            val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
+            val eResourceSet = eResource.resourceSet
+            if (eResourceSet !== null) {
+                eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
+                    scchartsInScope += it
+                ]
+            }
+            return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+        }
+        return IScope.NULLSCOPE
     }
 
 }

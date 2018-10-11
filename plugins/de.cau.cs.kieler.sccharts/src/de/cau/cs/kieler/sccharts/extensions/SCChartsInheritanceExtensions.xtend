@@ -12,13 +12,15 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.sccharts.State
-import java.util.Set
+import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
-import com.google.common.collect.HashMultimap
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
 import java.util.List
+import java.util.Set
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author als
@@ -32,15 +34,18 @@ class SCChartsInheritanceExtensions {
     def Set<State> getAllInheritedStates(State state) {
         val allBaseStates = newLinkedHashSet
         val work = newLinkedList
-        work.addAll(state.baseStates.toSet)
-        work.removeIf[it == state]
         
-        while (!work.empty) {
-            val s = work.pop
-            allBaseStates += s
-            for (base : s.baseStates.reverseView) { // Depth first
-                if (base != state && !work.contains(base) && !allBaseStates.contains(base)) {
-                    work.push(base)
+        if (state !== null) {
+            work.addAll(state.baseStates.toSet)
+            work.removeIf[it == state]
+            
+            while (!work.empty) {
+                val s = work.pop
+                allBaseStates += s
+                for (base : s.baseStates.reverseView) { // Depth first
+                    if (base != state && !work.contains(base) && !allBaseStates.contains(base)) {
+                        work.push(base)
+                    }
                 }
             }
         }
@@ -77,7 +82,7 @@ class SCChartsInheritanceExtensions {
      *
      */
     def Iterable<Region> getAllVisibleInheritedRegions(State state, boolean directOverride) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (state !== null && !state.baseStates.nullOrEmpty) {
             val regions = newLinkedHashSet
             val path = newLinkedList(state)
             val indexes = newLinkedList(-1)
@@ -126,7 +131,7 @@ class SCChartsInheritanceExtensions {
      */
     def getHierarchyCycles(State state) {
         val cycles = HashMultimap.<State, Integer>create
-        if (!state.baseStates.nullOrEmpty) {
+        if (state !== null && !state.baseStates.nullOrEmpty) {
             // DFS with checks if new child already exists in path to root.
             val path = newLinkedList(state)
             val indexes = newLinkedList(-1)
@@ -149,6 +154,19 @@ class SCChartsInheritanceExtensions {
             }
         }
         return cycles
+    }
+    
+    def State getNextSuperStateWithBaseStates(Scope scope) {
+        var EObject parent = scope
+        while (parent !== null) {
+            if (parent instanceof State) {
+                if (!parent.baseStates.nullOrEmpty) {
+                    return parent
+                }
+            }
+            parent = parent.eContainer
+        }
+        return null
     }
 
 }

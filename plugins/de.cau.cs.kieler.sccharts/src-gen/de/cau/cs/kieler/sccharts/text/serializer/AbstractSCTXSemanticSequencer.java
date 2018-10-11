@@ -1206,11 +1206,16 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         final?='final'? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
-	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *         schedule+=ScheduleObjectReference* 
 	 *         (
-	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
-	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *             (reference=ScopeCall (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? schedule+=ScheduleObjectReference*) | 
+	 *             (
+	 *                 (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *                 schedule+=ScheduleObjectReference* 
+	 *                 (
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *                 )
+	 *             )
 	 *         )
 	 *     )
 	 */

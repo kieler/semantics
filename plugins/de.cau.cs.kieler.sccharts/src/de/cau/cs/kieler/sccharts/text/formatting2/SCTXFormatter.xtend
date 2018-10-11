@@ -178,7 +178,7 @@ class SCTXFormatter extends KExtFormatter {
 			format(annotations, document);
 		}
 	
-		controlflowregion.regionFor.keyword(controlflowRegionAccess.colonKeyword_9_0_0)?.prepend[ noSpace ]?.append[ newLine ]
+		controlflowregion.regionFor.keyword(":")?.prepend[ noSpace ]?.append[ newLine ]
         controlflowregion.regionFor.keyword("{")?.prepend[ oneSpace ]?.append[ newLine ]
         controlflowregion.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         controlflowregion.regionFor.keyword("}")?.prepend[ newLine ]
