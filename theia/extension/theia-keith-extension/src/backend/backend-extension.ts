@@ -71,7 +71,9 @@ class KeithLanguageServerContribution extends BaseLanguageServerContribution {
     }
 
     start(clientConnection: IConnection): void {
-        if (startAsSocket) {
+        let socket = startAsSocket()
+        console.log("Starting with socket is: " + socket)
+        if (socket) {
             let socketPort = getPort();
             const socket = new net.Socket()
             const serverConnection = createSocketConnection(socket, socket, () => {

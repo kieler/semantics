@@ -12,10 +12,11 @@
             "program": "${workspaceRoot}/keith-app/src-gen/backend/main.js", 
             "args": [
                 "--root-dir=./workspace",
-                "--LSP_PORT=5008",
+                "--LSP_PORT=5007",
                 "--loglevel=debug",
                 "--port=3000",
-                "--no-cluster"
+                "--no-cluster",
+                "--socket"
             ],
             "env": {
                 "NODE_ENV": "development"
