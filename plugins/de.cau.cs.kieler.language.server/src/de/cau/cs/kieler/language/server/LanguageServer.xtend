@@ -53,7 +53,6 @@ import org.eclipse.xtext.util.Modules2
 class LanguageServer implements IApplication {
     
     static val defaultHost = "localhost"
-    static val defaultPort = 5008
     
     static val LOG = Logger.getLogger(LanguageServer)
     
@@ -61,33 +60,42 @@ class LanguageServer implements IApplication {
      * Starts the language server.
      */
     override start(IApplicationContext context) throws Exception {
-        var args = (context.arguments.get("application.args")) as String[]
-        val osName = System.getProperty("os.name").toLowerCase();
-        val isMacOs = osName.startsWith("mac os x");
-        if ((!isMacOs && args.size > 0) && (isMacOs && args.size > 1)) {
+        var host = System.getProperty("host")
+        var portArg = System.getProperty("port")
+        println(System.getProperty("host"))
+        println(System.getProperty("port"))
+        if (portArg !== null) {
             // debug case, communicate via socket
-            var host = defaultHost
-            var port = defaultPort
-            println("Got arguments: " + args)
-            if (args.size > 2 + if (isMacOs) 1 else 0) {
-                throw new Exception("Too many arguments: Expecting host and port or only port as arguments")
+            if (host !== null) {
+                host = defaultHost
             }
+            var port = 0
             try {
-                if (args.size == 1 + if (isMacOs) 1 else 0) {
-                    port = Integer.parseInt(args.get(0 + if (isMacOs) 1 else 0))
-                } else {
-                    host = args.get(0 + if (isMacOs) 1 else 0)
-                    port = Integer.parseInt(args.get(1 + if (isMacOs) 1 else 0))
-                }
+                port = Integer.parseInt(portArg)
             } catch (NumberFormatException e) {
-                if (args.size == 1) {
-                    println("Expected port, but got " + args.get(0 + if (isMacOs) 1 else 0))
-                } else {
-                    println("Expected port, but got " + args.get(1 + if (isMacOs) 1 else 0))
-                }
                 println(e.stackTrace)
                 return 1
             }
+//            println("Got arguments: " + args)
+//            if (args.size > 2 + if (isMacOs) 1 else 0) {
+//                throw new Exception("Too many arguments: Expecting host and port or only port as arguments")
+//            }
+//            try {
+//                if (args.size == 1 + if (isMacOs) 1 else 0) {
+//                    port = Integer.parseInt(args.get(0 + if (isMacOs) 1 else 0))
+//                } else {
+//                    host = args.get(0 + if (isMacOs) 1 else 0)
+//                    port = Integer.parseInt(args.get(1 + if (isMacOs) 1 else 0))
+//                }
+//            } catch (NumberFormatException e) {
+//                if (args.size == 1) {
+//                    println("Expected port, but got " + args.get(0 + if (isMacOs) 1 else 0))
+//                } else {
+//                    println("Expected port, but got " + args.get(1 + if (isMacOs) 1 else 0))
+//                }
+//                println(e.stackTrace)
+//                return 1
+//            }
             println("Connection to: " + host + ":" + port)
                
                

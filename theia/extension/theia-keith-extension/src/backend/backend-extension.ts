@@ -40,11 +40,20 @@ function getLsPath(): string | undefined {
     }
 }
 
+function startAsSocket(): boolean {
+    let arg = process.argv.filter(arg => arg.startsWith('--socket'))[0]
+    if (!arg) {
+        return false
+    } else {
+        return true
+    }
+}
+
 @injectable()
 class KeithLanguageServerContribution extends BaseLanguageServerContribution {
 
-    readonly id = 'sctx'
-    readonly name = 'SCTX'
+    readonly id = Constants.sctxId
+    readonly name = Constants.sctxName
 
     readonly description = {
         id: 'sctx',
@@ -62,24 +71,33 @@ class KeithLanguageServerContribution extends BaseLanguageServerContribution {
     }
 
     start(clientConnection: IConnection): void {
-        let socketPort = getPort();
-        if (socketPort) {
+        if (startAsSocket) {
+            let socketPort = getPort();
             const socket = new net.Socket()
             const serverConnection = createSocketConnection(socket, socket, () => {
                 socket.destroy()
             });
             this.forward(clientConnection, serverConnection)
-            socket.connect(socketPort)
+            if (socketPort) {
+                socket.connect(socketPort)
+            } else {
+                console.log("Socketport not defined, LSP_PORT=XXXX is required if --socket is used")
+            }
         } else {
             let lsPath = getLsPath()
             if (!lsPath) {
                 let arg = process.argv.filter(arg => arg.startsWith('--root-dir='))[0]
                 if (!arg) {
                     lsPath = productLsPath
+                    console.log("Starting with product path")
                 } else {
                     lsPath = debugLsPath
+                    console.log("Starting with debug path")
                 }
+            } else {
+                console.log("Starting with LS_PATH as argument")
             }
+            console.log("Starting LS with path: " + lsPath)
             const command = path.resolve(__dirname, lsPath);
             const serverConnection = this.createProcessStreamConnection(command, []);
             this.forward(clientConnection, serverConnection);
