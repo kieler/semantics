@@ -28,7 +28,6 @@ win:
   
   target:
     - nsis
-    - zip
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
 mac:
   # copy ls
@@ -42,7 +41,6 @@ mac:
       from: "../../plugins/de.cau.cs.kieler.language.server/src/de/cau/cs/kieler/language/server/util/kieler-mac.ini"
       to: "app/kieler.app/Contents/Eclipse/kieler.ini"
   target:
-    - tar.gz
     - dmg
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
     # - dmg only possible on macOS
@@ -59,7 +57,6 @@ linux:
   target:
     # - deb
     - AppImage
-    - zip
   category: Development
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo-512.png
 
