@@ -62,25 +62,28 @@ class LanguageServer implements IApplication {
      */
     override start(IApplicationContext context) throws Exception {
         var args = (context.arguments.get("application.args")) as String[]
-        if (args.size > 0) {
+        val osName = System.getProperty("os.name").toLowerCase();
+        val isMacOs = osName.startsWith("mac os x");
+        if ((!isMacOs && args.size > 0) && (isMacOs && args.size > 1)) {
             // debug case, communicate via socket
             var host = defaultHost
             var port = defaultPort
-            if (args.size > 2) {
+            println("Got arguments: " + args)
+            if (args.size > 2 + if (isMacOs) 1 else 0) {
                 throw new Exception("Too many arguments: Expecting host and port or only port as arguments")
             }
             try {
-                if (args.size == 1) {
-                    port = Integer.parseInt(args.get(0))
+                if (args.size == 1 + if (isMacOs) 1 else 0) {
+                    port = Integer.parseInt(args.get(0 + if (isMacOs) 1 else 0))
                 } else {
-                    host = args.get(0)
-                    port = Integer.parseInt(args.get(1))
+                    host = args.get(0 + if (isMacOs) 1 else 0)
+                    port = Integer.parseInt(args.get(1 + if (isMacOs) 1 else 0))
                 }
             } catch (NumberFormatException e) {
                 if (args.size == 1) {
-                    println("Expected port, but got " + args.get(0))
+                    println("Expected port, but got " + args.get(0 + if (isMacOs) 1 else 0))
                 } else {
-                    println("Expected port, but got " + args.get(1))
+                    println("Expected port, but got " + args.get(1 + if (isMacOs) 1 else 0))
                 }
                 println(e.stackTrace)
                 return 1
