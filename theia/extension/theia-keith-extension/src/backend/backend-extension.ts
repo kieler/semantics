@@ -40,15 +40,6 @@ function getLsPath(): string | undefined {
     }
 }
 
-function startAsSocket(): boolean {
-    let arg = process.argv.filter(arg => arg.startsWith('--socket'))[0]
-    if (!arg) {
-        return false
-    } else {
-        return true
-    }
-}
-
 @injectable()
 class KeithLanguageServerContribution extends BaseLanguageServerContribution {
 
@@ -71,20 +62,14 @@ class KeithLanguageServerContribution extends BaseLanguageServerContribution {
     }
 
     start(clientConnection: IConnection): void {
-        let socket = startAsSocket()
-        console.log("Starting with socket is: " + socket)
-        if (socket) {
-            let socketPort = getPort();
+        let socketPort = getPort();
+        if (socketPort) {
             const socket = new net.Socket()
             const serverConnection = createSocketConnection(socket, socket, () => {
                 socket.destroy()
             });
             this.forward(clientConnection, serverConnection)
-            if (socketPort) {
-                socket.connect(socketPort)
-            } else {
-                console.log("Socketport not defined, LSP_PORT=XXXX is required if --socket is used")
-            }
+            socket.connect(socketPort)
         } else {
             let lsPath = getLsPath()
             if (!lsPath) {

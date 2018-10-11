@@ -114,6 +114,7 @@ class LanguageServer implements IApplication {
             return EXIT_OK 
         } else {
             // product case, communicate via stdin/out
+            println("Connecting via stdin/out")
             LanguageServerLauncher.main(#[])
             return EXIT_OK
         }
