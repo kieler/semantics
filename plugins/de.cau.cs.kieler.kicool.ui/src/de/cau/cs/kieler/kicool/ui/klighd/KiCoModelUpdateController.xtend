@@ -74,7 +74,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
+class KiCoModelUpdateController extends EcoreXtextTextSaveUpdateController {
 
 //    ssm: Workaround for the SBE with SDs
 //    override selectionChanged(SelectionChangedEvent event) {
@@ -161,7 +161,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** Model extracted from editor. */
     @Accessors(PUBLIC_GETTER)
-    private var EObject sourceModel
+    private var Object sourceModel
 
     /** Indicates if the source model has error markers. */
     private var boolean sourceModelHasErrorMarkers = false
@@ -668,15 +668,16 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (diagramView.viewContext !== null) {
                 diagramView.viewContext.setProperty(TracingVisualizationUpdateStrategy.ALWAYS_FALLBACK_TO_SIMPLE_UPDATE_STRATEGY, simpleUpdateToggleAction.isChecked())
             }
+            var EObject sModel
             // Read the model if necessary
             if (change == ChangeEvent.EDITOR) {
-                sourceModel = readModel(getEditor())
-                if (sourceModel != null && sourceModel.eResource() != null) {
-                    val eResource = sourceModel.eResource()
+                sModel = readModel(getEditor()) 
+                if (sModel != null && sModel.eResource() != null) {
+                    val eResource = sModel.eResource()
                     sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty()
                     
                     // Check for model specific errors (e.g. Xtext validator rules) 
-                    val diagnostic = Diagnostician.INSTANCE.validate(sourceModel)
+                    val diagnostic = Diagnostician.INSTANCE.validate(sModel)
                     if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
                         sourceModelHasErrorMarkers = true
                     }
@@ -707,8 +708,15 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
             // Create model to passed to update
             var Object model = null
+            if (sModel === null) {
+                // Try to load a generic object.
+                // IF this also fails, the sourceModel will be null.              
+                sourceModel = readObject(getEditor())
+            } else {
+                sourceModel = sModel
+            }
 
-            if (sourceModel != null) {
+            if (sourceModel !== null) {
                 if (diagramPlaceholderToggleAction.isChecked()) {
                     model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + getEditor().getTitle(), MODEL_PLACEHOLDER_MESSGAE)
                 } else if (sideBySideToggleAction.isChecked()) {
