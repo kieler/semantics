@@ -401,7 +401,8 @@ class KiCoModelUpdateController extends EcoreXtextTextSaveUpdateController {
         }
         if (warnings.length() > 0) {
             warnings.setLength(warnings.length() - 1)
-            addWarningComposite(getDiagramView().getViewer(), warnings.toString())
+// ssm: NEVER TO MASTER! ;-) 15.10.2018            
+//            addWarningComposite(getDiagramView().getViewer(), warnings.toString())
         }
     }
     

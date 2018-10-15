@@ -125,6 +125,14 @@ class AnnotationsExtensions {
         ]
     }
     
+    def addCommentAnnotation(Annotatable annotatable, String name, String text) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createCommentAnnotation => [
+            it.name = name
+            values += text
+        ]
+    }
+    
+    
     def boolean hasEqualAnnotationValue(Annotatable source, String name, Annotatable target) {
         if (!source.hasAnnotation(name) || !target.hasAnnotation(name)) return false;
         val sourceAnnotation = source.getAnnotation(name)
