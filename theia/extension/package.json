@@ -1,11 +1,11 @@
 {
-  "name": "keith-richarts",
+  "name": "keith",
   "version": "0.1.0",
   "private": true,
   "electronVersion" : "2.0.4",
   "main": "src-gen/frontend/electron-main.js",
 
-  "description": "Kiel Environment Integrated in Theia for Rich Charts",
+  "description": "KIEL Environment Integrated in Theia",
   "theia": {
     "target": "electron"
   },

@@ -28,8 +28,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.esterel;bundle-version="0.13.0",
  de.cau.cs.kieler.esterel.ide;bundle-version="0.13.0",
  de.cau.cs.kieler.lustre.ide;bundle-version="0.13.0",
- de.cau.cs.kieler.lustre;bundle-version="0.13.0",
- de.cau.cs.kieler.sccharts.ui;bundle-version="0.13.0"
+ de.cau.cs.kieler.lustre;bundle-version="0.13.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: de.cau.cs.kieler.language.server
 Bundle-ActivationPolicy: lazy

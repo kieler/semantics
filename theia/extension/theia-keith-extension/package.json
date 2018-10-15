@@ -1,7 +1,7 @@
 {
   "name": "theia-keith-extension",
   "version": "0.1.0",
-  "description": "An extension for Theia connection language support for Keith RiCharts",
+  "description": "An extension for Theia connection language support for KEITH",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
   "keywords": [
