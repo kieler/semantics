@@ -24,7 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class AutoCompileToggle extends AbstractAction {
 
-    private static val AUTO_COMPILE_TOGGLE_ACTION_DEFAULT = false
+    private static val AUTO_COMPILE_TOGGLE_ACTION_DEFAULT = true
 
     /** The action for toggling forward result mode. */
     @Accessors private IToolBarManager toolBar
