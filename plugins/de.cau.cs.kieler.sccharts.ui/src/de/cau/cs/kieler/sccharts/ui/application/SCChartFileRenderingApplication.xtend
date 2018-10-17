@@ -55,7 +55,8 @@ class SCChartFileRenderingApplication implements IApplication {
         NONE,
         INPUT_FILE,
         SYSTEM_SELECTION,
-        FILE_EXTENSION_SPECIFICATION
+        FILE_EXTENSION_SPECIFICATION,
+        FILE_OUT_EXTENSION_SPECIFICATION
     }
 
     enum OutputFormat {
@@ -96,8 +97,11 @@ class SCChartFileRenderingApplication implements IApplication {
     // A flag to indicate if files should be loaded as a model.
     var boolean loadAsModel = true
 
-    // A set of file extensions to filter files in recursive searches
+    // A set of file extensions to filter files in recursive searches.
     var Set<String> acceptedExtensions = new HashSet(0);
+
+    // The file extension to use for output files which are not from a CodeContainer.
+    var String outputExtension = ".out"
 
     override start(IApplicationContext context) throws Exception {
         // Mark application internally as running and make sure no stop handler is waiting.
@@ -110,6 +114,8 @@ class SCChartFileRenderingApplication implements IApplication {
         // initialize state
         acceptedExtensions = new HashSet(1);
         acceptedExtensions.add(SCCHART_FILE_EXTENSION)
+
+        outputExtension = ".out"
 
         loadAsModel = true
 
@@ -189,6 +195,9 @@ class SCChartFileRenderingApplication implements IApplication {
                             case "-extension": {
                                 inpState = InputState.FILE_EXTENSION_SPECIFICATION
                             }
+                            case "-outext": {
+                                inpState = InputState.FILE_OUT_EXTENSION_SPECIFICATION
+                            }
                             case "-in": {
                                 // next parameter is a file to read target SCCharts from
                                 inpState = InputState.INPUT_FILE
@@ -202,6 +211,10 @@ class SCChartFileRenderingApplication implements IApplication {
                     case FILE_EXTENSION_SPECIFICATION: {
                         inpState = InputState.NONE
                         acceptedExtensions = new HashSet(param.split(","))
+                    }
+                    case FILE_OUT_EXTENSION_SPECIFICATION: {
+                        inpState = InputState.NONE
+                        outputExtension = "." + param
                     }
                     case INPUT_FILE: {
                         inpState = InputState.NONE
@@ -269,10 +282,13 @@ class SCChartFileRenderingApplication implements IApplication {
         println("    -asModel   : Load input as model.")
         println("    -asText    : Load input as string of file Contents.")
         println()
-        println("  Files: (default extension: " + SCCHART_FILE_EXTENSION + ")")
+        println("  Files: (default extension in: \"" + SCCHART_FILE_EXTENSION + "\", out: \"out\")")
         println("    -extension <extensions>")
         println("               : Sets the extensions to use when searching a directory.")
         println("                 Multiple extensions can be separated with a comma(,).")
+        println("    -outExt <extension>")
+        println("               : Sets the extension to use when saving a compiled result.")
+        println("                 (Except for results providing a CodeContainer.)")
         println("    -in -      : Reads a list of SCCharts file paths to render/compile from input.")
         println("    -in <file> : Reads a list of SCCharts file paths to render/compile from specified file.")
         println("    <file>     : A (SCCharts) file path to render/compile.")
@@ -436,17 +452,19 @@ class SCChartFileRenderingApplication implements IApplication {
                     }
                 }
                 EObject: {
-                    // TODO: get correct file extension
-                    ModelUtil.saveModel(resModel,
-                        URI.createURI(file.parent + "/" + removeFileExtension(file.name) + '.out'))
+                    ModelUtil.saveModel(resModel, URI.createURI(
+                        file.parent + "/" + removeFileExtension(file.name) + outputExtension
+                    ))
                 }
                 String: {
-                    // TODO: get correct file extension
-                    saveStringToFile(resModel, file.parent + "/" + removeFileExtension(file.name) + '.out')
+                    saveStringToFile(
+                        resModel,
+                        file.parent + "/" + removeFileExtension(file.name) + outputExtension
+                    )
                 }
                 default: {
-                    // TODO: get correct file extension
-                    saveStringToFile(resModel.toString, file.parent + "/" + removeFileExtension(file.name) + '.out')
+                    saveStringToFile(resModel.toString,
+                        file.parent + "/" + removeFileExtension(file.name) + outputExtension)
                 }
             }
         }
