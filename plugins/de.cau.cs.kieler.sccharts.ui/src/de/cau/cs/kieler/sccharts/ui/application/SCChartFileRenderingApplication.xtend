@@ -180,8 +180,10 @@ class SCChartFileRenderingApplication implements IApplication {
                             }
                             // model loading
                             case "-astext": {
+                                loadAsModel = false
                             }
                             case "-asmodel": {
+                                loadAsModel = true
                             }
                             // file
                             case "-extension": {
