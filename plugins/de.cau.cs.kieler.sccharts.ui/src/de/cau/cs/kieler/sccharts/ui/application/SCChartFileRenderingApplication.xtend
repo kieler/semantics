@@ -41,6 +41,8 @@ import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.swt.widgets.Display
 import org.eclipse.xtext.resource.XtextResourceSet
+import java.io.FileNotFoundException
+import java.util.NoSuchElementException
 
 /**
  * @author mek
@@ -366,9 +368,14 @@ class SCChartFileRenderingApplication implements IApplication {
             initResourceSet
         }
 
-        // get the SCChart
-        val resource = resourceSet.getResource(URI.createFileURI(absPath), true)
-        return resource.getContents().head
+        try {
+            // get the SCChart
+            val resource = resourceSet.getResource(URI.createFileURI(absPath), true)
+            return resource.getContents().head
+        } catch (Exception e) {
+            System.err.println("Error: could not load model from file " + file.path)
+        }
+        return null
     }
 
     /**
@@ -378,10 +385,14 @@ class SCChartFileRenderingApplication implements IApplication {
         var Scanner scanner = null
         try {
             scanner = new Scanner(file)
-            return scanner.useDelimiter("\\Z") // EOF as delimiter
+            return scanner.useDelimiter("\\Z").next // EOF as delimiter
+        } catch (FileNotFoundException e) {
+            System.err.println("Error, cannot load text from file. FileNotFound: " + file.path)
+        } catch (NoSuchElementException ignore) {
         } finally {
             if(scanner !== null) scanner.close
         }
+        return null
     }
 
     /**
@@ -420,11 +431,16 @@ class SCChartFileRenderingApplication implements IApplication {
         // get model
         val model = if(loadAsModel) loadModel(file) else loadText(file)
 
+        if (model === null) {
+            System.err.println("Error loading File " + file.path)
+            return
+        }
+
         // and render model if requested
         if (shouldRender) {
             renderModel(
                 "file: " + file.path,
-                model as SCCharts,
+                model,
                 renderFormat,
                 getOutputFile(file, renderFormat).absolutePath
             )
@@ -432,40 +448,45 @@ class SCChartFileRenderingApplication implements IApplication {
 
         // Handle Compilation if requested.
         if (shouldCompile) {
-            val cc = Compile.createCompilationContext(system, model)
+            try {
+                val cc = Compile.createCompilationContext(system, model)
 
-            // compile and extract result
-            val resultEnv = cc.compile
-            var resModel = resultEnv.model
+                // compile and extract result
+                val resultEnv = cc.compile
+                var resModel = resultEnv.model
 
-            // decompose chain
-            if (resModel instanceof ModelChain) {
-                resModel = resModel.getSelectedModel()
-            }
+                // decompose chain
+                if (resModel instanceof ModelChain) {
+                    resModel = resModel.getSelectedModel()
+                }
 
-            switch (resModel) {
-                // Save files inside a CodeContainer.
-                CodeContainer: {
-                    val codeContainer = resModel as CodeContainer
-                    for (codeFileEntry : codeContainer.files) {
-                        saveStringToFile(codeFileEntry.code, file.parent + "/" + codeFileEntry.fileName)
+                switch (resModel) {
+                    // Save files inside a CodeContainer.
+                    CodeContainer: {
+                        val codeContainer = resModel as CodeContainer
+                        for (codeFileEntry : codeContainer.files) {
+                            saveStringToFile(codeFileEntry.code, file.parent + "/" + codeFileEntry.fileName)
+                        }
+                    }
+                    EObject: {
+                        ModelUtil.saveModel(resModel, URI.createURI(
+                            file.parent + "/" + removeFileExtension(file.name) + outputExtension
+                        ))
+                    }
+                    String: {
+                        saveStringToFile(
+                            resModel,
+                            file.parent + "/" + removeFileExtension(file.name) + outputExtension
+                        )
+                    }
+                    default: {
+                        saveStringToFile(resModel.toString,
+                            file.parent + "/" + removeFileExtension(file.name) + outputExtension)
                     }
                 }
-                EObject: {
-                    ModelUtil.saveModel(resModel, URI.createURI(
-                        file.parent + "/" + removeFileExtension(file.name) + outputExtension
-                    ))
-                }
-                String: {
-                    saveStringToFile(
-                        resModel,
-                        file.parent + "/" + removeFileExtension(file.name) + outputExtension
-                    )
-                }
-                default: {
-                    saveStringToFile(resModel.toString,
-                        file.parent + "/" + removeFileExtension(file.name) + outputExtension)
-                }
+            } catch (Exception e) {
+                System.err.println("Error compiling File " + file.path + ":")
+                e.printStackTrace
             }
         }
     }
@@ -528,6 +549,11 @@ class SCChartFileRenderingApplication implements IApplication {
      * Errors are printed to std-err.
      */
     def renderModel(String modelSrcDescription, Object model, OutputFormat format, String targetFile) {
+        if (model === null) {
+            System.err.println("Error: Cannot Render null Object from " + modelSrcDescription)
+            return
+        }
+
         // render the SCChart
         val IStatus result = LightDiagramServices.renderOffScreen(
             model,
@@ -536,10 +562,9 @@ class SCChartFileRenderingApplication implements IApplication {
         );
 
         // check if rendering was successful
-        if (!result.OK) {
-            System.err.println("Error Rendering " + modelSrcDescription)
-            System.err.println(result)
-            result.exception.printStackTrace
+        if (result === null || !result.OK) {
+            System.err.println("Error Rendering " + modelSrcDescription + " (loaded as " + model.class.name + ")")
+            if(result !== null) result.exception.printStackTrace
         }
     }
 
