@@ -114,6 +114,8 @@ class SCChartFileRenderingApplication implements IApplication {
         }
 
         // initialize state
+        val cwdFile = new File("./").canonicalFile
+
         acceptedExtensions = new HashSet(1);
         acceptedExtensions.add(SCCHART_FILE_EXTENSION)
 
@@ -206,7 +208,7 @@ class SCChartFileRenderingApplication implements IApplication {
                             }
                             default: {
                                 // use this parameter as one file specifier for SCCharts to render
-                                handleSpecifiers(Stream.of(param), true)
+                                handleSpecifiers(Stream.of(param), true, cwdFile)
                             }
                         }
                     }
@@ -220,23 +222,27 @@ class SCChartFileRenderingApplication implements IApplication {
                     }
                     case INPUT_FILE: {
                         inpState = InputState.NONE
+                        var File relativeFile
                         // Current parameter specifies a file to read SCCHarts specifier from
                         var InputStreamReader reader = null
                         if (param == "-") {
                             // input file is stdIn
                             reader = new InputStreamReader(System.in)
+                            relativeFile = cwdFile
                         } else {
                             // input file is a file
                             var file = new File(param)
-                            if (!file.exists)
+                            if (!file.exists) {
                                 System.err.println("Could not find file: " + param)
-                            else if (!file.canRead)
+                            } else if (!file.canRead) {
                                 System.err.println("File is not readable: " + param)
-                            else
+                            } else {
                                 reader = new FileReader(file)
+                                relativeFile = file.parentFile.canonicalFile
+                            }
                         }
                         // use each line as one SCCHarts specifier
-                        if(reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true)
+                        if(reader !== null) handleSpecifiers(new BufferedReader(reader).lines, true, relativeFile)
                     }
                     case SYSTEM_SELECTION: {
                         inpState = InputState.NONE
@@ -312,20 +318,22 @@ class SCChartFileRenderingApplication implements IApplication {
      * @param selectors a Stream of paths to handle
      * @param isDirect true if an error should be printed on file extension miss-match
      */
-    private def void handleSpecifiers(Stream<String> selectors, boolean isDirect) {
+    private def void handleSpecifiers(Stream<String> selectors, boolean isDirect, File parent) {
         val iter = selectors.iterator;
         while (!shouldStop && iter.hasNext) {
             val selector = iter.next
 
             // check file
             var file = new File(selector)
-            if (!file.exists)
+            if (!file.absolute) file = new File(parent, selector)
+            if (!file.exists) {
                 System.err.println("Could not find file or directory: " + selector)
-            else if (file.isDirectory) {
+            } else if (file.isDirectory) {
                 // get a list of all files in this folder (with recursion)
                 handleSpecifiers(
                     Files.walk(Paths.get(file.path)).filter([p|Files::isRegularFile(p)]).map([path|path.toString]),
-                    false
+                    false,
+                    parent
                 )
             } else {
                 val fileExtension = getFileExtension(file.name.toLowerCase(Locale.ROOT))
