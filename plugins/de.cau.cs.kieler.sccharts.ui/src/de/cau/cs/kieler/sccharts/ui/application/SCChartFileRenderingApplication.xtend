@@ -374,6 +374,7 @@ class SCChartFileRenderingApplication implements IApplication {
             return resource.getContents().head
         } catch (Exception e) {
             System.err.println("Error: could not load model from file " + file.path)
+            e.printStackTrace
         }
         return null
     }
