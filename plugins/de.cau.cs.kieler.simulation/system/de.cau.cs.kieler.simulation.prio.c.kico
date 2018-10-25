@@ -7,10 +7,12 @@ de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
         "platform:/plugin/de.cau.cs.kieler.scg/resources/sc": "lib",
         "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/json": "lib",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/ticktime.h": "lib/ticktime.h",
         "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/templates/c-main.ftl": "templates/c-main.ftl",
         "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
     }
 }
+pre process de.cau.cs.kieler.^simulation.c.ticktime
 pre process de.cau.cs.kieler.^simulation.c.template
 de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.kicool.deploy.templates": {

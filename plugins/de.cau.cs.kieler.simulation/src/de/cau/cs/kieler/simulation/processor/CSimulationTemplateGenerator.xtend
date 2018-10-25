@@ -16,11 +16,14 @@ import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
+
+import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 
@@ -104,11 +107,11 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.orderedVariableNames»
-                        // Receive «v»
-                        item = cJSON_GetObjectItemCaseSensitive(root, "«v»");
+                    «FOR v : store.orderedVariables»
+                        // Receive «v.key»
+                        item = cJSON_GetObjectItemCaseSensitive(root, "«v.key»");
                         if(item != NULL) {
-                            «store.parse(v, "item")»
+                            «v.parse("item")»
                         }
                     «ENDFOR» 
                 }
@@ -122,9 +125,9 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                     cJSON* array;
                 «ENDIF»
                 
-                «FOR v : store.orderedVariableNames»
-                    // Send «v»
-                    «store.serialize(v, "root", "array")»
+                «FOR v : store.orderedVariables»
+                    // Send «v.key»
+                    «v.serialize("root", "array")»
                 «ENDFOR»
             
                 // Get JSON object as string
@@ -151,27 +154,34 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         return cc
     }
     
-    private def access() {
+    private def accessor() {
         return environment.getProperty(STRUCT_ACCESS)?:STRUCT_ACCESS.^default
     }
     
-    def serialize(VariableStore store, String varName, String json, String array) {
-        if (store.variables.get(varName).head.array) {
+    def serialize(Pair<String, VariableInformation> variable, String json, String array) {
+        val varName = variable.key
+        val info = variable.value
+        if (info.array) {
+            if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variabels.")
             return '''
                 «array» = cJSON_CreateArray();
-                «store.serializeArray(varName, 0, array)»
+                «info.serializeArray(varName, 0, array)»
                 cJSON_AddItemToObject(«json», "«varName»", «array»);
             '''
         } else {
-            val type = store.variables.get(varName).head.type
-            val accessor = access + varName
+            val type = info.type
+            val access = if (info.isExternal) {
+                info.externalName
+            } else {
+                "${tickdata_name}" + accessor + varName
+            }
             val creator = switch(type) {
-                case BOOL: '''cJSON_CreateBool(${tickdata_name}«accessor»)'''
+                case BOOL: '''cJSON_CreateBool(«access»)'''
                 case UNSIGNED,
                 case INT,
                 case DOUBLE,
-                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«accessor»)'''
-                case STRING: '''cJSON_CreateString((${tickdata_name}«accessor» != NULL) ? ${tickdata_name}«accessor» : "")'''
+                case FLOAT: '''cJSON_CreateNumber(«access»)'''
+                case STRING: '''cJSON_CreateString((«access» != NULL) ? «access» : "")'''
                 default: {
                     environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
                     ""
@@ -181,18 +191,17 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         }
     }
     
-    def String serializeArray(VariableStore store, String varName, int idx, String json) {
-        val info = store.variables.get(varName).head
+    def String serializeArray(VariableInformation info, String varName, int idx, String json) {
         val dimensions = info.dimensions
         val creator = if (idx + 1 >= dimensions.size) {
-            val accessor = access + varName + (0..<dimensions.size).map["[i"+it+"]"].join
+            val access = accessor + varName + (0..<dimensions.size).map["[i"+it+"]"].join
             switch(info.type) {
-                case BOOL: '''cJSON_CreateBool(${tickdata_name}«accessor»)'''
+                case BOOL: '''cJSON_CreateBool(${tickdata_name}«access»)'''
                 case UNSIGNED,
                 case INT,
                 case DOUBLE,
-                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«accessor»)'''
-                case STRING: '''cJSON_CreateString((${tickdata_name}«accessor» != NULL) ? ${tickdata_name}«accessor» : "")'''
+                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«access»)'''
+                case STRING: '''cJSON_CreateString((${tickdata_name}«access» != NULL) ? ${tickdata_name}«access» : "")'''
                 default: {
                     environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
                     ""
@@ -205,24 +214,28 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             for (int i«idx» = 0; i«idx» < «dimensions.get(idx)»; i«idx»++) {
                 cJSON *item«idx» = «creator»;
                 «IF idx + 1 < dimensions.size»
-                «store.serializeArray(varName, idx + 1, "item" + idx)»
+                «info.serializeArray(varName, idx + 1, "item" + idx)»
                 «ENDIF»
                 cJSON_AddItemToArray(«json», item«idx»);
             }
         '''
     }
     
-    def parse(VariableStore store, String varName, String json) {
-        if (store.variables.get(varName).head.array) {
-            return store.parseArray(varName, 0, store.variables.get(varName).head.dimensions.size, json)
+    def parse(Pair<String, VariableInformation> variable, String json) {
+        val varName = variable.key
+        val info = variable.value
+        if (info.array) {
+            if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variabels.")
+            return info.parseArray(varName, 0, info.dimensions.size, json)
+        } else if (info.isExternal){
+            return '''«info.externalName» = «json»«info.jsonTypeGetter»;'''
         } else {
-            return '''${tickdata_name}«access»«varName» = «json»«store.jsonTypeGetter(varName)»;'''
+            return '''${tickdata_name}«accessor»«varName» = «json»«info.jsonTypeGetter»;'''
         }
     }
     
-    def jsonTypeGetter(VariableStore store, String varName) {
-        val type = store.variables.get(varName).head.inferType
-        return switch(type) {
+    def jsonTypeGetter(VariableInformation info) {
+        return switch(info.type) {
             case UNSIGNED,
             case BOOL,
             case INT: "->valueint"
@@ -236,14 +249,14 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         }
     }
 
-    def String parseArray(VariableStore store, String varName, int idx, int dimensions, String json) {
+    def String parseArray(VariableInformation info, String varName, int idx, int dimensions, String json) {
         if (idx == dimensions) {
-            return '''${tickdata_name}«access»«varName»«(0..<dimensions).map["[i"+it+"]"].join» = item«idx - 1»«store.jsonTypeGetter(varName)»;'''
+            return '''${tickdata_name}«accessor»«varName»«(0..<dimensions).map["[i"+it+"]"].join» = item«idx - 1»«info.jsonTypeGetter»;'''
         } else {
             return '''
                 for (int i«idx» = 0; i«idx» < cJSON_GetArraySize(«json»); i«idx»++) {
                     cJSON *item«idx» = cJSON_GetArrayItem(«json», i«idx»);
-                    «store.parseArray(varName, idx + 1, dimensions, "item" + idx)»
+                    «info.parseArray(varName, idx + 1, dimensions, "item" + idx)»
                 }
             '''
         }
