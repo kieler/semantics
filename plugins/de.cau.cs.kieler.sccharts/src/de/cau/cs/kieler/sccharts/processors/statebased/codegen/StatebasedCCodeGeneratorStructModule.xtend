@@ -106,44 +106,27 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         stateEnumNames.put(createState, THREAD_STATUS_WAITING)
         stateEnumNames.put(createState, THREAD_STATUS_PAUSING)
         
-        code.addCLL(
-            SLC("The chosen scheduling regime (IUR) uses four states to maintain the status of threads."),
+        code.addCLLRS(
+            '''
+            « SLC("The chosen scheduling regime (IUR) uses four states to maintain the status of threads.") »
+            typedef enum {
+                « THREAD_STATUS_TERMINATED », « LEC("thread is dead until spawned again (e.g. via fork)") »
+                « THREAD_STATUS_RUNNING », « LEC("thread is running") »
+                « THREAD_STATUS_WAITING », « LEC("thread is waiting to be selected as running") »
+                « THREAD_STATUS_PAUSING », « LEC("thread is paused for this tick instance") »
+            } « THREAD_STATUS_ENUM »;
             
-            "typedef enum {", NL,
-            "  ",
-            THREAD_STATUS_TERMINATED, 
-            ", ",
-            LEC("thread is dead until spawned again (e.g. via fork)"), NL,
             
-            "  ",
-            THREAD_STATUS_RUNNING,
-            ", ",
-            LEC("thread is running"), NL,
-            
-            "  ", 
-            THREAD_STATUS_WAITING,
-            ", ",
-            LEC("thread is waiting to be selected as running"), NL, 
-            
-            "  ", 
-            THREAD_STATUS_PAUSING, 
-            LEC("thread is paused for this tick instance"), NL,
-            
-            "} ",
-            THREAD_STATUS_ENUM,
-            ";", NL, NL
-        )
-        
-        code.add(
-            SLC("The interface of the program is used to communicate with the surrounding environment."),
-            
-            "typedef struct {", NL
+            « SLC("The interface of the program is used to communicate with the surrounding environment.") »
+            typedef struct {
+            '''
         )
         
         tickData.add(
-            SLC("Root level data of the program"),
-            
-            "typedef struct {", NL
+            '''
+            « SLC("Root level data of the program") »
+            typedef struct {
+            '''
         )
     }
     
@@ -186,25 +169,23 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateDone() {
-        tickData.add(
-            NL, 
-            "  ", STRUCT_INTERFACE_NAME, " ", REGION_INTERFACE_NAME, ";", NL, 
-            IFC(!leanMode, "  int ", REGION_ACTIVE_PRIORITY, ";", NL),
-            "  ThreadStatus ", REGION_THREADSTATUS, ";", NL
+        tickData.add(            
+            '''
+            
+              « STRUCT_INTERFACE_NAME » « REGION_INTERFACE_NAME »;
+            «IF !leanMode»   int « REGION_ACTIVE_PRIORITY »;«ENDIF»
+              ThreadStatus « REGION_THREADSTATUS »;
+              « FOR cfr : rootRegions »
+              « getContextTypeName(cfr) » « getContextVariableName(cfr) »;
+              « ENDFOR »
+            } « getName »;
+            '''
         )
-        
-        for (cfr : rootRegions) {
-            tickData.add(
-                "  ", getContextTypeName(cfr), " ", getContextVariableName(cfr), ";", NL
-            )
-        }
-        
-        tickData.add(
-            "} ", getName, ";", NL
-        )
-        
+       
         code.add(
-            "} ", STRUCT_INTERFACE_NAME, ";", NL
+            '''
+            } « STRUCT_INTERFACE_NAME »;
+            '''
         )
         
         if (threadData.length > 0) code.nl
@@ -258,48 +239,35 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         }
         
         threadData.add(
-            SLC("This enum contains all states of the " + name + " region,"),
-            SLC("namely " + commentSB.toString + "."),
+            '''
+            « SLC("This enum contains all states of the " + name + " region.") »
+«««            « SLC("namely " + commentSB.toString + ".") »
+            typedef enum {
+              « statesSB.toString »
+            } « regionName + ENUM_STATES_SUFFIX »;
             
-            "typedef enum {", NL,
-            "  ", statesSB.toString, NL, 
-            "} ",
-            regionName + ENUM_STATES_SUFFIX,
-            ";", NL, NL
+            
+            '''
         )
         
-        threadData.addCLL(
-            SLC("The thread data of " + name),
+        threadData.addCLLRS(
+            '''
+            « SLC("The thread data of " + name) »
+            typedef struct {
+              « THREAD_STATUS_ENUM » threadStatus; « LEC("status of the thread (see ThreadStatus enum)") »
+              « regionName + ENUM_STATES_SUFFIX » « REGION_ACTIVE_STATE »; « LEC("the active state") »
+            «IF !leanMode»   int « REGION_ACTIVE_PRIORITY »; « LEC("active priority of the thread for scheduling") »«ENDIF»
+              char « REGION_DELAYED_ENABLED »; « LEC("active state at the beginning of the tick") »
+              « STRUCT_INTERFACE_NAME »* « REGION_INTERFACE_NAME »; « LEC("pointer to the program interface for communication") »
+            «IF children !== null»
+              «FOR child : children»
+                « child.contextTypeName » « child.contextVariableName »;
+              «ENDFOR»
+            «ENDIF»
+            } « contextTypename»;
+             
             
-            "typedef struct {", NL,
-            indentation, THREAD_STATUS_ENUM, " threadStatus;", 
-            LEC("status of the thread (see ThreadStatus enum)"), NL,
-            
-            indentation, regionName, ENUM_STATES_SUFFIX, " ", REGION_ACTIVE_STATE, ";", 
-            LEC("the active state"), NL,
-            
-            IFC(!leanMode, indentation, "int ", REGION_ACTIVE_PRIORITY, ";", 
-                LEC("active priority of the thread for scheduling"), NL),
-            
-            indentation, "char ", REGION_DELAYED_ENABLED, ";", 
-            LEC("active state at the beginning of the tick"), NL,
-            
-            indentation, STRUCT_INTERFACE_NAME, "* ", REGION_INTERFACE_NAME, ";", 
-            LEC("pointer to the program interface for communication"), NL
-        )
-        
-        if (children !== null && children.size > 0) {
-            for (child : children) {
-                threadData.add(
-                    indentation, child.contextTypeName, " ", child.contextVariableName, ";", NL
-                )
-            }
-        }
-        
-        threadData.add(
-            "} ",
-            contextTypename,
-            ";", NL, NL
+            '''
         )
     }
     

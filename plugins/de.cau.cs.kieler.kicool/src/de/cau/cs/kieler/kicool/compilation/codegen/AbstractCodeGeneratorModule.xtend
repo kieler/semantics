@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.compilation.codegen
 import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.inject.Inject
 import com.google.inject.Injector
+import org.eclipse.xtend2.lib.StringConcatenation
 
 /**
  * Abstract class for code generator modules
@@ -92,6 +93,30 @@ abstract class AbstractCodeGeneratorModule {
             sb.append(s2)
             actualLineLength += String.valueOf(s2).length
         }
+    }
+    
+    // Add Auto Code Line Length for Rich Strings
+    protected def void addCLLRS(StringBuilder sb, Object ... args) {
+        val concString = (args.head as StringConcatenation).toString
+        if (!concString.contains(MAGIC_PREFIX)) {
+            sb.addCLL(args)
+            return   
+        }
+        
+        val spl = concString.split("(\r\n|\r|\n)")
+        val sl = <String> newLinkedList
+        for (s : spl) {
+            if (s.contains(MAGIC_PREFIX)) {
+                val spl2 = s.split(MAGIC_PREFIX)
+                sl.add(spl2.head)
+                sl.add(MAGIC_PREFIX + spl2.get(1))
+            } else {
+                sl.add(s)
+            }
+            sl.add(NL)
+        }
+        
+        sb.addCLL(sl.toArray)
     }
     
     // Add Auto Code Line Length

@@ -166,7 +166,7 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
                     annotationModelStatesAndRegions.addInfo(object, code)
                 }
             } else if (object instanceof Region) {
-                annotationModelStatesAndRegions.addInfo(object, code)
+//                annotationModelStatesAndRegions.addInfo(object, code)
             }
         }        
     }
