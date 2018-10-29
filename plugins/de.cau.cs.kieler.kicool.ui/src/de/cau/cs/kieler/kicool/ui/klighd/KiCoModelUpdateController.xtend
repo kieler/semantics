@@ -74,7 +74,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-class KiCoModelUpdateController extends EcoreXtextTextSaveUpdateController {
+class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
 //    ssm: Workaround for the SBE with SDs
 //    override selectionChanged(SelectionChangedEvent event) {
@@ -401,8 +401,9 @@ class KiCoModelUpdateController extends EcoreXtextTextSaveUpdateController {
         }
         if (warnings.length() > 0) {
             warnings.setLength(warnings.length() - 1)
-// ssm: NEVER TO MASTER! ;-) 15.10.2018            
-//            addWarningComposite(getDiagramView().getViewer(), warnings.toString())
+// ssm: There is an issue with the warnings reporting. You can comment the following line as a work around, 
+// but of course this should be resolved soon.            
+            addWarningComposite(getDiagramView().getViewer(), warnings.toString())
         }
     }
     
@@ -712,7 +713,7 @@ class KiCoModelUpdateController extends EcoreXtextTextSaveUpdateController {
             if (sModel === null) {
                 // Try to load a generic object.
                 // IF this also fails, the sourceModel will be null.              
-                sourceModel = readObject(getEditor())
+                sourceModel = readModel(getEditor())    // Use readObject if not using an EMF/Xtext editor
             } else {
                 sourceModel = sModel
             }
