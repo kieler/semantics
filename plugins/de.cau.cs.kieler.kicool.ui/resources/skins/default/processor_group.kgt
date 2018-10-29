@@ -1,5 +1,5 @@
 knode group {
-    size: width = 36 height = 12
+    size: width = 60 height = 16.5 
     properties:
         org.eclipse.elk.algorithm = org.eclipse.elk.layered
         org.eclipse.elk.edgeRouting = ORTHOGONAL
