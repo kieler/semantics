@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.codegen.statebased
+package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
@@ -70,6 +70,10 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         reset.printDebug = printDebug
         tick.printDebug = printDebug
         logic.printDebug = printDebug
+        struct.leanMode = leanMode
+        reset.leanMode = leanMode
+        tick.leanMode = leanMode
+        logic.leanMode = leanMode
         
         struct.generateInit
         reset.generateInit
