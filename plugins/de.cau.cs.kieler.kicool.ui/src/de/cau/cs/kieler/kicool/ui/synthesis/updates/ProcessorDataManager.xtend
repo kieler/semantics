@@ -422,8 +422,10 @@ class ProcessorDataManager {
                                 view, intermediateModelCounter++, infoNode
                             ))
                     } else {
+                        val morModel = new MessageObjectListPair(infos.get(infoKey).fillUndefinedColors(INFO), 
+                            if (infoKey === null) model else infoKey)
                         infoNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, infos, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
                                 view, intermediateModelCounter++, infoNode
                             ))
                     }
@@ -441,7 +443,7 @@ class ProcessorDataManager {
                     warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += warningNode 
                     
-                    val model = processorInstance.targetModel
+                    val model = if (warningKey === null) processorInstance.targetModel else warningKey
                     if (model instanceof EObject) {
                         val morModel = new MessageObjectListPair(warnings.get(warningKey).fillUndefinedColors(WARNING), 
                             if (warningKey === null) model else warningKey)
@@ -450,8 +452,10 @@ class ProcessorDataManager {
                                 view, intermediateModelCounter++, warningNode
                             ))
                     } else {
+                        val morModel = new MessageObjectListPair(warnings.get(warningKey).fillUndefinedColors(WARNING), 
+                            if (warningKey === null) model else warningKey)
                         warningNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
                                 view, intermediateModelCounter++, warningNode
                             ))
                     }
@@ -478,8 +482,10 @@ class ProcessorDataManager {
                                 view, intermediateModelCounter++, errorNode
                             ))
                     } else {
+                        val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
+                            if (errorKey === null) model else errorKey)
                         errorNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
                                 view, intermediateModelCounter++, errorNode
                             ))
                     }
