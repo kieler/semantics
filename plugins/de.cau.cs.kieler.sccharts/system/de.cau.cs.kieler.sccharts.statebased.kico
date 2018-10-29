@@ -1,4 +1,4 @@
-system de.cau.cs.kieler.sccharts.statebased
+public system de.cau.cs.kieler.sccharts.statebased
 	label "State-based Compilation (C)"
 
 system de.cau.cs.kieler.sccharts.extended 
