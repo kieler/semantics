@@ -89,6 +89,7 @@ import org.eclipse.core.runtime.Status
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 
 /**
  * The data manager handles all synthesis updates.
@@ -135,8 +136,10 @@ class ProcessorDataManager {
         }
         
         val nameNode = nodeIdMap.findNode(NODE_NAME)
+        val nameStr = if (rtProcessor.name.length < SkinSelector.skinMaxNameSize) rtProcessor.name else
+            rtProcessor.name.substring(0, SkinSelector.skinMaxNameSize - 2) + "..."
         val label = nameNode.label
-        label.text = rtProcessor.name
+        label.text = nameStr
 //        label.data.filter(KText).head.setProperty(KlighdProperties.NOT_SELECTABLE, true)
         val text = label.data.filter(KText).head
         text.addAction(Trigger::SINGLECLICK, SelectParent.ID)
