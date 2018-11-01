@@ -12,42 +12,30 @@
  */
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import java.util.Random
 
 /**
  * @author stu114663
  *
  */
-class Obfuscator<SCCharts> extends InplaceProcessor<SCCharts> {
+abstract class Obfuscator {
+
+    static final String NAME_CHARACTERS = "abcdefghijklmnopqrstuvwxyz"
+    static final int NAME_CHARACTERS_LENGTH = NAME_CHARACTERS.codePointCount(0, NAME_CHARACTERS.length)
     
-    @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsCoreExtensions
-    
-    public static val IProperty<String> OBFUSCATOR_ROOTSTATE_NAME = 
-        new Property<String>("de.cau.cs.kieler.sccharts.obfuscator.rootStateName", "Obfuscator Spec")
-               
-    override getId() {
-        "de.cau.cs.kieler.sccharts.processors.obfuscator"
+    protected def getObfuscatedText(int name_length) {
+        val rnd = new Random()
+        var o_name = new StringBuilder
+        for (var i = 0; i < name_length; i++) {
+            val r = rnd.nextInt(NAME_CHARACTERS_LENGTH)
+            val n = NAME_CHARACTERS.codePointAt(r)
+            o_name.appendCodePoint(n)
+        }
+        return o_name.toString
     }
     
-    override getName() {
-        "Obfuscator"
-    }
-    
-    override process() {
-        val model = getModel;
-        
-        val rootState = createState => [
-            name = environment.getProperty(OBFUSCATOR_ROOTSTATE_NAME)
-        ] 
-        val scc = createSCChart => [
-            rootStates += rootState
-        ]
-    }
+    abstract def String getValuedObjectName()
+    abstract def String getStateName()
+    abstract def String getCommentText()
+    abstract def String getRegionName()
 }
