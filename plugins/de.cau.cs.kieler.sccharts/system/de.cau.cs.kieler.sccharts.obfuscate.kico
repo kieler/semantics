@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.kicool.obfuscator
+    label "Obfuscator"
+    
+de.cau.cs.kieler.sccharts.processors.obfuscator

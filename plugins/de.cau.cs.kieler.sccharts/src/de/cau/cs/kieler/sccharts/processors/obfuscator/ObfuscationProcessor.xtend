@@ -12,19 +12,19 @@
  */
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
-import java.util.Random
-import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.iterators.ScopeIterator
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.iterators.RegionIterator
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
+import de.cau.cs.kieler.sccharts.iterators.ValuedObjectIterator
+import java.util.Iterator
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author stu114663
@@ -34,6 +34,59 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
 
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsCoreExtensions
+    
+    def static int getIteratorSize(Iterator iter) {
+        var int cnt = 0
+        while (iter.hasNext()) {
+            iter.next()
+            cnt += 1
+        }
+        return cnt
+    }
+    
+    def static int getValuedObjectsCount(Scope scp) {
+        return getIteratorSize(ValuedObjectIterator.sccValuedObjects(scp))
+    }
+    
+    def static int getStatesCount(Scope scp) {
+        return getIteratorSize(StateIterator.sccAllStates(scp))
+    }
+    
+    def static int getRegionsCount(Scope scp) {
+        return getIteratorSize(RegionIterator.sccAllRegions(scp))
+    }
+    
+    def static int getItemCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getValuedObjectsCount(rs) + getStatesCount(rs) + getRegionsCount(rs)
+        }
+        return itemCount
+    }
+    
+    def static int getValuedObjectsCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getValuedObjectsCount(rs)
+        }
+        return itemCount
+    }
+    
+    def static int getStatesCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getStatesCount(rs)
+        }
+        return itemCount
+    }
+    
+    def static int getRegionsCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getRegionsCount(rs)
+        }
+        return itemCount
+    }
 
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.obfuscator"
@@ -45,17 +98,34 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
 
     override process() {
         val model = getModel;
-        
-        val obf = new BlankObfuscator
 
-        model.rootStates.forEach[rs |
+        val obf = getObfuscator(ObfuscatorTypes.COUNTING_TYPE, model)
+
+        model.rootStates.forEach [ rs |
             obfuscateState(rs, obf)
             val stateI = StateIterator.sccAllStates(rs)
-            
-            stateI.forEach[s |
+
+            stateI.forEach [ s |
                 obfuscateState(s, obf)
             ]
         ]
+    }
+    
+    def getObfuscator(ObfuscatorTypes type, SCCharts model) {
+        switch (type) {
+            case COUNTING: {
+                return new CountingObfuscator(getItemCount(model))
+            }
+            case COUNTING_TYPE: {
+                return new CountingTypeObfuscator(getValuedObjectsCount(model), getStatesCount(model), getRegionsCount(model))
+            }
+            case RANDOM: {
+                return new RandomObfuscator(getItemCount(model))
+            }
+            case RANDOM_KEEP_LENGTH: {
+                return new RandomKeepLengthObfuscator
+            }
+        }
     }
 
     /**
@@ -65,28 +135,28 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
      *   - regions
      */
     def obfuscateState(State state, Obfuscator obf) {
-        state.name = obf.stateName
-        
+        state.name = obf.getStateName(state)
+
         state.declarations.forEach [ decl |
             decl.valuedObjects.forEach [ valO |
-                valO.name = obf.valuedObjectName
+                valO.name = obf.getValuedObjectName(valO)
             ]
         ]
-        
-        state.regions.forEach [ region | obfuscateRegion(region, obf)]
+
+        state.regions.forEach[region|obfuscateRegion(region, obf)]
     }
-    
+
     /**
      * Obfuscates the following:
      *   - region name
      *   - valued objects
      */
     def obfuscateRegion(Region region, Obfuscator obf) {
-        region.name = obf.regionName
-        
+        region.name = obf.getRegionName(region)
+
         region.declarations.forEach [ decl |
             decl.valuedObjects.forEach [ valO |
-                valO.name = obf.valuedObjectName
+                valO.name = obf.getValuedObjectName(valO)
             ]
         ]
     }
