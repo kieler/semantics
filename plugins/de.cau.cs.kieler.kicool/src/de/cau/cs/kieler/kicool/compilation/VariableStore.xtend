@@ -32,6 +32,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.annotations.Annotation
 
 /**
  * @author als
@@ -203,6 +205,11 @@ class VariableStore implements IKiCoolCloneable {
             }
         }
         
+        info.annotations.clear
+        vo.annotations.forEach[
+            info.annotations += it.copy
+        ]
+        
         variables.put(vo.name, info)
         return info
     }
@@ -317,6 +324,10 @@ class VariableInformation {
     @Accessors
     val Set<String> properties = newHashSet
     
+    /** List of copied annotations from the original valued object */
+    @Accessors
+    val List<Annotation> annotations = newLinkedList
+    
     override VariableInformation clone() {
         val clone = new VariableInformation
         clone.valuedObject = valuedObject
@@ -325,6 +336,7 @@ class VariableInformation {
         clone.typeName = typeName
         clone.format = format
         clone.properties.addAll(properties)
+        annotations.forEach[ clone.annotations += it.copy ]
         return clone
     }
     

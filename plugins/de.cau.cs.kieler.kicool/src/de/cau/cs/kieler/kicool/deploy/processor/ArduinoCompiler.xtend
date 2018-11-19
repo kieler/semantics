@@ -15,30 +15,34 @@ package de.cau.cs.kieler.kicool.deploy.processor
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
-import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
 
 /**
- * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
+ * @author ssm
+ * @kieler.design 2018-11-19 proposed
+ * @kieler.rating 2018-11-19 proposed yellow
  */
-class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContainer> {
+class ArduinoCompiler extends AbstractSystemCompilerProcessor<Object, Boolean> {
 
-    public static val IProperty<String> CC_PATH = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.path", "gcc")
-        
-    public static val IProperty<String> EXE_NAME = 
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.result", "main.exe")
-    
+    public static val IProperty<String> ARDUINO_PATH = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.arduino.path", "arduino")
+    public static val IProperty<String> ARDUINO_BOARD = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.arduino.board", "arduino:avr:mega:cpu=atmega2560")
+    public static val IProperty<String> ARDUINO_PORT = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.arduino.port", "COM13")
+    public static val IProperty<Boolean> ARDUINO_UPLOAD = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.arduino.upload", false)
+    public static val IProperty<Boolean> ARDUINO_VERIFY = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.arduino.verify", true)
+   
     override getId() {
-        "de.cau.cs.kieler.kicool.deploy.compiler.c"
+        "de.cau.cs.kieler.kicool.deploy.compiler.arduino"
     }
     
     override getName() {
-        "GCC Compiler"
+        "Arduino Compiler"
     }
     
     override process() {
@@ -50,20 +54,14 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
             infra.log(logger)
         }
         
-        // Bin folder
-        val binFolder = infra.createBinFolder
-        
         // javac
         logger.println
-        logger.println("== Compiling source files (GCC) ==")
+        logger.println("== Compiling source files (Arduino) ==")
         
         val sources = newArrayList
         val sourcePaths = newLinkedHashSet
         val iDir = newLinkedHashSet
         
-        if (environment.getProperty(INCLUDE_GENERATED_FILES)) {
-            sources.addAll(infra.sourceCode.files.filter(CCodeFile).filter[!header].map[fileName])
-        }
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
         
         logger.println("Files:")
@@ -85,47 +83,48 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         }
         sourcePaths.forEach[logger.println("  " + it)]
         
+        if (environment.getProperty(INCLUDE_GENERATED_FILES)) {
+            sources.addAll(infra.sourceCode.files.filter(CCodeFile).filter[!header].map[fileName])
+        }
+        
         if (!iDir.empty) {
             logger.println("Include directories:") 
             iDir.forEach[logger.println("  " + it)] 
         }
         
-        val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
-        val targetExePath = infra.generatedCodeFolder.toPath.relativize(targetExe.toPath).toString
-        logger.println("Target exe file: " + targetExe)
+        val ardc = newArrayList(environment.getProperty(ARDUINO_PATH)?:ARDUINO_PATH.^default)
+        if (environment.getProperty(ARDUINO_VERIFY)) ardc += "--verify"
+        if (environment.getProperty(ARDUINO_UPLOAD)) {
+            ardc += "--upload"
+            ardc += "--board"
+            ardc += environment.getProperty(ARDUINO_BOARD)
+            ardc += "--port"
+            ardc += environment.getProperty(ARDUINO_PORT)
+         }
         
-        val gcc = newArrayList(environment.getProperty(CC_PATH)?:CC_PATH.^default)
-        gcc += "-std=c99"
-        gcc += "-lm"
-        gcc += "-v"
-        gcc += "-Wall"
-        gcc += "-o"
-        gcc += targetExePath
-        if (!iDir.empty) {
-            iDir.forEach[ gcc += "-I"+it] 
-        }
         if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
             val args = environment.getProperty(ADDITIONAL_OPTIONS)
             if (args.contains(" ")) {
-                gcc += args.split(" ")
+                ardc += args.split(" ")
             } else {
-                gcc += args
+                ardc += args
             }
         }
-        gcc += sourcePaths
+        ardc += sourcePaths
         
-        // Run c compiler
-        var success = gcc.invoke(infra.generatedCodeFolder)?:-1 == 0
+        // Run arduino compiler
+        escapeOptions = false
+        var success = ardc.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")
             logger.println("Compilation failed")
         }
         
         // Create model
-        model = new ExecutableContainer(targetExe)
+        model = new Boolean(success)
         
         // report
-        logger.closeLog("gcc-compiler-report.log").snapshot
+        logger.closeLog("arduino-compiler-report.log").snapshot
         infra.refresh
     }
 

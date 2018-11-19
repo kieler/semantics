@@ -30,7 +30,7 @@ abstract class AbstractTemplateGeneratorProcessor<I> extends AbstractDeploymentP
     override process() {
         // Generate template code
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             environment.errors.add("No folder for generated code is available. Check project setup.")
         } else {
             logger.println("== Template Generation ==")
@@ -40,7 +40,7 @@ abstract class AbstractTemplateGeneratorProcessor<I> extends AbstractDeploymentP
             logger.println
             logger.println("== Save Generated Templates ==")
             
-            val folder = new File(infra.generadedCodeFolder, genFolder)
+            val folder = new File(infra.generatedCodeFolder, genFolder)
             if (!folder.exists) {
                 folder.mkdirs
             }

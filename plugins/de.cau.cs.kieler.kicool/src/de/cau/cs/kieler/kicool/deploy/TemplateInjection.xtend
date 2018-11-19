@@ -31,6 +31,10 @@ class TemplateInjection {
     public static val INIT = "init"
     public static val INPUT = "input"
     public static val OUTPUT = "output"
+    public static val LOOP_START = "loopstart"
+    public static val LOOP_END = "loopend"
+    public static val TICK_START = "tickstart"
+    public static val TICK_END = "tickend"
     
     // Environment properties
     public static val IProperty<List<String>> INCLUDES = 

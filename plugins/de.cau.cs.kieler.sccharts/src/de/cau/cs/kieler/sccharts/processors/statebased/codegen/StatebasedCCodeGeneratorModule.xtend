@@ -107,8 +107,13 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         val hFile = new StringBuilder
         val cFile = new StringBuilder
 
+        val headerMacro = ("_" + hFilename.replaceAll("\\.", "_") + "_").toUpperCase
+
         hFile.addHeader
+        hFile.append("#ifndef " + headerMacro + "\n")
+        hFile.append("#define " + headerMacro + "\n\n")
         hFile.append(struct.code)
+        hFile.append("\n#endif")
         
         cFile.addHeader
         cFile.hostcodeAdditions

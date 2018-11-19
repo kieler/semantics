@@ -186,6 +186,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -221,6 +224,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.csv.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy.kico">
         </TransformationSystem>
      </extension>
 

@@ -69,7 +69,7 @@ class ProjectInfrastructure {
     @Accessors(AccessorType.PUBLIC_GETTER)
     var File modelFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
-    var File generadedCodeFolder = null
+    var File generatedCodeFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
     var List<File> sourceCodeFiles = newArrayList
     @Accessors
@@ -164,15 +164,15 @@ class ProjectInfrastructure {
                     if (!gen.exists) {
                         gen.create(true, true, null)
                     }
-                    generadedCodeFolder = gen.rawLocation.toFile
+                    generatedCodeFolder = gen.rawLocation.toFile
                 } else {
-                    generadedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
-                    if (!generadedCodeFolder.exists) {
-                        generadedCodeFolder.mkdir
+                    generatedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
+                    if (!generatedCodeFolder.exists) {
+                        generatedCodeFolder.mkdir
                     }
                 }
             } else {
-                generadedCodeFolder = modelFolder
+                generatedCodeFolder = modelFolder
             }
         }
     }
@@ -202,7 +202,7 @@ class ProjectInfrastructure {
         logger.println("== Project Infrastructure ==")
         logger.println("Model file: " + modelFile)
         logger.println("Base folder: " + modelFolder)
-        logger.println("Generated code folder: " + generadedCodeFolder)
+        logger.println("Generated code folder: " + generatedCodeFolder)
         logger.println
     }
     
