@@ -150,7 +150,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     
     protected def boolean executeCoProcessor(Processor<?,?> processorInstance, boolean doSnapshot) {
         executeCoProcessor(processorInstance, doSnapshot, false)
-    } 
+    }
     
     /**
      * Protected convenient method to trigger a snapshot.
