@@ -22,15 +22,20 @@
  *
  */
 
-#ifdef WIN32
-// Windows case
+#if defined WIN32
+// - Windows case -
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 LARGE_INTEGER remembered_time;
 LARGE_INTEGER frequency;
+#elif defined __MACH__
+// - Mac case -
+#import <mach/mach_time.h>
+
+uint64_t remembered_time;
 #else
-// Non-Windows case
+// - Unix case -
 // Make sure clocks are available in c99 compilation
 #define _POSIX_C_SOURCE 199309L
 
@@ -42,29 +47,35 @@ long int remembered_time;
 
 
 void resetticktime() {
-#ifdef WIN32
-	// Windows case
+#if defined WIN32
     QueryPerformanceFrequency(&frequency);
     QueryPerformanceCounter(&remembered_time);
     return;
-#else
-    // Non-Windows case
+#elif defined __MACH__
+    remembered_time = mach_absolute_time();
+#elif defined CLOCK_REALTIME
 	clock_gettime(CLOCK_REALTIME, &remembered_spec);
 #endif
 }
 
 double getticktime() {
-#ifdef WIN32
-	// Windows case
-
+#if defined WIN32
     LARGE_INTEGER current_time;
-
     QueryPerformanceCounter(&current_time);
 
     // Time in milliseconds
     return (((double) (current_time.QuadPart - remembered_time.QuadPart)) * 1000000000) / frequency.QuadPart;
-#else
-    // Non-Windows case
+#elif defined __MACH__
+    uint64_t end = mach_absolute_time();
+    uint64_t elapsed = end - remembered_time;
+    
+    mach_timebase_info_data_t info;
+    if (mach_timebase_info(&info) != KERN_SUCCESS) {
+        return -1.0;
+    }
+    
+    return (double) elapsed * info.numer / info.denom;
+#elif defined CLOCK_REALTIME
 	struct timespec now;
 	double diff;
 	
@@ -78,5 +89,7 @@ double getticktime() {
 	diff += now.tv_nsec - remembered_spec.tv_nsec;
 
     return diff;
+#else
+    return -1.0;
 #endif
 }
