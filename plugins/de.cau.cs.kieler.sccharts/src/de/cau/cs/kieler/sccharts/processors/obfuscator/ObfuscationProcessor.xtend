@@ -12,19 +12,16 @@
  */
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.RegionIterator
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.iterators.ValuedObjectIterator
 import java.util.Iterator
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author stu114663
@@ -32,61 +29,8 @@ import org.eclipse.emf.ecore.EObject
  */
 class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
 
-    @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsCoreExtensions
-    
-    def static int getIteratorSize(Iterator iter) {
-        var int cnt = 0
-        while (iter.hasNext()) {
-            iter.next()
-            cnt += 1
-        }
-        return cnt
-    }
-    
-    def static int getValuedObjectsCount(Scope scp) {
-        return getIteratorSize(ValuedObjectIterator.sccValuedObjects(scp))
-    }
-    
-    def static int getStatesCount(Scope scp) {
-        return getIteratorSize(StateIterator.sccAllStates(scp))
-    }
-    
-    def static int getRegionsCount(Scope scp) {
-        return getIteratorSize(RegionIterator.sccAllRegions(scp))
-    }
-    
-    def static int getItemCount(SCCharts model) {
-        var itemCount = 0
-        for (rs : model.rootStates) {
-            itemCount += getValuedObjectsCount(rs) + getStatesCount(rs) + getRegionsCount(rs)
-        }
-        return itemCount
-    }
-    
-    def static int getValuedObjectsCount(SCCharts model) {
-        var itemCount = 0
-        for (rs : model.rootStates) {
-            itemCount += getValuedObjectsCount(rs)
-        }
-        return itemCount
-    }
-    
-    def static int getStatesCount(SCCharts model) {
-        var itemCount = 0
-        for (rs : model.rootStates) {
-            itemCount += getStatesCount(rs)
-        }
-        return itemCount
-    }
-    
-    def static int getRegionsCount(SCCharts model) {
-        var itemCount = 0
-        for (rs : model.rootStates) {
-            itemCount += getRegionsCount(rs)
-        }
-        return itemCount
-    }
+//    @Inject extension SCChartsStateExtensions
+//    @Inject extension SCChartsCoreExtensions
 
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.obfuscator"
@@ -98,8 +42,8 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
 
     override process() {
         val model = getModel;
-
-        val obf = getObfuscator(ObfuscatorTypes.COUNTING_TYPE, model)
+        
+        val obf = getObfuscator(ObfuscatorTypes.RANDOM, model)
 
         model.rootStates.forEach [ rs |
             obfuscateState(rs, obf)
@@ -159,5 +103,76 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
                 valO.name = obf.getValuedObjectName(valO)
             ]
         ]
+    }
+    
+    def static int getIteratorSizeVO(Iterator<ValuedObject> iter) {
+        var int cnt = 0
+        while (iter.hasNext()) {
+            iter.next()
+            cnt += 1
+        }
+        return cnt
+    }
+    
+    def static int getIteratorSizeS(Iterator<State> iter) {
+        var int cnt = 0
+        while (iter.hasNext()) {
+            iter.next()
+            cnt += 1
+        }
+        return cnt
+    }
+    
+    def static int getIteratorSizeR(Iterator<Region> iter) {
+        var int cnt = 0
+        while (iter.hasNext()) {
+            iter.next()
+            cnt += 1
+        }
+        return cnt
+    }
+    
+    def static int getValuedObjectsCount(Scope scp) {
+        return getIteratorSizeVO(ValuedObjectIterator.sccValuedObjects(scp))
+    }
+    
+    def static int getStatesCount(Scope scp) {
+        return getIteratorSizeS(StateIterator.sccAllStates(scp))
+    }
+    
+    def static int getRegionsCount(Scope scp) {
+        return getIteratorSizeR(RegionIterator.sccAllRegions(scp))
+    }
+    
+    def static int getItemCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getValuedObjectsCount(rs) + getStatesCount(rs) + getRegionsCount(rs)
+        }
+        return itemCount
+    }
+    
+    def static int getValuedObjectsCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getValuedObjectsCount(rs)
+        }
+        return itemCount
+    }
+    
+    def static int getStatesCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getStatesCount(rs)
+        }
+        return itemCount
+    }
+    
+    def static int getRegionsCount(SCCharts model) {
+        var itemCount = 0
+        for (rs : model.rootStates) {
+            itemCount += getRegionsCount(rs)
+        }
+        return itemCount
     }
 }
