@@ -157,24 +157,31 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
                     e.printStackTrace(logger)
                 }
                 
-                val imagePath = vizFolder.resolve(viz.image)
-                logger.println("Loading image: " + imagePath.toString)
-                var String svg;
-                try {
-                    svg = new String(Files.readAllBytes(imagePath), StandardCharsets.UTF_8);
-                    // Skipp everything until opening svg tag
-                    svg = svg.substring(svg.indexOf("<svg"))
-                } catch (Exception e) {
-                    environment.errors.add("Cannot load image file", e)
-                    logger.println("ERROR: Cannot load image file")
-                    e.printStackTrace(logger)
+                val svg = new StringBuffer
+                for (image : viz.images) {
+                    val imagePath = vizFolder.resolve(image)
+                    logger.println("Loading image: " + imagePath.toString)
+                    try {
+                        val imageSVG = new String(Files.readAllBytes(imagePath), StandardCharsets.UTF_8);
+                        // Skipp everything until opening svg tag
+                        if (imageSVG.contains("<svg")) {
+                            svg.append(imageSVG.substring(imageSVG.indexOf("<svg")))
+                        } else {
+                            svg.append(imageSVG)
+                            logger.println("Warning: Image is not an svg!")
+                        }
+                    } catch (Exception e) {
+                        environment.errors.add("Cannot load image file", e)
+                        logger.println("ERROR: Cannot load image file")
+                        e.printStackTrace(logger)
+                    }
                 }
                 
                 logger.println("Generating JS code")
                 val js = jsProcessor.translate(viz)
                 
                 logger.println("Generating HTML")
-                val composed = viz.compose(js, svg)
+                val composed = viz.compose(js, svg.toString)
                 val vizCC = new CodeContainer
                 val fileName = "visualization.html"
                 vizCC.add(fileName, composed)

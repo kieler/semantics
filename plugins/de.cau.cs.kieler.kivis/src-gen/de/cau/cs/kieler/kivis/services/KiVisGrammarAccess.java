@@ -31,8 +31,8 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
 		private final Keyword cImageKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cImageAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cImageSTRINGTerminalRuleCall_0_1_0 = (RuleCall)cImageAssignment_0_1.eContents().get(0);
+		private final Assignment cImagesAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cImagesSTRINGTerminalRuleCall_0_1_0 = (RuleCall)cImagesAssignment_0_1.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLoadKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cLoadsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -45,24 +45,24 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContentContentParserRuleCall_3_0 = (RuleCall)cContentAssignment_3.eContents().get(0);
 		
 		//Visualization:
-		//	('image' image=STRING) ('load' loads+=STRING)* ('init' init=SCRIPT)?
+		//	('image' images+=STRING)* ('load' loads+=STRING)* ('init' init=SCRIPT)?
 		//	content+=Content*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('image' image=STRING) ('load' loads+=STRING)* ('init' init=SCRIPT)? content+=Content*
+		//('image' images+=STRING)* ('load' loads+=STRING)* ('init' init=SCRIPT)? content+=Content*
 		public Group getGroup() { return cGroup; }
 		
-		//'image' image=STRING
+		//('image' images+=STRING)*
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'image'
 		public Keyword getImageKeyword_0_0() { return cImageKeyword_0_0; }
 		
-		//image=STRING
-		public Assignment getImageAssignment_0_1() { return cImageAssignment_0_1; }
+		//images+=STRING
+		public Assignment getImagesAssignment_0_1() { return cImagesAssignment_0_1; }
 		
 		//STRING
-		public RuleCall getImageSTRINGTerminalRuleCall_0_1_0() { return cImageSTRINGTerminalRuleCall_0_1_0; }
+		public RuleCall getImagesSTRINGTerminalRuleCall_0_1_0() { return cImagesSTRINGTerminalRuleCall_0_1_0; }
 		
 		//('load' loads+=STRING)*
 		public Group getGroup_1() { return cGroup_1; }
@@ -1047,7 +1047,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Visualization:
-	//	('image' image=STRING) ('load' loads+=STRING)* ('init' init=SCRIPT)?
+	//	('image' images+=STRING)* ('load' loads+=STRING)* ('init' init=SCRIPT)?
 	//	content+=Content*;
 	public VisualizationElements getVisualizationAccess() {
 		return pVisualization;

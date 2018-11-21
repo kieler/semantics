@@ -632,7 +632,7 @@ rule__Visualization__Group__0__Impl
 :
 (
 	{ before(grammarAccess.getVisualizationAccess().getGroup_0()); }
-	(rule__Visualization__Group_0__0)
+	(rule__Visualization__Group_0__0)*
 	{ after(grammarAccess.getVisualizationAccess().getGroup_0()); }
 )
 ;
@@ -765,9 +765,9 @@ rule__Visualization__Group_0__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVisualizationAccess().getImageAssignment_0_1()); }
-	(rule__Visualization__ImageAssignment_0_1)
-	{ after(grammarAccess.getVisualizationAccess().getImageAssignment_0_1()); }
+	{ before(grammarAccess.getVisualizationAccess().getImagesAssignment_0_1()); }
+	(rule__Visualization__ImagesAssignment_0_1)
+	{ after(grammarAccess.getVisualizationAccess().getImagesAssignment_0_1()); }
 )
 ;
 finally {
@@ -3772,15 +3772,15 @@ finally {
 }
 
 
-rule__Visualization__ImageAssignment_0_1
+rule__Visualization__ImagesAssignment_0_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getVisualizationAccess().getImageSTRINGTerminalRuleCall_0_1_0()); }
+		{ before(grammarAccess.getVisualizationAccess().getImagesSTRINGTerminalRuleCall_0_1_0()); }
 		RULE_STRING
-		{ after(grammarAccess.getVisualizationAccess().getImageSTRINGTerminalRuleCall_0_1_0()); }
+		{ after(grammarAccess.getVisualizationAccess().getImagesSTRINGTerminalRuleCall_0_1_0()); }
 	)
 ;
 finally {

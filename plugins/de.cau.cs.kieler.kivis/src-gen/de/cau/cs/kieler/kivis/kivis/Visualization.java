@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.Visualization#getImage <em>Image</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Visualization#getImages <em>Images</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Visualization#getLoads <em>Loads</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Visualization#getInit <em>Init</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Visualization#getContent <em>Content</em>}</li>
@@ -29,30 +29,20 @@ import org.eclipse.emf.ecore.EObject;
 public interface Visualization extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Image</b></em>' attribute.
+   * Returns the value of the '<em><b>Images</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Image</em>' attribute isn't clear,
+   * If the meaning of the '<em>Images</em>' attribute list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Image</em>' attribute.
-   * @see #setImage(String)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVisualization_Image()
-   * @model
+   * @return the value of the '<em>Images</em>' attribute list.
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVisualization_Images()
+   * @model unique="false"
    * @generated
    */
-  String getImage();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getImage <em>Image</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Image</em>' attribute.
-   * @see #getImage()
-   * @generated
-   */
-  void setImage(String value);
+  EList<String> getImages();
 
   /**
    * Returns the value of the '<em><b>Loads</b></em>' attribute list.

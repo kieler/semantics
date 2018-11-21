@@ -69,13 +69,13 @@ public interface KivisPackage extends EPackage
   int VISUALIZATION = 0;
 
   /**
-   * The feature id for the '<em><b>Image</b></em>' attribute.
+   * The feature id for the '<em><b>Images</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION__IMAGE = 0;
+  int VISUALIZATION__IMAGES = 0;
 
   /**
    * The feature id for the '<em><b>Loads</b></em>' attribute list.
@@ -465,15 +465,15 @@ public interface KivisPackage extends EPackage
   EClass getVisualization();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getImage <em>Image</em>}'.
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getImages <em>Images</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Image</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Visualization#getImage()
+   * @return the meta object for the attribute list '<em>Images</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization#getImages()
    * @see #getVisualization()
    * @generated
    */
-  EAttribute getVisualization_Image();
+  EAttribute getVisualization_Images();
 
   /**
    * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getLoads <em>Loads</em>}'.
@@ -788,12 +788,12 @@ public interface KivisPackage extends EPackage
     EClass VISUALIZATION = eINSTANCE.getVisualization();
 
     /**
-     * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Images</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VISUALIZATION__IMAGE = eINSTANCE.getVisualization_Image();
+    EAttribute VISUALIZATION__IMAGES = eINSTANCE.getVisualization_Images();
 
     /**
      * The meta object literal for the '<em><b>Loads</b></em>' attribute list feature.

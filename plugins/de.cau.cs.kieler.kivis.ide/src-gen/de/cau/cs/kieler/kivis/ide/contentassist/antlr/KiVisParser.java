@@ -75,7 +75,7 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyAccess().getGroup(), "rule__Key__Group__0");
 					put(grammarAccess.getKeyAccess().getGroup_0_1(), "rule__Key__Group_0_1__0");
 					put(grammarAccess.getKeyAccess().getGroup_1(), "rule__Key__Group_1__0");
-					put(grammarAccess.getVisualizationAccess().getImageAssignment_0_1(), "rule__Visualization__ImageAssignment_0_1");
+					put(grammarAccess.getVisualizationAccess().getImagesAssignment_0_1(), "rule__Visualization__ImagesAssignment_0_1");
 					put(grammarAccess.getVisualizationAccess().getLoadsAssignment_1_1(), "rule__Visualization__LoadsAssignment_1_1");
 					put(grammarAccess.getVisualizationAccess().getInitAssignment_2_1(), "rule__Visualization__InitAssignment_2_1");
 					put(grammarAccess.getVisualizationAccess().getContentAssignment_3(), "rule__Visualization__ContentAssignment_3");

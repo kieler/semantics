@@ -164,7 +164,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVisualization_Image()
+  public EAttribute getVisualization_Images()
   {
     return (EAttribute)visualizationEClass.getEStructuralFeatures().get(0);
   }
@@ -460,7 +460,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     // Create classes and their features
     visualizationEClass = createEClass(VISUALIZATION);
-    createEAttribute(visualizationEClass, VISUALIZATION__IMAGE);
+    createEAttribute(visualizationEClass, VISUALIZATION__IMAGES);
     createEAttribute(visualizationEClass, VISUALIZATION__LOADS);
     createEAttribute(visualizationEClass, VISUALIZATION__INIT);
     createEReference(visualizationEClass, VISUALIZATION__CONTENT);
@@ -533,7 +533,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(visualizationEClass, Visualization.class, "Visualization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVisualization_Image(), ecorePackage.getEString(), "image", null, 0, 1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVisualization_Images(), ecorePackage.getEString(), "images", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVisualization_Loads(), ecorePackage.getEString(), "loads", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVisualization_Init(), ecorePackage.getEString(), "init", null, 0, 1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVisualization_Content(), this.getContent(), null, "content", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

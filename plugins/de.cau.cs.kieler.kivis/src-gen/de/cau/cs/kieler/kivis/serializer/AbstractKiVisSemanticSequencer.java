@@ -243,7 +243,12 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 *     Visualization returns Visualization
 	 *
 	 * Constraint:
-	 *     (image=STRING loads+=STRING* init=SCRIPT? content+=Content*)
+	 *     (
+	 *         (images+=STRING* loads+=STRING+ init=SCRIPT content+=Content*) | 
+	 *         (images+=STRING* (init=SCRIPT | (init=SCRIPT content+=Content*))) | 
+	 *         init=SCRIPT | 
+	 *         (init=SCRIPT content+=Content*)
+	 *     )?
 	 */
 	protected void sequence_Visualization(ISerializationContext context, Visualization semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

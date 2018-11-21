@@ -14,7 +14,7 @@
       <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//SimulationCorntrol/PLAY"/>
     </genEnums>
     <genClasses ecoreClass="KiVis.ecore#//Visualization">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Visualization/image"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Visualization/images"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Visualization/loads"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Visualization/init"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Visualization/content"/>

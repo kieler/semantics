@@ -84,23 +84,23 @@ ruleVisualization returns [EObject current=null]
 			}
 			(
 				(
-					lv_image_1_0=RULE_STRING
+					lv_images_1_0=RULE_STRING
 					{
-						newLeafNode(lv_image_1_0, grammarAccess.getVisualizationAccess().getImageSTRINGTerminalRuleCall_0_1_0());
+						newLeafNode(lv_images_1_0, grammarAccess.getVisualizationAccess().getImagesSTRINGTerminalRuleCall_0_1_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getVisualizationRule());
 						}
-						setWithLastConsumed(
+						addWithLastConsumed(
 							$current,
-							"image",
-							lv_image_1_0,
+							"images",
+							lv_images_1_0,
 							"de.cau.cs.kieler.kivis.KiVis.STRING");
 					}
 				)
 			)
-		)
+		)*
 		(
 			otherlv_2='load'
 			{

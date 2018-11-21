@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl#getImage <em>Image</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl#getImages <em>Images</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl#getLoads <em>Loads</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl#getInit <em>Init</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl#getContent <em>Content</em>}</li>
@@ -43,24 +43,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class VisualizationImpl extends MinimalEObjectImpl.Container implements Visualization
 {
   /**
-   * The default value of the '{@link #getImage() <em>Image</em>}' attribute.
+   * The cached value of the '{@link #getImages() <em>Images</em>}' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getImage()
+   * @see #getImages()
    * @generated
    * @ordered
    */
-  protected static final String IMAGE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getImage() <em>Image</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getImage()
-   * @generated
-   * @ordered
-   */
-  protected String image = IMAGE_EDEFAULT;
+  protected EList<String> images;
 
   /**
    * The cached value of the '{@link #getLoads() <em>Loads</em>}' attribute list.
@@ -128,22 +118,13 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getImage()
+  public EList<String> getImages()
   {
-    return image;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setImage(String newImage)
-  {
-    String oldImage = image;
-    image = newImage;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.VISUALIZATION__IMAGE, oldImage, image));
+    if (images == null)
+    {
+      images = new EDataTypeEList<String>(String.class, this, KivisPackage.VISUALIZATION__IMAGES);
+    }
+    return images;
   }
 
   /**
@@ -223,8 +204,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
   {
     switch (featureID)
     {
-      case KivisPackage.VISUALIZATION__IMAGE:
-        return getImage();
+      case KivisPackage.VISUALIZATION__IMAGES:
+        return getImages();
       case KivisPackage.VISUALIZATION__LOADS:
         return getLoads();
       case KivisPackage.VISUALIZATION__INIT:
@@ -246,8 +227,9 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
   {
     switch (featureID)
     {
-      case KivisPackage.VISUALIZATION__IMAGE:
-        setImage((String)newValue);
+      case KivisPackage.VISUALIZATION__IMAGES:
+        getImages().clear();
+        getImages().addAll((Collection<? extends String>)newValue);
         return;
       case KivisPackage.VISUALIZATION__LOADS:
         getLoads().clear();
@@ -274,8 +256,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
   {
     switch (featureID)
     {
-      case KivisPackage.VISUALIZATION__IMAGE:
-        setImage(IMAGE_EDEFAULT);
+      case KivisPackage.VISUALIZATION__IMAGES:
+        getImages().clear();
         return;
       case KivisPackage.VISUALIZATION__LOADS:
         getLoads().clear();
@@ -300,8 +282,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
   {
     switch (featureID)
     {
-      case KivisPackage.VISUALIZATION__IMAGE:
-        return IMAGE_EDEFAULT == null ? image != null : !IMAGE_EDEFAULT.equals(image);
+      case KivisPackage.VISUALIZATION__IMAGES:
+        return images != null && !images.isEmpty();
       case KivisPackage.VISUALIZATION__LOADS:
         return loads != null && !loads.isEmpty();
       case KivisPackage.VISUALIZATION__INIT:
@@ -323,8 +305,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (image: ");
-    result.append(image);
+    result.append(" (images: ");
+    result.append(images);
     result.append(", loads: ");
     result.append(loads);
     result.append(", init: ");
