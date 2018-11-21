@@ -61,7 +61,8 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
         return modelData.modelProperties.contains("dataflow")
     }
     
-    @Test(timeout=10000)
+// TODO: reactivate    
+//    @Test(timeout=10000)
     def void testDataflowSynthesis(SCCharts scc, TestModelData modelData) {
 //        assumeFalse(true)
         
