@@ -18,13 +18,14 @@ import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
+import de.cau.cs.kieler.kicool.classes.GenericCompilationResult
 
 /**
  * @author ssm
  * @kieler.design 2018-11-19 proposed
  * @kieler.rating 2018-11-19 proposed yellow
  */
-class ArduinoCompiler extends AbstractSystemCompilerProcessor<Object, Boolean> {
+class ArduinoCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompilationResult> {
 
     public static val IProperty<String> ARDUINO_PATH = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.arduino.path", "arduino")
@@ -121,7 +122,7 @@ class ArduinoCompiler extends AbstractSystemCompilerProcessor<Object, Boolean> {
         }
         
         // Create model
-        model = new Boolean(success)
+        model = new GenericCompilationResult
         
         // report
         logger.closeLog("arduino-compiler-report.log").snapshot

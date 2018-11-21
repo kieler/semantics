@@ -368,6 +368,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainerSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainer">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.GenericCompilationResultSynthesis"
+            id="GenericCompilationResult">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">
