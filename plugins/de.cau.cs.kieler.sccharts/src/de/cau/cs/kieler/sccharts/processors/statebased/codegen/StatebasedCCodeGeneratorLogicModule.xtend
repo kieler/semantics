@@ -329,7 +329,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 "    ", regionName, "(&", CONTEXT_DATA_NAME, "->", contextName, ");", NL
             )
 
-            if (!isRootState) {
+            if (!isRootState && !leanMode) {
                 function.add(
                     "  ", CONTEXT_DATA_NAME, "->", "activePriority = ", CONTEXT_DATA_NAME, "->", contextName, ".activePriority;", NL, 
                     IFC(printDebug, "  printf(\"APRIO %d \", " + CONTEXT_DATA_NAME, "->activePriority); fflush(stdout);\n"),
@@ -501,7 +501,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                     transitionTrigger = transition.trigger.serializeHR as String
                 } 
             }
-            val trigger = if (!isImmediate) 
+            val trigger = if (!isImmediate && !transition.isTermination) 
                     (if (hasTrigger) 
                     CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED + " && (" + transitionTrigger + ")"
                     else CONTEXT_DATA_NAME + "->" + REGION_DELAYED_ENABLED) 
@@ -567,7 +567,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 scopeIndent, "  ", CONTEXT_DATA_NAME, "->", REGION_DELAYED_ENABLED, " = 0;", NL
             )                
 
-            if (!isSelfLoop) {
+            if (!isSelfLoop || transition.isTermination) {
                 function.add(
                     scopeIndent, "  ", CONTEXT_DATA_NAME, "->activeState = ", struct.getStateEnumName(transition.targetState), ";", NL
                 )

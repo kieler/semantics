@@ -11,8 +11,12 @@ de.cau.cs.kieler.kicool.deploy.setup config {
         "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
     }
 }
+pre process de.cau.cs.kieler.kicool.deploy.macroAnnotations
 pre process de.cau.cs.kieler.sccharts.arduino.template
 de.cau.cs.kieler.kicool.deploy.templates config {
+    "de.cau.cs.kieler.kicool.deploy.template.injection.includes" : [
+        "arduino-timing.ftl"
+    ],
     "de.cau.cs.kieler.kicool.deploy.templates": {
         "templates/arduino-main.ftl": "kieler-gen.ino"
     },

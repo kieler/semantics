@@ -3,7 +3,7 @@
 #include "${tickdata_file}"
 
 TickData ${tickdata_name};
-<@inject position="body" />
+<@inject position="globals" />
 
 void setup() {
     <@inject position="init" /><#nt>
@@ -18,5 +18,4 @@ void loop() {
     <@inject position="tickend" /><#nt>
     <@inject position="output" /><#nt>
     <@inject position="loopend" /><#nt>
-    delay(500);
 }

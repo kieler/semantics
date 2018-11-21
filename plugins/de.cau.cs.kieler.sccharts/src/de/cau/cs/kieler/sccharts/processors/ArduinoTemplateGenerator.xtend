@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations
 
 /**
  * @author ssm
@@ -37,6 +38,7 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
      
     public static val ANNOTATION_PINMODE_NAME = "pin"
     public static val ANNOTATION_PULLUP_NAME = "pullup"
+    public static val ANNOTATION_INVERT_NAME = "invert"
 
     public static val IProperty<String> STRUCT_ACCESS = 
         new Property<String>("de.cau.cs.kieler.c.struct.access", ".")
@@ -78,6 +80,7 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
         
         val inputPinVariables = <String, String> newHashMap
         val inputPinIsPullUp = <String, Boolean> newHashMap
+        val inputPinIsInverted = <String, Boolean> newHashMap
         val outputPinVariables = <String, String> newHashMap
         for (v : store.orderedVariableNames) {
             val vi = store.variables.get(v).head
@@ -85,17 +88,22 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
                 if (vi.annotations.exists[ name == ANNOTATION_PINMODE_NAME ]) {
                     inputPinVariables.put(v, vi.annotations.filter[ name == ANNOTATION_PINMODE_NAME ].filter(StringAnnotation).head.values.head )
                     inputPinIsPullUp.put(v, vi.annotations.exists[ name == ANNOTATION_PULLUP_NAME ])
+                    inputPinIsInverted.put(v, vi.annotations.exists[ name == ANNOTATION_INVERT_NAME ])
                 } else {
-                    environment.warnings.add("Variable " + v + " is an input, but has no pin associated with it.")
-                    logger.println("WARNING:Variable " + v + " is an input, but has no pin associated with it.")
+                    if (vi.annotations.forall[ name != MacroAnnotations.ANNOTATION_MACRO_NAME ]) {
+                        environment.warnings.add("Variable " + v + " is an input, but has no pin associated with it.")
+                        logger.println("WARNING:Variable " + v + " is an input, but has no pin associated with it.")
+                    }
                 }
             }
             if (vi.output) {
                 if (vi.annotations.exists[ name == ANNOTATION_PINMODE_NAME ]) {
                     outputPinVariables.put(v, vi.annotations.filter[ name == ANNOTATION_PINMODE_NAME ].filter(StringAnnotation).head.values.head )
                 } else {
-                    environment.warnings.add("Variable " + v + " is an output, but has no pin associated with it.")
-                    logger.println("WARNING:Variable " + v + " is an output, but has no pin associated with it.")
+                    if (vi.annotations.forall[ name != MacroAnnotations.ANNOTATION_MACRO_NAME ]) {
+                        environment.warnings.add("Variable " + v + " is an output, but has no pin associated with it.")
+                        logger.println("WARNING:Variable " + v + " is an output, but has no pin associated with it.")
+                    }
                 }
             } 
             if (vi.input || vi.output) {
@@ -120,7 +128,7 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
             
             <#macro pin_input position>
             «FOR v : inputPinVariables.keySet»
-            «store.parse(v, inputPinVariables.get(v))»
+            «store.parse(v, inputPinVariables.get(v), inputPinIsInverted.get(v))»
             «ENDFOR»
             </#macro>
             
@@ -159,7 +167,7 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
         val type = store.variables.get(varName).head.inferType
         val writeType = if (type == ValueType.INT) '''analogWrite''' else '''digitalWrite'''
         val info = store.variables.get(varName).head
-        val pinAnnotation = info.annotations.filter[ name == ANNOTATION_PINMODE_NAME].filter(StringAnnotation).head
+        val pinAnnotation = info.annotations.filter[ name == ANNOTATION_PINMODE_NAME ].filter(StringAnnotation).head
         
         val code = 
             '''
@@ -171,21 +179,21 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
         return code
     }
     
-    def parse(VariableStore store, String varName, String pin) {
+    def parse(VariableStore store, String varName, String pin, boolean invert) {
         if (store.variables.get(varName).head.array) {
-            return store.parseArray(varName, 0, store.variables.get(varName).head.dimensions.size, pin)
+            return store.parseArray(varName, 0, store.variables.get(varName).head.dimensions.size, pin, invert)
         } else {
             val type = store.variables.get(varName).head.inferType
             if (type == ValueType.INT)              
                 return '''${tickdata_name}«access»«varName» = analogRead(«pin»);'''
             if (type == ValueType.BOOL)
-                return '''${tickdata_name}«access»«varName» = digitalRead(«pin»);''' 
+                return '''${tickdata_name}«access»«varName» = «IF invert»!«ENDIF»digitalRead(«pin»);''' 
         }
     }
     
-    def String parseArray(VariableStore store, String varName, int idx, int dimensions, String pin) {
+    def String parseArray(VariableStore store, String varName, int idx, int dimensions, String pin, boolean invert) {
         val type = store.variables.get(varName).head.inferType
-        val readType = if (type == ValueType.INT) '''analogRead''' else '''digitalRead'''
+        val readType = if (type == ValueType.INT) '''analogRead''' else '''«IF invert»!«ENDIF»digitalRead'''
         val info = store.variables.get(varName).head
         val pinAnnotation = info.annotations.filter[ name == ANNOTATION_PINMODE_NAME].filter(StringAnnotation).head
         

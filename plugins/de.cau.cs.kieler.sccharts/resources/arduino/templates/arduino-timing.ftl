@@ -1,52 +1,71 @@
-<#-- Clock -->
-<#-- As input variable, sets a boolean variable to true after the given time (in milliseconds) has passed.
-
-     Note that the ResetClock macro directly depends on this implementation. 
+<#-- Delay -->
+<#-- The integer value in the output variable delays the execution by the variable value in milliseconds.
 
      Example for SCCharts:
-         @Wrapper Clock, "1000"
-         input bool clock; -->
-<#macro Clock millis>
-    <@decl>
-        unsigned long ${varname}Counter;
-    </@>
-    <@init>
-        ${varname}Counter = millis();
-    </@>
-    <@input>
-        // Clock
-        tickData.${varname} = false;
-        if((millis() - ${varname}Counter) > ${millis}){
-            ${varname}Counter= millis();
-            tickData.${varname} = true;
-        }
-    </@>
+         output int
+         @macro "Delay" delayTime = 500; 
+
+-->
+         
+<#macro Delay position>
+<#if position=="output">
+<#list parameters["Delay"] as parameters>
+if(${tickdata_name}${parameters.varName} > 0) {
+    delay(${tickdata_name}${parameters.varName});
+}
+</#list>
+</#if>
 </#macro>
+
+
+<#-- Clock -->
+<#-- Sets a boolean input variable to true after the given time (in milliseconds) has passed.
+
+     Example for SCCharts:
+         input bool 
+         @macro "Clock", "1000" second; 
+        
+-->
+
+<#macro Clock position>
+<#if position=="globals">
+<#list parameters["Clock"] as parameters>
+unsigned long clock_${parameters.voName};
+</#list>
+</#if>
+
+<#if position=="init">
+<#list parameters["Clock"] as parameters>
+clock_${parameters.voName} = millis();
+</#list>
+</#if>
+
+<#if position=="input">
+<#list parameters["Clock"] as parameters>
+// Clock
+${tickdata_name}${parameters.varName} = false;
+if((millis() - clock_${parameters.voName}) > ${parameters.parameter1}){
+    clock_${parameters.voName} = millis();
+    ${tickdata_name}${parameters.varName} = true;
+}
+</#list>
+</#if>
+</#macro>
+
+
 
 <#-- Time -->
-<#-- As input variable, contains the elapsed time since program start in milliseconds.
+<#-- The input variable contains the elapsed time since program start in milliseconds.
 
     Example:
-    @Wrapper Time
-    input unsigned time; -->
-<#macro Time>
-    <@input>
-        // Time
-        tickData.${varname} = millis();
-    </@>
+    input int 
+    @macro "Time" time; -->
+    
+<#macro Time position>
+<#if position=="input">
+<#list parameters["Clock"] as parameters>
+// Time
+${tickdata_name}${parameter.varName} = millis();
+</#list>
+</#if>
 </#macro>
-
-<#-- Delay -->
-<#-- As output variable, delays the execution by the variable value in milliseconds.
-
-     Example for SCCharts:
-         @Wrapper Delay
-         output unsigned delayTime = 500; -->
-<#macro Delay>
-    <@output>
-        if(tickData.${varname} > 0) {
-            delay(tickData.${varname});
-        }
-    </@>
-</#macro>
-
