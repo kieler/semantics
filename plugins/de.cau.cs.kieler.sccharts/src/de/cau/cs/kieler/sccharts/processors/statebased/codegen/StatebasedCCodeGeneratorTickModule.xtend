@@ -10,12 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.codegen.statebased
+package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
@@ -116,7 +116,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     }
     
     override generate() {
-        generateInitSetInputs(serializer)
+//        generateInitSetInputs(serializer)
         
         for (cfr : rootState.regions.filter(ControlflowRegion).indexed) {
             val cfrName = struct.getContextVariableName(cfr.value)
@@ -126,16 +126,9 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
             prefix += "."
                         
             setTickStart(prefix, cfr.value)
-            
-//            code.add(
-//                "  if (", CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, " > ",
-//                        CONTEXT_DATA_NAME, "->activePriority", ")", NL, 
-//                "    ", CONTEXT_DATA_NAME, "->activePriority = ", 
-//                            CONTEXT_DATA_NAME, "->", cfrName, ".", REGION_ACTIVE_PRIORITY, ";", NL
-//            )
         }        
 
-        code.add(NL, "  do {", NL)
+        code.add(IFC(!leanMode, NL, "  do {", NL))
 
         code.add(
             indentation, "  ", struct.getStateNameRunning(rootState), "(", struct.getVariableName, ");", NL
@@ -152,49 +145,28 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
                 conditionalBuilder.add(" || ", NL, "    ")
         }
             
-        code.add("  } while (" + conditionalBuilder + ");", NL, NL);
+        code.add(IFC(!leanMode, "  } while (" + conditionalBuilder + ");", NL, NL));
 
-        generateInitSetOutputs(serializer)
-
+//        generateInitSetOutputs(serializer)
     }
     
     protected def void setTickStart(String prefix, ControlflowRegion cfr) {
         var ctxName = struct.getContextVariableName(cfr);
         
-//        val conditionalBuilder = new StringBuilder
         val regionCount = rootState.regions.filter(ControlflowRegion).size
 
         val hierarchicalStates = cfr.states.filter[ isHierarchical ].toList
-//        if (hierarchicalStates.size > 0) {
-//            code.add(
-//                "  ", "newPriority = ", prefix, REGION_ACTIVE_PRIORITY, ";", NL
-//            )
-//        }
         for (cfr2 : hierarchicalStates.map[ regions ].flatten.filter(ControlflowRegion)) {
             var prefix2 = prefix
             prefix2 += struct.getContextVariableName(cfr2) 
             prefix2 += "."
             setTickStart(prefix2, cfr2)
             
-            
-//            conditionalBuilder.add(
-//                "    ", "if ((", prefix, struct.getContextVariableName(cfr2), ".activePriority > ",
-//                  prefix, REGION_ACTIVE_PRIORITY, ") &&", NL,
-//                "      (", prefix, struct.getContextVariableName(cfr2), ".", REGION_THREADSTATUS, " == ", THREAD_STATUS_WAITING, "))", NL,   
-//                
-//                "      ", prefix, REGION_ACTIVE_PRIORITY, " = ", prefix, struct.getContextVariableName(cfr2), ".activePriority;", NL 
-//            )
         }
-        
       
-//        val conditional = conditionalBuilder.toString
-        
-        
         code.add(
           "  ", "if (", prefix, REGION_THREADSTATUS, " == ",THREAD_STATUS_PAUSING, ") {", NL,
           "    ", prefix, REGION_THREADSTATUS, " = ", THREAD_STATUS_WAITING, ";", NL,
-//          IFC(hierarchicalStates.size > 0, "    ", prefix, REGION_ACTIVE_PRIORITY, " = 0;"), NL,
-//          IFC(!conditional.nullOrEmpty, conditional), 
           IFC(printDebug, "    printf(\"APRIO " + ctxName +" %d \", " + prefix, "activePriority); fflush(stdout);\n"),
           "    ", prefix, REGION_DELAYED_ENABLED, " = 1;", NL,
           "  ",  "}", NL            

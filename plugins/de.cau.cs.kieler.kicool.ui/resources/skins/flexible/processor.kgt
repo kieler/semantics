@@ -1,0 +1,63 @@
+knode processor {
+    properties:
+      de.cau.cs.kieler.klighd.minimalNodeSize = "(60.0,16.5)"
+    	org.eclipse.elk.padding = "[top=0.0,left=0.0,bottom=0.0,right=0.0]"
+        
+        krectangle {
+            styles: lineStyle = solid
+            foreground = 100r
+            invisible = true            
+        }           
+        
+    knode processorbody {
+        properties:
+        		de.cau.cs.kieler.klighd.minimalNodeSize = "(60.0,16.5)"
+            org.eclipse.elk.padding = "[top=2.0,left=2.0,bottom=2.0,right=2.0]"
+            org.eclipse.elk.spacing.componentComponent = 0
+        
+        kroundedRectangle (2.5,2.5) {
+            styles: lineStyle = solid
+            foreground = 190r, 190g, 190b 
+            background = 248r, 249g, 253b, 255a -> 205r, 220g, 222b, 243a (90)
+        }   
+            
+        knode name {
+            pos: x = 2 y = 1
+            properties:
+                de.cau.cs.kieler.klighd.minimalNodeSize = "(50.0,8.0)"
+                de.cau.cs.kieler.nodeLabelPlacement = H_LEFT
+                de.cau.cs.kieler.klighd.suppressSelectability = true
+					    	org.eclipse.elk.padding = "[top=0.0,left=0.0,bottom=0.0,right=0.0]"
+					    	org.eclipse.elk.priority = 5
+            
+            krectangle {
+                styles: invisible = true
+            }
+            
+            klabel "Trigger/Effect"  
+            {
+                ktext {
+                styles:
+                    fontName = "Arial"
+                    fontSize = 5pt
+                    }               
+            }
+        }
+        
+        knode intermediate {
+            pos: x = 2 y = 9.5 
+            properties:
+							de.cau.cs.kieler.klighd.minimalNodeSize = "(56.0,5.0)"
+				    	org.eclipse.elk.padding = "[top=0.0,left=0.0,bottom=0.0,right=0.0]"
+            kroundedRectangle (0,0) {
+	            styles: 
+	            	lineStyle = solid
+	            	lineWidth = 0.33
+	            foreground = 190r, 190g, 190b 
+	            background = 205r, 220g, 222b, 243a -> 224r, 225g, 234b, 255a (90)
+        	}  
+            
+        }       
+        
+    }
+}

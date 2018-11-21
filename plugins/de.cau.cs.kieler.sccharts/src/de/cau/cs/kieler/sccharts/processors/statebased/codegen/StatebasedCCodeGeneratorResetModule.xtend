@@ -10,12 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.codegen.statebased
+package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import static extension de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGeneratorStructModule.*
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
 import de.cau.cs.kieler.sccharts.State
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -82,7 +82,7 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     }
     
     override generateDone() {
-        code.add("  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", maxRootstatePriority, ";", NL)
+        code.add(IFC(!leanMode, "  ", CONTEXT_DATA_NAME, "->", REGION_ACTIVE_PRIORITY, " = ", maxRootstatePriority, ";", NL))
         code.add("  ", STRUCT_CONTEXT_NAME, "->", REGION_THREADSTATUS, " = ", THREAD_STATUS_RUNNING, ";", NL)
         code.add(
             "}", NL

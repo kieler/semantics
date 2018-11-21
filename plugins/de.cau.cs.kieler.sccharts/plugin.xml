@@ -166,7 +166,7 @@
               class="de.cau.cs.kieler.sccharts.processors.statebased.SuperfluousSuperstateRemover">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGenerator">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGenerator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.ToHybridDataflow">
@@ -182,6 +182,9 @@
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
         </Processor>
      </extension>
      <extension
@@ -212,6 +215,12 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.statebased.woComments.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.csv.kico">
         </TransformationSystem>
      </extension>
 
