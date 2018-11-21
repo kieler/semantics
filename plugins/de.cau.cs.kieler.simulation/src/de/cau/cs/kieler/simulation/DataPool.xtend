@@ -93,7 +93,6 @@ class DataPool implements IKiCoolCloneable {
         merge(output)
     }
     
-    
     def JsonObject getInput(Simulatable sim) {
         val input = new JsonObject
         val infos = entries
@@ -167,6 +166,24 @@ class DataPool implements IKiCoolCloneable {
                 entryCache.put(key, new DataPoolEntry(this, key, entry.value, obj))
             }
         }
+    }
+    
+    /**
+     * Creates a map that contains all entries in the given pool object that differ from this pool.
+     * <br>elements in the given object will not be cloned.
+     */
+    def createPatch(JsonObject content) {
+        val diff = <String, JsonElement>newHashMap
+        for (entry : content.entrySet) {
+            if (pool.has(entry.key)) {
+                if (!pool.get(entry.key).equals(entry.value)) {
+                    diff.put(entry.key, entry.value)
+                }
+            } else {
+                diff.put(entry.key, entry.value)
+            }
+        }
+        return diff
     }
     
     // -- Cloneable --

@@ -3,9 +3,15 @@
  */
 package de.cau.cs.kieler.kivis
 
+import de.cau.cs.kieler.kivis.serializer.KiVisValueConverter
+import org.eclipse.xtext.conversion.IValueConverterService
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 class KiVisRuntimeModule extends AbstractKiVisRuntimeModule {
+    
+    override Class<? extends IValueConverterService> bindIValueConverterService() {
+        return KiVisValueConverter
+    }
 }

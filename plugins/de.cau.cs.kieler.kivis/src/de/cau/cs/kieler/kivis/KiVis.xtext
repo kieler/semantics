@@ -1,124 +1,144 @@
-grammar de.cau.cs.kieler.kivis.KiVis with de.cau.cs.kieler.prom.KiBuild
+grammar de.cau.cs.kieler.kivis.KiVis with org.eclipse.xtext.common.Terminals
 
 generate kivis "http://www.cau.de/cs/kieler/kivis/KiVis"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
-import "http://www.cau.de/cs/kieler/prom/KiBuild" as kibuild 
 
-VisualizationConfiguration:
-	('image' ':' image=STRING)?
-	(elements += Element | interactions += Interaction)*
+Visualization:
+	('image' image = STRING)
+	('load' loads += STRING)*
+	('init' init = SCRIPT)?
+	(content += Content)*
 ;
 
-Element:
-	'animate' name=ID '{'
-        (animations+=Animation)+
-	'}'
+Content:
+    Binding | Handler | Action | Code
 ;
 
-Interaction:
-    {Interaction}
-    'perform' (('on' event=Event)? | (afterTick ?= ('after tick')|(beforeTick ?= 'before tick'))?)'{'
-        (actions+=Action)*
-    '}' ('if' condition=AndExpression)?
+Binding: 
+    'bind' variable=Key
+    (
+        'to' domElement=STRING
+        'with' interface=BindingInterface1 script=SCRIPT
+    |
+        'with' interface=BindingInterface2 script=SCRIPT
+    )
 ;
 
-Event:
-    event=DOMEvent 'from' element=ID
+Handler: 
+    'handle' variable=Key
+    (
+        'in' domElement=STRING
+        'with' interface=HandlerInterface1 script=SCRIPT
+    |
+        'with' interface=HandlerInterface2 script=SCRIPT
+    )
 ;
 
-Action returns Action:
-    VariableAssignment | SimulationAction
+Action:
+    'event' domEvent=STRING
+    'on' domElement=STRING
+    ('do' 
+        (
+            deferred?='deferred' interface=ActionInterface1 script=SCRIPT
+        |
+            interface=ActionInterface2 script=SCRIPT
+        )
+    )?
+    ('set' variable=Key)?
+    ('simulation' control=SimulationCorntrol)?
 ;
 
-VariableAssignment returns Action:
-    variable=VariableReference '=' (value=Literal | function=Function)
+Code:
+    'script' interface=CodeInterface script=SCRIPT
 ;
 
-SimulationAction returns Action:
-    operation=SimulationOperation 'simulation'
+
+BindingInterface1 returns Interface:
+    {Interface}
+    '('
+    element = ID
+    (
+        ',' variable = ID
+    |
+        ',' variable = ID
+        ',' pool = ID
+    )?
+    ')' '=>'?
 ;
 
-Function returns Function:
-    functionName=ID
-    (('(' parameters += FunctionParameter 
-          (',' parameters += FunctionParameter)* ')')
-    | '()')
+BindingInterface2 returns Interface:
+    {Interface}
+    '('
+    (
+    variable = ID
+    (',' pool = ID)?
+    )?
+    ')' '=>'?
 ;
 
-Animation:
-    'apply' type=ID ('using' variable=VariableReference)? '{'
-        (attributeMappings+=AttributeMapping)*
-    '}' ('if' condition=AndExpression)?
+HandlerInterface1 returns Interface:
+    {Interface}
+    '('
+    element = ID
+    ',' variable = ID
+    (',' pool = ID)?
+    ')' '=>'?
 ;
 
-AttributeMapping:
-    attribute=ID ':' (currentValue ?= 'value' | literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
+HandlerInterface2 returns Interface:
+    {Interface}
+    '('
+    variable = ID
+    (',' pool = ID)?
+    ')' '=>'?
 ;
 
-Mapping:
-    variableDomain = VariableDomain 'is' attributeDomain = AttributeDomain
+ActionInterface1 returns Interface:
+    {Interface}
+    (
+    '('
+    (pool = ID)?
+    ')' '=>'?
+    )?
 ;
 
-AndExpression returns Condition:
-    Comparison 
-    (({AndExpression.left=current} operator="&&") right=Comparison)*
+
+ActionInterface2 returns Interface:
+    {Interface}
+    (
+    '('
+    ')' '=>'?
+    )?
 ;
 
-Comparison:
-    left=VariableReference
-    relation=CompareOperator
-    (right=Literal | right=VariableReference)
+CodeInterface returns Interface:
+    {Interface}
+    (
+    '('
+    (pool = ID)?
+    ')' '=>'?
+    )?
 ;
 
-VariableDomain returns Domain:
-    otherValues ?= 'others'
-    | value = Literal
-    | range = Interval
+// Json object member key
+Key returns ecore::EString:
+    ( ID | '#' ID) (('.'|'-')? ID)*
 ;
 
-Interval:
-    (from=SignedInt | from=SignedFloat)
-    Range
-    (to=SignedInt | to=SignedFloat)
+enum SimulationCorntrol:
+    NONE='nothing' | STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
 ;
 
-AttributeDomain returns Domain:
-    currentValue ?= 'value'
-    | value = Literal
-    | range = Interval
-;
+terminal BOOL returns ecore::EBooleanObject :
+    'true' | 'false';
 
-VariableReference:
-    (model=ModelReference)?
-    name=ID
-    (arrayIndex = ArrayIndex)?
-;
-
-ModelReference:
-    name=ID '.'
-;
-
-FunctionParameter:
-    variableReference = VariableReference
-    | value = Literal
-;
-
-enum DOMEvent:
-    CLICK='click'
-    | MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
-    | MOUSEMOVE='mousemove'
-    // The following events do not work very well (or not at all) with the JSVGCanvas
-//    | DOUBLECLICK='dblclick'
-//    | MOUSEOVER='mouseover' | MOUSEOUT='mouseout'
-//    | MOUSEENTER='mouseenter' | MOUSELEAVE='mouseleave'
-;
-
-enum SimulationOperation:
-    STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
-;
-
-Range:
-    '-' // Alternative would be '..' but this creates problems with floating point numbers
-;
+terminal fragment ESCAPED_CHAR:
+    '\\' ('n'|'t'|'r'|'\\');
+    
+terminal SCRIPT returns ecore::EString:
+    "'" ( ESCAPED_CHAR | !('\\'|"'") )* "'";
+    
+@Override 
+terminal STRING returns ecore::EString:
+    '"' ( ESCAPED_CHAR | !('\\'|'"') )* '"';
