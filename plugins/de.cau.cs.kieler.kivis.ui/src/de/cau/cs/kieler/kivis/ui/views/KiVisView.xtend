@@ -253,7 +253,6 @@ class KiVisView extends ViewPart implements SimulationListener {
             try {
                 val json = DataPool.serializeJSON(context.dataPool.rawData)
                 val resultJson = browser.evaluate("return " + KiVisConstants.VISUALIZATION_FUNCTION + "(" + json + ");", true);
-                println("out:" + resultJson)
                 if (resultJson instanceof String) {
                     val patch = context.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
                     synchronized (patch) {
