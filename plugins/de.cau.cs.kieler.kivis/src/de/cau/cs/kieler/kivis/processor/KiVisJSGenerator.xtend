@@ -106,15 +106,23 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
     
     def dispatch translateContent(Handler handler) {
         if (!handler.domElement.nullOrEmpty) {
-            return '''
-                var _elems = document.querySelectorAll('«handler.domElement»');
-                var _i;
-                for (_i = 0; _i < _elems.length; _i++) {
+            if (handler.multimatch) {
+                return '''
+                    var _elems = document.querySelectorAll('«handler.domElement»');
+                    var _i;
+                    for (_i = 0; _i < _elems.length; _i++) {
+                        (function(«handler.interface.createParameters(INTERFACE__ELEMENT, INTERFACE__VARIABLE, INTERFACE__POOL)») {
+                            «handler.script»
+                        })(_elems[_i], _dataPool«handler.variable.varAccessor», _dataPool);
+                    }
+                '''
+            } else {
+                return '''
                     (function(«handler.interface.createParameters(INTERFACE__ELEMENT, INTERFACE__VARIABLE, INTERFACE__POOL)») {
                         «handler.script»
-                    })(_elems[_i], _dataPool«handler.variable.varAccessor», _dataPool);
-                }
-            '''
+                    })(document.querySelectorAll('«handler.domElement»')[0], _dataPool«handler.variable.varAccessor», _dataPool);
+                '''
+            }
         } else {
             return '''
                 (function(«handler.interface.createParameters(INTERFACE__VARIABLE, INTERFACE__POOL)») {
@@ -125,33 +133,23 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
     }
     
     def dispatch translateContent(Action action) {
-        return '''
-            (function(){ // Register event listener
-                var _elems = document.querySelectorAll('«action.domElement»');
-                var _i;
-                for (_i = 0; _i < _elems.length; _i++) {
-                    _elems[_i].addEventListener("«action.domEvent»", function() {
-                        «IF action.deferred»
-                            _kivis_deferred_actions.push(
-                                function(«action.interface.createParameters(INTERFACE__POOL)») {
-                                    «action.script»
-                                }
-                            );
-                        «ELSE»
-                            (function() {
-                                «action.script»
-                            })();
-                        «ENDIF»
-                        «IF !action.variable.nullOrEmpty»
-                            «ACTION_INDICATOR_CALLBACK»("«action.variable»");
-                        «ENDIF»
-                        «IF action.control !== null && action.control !== SimulationCorntrol.NONE»
-                            «SIMULATION_CONTROL_CALLBACK»("«action.control.literal»");
-                        «ENDIF»
-                    });
-                }
-            })();
-        '''
+        if (action.multimatch) {
+            return '''
+                (function(){ // Register event listener
+                    var _elems = document.querySelectorAll('«action.domElement»');
+                    var _i;
+                    for (_i = 0; _i < _elems.length; _i++) {
+                        _elems[_i].addEventListener("«action.domEvent»", «action.eventHandler»);
+                    }
+                })();
+            '''
+        } else {
+            return '''
+                (function(){ // Register event listener
+                    document.querySelectorAll('«action.domElement»')[0].addEventListener("«action.domEvent»", «action.eventHandler»);
+                })();
+            '''
+        }
     }
     
     def dispatch translateContent(Code code) {
@@ -159,6 +157,32 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
             (function(«code.interface.createParameters(INTERFACE__POOL)») {
                 «code.script»
             })(_dataPool);
+        '''
+    }
+    
+    def eventHandler(Action action) {
+        return '''
+            function() {
+                «IF !action.script.nullOrEmpty»
+                    «IF action.deferred»
+                        _kivis_deferred_actions.push(
+                            function(«action.interface.createParameters(INTERFACE__POOL)») {
+                                «action.script»
+                            }
+                        );
+                    «ELSE»
+                        (function() {
+                            «action.script»
+                        })();
+                    «ENDIF»
+                «ENDIF»
+                «IF !action.variable.nullOrEmpty»
+                    «ACTION_INDICATOR_CALLBACK»("«action.variable»");
+                «ENDIF»
+                «IF action.control !== null && action.control !== SimulationCorntrol.NONE»
+                    «SIMULATION_CONTROL_CALLBACK»("«action.control.literal»");
+                «ENDIF»
+            }
         '''
     }
     

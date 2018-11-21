@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kivis.kivis;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDomEvent <em>Dom Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDomElement <em>Dom Element</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#isDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}</li>
@@ -51,6 +52,32 @@ public interface Action extends Content
    * @generated
    */
   void setDomEvent(String value);
+
+  /**
+   * Returns the value of the '<em><b>Multimatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Multimatch</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Multimatch</em>' attribute.
+   * @see #setMultimatch(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Multimatch()
+   * @model
+   * @generated
+   */
+  boolean isMultimatch();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Multimatch</em>' attribute.
+   * @see #isMultimatch()
+   * @generated
+   */
+  void setMultimatch(boolean value);
 
   /**
    * Returns the value of the '<em><b>Dom Element</b></em>' attribute.

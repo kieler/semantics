@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl#isMultimatch <em>Multimatch</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl#getDomElement <em>Dom Element</em>}</li>
  * </ul>
  *
@@ -47,6 +48,26 @@ public class HandlerImpl extends ContentImpl implements Handler
    * @ordered
    */
   protected String variable = VARIABLE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isMultimatch() <em>Multimatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultimatch()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MULTIMATCH_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isMultimatch() <em>Multimatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultimatch()
+   * @generated
+   * @ordered
+   */
+  protected boolean multimatch = MULTIMATCH_EDEFAULT;
 
   /**
    * The default value of the '{@link #getDomElement() <em>Dom Element</em>}' attribute.
@@ -117,6 +138,29 @@ public class HandlerImpl extends ContentImpl implements Handler
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isMultimatch()
+  {
+    return multimatch;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMultimatch(boolean newMultimatch)
+  {
+    boolean oldMultimatch = multimatch;
+    multimatch = newMultimatch;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.HANDLER__MULTIMATCH, oldMultimatch, multimatch));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getDomElement()
   {
     return domElement;
@@ -147,6 +191,8 @@ public class HandlerImpl extends ContentImpl implements Handler
     {
       case KivisPackage.HANDLER__VARIABLE:
         return getVariable();
+      case KivisPackage.HANDLER__MULTIMATCH:
+        return isMultimatch();
       case KivisPackage.HANDLER__DOM_ELEMENT:
         return getDomElement();
     }
@@ -165,6 +211,9 @@ public class HandlerImpl extends ContentImpl implements Handler
     {
       case KivisPackage.HANDLER__VARIABLE:
         setVariable((String)newValue);
+        return;
+      case KivisPackage.HANDLER__MULTIMATCH:
+        setMultimatch((Boolean)newValue);
         return;
       case KivisPackage.HANDLER__DOM_ELEMENT:
         setDomElement((String)newValue);
@@ -186,6 +235,9 @@ public class HandlerImpl extends ContentImpl implements Handler
       case KivisPackage.HANDLER__VARIABLE:
         setVariable(VARIABLE_EDEFAULT);
         return;
+      case KivisPackage.HANDLER__MULTIMATCH:
+        setMultimatch(MULTIMATCH_EDEFAULT);
+        return;
       case KivisPackage.HANDLER__DOM_ELEMENT:
         setDomElement(DOM_ELEMENT_EDEFAULT);
         return;
@@ -205,6 +257,8 @@ public class HandlerImpl extends ContentImpl implements Handler
     {
       case KivisPackage.HANDLER__VARIABLE:
         return VARIABLE_EDEFAULT == null ? variable != null : !VARIABLE_EDEFAULT.equals(variable);
+      case KivisPackage.HANDLER__MULTIMATCH:
+        return multimatch != MULTIMATCH_EDEFAULT;
       case KivisPackage.HANDLER__DOM_ELEMENT:
         return DOM_ELEMENT_EDEFAULT == null ? domElement != null : !DOM_ELEMENT_EDEFAULT.equals(domElement);
     }
@@ -224,6 +278,8 @@ public class HandlerImpl extends ContentImpl implements Handler
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (variable: ");
     result.append(variable);
+    result.append(", multimatch: ");
+    result.append(multimatch);
     result.append(", domElement: ");
     result.append(domElement);
     result.append(')');

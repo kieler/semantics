@@ -425,9 +425,23 @@ ruleHandler returns [EObject current=null]
 				}
 				(
 					(
-						lv_domElement_3_0=RULE_STRING
+						lv_multimatch_3_0='all'
 						{
-							newLeafNode(lv_domElement_3_0, grammarAccess.getHandlerAccess().getDomElementSTRINGTerminalRuleCall_2_0_1_0());
+							newLeafNode(lv_multimatch_3_0, grammarAccess.getHandlerAccess().getMultimatchAllKeyword_2_0_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getHandlerRule());
+							}
+							setWithLastConsumed($current, "multimatch", true, "all");
+						}
+					)
+				)?
+				(
+					(
+						lv_domElement_4_0=RULE_STRING
+						{
+							newLeafNode(lv_domElement_4_0, grammarAccess.getHandlerAccess().getDomElementSTRINGTerminalRuleCall_2_0_2_0());
 						}
 						{
 							if ($current==null) {
@@ -436,21 +450,21 @@ ruleHandler returns [EObject current=null]
 							setWithLastConsumed(
 								$current,
 								"domElement",
-								lv_domElement_3_0,
+								lv_domElement_4_0,
 								"de.cau.cs.kieler.kivis.KiVis.STRING");
 						}
 					)
 				)
-				otherlv_4='with'
+				otherlv_5='with'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getHandlerAccess().getWithKeyword_2_0_2());
+					newLeafNode(otherlv_5, grammarAccess.getHandlerAccess().getWithKeyword_2_0_3());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getHandlerAccess().getInterfaceHandlerInterface1ParserRuleCall_2_0_3_0());
+							newCompositeNode(grammarAccess.getHandlerAccess().getInterfaceHandlerInterface1ParserRuleCall_2_0_4_0());
 						}
-						lv_interface_5_0=ruleHandlerInterface1
+						lv_interface_6_0=ruleHandlerInterface1
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getHandlerRule());
@@ -458,7 +472,7 @@ ruleHandler returns [EObject current=null]
 							set(
 								$current,
 								"interface",
-								lv_interface_5_0,
+								lv_interface_6_0,
 								"de.cau.cs.kieler.kivis.KiVis.HandlerInterface1");
 							afterParserOrEnumRuleCall();
 						}
@@ -466,9 +480,9 @@ ruleHandler returns [EObject current=null]
 				)
 				(
 					(
-						lv_script_6_0=RULE_SCRIPT
+						lv_script_7_0=RULE_SCRIPT
 						{
-							newLeafNode(lv_script_6_0, grammarAccess.getHandlerAccess().getScriptSCRIPTTerminalRuleCall_2_0_4_0());
+							newLeafNode(lv_script_7_0, grammarAccess.getHandlerAccess().getScriptSCRIPTTerminalRuleCall_2_0_5_0());
 						}
 						{
 							if ($current==null) {
@@ -477,7 +491,7 @@ ruleHandler returns [EObject current=null]
 							setWithLastConsumed(
 								$current,
 								"script",
-								lv_script_6_0,
+								lv_script_7_0,
 								"de.cau.cs.kieler.kivis.KiVis.SCRIPT");
 						}
 					)
@@ -485,16 +499,16 @@ ruleHandler returns [EObject current=null]
 			)
 			    |
 			(
-				otherlv_7='with'
+				otherlv_8='with'
 				{
-					newLeafNode(otherlv_7, grammarAccess.getHandlerAccess().getWithKeyword_2_1_0());
+					newLeafNode(otherlv_8, grammarAccess.getHandlerAccess().getWithKeyword_2_1_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getHandlerAccess().getInterfaceHandlerInterface2ParserRuleCall_2_1_1_0());
 						}
-						lv_interface_8_0=ruleHandlerInterface2
+						lv_interface_9_0=ruleHandlerInterface2
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getHandlerRule());
@@ -502,7 +516,7 @@ ruleHandler returns [EObject current=null]
 							set(
 								$current,
 								"interface",
-								lv_interface_8_0,
+								lv_interface_9_0,
 								"de.cau.cs.kieler.kivis.KiVis.HandlerInterface2");
 							afterParserOrEnumRuleCall();
 						}
@@ -510,9 +524,9 @@ ruleHandler returns [EObject current=null]
 				)
 				(
 					(
-						lv_script_9_0=RULE_SCRIPT
+						lv_script_10_0=RULE_SCRIPT
 						{
-							newLeafNode(lv_script_9_0, grammarAccess.getHandlerAccess().getScriptSCRIPTTerminalRuleCall_2_1_2_0());
+							newLeafNode(lv_script_10_0, grammarAccess.getHandlerAccess().getScriptSCRIPTTerminalRuleCall_2_1_2_0());
 						}
 						{
 							if ($current==null) {
@@ -521,7 +535,7 @@ ruleHandler returns [EObject current=null]
 							setWithLastConsumed(
 								$current,
 								"script",
-								lv_script_9_0,
+								lv_script_10_0,
 								"de.cau.cs.kieler.kivis.KiVis.SCRIPT");
 						}
 					)
@@ -575,9 +589,23 @@ ruleAction returns [EObject current=null]
 		}
 		(
 			(
-				lv_domElement_3_0=RULE_STRING
+				lv_multimatch_3_0='all'
 				{
-					newLeafNode(lv_domElement_3_0, grammarAccess.getActionAccess().getDomElementSTRINGTerminalRuleCall_3_0());
+					newLeafNode(lv_multimatch_3_0, grammarAccess.getActionAccess().getMultimatchAllKeyword_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getActionRule());
+					}
+					setWithLastConsumed($current, "multimatch", true, "all");
+				}
+			)
+		)?
+		(
+			(
+				lv_domElement_4_0=RULE_STRING
+				{
+					newLeafNode(lv_domElement_4_0, grammarAccess.getActionAccess().getDomElementSTRINGTerminalRuleCall_4_0());
 				}
 				{
 					if ($current==null) {
@@ -586,23 +614,23 @@ ruleAction returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"domElement",
-						lv_domElement_3_0,
+						lv_domElement_4_0,
 						"de.cau.cs.kieler.kivis.KiVis.STRING");
 				}
 			)
 		)
 		(
-			otherlv_4='do'
+			otherlv_5='do'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getActionAccess().getDoKeyword_4_0());
+				newLeafNode(otherlv_5, grammarAccess.getActionAccess().getDoKeyword_5_0());
 			}
 			(
 				(
 					(
 						(
-							lv_deferred_5_0='deferred'
+							lv_deferred_6_0='deferred'
 							{
-								newLeafNode(lv_deferred_5_0, grammarAccess.getActionAccess().getDeferredDeferredKeyword_4_1_0_0_0());
+								newLeafNode(lv_deferred_6_0, grammarAccess.getActionAccess().getDeferredDeferredKeyword_5_1_0_0_0());
 							}
 							{
 								if ($current==null) {
@@ -615,9 +643,9 @@ ruleAction returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getActionAccess().getInterfaceActionInterface1ParserRuleCall_4_1_0_1_0());
+								newCompositeNode(grammarAccess.getActionAccess().getInterfaceActionInterface1ParserRuleCall_5_1_0_1_0());
 							}
-							lv_interface_6_0=ruleActionInterface1
+							lv_interface_7_0=ruleActionInterface1
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getActionRule());
@@ -625,7 +653,7 @@ ruleAction returns [EObject current=null]
 								set(
 									$current,
 									"interface",
-									lv_interface_6_0,
+									lv_interface_7_0,
 									"de.cau.cs.kieler.kivis.KiVis.ActionInterface1");
 								afterParserOrEnumRuleCall();
 							}
@@ -633,9 +661,9 @@ ruleAction returns [EObject current=null]
 					)
 					(
 						(
-							lv_script_7_0=RULE_SCRIPT
+							lv_script_8_0=RULE_SCRIPT
 							{
-								newLeafNode(lv_script_7_0, grammarAccess.getActionAccess().getScriptSCRIPTTerminalRuleCall_4_1_0_2_0());
+								newLeafNode(lv_script_8_0, grammarAccess.getActionAccess().getScriptSCRIPTTerminalRuleCall_5_1_0_2_0());
 							}
 							{
 								if ($current==null) {
@@ -644,7 +672,7 @@ ruleAction returns [EObject current=null]
 								setWithLastConsumed(
 									$current,
 									"script",
-									lv_script_7_0,
+									lv_script_8_0,
 									"de.cau.cs.kieler.kivis.KiVis.SCRIPT");
 							}
 						)
@@ -655,9 +683,9 @@ ruleAction returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getActionAccess().getInterfaceActionInterface2ParserRuleCall_4_1_1_0_0());
+								newCompositeNode(grammarAccess.getActionAccess().getInterfaceActionInterface2ParserRuleCall_5_1_1_0_0());
 							}
-							lv_interface_8_0=ruleActionInterface2
+							lv_interface_9_0=ruleActionInterface2
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getActionRule());
@@ -665,7 +693,7 @@ ruleAction returns [EObject current=null]
 								set(
 									$current,
 									"interface",
-									lv_interface_8_0,
+									lv_interface_9_0,
 									"de.cau.cs.kieler.kivis.KiVis.ActionInterface2");
 								afterParserOrEnumRuleCall();
 							}
@@ -673,9 +701,9 @@ ruleAction returns [EObject current=null]
 					)
 					(
 						(
-							lv_script_9_0=RULE_SCRIPT
+							lv_script_10_0=RULE_SCRIPT
 							{
-								newLeafNode(lv_script_9_0, grammarAccess.getActionAccess().getScriptSCRIPTTerminalRuleCall_4_1_1_1_0());
+								newLeafNode(lv_script_10_0, grammarAccess.getActionAccess().getScriptSCRIPTTerminalRuleCall_5_1_1_1_0());
 							}
 							{
 								if ($current==null) {
@@ -684,7 +712,7 @@ ruleAction returns [EObject current=null]
 								setWithLastConsumed(
 									$current,
 									"script",
-									lv_script_9_0,
+									lv_script_10_0,
 									"de.cau.cs.kieler.kivis.KiVis.SCRIPT");
 							}
 						)
@@ -693,16 +721,16 @@ ruleAction returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_10='set'
+			otherlv_11='set'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getActionAccess().getSetKeyword_5_0());
+				newLeafNode(otherlv_11, grammarAccess.getActionAccess().getSetKeyword_6_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getActionAccess().getVariableKeyParserRuleCall_5_1_0());
+						newCompositeNode(grammarAccess.getActionAccess().getVariableKeyParserRuleCall_6_1_0());
 					}
-					lv_variable_11_0=ruleKey
+					lv_variable_12_0=ruleKey
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getActionRule());
@@ -710,7 +738,7 @@ ruleAction returns [EObject current=null]
 						set(
 							$current,
 							"variable",
-							lv_variable_11_0,
+							lv_variable_12_0,
 							"de.cau.cs.kieler.kivis.KiVis.Key");
 						afterParserOrEnumRuleCall();
 					}
@@ -718,16 +746,16 @@ ruleAction returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_12='simulation'
+			otherlv_13='simulation'
 			{
-				newLeafNode(otherlv_12, grammarAccess.getActionAccess().getSimulationKeyword_6_0());
+				newLeafNode(otherlv_13, grammarAccess.getActionAccess().getSimulationKeyword_7_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getActionAccess().getControlSimulationCorntrolEnumRuleCall_6_1_0());
+						newCompositeNode(grammarAccess.getActionAccess().getControlSimulationCorntrolEnumRuleCall_7_1_0());
 					}
-					lv_control_13_0=ruleSimulationCorntrol
+					lv_control_14_0=ruleSimulationCorntrol
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getActionRule());
@@ -735,7 +763,7 @@ ruleAction returns [EObject current=null]
 						set(
 							$current,
 							"control",
-							lv_control_13_0,
+							lv_control_14_0,
 							"de.cau.cs.kieler.kivis.KiVis.SimulationCorntrol");
 						afterParserOrEnumRuleCall();
 					}

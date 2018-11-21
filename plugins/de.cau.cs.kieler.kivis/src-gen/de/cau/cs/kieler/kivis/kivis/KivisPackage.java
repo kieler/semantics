@@ -243,13 +243,22 @@ public interface KivisPackage extends EPackage
   int HANDLER__VARIABLE = CONTENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Multimatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HANDLER__MULTIMATCH = CONTENT_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Dom Element</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HANDLER__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 1;
+  int HANDLER__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Handler</em>' class.
@@ -258,7 +267,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HANDLER_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 2;
+  int HANDLER_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl <em>Action</em>}' class.
@@ -298,13 +307,22 @@ public interface KivisPackage extends EPackage
   int ACTION__DOM_EVENT = CONTENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Multimatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__MULTIMATCH = CONTENT_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Dom Element</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 1;
+  int ACTION__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Deferred</b></em>' attribute.
@@ -313,7 +331,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION__DEFERRED = CONTENT_FEATURE_COUNT + 2;
+  int ACTION__DEFERRED = CONTENT_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' attribute.
@@ -322,7 +340,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION__VARIABLE = CONTENT_FEATURE_COUNT + 3;
+  int ACTION__VARIABLE = CONTENT_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Control</b></em>' attribute.
@@ -331,7 +349,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION__CONTROL = CONTENT_FEATURE_COUNT + 4;
+  int ACTION__CONTROL = CONTENT_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -340,7 +358,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 5;
+  int ACTION_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.CodeImpl <em>Code</em>}' class.
@@ -576,6 +594,17 @@ public interface KivisPackage extends EPackage
   EAttribute getHandler_Variable();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Handler#isMultimatch <em>Multimatch</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Multimatch</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Handler#isMultimatch()
+   * @see #getHandler()
+   * @generated
+   */
+  EAttribute getHandler_Multimatch();
+
+  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Handler#getDomElement <em>Dom Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -606,6 +635,17 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EAttribute getAction_DomEvent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Multimatch</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#isMultimatch()
+   * @see #getAction()
+   * @generated
+   */
+  EAttribute getAction_Multimatch();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getDomElement <em>Dom Element</em>}'.
@@ -850,6 +890,14 @@ public interface KivisPackage extends EPackage
     EAttribute HANDLER__VARIABLE = eINSTANCE.getHandler_Variable();
 
     /**
+     * The meta object literal for the '<em><b>Multimatch</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HANDLER__MULTIMATCH = eINSTANCE.getHandler_Multimatch();
+
+    /**
      * The meta object literal for the '<em><b>Dom Element</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -874,6 +922,14 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EAttribute ACTION__DOM_EVENT = eINSTANCE.getAction_DomEvent();
+
+    /**
+     * The meta object literal for the '<em><b>Multimatch</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ACTION__MULTIMATCH = eINSTANCE.getAction_Multimatch();
 
     /**
      * The meta object literal for the '<em><b>Dom Element</b></em>' attribute feature.

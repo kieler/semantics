@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDomEvent <em>Dom Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#isMultimatch <em>Multimatch</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDomElement <em>Dom Element</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#isDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getVariable <em>Variable</em>}</li>
@@ -51,6 +52,26 @@ public class ActionImpl extends ContentImpl implements Action
    * @ordered
    */
   protected String domEvent = DOM_EVENT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isMultimatch() <em>Multimatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultimatch()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MULTIMATCH_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isMultimatch() <em>Multimatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultimatch()
+   * @generated
+   * @ordered
+   */
+  protected boolean multimatch = MULTIMATCH_EDEFAULT;
 
   /**
    * The default value of the '{@link #getDomElement() <em>Dom Element</em>}' attribute.
@@ -181,6 +202,29 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isMultimatch()
+  {
+    return multimatch;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMultimatch(boolean newMultimatch)
+  {
+    boolean oldMultimatch = multimatch;
+    multimatch = newMultimatch;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__MULTIMATCH, oldMultimatch, multimatch));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getDomElement()
   {
     return domElement;
@@ -280,6 +324,8 @@ public class ActionImpl extends ContentImpl implements Action
     {
       case KivisPackage.ACTION__DOM_EVENT:
         return getDomEvent();
+      case KivisPackage.ACTION__MULTIMATCH:
+        return isMultimatch();
       case KivisPackage.ACTION__DOM_ELEMENT:
         return getDomElement();
       case KivisPackage.ACTION__DEFERRED:
@@ -304,6 +350,9 @@ public class ActionImpl extends ContentImpl implements Action
     {
       case KivisPackage.ACTION__DOM_EVENT:
         setDomEvent((String)newValue);
+        return;
+      case KivisPackage.ACTION__MULTIMATCH:
+        setMultimatch((Boolean)newValue);
         return;
       case KivisPackage.ACTION__DOM_ELEMENT:
         setDomElement((String)newValue);
@@ -334,6 +383,9 @@ public class ActionImpl extends ContentImpl implements Action
       case KivisPackage.ACTION__DOM_EVENT:
         setDomEvent(DOM_EVENT_EDEFAULT);
         return;
+      case KivisPackage.ACTION__MULTIMATCH:
+        setMultimatch(MULTIMATCH_EDEFAULT);
+        return;
       case KivisPackage.ACTION__DOM_ELEMENT:
         setDomElement(DOM_ELEMENT_EDEFAULT);
         return;
@@ -362,6 +414,8 @@ public class ActionImpl extends ContentImpl implements Action
     {
       case KivisPackage.ACTION__DOM_EVENT:
         return DOM_EVENT_EDEFAULT == null ? domEvent != null : !DOM_EVENT_EDEFAULT.equals(domEvent);
+      case KivisPackage.ACTION__MULTIMATCH:
+        return multimatch != MULTIMATCH_EDEFAULT;
       case KivisPackage.ACTION__DOM_ELEMENT:
         return DOM_ELEMENT_EDEFAULT == null ? domElement != null : !DOM_ELEMENT_EDEFAULT.equals(domElement);
       case KivisPackage.ACTION__DEFERRED:
@@ -387,6 +441,8 @@ public class ActionImpl extends ContentImpl implements Action
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (domEvent: ");
     result.append(domEvent);
+    result.append(", multimatch: ");
+    result.append(multimatch);
     result.append(", domElement: ");
     result.append(domElement);
     result.append(", deferred: ");

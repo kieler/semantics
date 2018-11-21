@@ -28,7 +28,7 @@ Binding:
 Handler: 
     'handle' variable=Key
     (
-        'in' domElement=STRING
+        'in' (multimatch?='all')? domElement=STRING
         'with' interface=HandlerInterface1 script=SCRIPT
     |
         'with' interface=HandlerInterface2 script=SCRIPT
@@ -37,7 +37,7 @@ Handler:
 
 Action:
     'event' domEvent=STRING
-    'on' domElement=STRING
+    'on' (multimatch?='all')? domElement=STRING
     ('do' 
         (
             deferred?='deferred' interface=ActionInterface1 script=SCRIPT

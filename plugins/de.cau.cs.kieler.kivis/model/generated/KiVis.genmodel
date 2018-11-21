@@ -29,10 +29,12 @@
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Handler">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Handler/variable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Handler/multimatch"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Handler/domElement"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/domEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/multimatch"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/domElement"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/deferred"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/variable"/>

@@ -118,6 +118,7 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 * Constraint:
 	 *     (
 	 *         domEvent=STRING 
+	 *         multimatch?='all'? 
 	 *         domElement=STRING 
 	 *         ((deferred?='deferred' interface=ActionInterface1 script=SCRIPT) | (interface=ActionInterface2 script=SCRIPT))? 
 	 *         variable=Key? 
@@ -230,7 +231,7 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 *     Handler returns Handler
 	 *
 	 * Constraint:
-	 *     (variable=Key ((domElement=STRING interface=HandlerInterface1 script=SCRIPT) | (interface=HandlerInterface2 script=SCRIPT)))
+	 *     (variable=Key ((multimatch?='all'? domElement=STRING interface=HandlerInterface1 script=SCRIPT) | (interface=HandlerInterface2 script=SCRIPT)))
 	 */
 	protected void sequence_Handler(ISerializationContext context, Handler semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

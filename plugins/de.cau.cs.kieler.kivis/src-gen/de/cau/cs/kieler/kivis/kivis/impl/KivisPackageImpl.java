@@ -284,9 +284,19 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getHandler_DomElement()
+  public EAttribute getHandler_Multimatch()
   {
     return (EAttribute)handlerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getHandler_DomElement()
+  {
+    return (EAttribute)handlerEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -314,7 +324,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_DomElement()
+  public EAttribute getAction_Multimatch()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(1);
   }
@@ -324,7 +334,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_Deferred()
+  public EAttribute getAction_DomElement()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(2);
   }
@@ -334,7 +344,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_Variable()
+  public EAttribute getAction_Deferred()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
   }
@@ -344,9 +354,19 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_Control()
+  public EAttribute getAction_Variable()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAction_Control()
+  {
+    return (EAttribute)actionEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -455,10 +475,12 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     handlerEClass = createEClass(HANDLER);
     createEAttribute(handlerEClass, HANDLER__VARIABLE);
+    createEAttribute(handlerEClass, HANDLER__MULTIMATCH);
     createEAttribute(handlerEClass, HANDLER__DOM_ELEMENT);
 
     actionEClass = createEClass(ACTION);
     createEAttribute(actionEClass, ACTION__DOM_EVENT);
+    createEAttribute(actionEClass, ACTION__MULTIMATCH);
     createEAttribute(actionEClass, ACTION__DOM_ELEMENT);
     createEAttribute(actionEClass, ACTION__DEFERRED);
     createEAttribute(actionEClass, ACTION__VARIABLE);
@@ -526,10 +548,12 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     initEClass(handlerEClass, Handler.class, "Handler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHandler_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, Handler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHandler_Multimatch(), ecorePackage.getEBoolean(), "multimatch", null, 0, 1, Handler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHandler_DomElement(), ecorePackage.getEString(), "domElement", null, 0, 1, Handler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAction_DomEvent(), ecorePackage.getEString(), "domEvent", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAction_Multimatch(), ecorePackage.getEBoolean(), "multimatch", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_DomElement(), ecorePackage.getEString(), "domElement", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Deferred(), ecorePackage.getEBoolean(), "deferred", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
