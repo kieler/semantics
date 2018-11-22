@@ -86,6 +86,10 @@ class SimulationContext extends CompilationContext implements SimulationControls
         }
         EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, system.config)
     }
+    
+    def getSourceCompilationContext() {
+        return startEnvironment.getProperty(SOURCE_COMPILATION_CONTEXT)
+    }
 
     package def initialize() {
         history.maxLength = startEnvironment.getProperty(MAX_HISTORY_LENGTH)

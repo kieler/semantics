@@ -69,6 +69,12 @@
       <Processor
             class="de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.CTickTimeTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator">
+      </Processor>
    </extension>
 
 </plugin>

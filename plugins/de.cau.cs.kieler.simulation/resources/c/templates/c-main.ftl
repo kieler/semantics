@@ -7,9 +7,13 @@
 // The data for the model
 ${tickdata_type} ${tickdata_name};
 
+<@inject position="global-decl" /><#nt>
+
 <@inject position="body" />
 
 int main(int argc, const char* argv[]) {
+    <@inject position="local-decl" /><#nt>
+
     // Initialize 
     reset(&${tickdata_name});
     
@@ -19,9 +23,13 @@ int main(int argc, const char* argv[]) {
     while (1) {
         // Read inputs
         <@inject position="input" /><#nt>
+        
+        <@inject position="pre-tick" /><#nt>
   
         // Reaction of model
         tick(&${tickdata_name});
+        
+        <@inject position="post-tick" /><#nt>
          
         // Send outputs
         <@inject position="output" /><#nt>

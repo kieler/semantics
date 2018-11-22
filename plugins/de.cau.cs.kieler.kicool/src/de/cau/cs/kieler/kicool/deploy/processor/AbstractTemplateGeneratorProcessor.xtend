@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
@@ -70,4 +72,5 @@ abstract class AbstractTemplateGeneratorProcessor<I> extends AbstractDeploymentP
         // First slash is important for freemarker to look into the base directory
         return "/" + genFolder + "/" + fileName
     }
+    
 }

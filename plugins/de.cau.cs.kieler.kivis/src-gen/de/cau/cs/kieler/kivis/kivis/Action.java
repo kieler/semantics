@@ -3,9 +3,6 @@
  */
 package de.cau.cs.kieler.kivis.kivis;
 
-import de.cau.cs.kieler.prom.kibuild.Literal;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,123 +13,177 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDomEvent <em>Dom Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDomElement <em>Dom Element</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#isDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getValue <em>Value</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getFunction <em>Function</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getControl <em>Control</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction()
  * @model
  * @generated
  */
-public interface Action extends EObject
+public interface Action extends Content
 {
   /**
-   * Returns the value of the '<em><b>Variable</b></em>' containment reference.
+   * Returns the value of the '<em><b>Dom Event</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Variable</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Dom Event</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Variable</em>' containment reference.
-   * @see #setVariable(VariableReference)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Variable()
-   * @model containment="true"
-   * @generated
-   */
-  VariableReference getVariable();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Variable</em>' containment reference.
-   * @see #getVariable()
-   * @generated
-   */
-  void setVariable(VariableReference value);
-
-  /**
-   * Returns the value of the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Value</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(Literal)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Value()
-   * @model containment="true"
-   * @generated
-   */
-  Literal getValue();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getValue <em>Value</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Value</em>' containment reference.
-   * @see #getValue()
-   * @generated
-   */
-  void setValue(Literal value);
-
-  /**
-   * Returns the value of the '<em><b>Function</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Function</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Function</em>' containment reference.
-   * @see #setFunction(Function)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Function()
-   * @model containment="true"
-   * @generated
-   */
-  Function getFunction();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getFunction <em>Function</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Function</em>' containment reference.
-   * @see #getFunction()
-   * @generated
-   */
-  void setFunction(Function value);
-
-  /**
-   * Returns the value of the '<em><b>Operation</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.kivis.kivis.SimulationOperation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Operation</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Operation</em>' attribute.
-   * @see de.cau.cs.kieler.kivis.kivis.SimulationOperation
-   * @see #setOperation(SimulationOperation)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Operation()
+   * @return the value of the '<em>Dom Event</em>' attribute.
+   * @see #setDomEvent(String)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_DomEvent()
    * @model
    * @generated
    */
-  SimulationOperation getOperation();
+  String getDomEvent();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getOperation <em>Operation</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getDomEvent <em>Dom Event</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Operation</em>' attribute.
-   * @see de.cau.cs.kieler.kivis.kivis.SimulationOperation
-   * @see #getOperation()
+   * @param value the new value of the '<em>Dom Event</em>' attribute.
+   * @see #getDomEvent()
    * @generated
    */
-  void setOperation(SimulationOperation value);
+  void setDomEvent(String value);
+
+  /**
+   * Returns the value of the '<em><b>Multimatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Multimatch</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Multimatch</em>' attribute.
+   * @see #setMultimatch(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Multimatch()
+   * @model
+   * @generated
+   */
+  boolean isMultimatch();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Multimatch</em>' attribute.
+   * @see #isMultimatch()
+   * @generated
+   */
+  void setMultimatch(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Dom Element</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Dom Element</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Dom Element</em>' attribute.
+   * @see #setDomElement(String)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_DomElement()
+   * @model
+   * @generated
+   */
+  String getDomElement();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getDomElement <em>Dom Element</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Dom Element</em>' attribute.
+   * @see #getDomElement()
+   * @generated
+   */
+  void setDomElement(String value);
+
+  /**
+   * Returns the value of the '<em><b>Deferred</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Deferred</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Deferred</em>' attribute.
+   * @see #setDeferred(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Deferred()
+   * @model
+   * @generated
+   */
+  boolean isDeferred();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#isDeferred <em>Deferred</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Deferred</em>' attribute.
+   * @see #isDeferred()
+   * @generated
+   */
+  void setDeferred(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Variable</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variable</em>' attribute.
+   * @see #setVariable(String)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Variable()
+   * @model
+   * @generated
+   */
+  String getVariable();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Variable</em>' attribute.
+   * @see #getVariable()
+   * @generated
+   */
+  void setVariable(String value);
+
+  /**
+   * Returns the value of the '<em><b>Control</b></em>' attribute.
+   * The literals are from the enumeration {@link de.cau.cs.kieler.kivis.kivis.SimulationCorntrol}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Control</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Control</em>' attribute.
+   * @see de.cau.cs.kieler.kivis.kivis.SimulationCorntrol
+   * @see #setControl(SimulationCorntrol)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Control()
+   * @model
+   * @generated
+   */
+  SimulationCorntrol getControl();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getControl <em>Control</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Control</em>' attribute.
+   * @see de.cau.cs.kieler.kivis.kivis.SimulationCorntrol
+   * @see #getControl()
+   * @generated
+   */
+  void setControl(SimulationCorntrol value);
 
 } // Action
