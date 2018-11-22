@@ -33,7 +33,7 @@ class RandomKeepLengthObfuscator extends Obfuscator {
         getText(state.name.length)
     }
     
-    override getCommentText() {
+    override getCommentText(String comment) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     

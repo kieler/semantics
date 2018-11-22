@@ -25,7 +25,7 @@ import java.util.LinkedList
 class RandomObfuscator extends Obfuscator {
     int name_length = 32
     
-    List<String> usedStrings = new LinkedList<String>()
+    public var List<String> usedStrings = new LinkedList<String>()
     
     new(int maxItems) {
         this.name_length = calcMinimumLengthOfCodePointString(maxItems)
@@ -46,7 +46,7 @@ class RandomObfuscator extends Obfuscator {
         return getText()
     }
     
-    override getCommentText() {
+    override getCommentText(String comment) {
         return ""
     }
     
@@ -57,9 +57,10 @@ class RandomObfuscator extends Obfuscator {
     def getText() {
         var nameText = getObfuscatedText(name_length)
         
-        while (containsString(usedStrings, nameText)) {
+        while (usedStrings.contains(nameText)) {
             nameText = getObfuscatedText(name_length)
         }
+        
         usedStrings.add(nameText)
         
         return nameText

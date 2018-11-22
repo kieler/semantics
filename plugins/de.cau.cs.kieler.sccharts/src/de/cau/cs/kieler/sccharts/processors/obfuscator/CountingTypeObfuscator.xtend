@@ -23,47 +23,77 @@ import de.cau.cs.kieler.sccharts.Region
  */
 class CountingTypeObfuscator extends Obfuscator {
     
-    var valuedObjectCounter = 1
-    int valuedObjectsNumSize = 0
-    String valuedObjectPrefix = "V"
+    var valOCounter = 1
+    int minValONumSize = 0
+    String valOPrefix = "Var"
     var stateCounter = 1
-    int statesNumSize = 0
-    String statePrefix = "S"
+    int minStateNumSize = 0
+    String statePrefix = "State"
     var regionCounter = 1
-    int regionsNumSize = 0
-    String regionPrefix = "R"
+    int minRegionNumSize = 0
+    String regionPrefix = "Region"
+    
+    boolean leadingZeroes = true
     
     new(int maxValuedObjects, int maxStates, int maxRegions) {
-        this.valuedObjectsNumSize = calcMinimumLengthOfNum(maxValuedObjects)
-        this.statesNumSize = calcMinimumLengthOfNum(maxStates)
-        this.regionsNumSize = calcMinimumLengthOfNum(maxRegions)
+        this.minValONumSize = calcMinimumLengthOfNum(maxValuedObjects)
+        this.minStateNumSize = calcMinimumLengthOfNum(maxStates)
+        this.minRegionNumSize = calcMinimumLengthOfNum(maxRegions)
+    }
+    
+    new(int maxValuedObjects, int maxStates, int maxRegions, boolean leadingZeroes) {
+        this(maxValuedObjects, maxStates, maxRegions)
+        this.leadingZeroes = leadingZeroes
     }
     
     new(int maxValuedObjects, int maxStates, int maxRegions, String valuedObjectPrefix, String statePrefix, String regionPrefix) {
         this(maxValuedObjects, maxStates, maxRegions)
-        this.valuedObjectPrefix = valuedObjectPrefix
+        this.valOPrefix = valuedObjectPrefix
         this.statePrefix = statePrefix
         this.regionPrefix = regionPrefix
     }
     
+    new(int maxValuedObjects, int maxStates, int maxRegions, String valuedObjectPrefix, String statePrefix, String regionPrefix, boolean leadingZeroes) {
+        this(maxValuedObjects, maxStates, maxRegions)
+        this.valOPrefix = valuedObjectPrefix
+        this.statePrefix = statePrefix
+        this.regionPrefix = regionPrefix
+        this.leadingZeroes = leadingZeroes
+    }
+    
     override getValuedObjectName(ValuedObject valuedO) {
-        val str = valuedObjectPrefix + numberToFixedLengthString(valuedObjectCounter, valuedObjectsNumSize)
-        valuedObjectCounter++
+        var str = valOPrefix
+        if (leadingZeroes) {
+            str += numberToFixedLengthString(valOCounter, minValONumSize)
+        } else {
+            str += valOCounter.toString
+        }
+        valOCounter++
         return str
     }
     
     override getStateName(State state) {
-        val str = statePrefix + numberToFixedLengthString(stateCounter, statesNumSize)
+        var str = statePrefix
+        if (leadingZeroes) {
+            str += numberToFixedLengthString(stateCounter, minStateNumSize)
+        } else {
+            str += stateCounter.toString
+        }
         stateCounter++
         return str
     }
     
-    override getCommentText() {
+    override getCommentText(String comment) {
         return ""
     }
     
     override getRegionName(Region region) {
-        val str = regionPrefix + numberToFixedLengthString(regionCounter, regionsNumSize)
+        var str = regionPrefix
+        if (leadingZeroes) {
+            str += numberToFixedLengthString(regionCounter, minRegionNumSize)
+        } else {
+            str += regionCounter.toString
+        }
         regionCounter++
         return str
     }

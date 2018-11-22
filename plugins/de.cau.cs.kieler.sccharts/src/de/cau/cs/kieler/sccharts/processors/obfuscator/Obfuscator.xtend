@@ -59,7 +59,7 @@ abstract class Obfuscator {
      * Calculate the minimum length of a number string for it to contain at least maxNum possible different numbers
      */
     def int calcMinimumLengthOfNum(int maxNum) {
-        return Math.ceil(Math.log(maxNum)/Math.log(10)).intValue
+        return Math.ceil(Math.log(maxNum)/Math.log(10)).intValue + 1 
     }
     
     /**
@@ -83,6 +83,6 @@ abstract class Obfuscator {
     
     abstract def String getValuedObjectName(ValuedObject valuedO)
     abstract def String getStateName(State state)
-    abstract def String getCommentText()
+    abstract def String getCommentText(String comment)
     abstract def String getRegionName(Region region)
 }

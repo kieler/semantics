@@ -22,12 +22,13 @@ import de.cau.cs.kieler.sccharts.Region
  *
  */
 class CountingObfuscator extends Obfuscator {
-    String prefix = "I"
+    String prefix = "ITEM"
     int count = 1
-    int maxItems = 0
+    int minStringLength
+    boolean leadingZeroes = true
     
     new(int maxItems) {
-        this.maxItems = maxItems
+        this.minStringLength = calcMinimumLengthOfNum(maxItems)
     }
     
     new(int maxItems, String prefix) {
@@ -35,7 +36,17 @@ class CountingObfuscator extends Obfuscator {
         this.prefix = prefix
     }
     
-    override getValuedObjectName(ValuedObject valuedO) {
+    new(int maxItems, boolean leadingZeroes) {
+        this(maxItems)
+        this.leadingZeroes = leadingZeroes
+    }
+    
+    new(int maxItems, String prefix, boolean leadingZeroes) {
+        this(maxItems, prefix)
+        this.leadingZeroes = leadingZeroes
+    }
+    
+    override getValuedObjectName(ValuedObject valO) {
         return getText()
     }
     
@@ -43,7 +54,7 @@ class CountingObfuscator extends Obfuscator {
         return getText()
     }
     
-    override getCommentText() {
+    override getCommentText(String comment) {
         return ""
     }
     
@@ -52,7 +63,12 @@ class CountingObfuscator extends Obfuscator {
     }
     
     def String getText() {
-        val str = prefix + numberToFixedLengthString(count, maxItems)
+        var str = prefix
+        if (leadingZeroes) {
+            str += numberToFixedLengthString(count, minStringLength)
+        } else {
+            str += count.toString
+        }
         count++
         return str
     }
