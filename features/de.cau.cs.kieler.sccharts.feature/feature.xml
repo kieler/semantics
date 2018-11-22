@@ -276,10 +276,6 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.lustre.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.prom" download-size="0" install-size="0" version="0.0.0"/>
-   
-   <plugin id="de.cau.cs.kieler.prom.ui" download-size="0" install-size="0" version="0.0.0"/>
-   
    <plugin id="de.cau.cs.kieler.sccharts" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.examples" download-size="0" install-size="0" version="0.0.0"/>
@@ -287,8 +283,6 @@ litigation.
    <plugin id="de.cau.cs.kieler.sccharts.legacy" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.legacy.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.sccharts.prom" download-size="0" install-size="0" version="0.0.0"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
