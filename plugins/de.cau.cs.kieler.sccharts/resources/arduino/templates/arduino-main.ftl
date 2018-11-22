@@ -3,7 +3,8 @@
 #include "${tickdata_file}"
 
 TickData ${tickdata_name};
-<@inject position="globals" />
+<@inject position="global-decl" />
+<@inject position="body" />
 
 void setup() {
     <@inject position="init" /><#nt>
@@ -11,11 +12,12 @@ void setup() {
 }
 
 void loop() {
-    <@inject position="loopstart" /><#nt>
+    <@inject position="local-decl" />
+    <@inject position="start-loop" /><#nt>
     <@inject position="input" /><#nt>
-    <@inject position="tickstart" /><#nt>
+    <@inject position="pre-tick" /><#nt>
     tick(&${tickdata_name});
-    <@inject position="tickend" /><#nt>
+    <@inject position="post-tick" /><#nt>
     <@inject position="output" /><#nt>
-    <@inject position="loopend" /><#nt>
+    <@inject position="end-loop" /><#nt>
 }

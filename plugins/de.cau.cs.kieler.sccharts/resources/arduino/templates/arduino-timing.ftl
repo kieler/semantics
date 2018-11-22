@@ -28,7 +28,7 @@ if(${tickdata_name}${parameters.varName} > 0) {
 -->
 
 <#macro Clock position>
-<#if position=="globals">
+<#if position=="global-decl">
 <#list parameters["Clock"] as parameters>
 unsigned long clock_${parameters.voName};
 </#list>

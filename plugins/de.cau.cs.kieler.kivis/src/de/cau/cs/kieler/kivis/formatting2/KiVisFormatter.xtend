@@ -4,34 +4,28 @@
 package de.cau.cs.kieler.kivis.formatting2
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kivis.kivis.Animation
-import de.cau.cs.kieler.kivis.kivis.Element
-import de.cau.cs.kieler.kivis.kivis.Interaction
-import de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration
+import de.cau.cs.kieler.kivis.kivis.Binding
+import de.cau.cs.kieler.kivis.kivis.Content
+import de.cau.cs.kieler.kivis.kivis.Visualization
 import de.cau.cs.kieler.kivis.services.KiVisGrammarAccess
-import de.cau.cs.kieler.prom.formatting2.KiBuildFormatter
+import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
-class KiVisFormatter extends KiBuildFormatter {
+class KiVisFormatter extends AbstractFormatter2 {
 	
 	@Inject extension KiVisGrammarAccess
 
-	def dispatch void format(VisualizationConfiguration visualizationConfiguration, extension IFormattableDocument document) {
+	def dispatch void format(Visualization visualization, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Element element : visualizationConfiguration.getElements()) {
-			element.format;
-		}
-		for (Interaction interaction : visualizationConfiguration.getInteractions()) {
-			interaction.format;
+		for (Content content : visualization.getContent()) {
+			content.format;
 		}
 	}
 
-	def dispatch void format(Element element, extension IFormattableDocument document) {
+	def dispatch void format(Binding binding, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Animation animation : element.getAnimations()) {
-			animation.format;
-		}
+		binding.getInterface.format;
 	}
 	
-	// TODO: implement for Interaction, Action, Function, Animation, AttributeMapping, Mapping, AndExpression, Comparison, Domain, Interval, VariableReference, FunctionParameter
+	// TODO: implement for Handler, Action, Code
 }

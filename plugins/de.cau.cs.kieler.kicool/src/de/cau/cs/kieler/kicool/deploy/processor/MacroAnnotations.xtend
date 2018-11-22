@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 
+import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 
 /**
@@ -69,14 +70,14 @@ class MacroAnnotations extends AbstractDeploymentProcessor<Object> {
         for (macro : macros.keySet) {
             environment.addMacroInjection(HEADER, macro)
             environment.addMacroInjection(BODY, macro)
-            environment.addMacroInjection(GLOBALS, macro)
+            environment.addMacroInjection(GLOBAL_DECLARATION, macro)
             environment.addMacroInjection(INIT, macro)
-            environment.addMacroInjection(LOOP_START, macro)
-            environment.addMacroInjection(TICK_START, macro)
+            environment.addMacroInjection(START_LOOP, macro)
+            environment.addMacroInjection(PRE_TICK, macro)
             environment.addMacroInjection(INPUT, macro)
-            environment.addMacroInjection(TICK_END, macro)
+            environment.addMacroInjection(POST_TICK, macro)
             environment.addMacroInjection(OUTPUT, macro)
-            environment.addMacroInjection(LOOP_END, macro)
+            environment.addMacroInjection(END_LOOP, macro)
         }
         
         val genEnv = environment.getProperty(TemplateEngine.GENRAL_ENVIRONMENT)?:newHashMap

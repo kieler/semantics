@@ -25,18 +25,6 @@ import de.cau.cs.kieler.kicool.environments.Environment
  */
 class TemplateInjection {
     
-    // Common template positions
-    public static val HEADER = "header"
-    public static val BODY = "body"
-    public static val INIT = "init"
-    public static val INPUT = "input"
-    public static val OUTPUT = "output"
-    public static val GLOBALS = "globals"
-    public static val LOOP_START = "loopstart"
-    public static val LOOP_END = "loopend"
-    public static val TICK_START = "tickstart"
-    public static val TICK_END = "tickend"
-    
     // Environment properties
     public static val IProperty<List<String>> INCLUDES = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.deploy.template.injection.includes", null)
@@ -49,6 +37,10 @@ class TemplateInjection {
         val includes = env.getProperty(INCLUDES)?:newArrayList
         env.setProperty(INCLUDES, includes)
         includes += includeFile
+    }
+    
+    static def addMacroInjection(Environment env, TemplatePosition position, String macroName) {
+        addMacroInjection(env, position.position, macroName)
     }
     
     static def addMacroInjection(Environment env, String position, String macroName) {

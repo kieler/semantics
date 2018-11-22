@@ -456,7 +456,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences, boolean isPostProcessor) {
         for (processorReference : processorReferences) {
+            processor.environment.processEnvironmentConfig(processorReference.preconfig)
             processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
+            processor.environment.processEnvironmentConfig(processorReference.postconfig)
         }
     }
     

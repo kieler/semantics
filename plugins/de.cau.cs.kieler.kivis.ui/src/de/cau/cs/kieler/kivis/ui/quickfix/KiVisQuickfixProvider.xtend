@@ -3,14 +3,14 @@
  */
 package de.cau.cs.kieler.kivis.ui.quickfix
 
-import de.cau.cs.kieler.prom.ui.quickfix.KiBuildQuickfixProvider
+import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 
 /**
  * Custom quickfixes.
  *
  * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quick-fixes
  */
-class KiVisQuickfixProvider extends KiBuildQuickfixProvider {
+class KiVisQuickfixProvider extends DefaultQuickfixProvider {
 
 //	@Fix(KiVisValidator.INVALID_NAME)
 //	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {

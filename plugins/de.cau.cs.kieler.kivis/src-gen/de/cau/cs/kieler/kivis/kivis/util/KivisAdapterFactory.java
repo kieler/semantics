@@ -76,24 +76,24 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
     new KivisSwitch<Adapter>()
     {
       @Override
-      public Adapter caseVisualizationConfiguration(VisualizationConfiguration object)
+      public Adapter caseVisualization(Visualization object)
       {
-        return createVisualizationConfigurationAdapter();
+        return createVisualizationAdapter();
       }
       @Override
-      public Adapter caseElement(Element object)
+      public Adapter caseContent(Content object)
       {
-        return createElementAdapter();
+        return createContentAdapter();
       }
       @Override
-      public Adapter caseInteraction(Interaction object)
+      public Adapter caseBinding(Binding object)
       {
-        return createInteractionAdapter();
+        return createBindingAdapter();
       }
       @Override
-      public Adapter caseEvent(Event object)
+      public Adapter caseHandler(Handler object)
       {
-        return createEventAdapter();
+        return createHandlerAdapter();
       }
       @Override
       public Adapter caseAction(Action object)
@@ -101,69 +101,14 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
         return createActionAdapter();
       }
       @Override
-      public Adapter caseFunction(Function object)
+      public Adapter caseCode(Code object)
       {
-        return createFunctionAdapter();
+        return createCodeAdapter();
       }
       @Override
-      public Adapter caseAnimation(Animation object)
+      public Adapter caseInterface(Interface object)
       {
-        return createAnimationAdapter();
-      }
-      @Override
-      public Adapter caseAttributeMapping(AttributeMapping object)
-      {
-        return createAttributeMappingAdapter();
-      }
-      @Override
-      public Adapter caseMapping(Mapping object)
-      {
-        return createMappingAdapter();
-      }
-      @Override
-      public Adapter caseCondition(Condition object)
-      {
-        return createConditionAdapter();
-      }
-      @Override
-      public Adapter caseComparison(Comparison object)
-      {
-        return createComparisonAdapter();
-      }
-      @Override
-      public Adapter caseDomain(Domain object)
-      {
-        return createDomainAdapter();
-      }
-      @Override
-      public Adapter caseInterval(Interval object)
-      {
-        return createIntervalAdapter();
-      }
-      @Override
-      public Adapter caseVariableReference(VariableReference object)
-      {
-        return createVariableReferenceAdapter();
-      }
-      @Override
-      public Adapter caseModelReference(ModelReference object)
-      {
-        return createModelReferenceAdapter();
-      }
-      @Override
-      public Adapter caseFunctionParameter(FunctionParameter object)
-      {
-        return createFunctionParameterAdapter();
-      }
-      @Override
-      public Adapter caseAndExpression(AndExpression object)
-      {
-        return createAndExpressionAdapter();
-      }
-      @Override
-      public Adapter caseKibuild_AttributeMapping(de.cau.cs.kieler.prom.kibuild.AttributeMapping object)
-      {
-        return createKibuild_AttributeMappingAdapter();
+        return createInterfaceAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -188,61 +133,61 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration <em>Visualization Configuration</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Visualization <em>Visualization</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization
    * @generated
    */
-  public Adapter createVisualizationConfigurationAdapter()
+  public Adapter createVisualizationAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Element <em>Element</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Content <em>Content</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Element
+   * @see de.cau.cs.kieler.kivis.kivis.Content
    * @generated
    */
-  public Adapter createElementAdapter()
+  public Adapter createContentAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Interaction <em>Interaction</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Binding <em>Binding</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction
+   * @see de.cau.cs.kieler.kivis.kivis.Binding
    * @generated
    */
-  public Adapter createInteractionAdapter()
+  public Adapter createBindingAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Event <em>Event</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Handler <em>Handler</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Event
+   * @see de.cau.cs.kieler.kivis.kivis.Handler
    * @generated
    */
-  public Adapter createEventAdapter()
+  public Adapter createHandlerAdapter()
   {
     return null;
   }
@@ -263,196 +208,31 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Function <em>Function</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Code <em>Code</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Function
+   * @see de.cau.cs.kieler.kivis.kivis.Code
    * @generated
    */
-  public Adapter createFunctionAdapter()
+  public Adapter createCodeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Animation <em>Animation</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Interface <em>Interface</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Animation
+   * @see de.cau.cs.kieler.kivis.kivis.Interface
    * @generated
    */
-  public Adapter createAnimationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping <em>Attribute Mapping</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping
-   * @generated
-   */
-  public Adapter createAttributeMappingAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Mapping <em>Mapping</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Mapping
-   * @generated
-   */
-  public Adapter createMappingAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Condition <em>Condition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Condition
-   * @generated
-   */
-  public Adapter createConditionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Comparison <em>Comparison</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Comparison
-   * @generated
-   */
-  public Adapter createComparisonAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Domain <em>Domain</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Domain
-   * @generated
-   */
-  public Adapter createDomainAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Interval <em>Interval</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.Interval
-   * @generated
-   */
-  public Adapter createIntervalAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.VariableReference <em>Variable Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference
-   * @generated
-   */
-  public Adapter createVariableReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.ModelReference <em>Model Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.ModelReference
-   * @generated
-   */
-  public Adapter createModelReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter <em>Function Parameter</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter
-   * @generated
-   */
-  public Adapter createFunctionParameterAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.AndExpression <em>And Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.AndExpression
-   * @generated
-   */
-  public Adapter createAndExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping <em>Attribute Mapping</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.prom.kibuild.AttributeMapping
-   * @generated
-   */
-  public Adapter createKibuild_AttributeMappingAdapter()
+  public Adapter createInterfaceAdapter()
   {
     return null;
   }

@@ -21,11 +21,12 @@ import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
-
-import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations
+
+import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
+import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 
 /**
  * @author ssm
@@ -82,7 +83,7 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
         val inputPinIsPullUp = <String, Boolean> newHashMap
         val inputPinIsInverted = <String, Boolean> newHashMap
         val outputPinVariables = <String, String> newHashMap
-        for (v : store.orderedVariableNames) {
+        for (v : store.orderedVariables.map[key]) {
             val vi = store.variables.get(v).head
             if (vi.input) {
                 if (vi.annotations.exists[ name == ANNOTATION_PINMODE_NAME ]) {
