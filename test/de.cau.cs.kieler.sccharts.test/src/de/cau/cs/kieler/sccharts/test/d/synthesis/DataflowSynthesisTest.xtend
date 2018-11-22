@@ -62,12 +62,6 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     }
     
     @Test(timeout=10000)
-    def void testDummyTest(SCCharts scc, TestModelData modelData) {
-        
-    }
-    
-// TODO: reactivate    
-//    @Test(timeout=10000)
     def void testDataflowSynthesis(SCCharts scc, TestModelData modelData) {
 //        assumeFalse(true)
         
