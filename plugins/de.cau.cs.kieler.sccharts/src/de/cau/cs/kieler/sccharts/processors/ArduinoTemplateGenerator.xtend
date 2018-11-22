@@ -90,6 +90,10 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
                     inputPinVariables.put(v, vi.annotations.filter[ name == ANNOTATION_PINMODE_NAME ].filter(StringAnnotation).head.values.head )
                     inputPinIsPullUp.put(v, vi.annotations.exists[ name == ANNOTATION_PULLUP_NAME ])
                     inputPinIsInverted.put(v, vi.annotations.exists[ name == ANNOTATION_INVERT_NAME ])
+                    if (vi.type !== ValueType.INT && vi.type !== ValueType.BOOL) {
+                        environment.warnings.add("Variable " + v + " has an unsupported interface type. It will be ignored.")
+                        logger.println("WARNING:Variable " + v + " has an unsupported interface type. It will be ignored.")
+                    }
                 } else {
                     if (vi.annotations.forall[ name != MacroAnnotations.ANNOTATION_MACRO_NAME ]) {
                         environment.warnings.add("Variable " + v + " is an input, but has no pin associated with it.")
@@ -100,6 +104,10 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
             if (vi.output) {
                 if (vi.annotations.exists[ name == ANNOTATION_PINMODE_NAME ]) {
                     outputPinVariables.put(v, vi.annotations.filter[ name == ANNOTATION_PINMODE_NAME ].filter(StringAnnotation).head.values.head )
+                    if (vi.type !== ValueType.INT && vi.type !== ValueType.BOOL) {
+                        environment.warnings.add("Variable " + v + " has an unsupported interface type. It will be ignored.")
+                        logger.println("WARNING:Variable " + v + " has an unsupported interface type. It will be ignored.")
+                    }
                 } else {
                     if (vi.annotations.forall[ name != MacroAnnotations.ANNOTATION_MACRO_NAME ]) {
                         environment.warnings.add("Variable " + v + " is an output, but has no pin associated with it.")
@@ -107,12 +115,6 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
                     }
                 }
             } 
-            if (vi.input || vi.output) {
-                if (vi.type !== ValueType.INT && vi.type !== ValueType.BOOL) {
-                    environment.warnings.add("Variable " + v + " has an unsupported interface type. It will be ignored.")
-                    logger.println("WARNING:Variable " + v + " has an unsupported interface type. It will be ignored.")
-                }
-            }       
         }
         
         val cc = new CodeContainer

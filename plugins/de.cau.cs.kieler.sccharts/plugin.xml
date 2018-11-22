@@ -228,6 +228,9 @@
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy.kico">
         </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.netlist.arduino.deploy.kico">
+        </TransformationSystem>
      </extension>
 
 

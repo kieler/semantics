@@ -126,7 +126,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         if (assignment.valuedObject === null) {
             if (assignment.expression instanceof TextExpression) {
                 indent(conditionalStack.size + 1)
-                code.append((assignment.expression as TextExpression).text).append("\n")
+                code.append((assignment.expression as TextExpression).text).append(";\n")
             } else if (assignment.expression instanceof PrintCall) {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as PrintCall).serialize).append(";\n")

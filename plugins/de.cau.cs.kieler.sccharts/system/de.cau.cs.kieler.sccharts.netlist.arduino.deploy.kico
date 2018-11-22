@@ -1,7 +1,7 @@
-developer system de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy
-    label "State-based Lean Deployment (Arduino)"
+developer system de.cau.cs.kieler.sccharts.netlist.arduino.deploy
+    label "Netlist-based Lean Deployment (Arduino)"
 
-system de.cau.cs.kieler.sccharts.statebased.lean
+system de.cau.cs.kieler.sccharts.netlist 
 pre process de.cau.cs.kieler.kicool.deploy.model.includes
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
@@ -23,7 +23,7 @@ de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.kicool.deploy.templates": {
         "templates/arduino-main.ftl": "kieler-gen.ino"
     },
-    "de.cau.cs.kieler.c.struct.access": ".iface."
+    "de.cau.cs.kieler.c.struct.access": "."
 }
 de.cau.cs.kieler.kicool.deploy.compiler.arduino config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["kieler-gen.ino"],

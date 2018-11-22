@@ -462,5 +462,13 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
     }
     
+    
+    def Processor<?,?> getLastProcessorForResultType(Class<?> clazz) {
+        for(p : processorInstancesSequence.reverse) {
+            val result = p.environment.model
+            if (clazz.isInstance(result)) return p
+        }
+        return null
+    } 
        
 }
