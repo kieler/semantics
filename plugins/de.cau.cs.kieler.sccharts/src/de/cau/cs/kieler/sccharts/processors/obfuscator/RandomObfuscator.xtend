@@ -38,7 +38,7 @@ class RandomObfuscator extends Obfuscator {
         }
     }
     
-    override getValuedObjectName(ValuedObject valuedO) {
+    override getValuedObjectName(ValuedObject valO) {
         return getText()
     }
     

@@ -30,15 +30,24 @@ class RandomKeepLengthObfuscator extends Obfuscator {
     }
     
     override getStateName(State state) {
-        getText(state.name.length)
+        if(state.name === null) {
+            return ""
+        } else {
+            return getText(state.name.length)
+        }
+        
     }
     
     override getCommentText(String comment) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+        getText(comment.length)
     }
     
     override getRegionName(Region region) {
-        getText(region.name.length)
+        if(region.name === null) {
+            return ""
+        } else {
+            return getText(region.name.length)
+        }
     }
     
     def getText(int name_length) {

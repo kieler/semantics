@@ -47,7 +47,7 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
     override process() {
         val model = getModel()
         
-        val obf = getObfuscator(ObfuscatorTypes.COUNTING_TYPE, model)
+        val obf = getObfuscator(ObfuscatorTypes.RANDOM_KEEP_LENGTH, model)
 
         model.rootStates.forEach [ rs |
             obfuscateState(rs, obf)

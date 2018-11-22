@@ -81,7 +81,7 @@ abstract class Obfuscator {
         return false
     }
     
-    abstract def String getValuedObjectName(ValuedObject valuedO)
+    abstract def String getValuedObjectName(ValuedObject valO)
     abstract def String getStateName(State state)
     abstract def String getCommentText(String comment)
     abstract def String getRegionName(Region region)

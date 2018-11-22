@@ -12,10 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
-import de.cau.cs.kieler.sccharts.processors.obfuscator.Obfuscator
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author stu114663
@@ -23,64 +22,60 @@ import de.cau.cs.kieler.sccharts.Region
  */
 class CountingTypeObfuscator extends Obfuscator {
     
-    var valOCounter = 1
-    int minValONumSize = 0
-    String valOPrefix = "Var"
-    var stateCounter = 1
-    int minStateNumSize = 0
-    String statePrefix = "State"
-    var regionCounter = 1
-    int minRegionNumSize = 0
-    String regionPrefix = "Region"
+    var CountingObfuscator valOObf
+    var CountingObfuscator stateObf
+    var CountingObfuscator regionObf
     
-    boolean leadingZeroes = true
+    static final String DEFAULT_VALO_PREFIX = "Var"
+    static final String DEFAULT_REGION_PREFIX = "Region"
+    static final String DEFAULT_STATE_PREFIX = "State"
+    static final boolean DEFAULT_LEADING_ZEROES = true
+    
+    new(ItemCounter ic) {
+        this(ic, DEFAULT_LEADING_ZEROES)
+    }
+    
+    new(ItemCounter ic, boolean leadingZeroes) {
+        this(ic, DEFAULT_VALO_PREFIX, DEFAULT_STATE_PREFIX, DEFAULT_REGION_PREFIX, leadingZeroes)
+    }
+    
+    new(ItemCounter ic, String valuedObjectPrefix, String statePrefix, String regionPrefix) {
+        this(ic, valuedObjectPrefix, statePrefix, regionPrefix, DEFAULT_LEADING_ZEROES)
+    }
+    
+    new(ItemCounter ic, String valuedObjectPrefix, String statePrefix, String regionPrefix, boolean leadingZeroes) {
+        if (!ic.counted) {
+        	ic.count
+        }
+        this.valOObf = new CountingObfuscator(ic.valOCount, valuedObjectPrefix, leadingZeroes)
+        this.stateObf = new CountingObfuscator(ic.stateCount, statePrefix, leadingZeroes)
+        this.regionObf = new CountingObfuscator(ic.regionCount, regionPrefix, leadingZeroes)
+    }
     
     new(int maxValuedObjects, int maxStates, int maxRegions) {
-        this.minValONumSize = calcMinimumLengthOfNum(maxValuedObjects)
-        this.minStateNumSize = calcMinimumLengthOfNum(maxStates)
-        this.minRegionNumSize = calcMinimumLengthOfNum(maxRegions)
+        this(maxValuedObjects, maxStates, maxRegions, DEFAULT_LEADING_ZEROES)
     }
     
     new(int maxValuedObjects, int maxStates, int maxRegions, boolean leadingZeroes) {
-        this(maxValuedObjects, maxStates, maxRegions)
-        this.leadingZeroes = leadingZeroes
+        this(maxValuedObjects, maxStates, maxRegions, DEFAULT_VALO_PREFIX, DEFAULT_STATE_PREFIX, DEFAULT_REGION_PREFIX, leadingZeroes)
     }
     
     new(int maxValuedObjects, int maxStates, int maxRegions, String valuedObjectPrefix, String statePrefix, String regionPrefix) {
-        this(maxValuedObjects, maxStates, maxRegions)
-        this.valOPrefix = valuedObjectPrefix
-        this.statePrefix = statePrefix
-        this.regionPrefix = regionPrefix
+        this(maxValuedObjects, maxStates, maxRegions, valuedObjectPrefix, statePrefix, regionPrefix, DEFAULT_LEADING_ZEROES)
     }
     
     new(int maxValuedObjects, int maxStates, int maxRegions, String valuedObjectPrefix, String statePrefix, String regionPrefix, boolean leadingZeroes) {
-        this(maxValuedObjects, maxStates, maxRegions)
-        this.valOPrefix = valuedObjectPrefix
-        this.statePrefix = statePrefix
-        this.regionPrefix = regionPrefix
-        this.leadingZeroes = leadingZeroes
+        this.valOObf = new CountingObfuscator(maxValuedObjects, valuedObjectPrefix, leadingZeroes)
+        this.stateObf = new CountingObfuscator(maxStates, statePrefix, leadingZeroes)
+        this.regionObf = new CountingObfuscator(maxRegions, regionPrefix, leadingZeroes)
     }
     
-    override getValuedObjectName(ValuedObject valuedO) {
-        var str = valOPrefix
-        if (leadingZeroes) {
-            str += numberToFixedLengthString(valOCounter, minValONumSize)
-        } else {
-            str += valOCounter.toString
-        }
-        valOCounter++
-        return str
+    override getValuedObjectName(ValuedObject valO) {
+        return valOObf.getValuedObjectName(valO)
     }
     
     override getStateName(State state) {
-        var str = statePrefix
-        if (leadingZeroes) {
-            str += numberToFixedLengthString(stateCounter, minStateNumSize)
-        } else {
-            str += stateCounter.toString
-        }
-        stateCounter++
-        return str
+        return stateObf.getStateName(state)
     }
     
     override getCommentText(String comment) {
@@ -88,13 +83,6 @@ class CountingTypeObfuscator extends Obfuscator {
     }
     
     override getRegionName(Region region) {
-        var str = regionPrefix
-        if (leadingZeroes) {
-            str += numberToFixedLengthString(regionCounter, minRegionNumSize)
-        } else {
-            str += regionCounter.toString
-        }
-        regionCounter++
-        return str
+        return regionObf.getRegionName(region)
     }
 }

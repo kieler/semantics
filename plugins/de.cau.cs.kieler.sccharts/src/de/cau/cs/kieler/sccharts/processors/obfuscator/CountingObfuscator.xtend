@@ -25,6 +25,7 @@ class CountingObfuscator extends Obfuscator {
     String prefix = "ITEM"
     int count = 1
     int minStringLength
+    
     boolean leadingZeroes = true
     
     new(int maxItems) {
