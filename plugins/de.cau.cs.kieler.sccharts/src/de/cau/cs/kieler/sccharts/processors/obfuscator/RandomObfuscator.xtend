@@ -13,37 +13,38 @@
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
-import java.util.List
-import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author stu114663
  *
  */
 class RandomObfuscator extends Obfuscator {
-    int name_length = 32
     
-    public var List<String> usedStrings = new LinkedList<String>()
+    RandomTextGenerator rtg = new RandomTextGenerator
+    int nameLength
+    
+    new(ItemCounter ic) {
+        this(ic.itemCount)
+    }
     
     new(int maxItems) {
-        this.name_length = calcMinimumLengthOfCodePointString(maxItems)
+        this(RandomTextGenerator.calcMinimumLengthOfCodePointString(maxItems), maxItems)
     }
     
     new(int name_length, int maxItems) {
-        this(maxItems)
-        if (name_length >= this.name_length) {
-            this.name_length = name_length
+        if (name_length >= this.nameLength) {
+            this.nameLength = name_length
         }
     }
     
     override getValuedObjectName(ValuedObject valO) {
-        return getText()
+        return getText(this.nameLength)
     }
     
     override getStateName(State state) {
-        return getText()
+        return getText(this.nameLength)
     }
     
     override getCommentText(String comment) {
@@ -51,18 +52,11 @@ class RandomObfuscator extends Obfuscator {
     }
     
     override getRegionName(Region region) {
-        return getText()
+        return getText(this.nameLength)
     }
     
-    def getText() {
-        var nameText = getObfuscatedText(name_length)
-        
-        while (usedStrings.contains(nameText)) {
-            nameText = getObfuscatedText(name_length)
-        }
-        
-        usedStrings.add(nameText)
-        
-        return nameText
+    /** Get a String of random text that has not been used yet */
+    def String getText(int nameLength) {
+        return rtg.getText(nameLength)
     }
 }

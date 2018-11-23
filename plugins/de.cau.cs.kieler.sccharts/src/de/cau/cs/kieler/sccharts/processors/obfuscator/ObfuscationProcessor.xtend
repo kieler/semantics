@@ -26,15 +26,15 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.ArrayList
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.annotations.StringAnnotation
 
 /**
  * @author stu114663
  * 
  */
 class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
-
-//    @Inject extension SCChartsStateExtensions
-//    @Inject extension SCChartsCoreExtensions
+    
+    val DEFAULT_OBFUSCATOR_TYPE = ObfuscatorTypes.COUNTING_TYPE
 
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.obfuscator"
@@ -47,51 +47,51 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
     override process() {
         val model = getModel()
         
-        val obf = getObfuscator(ObfuscatorTypes.RANDOM_KEEP_LENGTH, model)
-
-        model.rootStates.forEach [ rs |
-            obfuscateState(rs, obf)
-        ]        
+        try {
+            model.rootStates.forEach [ rs |
+                val obf = getObfuscator(rs)
+                obfuscateState(rs, obf)
+            ] 
+        } catch (Exception e) {
+            
+        }       
     }
     
-    def getObfuscator(ObfuscatorTypes type, SCCharts model) {
-        val ModelItemCounter micnt = new ModelItemCounter(model)
-        micnt.count
-        
-        switch (type) {
-            case COUNTING: {
-                return new CountingObfuscator(micnt.itemCount, false)
-            }
-            case COUNTING_TYPE: {
-                return new CountingTypeObfuscator(micnt.valOCount, micnt.stateCount, micnt.regionCount)
-            }
-            case RANDOM: {
-                return new RandomObfuscator(micnt.itemCount)
-            }
-            case RANDOM_KEEP_LENGTH: {
-                return new RandomKeepLengthObfuscator
-            }
-        }
-    }
-    
-    def getObfuscator(ObfuscatorTypes type, Scope scp) {
+    def Obfuscator getObfuscator(ObfuscatorTypes type, Scope scp) throws Exception {
         val ScopeItemCounter sicnt = new ScopeItemCounter(scp)
         sicnt.count
         
         switch (type) {
             case COUNTING: {
-                return new CountingObfuscator(sicnt.itemCount, false)
+                return new CountingObfuscator(sicnt)
             }
             case COUNTING_TYPE: {
-                return new CountingTypeObfuscator(sicnt.valOCount, sicnt.stateCount, sicnt.regionCount)
+                return new CountingTypeObfuscator(sicnt)
             }
             case RANDOM: {
-                return new RandomObfuscator(sicnt.itemCount)
+                return new RandomObfuscator(sicnt)
             }
             case RANDOM_KEEP_LENGTH: {
                 return new RandomKeepLengthObfuscator
             }
         }
+    }
+    
+    def Obfuscator getObfuscator(Scope scp) throws Exception {
+        getObfuscator(evaluateObfuscatorAnnotations(scp), scp)
+    }
+    
+    def ObfuscatorTypes evaluateObfuscatorAnnotations(Scope scp) {
+        val annotationList = scp.annotations
+        var ObfuscatorTypes type = DEFAULT_OBFUSCATOR_TYPE
+        val stringAnnotations = annotationList.filter[v | v instanceof StringAnnotation]
+        for (anno : stringAnnotations) {
+            val strA = anno as StringAnnotation
+            if (strA.name.equals("OBFUSCATOR") && !strA.values.empty) {
+                type = ObfuscatorTypes.valueOf(strA.values.get(0))
+            }
+        }
+        return type
     }
      
     // Structural Obfuscation -------------------------------------------------
@@ -99,7 +99,7 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
     /** 
      * Filters CommentAnnotations, obfuscates them and deletes them if the comment is empty
      */
-    def void obfuscateAnnotations(EList<Annotation> annotationList, Obfuscator obf) {
+    def obfuscateAnnotations(EList<Annotation> annotationList, Obfuscator obf) {
         val comments = annotationList.filter[v | v instanceof CommentAnnotation]
         var markedForDeletion = new ArrayList<Annotation>
         
@@ -135,19 +135,20 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
      * Obfuscates the ValuedObject name and the Annotations attached to it
      */
     def void obfuscateValO(ValuedObject valO, Obfuscator obf) {
-        valO.name = obf.getValuedObjectName(valO)
         obfuscateAnnotations(valO.annotations, obf)
+        
+        valO.name = obf.getValuedObjectName(valO)
     }
     
     /**
      * Obfuscates the included ValuedObjects and the attached Annotations
      */
-    def void obfuscateDeclaration(Declaration decl, Obfuscator obf) {
+    def obfuscateDeclaration(Declaration decl, Obfuscator obf) {
         obfuscateAnnotations(decl.annotations, obf)
-        
-        decl.valuedObjects.forEach[valO |
-            obfuscateValO(valO, obf)
-        ]
+
+        for (valO : decl.valuedObjects) {
+        	obfuscateValO(valO, obf)
+        }
     }
     
     /**
@@ -155,18 +156,18 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
      * as well as the included States, if the Region is a ControlflowRegion
      */
     def void obfuscateRegion(Region region, Obfuscator obf) {
-        region.name = obf.getRegionName(region)
-        
         obfuscateAnnotations(region.annotations, obf)
+        
+        region.name = obf.getRegionName(region)
 
-        region.declarations.forEach [ decl |
+        for (decl : region.declarations) {
             obfuscateDeclaration(decl, obf)
-        ]
+        }
         
         if (region instanceof ControlflowRegion) {
-            region.states.forEach[state |
+            for (state : region.states) {
                 obfuscateState(state, obf)
-            ]
+            }
         } else if (region instanceof DataflowRegion) {
         }
     }
@@ -176,20 +177,21 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
      * as well as the included Regions and the Outgoing Transitions
      */
     def void obfuscateState(State state, Obfuscator obf) {
-        state.name = obf.getStateName(state)
         obfuscateAnnotations(state.annotations, obf)
-
-        state.declarations.forEach [ decl |
-            obfuscateDeclaration(decl, obf)
-        ]
-
-        state.regions.forEach[ region |
-            obfuscateRegion(region, obf)
-        ]
         
-        state.outgoingTransitions.forEach[tran |
-            obfuscateAnnotations(tran.annotations, obf)
-        ]
+        state.name = obf.getStateName(state)
+
+        for (decl : state.declarations) {
+            obfuscateDeclaration(decl, obf)
+        }
+
+        for (region : state.regions) {
+            obfuscateRegion(region, obf)
+        }
+
+        for (tran : state.outgoingTransitions) {
+            obfuscateTransition(tran, obf)
+        }
     }
     
     /**
@@ -197,5 +199,12 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
      */
     def void obfuscateTransition(Transition tran, Obfuscator obf) {
         obfuscateAnnotations(tran.annotations, obf)
+        
+        if (tran.label !== null) {
+            tran.label = obf.getCommentText(tran.label)
+            if (tran.label.empty) {
+                tran.label = null
+            }
+        }
     }
 }

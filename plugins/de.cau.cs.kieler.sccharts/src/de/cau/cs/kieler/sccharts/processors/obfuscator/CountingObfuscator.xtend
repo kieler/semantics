@@ -12,21 +12,40 @@
  */
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
-import de.cau.cs.kieler.sccharts.processors.obfuscator.Obfuscator
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author stu114663
  *
  */
 class CountingObfuscator extends Obfuscator {
-    String prefix = "ITEM"
-    int count = 1
+    
+    static final String DEFAULT_PREFIX = "ITEM"
+    static final boolean DEFAULT_LEADING_ZEROES = false
+    
+    String prefix
+    boolean leadingZeroes
+    int count = 0
     int minStringLength
     
-    boolean leadingZeroes = true
+    new(ItemCounter ic) {
+        this(ic, DEFAULT_PREFIX, DEFAULT_LEADING_ZEROES)
+    }
+    
+    new(ItemCounter ic, String prefix) {
+        this(ic, prefix, DEFAULT_LEADING_ZEROES)
+    }
+    
+    new(ItemCounter ic, boolean leadingZeroes) {
+        this(ic, DEFAULT_PREFIX, leadingZeroes)
+    }
+    
+    new(ItemCounter ic, String prefix, boolean leadingZeroes) {
+        // comments are not counted but deleted
+        this(ic.itemCount - ic.commentCount, prefix, leadingZeroes)
+    }
     
     new(int maxItems) {
         this.minStringLength = calcMinimumLengthOfNum(maxItems)
@@ -61,6 +80,13 @@ class CountingObfuscator extends Obfuscator {
     
     override getRegionName(Region region) {
         return getText()
+    }
+    
+    /**
+     * Calculate the minimum length of a number string for it to contain at least maxNum possible different numbers
+     */
+    def int calcMinimumLengthOfNum(int maxNum) {
+        return Math.ceil(Math.log(maxNum)/Math.log(10)).intValue
     }
     
     def String getText() {

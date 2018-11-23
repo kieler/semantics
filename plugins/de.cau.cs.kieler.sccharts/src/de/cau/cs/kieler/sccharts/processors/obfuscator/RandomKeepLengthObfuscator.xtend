@@ -13,18 +13,17 @@
 package de.cau.cs.kieler.sccharts.processors.obfuscator
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
-import java.util.List
-import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author stu114663
  *
  */
 class RandomKeepLengthObfuscator extends Obfuscator {
-    List<String> usedStrings = new LinkedList<String>()
-
+    
+    RandomTextGenerator rtg = new RandomTextGenerator
+    
     override getValuedObjectName(ValuedObject valuedO) {
         getText(valuedO.name.length)
     }
@@ -35,7 +34,6 @@ class RandomKeepLengthObfuscator extends Obfuscator {
         } else {
             return getText(state.name.length)
         }
-        
     }
     
     override getCommentText(String comment) {
@@ -50,14 +48,7 @@ class RandomKeepLengthObfuscator extends Obfuscator {
         }
     }
     
-    def getText(int name_length) {
-        var nameText = getObfuscatedText(name_length)
-        
-        while (containsString(usedStrings, nameText)) {
-            nameText = getObfuscatedText(name_length)
-        }
-        usedStrings.add(nameText)
-        
-        return nameText
+    def String getText(int nameLength) {
+        return rtg.getText(nameLength)
     }
 }

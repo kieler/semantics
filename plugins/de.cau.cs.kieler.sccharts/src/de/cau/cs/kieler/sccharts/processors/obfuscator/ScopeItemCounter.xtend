@@ -32,7 +32,7 @@ class ScopeItemCounter extends ItemCounter {
      * Recursively counts subitems:
      *      -rootstates
      */
-    override count() {
+    override void count() {
         if (counted) {
             reset
             counted = false

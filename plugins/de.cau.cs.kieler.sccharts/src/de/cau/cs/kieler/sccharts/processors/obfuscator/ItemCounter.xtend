@@ -26,8 +26,6 @@ import de.cau.cs.kieler.sccharts.Transition
  *
  */
 abstract class ItemCounter {
-    
-    int itemCount    = 0
     int commentCount = 0
     int valOCount    = 0
     int regionCount  = 0
@@ -38,7 +36,6 @@ abstract class ItemCounter {
     abstract def void count()
     
     def void reset() {
-        itemCount = 0
         commentCount = 0
         valOCount = 0
         regionCount = 0
@@ -47,8 +44,9 @@ abstract class ItemCounter {
         counted = false
     }
     
+    /** get the overall item count */
     def int getItemCount() {
-        return itemCount
+        return commentCount + valOCount + regionCount + stateCount
     }
     
     def int getCommentCount() {
@@ -87,7 +85,6 @@ abstract class ItemCounter {
      */
     def void countValOItems(ValuedObject valO) {
         valOCount++
-        itemCount++
         
         valO.annotations.forEach[anno |
             countAnnotationItems(anno)
@@ -118,7 +115,6 @@ abstract class ItemCounter {
      */
     def void countRegionItems(Region region) {
         regionCount++
-        itemCount++
         
         region.annotations.forEach[anno |
             countAnnotationItems(anno)
@@ -144,7 +140,6 @@ abstract class ItemCounter {
      */
     def void countStateItems(State state) {
         stateCount++
-        itemCount++
         
         state.annotations.forEach[anno |
             countAnnotationItems(anno)
@@ -169,6 +164,9 @@ abstract class ItemCounter {
         tran.annotations.forEach[anno |
             countAnnotationItems(anno)
         ]
+        if (tran.label !== null) {
+            commentCount++
+        }
     }
     
 }

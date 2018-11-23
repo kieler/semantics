@@ -29,7 +29,7 @@ class CountingTypeObfuscator extends Obfuscator {
     static final String DEFAULT_VALO_PREFIX = "Var"
     static final String DEFAULT_REGION_PREFIX = "Region"
     static final String DEFAULT_STATE_PREFIX = "State"
-    static final boolean DEFAULT_LEADING_ZEROES = true
+    static final boolean DEFAULT_LEADING_ZEROES = false
     
     new(ItemCounter ic) {
         this(ic, DEFAULT_LEADING_ZEROES)
