@@ -317,6 +317,7 @@ class SCChartFileRenderingApplication implements IApplication {
      * 
      * @param selectors a Stream of paths to handle
      * @param isDirect true if an error should be printed on file extension miss-match
+     * @param parent a parent file used, if a path is relative
      */
     private def void handleSpecifiers(Stream<String> selectors, boolean isDirect, File parent) {
         val iter = selectors.iterator;
