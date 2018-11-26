@@ -1,0 +1,4 @@
+system de.cau.cs.kieler.sccharts.interactiveScheduling
+	label "SCCharts Interactive Scheduling"
+    
+de.cau.cs.kieler.sccharts.processors.stateDependencies

@@ -151,6 +151,9 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActionsAndDeclarations">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Inheritance">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth">
         </Processor>
         <Processor
@@ -166,7 +169,7 @@
               class="de.cau.cs.kieler.sccharts.processors.statebased.SuperfluousSuperstateRemover">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.codegen.statebased.StatebasedCCodeGenerator">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGenerator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.ToHybridDataflow">
@@ -181,7 +184,13 @@
               class="de.cau.cs.kieler.sccharts.processors.dataflow.DeLoopRegions">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Inheritance">
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
      </extension>
      <extension
@@ -206,6 +215,21 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.lustre.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.interactiveScheduling.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.woComments.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.csv.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy.kico">
         </TransformationSystem>
      </extension>
 

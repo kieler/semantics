@@ -178,6 +178,15 @@ abstract class AbstractCodeGeneratorModule {
         return if (!condition) "" else comment
     }
     
+    protected def String IFC(boolean condition, Object ... args) {
+        if (!condition) return ""
+        val sb = new StringBuilder
+        for (s : args) {
+            sb.add(s)
+        }
+        return sb.toString
+    }
+    
     // Multi-Line Comment
     protected def String MLC(Object ... args) {
         MLCi(0, args)

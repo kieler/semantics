@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -61,7 +62,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface Action extends Annotatable {
+public interface Action extends Annotatable, Linkable {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

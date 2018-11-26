@@ -272,13 +272,31 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__OUTGOING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__INCOMING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION__EFFECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int ACTION__EFFECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Trigger</b></em>' containment reference.
@@ -287,7 +305,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int ACTION__TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Trigger Delay</b></em>' attribute.
@@ -296,7 +314,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__TRIGGER_DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int ACTION__TRIGGER_DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
@@ -305,7 +323,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__TRIGGER_PROBABILITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int ACTION__TRIGGER_PROBABILITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -314,7 +332,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -323,7 +341,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
@@ -332,7 +350,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__NONDETERMINISTIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int ACTION__NONDETERMINISTIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>Action</em>' class.
@@ -341,7 +359,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
@@ -361,6 +379,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int LOCAL_ACTION__ANNOTATIONS = ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__OUTGOING_LINKS = ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__INCOMING_LINKS = ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1088,6 +1124,24 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__ANNOTATIONS = ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__OUTGOING_LINKS = ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__INCOMING_LINKS = ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1224,6 +1278,24 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1313,6 +1385,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DURING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1415,6 +1505,24 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1504,6 +1612,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUSPEND_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1606,6 +1732,24 @@ public interface SCChartsPackage extends EPackage {
     int PRECEDING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1697,6 +1841,24 @@ public interface SCChartsPackage extends EPackage {
     int SUCCEEDING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1786,6 +1948,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int PERIOD_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PERIOD_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PERIOD_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.

@@ -25,28 +25,32 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
  */
 class SkinSelectionActions {
 
-    public val static skins = #[new Pair<String, String>("Default Skin", "default/"),
+    public val static SKINS = #[new Pair<String, String>("Default Skin", "default/"),
+                         new Pair<String, String>("Flexible Skin", "flexible/"),
+                         new Pair<String, String>("Fixed Skin", "fixed/"),
                          new Pair<String, String>("SCCharts Skin", "scc/"),
                          new Pair<String, String>("Detailed Skin", "detailed/")
     ]
+    
+    public val static SKINS_MAX_NAME_SIZE = #[255, 255, 15, 255, 255]
 
     @Accessors List<AbstractAction> actions = <AbstractAction> newLinkedList
     @Accessors private CompilerView view
     
     new(CompilerView view) {
         this.view = view 
-        for(s : skins) {
+        for(s : SKINS.indexed) {
             
             val action = new AbstractAction(view, 
-                s.key, 
+                s.value.key, 
                 IAction.AS_RADIO_BUTTON,
-                "skinToggle" + s.key.replaceAll(" ", ""), 
-                s.key,
-                s.key, 
+                "skinToggle" + s.value.key.replaceAll(" ", ""), 
+                s.value.key,
+                s.value.key, 
                 null
             ) {
                 override void invoke() {
-                    if (action.isChecked) invokeFromActions(s.value)
+                    if (action.isChecked) invokeFromActions(s.key)
                 }
             }
             
@@ -56,8 +60,9 @@ class SkinSelectionActions {
         actions.head.action.checked = true
     }
     
-    protected def void invokeFromActions(String str) {
-        SkinSelector.skinPrefix = "resources/skins/" + str
+    protected def void invokeFromActions(int index) {
+        SkinSelector.skinPrefix = "resources/skins/" + SKINS.get(index).value
+        SkinSelector.skinMaxNameSize = SKINS_MAX_NAME_SIZE.get(index)
         view.updateView
     }
 }

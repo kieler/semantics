@@ -27,7 +27,7 @@ public class KiVisParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "VisualizationConfiguration";
+		return "Visualization";
 	}
 
 	public KiVisGrammarAccess getGrammarAccess() {

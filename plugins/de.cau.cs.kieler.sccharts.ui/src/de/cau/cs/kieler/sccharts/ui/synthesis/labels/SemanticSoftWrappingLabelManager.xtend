@@ -14,9 +14,9 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.labels
 
 import com.google.inject.Guice
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.krendering.KRenderingOptions
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KLabel
-import de.cau.cs.kieler.klighd.krendering.KRenderingOptions
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef
 import de.cau.cs.kieler.klighd.labels.management.SoftWrappingLabelManager
 import de.cau.cs.kieler.sccharts.Transition

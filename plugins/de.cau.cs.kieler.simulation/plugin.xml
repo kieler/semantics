@@ -39,6 +39,12 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.internal.simulation.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.statebased.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.tts.statebased.c.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">
@@ -62,6 +68,12 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.CTickTimeTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator">
       </Processor>
    </extension>
 

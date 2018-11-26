@@ -23,6 +23,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.sccharts.processors.statebased.StatebasedUtil.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author ssm
@@ -53,6 +56,7 @@ class DeSurfaceDepth extends SCChartsProcessor implements Traceable {
     
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     
     protected def void transformSuperstate(State state) {
@@ -72,22 +76,24 @@ class DeSurfaceDepth extends SCChartsProcessor implements Traceable {
             // The pattern is identified as a state that has
             // - only one outgoing not-immediate transition
             //   - The target state of that transition also has an immediate transition back to the state without trigger
-            //     or effects
+            //     or effects that is not a normal termination
             //   OR
             //   - The target state is not initial or final 
-            //   - The target state's transition are all immediate and do not directly lead back to the source state.   
+            //   - The target state's transition are all immediate and do not directly lead back to the source state.  
             if (state.outgoingTransitions.size == 1) {
                 val oT = state.outgoingTransitions.head
                 if (!oT.isImmediate) {
                     if (state.incomingTransitions.exists[ 
-                        sourceState == oT.targetState && 
+                        sourceState == oT.targetState &&
+                        !isTermination && 
                         trigger === null && // We don't want to lose trigger.
                         effects.empty // We don't want to lose effects.
-                    ] || 
-                    (!oT.targetState.initial && !oT.targetState.final &&  
-                        oT.targetState.outgoingTransitions.forall[
-                            immediate && targetState != state 
-                        ])
+                    ] 
+//                    || 
+//                    (!oT.targetState.initial && !oT.targetState.final &&  
+//                        oT.targetState.outgoingTransitions.forall[
+//                            immediate && targetState != state 
+//                        ])
                     ) {
                         sdStates += state 
                         annotationModel.addInfo(state, "Surface / Depth")
@@ -131,6 +137,7 @@ class DeSurfaceDepth extends SCChartsProcessor implements Traceable {
                 
                 tS.initial = tS.initial || state.initial 
                 tS.adaptName(state)
+                tS.saveNodePriority(state)
                 
                 state.remove
                 snapshot

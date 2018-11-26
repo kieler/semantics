@@ -123,6 +123,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 Action action = (Action)theEObject;
                 T result = caseAction(action);
                 if (result == null) result = caseAnnotatable(action);
+                if (result == null) result = caseLinkable(action);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -131,6 +132,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseLocalAction(localAction);
                 if (result == null) result = caseAction(localAction);
                 if (result == null) result = caseAnnotatable(localAction);
+                if (result == null) result = caseLinkable(localAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -192,6 +194,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseTransition(transition);
                 if (result == null) result = caseAction(transition);
                 if (result == null) result = caseAnnotatable(transition);
+                if (result == null) result = caseLinkable(transition);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -201,6 +204,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(entryAction);
                 if (result == null) result = caseAction(entryAction);
                 if (result == null) result = caseAnnotatable(entryAction);
+                if (result == null) result = caseLinkable(entryAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -210,6 +214,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(duringAction);
                 if (result == null) result = caseAction(duringAction);
                 if (result == null) result = caseAnnotatable(duringAction);
+                if (result == null) result = caseLinkable(duringAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -219,6 +224,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(exitAction);
                 if (result == null) result = caseAction(exitAction);
                 if (result == null) result = caseAnnotatable(exitAction);
+                if (result == null) result = caseLinkable(exitAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -228,6 +234,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(suspendAction);
                 if (result == null) result = caseAction(suspendAction);
                 if (result == null) result = caseAnnotatable(suspendAction);
+                if (result == null) result = caseLinkable(suspendAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -237,6 +244,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(precedingAction);
                 if (result == null) result = caseAction(precedingAction);
                 if (result == null) result = caseAnnotatable(precedingAction);
+                if (result == null) result = caseLinkable(precedingAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -246,6 +254,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(succeedingAction);
                 if (result == null) result = caseAction(succeedingAction);
                 if (result == null) result = caseAnnotatable(succeedingAction);
+                if (result == null) result = caseLinkable(succeedingAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -255,6 +264,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(periodAction);
                 if (result == null) result = caseAction(periodAction);
                 if (result == null) result = caseAnnotatable(periodAction);
+                if (result == null) result = caseLinkable(periodAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

@@ -269,6 +269,15 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ScgPackage.TICK_BOUNDARY_DEPENDENCY: {
+                TickBoundaryDependency tickBoundaryDependency = (TickBoundaryDependency)theEObject;
+                T result = caseTickBoundaryDependency(tickBoundaryDependency);
+                if (result == null) result = caseDependency(tickBoundaryDependency);
+                if (result == null) result = caseLink(tickBoundaryDependency);
+                if (result == null) result = caseAnnotatable(tickBoundaryDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -559,6 +568,21 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
 				/**
+     * Returns the result of interpreting the object as an instance of '<em>Tick Boundary Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Tick Boundary Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTickBoundaryDependency(TickBoundaryDependency object) {
+        return null;
+    }
+
+                /**
      * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;

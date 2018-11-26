@@ -159,6 +159,8 @@ class Dataflow extends SCChartsProcessor {
                                     val newAssignment = createAssignment(rdInstance, valuedObject, value)
                                     val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
                                     processedEquations += newEq
+                                } else {
+                                    vectorValues.head.remove
                                 }
                             }
                             idx++

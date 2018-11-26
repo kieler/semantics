@@ -207,7 +207,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }          
         } else if (declaration instanceof ScheduleDeclaration) {
             components.addKeyword("schedule")
-            components.addHighlight(declaration.name)
+            if (!declaration.name.nullOrEmpty) {
+                components.addHighlight(declaration.name)
+            }
         }
         
         
@@ -375,10 +377,13 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }   
     
     override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
-        var res = assignment.reference.valuedObject.name.applySymbolTable
-        if (!assignment.reference.indices.nullOrEmpty) {
-            for(index : assignment.reference.indices) {
-                res = res + "[" + index.serialize + "]"
+        var res = ""
+        if (assignment.reference !== null && assignment.reference.valuedObject !== null) {
+            res = assignment.reference.valuedObject.name.applySymbolTable
+            if (!assignment.reference.indices.nullOrEmpty) {
+                for(index : assignment.reference.indices) {
+                    res = res + "[" + index.serialize + "]"
+                }
             }
         }
         

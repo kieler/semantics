@@ -40,6 +40,7 @@
     <module>de.cau.cs.kieler.kicool.ui</module>
     <module>de.cau.cs.kieler.kicool</module>
     <module>de.cau.cs.kieler.kivis.ui</module>
+    <module>de.cau.cs.kieler.kivis.ide</module>
     <module>de.cau.cs.kieler.kivis</module>
     <module>de.cau.cs.kieler.language.server</module>
     <module>de.cau.cs.kieler.lustre.ide</module>

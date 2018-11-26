@@ -32,7 +32,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 /**
  * Display/Hides annotations on states.
  * 
- * @author als
+ * @author ssm
  * @kieler.design 2018-04-14 proposed
  * @kieler.rating 2018-04-14 proposed yellow
  * 

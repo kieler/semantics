@@ -84,7 +84,7 @@ class SimulationModelWrapper implements Simulatable {
                 val pb = executable.processBuilder
                 if (environment !== null) {
                     val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-                    pb.directory(infra.generadedCodeFolder)
+                    pb.directory(infra.generatedCodeFolder)
                 }
                 
                 // Start and set up concurrent redirects
