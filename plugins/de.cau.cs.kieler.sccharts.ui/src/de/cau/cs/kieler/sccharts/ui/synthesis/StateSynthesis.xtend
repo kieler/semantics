@@ -19,9 +19,9 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -53,7 +53,6 @@ import org.eclipse.elk.core.options.SizeConstraint
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -180,11 +179,15 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
             for (declaration : declarations) {
-                node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
-                    associateWith(declaration)
-                    eAllContents.filter(KRendering).forEach[associateWith(declaration)]
-                ]
+                if (declaration instanceof StructDeclaration) {
+                    node.addStructDeclarations(declaration, 0)
+                } else {
+                    node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
+                        setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                        associateWith(declaration)
+                        eAllContents.filter(KRendering).forEach[associateWith(declaration)]
+                    ]
+                }
             }           
 
             // Add actions
@@ -249,6 +252,29 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }                       
 
         return returnNodes
+    }
+    
+    private def void addStructDeclarations(KNode node, StructDeclaration struct, int indent) {
+        val segments = struct.serializeHighlighted(true)
+        val head = segments.takeWhile[value !== TextFormat.CONTENT_PLACEHOLDER].toList;
+        val tail = segments.dropWhile[value !== TextFormat.CONTENT_PLACEHOLDER].drop(1).toList;
+        node.addDeclarationLabel(head, indent) => [
+            setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+            associateWith(struct)
+            eAllContents.filter(KRendering).forEach[associateWith(struct)]
+        ]
+        for (declaration : struct.declarations) {
+            if (declaration instanceof StructDeclaration) {
+                node.addStructDeclarations(declaration, indent + 1)
+            } else {
+                node.addDeclarationLabel(declaration.serializeHighlighted(true), indent + 1) => [
+                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    associateWith(declaration)
+                    eAllContents.filter(KRendering).forEach[associateWith(declaration)]
+                ]
+            }
+        }
+        node.addDeclarationLabel(tail, indent);
     }
     
     

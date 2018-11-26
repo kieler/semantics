@@ -232,7 +232,7 @@ class StateStyles {
      * Adds a title label to a macro state figure.
      */
     def KRectangle addMacroStateLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
-        node.contentContainer.addKeywordLabel(components) => [
+        node.contentContainer.addKeywordLabel(components, 0) => [
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
                 
@@ -260,21 +260,28 @@ class StateStyles {
      * The first part will be highlighted as keywords.
      */
     def KRectangle addActionLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
-        node.actionsContainer.addKeywordLabel(components);
+        node.actionsContainer.addKeywordLabel(components, 0);
     }
 
     /**
-     * Adds a label in action style with the given components to a macro state.<br>
-     * The first part will be highlighted as keywords.
+     * Adds a label in action style with the given components to a macro state.
      */
     def KRectangle addDeclarationLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
-        return node.declarationsContainer.addKeywordLabel(components);
+        return node.declarationsContainer.addKeywordLabel(components, 0);
+    }
+    
+    /**
+     * Adds a label in action style with the given components to a macro state.<br>
+     * The given indent level will be prepended.
+     */
+    def KRectangle addDeclarationLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components, int indent) {
+        return node.declarationsContainer.addKeywordLabel(components, indent);
     }
 
     /**
      * Creates a text with highlighted keywords.
      */
-    package def addKeywordLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> components) {
+    package def addKeywordLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> components, int indent) {
         return container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
             invisible = true
@@ -282,7 +289,7 @@ class StateStyles {
             addRectangle() => [
                 invisible = true;
                 // Add left alignment
-                setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                setPointPlacementData(createKPosition(LEFT, indent * 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
                 var parts = 0
                 val entries = components.iterator
                 val builder = new StringBuilder()

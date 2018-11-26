@@ -185,6 +185,7 @@
     <eLiterals name="UNKNOWN" value="10" literal="UNKNOWN"/>
     <eLiterals name="CLOCK" value="11" literal="CLOCK"/>
     <eLiterals name="JSON" value="12" literal="JSON"/>
+    <eLiterals name="STRUCT" value="13" literal="STRUCT"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

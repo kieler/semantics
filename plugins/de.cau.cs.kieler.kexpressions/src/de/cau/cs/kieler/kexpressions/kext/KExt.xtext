@@ -74,10 +74,10 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
+    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration;
 
 DeclarationWOSemicolon returns kexpressions::Declaration:
-    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | StructDeclarationWOSemicolon;
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
@@ -108,6 +108,41 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
         (type = HostType hostType = STRING)
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?; 
+
+StructDeclaration returns kext::StructDeclaration:
+    {kext::StructDeclaration}
+    annotations+=Annotation*
+    private?='private'?
+    const?='const'?
+    input?='input'?
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    type = StructType
+    (name = ID)?
+    '{'
+        declarations+=Declaration*
+    '}'
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+    ';'
+    annotations+=CommentAnnotatonSL?;
+    
+StructDeclarationWOSemicolon returns kext::StructDeclaration:
+    {kext::StructDeclaration}
+    annotations+=Annotation*
+    private?='private'?
+    const?='const'?
+    input?='input'? 
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    type = StructType
+    (name = ID)?
+    '{'
+        declarations+=DeclarationWOSemicolon*
+    '}'
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
     annotations+=CommentAnnotatonSL?;  
     
 NamespaceID returns ecore::EString:

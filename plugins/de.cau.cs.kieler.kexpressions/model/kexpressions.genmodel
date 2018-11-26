@@ -59,6 +59,7 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/UNKNOWN"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLOCK"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/JSON"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/STRUCT"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//PriorityProtocol">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//PriorityProtocol/CONFLICT"/>

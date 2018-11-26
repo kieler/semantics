@@ -61,6 +61,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
             case KExtPackage.KEXT_SCOPE: return createKExtScope();
             case KExtPackage.TEST_ENTITY: return createTestEntity();
             case KExtPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
+            case KExtPackage.STRUCT_DECLARATION: return createStructDeclaration();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -104,6 +105,16 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
     public AnnotatedExpression createAnnotatedExpression() {
         AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
         return annotatedExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public StructDeclaration createStructDeclaration() {
+        StructDeclarationImpl structDeclaration = new StructDeclarationImpl();
+        return structDeclaration;
     }
 
     /**

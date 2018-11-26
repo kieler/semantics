@@ -2678,6 +2678,21 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"host"
 		public Keyword getHOSTHostKeyword_0() { return cHOSTHostKeyword_0; }
 	}
+	public class StructTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.StructType");
+		private final EnumLiteralDeclaration cSTRUCTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSTRUCTStructKeyword_0 = (Keyword)cSTRUCTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum StructType returns ValueType:
+		//	STRUCT="struct";
+		public EnumRule getRule() { return rule; }
+		
+		//STRUCT="struct"
+		public EnumLiteralDeclaration getSTRUCTEnumLiteralDeclaration() { return cSTRUCTEnumLiteralDeclaration; }
+		
+		//"struct"
+		public Keyword getSTRUCTStructKeyword_0() { return cSTRUCTStructKeyword_0; }
+	}
 	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.CombineOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -2824,6 +2839,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final FBYOperatorElements eFBYOperator;
 	private final ValueTypeElements eValueType;
 	private final HostTypeElements eHostType;
+	private final StructTypeElements eStructType;
 	private final CombineOperatorElements eCombineOperator;
 	private final JsonObjectValueElements pJsonObjectValue;
 	private final JsonObjectMemberElements pJsonObjectMember;
@@ -2914,6 +2930,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.eFBYOperator = new FBYOperatorElements();
 		this.eValueType = new ValueTypeElements();
 		this.eHostType = new HostTypeElements();
+		this.eStructType = new StructTypeElements();
 		this.eCombineOperator = new CombineOperatorElements();
 		this.pJsonObjectValue = new JsonObjectValueElements();
 		this.pJsonObjectMember = new JsonObjectMemberElements();
@@ -3809,6 +3826,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getHostTypeRule() {
 		return getHostTypeAccess().getRule();
+	}
+	
+	//enum StructType returns ValueType:
+	//	STRUCT="struct";
+	public StructTypeElements getStructTypeAccess() {
+		return eStructType;
+	}
+	
+	public EnumRule getStructTypeRule() {
+		return getStructTypeAccess().getRule();
 	}
 	
 	//enum CombineOperator:

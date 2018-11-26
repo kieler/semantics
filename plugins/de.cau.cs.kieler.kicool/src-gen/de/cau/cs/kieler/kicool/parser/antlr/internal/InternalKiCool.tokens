@@ -62,11 +62,11 @@
 'int'=107
 'intermediate'=23
 'label'=21
-'max'=112
+'max'=113
 'max='=91
-'min'=113
+'min'=114
 'min='=90
-'none'=111
+'none'=112
 'null'=74
 'output'=39
 'post'=29
@@ -86,6 +86,7 @@
 'simulation'=19
 'static'=41
 'string'=109
+'struct'=111
 'system'=20
 'unsigned'=106
 'val'=101
@@ -122,6 +123,7 @@ T__110=110
 T__111=111
 T__112=112
 T__113=113
+T__114=114
 T__17=17
 T__18=18
 T__19=19

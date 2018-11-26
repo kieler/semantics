@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
 
 /**
  * @author ssm
@@ -183,6 +184,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 components.addKeyword(declaration.hostType)
             } else if (type == ValueType.CLOCK) {
                 components.addKeyword("clock")
+            }  else if (type == ValueType.STRUCT) {
+                components.addKeyword("struct")
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
@@ -205,6 +208,16 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         } else if (declaration instanceof ScheduleDeclaration) {
             components.addKeyword("schedule")
             components.addHighlight(declaration.name)
+        }
+        
+        
+        if (declaration instanceof StructDeclaration) {
+            if (!declaration.name.nullOrEmpty) {
+                components.addText(declaration.name)
+            }
+            components.addText("{")
+            components.addContentPlaceholder
+            components.addText("}")
         }
 
         // Content
@@ -252,6 +265,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         list += new Pair(text, TextFormat.TEXT)
     }
     
+    private def addContentPlaceholder(List<Pair<? extends CharSequence, TextFormat>> list) {
+        list += new Pair("", TextFormat.CONTENT_PLACEHOLDER)
+    }
+    
     
     def dispatch CharSequence serialize(VariableDeclaration declaration) {
         declaration.serialize(false)
@@ -262,85 +279,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
     
     private def CharSequence serialize(VariableDeclaration declaration, boolean hr) {
-        val joiner = Joiner.on(" ");
-        val parts = declaration.serializeComponents(hr)
-        return joiner.join(parts.key) + joiner.join(parts.value);
+        return declaration.serializeHighlighted(hr).map[key].join(" ");
     }
-    
-    def dispatch Pair<List<String>, List<String>> serializeComponents(VariableDeclaration declaration, boolean hr) {
-        val keywords = newLinkedList;
-        val content = newLinkedList;
 
-        //Modifiers
-        if (declaration.isExtern) {
-            keywords += "extern";
-        }
-        if (declaration.isGlobal) {
-            keywords += "global";
-        }
-        if (declaration.isStatic) {
-            keywords += "static";
-        }
-        if (declaration.isConst) {
-            keywords += "const";
-        }
-        if (declaration.isVolatile) {
-            keywords += "volatile";
-        }
-        if (declaration.isInput) {
-            keywords += "input";
-        }
-        if (declaration.isOutput) {
-            keywords += "output"
-        }
-        if (declaration.isSignal) {
-            keywords += "signal";
-        }
-
-        //Type
-        val type = declaration.type;
-        if (type == ValueType.PURE) {
-            // Nothing - indicated by signal keyword
-        } else if (type == ValueType.HOST) {
-            keywords += declaration.hostType
-        } else if (type == ValueType.CLOCK) {
-            keywords += "clock"
-        } else {
-            if (hr) {
-                keywords += type.serializeHR as String
-            }else{
-                keywords += type.serialize as String
-            }
-        } 
-
-        //Content
-        val voIter = declaration.valuedObjects.iterator;
-        while (voIter.hasNext) {
-            val vo = voIter.next;
-            val text = new StringBuilder();
-            if (hr) {
-                text.append(vo.serializeHR)
-            }else{
-                text.append(vo.serialize)
-            }
-            if (vo.initialValue !== null) {
-                text.append(" = ");
-                if (hr) {
-                    text.append(vo.initialValue.serializeHR);
-                }else{
-                    text.append(vo.initialValue.serialize);
-                }
-            }
-            if (voIter.hasNext) {
-                text.append(",");
-            }
-            content += text.toString;
-        }
-
-        return new Pair(keywords, content);
-    }
-    
-    
     def dispatch CharSequence serialize(ReferenceDeclaration declaration) {
         declaration.serialize(false)
     }
@@ -350,63 +291,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
     
     private def CharSequence serialize(ReferenceDeclaration declaration, boolean hr) {
-        val joiner = Joiner.on(" ");
-        val parts = declaration.serializeComponents(hr)
-        return joiner.join(parts.key) + joiner.join(parts.value);
+        return declaration.serializeHighlighted(hr).map[key].join(" ");
     }
-    
-    def dispatch Pair<List<String>, List<String>> serializeComponents(ReferenceDeclaration declaration, boolean hr) {
-        val keywords = newLinkedList;
-        val content = newLinkedList;
-        
-        if (declaration.extern.nullOrEmpty) {
-            keywords += "ref"
-            if (declaration.reference instanceof NamedObject) {
-                keywords += (declaration.reference as NamedObject).name
-            } else {
-                keywords += declaration.reference.class.name
-            }
-        } else {
-            keywords += "extern"
-            content += "\"" + declaration.extern + "\""
-        }
-
-        //Content
-        val voIter = declaration.valuedObjects.iterator;
-        while (voIter.hasNext) {
-            val vo = voIter.next;
-            val text = new StringBuilder();
-            if (hr) {
-                text.append(vo.serializeHR)
-            }else{
-                text.append(vo.serialize)
-            }
-            if (vo.initialValue !== null) {
-                text.append(" = ");
-                if (hr) {
-                    text.append(vo.initialValue.serializeHR);
-                }else{
-                    text.append(vo.initialValue.serialize);
-                }
-            }
-            if (voIter.hasNext) {
-                text.append(",");
-            }
-            content += text.toString;
-        }
-
-        return new Pair(keywords, content);
-    }
-    
-    def dispatch Pair<List<String>, List<String>> serializeComponents(ScheduleDeclaration declaration, boolean hr
-    ) {
-        
-    }    
-    
-    def dispatch Pair<List<String>, List<String>> serializeComponents(Void void, boolean hr) {
-        // error handling
-    }
-    
     
     def dispatch serialize(State state) {
         state.label

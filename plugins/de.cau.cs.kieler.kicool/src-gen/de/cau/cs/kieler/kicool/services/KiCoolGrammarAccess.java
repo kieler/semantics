@@ -799,7 +799,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -809,7 +809,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
+	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
+	//	StructDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -852,6 +853,51 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getVariableDeclarationWOSemicolonRule() {
 		return getVariableDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//StructDeclaration kext::StructDeclaration:
+	//	{kext::StructDeclaration} annotations+=Annotation*
+	//	private?='private'?
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	global?='global'?
+	//	static?='static'?
+	//	type=StructType
+	//	name=ID?
+	//	'{'
+	//	declarations+=Declaration*
+	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	';'
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.StructDeclarationElements getStructDeclarationAccess() {
+		return gaKExt.getStructDeclarationAccess();
+	}
+	
+	public ParserRule getStructDeclarationRule() {
+		return getStructDeclarationAccess().getRule();
+	}
+	
+	//StructDeclarationWOSemicolon kext::StructDeclaration:
+	//	{kext::StructDeclaration} annotations+=Annotation*
+	//	private?='private'?
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	global?='global'?
+	//	static?='static'?
+	//	type=StructType
+	//	name=ID?
+	//	'{'
+	//	declarations+=DeclarationWOSemicolon*
+	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.StructDeclarationWOSemicolonElements getStructDeclarationWOSemicolonAccess() {
+		return gaKExt.getStructDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getStructDeclarationWOSemicolonRule() {
+		return getStructDeclarationWOSemicolonAccess().getRule();
 	}
 	
 	//NamespaceID:
@@ -1985,6 +2031,16 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getHostTypeRule() {
 		return getHostTypeAccess().getRule();
+	}
+	
+	//enum StructType returns ValueType:
+	//	STRUCT="struct";
+	public KExpressionsGrammarAccess.StructTypeElements getStructTypeAccess() {
+		return gaKExpressions.getStructTypeAccess();
+	}
+	
+	public EnumRule getStructTypeRule() {
+		return getStructTypeAccess().getRule();
 	}
 	
 	//enum CombineOperator:

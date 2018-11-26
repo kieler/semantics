@@ -184,7 +184,7 @@ class ControlflowRegionStyles {
      * The first part will be highlighted as keywords.
      */
     def KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> components) {
-        container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
+        container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components, 0);
     }
     
     /**
@@ -192,7 +192,7 @@ class ControlflowRegionStyles {
      * The first part will be highlighted as keywords.
      */
     def KRectangle addActionLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> components) {
-        container.getProperty(ACTIONS_CONTAINER)?.addKeywordLabel(components);
+        container.getProperty(ACTIONS_CONTAINER)?.addKeywordLabel(components, 0);
     }
     
     /** 

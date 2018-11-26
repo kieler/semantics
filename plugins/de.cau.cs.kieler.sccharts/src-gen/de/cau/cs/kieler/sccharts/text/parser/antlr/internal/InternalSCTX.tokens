@@ -84,12 +84,12 @@
 'is'=27
 'join to'=98
 'label'=43
-'max'=146
+'max'=147
 'max='=130
-'min'=147
+'min'=148
 'min='=129
 'nondeterministic'=40
-'none'=145
+'none'=146
 'null'=93
 'o->'=100
 'once'=50
@@ -114,6 +114,7 @@
 'state'=26
 'static'=67
 'string'=114
+'struct'=145
 'succeeding'=58
 'super.'=29
 'suspend'=56
@@ -190,6 +191,7 @@ T__144=144
 T__145=145
 T__146=146
 T__147=147
+T__148=148
 T__17=17
 T__18=18
 T__19=19

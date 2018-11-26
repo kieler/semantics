@@ -48,6 +48,7 @@ import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
 import java.util.Set;
@@ -334,6 +335,18 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
+			case KExtPackage.STRUCT_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
+					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getStructDeclarationRule()) {
+					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
@@ -482,6 +495,58 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (name=ID? declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
 	 */
 	protected void sequence_Scope(ISerializationContext context, KExtScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeclarationWOSemicolon returns StructDeclaration
+	 *     StructDeclarationWOSemicolon returns StructDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         private?='private'? 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         global?='global'? 
+	 *         static?='static'? 
+	 *         type=StructType 
+	 *         name=ID? 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 */
+	protected void sequence_StructDeclarationWOSemicolon(ISerializationContext context, StructDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Declaration returns StructDeclaration
+	 *     StructDeclaration returns StructDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         private?='private'? 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         global?='global'? 
+	 *         static?='static'? 
+	 *         type=StructType 
+	 *         name=ID? 
+	 *         declarations+=Declaration* 
+	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 */
+	protected void sequence_StructDeclaration(ISerializationContext context, StructDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
