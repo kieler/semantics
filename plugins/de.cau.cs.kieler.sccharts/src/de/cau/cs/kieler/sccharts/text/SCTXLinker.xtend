@@ -28,6 +28,7 @@ import org.eclipse.xtext.GrammarUtil
 import org.eclipse.xtext.diagnostics.IDiagnosticProducer
 import org.eclipse.xtext.linking.impl.Linker
 import org.eclipse.xtext.nodemodel.INode
+import de.cau.cs.kieler.sccharts.ScopeCall
 
 /** 
  * A customized Xtext linker linking textual SCCharts models.
@@ -101,6 +102,12 @@ class SCTXLinker extends Linker {
         } else {
             // Default linking
             super.ensureIsLinked(obj, node, ref, handledReferences, producer)
+            // Pre link Scope calls for correct binding of inherited variables
+            if (obj instanceof ScopeCall) {
+                if (obj.scope !== null) {
+                    ensureLinked(obj.scope, producer)
+                }
+            }
         }
     }
 
