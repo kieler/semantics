@@ -32,7 +32,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
@@ -85,13 +84,10 @@ class Suspend extends SCChartsProcessor implements Traceable {
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    private val nameCache = new UniqueNameCache
-
     // -------------------------------------------------------------------------
     // --                          S U S P E N D                              --
     // -------------------------------------------------------------------------
@@ -108,7 +104,6 @@ class Suspend extends SCChartsProcessor implements Traceable {
     // (within the disabledExpression) 
     // Transforming Suspends.
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all states
         rootState.getAllStates.forEach [ targetState |
             targetState.transformSuspend(rootState)
@@ -126,7 +121,7 @@ class Suspend extends SCChartsProcessor implements Traceable {
         }
 
         // One unique suspend flag
-        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName(nameCache)
+        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
         voStore.update(suspendFlag, SCCHARTS_GENERATED)
 
         // Do not consider other suspends as actions
@@ -167,7 +162,7 @@ class Suspend extends SCChartsProcessor implements Traceable {
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;
 
-            val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName(nameCache)
+            val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
             suspendFlag.setInitialValue(TRUE)
 
             // Do not consider other suspends as actions

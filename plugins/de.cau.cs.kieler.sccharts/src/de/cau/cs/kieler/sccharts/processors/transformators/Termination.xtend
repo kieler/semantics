@@ -34,7 +34,6 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
@@ -93,14 +92,11 @@ class Termination extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    private val nameCache = new UniqueNameCache
-
     // -------------------------------------------------------------------------
     // --                       T E R M I N A T I O N                         --
     // -------------------------------------------------------------------------
@@ -123,7 +119,6 @@ class Termination extends SCChartsProcessor implements Traceable {
     // of other outgoing transitions.
     // Transforming Normal Termination. 
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformTermination(rootState)
@@ -159,7 +154,7 @@ class Termination extends SCChartsProcessor implements Traceable {
             // Setup the auxiliary termination valuedObject indicating that a normal termination
             // should be taken.
             val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
-                setTypeBool.uniqueName(nameCache)
+                setTypeBool.uniqueName
             voStore.update(finishedValuedObject, SCCHARTS_GENERATED)
             val resetFinished = state.createEntryAction
             resetFinished.effects.add(finishedValuedObject.createAssignment(FALSE))
@@ -207,7 +202,7 @@ class Termination extends SCChartsProcessor implements Traceable {
             if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
                  finishedValuedObject.name = finishedValuedObject.name + "D"
             }
-            finishedValuedObject.uniqueName(nameCache)
+            finishedValuedObject.uniqueName
              voStore.update(finishedValuedObject)
             
             if (triggerExpression == null) {

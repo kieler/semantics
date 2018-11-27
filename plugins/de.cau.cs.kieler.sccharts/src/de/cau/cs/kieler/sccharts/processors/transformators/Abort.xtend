@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -33,7 +32,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
 
@@ -93,13 +91,10 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_A"
-
-    private val nameCache = new UniqueNameCache => [ it += "_term" ]
 
     // FIXME: Delayed weak aborts need to be treated with a watcher region and a
     // delaying auxiliary signal there.
@@ -109,7 +104,6 @@ class Abort extends SCChartsProcessor implements Traceable {
     // Transforming Aborts.
     def State transform(State rootState) {
         termTrans.setEnvironment(environments.source, environments.target)
-        nameCache.clear
 
         // Traverse all states
         for (targetState : rootState.getAllContainedStatesList) {
@@ -222,10 +216,9 @@ class Abort extends SCChartsProcessor implements Traceable {
                     // for (region : state.regions) {
                     // region.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
                     // }
-                    val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").
-                        uniqueName(nameCache)
-                    runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName(nameCache)
-                    doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName(nameCache)
+                    val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName
+                    runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
+                    doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
                 }
 
                 // Build up weak and strong abort triggers
@@ -246,7 +239,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                             if (mixedDelayedStrongAborts) {
                                 // strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                                 val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                    GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                                    GENERATED_PREFIX + "trig").setTypeBool.uniqueName
                                 voStore.update(transitionTriggerVariable, SCCHARTS_GENERATED)
                                 state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                                 transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
@@ -277,7 +270,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                             // the watcher region and create an auxiliarv variable
                             // Create a new _transitionTrigger valuedObject
                             val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                                GENERATED_PREFIX + "trig").setTypeBool.uniqueName
                             voStore.update(transitionTriggerVariable, SCCHARTS_GENERATED)
                             state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
@@ -293,8 +286,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                 for (region : regions) {
 
                     // Inside every region create an _Aborted
-                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").
-                        uniqueName(nameCache)
+                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
@@ -385,8 +377,7 @@ class Abort extends SCChartsProcessor implements Traceable {
 
             state.outgoingTransitions.setDefaultTrace;
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").
-                uniqueName(nameCache).setTypeConnector
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             // Be careful to NOT create a trigger for the LAST (lowest priorized) outgoing transition from a connector, this must
