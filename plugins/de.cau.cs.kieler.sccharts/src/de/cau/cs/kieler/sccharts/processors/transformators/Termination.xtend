@@ -200,10 +200,10 @@ class Termination extends SCChartsProcessor implements Traceable {
 
             // Optimization: see above            
             if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
-                 finishedValuedObject.name = finishedValuedObject.name + "D"
+                 finishedValuedObject.name = (finishedValuedObject.name + "D")
+                 finishedValuedObject.uniqueName
             }
-            finishedValuedObject.uniqueName
-             voStore.update(finishedValuedObject)
+            voStore.update(finishedValuedObject)
             
             if (triggerExpression == null) {
                 triggerExpression = finishedValuedObject.reference;
