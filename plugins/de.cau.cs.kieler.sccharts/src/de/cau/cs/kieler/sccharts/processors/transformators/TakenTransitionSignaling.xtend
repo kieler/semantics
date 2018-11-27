@@ -167,9 +167,8 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     private def void createResetRegion(State rootState, ValuedObject transitionArray) {
         // Add reset region in root state to set variables to false at start of tick
         val newRegion = rootState.createControlflowRegion("taken_transition_signaling_reset")
-        val initState = newRegion.createFinalState("init")
+        val initState = newRegion.createInitialState("init")
         initState.label = null
-        initState.initial = true
         
         val pauseState = newRegion.createFinalState("pause")
         // Create transition for the effects to reset the variables
