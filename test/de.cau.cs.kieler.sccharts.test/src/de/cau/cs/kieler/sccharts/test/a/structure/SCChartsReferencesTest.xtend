@@ -26,6 +26,7 @@ import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
 import de.cau.cs.kieler.annotations.Nameable
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Tests if all reference in SCCharts are correctly linked.
@@ -69,8 +70,8 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
                 grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
             ].forEach[
-                assertTrue("Referenced state " + (semanticElement as Nameable).name + " in " + res.getURI.segment(res.getURI.segmentCount - 1) + " cannot be resolved",
-                    (semanticElement as State).reference.scope !== null)
+                assertTrue("Referenced state " + (semanticElement as Scope).name + " in " + res.getURI.segment(res.getURI.segmentCount - 1) + " cannot be resolved",
+                    (semanticElement as Scope).reference.scope !== null)
             ]
         }
     }
