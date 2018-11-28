@@ -120,7 +120,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         val firstRoot = model.rootStates.head
         model.rootStates.removeIf[it !== firstRoot]
         
-        model.pragmas.removeIf[SCTXResource.PRAGMA_IMPORT.equals(name)]
+        model.imports.clear
     }   
     
     /** Expands one referenced state and keeps track of the replacement stack. */

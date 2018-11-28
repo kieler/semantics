@@ -39,7 +39,9 @@ class SCTXFormatter extends KExtFormatter {
 		    pragmas.append[ setNewLines(1) ]
 			format(pragmas, document)
 		}
-
+		
+		sccharts.regionFor.assignments(SCChartsAccess.importsAssignment_0_1_1).forEach[append[ newLine ]]
+        
 		for (idxRootState : sccharts.rootStates.indexed) {
 			format(idxRootState.value, document)
 			if (idxRootState.key < sccharts.rootStates.size - 1) idxRootState.value.append[ newLine ]

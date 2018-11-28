@@ -27,6 +27,7 @@
     </genEnums>
     <genClasses ecoreClass="sccharts.ecore#//SCCharts">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//SCCharts/rootStates"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SCCharts/imports"/>
     </genClasses>
     <genClasses image="false" ecoreClass="sccharts.ecore#//Scope">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Scope/label"/>

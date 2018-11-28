@@ -14,7 +14,11 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    pragmas+=Pragma*
+    (
+        pragmas+=Pragma
+    |
+        'import' imports+=EString
+    )*
     rootStates+=RootState*;
 
 // ------------- //

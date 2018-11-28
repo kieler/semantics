@@ -114,6 +114,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     static val String IMMEDIATE_LOOP = "There is an immediate loop. The model is not SASC."
     
+    static val String DEPRECATED_IMPORT = "The import pragma is no longer supported. Use import keyword."
     static val String BROKEN_IMPORT = "Broken Import: There is no SCCharts model with the given name."
     static val String BROKEN_FOLDER_IMPORT = "Broken Import: There are no SCCharts models in the given directory."
 
@@ -276,7 +277,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      * Checks if given layout annotation uses an existing unique layout option id (suffix).
      */
     @Check
-    def void checkImportPragma(Annotation anno) {
+    def void checkLayoutAnnotation(Annotation anno) {
         if ("layout".equals(anno.name)) { // FIXME magic string
             if (anno instanceof TypedStringAnnotation) {
                 val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(anno.type ?: "")
@@ -296,15 +297,22 @@ class SCTXValidator extends AbstractSCTXValidator {
 
     @Check
     def void checkImportPragma(StringPragma pragma) {
-        if (SCTXResource.PRAGMA_IMPORT.equals(pragma.name) && pragma.eResource !== null) {
-            val res = pragma.eResource as SCTXResource
-            for (var i = 0; i < pragma.values.size; i++) {
-                val import = pragma.values.get(i)
+        if (SCTXResource.DEPRECATED_PRAGMA_IMPORT.equals(pragma.name)) {
+            error(DEPRECATED_IMPORT, pragma, null)
+        }
+    }
+    
+    @Check
+    def void checkImports(SCCharts scc) {
+        if (!scc.imports.nullOrEmpty && scc.eResource !== null) {
+            val res = scc.eResource as SCTXResource
+            for (var i = 0; i < scc.imports.size; i++) {
+                val import = scc.imports.get(i)
                 if (res.directImports.get(import).empty) {
                     if (import.endsWith("*")) {
-                        warning(BROKEN_FOLDER_IMPORT, pragma, AnnotationsPackage.eINSTANCE.stringPragma_Values, i);
+                        warning(BROKEN_FOLDER_IMPORT, scc, SCChartsPackage.eINSTANCE.SCCharts_Imports, i);
                     } else {
-                        warning(BROKEN_IMPORT, pragma, AnnotationsPackage.eINSTANCE.stringPragma_Values, i);
+                        warning(BROKEN_IMPORT, scc, SCChartsPackage.eINSTANCE.SCCharts_Imports, i);
                     }
                 }
             }

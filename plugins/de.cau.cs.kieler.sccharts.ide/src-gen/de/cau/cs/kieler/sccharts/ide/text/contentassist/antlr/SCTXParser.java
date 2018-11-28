@@ -31,6 +31,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, SCTXGrammarAccess grammarAccess) {
+			builder.put(grammarAccess.getSCChartsAccess().getAlternatives_0(), "rule__SCCharts__Alternatives_0");
 			builder.put(grammarAccess.getRootStateAccess().getAlternatives_8(), "rule__RootState__Alternatives_8");
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8(), "rule__State__Alternatives_8");
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8_1_5(), "rule__State__Alternatives_8_1_5");
@@ -95,6 +96,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 			builder.put(grammarAccess.getSCChartsAccess().getGroup(), "rule__SCCharts__Group__0");
+			builder.put(grammarAccess.getSCChartsAccess().getGroup_0_1(), "rule__SCCharts__Group_0_1__0");
 			builder.put(grammarAccess.getRootStateAccess().getGroup(), "rule__RootState__Group__0");
 			builder.put(grammarAccess.getRootStateAccess().getGroup_4(), "rule__RootState__Group_4__0");
 			builder.put(grammarAccess.getRootStateAccess().getGroup_4_2(), "rule__RootState__Group_4_2__0");
@@ -360,7 +362,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
-			builder.put(grammarAccess.getSCChartsAccess().getPragmasAssignment_0(), "rule__SCCharts__PragmasAssignment_0");
+			builder.put(grammarAccess.getSCChartsAccess().getPragmasAssignment_0_0(), "rule__SCCharts__PragmasAssignment_0_0");
+			builder.put(grammarAccess.getSCChartsAccess().getImportsAssignment_0_1_1(), "rule__SCCharts__ImportsAssignment_0_1_1");
 			builder.put(grammarAccess.getSCChartsAccess().getRootStatesAssignment_1(), "rule__SCCharts__RootStatesAssignment_1");
 			builder.put(grammarAccess.getRootStateAccess().getAnnotationsAssignment_0(), "rule__RootState__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getRootStateAccess().getNameAssignment_2(), "rule__RootState__NameAssignment_2");

@@ -85,21 +85,49 @@ ruleSCCharts returns [EObject current=null]
 	(
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getSCChartsAccess().getPragmasPragmaParserRuleCall_0_0());
-				}
-				lv_pragmas_0_0=rulePragma
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getSCChartsRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getSCChartsAccess().getPragmasPragmaParserRuleCall_0_0_0());
 					}
-					add(
-						$current,
-						"pragmas",
-						lv_pragmas_0_0,
-						"de.cau.cs.kieler.annotations.Annotations.Pragma");
-					afterParserOrEnumRuleCall();
+					lv_pragmas_0_0=rulePragma
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getSCChartsRule());
+						}
+						add(
+							$current,
+							"pragmas",
+							lv_pragmas_0_0,
+							"de.cau.cs.kieler.annotations.Annotations.Pragma");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			    |
+			(
+				otherlv_1='import'
+				{
+					newLeafNode(otherlv_1, grammarAccess.getSCChartsAccess().getImportKeyword_0_1_0());
 				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getSCChartsAccess().getImportsEStringParserRuleCall_0_1_1_0());
+						}
+						lv_imports_2_0=ruleEString
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getSCChartsRule());
+							}
+							add(
+								$current,
+								"imports",
+								lv_imports_2_0,
+								"de.cau.cs.kieler.annotations.Annotations.EString");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
 			)
 		)*
 		(
@@ -107,7 +135,7 @@ ruleSCCharts returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getSCChartsAccess().getRootStatesRootStateParserRuleCall_1_0());
 				}
-				lv_rootStates_1_0=ruleRootState
+				lv_rootStates_3_0=ruleRootState
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getSCChartsRule());
@@ -115,7 +143,7 @@ ruleSCCharts returns [EObject current=null]
 					add(
 						$current,
 						"rootStates",
-						lv_rootStates_1_0,
+						lv_rootStates_3_0,
 						"de.cau.cs.kieler.sccharts.text.SCTX.RootState");
 					afterParserOrEnumRuleCall();
 				}
@@ -12071,6 +12099,43 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
 				)
 			)
 		)*
+	)
+;
+
+// Entry rule entryRuleEString
+entryRuleEString returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getEStringRule()); }
+	iv_ruleEString=ruleEString
+	{ $current=$iv_ruleEString.current.getText(); }
+	EOF;
+
+// Rule EString
+ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		this_STRING_0=RULE_STRING
+		{
+			$current.merge(this_STRING_0);
+		}
+		{
+			newLeafNode(this_STRING_0, grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0());
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1());
+		}
+		this_ExtendedID_1=ruleExtendedID
+		{
+			$current.merge(this_ExtendedID_1);
+		}
+		{
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 

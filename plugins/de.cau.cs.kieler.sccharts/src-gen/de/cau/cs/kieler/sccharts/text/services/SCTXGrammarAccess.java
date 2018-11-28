@@ -34,8 +34,13 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	public class SCChartsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.SCCharts");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPragmasAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPragmasPragmaParserRuleCall_0_0 = (RuleCall)cPragmasAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cPragmasAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final RuleCall cPragmasPragmaParserRuleCall_0_0_0 = (RuleCall)cPragmasAssignment_0_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cAlternatives_0.eContents().get(1);
+		private final Keyword cImportKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
+		private final Assignment cImportsAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
+		private final RuleCall cImportsEStringParserRuleCall_0_1_1_0 = (RuleCall)cImportsAssignment_0_1_1.eContents().get(0);
 		private final Assignment cRootStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cRootStatesRootStateParserRuleCall_1_0 = (RuleCall)cRootStatesAssignment_1.eContents().get(0);
 		
@@ -44,18 +49,35 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		////  SCCharts Rules  // 
 		//// ---------------- //
 		//SCCharts sccharts::SCCharts:
-		//	pragmas+=Pragma*
+		//	(pragmas+=Pragma
+		//	|
+		//	'import' imports+=EString)*
 		//	rootStates+=RootState*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//pragmas+=Pragma* rootStates+=RootState*
+		//(pragmas+=Pragma | 'import' imports+=EString)* rootStates+=RootState*
 		public Group getGroup() { return cGroup; }
 		
-		//pragmas+=Pragma*
-		public Assignment getPragmasAssignment_0() { return cPragmasAssignment_0; }
+		//(pragmas+=Pragma | 'import' imports+=EString)*
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//pragmas+=Pragma
+		public Assignment getPragmasAssignment_0_0() { return cPragmasAssignment_0_0; }
 		
 		//Pragma
-		public RuleCall getPragmasPragmaParserRuleCall_0_0() { return cPragmasPragmaParserRuleCall_0_0; }
+		public RuleCall getPragmasPragmaParserRuleCall_0_0_0() { return cPragmasPragmaParserRuleCall_0_0_0; }
+		
+		//'import' imports+=EString
+		public Group getGroup_0_1() { return cGroup_0_1; }
+		
+		//'import'
+		public Keyword getImportKeyword_0_1_0() { return cImportKeyword_0_1_0; }
+		
+		//imports+=EString
+		public Assignment getImportsAssignment_0_1_1() { return cImportsAssignment_0_1_1; }
+		
+		//EString
+		public RuleCall getImportsEStringParserRuleCall_0_1_1_0() { return cImportsEStringParserRuleCall_0_1_1_0; }
 		
 		//rootStates+=RootState*
 		public Assignment getRootStatesAssignment_1() { return cRootStatesAssignment_1; }
@@ -2675,7 +2697,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  SCCharts Rules  // 
 	//// ---------------- //
 	//SCCharts sccharts::SCCharts:
-	//	pragmas+=Pragma*
+	//	(pragmas+=Pragma
+	//	|
+	//	'import' imports+=EString)*
 	//	rootStates+=RootState*;
 	public SCChartsElements getSCChartsAccess() {
 		return pSCCharts;

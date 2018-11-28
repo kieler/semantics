@@ -107,13 +107,22 @@ public interface SCChartsPackage extends EPackage {
     int SC_CHARTS__ROOT_STATES = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Imports</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_CHARTS__IMPORTS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>SC Charts</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SC_CHARTS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+    int SC_CHARTS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
@@ -2092,6 +2101,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getSCCharts_RootStates();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.sccharts.SCCharts#getImports <em>Imports</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Imports</em>'.
+     * @see de.cau.cs.kieler.sccharts.SCCharts#getImports()
+     * @see #getSCCharts()
+     * @generated
+     */
+    EAttribute getSCCharts_Imports();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Scope <em>Scope</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2727,6 +2747,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference SC_CHARTS__ROOT_STATES = eINSTANCE.getSCCharts_RootStates();
+
+        /**
+         * The meta object literal for the '<em><b>Imports</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SC_CHARTS__IMPORTS = eINSTANCE.getSCCharts_Imports();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
