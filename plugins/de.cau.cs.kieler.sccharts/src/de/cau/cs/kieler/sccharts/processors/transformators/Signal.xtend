@@ -38,7 +38,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -94,7 +93,6 @@ class Signal extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension ValuedObjectRise
     @Inject extension KExpressionsArrayExtensions
 
@@ -174,8 +172,8 @@ class Signal extends SCChartsProcessor implements Traceable {
                 valueDecl.setOutput(signal.isOutput)
                 valueVariable.applyAttributes(signal)
 
-                voStore.add(valueVariable, SCCHARTS_GENERATED, "signal-value", variableValueExtension)
-                voStore.add(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
+                voStore.update(valueVariable, SCCHARTS_GENERATED, "signal-value", variableValueExtension)
+                voStore.update(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
                 
                 // Add an immediate during action that updates the value (in case of an emission)
                 // to the current value

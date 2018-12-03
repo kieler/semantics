@@ -14,7 +14,11 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    pragmas+=Pragma*
+    (
+        pragmas+=Pragma
+    |
+        'import' imports+=EString
+    )*
     rootStates+=RootState*;
 
 // ------------- //
@@ -25,6 +29,7 @@ SCCharts returns sccharts::SCCharts:
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
+	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
@@ -43,6 +48,7 @@ State returns sccharts::State:
 	    'is' reference = ScopeCall
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
+	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
 		declarations+=DeclarationWOSemicolon*
@@ -59,7 +65,8 @@ ImplicitState returns sccharts::State:
 
 	
 ScopeCall returns sccharts::ScopeCall:
-    scope = [sccharts::State|ID]
+    super?='super.'?
+    scope = [sccharts::Scope|ID]
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
@@ -121,28 +128,36 @@ ImplicitControlflowRegion returns sccharts::ControlflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
+    override?='override'?
     final?='final'?
     'region' name=ExtendedID? label=STRING?
-    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
-    ('schedule' schedule+=ScheduleObjectReference+)?
     ((
-        ':'
-        declarations+=DeclarationWOSemicolon*
-        actions+=LocalAction*
-        states+=State*
+        'is'
+        reference = ScopeCall
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('schedule' schedule+=ScheduleObjectReference+)?
     )|(
-        '{'
-        declarations+=DeclarationWOSemicolon*
-        actions+=LocalAction*
-        (states+=ImplicitState | states+=State+)
-        '}'
-    ))  
-    ;
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('schedule' schedule+=ScheduleObjectReference+)?
+        ((
+            ':'
+            declarations+=DeclarationWOSemicolon*
+            actions+=LocalAction*
+            states+=State*
+        )|(
+            '{'
+            declarations+=DeclarationWOSemicolon*
+            actions+=LocalAction*
+            (states+=ImplicitState | states+=State+)
+            '}'
+        ))
+    ));
 
     
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
+    override?='override'?
     'dataflow' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
     ('schedule' schedule+=ScheduleObjectReference+)?

@@ -9,34 +9,14 @@
       ecorePackage="ktrace.ecore#/">
     <genClasses ecoreClass="ktrace.ecore#//TraceFile">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//TraceFile/traces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//TraceFile/aggregatedValuedObjects"/>
     </genClasses>
-    <genClasses ecoreClass="ktrace.ecore#//EsoTraces"/>
-    <genClasses ecoreClass="ktrace.ecore#//KTraces"/>
     <genClasses ecoreClass="ktrace.ecore#//Trace">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//Trace/ticks"/>
     </genClasses>
-    <genClasses ecoreClass="ktrace.ecore#//EsoTrace"/>
-    <genClasses ecoreClass="ktrace.ecore#//KTrace"/>
-    <genClasses ecoreClass="ktrace.ecore#//Tick"/>
-    <genClasses ecoreClass="ktrace.ecore#//EsoTick">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//EsoTick/inputs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//EsoTick/outputs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//EsoTick/properties"/>
-    </genClasses>
-    <genClasses ecoreClass="ktrace.ecore#//signal">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ktrace.ecore#//signal/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ktrace.ecore#//signal/valued"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//signal/val"/>
-    </genClasses>
-    <genClasses ecoreClass="ktrace.ecore#//KVpair">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ktrace.ecore#//KVpair/key"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//KVpair/value"/>
-    </genClasses>
-    <genClasses ecoreClass="ktrace.ecore#//IntValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ktrace.ecore#//IntValue/value"/>
-    </genClasses>
-    <genClasses ecoreClass="ktrace.ecore#//FloatValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ktrace.ecore#//FloatValue/value"/>
+    <genClasses ecoreClass="ktrace.ecore#//Tick">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//Tick/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//Tick/outputs"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -14,6 +14,7 @@ import de.cau.cs.kieler.scl.scoping.SCLScopeProvider;
 import de.cau.cs.kieler.scl.serializer.SCLSemanticSequencer;
 import de.cau.cs.kieler.scl.serializer.SCLSyntacticSequencer;
 import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
+import de.cau.cs.kieler.scl.validation.SCLConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.scl.validation.SCLValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link SCLRuntimeModule}.
@@ -135,6 +137,11 @@ public abstract class AbstractSCLRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends SCLValidator> bindSCLValidator() {
 		return SCLValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return SCLConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

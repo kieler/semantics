@@ -5,6 +5,7 @@ package de.cau.cs.kieler.sccharts.ui.text;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.sccharts.ui.internal.SCTXActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class SCTXExecutableExtensionFactory extends AbstractGuiceAwareExecutable
 
 	@Override
 	protected Bundle getBundle() {
-		return SCTXActivator.getInstance().getBundle();
+		return Platform.getBundle(SCTXActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return SCTXActivator.getInstance().getInjector(SCTXActivator.DE_CAU_CS_KIELER_SCCHARTS_TEXT_SCTX);
+		SCTXActivator activator = SCTXActivator.getInstance();
+		return activator != null ? activator.getInjector(SCTXActivator.DE_CAU_CS_KIELER_SCCHARTS_TEXT_SCTX) : null;
 	}
-	
+
 }

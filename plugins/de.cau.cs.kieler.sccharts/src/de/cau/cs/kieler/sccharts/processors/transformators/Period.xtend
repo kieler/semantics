@@ -29,7 +29,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.PeriodAction
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -67,7 +66,6 @@ class Period extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -118,7 +116,7 @@ class Period extends SCChartsProcessor implements Traceable {
                     type = ValueType.CLOCK
                     valuedObjects += clocks
                 ]
-                clocks.forEach[voStore.add(it, SCCHARTS_GENERATED)]
+                clocks.forEach[voStore.update(it, SCCHARTS_GENERATED)]
                 
                 // Create tick guards
                 val ticks = newArrayList
@@ -132,7 +130,7 @@ class Period extends SCChartsProcessor implements Traceable {
                 state.declarations += createBoolDeclaration => [
                     valuedObjects += ticks
                 ]
-                ticks.forEach[voStore.add(it, SCCHARTS_GENERATED)]
+                ticks.forEach[voStore.update(it, SCCHARTS_GENERATED)]
                 
                 // Guard regions
                 for (tick : ticks) {

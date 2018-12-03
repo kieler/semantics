@@ -37,6 +37,6 @@ public interface SCLProgram extends Pragmatable {
      * @model containment="true" required="true"
      * @generated
      */
-    EList<Module> getModules();
+    EList<de.cau.cs.kieler.scl.Module> getModules();
 
 } // SCLProgram

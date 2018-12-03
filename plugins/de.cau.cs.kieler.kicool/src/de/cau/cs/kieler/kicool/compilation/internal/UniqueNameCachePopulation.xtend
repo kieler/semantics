@@ -27,8 +27,8 @@ class UniqueNameCachePopulation {
         if (!(object instanceof EObject)) return;
         
         (object as EObject).eAllContents.filter(NamedObject).forEach[
-            cache.getNewUniqueName(it.name)
-        ] 
+            cache.add(it.name)
+        ]
     }
     
 }

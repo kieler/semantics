@@ -30,12 +30,12 @@ public interface ModuleCall extends Call, Statement {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Module</em>' reference.
-     * @see #setModule(Module)
+     * @see #setModule(de.cau.cs.kieler.scl.Module)
      * @see de.cau.cs.kieler.scl.SCLPackage#getModuleCall_Module()
      * @model required="true"
      * @generated
      */
-    Module getModule();
+    de.cau.cs.kieler.scl.Module getModule();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.scl.ModuleCall#getModule <em>Module</em>}' reference.
@@ -45,6 +45,6 @@ public interface ModuleCall extends Call, Statement {
      * @see #getModule()
      * @generated
      */
-    void setModule(Module value);
+    void setModule(de.cau.cs.kieler.scl.Module value);
 
 } // ModuleCall

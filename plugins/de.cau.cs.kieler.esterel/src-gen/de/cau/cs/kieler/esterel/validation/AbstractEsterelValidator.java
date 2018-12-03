@@ -22,5 +22,4 @@ public abstract class AbstractEsterelValidator extends SCLValidator {
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
-	
 }

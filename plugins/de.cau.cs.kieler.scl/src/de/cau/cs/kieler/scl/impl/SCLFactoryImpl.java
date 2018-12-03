@@ -100,7 +100,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Module createModule() {
+    public de.cau.cs.kieler.scl.Module createModule() {
         ModuleImpl module = new ModuleImpl();
         return module;
     }

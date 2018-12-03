@@ -213,6 +213,16 @@
                 </reference>
             </activeWhen>
         </handler>
+    </extension>
+    
+    <extension point="org.eclipse.core.contenttype.contentTypes">
+        <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="kext"
+            id="de.cau.cs.kieler.kexpressions.kext.KExt.contenttype"
+            name="KExt File"
+            priority="normal">
+        </content-type>
     </extension>   
 
 <!-- adding resource factories -->

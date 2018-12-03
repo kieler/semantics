@@ -107,7 +107,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * @generated
      * @ordered
      */
-    protected Module module;
+    protected de.cau.cs.kieler.scl.Module module;
 
     /**
      * <!-- begin-user-doc -->
@@ -190,10 +190,10 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
-    public Module getModule() {
+    public de.cau.cs.kieler.scl.Module getModule() {
         if (module != null && module.eIsProxy()) {
             InternalEObject oldModule = (InternalEObject)module;
-            module = (Module)eResolveProxy(oldModule);
+            module = (de.cau.cs.kieler.scl.Module)eResolveProxy(oldModule);
             if (module != oldModule) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCLPackage.MODULE_CALL__MODULE, oldModule, module));
@@ -207,7 +207,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
-    public Module basicGetModule() {
+    public de.cau.cs.kieler.scl.Module basicGetModule() {
         return module;
     }
 
@@ -216,8 +216,8 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setModule(Module newModule) {
-        Module oldModule = module;
+    public void setModule(de.cau.cs.kieler.scl.Module newModule) {
+        de.cau.cs.kieler.scl.Module oldModule = module;
         module = newModule;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCLPackage.MODULE_CALL__MODULE, oldModule, module));
@@ -289,7 +289,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
                 setSemicolon((Boolean)newValue);
                 return;
             case SCLPackage.MODULE_CALL__MODULE:
-                setModule((Module)newValue);
+                setModule((de.cau.cs.kieler.scl.Module)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -316,7 +316,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
                 setSemicolon(SEMICOLON_EDEFAULT);
                 return;
             case SCLPackage.MODULE_CALL__MODULE:
-                setModule((Module)null);
+                setModule((de.cau.cs.kieler.scl.Module)null);
                 return;
         }
         super.eUnset(featureID);
@@ -407,7 +407,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (semicolon: ");
         result.append(semicolon);
         result.append(')');

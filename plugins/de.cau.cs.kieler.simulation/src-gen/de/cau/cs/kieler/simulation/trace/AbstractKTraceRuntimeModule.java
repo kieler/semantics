@@ -14,6 +14,7 @@ import de.cau.cs.kieler.simulation.trace.scoping.KTraceScopeProvider;
 import de.cau.cs.kieler.simulation.trace.serializer.KTraceSemanticSequencer;
 import de.cau.cs.kieler.simulation.trace.serializer.KTraceSyntacticSequencer;
 import de.cau.cs.kieler.simulation.trace.services.KTraceGrammarAccess;
+import de.cau.cs.kieler.simulation.trace.validation.KTraceConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.simulation.trace.validation.KTraceValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link KTraceRuntimeModule}.
@@ -135,6 +137,11 @@ public abstract class AbstractKTraceRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends KTraceValidator> bindKTraceValidator() {
 		return KTraceValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return KTraceConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

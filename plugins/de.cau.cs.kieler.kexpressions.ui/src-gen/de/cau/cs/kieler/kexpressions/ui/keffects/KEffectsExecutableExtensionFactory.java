@@ -5,6 +5,7 @@ package de.cau.cs.kieler.kexpressions.ui.keffects;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.kexpressions.ui.internal.KEffectsActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class KEffectsExecutableExtensionFactory extends AbstractGuiceAwareExecut
 
 	@Override
 	protected Bundle getBundle() {
-		return KEffectsActivator.getInstance().getBundle();
+		return Platform.getBundle(KEffectsActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return KEffectsActivator.getInstance().getInjector(KEffectsActivator.DE_CAU_CS_KIELER_KEXPRESSIONS_KEFFECTS_KEFFECTS);
+		KEffectsActivator activator = KEffectsActivator.getInstance();
+		return activator != null ? activator.getInjector(KEffectsActivator.DE_CAU_CS_KIELER_KEXPRESSIONS_KEFFECTS_KEFFECTS) : null;
 	}
-	
+
 }

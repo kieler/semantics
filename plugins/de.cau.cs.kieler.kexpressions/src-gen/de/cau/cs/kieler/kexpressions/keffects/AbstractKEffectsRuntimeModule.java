@@ -14,6 +14,7 @@ import de.cau.cs.kieler.kexpressions.keffects.scoping.KEffectsScopeProvider;
 import de.cau.cs.kieler.kexpressions.keffects.serializer.KEffectsSemanticSequencer;
 import de.cau.cs.kieler.kexpressions.keffects.serializer.KEffectsSyntacticSequencer;
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.keffects.validation.KEffectsConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.kexpressions.keffects.validation.KEffectsValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link KEffectsRuntimeModule}.
@@ -135,6 +137,11 @@ public abstract class AbstractKEffectsRuntimeModule extends DefaultRuntimeModule
 	@SingletonBinding(eager=true)
 	public Class<? extends KEffectsValidator> bindKEffectsValidator() {
 		return KEffectsValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return KEffectsConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
