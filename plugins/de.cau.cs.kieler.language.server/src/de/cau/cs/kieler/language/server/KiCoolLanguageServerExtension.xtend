@@ -42,9 +42,9 @@ import org.eclipse.xtext.resource.XtextResourceSet
  * @author sdo
  * 
  */
-class KeithLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
-    protected static val LOG = Logger.getLogger(KeithLanguageServerExtension)
+    protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
     

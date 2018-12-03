@@ -21,12 +21,12 @@ import org.eclipse.xtext.service.AbstractGenericModule
  * @author sdo
  *
  */
-class KeithServerModule extends AbstractGenericModule {
+class KiCoolServerModule extends AbstractGenericModule {
     
     /**
      * Bind language server extension for keith.
      */
     def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
-        KeithLanguageServerExtension
+        KiCoolLanguageServerExtension
     }
 }
