@@ -78,8 +78,6 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
     override compile(String uri, String command, boolean inplace) {
         var fileUri = uri
         
-        CompilerViewUtil.compileInplace = inplace
-        
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
         
@@ -93,7 +91,7 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         val resource = resourceSet.getResource(stringUri, true)
         
         var eobject = resource.getContents().head
-        var context = compile(eobject, command)
+        var context = compile(eobject, command, inplace)
         for (iResult : context.processorInstancesSequence) {
             convertImpl(iResult.environment , uri, iResult.name)
         }
@@ -134,8 +132,9 @@ class KeithLanguageServerExtension implements ILanguageServerExtension, CommandE
         return injector.getInstance(XtextResourceSet);
     }
     
-    private def compile(EObject eobject, String systemId) {
+    private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
+        context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         context.compile
         return context
     }
