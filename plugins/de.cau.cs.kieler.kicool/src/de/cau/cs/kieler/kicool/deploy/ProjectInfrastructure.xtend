@@ -12,12 +12,15 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
-import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.io.File
-import java.util.regex.Pattern
+import java.io.PrintStream
+import java.util.List
+import java.util.Set
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -30,10 +33,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
-import java.util.List
-import java.io.PrintStream
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * 
@@ -61,6 +60,7 @@ class ProjectInfrastructure {
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
 
+    public static val Set<IProject> createdTemporaryProjects = newHashSet
 
     @Accessors(AccessorType.PUBLIC_GETTER)
     var IProject project = null
@@ -104,6 +104,8 @@ class ProjectInfrastructure {
         if(!project.open) {
             project.open(null)
         }
+        // Store project for cleanup
+        createdTemporaryProjects.add(project)
         return project
     }
     

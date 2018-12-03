@@ -441,4 +441,19 @@
                 class="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController">
           </controller>
        </extension>
+       <extension
+             point="org.eclipse.ui.startup">
+          <startup
+                class="de.cau.cs.kieler.kicool.ui.deploy.DeployProjectCleanup">
+          </startup>
+       </extension>
+       <extension
+             point="org.eclipse.ui.preferencePages">
+          <page
+                category="de.cau.cs.kieler.core.product.preferencePage"
+                class="de.cau.cs.kieler.kicool.ui.preferences.KiCoolPreferencePage"
+                id="de.cau.cs.kieler.kicool.ui.deploy"
+                name="Compiler">
+          </page>
+       </extension>
 </plugin>
