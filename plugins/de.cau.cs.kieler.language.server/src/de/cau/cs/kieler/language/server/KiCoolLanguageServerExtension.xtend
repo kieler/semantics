@@ -15,7 +15,6 @@ package de.cau.cs.kieler.language.server
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
@@ -109,18 +108,11 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         var errors = environment.errors
         var warnings = environment.warnings
         var infos = environment.infos
-        if (impl instanceof CodeContainer) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription("generated", 0, errors, warnings, infos))
-        } else if (impl instanceof EObject) {
-            this.objectMap.get(uri).add(impl)
-            this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
-            for (snapshot : snapshots.indexed) {
-                this.objectMap.get(uri).add(snapshot.value as EObject)
-                this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
-            }
-        } else {
-            println("Got something I currently do not recognize " + impl.class)
+        this.objectMap.get(uri).add(impl)
+        this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
+        for (snapshot : snapshots.indexed) {
+            this.objectMap.get(uri).add(snapshot.value as EObject)
+            this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
         }
         
     }
