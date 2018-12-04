@@ -13,7 +13,7 @@
 
 import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
-import { Message } from "@theia/core/lib/browser";
+import { Message, StatefulWidget } from "@theia/core/lib/browser";
 import * as React from "react";
 import { Constants, CompilationSystems } from "keith-language-extension/lib/frontend/utils";
 
@@ -24,7 +24,8 @@ import { KiCoolContribution } from "../language/kicool-contribution";
  * Widget to compile and navigate compilation results. Should be linked to editor.
  */
 @injectable()
-export class CompilerWidget extends ReactWidget {
+export class CompilerWidget extends ReactWidget implements StatefulWidget {
+
     systems: CompilationSystems[]
 
     autoCompile: boolean
@@ -164,5 +165,27 @@ export class CompilerWidget extends ReactWidget {
             this.commands.message("No compilation systems found", "error")
             return
         }
+    }
+
+    storeState(): CompilerWidget.Data {
+        return {
+            autoCompile : this.autoCompile,
+            compileInplace : this.compileInplace,
+            showPrivateSystems : this.showPrivateSystems
+        }
+    }
+
+    restoreState(oldState: CompilerWidget.Data): void {
+        this.autoCompile = oldState.autoCompile
+        this.compileInplace = oldState.compileInplace
+        this.showPrivateSystems = this.showPrivateSystems
+    }
+}
+
+export namespace CompilerWidget {
+    export interface Data {
+        autoCompile: boolean,
+        compileInplace: boolean,
+        showPrivateSystems: boolean
     }
 }
