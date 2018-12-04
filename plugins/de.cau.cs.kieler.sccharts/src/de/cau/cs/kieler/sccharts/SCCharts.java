@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.Pragmatable;
 
 import org.eclipse.emf.common.util.EList;
@@ -27,13 +28,14 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.SCCharts#getRootStates <em>Root States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.SCCharts#getImports <em>Imports</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSCCharts()
  * @model
  * @generated
  */
-public interface SCCharts extends Pragmatable {
+public interface SCCharts extends Pragmatable, Nameable {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -56,5 +58,21 @@ public interface SCCharts extends Pragmatable {
      * @generated
      */
     EList<State> getRootStates();
+
+    /**
+     * Returns the value of the '<em><b>Imports</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Imports</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Imports</em>' attribute list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSCCharts_Imports()
+     * @model
+     * @generated
+     */
+    EList<String> getImports();
 
 } // SCCharts

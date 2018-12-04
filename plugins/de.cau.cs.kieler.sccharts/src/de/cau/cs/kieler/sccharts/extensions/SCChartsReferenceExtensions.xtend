@@ -13,17 +13,15 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import java.util.List
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.State
+import java.util.List
 
 /**
  * @author ssm
@@ -37,6 +35,7 @@ class SCChartsReferenceExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsInheritanceExtensions
     
     /** Creates all bindings for a referenced scope. */
     def List<Binding> createBindings(Scope scope) {
@@ -59,11 +58,20 @@ class SCChartsReferenceExtensions {
         // Return an empty binding list if there is no target in the reference.
         // At the moment, only states are supported.
         if (targetState === null) return bindings
-        if (!(targetState instanceof State)) return bindings
         
         val targetVOs = <ValuedObject> newArrayList
-        for (declaration : targetState.variableDeclarations.filter[ input || output]) {
-            targetVOs += declaration.valuedObjects
+        if (targetState instanceof State) {
+            
+            for (declaration : targetState.variableDeclarations.filter[ input || output]) {
+                targetVOs += declaration.valuedObjects
+            }
+            
+            // Inherited Decls
+            for (declaration : targetState.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
+                targetVOs += declaration.valuedObjects
+            }
+        } else {
+            targetVOs += targetState.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet
         }
 
         // Process explicit bindings.

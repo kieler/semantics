@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.Call;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.ScopeCall#getScope <em>Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ScopeCall#isSuper <em>Super</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScopeCall()
@@ -64,5 +65,31 @@ public interface ScopeCall extends Call {
      * @generated
      */
     void setScope(Scope value);
+
+    /**
+     * Returns the value of the '<em><b>Super</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Super</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Super</em>' attribute.
+     * @see #setSuper(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScopeCall_Super()
+     * @model
+     * @generated
+     */
+    boolean isSuper();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ScopeCall#isSuper <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Super</em>' attribute.
+     * @see #isSuper()
+     * @generated
+     */
+    void setSuper(boolean value);
 
 } // ScopeCall

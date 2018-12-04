@@ -275,7 +275,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (newFunc: ");
         result.append(newFunc);
         result.append(')');

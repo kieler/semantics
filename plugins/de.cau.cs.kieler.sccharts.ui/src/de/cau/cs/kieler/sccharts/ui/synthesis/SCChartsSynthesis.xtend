@@ -93,7 +93,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
-        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_COMMENTS)
+        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_BINDINGS, SHOW_COMMENTS)
         
         // Subsynthesis options
         options.addAll(stateSynthesis.displayedSynthesisOptions)

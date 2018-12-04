@@ -14,63 +14,62 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
+import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
+import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.core.model.Pair
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import java.util.List
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.klighd.SynthesisOption
-import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.core.options.Direction
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
-import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import java.util.Map
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.klighd.krendering.LineStyle
-import de.cau.cs.kieler.klighd.krendering.Colors
-import de.cau.cs.kieler.klighd.krendering.KCustomRendering
-import de.cau.cs.kieler.klighd.krendering.KPolyline
-import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.Trigger
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.klighd.krendering.KRectangle
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -98,25 +97,20 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsInheritanceExtensions
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
     
-    /** Scope call parameters synthesis option */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
-    
     // als magic: this should never reach the master (11.09.2018)! ;-)
     // but probably will. (10.10.2018) ;-)
     private val actionRectangleMap = <Action, KRectangle> newHashMap 
     
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_BINDINGS)
-    }
 
     override List<KNode> performTranformation(State state) {
-        val node = state.createNode().associateWith(state);
+        val node = state.createNode().associateWith(state)
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
@@ -175,43 +169,74 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (!isConnector) {
             // Add label
             if (!state.label.nullOrEmpty) {
-                switch state {
-                    case state.isReferencedState:
-                        node.addMacroStateLabel(
-                            state.serializeHR + " @ "
-                            + (if (state.reference.scope !== null) (state.reference.scope as State).serializeHR else "UnresolvedReference")
-                            + (if (SHOW_BINDINGS.booleanValue) state.reference.parameters.serializeHRParameters else "")
-                            ).associateWith(state)
-                    case state.isMacroState:
-                        node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
-                    default:
-                        node.addSimpleStateLabel(state.serializeHR.toString).associateWith(state)
-                }
+                if (state.isMacroState) {
+                    val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
+                    label += new Pair(state.serializeHR, TextFormat.TEXT)
+                    if (state.isReferencedState) {
+                        label += new Pair("@", TextFormat.KEYWORD)
+                        if (state.reference.scope !== null) {
+                            label += new Pair((state.reference.scope as State).serializeHR, TextFormat.TEXT)
+                        } else {
+                            label += new Pair("UnresolvedReference", TextFormat.HIGHLIGHT)
+                        }
+                        if (SHOW_BINDINGS.booleanValue) {
+                            label += new Pair(state.reference.parameters.serializeHRParameters, TextFormat.TEXT)
+                        }
+                    } else if (!state.baseStates.nullOrEmpty) {
+                        label += new Pair("extends", TextFormat.KEYWORD)
+                        for (baseState : state.baseStates.indexed) {
+                            if (baseState.key == state.baseStates.length - 1) {
+                                label += new Pair(baseState.value.serializeHR, TextFormat.TEXT)
+                            } else {
+                                label += new Pair(baseState.value.serializeHR + ",", TextFormat.TEXT)
+                            }
+                        }
+                    }
+                    node.addMacroStateLabel(label)
+                } else {
+                    node.addSimpleStateLabel(state.serializeHR.toString)
+                } => [
+                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    associateWith(state)
+                    eAllContents.filter(KRendering).forEach[associateWith(state)]
+                ]
             } else {
                 node.addEmptyStateLabel
             }
-
+            
             // Add declarations
-            for (declaration : state.declarations) {
-                node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true);
-                    associateWith(declaration);
-                    eAllContents.filter(KRendering).forEach[associateWith(declaration)];
-                ]
+            val declarations = new ArrayList<Declaration>(state.declarations)
+            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
+            for (declaration : declarations) {
+                if (declaration instanceof StructDeclaration) {
+                    node.addStructDeclarations(declaration, 0)
+                } else {
+                    node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
+                        setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                        associateWith(declaration)
+                        eAllContents.filter(KRendering).forEach[associateWith(declaration)]
+                    ]
+                }
             }           
 
             // Add actions
-            for (action : state.actions) {
+            val actions = new ArrayList<Action>(state.actions)
+            if (SHOW_INHERITANCE.booleanValue) actions.addAll(0, state.allVisibleInheritedActions.toList)
+            for (action : actions) {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true);
-                    associateWith(action);
-                    eAllContents.filter(KRendering).forEach[associateWith(action)];
+                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    associateWith(action)
+                    eAllContents.filter(KRendering).forEach[associateWith(action)]
                     actionRectangleMap.put(action, it)
                 ]
             }
 
             // Add child area for regions
-            if (state.controlflowRegionsContainStates || state.containsDataflowRegions || state.isReferencedState) {
+            if (state.controlflowRegionsContainStates
+                || state.containsDataflowRegions
+                || state.isReferencedState
+                || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
+            ) {
                 node.addRegionsArea;
             }
         }
@@ -230,7 +255,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform regions
-        for (region : state.regions) {
+        val regions = new ArrayList<Region>(state.regions)
+        if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allVisibleInheritedRegions.toList)
+        for (region : regions) {
             switch region {
                 ControlflowRegion: node.children += region.transform
                 DataflowRegion: node.children += region.transform
@@ -257,6 +284,29 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return returnNodes
     }
     
+    private def void addStructDeclarations(KNode node, StructDeclaration struct, int indent) {
+        val segments = struct.serializeHighlighted(true)
+        val head = segments.takeWhile[value !== TextFormat.CONTENT_PLACEHOLDER].toList;
+        val tail = segments.dropWhile[value !== TextFormat.CONTENT_PLACEHOLDER].drop(1).toList;
+        node.addDeclarationLabel(head, indent) => [
+            setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+            associateWith(struct)
+            eAllContents.filter(KRendering).forEach[associateWith(struct)]
+        ]
+        for (declaration : struct.declarations) {
+            if (declaration instanceof StructDeclaration) {
+                node.addStructDeclarations(declaration, indent + 1)
+            } else {
+                node.addDeclarationLabel(declaration.serializeHighlighted(true), indent + 1) => [
+                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    associateWith(declaration)
+                    eAllContents.filter(KRendering).forEach[associateWith(declaration)]
+                ]
+            }
+        }
+        node.addDeclarationLabel(tail, indent);
+    }
+    
     
     /** Configures the default layout of children (regions in the state) */
     private def static void configureLayout(KNode node) {
@@ -279,7 +329,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
         return state.controlflowRegionsContainStates || state.containsDataflowRegions || !state.actions.empty ||
-            !state.declarations.empty || state.isReferencedState;
+            !state.declarations.empty || state.isReferencedState || state.hasBaseStates;
     }
     
     private val dependencyEdges = <Pair<EObject, EObject>, KEdge> newHashMap
@@ -317,7 +367,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
         
         // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
-        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
+        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new de.cau.cs.kieler.core.model.Pair<EObject, EObject>(dependency.eContainer, dependency.target)
         val sourceNode = cfrs.first.node
         val targetNode = cfrs.second.node
 

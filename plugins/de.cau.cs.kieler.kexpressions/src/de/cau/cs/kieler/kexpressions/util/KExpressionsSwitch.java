@@ -7,6 +7,7 @@
 package de.cau.cs.kieler.kexpressions.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.*;
 
@@ -87,6 +88,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(valuedObject);
                 if (result == null) result = caseAnnotatable(valuedObject);
                 if (result == null) result = caseReferenceable(valuedObject);
+                if (result == null) result = caseNameable(valuedObject);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -645,6 +647,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseExternString(ExternString object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
         return null;
     }
 

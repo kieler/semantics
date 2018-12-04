@@ -110,7 +110,7 @@ class SCChartsControlflowRegionExtensions {
     // use also for hasInnerStatesOrControlflowRegions
     def boolean controlflowRegionsContainStates(State state) {
         for (r : state.regions.filter(ControlflowRegion)) {
-            if (r.containsStates) return true
+            if (r.containsStates || r.reference !== null) return true
         }
         false
     }

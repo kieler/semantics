@@ -7,6 +7,7 @@
 package de.cau.cs.kieler.kexpressions.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.*;
 
@@ -196,6 +197,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseExternString(ExternString object) {
                 return createExternStringAdapter();
+            }
+            @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
             }
             @Override
             public Adapter caseNamedObject(NamedObject object) {
@@ -516,6 +521,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createExternStringAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
         return null;
     }
 

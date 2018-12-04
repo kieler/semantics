@@ -106,7 +106,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link KiCoolPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -120,7 +120,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         if (isInited) return (KiCoolPackage)EPackage.Registry.INSTANCE.getEPackage(KiCoolPackage.eNS_URI);
 
         // Obtain or create and register package
-        KiCoolPackageImpl theKiCoolPackage = (KiCoolPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KiCoolPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KiCoolPackageImpl());
+        Object registeredKiCoolPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        KiCoolPackageImpl theKiCoolPackage = registeredKiCoolPackage instanceof KiCoolPackageImpl ? (KiCoolPackageImpl)registeredKiCoolPackage : new KiCoolPackageImpl();
 
         isInited = true;
 
@@ -139,7 +140,6 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         // Mark meta-data to indicate it can't be changed
         theKiCoolPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(KiCoolPackage.eNS_URI, theKiCoolPackage);
         return theKiCoolPackage;

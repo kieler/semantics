@@ -37,7 +37,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
@@ -91,13 +90,10 @@ class AbortWTO extends SCChartsProcessor {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-
-    private val nameCache = new UniqueNameCache => [ it += "_term" ]
 
     //-------------------------------------------------------------------------
     //--   A B O R T   A L T E R N A T I V E  T R A N S F O R M A T I O N    --
@@ -105,7 +101,6 @@ class AbortWTO extends SCChartsProcessor {
     // The new DEFAULT abort transformation, previously transformAbortAlternative.
     // Transforming Aborts.
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all states
         var done = false;
         for (targetState : rootState.getAllContainedStatesList) {
@@ -149,9 +144,9 @@ class AbortWTO extends SCChartsProcessor {
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-                val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName(nameCache)
-                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName(nameCache)
-                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName(nameCache)
+                val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName
+                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
+                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
@@ -165,7 +160,7 @@ class AbortWTO extends SCChartsProcessor {
 
                     // Create a new _transitionTrigger valuedObject
                     val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName
                     state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.isStrongAbort) {
@@ -186,14 +181,11 @@ class AbortWTO extends SCChartsProcessor {
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName(nameCache)
-                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").
-                            uniqueName(nameCache)
+                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
+                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
                         mainState.regions.add(region)
-                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").
-                            uniqueName(nameCache)
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.
-                            uniqueName(nameCache)
+                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.uniqueName
                         mainState.createTransitionTo(termState).setTypeTermination.addEffect(termVariable.createAssignment(TRUE))
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
@@ -204,8 +196,7 @@ class AbortWTO extends SCChartsProcessor {
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").
-                        uniqueName(nameCache)
+                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
@@ -276,8 +267,7 @@ class AbortWTO extends SCChartsProcessor {
             }
 
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").
-                uniqueName(nameCache).setTypeConnector
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             // Be careful to NOT create a trigger for the LAST (lowest priorized) outgoing transition from a connector, this must

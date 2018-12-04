@@ -32,12 +32,12 @@ public interface ModuleRenaming extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Module</em>' reference.
-     * @see #setModule(Module)
+     * @see #setModule(de.cau.cs.kieler.scl.Module)
      * @see de.cau.cs.kieler.esterel.EsterelPackage#getModuleRenaming_Module()
      * @model
      * @generated
      */
-    Module getModule();
+    de.cau.cs.kieler.scl.Module getModule();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.esterel.ModuleRenaming#getModule <em>Module</em>}' reference.
@@ -47,7 +47,7 @@ public interface ModuleRenaming extends EObject {
      * @see #getModule()
      * @generated
      */
-    void setModule(Module value);
+    void setModule(de.cau.cs.kieler.scl.Module value);
 
     /**
      * Returns the value of the '<em><b>New Name</b></em>' attribute.

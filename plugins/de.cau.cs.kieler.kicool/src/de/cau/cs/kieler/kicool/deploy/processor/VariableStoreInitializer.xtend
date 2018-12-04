@@ -34,6 +34,6 @@ class VariableStoreInitializer extends InplaceProcessor<EObject> {
     override process() {
         // Initialize varibable store
         val voStore = VariableStore.getVariableStore(environment)
-        if(voStore.variables.empty) voStore.initialize(model)
+        voStore.initialize(model)
     }
 }
