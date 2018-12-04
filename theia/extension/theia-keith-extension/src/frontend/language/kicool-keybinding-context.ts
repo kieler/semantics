@@ -16,15 +16,15 @@ import { EditorManager } from "@theia/editor/lib/browser";
 import { KeybindingContext, Keybinding } from "@theia/core/lib/browser";
 
 /**
- * Defines in which context keybindings for keith can be used.
+ * Defines in which context keybindings for the kicool extension can be used.
  */
 @injectable()
-export class KeithKeybindingContext implements KeybindingContext {
+export class KiCoolKeybindingContext implements KeybindingContext {
     constructor(
         @inject(EditorManager) protected readonly editorService: EditorManager
     ) { }
 
-    readonly id = 'keith.keybinding.context';
+    readonly id = 'kicool.keybinding.context';
 
     /**
      * Checks whether a keybinding of this context can be used in the current situation.

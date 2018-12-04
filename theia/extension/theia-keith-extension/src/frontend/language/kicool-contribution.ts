@@ -21,14 +21,14 @@ import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, CompilationSystems, CodeContainer } from "keith-language-extension/lib/frontend/utils";
-import { KeithKeybindingContext } from "./keith-keybinding-context";
+import { KiCoolKeybindingContext } from "./kicool-keybinding-context";
 import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
 
 /**
  * Contribution for CompilerWidget to add functionality to it and link with the current editor.
  */
 @injectable()
-export class KeithContribution extends AbstractViewContribution<CompilerWidget> {
+export class KiCoolContribution extends AbstractViewContribution<CompilerWidget> {
 
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
@@ -47,7 +47,7 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         @inject(KeithLanguageClientContribution) public readonly client: KeithLanguageClientContribution,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager,
-        @inject(KeithKeybindingContext) protected readonly keithKeybindingContext: KeithKeybindingContext,
+        @inject(KiCoolKeybindingContext) protected readonly kicoolKeybindingContext: KiCoolKeybindingContext,
         @inject(FileSystemWatcher) protected readonly fileSystemWatcher: FileSystemWatcher
     ) {
         super({
@@ -83,17 +83,17 @@ export class KeithContribution extends AbstractViewContribution<CompilerWidget> 
         [
             {
                 command: SHOW_PREVIOUS.id,
-                context: this.keithKeybindingContext.id,
+                context: this.kicoolKeybindingContext.id,
                 keybinding: Constants.SHOW_PREVIOUS_KEYBINDING
             },
             {
                 command: SHOW_NEXT.id,
-                context: this.keithKeybindingContext.id,
+                context: this.kicoolKeybindingContext.id,
                 keybinding: Constants.SHOW_NEXT_KEYBINDING
             },
             {
                 command: COMPILER.id,
-                context: this.keithKeybindingContext.id,
+                context: this.kicoolKeybindingContext.id,
                 keybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
             }
         ].forEach(binding => {

@@ -12,7 +12,7 @@
  */
 
 import { ContainerModule, interfaces } from 'inversify'
-import { KeithContribution} from './keith-contribution'
+import { KiCoolContribution} from './kicool-contribution'
 import { CommandContribution } from '@theia/core/lib/common'
 // import { DiagramConfiguration } from 'theia-sprotty/lib'
 // import { KeithDiagramConfiguration } from '../keithdiagram/di.config'
@@ -30,7 +30,7 @@ import { Constants } from "keith-language-extension/lib/frontend/utils"
 // import { DiagramOptionsViewWidgetFactory, DiagramOptionsViewWidget } from '../diagramoptions/diagramoptions-view-widget'
 // import { DiagramOptionsViewService } from '../diagramoptions/diagramoptions-view-service'
 // import { DiagramOptionsViewContribution } from '../diagramoptions/diagramoptions-view-contribution'
-import { KeithKeybindingContext } from './keith-keybinding-context'
+import { KiCoolKeybindingContext } from './kicool-keybinding-context'
 import { CompilerWidget } from '../widgets/compiler-widget'
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
@@ -74,10 +74,10 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // bind(WidgetFactory).toDynamicValue(context => context.container.get(DiagramOptionsViewService));
 
     // added for keybinding and commands
-    bind(KeithKeybindingContext).toSelf()
-    bind(KeybindingContext).toDynamicValue(context => context.container.get(KeithKeybindingContext));
+    bind(KiCoolKeybindingContext).toSelf()
+    bind(KeybindingContext).toDynamicValue(context => context.container.get(KiCoolKeybindingContext));
 
-    bindViewContribution(bind, KeithContribution)
+    bindViewContribution(bind, KiCoolContribution)
 })
 
 

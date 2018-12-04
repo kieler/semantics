@@ -18,7 +18,7 @@ import * as React from "react";
 import { Constants, CompilationSystems } from "keith-language-extension/lib/frontend/utils";
 
 import '../../src/frontend/widgets/style/index.css'
-import { KeithContribution } from "../language/keith-contribution";
+import { KiCoolContribution } from "../language/kicool-contribution";
 
 /**
  * Widget to compile and navigate compilation results. Should be linked to editor.
@@ -32,7 +32,7 @@ export class CompilerWidget extends ReactWidget {
     showPrivateSystems: boolean
 
     constructor(
-        @inject(new LazyServiceIdentifer(() => KeithContribution)) protected readonly commands: KeithContribution
+        @inject(new LazyServiceIdentifer(() => KiCoolContribution)) protected readonly commands: KiCoolContribution
     ) {
         super();
         this.id = Constants.compilerWidgetId
