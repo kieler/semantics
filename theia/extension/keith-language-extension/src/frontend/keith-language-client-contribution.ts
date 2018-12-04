@@ -23,7 +23,7 @@ import {
 // import { DiagramManagerProvider, DiagramManager } from 'theia-sprotty/lib'
 import { CommandRegistry, Disposable } from '@theia/core/lib/common';
 import { ContextMenuCommands } from './dynamic-commands';
-import { Constants } from '../../common/util';
+import { Constants } from './utils';
 
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {

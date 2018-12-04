@@ -15,9 +15,9 @@ import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
 import { Message } from "@theia/core/lib/browser";
 import * as React from "react";
-import { Constants, CompilationSystems } from "../../common/util";
+import { Constants, CompilationSystems } from "keith-language-extension/lib/frontend/utils";
 
-import "../../../src/frontend/widgets/style/index.css";
+import '../../src/frontend/widgets/style/index.css'
 import { KeithContribution } from "../language/keith-contribution";
 
 /**

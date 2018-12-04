@@ -15,12 +15,12 @@ import { inject, injectable } from "inversify";
 import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
 import { EditorManager, EditorWidget } from "@theia/editor/lib/browser";
 import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, CommonMenus } from "@theia/core/lib/browser";
-import { KeithLanguageClientContribution } from "./keith-language-client-contribution";
+import { KeithLanguageClientContribution } from "keith-language-extension/lib/frontend/keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
 import { Workspace, ILanguageClient } from "@theia/languages/lib/browser";
-import { Constants, CompilationSystems, CodeContainer } from "../../common/util";
+import { Constants, CompilationSystems, CodeContainer } from "keith-language-extension/lib/frontend/utils";
 import { KeithKeybindingContext } from "./keith-keybinding-context";
 import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
 

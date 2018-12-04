@@ -17,7 +17,7 @@ import { EditorCommands, EditorManager, EditorWidget } from "@theia/editor/lib/b
 import { WorkspaceEdit, Workspace } from "@theia/languages/lib/browser"
 // import { DiagramOptionsViewWidget } from "../diagramoptions/diagramoptions-view-widget"
 import { WidgetManager/*, Widget, DidCreateWidgetEvent */} from "@theia/core/lib/browser"
-import { KeithLanguageClientContribution } from "./keith-language-client-contribution"
+import { KeithLanguageClientContribution } from "keith-language-extension/lib/frontend/keith-language-client-contribution"
 // import { SynthesisOption } from "../diagramoptions/synthesis-option"
 // import { KeithDiagramManager } from "../keithdiagram/keith-diagram-manager"
 // import URI from "@theia/core/lib/common/uri"

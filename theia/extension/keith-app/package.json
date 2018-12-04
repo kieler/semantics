@@ -27,6 +27,7 @@
         "@theia/userstorage": "next",
         "@theia/variable-resolver": "next",
         "@theia/workspace": "next",
+        "keith-language-extension": "0.1.0",
         "theia-keith-extension": "0.1.0",
         "vscode-jsonrpc": "^3.6.2",
         "vscode-nsfw": "^1.0.17"
