@@ -25,9 +25,12 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
 import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
+import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess
 
 /**
- * Generates syntax highlighting for Monaco editor.
+ * Generates syntax highlighting for Monaco editor via a highlighting file.
+ * The highlighting file handles everything but the keywords in a standardized way defined by the SCCharts use-case.
+ * The recognized keywords are specified by the Xtext grammar.
  * 
  * @author sdo
  * 
@@ -81,8 +84,6 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
         IterableExtensions.<String>filter(allKeywords, filterKeywords).forEach(sortKeywords)
         Collections.<String>sort(wordKeywords)
         Collections.<String>sort(nonWordKeywords)
-        val highlightingFile = fileAccessFactory.createTextFile()
-        highlightingFile.path = highlightingPath
         var StringConcatenationClient content = new StringConcatenationClient() {
             override protected void appendTo(TargetStringConcatenation target) {
                 target.append(generateLanguageConfiguration);
@@ -115,12 +116,14 @@ class MonacoHighlightingFragment extends AbstractXtextGeneratorFragment {
                 target.append(generateNumberHighlighting);
                 target.append(generateWhitespaceHighlighting);
                 target.append(generateCommentHighlighting);
-                target.append(generateStringHighlighting)
+                target.append(generateStringHighlighting);
                 target.append(generateSingleQuotedStringHighlighting);
                 target.append("};");
             }
         }
+        val highlightingFile = fileAccessFactory.createTextFile()
         highlightingFile.setContent(content)
+        highlightingFile.path = highlightingPath
         // TODO change path
         highlightingFile.writeTo(this.projectConfig.genericIde.srcGen)
     }
