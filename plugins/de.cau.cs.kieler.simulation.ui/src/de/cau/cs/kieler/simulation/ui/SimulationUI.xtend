@@ -181,10 +181,10 @@ class SimulationUI {
                         return Status.CANCEL_STATUS
                     }
                     
-                    if (context.hasWarings) {
-                        StatusManager.getManager().handle(new Status(IStatus.WARNING, SimulationUIPlugin.PLUGIN_ID,
-                            "Warning(s) in compilation for simulation", new Throwable(context.allWarnings.map[message].toSet.join("\n"))), StatusManager.LOG)
-                    }
+//                    if (context.hasWarings) {
+//                        StatusManager.getManager().handle(new Status(IStatus.WARNING, SimulationUIPlugin.PLUGIN_ID,
+//                            "Warning(s) in compilation for simulation", new Throwable(context.allWarnings.map[message].toSet.join("\n"))), StatusManager.LOG)
+//                    }
                     
                     if (monitor.canceled) {return Status.CANCEL_STATUS}
                     
