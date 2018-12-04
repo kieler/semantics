@@ -47,6 +47,7 @@ import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.scl.Conditional;
@@ -333,6 +334,18 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
+			case KExtPackage.STRUCT_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
+					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getStructDeclarationRule()) {
+					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
