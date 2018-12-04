@@ -1,9 +1,15 @@
-// /*
-//  * Copyright (C) 2017 TypeFox and others.
-//  *
-//  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-//  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-//  */
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ *
+ * Copyright 2018 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
 
 // import { inject, injectable } from 'inversify'
 // import { LanguageClientContribution } from '@theia/languages/lib/browser'
