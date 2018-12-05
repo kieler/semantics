@@ -39,7 +39,9 @@ class SCTXFormatter extends KExtFormatter {
 		    pragmas.append[ setNewLines(1) ]
 			format(pragmas, document)
 		}
-
+		
+		sccharts.regionFor.assignments(SCChartsAccess.importsAssignment_0_1_1).forEach[append[ newLine ]]
+        
 		for (idxRootState : sccharts.rootStates.indexed) {
 			format(idxRootState.value, document)
 			if (idxRootState.key < sccharts.rootStates.size - 1) idxRootState.value.append[ newLine ]
@@ -77,8 +79,8 @@ class SCTXFormatter extends KExtFormatter {
 		    format(state.regions.head, document)
     		for (Region regions : state.regions.drop(1)) {
       		    switch (regions) {
-       	           ControlflowRegion: regions.regionFor.keyword(controlflowRegionAccess.regionKeyword_3).prepend[ setNewLines(2) ]
-       	           DataflowRegion: regions.regionFor.keyword(dataflowRegionAccess.dataflowKeyword_2).prepend[ setNewLines(2) ]
+       	           ControlflowRegion: regions.regionFor.keyword(controlflowRegionAccess.regionKeyword_4).prepend[ setNewLines(2) ]
+       	           DataflowRegion: regions.regionFor.keyword(dataflowRegionAccess.dataflowKeyword_3).prepend[ setNewLines(2) ]
        	        }
     			format(regions, document)
     		}
@@ -92,8 +94,8 @@ class SCTXFormatter extends KExtFormatter {
 
 	def dispatch void format(ScopeCall scopecall, extension IFormattableDocument document) {
         
-        scopecall.regionFor.keyword(scopeCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        scopecall.regionFor.keyword(scopeCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+        scopecall.regionFor.keyword(scopeCallAccess.leftParenthesisKeyword_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        scopecall.regionFor.keyword(scopeCallAccess.rightParenthesisKeyword_2_0_3)?.prepend[ noSpace ]
         
         for (Parameter parameters : scopecall.getParameters()) {
             format(parameters, document);
@@ -178,7 +180,7 @@ class SCTXFormatter extends KExtFormatter {
 			format(annotations, document);
 		}
 	
-		controlflowregion.regionFor.keyword(controlflowRegionAccess.colonKeyword_8_0_0)?.prepend[ noSpace ]?.append[ newLine ]
+		controlflowregion.regionFor.keyword(":")?.prepend[ noSpace ]?.append[ newLine ]
         controlflowregion.regionFor.keyword("{")?.prepend[ oneSpace ]?.append[ newLine ]
         controlflowregion.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         controlflowregion.regionFor.keyword("}")?.prepend[ newLine ]
@@ -219,7 +221,7 @@ class SCTXFormatter extends KExtFormatter {
             format(annotations, document);
         }
     
-        dataflowregion.regionFor.keyword(dataflowRegionAccess.colonKeyword_8).prepend[ noSpace ].append[ newLine ]
+        dataflowregion.regionFor.keyword(dataflowRegionAccess.colonKeyword_9).prepend[ noSpace ].append[ newLine ]
          
         var EObject lastObject = null
         for (idxDeclaration : dataflowregion.declarations.indexed) {

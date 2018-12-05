@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
@@ -94,6 +95,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 SCCharts scCharts = (SCCharts)theEObject;
                 T result = caseSCCharts(scCharts);
                 if (result == null) result = casePragmatable(scCharts);
+                if (result == null) result = caseNameable(scCharts);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -104,6 +106,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(scope);
                 if (result == null) result = caseNamedObject(scope);
                 if (result == null) result = caseSchedulable(scope);
+                if (result == null) result = caseNameable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -141,6 +144,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(state);
                 if (result == null) result = caseNamedObject(state);
                 if (result == null) result = caseSchedulable(state);
+                if (result == null) result = caseNameable(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -153,6 +157,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(region);
                 if (result == null) result = caseNamedObject(region);
                 if (result == null) result = caseSchedulable(region);
+                if (result == null) result = caseNameable(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -166,6 +171,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
                 if (result == null) result = caseNamedObject(controlflowRegion);
                 if (result == null) result = caseSchedulable(controlflowRegion);
+                if (result == null) result = caseNameable(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -179,6 +185,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
                 if (result == null) result = caseNamedObject(dataflowRegion);
                 if (result == null) result = caseSchedulable(dataflowRegion);
+                if (result == null) result = caseNameable(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -562,6 +569,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclarationScope(DeclarationScope object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
         return null;
     }
 

@@ -19,5 +19,4 @@ public abstract class AbstractKEffectsValidator extends KExpressionsValidator {
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
-	
 }

@@ -107,13 +107,22 @@ public interface SCChartsPackage extends EPackage {
     int SC_CHARTS__ROOT_STATES = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Imports</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_CHARTS__IMPORTS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>SC Charts</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SC_CHARTS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+    int SC_CHARTS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
@@ -235,13 +244,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE_CALL__SCOPE = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Super</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_CALL__SUPER = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Scope Call</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+    int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -607,13 +625,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 7;
 
     /**
+     * The feature id for the '<em><b>Base States</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__BASE_STATES = SCOPE_FEATURE_COUNT + 8;
+
+    /**
      * The number of structural features of the '<em>State</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 8;
+    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -743,13 +770,22 @@ public interface SCChartsPackage extends EPackage {
     int REGION__FOR_END = SCOPE_FEATURE_COUNT + 5;
 
     /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__OVERRIDE = SCOPE_FEATURE_COUNT + 6;
+
+    /**
      * The number of structural features of the '<em>Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 6;
+    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
@@ -877,6 +913,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__FOR_END = REGION__FOR_END;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__OVERRIDE = REGION__OVERRIDE;
 
     /**
      * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -1031,6 +1076,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__FOR_END = REGION__FOR_END;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__OVERRIDE = REGION__OVERRIDE;
 
     /**
      * The feature id for the '<em><b>Equations</b></em>' containment reference list.
@@ -2047,6 +2101,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getSCCharts_RootStates();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.sccharts.SCCharts#getImports <em>Imports</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Imports</em>'.
+     * @see de.cau.cs.kieler.sccharts.SCCharts#getImports()
+     * @see #getSCCharts()
+     * @generated
+     */
+    EAttribute getSCCharts_Imports();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Scope <em>Scope</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2109,6 +2174,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getScopeCall_Scope();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ScopeCall#isSuper <em>Super</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Super</em>'.
+     * @see de.cau.cs.kieler.sccharts.ScopeCall#isSuper()
+     * @see #getScopeCall()
+     * @generated
+     */
+    EAttribute getScopeCall_Super();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
@@ -2306,6 +2382,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_IncomingTransitions();
 
     /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.State#getBaseStates <em>Base States</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Base States</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#getBaseStates()
+     * @see #getState()
+     * @generated
+     */
+    EReference getState_BaseStates();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2358,6 +2445,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getRegion_ForEnd();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Region#isOverride <em>Override</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Override</em>'.
+     * @see de.cau.cs.kieler.sccharts.Region#isOverride()
+     * @see #getRegion()
+     * @generated
+     */
+    EAttribute getRegion_Override();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ControlflowRegion <em>Controlflow Region</em>}'.
@@ -2651,6 +2749,14 @@ public interface SCChartsPackage extends EPackage {
         EReference SC_CHARTS__ROOT_STATES = eINSTANCE.getSCCharts_RootStates();
 
         /**
+         * The meta object literal for the '<em><b>Imports</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SC_CHARTS__IMPORTS = eINSTANCE.getSCCharts_Imports();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2701,6 +2807,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference SCOPE_CALL__SCOPE = eINSTANCE.getScopeCall_Scope();
+
+        /**
+         * The meta object literal for the '<em><b>Super</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCOPE_CALL__SUPER = eINSTANCE.getScopeCall_Super();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -2853,6 +2967,14 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
         /**
+         * The meta object literal for the '<em><b>Base States</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference STATE__BASE_STATES = eINSTANCE.getState_BaseStates();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2893,6 +3015,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference REGION__FOR_END = eINSTANCE.getRegion_ForEnd();
+
+        /**
+         * The meta object literal for the '<em><b>Override</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute REGION__OVERRIDE = eINSTANCE.getRegion_Override();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.

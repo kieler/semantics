@@ -455,6 +455,9 @@ enum ValueType returns ValueType:
 enum HostType returns ValueType:
     HOST="host";
 
+enum StructType returns ValueType:
+    STRUCT="struct";
+
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";

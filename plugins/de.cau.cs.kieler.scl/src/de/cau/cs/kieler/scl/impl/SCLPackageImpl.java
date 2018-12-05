@@ -182,7 +182,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link SCLPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -196,7 +196,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         if (isInited) return (SCLPackage)EPackage.Registry.INSTANCE.getEPackage(SCLPackage.eNS_URI);
 
         // Obtain or create and register package
-        SCLPackageImpl theSCLPackage = (SCLPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SCLPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SCLPackageImpl());
+        Object registeredSCLPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        SCLPackageImpl theSCLPackage = registeredSCLPackage instanceof SCLPackageImpl ? (SCLPackageImpl)registeredSCLPackage : new SCLPackageImpl();
 
         isInited = true;
 
@@ -215,7 +216,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         // Mark meta-data to indicate it can't be changed
         theSCLPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(SCLPackage.eNS_URI, theSCLPackage);
         return theSCLPackage;
@@ -570,7 +570,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSCLProgram_Modules(), this.getModule(), null, "modules", null, 1, -1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(moduleEClass, de.cau.cs.kieler.scl.Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(statementEClass, Statement.class, "Statement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.kicool.identity.dynamic
+developer system de.cau.cs.kieler.kicool.identity.dynamic
 	label "Dynamic Identity Transformation System"
 
 de.cau.cs.kieler.kicool.processors.identity	

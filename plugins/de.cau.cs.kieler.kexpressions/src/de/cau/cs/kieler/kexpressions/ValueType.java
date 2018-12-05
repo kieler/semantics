@@ -37,6 +37,11 @@ public enum ValueType implements Enumerator {
      * The '<em><b>PURE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Default value is the PURE type which means that the
+     * ValuedObject does not contain any value at all (only
+     * makes sense for Signals).
+     * <!-- end-model-doc -->
      * @see #PURE_VALUE
      * @generated
      * @ordered
@@ -83,6 +88,11 @@ public enum ValueType implements Enumerator {
      * The '<em><b>HOST</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * HOST means that no actual type is given but the
+     * type in the hostType attribute should be used 
+     * instead.
+     * <!-- end-model-doc -->
      * @see #HOST_VALUE
      * @generated
      * @ordered
@@ -147,7 +157,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    JSON(12, "JSON", "JSON");
+    JSON(12, "JSON", "JSON"), /**
+     * The '<em><b>STRUCT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #STRUCT_VALUE
+     * @generated
+     * @ordered
+     */
+    STRUCT(13, "STRUCT", "STRUCT");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -347,6 +365,21 @@ public enum ValueType implements Enumerator {
     public static final int JSON_VALUE = 12;
 
     /**
+     * The '<em><b>STRUCT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>STRUCT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #STRUCT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int STRUCT_VALUE = 13;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -367,6 +400,7 @@ public enum ValueType implements Enumerator {
             UNKNOWN,
             CLOCK,
             JSON,
+            STRUCT,
         };
 
     /**
@@ -436,6 +470,7 @@ public enum ValueType implements Enumerator {
             case UNKNOWN_VALUE: return UNKNOWN;
             case CLOCK_VALUE: return CLOCK;
             case JSON_VALUE: return JSON;
+            case STRUCT_VALUE: return STRUCT;
         }
         return null;
     }

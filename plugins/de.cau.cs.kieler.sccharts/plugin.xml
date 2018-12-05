@@ -151,6 +151,9 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActionsAndDeclarations">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Inheritance">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth">
         </Processor>
         <Processor
@@ -230,6 +233,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.netlist.arduino.deploy.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
         </TransformationSystem>
      </extension>
 

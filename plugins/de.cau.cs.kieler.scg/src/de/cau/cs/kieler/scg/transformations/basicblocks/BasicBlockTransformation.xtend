@@ -176,7 +176,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         }
         
         val voStore = VariableStore.get(environment)
-        basicBlockGuardCache.keySet.forEach[voStore.add(it, "guard")]
+        basicBlockGuardCache.keySet.forEach[voStore.update(it, "guard")]
         
         scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         

@@ -74,14 +74,15 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
+    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration;
 
 DeclarationWOSemicolon returns kexpressions::Declaration:
-    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | StructDeclarationWOSemicolon;
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
+    private?='private'?
 	const?='const'?
     input?='input'? 
     output?='output'?
@@ -96,6 +97,7 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
+    private?='private'?
 	const?='const'?
     input?='input'? 
     output?='output'?
@@ -106,6 +108,41 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
         (type = HostType hostType = STRING)
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?; 
+
+StructDeclaration returns kext::StructDeclaration:
+    {kext::StructDeclaration}
+    annotations+=Annotation*
+    private?='private'?
+    const?='const'?
+    input?='input'?
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    type = StructType
+    (name = ID)?
+    '{'
+        declarations+=Declaration*
+    '}'
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+    ';'
+    annotations+=CommentAnnotatonSL?;
+    
+StructDeclarationWOSemicolon returns kext::StructDeclaration:
+    {kext::StructDeclaration}
+    annotations+=Annotation*
+    private?='private'?
+    const?='const'?
+    input?='input'? 
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    type = StructType
+    (name = ID)?
+    '{'
+        declarations+=DeclarationWOSemicolon*
+    '}'
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
     annotations+=CommentAnnotatonSL?;  
     
 NamespaceID returns ecore::EString:
@@ -113,6 +150,7 @@ NamespaceID returns ecore::EString:
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
+    private?='private'?
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
@@ -123,6 +161,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
+    private?='private'?
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
@@ -138,6 +177,7 @@ ExternString returns kexpressions::ExternString:
     
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
+    private?='private'?
     'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
@@ -146,6 +186,7 @@ ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
+    private?='private'?
     'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?

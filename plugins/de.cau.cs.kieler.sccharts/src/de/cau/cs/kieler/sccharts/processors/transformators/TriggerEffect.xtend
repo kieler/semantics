@@ -28,7 +28,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
@@ -79,14 +78,11 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "__te_"
     
-    private val nameCache = new UniqueNameCache
-
     //-------------------------------------------------------------------------
     //--                  T R I G G E R   E F F E C T                        --
     //-------------------------------------------------------------------------
@@ -97,8 +93,6 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
     def State transform(State rootState) {
-        nameCache.clear
-
         // Traverse all transitions
         for (targetTransition : rootState.getAllContainedTransitions.toList) {
             targetTransition.transformTriggerEffect(rootState)
@@ -118,7 +112,7 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
 
             for (effect : transition.effects.immutableCopy) {
                     val effectState = parentRegion.createState(GENERATED_PREFIX + "S").trace(transition, effect)
-                    effectState.uniqueName(nameCache)
+                    effectState.uniqueName
                     val effectTransition = createImmediateTransition().trace(transition, effect)
                     effectTransition.addEffect(effect) 
                     effectTransition.setSourceState(effectState)

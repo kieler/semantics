@@ -5,6 +5,7 @@ package de.cau.cs.kieler.kicool.ui;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.kicool.ui.internal.KiCoolActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class KiCoolExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 
 	@Override
 	protected Bundle getBundle() {
-		return KiCoolActivator.getInstance().getBundle();
+		return Platform.getBundle(KiCoolActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return KiCoolActivator.getInstance().getInjector(KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL);
+		KiCoolActivator activator = KiCoolActivator.getInstance();
+		return activator != null ? activator.getInjector(KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL) : null;
 	}
-	
+
 }
