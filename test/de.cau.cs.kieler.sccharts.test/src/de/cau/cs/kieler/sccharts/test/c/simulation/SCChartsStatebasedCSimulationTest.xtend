@@ -15,34 +15,60 @@ package de.cau.cs.kieler.sccharts.test.c.simulation
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.junit.Test
+import org.junit.runner.RunWith
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
+import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import static org.junit.Assume.*
 
 /**
  * @author ssm
  *
  */
-class SCChartsStatebasedCSimulationTest {
+ @RunWith(ModelsRepositoryTestRunner)
+class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts> {
     
-//    override protected createSimulationBackend() {
-//        return createCSimulationBackend
-//    }
-//    
-//    protected def isStatebasedSimulationText(TestModelData modelData) {
-//        return modelData.isNetlistCompilationTests 
-//        && modelData.modelProperties.contains("statebased")
-//        && modelData.modelProperties.contains("rbls")
-//    }
-//    
-//    override filter(TestModelData modelData) {
-//        return modelData.isStatebasedSimulationText
-//        && modelData.isSCChartsTest
-//        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
-//        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
-//    }
+    public static val STATEBASED_SIMULATION_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.statebased.c"
+    public static val STATEBASED_SIMULATION_SYSTEM_TTS = "de.cau.cs.kieler.sccharts.simulation.tts.statebased.c"
+    public static val STATEBASED_LEAN_SIMULATION_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.statebased.lean.c"
+    public static val STATEBASED_LEAN_SIMULATION_SYSTEM_TTS = "de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c"
+
+        
+    public static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     
-//    @Test
-    def void testSimulationStatebasedC(SCCharts scc, TestModelData modelData) {
-//        startSimulationTest(#["de.cau.cs.kieler.sccharts.statebased.woComments"], scc, modelData)
-//        startSimulationTest(#["de.cau.cs.kieler.sccharts.netlist"], scc, modelData)
-//        startSimulationTest(#["de.cau.cs.kieler.sccharts.priority"], scc, modelData)
+    new() {
+        super(scchartsInjector)
+    }    
+    
+    override filter(TestModelData modelData) {
+        return modelData.modelProperties.contains("statebased")
+        && !modelData.modelProperties.contains("not-core")
+        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
+        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
     }
+    
+    @Test
+    def void testSimulationStatebasedC(SCCharts scc, TestModelData modelData) {
+        startSimulationTest(STATEBASED_SIMULATION_SYSTEM, scc, modelData, "State-based Simulation Test (C)")
+    }
+    
+    @Test
+    def void testSimulationStatebasedCTTS(SCCharts scc, TestModelData modelData) {
+        startSimulationTest(STATEBASED_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Simulation Test (C, TTS)")
+    }
+
+    @Test
+    def void testSimulationStatebasedLeanC(SCCharts scc, TestModelData modelData) {
+        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
+        
+        startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM, scc, modelData, "State-based Lean Simulation Test (C)")
+    }
+    
+    @Test
+    def void testSimulationStatebasedLeanCTTS(SCCharts scc, TestModelData modelData) {
+        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
+        
+        startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Lean Simulation Test (C, TTS)")
+    }
+    
 }
