@@ -24,7 +24,6 @@ import { configuration as strlConfiguration, monarchLanguage as strlMonarchLangu
 import { configuration as lusConfiguration, monarchLanguage as lusMonarchLanguage} from './lus-monaco-language'
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
-import { ContextMenuCommands } from './dynamic-commands';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
     // register kgt
@@ -110,8 +109,6 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
         monaco.languages.setLanguageConfiguration(Constants.lustreId, lusConfiguration)
         monaco.languages.setMonarchTokensProvider(Constants.lustreId, lusMonarchLanguage)
     });
-
-    bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
 
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
     // languages

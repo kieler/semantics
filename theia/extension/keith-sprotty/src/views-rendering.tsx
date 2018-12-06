@@ -3,10 +3,11 @@ import { svg } from 'snabbdom-jsx'
 import { KChildArea, KGraphElement, KEllipse, KNode, KPort, KRoundedRectangle, KRectangle,
     KSpline, KEdge, KPolyline, KPolygon, KText, KLabel, KContainerRendering, KGraphData,
     KRenderingRef, KRenderingLibrary } from "./kgraph-models"
-import { KGraphRenderingContext, fillBackground, fillForeground, findBoundsById, shadowFilter,
+import { KGraphRenderingContext, fillBackground, fillForeground, findById, shadowFilter,
     lineCapText, lineJoinText, lineStyleText, evaluateKPosition, camelToKebab,
     horizontalAlignmentText, verticalAlignmentText, calculateX, calculateY } from "./views-common"
 import { isNullOrUndefined } from "util"
+import { toDegrees } from "sprotty/lib"
 import { VNode } from "snabbdom/vnode"
 import { getStyles, background, foreground, DEFAULT_FOREGROUND, DEFAULT_LINE_WIDTH,
     DEFAULT_SHADOW, shadowDefinition, DEFAULT_MITER_LIMIT, DEFAULT_FONT_ITALIC,
@@ -65,10 +66,32 @@ export function renderKEllipse(rendering: KEllipse, parent: KGraphElement, conte
         bounds = rendering.calculatedBounds
     }
     if (isNullOrUndefined(bounds) && !isNullOrUndefined(context.boundsMap)) {
-        bounds = findBoundsById(context.boundsMap, rendering.id)
+        bounds = findById(context.boundsMap, rendering.id)
     }
-    if (isNullOrUndefined(bounds)) {
-        console.error('could not find bounds to render this KEllipse')
+
+    let decoration = undefined
+    if (!isNullOrUndefined(rendering.calculatedDecoration)) {
+        decoration = rendering.calculatedDecoration
+        bounds = {
+            x: decoration.bounds.x + decoration.origin.x,
+            y: decoration.bounds.y + decoration.origin.y,
+            width: decoration.bounds.width,
+            height: decoration.bounds.height
+        }
+    }
+    if (isNullOrUndefined(decoration) && !isNullOrUndefined(context.decorationMap)) {
+        decoration = findById(context.decorationMap, rendering.id)
+        if (!isNullOrUndefined(decoration)) {
+            bounds = {
+                x: decoration.bounds.x + decoration.origin.x,
+                y: decoration.bounds.y + decoration.origin.y,
+                width: decoration.bounds.width,
+                height: decoration.bounds.height
+            }
+        }
+    }
+    if (isNullOrUndefined(decoration) && isNullOrUndefined(bounds)) {
+        console.error('could not find bounds or decoration data to render this KEllipse')
         return <g/>
     }
 
@@ -126,7 +149,7 @@ export function renderKRoundedRectangle(rendering: KRoundedRectangle, parent: KG
     // if no sizes have been found yet, they should be in the boundsMap
     if (isNullOrUndefined(x) && !isNullOrUndefined(context.boundsMap)) {
         // sizes should be found in the boundsMap in the context
-        const bounds = findBoundsById(context.boundsMap, rendering.id)
+        const bounds = findById(context.boundsMap, rendering.id)
         if (isNullOrUndefined(bounds)) {
             console.error('the boundsMap does not contain the id for this rendering.')
             console.error('boundsMap:')
@@ -190,17 +213,13 @@ export function renderKSpline(rendering: KSpline, edge: KGraphElement | KEdge, c
     const miterLimit = styles.kLineJoin.miterLimit === null ? DEFAULT_MITER_LIMIT : styles.kLineJoin.miterLimit
     const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (edge as KGraphElement).id + rendering.id)
 
-    // TODO: draw a spline instead of a polyline
     const firstPoint = edge.routingPoints[0]
     let minX = firstPoint.x
     let maxX = firstPoint.x
     let minY = firstPoint.y
     let maxY = firstPoint.y
-    let path = `M ${firstPoint.x},${firstPoint.y}`
     for (let i = 1; i < edge.routingPoints.length - 1; i++) {
         const p = edge.routingPoints[i]
-        path += ` L ${p.x},${p.y}`
-
         if (p.x < minX) {
             minX = p.x
         }
@@ -223,13 +242,31 @@ export function renderKSpline(rendering: KSpline, edge: KGraphElement | KEdge, c
         // if this path has no width and the last point does not add anything to that, we need to shift one value by a tiny, invisible value so the width will now be bigger than 0.
         if (maxX - minX === 0 && lastX === maxX) {
             lastX += EPSILON
+            edge.routingPoints[edge.routingPoints.length - 1] = {x: lastX, y: lastY}
         }
         // same for Y
         if (maxY - minY === 0 && lastY === maxY) {
             lastY += EPSILON
+            edge.routingPoints[edge.routingPoints.length - 1] = {x: lastX, y: lastY}
         }
-        path += ` L ${lastX},${lastY}`
     }
+
+    // now define the spline's path.
+    let path = `M ${firstPoint.x},${firstPoint.y}`
+    for (let i = 1; i < edge.routingPoints.length; i = i + 3) {
+        let remainingPoints = edge.routingPoints.length - i
+        if (remainingPoints === 1) {
+            // if one routing point is left, draw a straight line to there.
+            path += ` L ${edge.routingPoints[i].x},${edge.routingPoints[i].y}`
+        } else if (remainingPoints === 2) {
+            // if two routing points are left, draw a quadratic bezier curve with those two points.
+            path += ` Q ${edge.routingPoints[i].x},${edge.routingPoints[i].y} ${edge.routingPoints[i + 1].x},${edge.routingPoints[i + 1].y}`
+        } else  {
+            // if three or more routing points are left, draw a cubic bezier curve with those points.
+            path += ` C ${edge.routingPoints[i].x},${edge.routingPoints[i].y} ${edge.routingPoints[i + 1].x},${edge.routingPoints[i + 1].y} ${edge.routingPoints[i + 2].x},${edge.routingPoints[i + 2].y}`
+        }
+    }
+
     return <g>
     {foregroundDefinition}
         <path 
@@ -323,7 +360,7 @@ export function renderKPolyline(rendering: KPolyline, edge: KGraphElement | KEdg
 
 export function renderKPolygon(rendering: KPolygon, parent: KGraphElement, context: KGraphRenderingContext): VNode {
     const styles = getStyles(rendering.styles, parent.id + rendering.id)
-    const stroke = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground(parent.id + rendering.id)
+    let stroke: string | null = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground(parent.id + rendering.id)
     const fill = styles.kBackground === null ? DEFAULT_FILL : fillBackground((parent as KGraphElement).id + rendering.id)
     const lineCap = styles.kLineCap === null ? undefined : lineCapText(styles.kLineCap)
     const lineWidth = styles.kLineWidth === null ? DEFAULT_LINE_WIDTH : styles.kLineWidth.lineWidth
@@ -333,15 +370,43 @@ export function renderKPolygon(rendering: KPolygon, parent: KGraphElement, conte
     const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id)
     const backgroundDefinition = styles.kBackground === null ? <g/> : background(styles.kBackground, (parent as KGraphElement).id + rendering.id)
 
+    // hack to fix the border being drawn although it should not
+    // FIXME: find out, how to not have to use this hack.
+    if (lineWidth === 0) {
+        stroke = null
+    }
+
     let bounds = undefined
     if (!isNullOrUndefined(rendering.calculatedBounds)) {
         bounds = rendering.calculatedBounds
     }
     if (isNullOrUndefined(bounds) && !isNullOrUndefined(context.boundsMap)) {
-        bounds = findBoundsById(context.boundsMap, rendering.id)
+        bounds = findById(context.boundsMap, rendering.id)
     }
-    if (isNullOrUndefined(bounds)) {
-        console.error('could not find bounds to render this KPolygon')
+
+    let decoration = undefined
+    if (!isNullOrUndefined(rendering.calculatedDecoration)) {
+        decoration = rendering.calculatedDecoration
+        bounds = {
+            x: decoration.bounds.x + decoration.origin.x,
+            y: decoration.bounds.y + decoration.origin.y,
+            width: decoration.bounds.width,
+            height: decoration.bounds.height
+        }
+    }
+    if (isNullOrUndefined(decoration) && !isNullOrUndefined(context.decorationMap)) {
+        decoration = findById(context.decorationMap, rendering.id)
+        if (!isNullOrUndefined(decoration)) {
+            bounds = {
+                x: decoration.bounds.x + decoration.origin.x,
+                y: decoration.bounds.y + decoration.origin.y,
+                width: decoration.bounds.width,
+                height: decoration.bounds.height
+            }
+        }
+    }
+    if (isNullOrUndefined(decoration) && isNullOrUndefined(bounds)) {
+        console.error('could not find bounds or decoration data to render this KPolygon')
         return <g/>
     }
 
@@ -353,12 +418,13 @@ export function renderKPolygon(rendering: KPolygon, parent: KGraphElement, conte
     }
     path += ' Z'
 
-    return <g>
+    // TODO: when replacing snabbdom with react or something similar: have all styles as attributes and in camelCase
+    return <g {...decoration ? {transform: `translate(${decoration.origin.x},${decoration.origin.y}) rotate(${toDegrees(decoration.rotation)}) translate(${-decoration.origin.x},${-decoration.origin.y})`} : {}}>
         {backgroundDefinition}
         {foregroundDefinition}
         <path 
             d = {path}
-            stroke = {stroke}
+            {...(stroke ? {stroke: stroke} : {})}
             fill = {fill}
             style = {{
                 'stroke-linecap': lineCap,
@@ -402,7 +468,7 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
     }
     // if no bounds have been found yet, they should be in the boundsMap
     if (isNullOrUndefined(x) && !isNullOrUndefined(context.boundsMap)) {
-        const bounds = findBoundsById(context.boundsMap, rendering.id)
+        const bounds = findById(context.boundsMap, rendering.id)
         if (isNullOrUndefined(bounds)) {
             console.error('the boundsMap does not contain the id for this rendering.')
         } else {
@@ -426,6 +492,7 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
             x = {x}
             y = {y}
             fill = {fill}
+            {...{'xml:space' : "preserve"}/* This attribute makes the text size estimation include any trailing white spaces. */}
         >{text}</text>
     </g>
 }
@@ -441,11 +508,14 @@ export function renderChildRenderings(parentRendering: KContainerRendering, pare
 
 export function getRendering(datas: KGraphData[], parent: KGraphElement, context: KGraphRenderingContext): VNode | null { // TODO: not all of these are implemented yet
     for (let data of datas) {
+        if (data === null)
+            continue
         if (data.type === K_RENDERING_REF) {
             var id = (data as KRenderingRef).id
             for (let rendering of context.kRenderingLibrary.renderings) {
                 if (rendering.id === id) {
                     context.boundsMap = (data as KRenderingRef).calculatedBoundsMap
+                    context.decorationMap = (data as KRenderingRef).calculatedDecorationMap
                     data = rendering as any // TODO: fix: persistentEntry is missing
                 }
             }

@@ -22,8 +22,7 @@ export class ComputedTextBoundsAction implements Action {
 
     readonly kind = ComputedTextBoundsAction.KIND
 
-    constructor(public readonly bounds: ElementAndBounds[],
-                public readonly revision?: number) {
+    constructor(public readonly bounds: ElementAndBounds[]) {
     }
 }
 
