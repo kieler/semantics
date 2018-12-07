@@ -12,9 +12,7 @@
  */
 
 import { ContainerModule, interfaces } from 'inversify'
-import { DiagramConfiguration, DiagramWidgetRegistry, DiagramConfigurationRegistry, TheiaFileSaver,
-    DiagramCommandContribution, DiagramMenuContribution, DiagramKeybindingContext,
-    DiagramKeybindingContribution } from 'theia-sprotty/lib'
+import { DiagramConfiguration } from 'theia-sprotty/lib'
 import { KeithDiagramConfiguration } from './di.config'
 import { DiagramManager, DiagramManagerProvider } from 'theia-sprotty/lib'
 import { KeithDiagramManager } from './keith-diagram-manager'
@@ -25,24 +23,8 @@ import { ThemeManager } from './theme-manager'
 import { ContextMenuCommands } from './dynamic-commands';
 import { KeithDiagramLanguageClientContribution } from './keith-diagram-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
-import { CommandContribution, MenuContribution } from '@theia/core';
-import { KeybindingContext, KeybindingContribution } from '@theia/core/lib/browser';
 
 export default new ContainerModule((bind: interfaces.Bind) => {
-
-    bind(DiagramWidgetRegistry).toSelf().inSingletonScope()
-    bind(DiagramConfigurationRegistry).toSelf().inSingletonScope()
-    bind(TheiaFileSaver).toSelf().inSingletonScope()
-    bind(CommandContribution).to(DiagramCommandContribution).inSingletonScope()
-    bind(MenuContribution).to(DiagramMenuContribution).inSingletonScope()
-    bind(DiagramKeybindingContext).toSelf().inSingletonScope()
-    bind(KeybindingContext).to(DiagramKeybindingContext).inSingletonScope()
-    bind(KeybindingContribution).to(DiagramKeybindingContribution).inSingletonScope()
-
-
-
-
-
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithDiagramLanguageClientContribution))
     bind(DiagramConfiguration).to(KeithDiagramConfiguration).inSingletonScope()
     bind(DiagramManagerProvider).toProvider<DiagramManager>(context => {
