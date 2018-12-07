@@ -63,14 +63,12 @@
     "theia-keith-extension": "https://stu114053@git.rtsys.informatik.uni-kiel.de/scm/~stu114053/theia-keith-extension-test.git#master",
     "vscode-jsonrpc": "^3.6.2",
     "vscode-nsfw": "^1.0.17",
-    "xcodebuild": "^1.0.2",
     "xterm": "^2.9.2",
     "yargs": "^9.0.1"
   },
   "devDependencies": {
     "@theia/cli": "latest",
     "electron-builder": "^19.30.2",
-    "@types/body-parser": "^1.17.0",
     "@types/chai": "^4.0.1",
     "@types/chai-as-promised": "0.0.31",
     "@types/mocha": "^2.2.41",
