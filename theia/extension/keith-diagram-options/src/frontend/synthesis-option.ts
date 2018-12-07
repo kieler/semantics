@@ -11,18 +11,18 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-// export interface SynthesisOption {
-//     name: string
-//     type: TransformationOptionType
-//     initialValue: any
-//     values: any[]
-//     currentValue: any
-// }
+export interface SynthesisOption {
+    name: string
+    type: TransformationOptionType
+    initialValue: any
+    values: any[]
+    currentValue: any
+}
 
-// export enum TransformationOptionType {
-//     CHECK = 0,
-//     CHOICE = 1,
-//     RANGE = 2,
-//     SEPARATOR = 3,
-//     CATEGORY = 4
-// }
+export enum TransformationOptionType {
+    CHECK = 0,
+    CHOICE = 1,
+    RANGE = 2,
+    SEPARATOR = 3,
+    CATEGORY = 4
+}
