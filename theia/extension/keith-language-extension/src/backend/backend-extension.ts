@@ -51,9 +51,9 @@ class KeithLanguageServerContribution extends BaseLanguageServerContribution {
     readonly description = {
         id: 'sctx',
         name: 'SCTX',
-        documentSelector: [Constants.annoId, Constants.esterelId, Constants.kextId, Constants.lustreId, Constants.sclId, Constants.sctxId],
+        documentSelector: [Constants.kgtId, Constants.annoId, Constants.esterelId, Constants.kextId, Constants.lustreId, Constants.sclId, Constants.sctxId],
         fileEvents: [
-            // '**/*.' + Constants.kgtId,
+            '**/*.' + Constants.kgtId,
             '**/*.' + Constants.sctxId,
             '**/*.' + Constants.sclId,
             '**/*.' + Constants.kextId,

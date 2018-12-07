@@ -8,7 +8,7 @@
 import { inject, injectable } from "inversify"
 import { VNode } from "snabbdom/vnode"
 import { Bounds, IVNodeDecorator, TYPES, IActionDispatcher, isExportable, ElementAndBounds,
-     almostEquals, BoundsAware, isSizeable/*, isLayoutContainer*/, SModelElement, SModelRoot } from "sprotty/lib"
+     almostEquals, BoundsAware, isSizeable, SModelElement, SModelRoot } from "sprotty/lib"
 import { ComputedTextBoundsAction } from "./actions"
 
 export class TextBoundsData {
@@ -35,7 +35,7 @@ export class HiddenTextBoundsUpdater implements IVNodeDecorator {
     root: SModelRoot | undefined
 
     decorate(vnode: VNode, element: SModelElement): VNode {
-        if (isSizeable(element) /*|| isLayoutContainer(element)*/) {
+        if (isSizeable(element)) {
             this.element2boundsData.set(element, {
                 vnode: vnode,
                 bounds: element.bounds,
@@ -60,8 +60,7 @@ export class HiddenTextBoundsUpdater implements IVNodeDecorator {
                         newBounds: boundsData.bounds
                     })
             })
-        const revision = (this.root !== undefined) ? this.root.revision : undefined
-        this.actionDispatcher.dispatch(new ComputedTextBoundsAction(resizes, revision))
+        this.actionDispatcher.dispatch(new ComputedTextBoundsAction(resizes))
         this.element2boundsData.clear()
     }
 

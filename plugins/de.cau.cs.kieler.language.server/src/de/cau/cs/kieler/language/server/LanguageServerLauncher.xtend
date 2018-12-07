@@ -46,13 +46,13 @@ import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-//import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
-//import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
-//import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
-//import de.cau.cs.kieler.klighd.kgraph.dsp.KGraphDiagramModule
-//import java.util.function.Consumer
-//import com.google.gson.GsonBuilder
-//import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
+import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
+import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
+import de.cau.cs.kieler.klighd.kgraph.dsp.KGraphDiagramModule
+import java.util.function.Consumer
+import com.google.gson.GsonBuilder
+import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
 
 /**
  * Used to start language server via stdin/out connection.
@@ -100,21 +100,21 @@ class LanguageServerLauncher extends ServerLauncher {
             }
         }.createInjectorAndDoEMFRegistration()
         
-//        new KGraphIdeSetup {
-//            override createInjector() {
-//                Guice.createInjector(Modules2.mixin(
-//                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
-//            }
-//        }.createInjectorAndDoEMFRegistration()
+        new KGraphIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(
+                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
     }
     
     override start(LaunchArgs args) {
         val executorService = Executors.newCachedThreadPool
-//        val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
-//            KGraphTypeAdapterUtil.configureGson(gsonBuilder)
-//        ]
+        val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
+            KGraphTypeAdapterUtil.configureGson(gsonBuilder)
+        ]
         val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, args.in, args.out, executorService,
-                args.wrapper/*, configureGson*/)
+                args.wrapper, configureGson)
         val client = launcher.remoteProxy
         languageServer.connect(client)
         // Redirect Log4J output to a file

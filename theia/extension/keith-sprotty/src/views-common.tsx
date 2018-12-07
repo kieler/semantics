@@ -19,13 +19,14 @@ const URL_END = ')'
 
 export class KGraphRenderingContext extends ModelRenderer {
     boundsMap: any
+    decorationMap: any
     kRenderingLibrary: KRenderingLibrary
 }
 
-export function lineCapText(lineCap: KLineCap): string {
+export function lineCapText(lineCap: KLineCap): 'butt' | 'round' | 'square' {
     switch (lineCap.lineCap) {
-        case LineCap.CAP_FLAT: {
-            return 'flat'
+        case LineCap.CAP_FLAT: { // the flat LineCap option is actually called 'butt' in svg and most other usages.
+            return 'butt'
         }
         case LineCap.CAP_ROUND: {
             return 'round'
@@ -36,7 +37,7 @@ export function lineCapText(lineCap: KLineCap): string {
     }
 }
 
-export function lineJoinText(lineJoin: KLineJoin): string {
+export function lineJoinText(lineJoin: KLineJoin): 'bevel' | 'miter' | 'round' {
     switch (lineJoin.lineJoin) {
         case LineJoin.JOIN_BEVEL: {
             return 'bevel'
@@ -180,11 +181,11 @@ export function evaluateKPosition(position: KPosition, parentBounds: Bounds, top
     return point
 }
 
-export function findBoundsById(boundsMap: any, idString: string): Bounds | undefined {
-    if (isNullOrUndefined(boundsMap)) {
+export function findById(map: any, idString: string): any {
+    if (isNullOrUndefined(map)) {
         return
     }
-    return boundsMap[idString]
+    return map[idString]
     // TODO: why did I first implement this variant? Can there be renderings not on top level of the boundsMap?
     // const ids = idString.split(ID_SEPARATOR)
     // let obj = boundsMap

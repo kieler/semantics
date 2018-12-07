@@ -1,12 +1,11 @@
 import {
     boundsFeature, fadeFeature, /*hoverFeedbackFeature, popupFeature,*/ selectFeature, layoutContainerFeature,
-    /*layoutableChildFeature, expandFeature, Expandable, */openFeature, RectangularNode, RectangularPort, SLabel, Insets, RGBColor, SEdge, SParentElement, Bounds
+    /*layoutableChildFeature, expandFeature, Expandable, */openFeature, RectangularNode, RectangularPort, SLabel, RGBColor, SEdge, SParentElement, Bounds, Point
 } from "sprotty/lib"
 
 export interface KGraphElement extends SParentElement {
     trace: string | undefined
     data: KGraphData[]
-    insets: Insets
     // additional field to remember, if this element's children have already been rendered.
     areChildrenRendered: boolean
 }
@@ -15,7 +14,6 @@ export class KNode extends RectangularNode implements KGraphElement {
     trace: string | undefined
     data: KGraphData[]
     persistentEntries: PersistentEntry[]
-    insets: Insets
     areChildrenRendered = false
     hasFeature(feature: symbol): boolean { // TODO: how do I use all these features?
         return feature === selectFeature || feature === boundsFeature
@@ -27,7 +25,6 @@ export class KNode extends RectangularNode implements KGraphElement {
 export class KPort extends RectangularPort implements KGraphElement {
    trace: string | undefined
    data: KGraphData[]
-   insets: Insets
    areChildrenRendered = false
    hasFeature(feature: symbol): boolean {
        return feature === selectFeature || feature === boundsFeature
@@ -37,7 +34,6 @@ export class KPort extends RectangularPort implements KGraphElement {
 export class KLabel extends SLabel implements KGraphElement {
     trace: string | undefined
     data: KGraphData[]
-    insets: Insets
     areChildrenRendered = false
     hasFeature(feature: symbol): boolean {
         return super.hasFeature(feature) || feature === selectFeature
@@ -47,7 +43,6 @@ export class KLabel extends SLabel implements KGraphElement {
 export class KEdge extends SEdge implements KGraphElement {
     trace: string | undefined
     data: KGraphData[]
-    insets: Insets
     areChildrenRendered = false
     hasFeature(feature: symbol): boolean {
         return super.hasFeature(feature) || feature === selectFeature
@@ -80,7 +75,8 @@ export interface KRendering extends KGraphData, KStyleHolder {
     action: KAction[]
     // not in the original java model, but is included in messages to remove the need to call '[Grid]?PlacementUtil.evaluate[Grid|Area|Point]Placement' 
     // and similar methods on client side for every rendering
-    calculatedBounds: Bounds 
+    calculatedBounds: Bounds
+    calculatedDecoration: Decoration
 }
 
 export interface KChildArea extends KRendering {}
@@ -135,7 +131,8 @@ export interface KRoundedRectangle extends KContainerRendering {
 export interface KRenderingRef extends KRendering {
     rendering: KRendering
     // not in the original java model, but is included in messages to remove the need to call 'PlacementUtil.estimateSize' on client side
-    calculatedBoundsMap: Map<string, Bounds> // These bounds do not have 'insets' (if they are of any use anyway)
+    calculatedBoundsMap: Map<string, Bounds>
+    calculatedDecorationMap: Map<string, number>
 }
 
 export interface KText extends KRendering {
@@ -143,18 +140,6 @@ export interface KText extends KRendering {
     cursorSelectable: boolean
     editable: boolean
 }
-
-/*export class KTextImpl implements KText {
-    text: string
-    cursorSelectable: boolean
-    editable: boolean
-    placementData: KPlacementData
-    action: KAction[]
-    id: string
-    styles: KStyle[]
-    persistentEntries: PersistentEntry[]
-    type: string
-}*/
 
 export interface KRenderingLibrary extends KGraphData {
     renderings: KStyleHolder[]
@@ -390,4 +375,10 @@ export enum Underline {
     ERROR = 3,
     SQUIGGLE = 4,
     LINK = 5
+}
+
+export interface Decoration {
+    origin: Point
+    bounds: Bounds
+    rotation: number
 }

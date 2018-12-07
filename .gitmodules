@@ -1,6 +1,0 @@
-[submodule "theia/extension/sprotty"]
-	path = theia/extension/sprotty
-	url = https://github.com/theia-ide/sprotty
-[submodule "theia/extension/theia-sprotty"]
-	path = theia/extension/theia-sprotty
-	url = https://github.com/theia-ide/theia-sprotty
