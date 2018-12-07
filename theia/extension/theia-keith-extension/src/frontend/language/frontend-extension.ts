@@ -14,22 +14,12 @@
 import { ContainerModule, interfaces } from 'inversify'
 import { KiCoolContribution} from './kicool-contribution'
 import { CommandContribution } from '@theia/core/lib/common'
-// import { DiagramConfiguration } from 'theia-sprotty/lib'
-// import { KeithDiagramConfiguration } from '../keithdiagram/di.config'
-// import { DiagramManager, DiagramManagerProvider } from 'theia-sprotty/lib'
-// import { KeithDiagramManager } from '../keithdiagram/keith-diagram-manager'
-import { BaseWidget, KeybindingContext/*, FrontendApplicationContribution, OpenHandler*/,
-    WidgetFactory, bindViewContribution/*, createTreeContainer, TreeWidget */} from '@theia/core/lib/browser'
+import { BaseWidget, KeybindingContext,
+    WidgetFactory, bindViewContribution} from '@theia/core/lib/browser'
 import { TextWidget } from '../widgets/text-widget'
 import { KeithCommandContribution } from './keith-commands'
 import '../../src/frontend/widgets/style/index.css'
 import { Constants } from "keith-language-extension/lib/frontend/utils"
-// import 'sprotty/css/sprotty.css'
-// import 'theia-sprotty/css/theia-sprotty.css'
-// import { ThemeManager } from '../keithdiagram/theme-manager'
-// import { DiagramOptionsViewWidgetFactory, DiagramOptionsViewWidget } from '../diagramoptions/diagramoptions-view-widget'
-// import { DiagramOptionsViewService } from '../diagramoptions/diagramoptions-view-service'
-// import { DiagramOptionsViewContribution } from '../diagramoptions/diagramoptions-view-contribution'
 import { KiCoolKeybindingContext } from './kicool-keybinding-context'
 import { CompilerWidget } from '../widgets/compiler-widget'
 
@@ -47,45 +37,9 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
 
     bind(CommandContribution).to(KeithCommandContribution)
 
-    // // diagram
-    // bind(DiagramConfiguration).to(KeithDiagramConfiguration).inSingletonScope()
-    // bind(DiagramManagerProvider).toProvider<DiagramManager>(context => {
-    //     return () => {
-    //         return new Promise<DiagramManager>((resolve) =>
-    //             resolve(context.container.get(KeithDiagramManager))
-    //         )
-    //     }
-    // }).whenTargetNamed('keith-diagram')
-    // bind(KeithDiagramManager).toSelf().inSingletonScope()
-    // bind(FrontendApplicationContribution).toDynamicValue(context => context.container.get(KeithDiagramManager))
-    // bind(OpenHandler).toDynamicValue(context => context.container.get(KeithDiagramManager))
-
-    // bind(ThemeManager).toSelf().inSingletonScope()
-
-    // // Diagram options bindings
-    // bindViewContribution(bind, DiagramOptionsViewContribution);
-    // bind(FrontendApplicationContribution).toService(DiagramOptionsViewContribution);
-
-    // bind(DiagramOptionsViewWidgetFactory).toFactory(ctx =>
-    //     () => createDiagramOptionsViewWidget(ctx.container)
-    // )
-
-    // bind(DiagramOptionsViewService).toSelf().inSingletonScope();
-    // bind(WidgetFactory).toDynamicValue(context => context.container.get(DiagramOptionsViewService));
-
     // added for keybinding and commands
     bind(KiCoolKeybindingContext).toSelf()
     bind(KeybindingContext).toDynamicValue(context => context.container.get(KiCoolKeybindingContext));
 
     bindViewContribution(bind, KiCoolContribution)
 })
-
-
-// function createDiagramOptionsViewWidget(parent: interfaces.Container): DiagramOptionsViewWidget {
-//     const child = createTreeContainer(parent);
-
-//     child.unbind(TreeWidget);
-//     child.bind(DiagramOptionsViewWidget).toSelf();
-
-//     return child.get(DiagramOptionsViewWidget);
-// }
