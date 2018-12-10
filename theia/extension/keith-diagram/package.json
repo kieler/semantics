@@ -1,11 +1,14 @@
 {
-  "name": "keith-language-extension",
+  "name": "keith-diagram",
   "version": "0.1.0",
-  "description": "An extension for Theia connection language support for KEITH",
+  "description": "An extension for Theia with diagram support for KEITH",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
   "keywords": [
-    "keith-language"
+    "keith-extension", 
+    "theia",
+    "diagram",
+    "sprotty"
   ],
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
@@ -13,6 +16,12 @@
     "lint": "tslint -c ../tslint.json --project ./tsconfig.json",
     "build": "tsc && yarn lint",
     "watch": "tsc -w"
+  },
+  "dependencies": {
+    "theia-sprotty": "0.1.20",
+    "keith-language": "0.1.0",
+    "keith-sprotty": "0.1.0",
+    "sprotty": "^0.4.2"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
@@ -29,8 +38,7 @@
   ],
   "theiaExtensions": [
     {
-      "frontend": "lib/frontend/frontend-extension",
-      "backend": "lib/backend/backend-extension"
+      "frontend": "lib/frontend-extension"
     }
   ]
 }

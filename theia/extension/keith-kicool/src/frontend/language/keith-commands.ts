@@ -16,7 +16,7 @@ import { CommandContribution, CommandRegistry, Command } from '@theia/core/lib/c
 import { EditorCommands, EditorManager, EditorWidget } from "@theia/editor/lib/browser"
 import { WorkspaceEdit, Workspace } from "@theia/languages/lib/browser"
 import { WidgetManager } from "@theia/core/lib/browser"
-import { KeithLanguageClientContribution } from "keith-language-extension/lib/frontend/keith-language-client-contribution"
+import { KeithLanguageClientContribution } from "keith-language/lib/frontend/keith-language-client-contribution"
 
 /**
  * Show references

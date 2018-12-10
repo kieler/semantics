@@ -19,7 +19,7 @@ import { BaseWidget, KeybindingContext,
 import { TextWidget } from '../widgets/text-widget'
 import { KeithCommandContribution } from './keith-commands'
 import '../../src/frontend/widgets/style/index.css'
-import { Constants } from "keith-language-extension/lib/frontend/utils"
+import { Constants } from "keith-language/lib/frontend/utils"
 import { KiCoolKeybindingContext } from './kicool-keybinding-context'
 import { CompilerWidget } from '../widgets/compiler-widget'
 

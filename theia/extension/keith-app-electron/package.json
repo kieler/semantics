@@ -27,10 +27,10 @@
         "@theia/userstorage": "latest",
         "@theia/variable-resolver": "latest",
         "@theia/workspace": "latest",
-        "keith-diagram-extension": "0.1.0",
+        "keith-diagram": "0.1.0",
         "keith-diagram-options": "0.1.0",
-        "keith-language-extension": "0.1.0",
-        "theia-keith-extension": "0.1.0",
+        "keith-language": "0.1.0",
+        "keith-kicool": "0.1.0",
         "vscode-jsonrpc": "^3.6.2",
         "vscode-nsfw": "^1.0.17"
     },

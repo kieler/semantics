@@ -59,11 +59,9 @@
     "@theia/variable-resolver": "latest",
     "@theia/workspace": "latest",
     "@types/node": "^8.0.14",
-    "keith-diagram-extension": "0.1.0",
     "keith-diagram-options": "0.1.0",
     "monaco-editor-core": "^0.14.6",
-    "keith-language-extension": "0.1.0",
-    "theia-keith-extension": "0.1.0",
+    "keith-kicool": "0.1.0",
     "vscode-jsonrpc": "^3.6.2",
     "vscode-nsfw": "^1.0.17",
     "xterm": "^2.9.2",
@@ -89,11 +87,11 @@
     "webpack":"^4.16.1"
   },
   "workspaces": [
-    "keith-diagram-extension",
+    "keith-diagram",
     "keith-diagram-options",
     "keith-app",
-    "keith-language-extension",
+    "keith-language",
     "keith-sprotty",
-    "theia-keith-extension"
+    "keith-kicool"
   ]
 }

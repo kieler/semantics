@@ -1,11 +1,15 @@
 {
   "name": "keith-diagram-options",
   "version": "0.1.0",
-  "description": "An extension for Theia with diagram support for KEITH",
+  "description": "An extension for Theia with diagram support for KEITH to set diagram options",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
   "keywords": [
-    "keith-diagram-extension"
+    "keith-extension",
+    "theia",
+    "sprotty",
+    "diagram",
+    "diagram-options"
   ],
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
@@ -15,8 +19,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "keith-diagram-extension": "0.1.0",
-    "keith-language-extension": "0.1.0"
+    "keith-diagram": "0.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",

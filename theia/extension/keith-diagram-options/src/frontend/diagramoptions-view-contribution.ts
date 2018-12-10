@@ -17,8 +17,8 @@ import { DiagramOptionsViewWidget } from './diagramoptions-view-widget'
 import { FrontendApplicationContribution, FrontendApplication } from '@theia/core/lib/browser/frontend-application'
 import { EditorManager, EditorWidget } from '@theia/editor/lib/browser';
 import { WidgetManager, Widget, DidCreateWidgetEvent } from '@theia/core/lib/browser';
-import { KeithLanguageClientContribution } from 'keith-language-extension/lib/frontend/keith-language-client-contribution';
-import { KeithDiagramManager } from 'keith-diagram-extension/lib/keith-diagram-manager';
+import { KeithLanguageClientContribution } from 'keith-language/lib/frontend/keith-language-client-contribution';
+import { KeithDiagramManager } from 'keith-diagram/lib/keith-diagram-manager';
 import URI from "@theia/core/lib/common/uri";
 import { SynthesisOption } from './synthesis-option';
 
