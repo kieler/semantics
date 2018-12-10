@@ -86,7 +86,7 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
             uri: this.editorWidget.editor.uri.toString(),
             synthesisOptions: synthesisOptions
         }
-        await lClient.sendRequest(SET_OPTIONS, param) as string
+        await lClient.sendRequest(SET_OPTIONS, param)
     }
 
     onDidCreateWidget(e: DidCreateWidgetEvent): void {
