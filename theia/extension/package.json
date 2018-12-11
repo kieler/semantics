@@ -2,9 +2,8 @@
   "name": "keith",
   "version": "0.1.0",
   "private": true,
-  "electronVersion" : "2.0.4",
+  "electronVersion": "2.0.4",
   "main": "src-gen/frontend/electron-main.js",
-
   "description": "KIEL Environment Integrated in Theia",
   "theia": {
     "target": "electron"
@@ -36,7 +35,7 @@
     "update": "git pull origin master && git submodule foreach git pull origin master"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free" : "^5.2.0",
+    "@fortawesome/fontawesome-free": "^5.2.0",
     "@theia/core": "latest",
     "@theia/editor": "latest",
     "@theia/editorconfig": "latest",
@@ -74,22 +73,22 @@
   },
   "devDependencies": {
     "@theia/cli": "latest",
-    "electron-builder": "20.9.2",
     "@types/chai": "^4.0.1",
     "@types/chai-as-promised": "0.0.31",
     "@types/mocha": "^2.2.41",
     "@types/sinon": "^2.3.5",
     "@types/temp": "^0.8.29",
     "@types/webdriverio": "^4.7.0",
+    "electron-builder": "20.9.2",
     "lerna": "^2.4.0",
     "mocha": "^3.4.2",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2",
-    "uuid": "^3.1.0",
-    "vscode-jsonrpc": "^3.6.2",
     "reflect-metadata": "^0.1.12",
     "ts-loader": "^4.4.2",
-    "webpack":"^4.16.1"
+    "tslint": "^5.7.0",
+    "typescript": "2.9.1",
+    "uuid": "^3.1.0",
+    "vscode-jsonrpc": "^3.6.2",
+    "webpack": "^4.16.1"
   },
   "workspaces": [
     "keith-diagram",
