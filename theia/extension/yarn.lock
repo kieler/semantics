@@ -5202,30 +5202,6 @@ jszip@^2.4.0:
   dependencies:
     pako "~1.0.2"
 
-"keith-diagram-options@file:./keith-diagram-options":
-  version "0.1.0"
-  dependencies:
-    keith-diagram "0.1.0"
-
-"keith-diagram@file:./keith-diagram":
-  version "0.1.0"
-  dependencies:
-    keith-language "0.1.0"
-    keith-sprotty "0.1.0"
-    sprotty "^0.4.2"
-    theia-sprotty "0.1.20"
-
-"keith-kicool@file:./keith-kicool":
-  version "0.1.0"
-
-"keith-language@file:./keith-language":
-  version "0.1.0"
-
-"keith-sprotty@file:./keith-sprotty":
-  version "0.1.0"
-  dependencies:
-    sprotty "^0.4.2"
-
 keyv@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/keyv/-/keyv-3.0.0.tgz#44923ba39e68b12a7cec7df6c3268c031f2ef373"
@@ -8018,7 +7994,7 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
-sprotty@^0.4.2:
+sprotty@0.4.2, sprotty@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/sprotty/-/sprotty-0.4.2.tgz#10d4c17932a317990f15bba25957e021218c8adb"
   dependencies:
@@ -8630,10 +8606,6 @@ type-is@~1.6.16:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
-
-typescript@2.9.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
 typescript@^2.5.2:
   version "2.9.2"

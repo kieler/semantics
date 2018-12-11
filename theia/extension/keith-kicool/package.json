@@ -16,11 +16,14 @@
     "build": "tsc && yarn lint",
     "watch": "tsc -w"
   },
+  "dependencies": {
+    "keith-diagram": "0.1.0",
+    "keith-language": "0.1.0"
+  },
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/chai-as-promised": "0.0.31",
     "@types/mocha": "^2.2.41",
-    "keith-language": "0.1.0",
     "mocha": "^3.4.2",
     "ts-node": "^3.2.0",
     "typescript": "^2.5.2"
