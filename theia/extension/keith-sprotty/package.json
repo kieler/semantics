@@ -9,15 +9,15 @@
     "keith",
     "diagram"
   ],
-  "dependencies": {
-    "sprotty": "^0.4.2"
-  },
   "scripts": {
     "prepare": "yarn run clean && yarn build",
     "clean": "rimraf lib",
     "lint": "tslint -c ./tslint.json --project ./tsconfig.json",
     "build": "tsc",
     "watch": "tsc -w -p ./tsconfig.json"
+  },
+  "dependencies": {
+    "sprotty": "0.4.2"
   },
   "devDependencies": {
     "rimraf": "^2.6.1",
