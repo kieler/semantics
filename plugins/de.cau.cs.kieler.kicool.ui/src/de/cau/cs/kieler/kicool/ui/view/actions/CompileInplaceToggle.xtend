@@ -30,6 +30,8 @@ class CompileInplaceToggle extends AbstractAction {
     /** The action for toggling forward result mode. */
     @Accessors private IToolBarManager toolBar
     
+    @Accessors boolean isChecked
+    
     new(CompilerView view) {
         super(view, 
             "Inplace Compilation", 
@@ -43,7 +45,7 @@ class CompileInplaceToggle extends AbstractAction {
     }
     
     override void invoke() {
-        CompilerViewUtil.compileInplace = action.isChecked
+        isChecked = action.isChecked
     }
     
     

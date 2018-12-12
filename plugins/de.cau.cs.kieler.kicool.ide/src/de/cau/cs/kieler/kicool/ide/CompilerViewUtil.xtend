@@ -16,17 +16,12 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
 import java.util.List
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author sdo
  * 
  */
 class CompilerViewUtil {
-    
-    @Accessors static boolean compileInplace
-
-    public static val COMPILE_INPLACE_TOGGLE_ACTION_DEFAULT = false
 
     static def String getDefaultSystem(String editorId) {
         return DefaultSystemAssociation.getDefaultSystem(editorId)

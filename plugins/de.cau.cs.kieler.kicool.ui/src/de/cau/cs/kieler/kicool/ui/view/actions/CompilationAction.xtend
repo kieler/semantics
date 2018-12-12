@@ -69,7 +69,7 @@ class CompilationAction {
         val cc = Compile.createCompilationContext(view.editPartSystemManager.activeSystem, model)
         cc.inputEditor = editor
         
-        if (CompilerViewUtil.compileInplace) {
+        if (view.compileInplaceToggle.checked) {
             cc.startEnvironment.setProperty(Environment.INPLACE, true)
         }
         if (view.compileTracingToggle.checked) {
