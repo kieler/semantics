@@ -15,6 +15,7 @@ package de.cau.cs.kieler.language.server
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import java.util.function.Function
@@ -27,7 +28,6 @@ import org.eclipse.lsp4j.MessageParams
 import org.eclipse.lsp4j.MessageType
 import org.eclipse.lsp4j.jsonrpc.Launcher
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer
-import org.eclipse.lsp4j.jsonrpc.validation.ReflectiveMessageValidator
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.LanguageServerImpl
@@ -88,7 +88,7 @@ class LanguageServerLauncher extends ServerLauncher {
                 ]
             }
             if (args.validate) {
-                result = new ReflectiveMessageValidator(result)
+                result = new ReflectiveMessageValidatorExcludingSKGraph(result)
             }
             return result
         ]
