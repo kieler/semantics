@@ -17,6 +17,10 @@
     "watch": "tsc -w"
   },
   "dependencies": {
+    "@theia/core": "latest",
+    "@theia/editor": "latest",
+    "@theia/filesystem": "latest",
+    "@theia/languages": "latest",
     "keith-diagram": "0.1.0",
     "keith-language": "0.1.0"
   },

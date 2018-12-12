@@ -70,11 +70,12 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         }
     }
 
-    onCurrentEditorChanged(editorWidget: EditorWidget | undefined): void {
+    async onCurrentEditorChanged(editorWidget: EditorWidget | undefined): Promise<void> {
         if (editorWidget) {
             this.editor = editorWidget
         }
         if (this.compilerWidget) {
+            await this.requestSystemDescriptions()
             this.compilerWidget.update()
         }
     }

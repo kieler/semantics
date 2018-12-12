@@ -15,7 +15,7 @@ import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
 import { Message, StatefulWidget } from "@theia/core/lib/browser";
 import * as React from "react";
-import { Constants, CompilationSystems } from "keith-language/lib/frontend/utils";
+import { Constants, CompilationSystems, Snapshots } from "keith-language/lib/frontend/utils";
 
 import '../../src/frontend/widgets/style/index.css'
 import { KiCoolContribution } from "../language/kicool-contribution";
@@ -87,7 +87,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
         if (!snapshots) {
             return
         }
-        snapshots.files.forEach((snapshot, index) => {
+        snapshots.files.forEach((snapshot: Snapshots, index: number) => {
 
             showButtons.push(
                 <div key={index} id={"showButton" + (index < 10 ? "0" + index : index)} className={'show-button'.concat((snapshot.errors.length > 0) ? ' error' :
@@ -148,10 +148,8 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     }
 
     onUpdateRequest(msg: Message): void {
-        this.commands.requestSystemDescriptions().then(() => {
-            super.onUpdateRequest(msg)
-            this.render()
-        })
+        super.onUpdateRequest(msg)
+        this.render()
     }
 
     public compileSelectedCompilationSystem(): void {
