@@ -22,7 +22,7 @@ import java.util.List
  * @author sdo
  * 
  */
-class CompilerViewUtil {
+class IdeCompilerView {
 
     def String getDefaultSystem(String editorId) {
         return DefaultSystemAssociation.getDefaultSystem(editorId)

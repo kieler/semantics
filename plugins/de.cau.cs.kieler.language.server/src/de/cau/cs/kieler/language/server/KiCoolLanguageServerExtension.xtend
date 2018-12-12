@@ -17,7 +17,6 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.ide.view.CompilerViewUtil
 import de.cau.cs.kieler.klighd.IOffscreenRenderer
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import java.io.ByteArrayOutputStream
@@ -34,6 +33,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
+import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -50,7 +50,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     @Inject
     Injector injector
     
-    extension CompilerViewUtil compilerView = new CompilerViewUtil
+    extension IdeCompilerView compilerView = new IdeCompilerView
     
     /**
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
