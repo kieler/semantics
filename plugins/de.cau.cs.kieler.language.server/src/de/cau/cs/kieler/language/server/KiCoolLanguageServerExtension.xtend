@@ -17,7 +17,7 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
+import de.cau.cs.kieler.kicool.ide.view.CompilerViewUtil
 import de.cau.cs.kieler.klighd.IOffscreenRenderer
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import java.io.ByteArrayOutputStream
@@ -49,6 +49,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     
     @Inject
     Injector injector
+    
+    extension CompilerViewUtil compilerView = new CompilerViewUtil
     
     /**
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
@@ -156,7 +158,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         if (model !== null && model.class !== modelClassFilter) {
             modelClassFilter = model.class
         }
-        var systems = CompilerViewUtil.getSystemModels(true, modelClassFilter)
+        var systems = getSystemModels(true, modelClassFilter)
         val systemDescriptions = getSystemDescription(systems)
         return requestManager.runRead[ cancelIndicator |
             systemDescriptions

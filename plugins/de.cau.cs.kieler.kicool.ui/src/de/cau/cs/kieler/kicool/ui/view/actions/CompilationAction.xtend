@@ -29,7 +29,6 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import org.eclipse.ui.IEditorPart
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm

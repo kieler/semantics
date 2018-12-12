@@ -16,7 +16,6 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * @author ssm

@@ -10,9 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ide
+package de.cau.cs.kieler.kicool.ide.view
 
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.ide.DefaultSystemAssociation
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
 import java.util.List
@@ -23,17 +24,17 @@ import java.util.List
  */
 class CompilerViewUtil {
 
-    static def String getDefaultSystem(String editorId) {
+    def String getDefaultSystem(String editorId) {
         return DefaultSystemAssociation.getDefaultSystem(editorId)
     }
 
-    static def List<System> getSystemModels(boolean filter, Class<?> modelClassFilter) {
+    def List<System> getSystemModels(boolean filter, Class<?> modelClassFilter) {
         val systems = newLinkedList
         systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
         return systems.filter[!filter || hasInput(modelClassFilter)].toList
     }
 
-    static private def hasInput(System sys, Class<?> modelClass) {
+    private def hasInput(System sys, Class<?> modelClass) {
         val input = KiCoolUtils.findInputClass(sys)
         if (modelClass !== null && input !== null) {
             return input.isAssignableFrom(modelClass)

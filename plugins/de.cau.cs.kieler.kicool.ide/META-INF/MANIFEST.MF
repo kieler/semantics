@@ -16,5 +16,6 @@ Require-Bundle: org.antlr.runtime,
  org.eclipse.core.runtime;bundle-version="3.13.0"
 Export-Package: de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr,
- de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.kicool.ide.view
 

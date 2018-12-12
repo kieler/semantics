@@ -44,6 +44,7 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ide.view.CompilerViewUtil
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -78,6 +79,8 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var ShowPrivateSystemsToggle showPrivateSystemsToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
+    
+    public extension CompilerViewUtil compilerView = new CompilerViewUtil
     
     /**
      * {@inheritDoc}

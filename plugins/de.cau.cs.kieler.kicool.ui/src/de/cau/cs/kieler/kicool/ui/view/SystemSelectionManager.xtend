@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Control
 import static extension de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction.retrieveModel
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
-import de.cau.cs.kieler.kicool.ide.CompilerViewUtil
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -83,7 +82,7 @@ class SystemSelectionManager implements SelectionListener {
         if (model !== null && model.class !== modelClassFilter) {
             modelClassFilter = model.class
         }
-        val systems = CompilerViewUtil.getSystemModels(filter, modelClassFilter)
+        val systems = view.compilerView.getSystemModels(filter, modelClassFilter)
         
         for(system : systems.
             filter[ public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked) ].
@@ -100,7 +99,7 @@ class SystemSelectionManager implements SelectionListener {
         var defaultIndex = 0
         
         // Default via extension point
-        val defaultSystemID = CompilerViewUtil.getDefaultSystem(view.editPartSystemManager.activeEditor?.editorSite?.id)
+        val defaultSystemID = view.compilerView.getDefaultSystem(view.editPartSystemManager.activeEditor?.editorSite?.id)
         if (defaultSystemID !== null) {
             val idx = index.indexOf(defaultSystemID)
             if (idx >= 0) {
