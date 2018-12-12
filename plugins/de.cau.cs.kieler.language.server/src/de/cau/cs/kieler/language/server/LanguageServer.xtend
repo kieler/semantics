@@ -56,6 +56,8 @@ class LanguageServer implements IApplication {
     
     static val LOG = Logger.getLogger(LanguageServer)
     
+    extension LanguageRegistration languageRegistration = new LanguageRegistration
+    
     /**
      * Starts the language server.
      */
@@ -83,7 +85,7 @@ class LanguageServer implements IApplication {
 //        
             // Register all languages
             println("Starting language server socket")
-            LanguageServerLauncher.bindAndRegisterLanguages()
+            bindAndRegisterLanguages()
             
             val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
@@ -92,6 +94,7 @@ class LanguageServer implements IApplication {
             return EXIT_OK 
         } else {
             // product case, communicate via stdin/out
+            bindAndRegisterLanguages()
             LanguageServerLauncher.main(#[])
             return EXIT_OK
         }

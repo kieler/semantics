@@ -13,26 +13,8 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
-import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.EsterelRuntimeModule
-import de.cau.cs.kieler.esterel.ide.EsterelIdeModule
-import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
-import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
-import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
-import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
-import de.cau.cs.kieler.klighd.kgraph.dsp.KGraphDiagramModule
 import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
-import de.cau.cs.kieler.language.server.kicool.KiCoolServerModule
-import de.cau.cs.kieler.lustre.LustreRuntimeModule
-import de.cau.cs.kieler.lustre.ide.LustreIdeModule
-import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
-import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeModule
-import de.cau.cs.kieler.sccharts.ide.text.SCTXIdeSetup
-import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
-import de.cau.cs.kieler.scl.SCLRuntimeModule
-import de.cau.cs.kieler.scl.ide.SCLIdeModule
-import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import java.util.function.Function
@@ -65,48 +47,12 @@ class LanguageServerLauncher extends ServerLauncher {
 
     @Inject LanguageServerImpl languageServer
     
-    def static void main(String[] args) {
-    
-        // register languages (sublanguages are also registered)
-        bindAndRegisterLanguages()
-        
+    def static void main(String[] args) {        
         // Launch the server
         launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [
             bind(ServerLauncher).to(LanguageServerLauncher)
             bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
         ]))
-    }
-    
-    static def bindAndRegisterLanguages() {
-        new SCLIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        new SCTXIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new KiCoolServerModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        
-        new EsterelIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        
-        new LustreIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
-        
-        new KGraphIdeSetup {
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(
-                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
-            }
-        }.createInjectorAndDoEMFRegistration()
     }
     
     override start(LaunchArgs args) {
