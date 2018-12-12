@@ -23,6 +23,7 @@ import { Workspace, ILanguageClient } from "@theia/languages/lib/browser";
 import { Constants, CompilationSystems, CodeContainer } from "keith-language/lib/frontend/utils";
 import { KiCoolKeybindingContext } from "./kicool-keybinding-context";
 import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
+import { Snapshots } from "keith-language/lib/frontend/utils";
 
 /**
  * Contribution for CompilerWidget to add functionality to it and link with the current editor.
@@ -242,22 +243,24 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             this.message("Got compilation result for " + uri, "info")
         }
         let infoList: string[] = []
-        snapshotsDescriptions.files.forEach(snapshot => {
+        snapshotsDescriptions.files.forEach((snapshot: Snapshots) => {
             let error, warning, info
             if (snapshot.errors.length > 0) {
-                error = "ERROR: " +  snapshot.errors.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                error = "ERROR: " +  snapshot.errors.reduce( (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
                 this.outputManager.getChannel("SCTX").appendLine(error)
             }
 
             if (snapshot.warnings.length > 0) {
-                warning = "WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                this.outputManager.getChannel("SCTX").appendLine("WARN: " +  snapshot.warnings.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
+                warning = "WARN: " +  snapshot.warnings.reduce( (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine("WARN: " +  snapshot.warnings.reduce(
+                    (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
 
             }
 
             if (snapshot.infos.length > 0) {
-                info = "INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                this.outputManager.getChannel("SCTX").appendLine("INFO: " +  snapshot.infos.reduce( (s1, s2) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
+                info = "INFO: " +  snapshot.infos.reduce( (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine("INFO: " +  snapshot.infos.reduce(
+                    (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
 
             }
             infoList.push(((error) ? error + "<br>" : "") + ((warning) ? warning + "<br>" : "") + ((info) ? info + "<br>" : ""))
@@ -284,7 +287,8 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         try {
             const lclient: ILanguageClient = await this.client.languageClient
             const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
-            this.compilerWidget.systems = systems,
+            this.compilerWidget.systems = systems
+            this.compilerWidget.update()
             this.compilerWidget.render()
             return Promise.resolve(true)
         } catch (error) {

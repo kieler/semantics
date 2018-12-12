@@ -51,24 +51,34 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     }
 
     render(): React.ReactNode {
-        const compilationElements: React.ReactNode[] = [];
-        this.systems.forEach(system => {
-            if (this.showPrivateSystems || system.isPublic) {
-                compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>)
+        if (!this.systems || this.systems.length === 1) {
+            console.log("Tried to render but missing stuff")
+            if (this.commands) {
+                this.commands.requestSystemDescriptions()
             }
-        });
-        return <React.Fragment>
-            <div className="compilation-panel">
-                {this.renderPrivateButton()}
-                {this.renderInplaceButton()}
-                {this.renderAutoCompileButton()}
-                <select id='compilation-list' className='compilation-list'>
-                    {compilationElements}
-                </select>
-                {this.renderCompileButton()}
-            </div>
-            {this.renderShowButtons()}
-        </React.Fragment>
+            return <div className='spinnerContainer'>
+                <div className='fa fa-spinner fa-pulse fa-3x fa-fw'></div>
+            </div>;
+        } else {
+            const compilationElements: React.ReactNode[] = [];
+            this.systems.forEach(system => {
+                if (this.showPrivateSystems || system.isPublic) {
+                    compilationElements.push(<option value={system.id} key={system.id}>{system.label}</option>)
+                }
+            });
+            return <React.Fragment>
+                <div className="compilation-panel">
+                    {this.renderPrivateButton()}
+                    {this.renderInplaceButton()}
+                    {this.renderAutoCompileButton()}
+                    <select id='compilation-list' className='compilation-list'>
+                        {compilationElements}
+                    </select>
+                    {this.renderCompileButton()}
+                </div>
+                {this.renderShowButtons()}
+            </React.Fragment>
+        }
     }
 
     onActivateRequest(msg: Message): void {
@@ -176,7 +186,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     restoreState(oldState: CompilerWidget.Data): void {
         this.autoCompile = oldState.autoCompile
         this.compileInplace = oldState.compileInplace
-        this.showPrivateSystems = this.showPrivateSystems
+        this.showPrivateSystems = oldState.showPrivateSystems
     }
 }
 
