@@ -12,11 +12,18 @@
  */
 package de.cau.cs.kieler.language.server
 
+import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.EsterelRuntimeModule
 import de.cau.cs.kieler.esterel.ide.EsterelIdeModule
 import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
+import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
+import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
+import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
+import de.cau.cs.kieler.klighd.kgraph.dsp.KGraphDiagramModule
+import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.language.server.kicool.KiCoolServerModule
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
@@ -27,6 +34,7 @@ import de.cau.cs.kieler.scl.SCLRuntimeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 import java.util.concurrent.Executors
+import java.util.function.Consumer
 import java.util.function.Function
 import org.apache.log4j.AppenderSkeleton
 import org.apache.log4j.AsyncAppender
@@ -46,13 +54,6 @@ import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
-import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
-import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
-import de.cau.cs.kieler.klighd.kgraph.dsp.KGraphDiagramModule
-import java.util.function.Consumer
-import com.google.gson.GsonBuilder
-import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
 
 /**
  * Used to start language server via stdin/out connection.

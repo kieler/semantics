@@ -9,7 +9,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.language.server
+package de.cau.cs.kieler.language.server.kicool
 
 import java.util.LinkedList
 import java.util.List
