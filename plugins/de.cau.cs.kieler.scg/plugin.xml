@@ -153,6 +153,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardOptimization">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGenerator">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -185,6 +188,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.promela.kico">
       </TransformationSystem>
    </extension>
 

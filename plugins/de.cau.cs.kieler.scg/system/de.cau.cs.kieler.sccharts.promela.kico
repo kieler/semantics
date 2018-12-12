@@ -1,0 +1,8 @@
+public system de.cau.cs.kieler.sccharts.promela
+	label "SCCharts to Promela"
+	
+system de.cau.cs.kieler.sccharts.extended.core
+de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer
+system de.cau.cs.kieler.scg.netlist
+de.cau.cs.kieler.scg.processors.codegen.promela
