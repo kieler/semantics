@@ -303,17 +303,17 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     def getAllErrors() {
         val errors = newLinkedHashSet(startEnvironment.errors)
-        errors += processorInstancesSequence.map[environment?.errors].filterNull
+        errors.addAll(processorInstancesSequence.map[environment?.errors].filterNull)
         return errors.map[allMessages].flatten.toList
     }
     
     def hasWarings() {
-        return !startEnvironment.errors.empty || processorInstancesSequence.map[environment?.errors].filterNull.exists[!empty]
+        return !startEnvironment.warnings.empty || processorInstancesSequence.map[environment?.warnings].filterNull.exists[!empty]
     }
 
-    def getWarningsErrors() {
+    def getAllWarnings() {
         val warnings = newLinkedHashSet(startEnvironment.warnings)
-        warnings += processorInstancesSequence.map[environment?.warnings].filterNull
+        warnings.addAll(processorInstancesSequence.map[environment?.warnings].filterNull)
         return warnings.map[allMessages].flatten.toList
     }
     
@@ -456,7 +456,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences, boolean isPostProcessor) {
         for (processorReference : processorReferences) {
+            processor.environment.processEnvironmentConfig(processorReference.preconfig)
             processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
+            processor.environment.processEnvironmentConfig(processorReference.postconfig)
         }
     }
     

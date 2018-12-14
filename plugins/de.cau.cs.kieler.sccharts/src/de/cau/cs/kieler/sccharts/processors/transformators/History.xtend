@@ -36,7 +36,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -88,9 +87,6 @@ class History extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
-
-    private val nameCache = new UniqueNameCache
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_H"
@@ -102,7 +98,6 @@ class History extends SCChartsProcessor implements Traceable {
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformHistory(rootState)
@@ -134,8 +129,7 @@ class History extends SCChartsProcessor implements Traceable {
                 var counter = 0
 
                 // FIXME: stateEnum should be static
-                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.name, createIntDeclaration).
-                    uniqueName(nameCache)
+                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.name, createIntDeclaration).uniqueName
                 stateEnumsAll.add(stateEnum)
                 if (!regions.contains(region)) {
                     stateEnumsDeep.add(stateEnum)
@@ -143,7 +137,7 @@ class History extends SCChartsProcessor implements Traceable {
                 val originalInitialState = region.initialState
                 originalInitialState.setNotInitial
                 val subStates = region.states.immutableCopy
-                val initialState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
+                val initialState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
 
                 for (subState : subStates) {
                     val transition = initialState.createImmediateTransitionTo(subState)

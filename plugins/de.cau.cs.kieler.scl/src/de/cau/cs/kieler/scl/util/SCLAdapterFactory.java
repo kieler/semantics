@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
@@ -12,6 +13,7 @@ import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
 import de.cau.cs.kieler.scl.Assignment;
@@ -99,7 +101,7 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createSCLProgramAdapter();
             }
             @Override
-            public Adapter caseModule(Module object) {
+            public Adapter caseModule(de.cau.cs.kieler.scl.Module object) {
                 return createModuleAdapter();
             }
             @Override
@@ -171,12 +173,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationScopeAdapter();
             }
             @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
+            }
+            @Override
             public Adapter caseNamedObject(NamedObject object) {
                 return createNamedObjectAdapter();
             }
             @Override
             public Adapter caseSchedulable(Schedulable object) {
                 return createSchedulableAdapter();
+            }
+            @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
             }
             @Override
             public Adapter caseEffect(Effect object) {
@@ -481,6 +491,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -505,6 +529,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSchedulableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
+     * @generated
+     */
+    public Adapter createLinkableAdapter() {
         return null;
     }
 

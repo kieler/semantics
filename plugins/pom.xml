@@ -27,7 +27,6 @@
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.esterel.compiler</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
-    <module>de.cau.cs.kieler.esterel.prom</module>
     <module>de.cau.cs.kieler.esterel.ide</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.esterel</module>
@@ -40,17 +39,15 @@
     <module>de.cau.cs.kieler.kicool.ui</module>
     <module>de.cau.cs.kieler.kicool</module>
     <module>de.cau.cs.kieler.kivis.ui</module>
+    <module>de.cau.cs.kieler.kivis.ide</module>
     <module>de.cau.cs.kieler.kivis</module>
     <module>de.cau.cs.kieler.language.server</module>
     <module>de.cau.cs.kieler.lustre.ide</module>
     <module>de.cau.cs.kieler.lustre.ui</module>
     <module>de.cau.cs.kieler.lustre</module>
-    <module>de.cau.cs.kieler.prom.ui</module>
-    <module>de.cau.cs.kieler.prom</module>
     <module>de.cau.cs.kieler.sccharts.examples</module>
     <module>de.cau.cs.kieler.sccharts.legacy.ui</module>
     <module>de.cau.cs.kieler.sccharts.legacy</module>
-    <module>de.cau.cs.kieler.sccharts.prom</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.ui</module>
     <module>de.cau.cs.kieler.sccharts.ide</module>

@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.kivis.scoping;
 
-import de.cau.cs.kieler.prom.scoping.KiBuildScopeProvider;
+import org.eclipse.xtext.scoping.impl.DelegatingScopeProvider;
 
-public abstract class AbstractKiVisScopeProvider extends KiBuildScopeProvider {
+public abstract class AbstractKiVisScopeProvider extends DelegatingScopeProvider {
 }

@@ -7,7 +7,7 @@
 			class="de.cau.cs.kieler.kivis.ui.KiVisExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
-			extensions="kivis"
+			extensions="kviz"
 			id="de.cau.cs.kieler.kivis.KiVis"
 			name="KiVis Editor">
 		</editor>
@@ -209,13 +209,13 @@
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
 			class="de.cau.cs.kieler.kivis.ui.KiVisExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="kivis">
+			type="kviz">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
 		<resourceServiceProvider
 			class="de.cau.cs.kieler.kivis.ui.KiVisExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-			uriExtension="kivis">
+			uriExtension="kviz">
 		</resourceServiceProvider>
 	</extension>
 	<!-- marker definitions for de.cau.cs.kieler.kivis.KiVis -->

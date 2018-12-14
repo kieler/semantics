@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
  */
 class SkinSelector {
     
-    @Accessors static String skinPrefix = "resources/skins/" + SkinSelectionActions.skins.head.value
+    @Accessors static String skinPrefix = "resources/skins/" + SkinSelectionActions.SKINS.head.value
+    @Accessors static int skinMaxNameSize = SkinSelectionActions.SKINS_MAX_NAME_SIZE.head
     
 }

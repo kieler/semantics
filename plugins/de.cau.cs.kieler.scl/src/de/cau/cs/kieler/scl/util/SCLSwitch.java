@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
@@ -12,6 +13,7 @@ import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
 import de.cau.cs.kieler.scl.Assignment;
@@ -101,12 +103,13 @@ public class SCLSwitch<T> extends Switch<T> {
                 return result;
             }
             case SCLPackage.MODULE: {
-                Module module = (Module)theEObject;
+                de.cau.cs.kieler.scl.Module module = (de.cau.cs.kieler.scl.Module)theEObject;
                 T result = caseModule(module);
                 if (result == null) result = caseScope(module);
                 if (result == null) result = caseNamedObject(module);
                 if (result == null) result = caseDeclarationScope(module);
                 if (result == null) result = caseStatementContainer(module);
+                if (result == null) result = caseNameable(module);
                 if (result == null) result = caseAnnotatable(module);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -151,6 +154,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(label);
                 if (result == null) result = caseAnnotatable(label);
                 if (result == null) result = caseSequencePart(label);
+                if (result == null) result = caseNameable(label);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -172,6 +176,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseSequencePart(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = caseSchedulable(assignment);
+                if (result == null) result = caseLinkable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -277,7 +282,7 @@ public class SCLSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseModule(Module object) {
+    public T caseModule(de.cau.cs.kieler.scl.Module object) {
         return null;
     }
 
@@ -537,6 +542,21 @@ public class SCLSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -563,6 +583,21 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseSchedulable(Schedulable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLinkable(Linkable object) {
         return null;
     }
 

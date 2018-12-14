@@ -151,6 +151,9 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActionsAndDeclarations">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Inheritance">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth">
         </Processor>
         <Processor
@@ -188,6 +191,9 @@
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.obfuscator.ObfuscationProcessor">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
      </extension>
      <extension
@@ -227,6 +233,12 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.obfuscate.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
         </TransformationSystem>
      </extension>
 

@@ -277,7 +277,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (newType: ");
         result.append(newType);
         result.append(')');

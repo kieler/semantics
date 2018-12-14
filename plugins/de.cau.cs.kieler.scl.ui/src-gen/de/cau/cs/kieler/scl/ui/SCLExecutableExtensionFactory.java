@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scl.ui;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.scl.ui.internal.SCLActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class SCLExecutableExtensionFactory extends AbstractGuiceAwareExecutableE
 
 	@Override
 	protected Bundle getBundle() {
-		return SCLActivator.getInstance().getBundle();
+		return Platform.getBundle(SCLActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return SCLActivator.getInstance().getInjector(SCLActivator.DE_CAU_CS_KIELER_SCL_SCL);
+		SCLActivator activator = SCLActivator.getInstance();
+		return activator != null ? activator.getInjector(SCLActivator.DE_CAU_CS_KIELER_SCL_SCL) : null;
 	}
-	
+
 }

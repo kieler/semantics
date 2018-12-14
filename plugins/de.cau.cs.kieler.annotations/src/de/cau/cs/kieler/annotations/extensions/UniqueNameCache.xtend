@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.annotations.extensions
 
 import java.util.HashSet
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * @author ssm aas
@@ -24,10 +25,13 @@ class UniqueNameCache extends HashSet<String> {
     
     private val maxNumberForBaseName = <String, Integer> newHashMap
     
-    public def String getNewUniqueName(String baseName) {
+    def String getNewUniqueName(String baseName) {
         if(contains(baseName)) {
-            val freeSuffix = (maxNumberForBaseName.getOrDefault(baseName, 0)+1)
-            val newUniquName = baseName+freeSuffix 
+            var freeSuffix = maxNumberForBaseName.getOrDefault(baseName, 0) + 1
+            while (this.contains(baseName + freeSuffix)) {
+                freeSuffix++;
+            }
+            val newUniquName = baseName + freeSuffix 
             maxNumberForBaseName.put(baseName, freeSuffix)
             add(newUniquName)
             return newUniquName 
@@ -35,9 +39,10 @@ class UniqueNameCache extends HashSet<String> {
             add(baseName)
             return baseName
         }
-    } 
+    }
     
-    public def boolean isUnique(String name) {
-        return contains(name)
-    } 
+    def <T extends NamedObject> T uniqueName(T namedObject) {
+        namedObject.name = this.getNewUniqueName(namedObject.name)
+        return namedObject
+    }
 }

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Declaration;
@@ -436,6 +437,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case SCChartsPackage.SCOPE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -464,6 +470,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return SCChartsPackage.SCOPE__NAME;
@@ -488,7 +499,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", label: ");

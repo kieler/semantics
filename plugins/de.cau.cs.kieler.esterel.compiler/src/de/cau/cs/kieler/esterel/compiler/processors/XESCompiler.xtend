@@ -51,7 +51,7 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -68,14 +68,14 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
         sources += sourceModel.file
         
         for (addSource : environment.getProperty(SOURCES)?:emptyList) {
-            val addSourceFile = new File(infra.generadedCodeFolder, addSource)
+            val addSourceFile = new File(infra.generatedCodeFolder, addSource)
             if (addSourceFile.file) {
-                sources += infra.generadedCodeFolder.toPath.relativize(addSourceFile.toPath).toFile
+                sources += infra.generatedCodeFolder.toPath.relativize(addSourceFile.toPath).toFile
             } else if (addSourceFile.directory) {
                 for (path : Files.find(addSourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
                     return fileAttr.regularFile && filePath.fileName.toString.endsWith(InriaEsterelCompiler.ESTEREL_EXTENSION)
                 ]).iterator.toIterable) {
-                    sources += infra.generadedCodeFolder.toPath.relativize(path).toFile
+                    sources += infra.generatedCodeFolder.toPath.relativize(path).toFile
                 }
             } else {
                 environment.errors.add("Source location does not exist: " + addSourceFile)
@@ -105,12 +105,12 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
         }
         
         val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
-        val targetExePath = infra.generadedCodeFolder.toPath.relativize(targetExe.toPath).toString
+        val targetExePath = infra.generatedCodeFolder.toPath.relativize(targetExe.toPath).toString
         logger.println("Target exe file: " + targetExe)
         
         // Run esterel compiler
         val command = compiler.compileXESCommand(sources, options, targetExePath)
-        var success = command.invoke(infra.generadedCodeFolder)?:-1 == 0
+        var success = command.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")
             logger.println("Compilation failed")

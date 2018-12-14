@@ -14,4 +14,8 @@ class KExtRuntimeModule extends AbstractKExtRuntimeModule {
     override Class<? extends IValueConverterService> bindIValueConverterService() {
         return KExtValueConverter;
     }
+
+    override Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
+        return KExtResource
+    }
 }

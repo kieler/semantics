@@ -50,6 +50,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.State#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.State#getBaseStates <em>Base States</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState()
@@ -249,5 +250,21 @@ public interface State extends Scope {
      * @generated
      */
     EList<Transition> getIncomingTransitions();
+
+    /**
+     * Returns the value of the '<em><b>Base States</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Base States</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Base States</em>' reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_BaseStates()
+     * @model
+     * @generated
+     */
+    EList<State> getBaseStates();
 
 } // State

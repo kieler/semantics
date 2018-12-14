@@ -55,7 +55,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -77,7 +77,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         // Environment
         generalTemplateEnvironment.putAll(environment.getProperty(GENRAL_ENVIRONMENT)?:newHashMap)
         // Genral
-        generalTemplateEnvironment.put(CommonTemplateVariables.BASE_DIR, infra.generadedCodeFolder.toString)       
+        generalTemplateEnvironment.put(CommonTemplateVariables.BASE_DIR, infra.generatedCodeFolder.toString)       
         // Injection
         generalTemplateEnvironment.registerTemplateInjection(environment)
         
@@ -94,9 +94,9 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         val templates = environment.getProperty(TEMPLATES)?:emptyMap
         for (entry : templates.entrySet) {
-            val target = new File(infra.generadedCodeFolder, entry.value)
+            val target = new File(infra.generatedCodeFolder, entry.value)
             val relativeTemplatePath = entry.key
-            val template = new File(infra.generadedCodeFolder, relativeTemplatePath)
+            val template = new File(infra.generatedCodeFolder, relativeTemplatePath)
             
             logger.println("Processing template: " + template)
             
@@ -136,7 +136,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 
                 
                 // prepare freemarker
-                val freemarkerTemplate = createFreemarkerConfiguration(infra.generadedCodeFolder).getTemplate(relativeTemplatePath)
+                val freemarkerTemplate = createFreemarkerConfiguration(infra.generatedCodeFolder).getTemplate(relativeTemplatePath)
                 // process
                 freemarkerTemplate.process(templateEnvironment, writer)
                 

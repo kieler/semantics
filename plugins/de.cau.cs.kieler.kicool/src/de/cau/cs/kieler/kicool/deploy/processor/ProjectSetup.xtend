@@ -58,7 +58,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -86,7 +86,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         for (file : model.files) {
             logger.println("Saving " + file.fileName)
             try {
-                val target = new File(infra.generadedCodeFolder, file.fileName)
+                val target = new File(infra.generatedCodeFolder, file.fileName)
                 val writer = new FileWriter(target)
                 writer.write(file.code)
                 writer.close
@@ -113,7 +113,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
             logger.println("== Copy Environment ==")
 
             for (entry : copyMap.entrySet) {
-                val target = new File(infra.generadedCodeFolder, entry.value)
+                val target = new File(infra.generatedCodeFolder, entry.value)
                 logger.println("Copying from " + entry.key + " to " + infra.getProjectRelativeFile(target))
                 var URI source = null
                 try {
@@ -167,7 +167,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
             logger.println("== Clear Environment ==")
             
             for (entry : clearList) {
-                val target = new File(infra.generadedCodeFolder, entry)
+                val target = new File(infra.generatedCodeFolder, entry)
                 val success = target.deleteRecursively(logger)
                 if (!success) environment.errors.add("Error while clearing file(s)")
                 logger.println

@@ -39,7 +39,7 @@ import org.eclipse.ui.editors.text.TextEditor
 class CompilationAction {
 
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+            "de.cau.cs.kieler.kicool.ui", "icons/compile.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
