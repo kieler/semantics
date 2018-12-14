@@ -12,15 +12,18 @@
  */
 
 import { inject, injectable } from "inversify";
-import { CommandRegistry, MessageService, Command } from '@theia/core/lib/common';
+import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
 import { EditorManager, EditorWidget } from "@theia/editor/lib/browser";
-import { FrontendApplication,
+import {
+    FrontendApplication,
     AbstractViewContribution,
     KeybindingRegistry,
     DidCreateWidgetEvent,
     Widget,
     WidgetManager,
-    FrontendApplicationContribution } from "@theia/core/lib/browser";
+    FrontendApplicationContribution,
+    CommonMenus
+} from "@theia/core/lib/browser";
 import { KeithLanguageClientContribution } from "keith-language/lib/frontend/keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
@@ -62,7 +65,8 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             widgetId: Constants.compilerWidgetId,
             widgetName: 'Compiler',
             defaultWidgetOptions: {
-                area: 'bottom'
+                area: 'bottom',
+                rank: 500
             },
             toggleCommandId: COMPILER.id,
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
@@ -86,13 +90,6 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
     async initializeLayout(app: FrontendApplication): Promise<void> {
         await this.openView()
     }
-
-    onDidCreateWidget(e: DidCreateWidgetEvent): void {
-        if (e.factoryId === CompilerWidget.widgetId) {
-            this.initializeCompilerWidget(e.widget)
-        }
-    }
-
     private initializeCompilerWidget(widget: Widget | undefined) {
         if (widget) {
             this.compilerWidget = widget as CompilerWidget
@@ -103,7 +100,13 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
                 this.requestSystemDescriptions()
             }
         }
-     }
+    }
+
+    onDidCreateWidget(e: DidCreateWidgetEvent): void {
+        if (e.factoryId === CompilerWidget.widgetId) {
+            this.initializeCompilerWidget(e.widget)
+        }
+    }
 
     onFilesChanged(fileChange: FileChange) {
         // TODO receives two event if file is saved
@@ -126,6 +129,17 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         }
     }
 
+    async requestSystemDescriptions() {
+        if (this.editor && this.compilerWidget.sourceModelPath !== this.editor.editor.uri.toString()) {
+            const lClient = await this.client.languageClient
+            const uri = this.editor.editor.uri.toString()
+            const systems: CompilationSystems[] = await lClient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
+            this.compilerWidget.systems = systems
+            this.compilerWidget.sourceModelPath = this.editor.editor.uri.toString()
+            this.compilerWidget.update()
+        }
+    }
+
     registerKeybindings(keybindings: KeybindingRegistry): void {
         [
             {
@@ -140,7 +154,6 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             },
             {
                 command: COMPILER.id,
-                context: this.kicoolKeybindingContext.id,
                 keybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
             }
         ].forEach(binding => {
@@ -148,24 +161,22 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         });
     }
 
-    // registerMenus(menus: MenuModelRegistry): void {
-    //     menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
-    //         commandId: COMPILER.id
-    //     });
-    // }
+    registerMenus(menus: MenuModelRegistry): void {
+        menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
+            commandId: COMPILER.id,
+            label: this.options.widgetName
+        });
+    }
 
     registerCommands(commands: CommandRegistry): void {
-        // commands.registerCommand(COMPILER, {
-        //     execute: async () => {
-        //         this.compilerWidget = await this.widgetManager.tryGetWidget(Constants.compilerWidgetId) as CompilerWidget
-        //         if (!this.compilerWidget) {
-        //             this.compilerWidget = await this.widgetManager.getOrCreateWidget(Constants.compilerWidgetId) as CompilerWidget
-        //             this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
-        //         }
-        //         this.compilerWidget.activate()
-        //         this.compilerWidget.node.focus()
-        //     }
-        // })
+        commands.registerCommand(COMPILER, {
+            execute: async () => {
+                this.openView({
+                    toggle: true,
+                    activate: true
+                })
+            }
+        })
         commands.registerCommand(SHOW_NEXT, {
             execute: () => {
                 if (!this.editor) {
@@ -214,7 +225,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         switch (type) {
             case "error":
                 this.messageService.error(message)
-                this.outputManager.getChannel("SCTX").appendLine("ERROR: " +  message)
+                this.outputManager.getChannel("SCTX").appendLine("ERROR: " + message)
                 break;
             case "warn":
                 this.messageService.warn(message)
@@ -252,12 +263,12 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             }) as TextWidget
             if (textWidget) {
                 textWidget.updateContent("Diagram: " + snapshotDescription.name + " " +
-                        snapshotDescription.snapshotIndex, info  + svg)
+                    snapshotDescription.snapshotIndex, info + svg)
             } else {
                 console.log("Adding new widget since old was not found")
 
                 this.front.shell.addWidget(new TextWidget("Diagram:" + snapshotDescription.name + " " +
-                snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right"})
+                    snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right" })
             }
             this.front.shell.activateWidget(uri)
         } else {
@@ -291,20 +302,20 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         snapshotsDescriptions.files.forEach((snapshot: Snapshots) => {
             let error, warning, info
             if (snapshot.errors.length > 0) {
-                error = "ERROR: " +  snapshot.errors.reduce( (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                error = "ERROR: " + snapshot.errors.reduce((s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
                 this.outputManager.getChannel("SCTX").appendLine(error)
             }
 
             if (snapshot.warnings.length > 0) {
-                warning = "WARN: " +  snapshot.warnings.reduce( (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                this.outputManager.getChannel("SCTX").appendLine("WARN: " +  snapshot.warnings.reduce(
+                warning = "WARN: " + snapshot.warnings.reduce((s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine("WARN: " + snapshot.warnings.reduce(
                     (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
 
             }
 
             if (snapshot.infos.length > 0) {
-                info = "INFO: " +  snapshot.infos.reduce( (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
-                this.outputManager.getChannel("SCTX").appendLine("INFO: " +  snapshot.infos.reduce(
+                info = "INFO: " + snapshot.infos.reduce((s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex)
+                this.outputManager.getChannel("SCTX").appendLine("INFO: " + snapshot.infos.reduce(
                     (s1: string, s2: string) => s1 + " " + s2, snapshot.name + snapshot.snapshotIndex))
 
             }
@@ -320,47 +331,6 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
         this.front.shell.activateWidget(Constants.compilerWidgetId)
     }
-
-
-
-    async requestSystemDescriptions() {
-        if (this.editor && this.compilerWidget.sourceModelPath !== this.editor.editor.uri.toString()) {
-            const lClient = await this.client.languageClient
-            const uri = this.editor.editor.uri.toString()
-            const systems: CompilationSystems[] =  await lClient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
-            this.compilerWidget.systems = systems
-            this.compilerWidget.sourceModelPath = this.editor.editor.uri.toString()
-            this.compilerWidget.update()
-        }
-        // if (!this.editor) {
-        //     // this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
-        //     return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
-        // }
-        // const uri = this.compilerWidget.sourceModelPath
-        // try {
-        //     const lclient: ILanguageClient = await this.client.languageClient
-        //     const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
-        //     this.compilerWidget.systems = systems
-        //     this.compilerWidget.update()
-        //     return Promise.resolve(true)
-        // } catch (error) {
-        //     return Promise.reject("Communication with LS failed")
-        // }
-    }
-
-    // getStringUriOfCurrentEditor(): string {
-    //     if (this.editor) {
-    //     const uri = this.editor.getResourceUri()
-    //     if (uri) {
-    //         return uri.toString()
-    //     } else {
-    //         return ""
-    //     }
-    //     } else {
-    //         console.log("No current editor defined")
-    //         return ""
-    //     }
-    // }
 }
 
 export const SAVE: Command = {

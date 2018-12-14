@@ -13,11 +13,9 @@
 
 import { ContainerModule, interfaces } from 'inversify'
 import { KiCoolContribution} from './kicool-contribution'
-import { CommandContribution } from '@theia/core/lib/common'
 import { BaseWidget, KeybindingContext,
     WidgetFactory, bindViewContribution, FrontendApplicationContribution, createTreeContainer, TreeWidget} from '@theia/core/lib/browser'
 import { TextWidget } from '../widgets/text-widget'
-import { KeithCommandContribution } from './keith-commands'
 import '../../src/frontend/widgets/style/index.css'
 import { KiCoolKeybindingContext } from './kicool-keybinding-context'
 import { CompilerWidget, KiCoolViewWidgetFactory } from '../widgets/compiler-widget'
@@ -28,14 +26,6 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // widgets
     bind(TextWidget).toSelf()
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
-    // bind(CompilerWidget).toSelf()
-    // bind(WidgetFactory).toDynamicValue(context => ({
-    //     id: Constants.compilerWidgetId,
-    //     area: "bottom",
-    //     createWidget: () => context.container.get<CompilerWidget>(CompilerWidget)
-    // })).inSingletonScope()
-
-    bind(CommandContribution).to(KeithCommandContribution)
 
     // added for keybinding and commands
     bind(KiCoolKeybindingContext).toSelf()
@@ -44,7 +34,6 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bindViewContribution(bind, KiCoolContribution)
     bind(FrontendApplicationContribution).toService(KiCoolContribution);
 
-
     bind(KiCoolViewWidgetFactory).toFactory(ctx =>
         () => createKiCoolViewWidget(ctx.container)
     )
@@ -52,8 +41,6 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(WidgetFactory).toDynamicValue(context => context.container.get(KiCoolViewService));
 
 })
-
-
 
 function createKiCoolViewWidget(parent: interfaces.Container): CompilerWidget {
 const child = createTreeContainer(parent);

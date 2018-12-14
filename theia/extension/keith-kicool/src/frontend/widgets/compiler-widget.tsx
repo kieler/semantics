@@ -24,10 +24,9 @@ import { Message,
 import { Event } from '@theia/core/lib/common'
 import * as React from "react";
 import { Constants, CompilationSystems, Snapshots } from "keith-language/lib/frontend/utils";
-
-import '../../src/frontend/widgets/style/index.css'
 import { KiCoolContribution } from "../language/kicool-contribution";
 import { Emitter } from "@theia/core";
+import '../../src/frontend/widgets/style/index.css'
 
 export interface KiCoolSymbolInformationNode extends CompositeTreeNode, SelectableTreeNode, ExpandableTreeNode {
     iconClass: string
@@ -41,6 +40,7 @@ export namespace KiCoolSymbolInformationNode {
 
 export type KiCoolViewWidgetFactory = () => CompilerWidget
 export const KiCoolViewWidgetFactory = Symbol('KiCoolViewWidgetFactory')
+
 /**
  * Widget to compile and navigate compilation results. Should be linked to editor.
  */
@@ -49,21 +49,20 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
 
     public static widgetId = Constants.compilerWidgetId
 
+
+    protected readonly onRequestSystemDescriptionsEmitter = new Emitter<CompilerWidget | undefined>()
+    /**
+     * Emit when compilation systems are requested.
+     */
+    readonly requestSystemDescriptions: Event<CompilerWidget | undefined> = this.onRequestSystemDescriptionsEmitter.event
+    readonly onDidChangeOpenStateEmitter = new Emitter<boolean>()
+
     systems: CompilationSystems[]
 
     autoCompile: boolean
     compileInplace: boolean
     showPrivateSystems: boolean
     public sourceModelPath: string
-
-    readonly onDidChangeOpenStateEmitter = new Emitter<boolean>()
-    protected readonly onRequestSystemDescriptionsEmitter = new Emitter<CompilerWidget | undefined>()
-
-    /**
-     * Emit when compilation systems are requested.
-     */
-    readonly requestSystemDescriptions: Event<CompilerWidget | undefined> = this.onRequestSystemDescriptionsEmitter.event
-
 
     constructor(
         @inject(TreeProps) protected readonly treeProps: TreeProps,
@@ -75,12 +74,8 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
         this.id = Constants.compilerWidgetId
         this.title.label = 'Compile'
         this.title.iconClass = 'fa fa-play-circle';
-        this.title.closable = true
         this.addClass(Constants.compilerWidgetId) // class for index.css
         this.systems = [{id: "NONE", label: "NONE", isPublic: true}]
-        this.node.draggable = false
-        this.show()
-        this.node.focus()
         this.autoCompile = false
         this.showPrivateSystems = false
         this.compileInplace = false
@@ -190,10 +185,6 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
             }}>
             <div className='fa fa-cog'> </div>
         </div>
-    }
-
-    onUpdateRequest(msg: Message): void {
-        super.onUpdateRequest(msg)
     }
 
     public compileSelectedCompilationSystem(): void {
