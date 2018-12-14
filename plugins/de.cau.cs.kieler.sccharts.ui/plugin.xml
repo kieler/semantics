@@ -513,6 +513,35 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
          </run>
       </application>
    </extension>
-   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="de.cau.cs.kieler.sccharts.ui.wizard.SctxFileWizard"
+            hasPages="true"
+            icon="icons/sccharts_icon16.png"
+            id="de.cau.cs.kieler.sccharts.ui.sctxWizard"
+            name="SCTX File"
+            project="false">
+         <description>
+            Create a new SCCharts Text file.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.ui.sctxWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.ui.sctxWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
    
 </plugin>
