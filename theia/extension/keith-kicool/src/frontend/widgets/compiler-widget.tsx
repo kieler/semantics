@@ -39,7 +39,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
         this.id = Constants.compilerWidgetId
         this.title.label = 'Compile'
         this.title.iconClass = 'fa fa-play-circle';
-        this.title.closable = false
+        this.title.closable = true
         this.addClass(Constants.compilerWidgetId) // class for index.css
         this.systems = [{id: "NONE", label: "NONE", isPublic: true}]
         this.node.draggable = false

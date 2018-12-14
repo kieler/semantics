@@ -114,6 +114,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             execute: async () => {
                 this.compilerWidget = await this.widgetManager.tryGetWidget(Constants.compilerWidgetId) as CompilerWidget
                 if (!this.compilerWidget) {
+                    console.log("No compiler widget, get it from widgetmanager")
                     this.compilerWidget = await this.widgetManager.getOrCreateWidget(Constants.compilerWidgetId) as CompilerWidget
                     this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
                 }
@@ -297,10 +298,15 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
     }
 
     getStringUriOfCurrentEditor(): string {
+        if (this.editor) {
         const uri = this.editor.getResourceUri()
         if (uri) {
             return uri.toString()
         } else {
+            return ""
+        }
+        } else {
+            console.log("No current editor defined")
             return ""
         }
     }
