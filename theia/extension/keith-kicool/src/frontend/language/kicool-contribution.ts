@@ -130,7 +130,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
     }
 
     async requestSystemDescriptions() {
-        if (this.editor && this.compilerWidget.sourceModelPath !== this.editor.editor.uri.toString()) {
+        if (this.editor) {
             const lClient = await this.client.languageClient
             const uri = this.editor.editor.uri.toString()
             const systems: CompilationSystems[] = await lClient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]

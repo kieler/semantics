@@ -83,8 +83,8 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
 
     render(): React.ReactNode {
         if (!this.systems || this.systems.length === 1) {
-            if (this.commands) {
-                this.commands.requestSystemDescriptions()
+            if (this.commands && this.commands.editor) {
+                this.requestSystemDescription()
             }
             return <div className='spinnerContainer'>
                 <div className='fa fa-spinner fa-pulse fa-3x fa-fw'></div>
@@ -114,6 +114,15 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
     onActivateRequest(msg: Message): void {
         super.onActivateRequest(msg);
         this.update()
+    }
+
+    onUpdateRequest(msg: Message): void {
+        super.onUpdateRequest(msg);
+        this.render()
+    }
+
+    public requestSystemDescription(): void {
+        this.onRequestSystemDescriptionsEmitter.fire(this)
     }
 
     renderShowButtons(): React.ReactNode {
@@ -204,7 +213,8 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
         return {
             autoCompile : this.autoCompile,
             compileInplace : this.compileInplace,
-            showPrivateSystems : this.showPrivateSystems
+            showPrivateSystems : this.showPrivateSystems,
+            systems : this.systems
         }
     }
 
@@ -212,6 +222,7 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
         this.autoCompile = oldState.autoCompile
         this.compileInplace = oldState.compileInplace
         this.showPrivateSystems = oldState.showPrivateSystems
+        this.systems = this.systems
     }
 }
 
@@ -219,6 +230,7 @@ export namespace CompilerWidget {
     export interface Data {
         autoCompile: boolean,
         compileInplace: boolean,
-        showPrivateSystems: boolean
+        showPrivateSystems: boolean,
+        systems: CompilationSystems[]
     }
 }
