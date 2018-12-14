@@ -11,31 +11,67 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
+// import { ReactWidget } from "@theia/core/lib/browser/widgets/react-widget";
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
-import { Message, StatefulWidget } from "@theia/core/lib/browser";
+import { Message,
+    StatefulWidget,
+    CompositeTreeNode,
+    SelectableTreeNode,
+    ExpandableTreeNode,
+    TreeNode, TreeModel,
+    TreeWidget, TreeProps,
+    ContextMenuRenderer } from "@theia/core/lib/browser";
+import { Event } from '@theia/core/lib/common'
 import * as React from "react";
 import { Constants, CompilationSystems, Snapshots } from "keith-language/lib/frontend/utils";
 
 import '../../src/frontend/widgets/style/index.css'
 import { KiCoolContribution } from "../language/kicool-contribution";
+import { Emitter } from "@theia/core";
 
+export interface KiCoolSymbolInformationNode extends CompositeTreeNode, SelectableTreeNode, ExpandableTreeNode {
+    iconClass: string
+}
+
+export namespace KiCoolSymbolInformationNode {
+    export function is(node: TreeNode): node is KiCoolSymbolInformationNode {
+        return !!node && SelectableTreeNode.is(node) && 'iconClass' in node
+    }
+}
+
+export type KiCoolViewWidgetFactory = () => CompilerWidget
+export const KiCoolViewWidgetFactory = Symbol('KiCoolViewWidgetFactory')
 /**
  * Widget to compile and navigate compilation results. Should be linked to editor.
  */
 @injectable()
-export class CompilerWidget extends ReactWidget implements StatefulWidget {
+export class CompilerWidget extends TreeWidget implements StatefulWidget {
+
+    public static widgetId = Constants.compilerWidgetId
 
     systems: CompilationSystems[]
 
     autoCompile: boolean
     compileInplace: boolean
     showPrivateSystems: boolean
+    public sourceModelPath: string
+
+    readonly onDidChangeOpenStateEmitter = new Emitter<boolean>()
+    protected readonly onRequestSystemDescriptionsEmitter = new Emitter<CompilerWidget | undefined>()
+
+    /**
+     * Emit when compilation systems are requested.
+     */
+    readonly requestSystemDescriptions: Event<CompilerWidget | undefined> = this.onRequestSystemDescriptionsEmitter.event
+
 
     constructor(
+        @inject(TreeProps) protected readonly treeProps: TreeProps,
+        @inject(TreeModel) model: TreeModel,
+        @inject(ContextMenuRenderer) protected readonly contextMenuRenderer: ContextMenuRenderer,
         @inject(new LazyServiceIdentifer(() => KiCoolContribution)) protected readonly commands: KiCoolContribution
     ) {
-        super();
+        super(treeProps, model, contextMenuRenderer);
         this.id = Constants.compilerWidgetId
         this.title.label = 'Compile'
         this.title.iconClass = 'fa fa-play-circle';
@@ -52,7 +88,6 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
 
     render(): React.ReactNode {
         if (!this.systems || this.systems.length === 1) {
-            console.log("Tried to render but missing stuff")
             if (this.commands) {
                 this.commands.requestSystemDescriptions()
             }
@@ -89,7 +124,7 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
     renderShowButtons(): React.ReactNode {
 
         const showButtons: React.ReactNode[] = [];
-        const uri = this.commands.getStringUriOfCurrentEditor()
+        const uri = this.sourceModelPath
         if (!uri) {
             return
         }
@@ -159,7 +194,6 @@ export class CompilerWidget extends ReactWidget implements StatefulWidget {
 
     onUpdateRequest(msg: Message): void {
         super.onUpdateRequest(msg)
-        this.render()
     }
 
     public compileSelectedCompilationSystem(): void {

@@ -12,14 +12,20 @@
  */
 
 import { inject, injectable } from "inversify";
-import { CommandRegistry, MessageService, Command, MenuModelRegistry } from '@theia/core/lib/common';
+import { CommandRegistry, MessageService, Command } from '@theia/core/lib/common';
 import { EditorManager, EditorWidget } from "@theia/editor/lib/browser";
-import { FrontendApplication, AbstractViewContribution, KeybindingRegistry, CommonMenus } from "@theia/core/lib/browser";
+import { FrontendApplication,
+    AbstractViewContribution,
+    KeybindingRegistry,
+    DidCreateWidgetEvent,
+    Widget,
+    WidgetManager,
+    FrontendApplicationContribution } from "@theia/core/lib/browser";
 import { KeithLanguageClientContribution } from "keith-language/lib/frontend/keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { TextWidget } from "../widgets/text-widget";
 import { CompilerWidget } from "../widgets/compiler-widget";
-import { Workspace, ILanguageClient } from "@theia/languages/lib/browser";
+import { Workspace } from "@theia/languages/lib/browser";
 import { Constants, CompilationSystems, CodeContainer } from "keith-language/lib/frontend/utils";
 import { KiCoolKeybindingContext } from "./kicool-keybinding-context";
 import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
@@ -29,7 +35,7 @@ import { Snapshots } from "keith-language/lib/frontend/utils";
  * Contribution for CompilerWidget to add functionality to it and link with the current editor.
  */
 @injectable()
-export class KiCoolContribution extends AbstractViewContribution<CompilerWidget> {
+export class KiCoolContribution extends AbstractViewContribution<CompilerWidget> implements FrontendApplicationContribution {
 
     isCompiled: Map<string, boolean> = new Map
     sourceURI: Map<string, string> = new Map
@@ -43,13 +49,14 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
 
     constructor(
         @inject(Workspace) protected readonly workspace: Workspace,
+        @inject(WidgetManager) protected readonly widgetManager: WidgetManager,
         @inject(MessageService) protected readonly messageService: MessageService,
         @inject(FrontendApplication) public readonly front: FrontendApplication,
         @inject(KeithLanguageClientContribution) public readonly client: KeithLanguageClientContribution,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager,
         @inject(KiCoolKeybindingContext) protected readonly kicoolKeybindingContext: KiCoolKeybindingContext,
-        @inject(FileSystemWatcher) protected readonly fileSystemWatcher: FileSystemWatcher
+        @inject(FileSystemWatcher) protected readonly fileSystemWatcher: FileSystemWatcher,
     ) {
         super({
             widgetId: Constants.compilerWidgetId,
@@ -60,9 +67,43 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             toggleCommandId: COMPILER.id,
             toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
         });
-        this.editorManager.onCurrentEditorChanged(this.onCurrentEditorChanged.bind(this))
         this.fileSystemWatcher.onFilesChanged(this.onFilesChanged.bind(this))
+
+        this.editorManager.onCurrentEditorChanged(this.onCurrentEditorChanged.bind(this))
+        if (editorManager.activeEditor) {
+            // if there is already an active editor, use that to initialize
+            this.editor = editorManager.activeEditor
+            this.onCurrentEditorChanged(this.editor)
+        }
+        this.widgetManager.onDidCreateWidget(this.onDidCreateWidget.bind(this))
+        // TODO: when the diagram closes, also update the view to the default one
+        const widgetPromise = this.widgetManager.getWidget(CompilerWidget.widgetId)
+        widgetPromise.then(widget => {
+            this.initializeCompilerWidget(widget)
+        })
     }
+
+    async initializeLayout(app: FrontendApplication): Promise<void> {
+        await this.openView()
+    }
+
+    onDidCreateWidget(e: DidCreateWidgetEvent): void {
+        if (e.factoryId === CompilerWidget.widgetId) {
+            this.initializeCompilerWidget(e.widget)
+        }
+    }
+
+    private initializeCompilerWidget(widget: Widget | undefined) {
+        if (widget) {
+            this.compilerWidget = widget as CompilerWidget
+            this.compilerWidget.requestSystemDescriptions(this.requestSystemDescriptions.bind(this))
+            this.compilerWidget.onActivateRequest(this.requestSystemDescriptions.bind(this))
+            if (this.editor) {
+                this.compilerWidget.sourceModelPath = this.editor.editor.uri.toString()
+                this.requestSystemDescriptions()
+            }
+        }
+     }
 
     onFilesChanged(fileChange: FileChange) {
         // TODO receives two event if file is saved
@@ -71,13 +112,17 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         }
     }
 
-    async onCurrentEditorChanged(editorWidget: EditorWidget | undefined): Promise<void> {
+    onCurrentEditorChanged(editorWidget: EditorWidget | undefined): void {
         if (editorWidget) {
             this.editor = editorWidget
         }
-        if (this.compilerWidget) {
-            await this.requestSystemDescriptions()
-            this.compilerWidget.update()
+        if (!this.compilerWidget || this.compilerWidget.isDisposed) {
+            const widgetPromise = this.widgetManager.getWidget(CompilerWidget.widgetId)
+            widgetPromise.then(widget => {
+                this.initializeCompilerWidget(widget)
+            })
+        } else {
+            this.requestSystemDescriptions()
         }
     }
 
@@ -103,32 +148,31 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         });
     }
 
-    registerMenus(menus: MenuModelRegistry): void {
-        menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
-            commandId: COMPILER.id
-        });
-    }
+    // registerMenus(menus: MenuModelRegistry): void {
+    //     menus.registerMenuAction(CommonMenus.VIEW_VIEWS, {
+    //         commandId: COMPILER.id
+    //     });
+    // }
 
     registerCommands(commands: CommandRegistry): void {
-        commands.registerCommand(COMPILER, {
-            execute: async () => {
-                this.compilerWidget = await this.widgetManager.tryGetWidget(Constants.compilerWidgetId) as CompilerWidget
-                if (!this.compilerWidget) {
-                    console.log("No compiler widget, get it from widgetmanager")
-                    this.compilerWidget = await this.widgetManager.getOrCreateWidget(Constants.compilerWidgetId) as CompilerWidget
-                    this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
-                }
-                this.compilerWidget.activate()
-                this.compilerWidget.node.focus()
-            }
-        })
+        // commands.registerCommand(COMPILER, {
+        //     execute: async () => {
+        //         this.compilerWidget = await this.widgetManager.tryGetWidget(Constants.compilerWidgetId) as CompilerWidget
+        //         if (!this.compilerWidget) {
+        //             this.compilerWidget = await this.widgetManager.getOrCreateWidget(Constants.compilerWidgetId) as CompilerWidget
+        //             this.front.shell.addWidget(this.compilerWidget, {area: "bottom"})
+        //         }
+        //         this.compilerWidget.activate()
+        //         this.compilerWidget.node.focus()
+        //     }
+        // })
         commands.registerCommand(SHOW_NEXT, {
             execute: () => {
                 if (!this.editor) {
                     this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
-                const uri = this.getStringUriOfCurrentEditor()
+                const uri = this.compilerWidget.sourceModelPath
                 if (!this.isCompiled.get(uri)) {
                     this.message(uri + " was not compiled", "error")
                     return false
@@ -152,7 +196,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
                     this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
-                const uri = this.getStringUriOfCurrentEditor()
+                const uri = this.compilerWidget.sourceModelPath
                 if (!this.isCompiled.get(uri)) {
                     this.message(uri + " was not compiled", "error")
                     return false
@@ -236,7 +280,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             return;
         }
 
-        const uri = this.getStringUriOfCurrentEditor()
+        const uri = this.compilerWidget.sourceModelPath
         console.log("Compiling " + uri)
         const lclient = await this.client.languageClient
         const snapshotsDescriptions: CodeContainer = await lclient.sendRequest(Constants.COMPILE, [uri, command, this.compilerWidget.compileInplace]) as CodeContainer
@@ -279,37 +323,44 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
 
 
 
-    async requestSystemDescriptions(): Promise<boolean> {
-        if (!this.editor) {
-            // this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
-            return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
-        }
-        const uri = this.getStringUriOfCurrentEditor()
-        try {
-            const lclient: ILanguageClient = await this.client.languageClient
-            const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
+    async requestSystemDescriptions() {
+        if (this.editor && this.compilerWidget.sourceModelPath !== this.editor.editor.uri.toString()) {
+            const lClient = await this.client.languageClient
+            const uri = this.editor.editor.uri.toString()
+            const systems: CompilationSystems[] =  await lClient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
             this.compilerWidget.systems = systems
+            this.compilerWidget.sourceModelPath = this.editor.editor.uri.toString()
             this.compilerWidget.update()
-            this.compilerWidget.render()
-            return Promise.resolve(true)
-        } catch (error) {
-            return Promise.reject("Communication with LS failed")
         }
+        // if (!this.editor) {
+        //     // this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
+        //     return Promise.reject(Constants.EDITOR_UNDEFINED_MESSAGE)
+        // }
+        // const uri = this.compilerWidget.sourceModelPath
+        // try {
+        //     const lclient: ILanguageClient = await this.client.languageClient
+        //     const systems: CompilationSystems[] =  await lclient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
+        //     this.compilerWidget.systems = systems
+        //     this.compilerWidget.update()
+        //     return Promise.resolve(true)
+        // } catch (error) {
+        //     return Promise.reject("Communication with LS failed")
+        // }
     }
 
-    getStringUriOfCurrentEditor(): string {
-        if (this.editor) {
-        const uri = this.editor.getResourceUri()
-        if (uri) {
-            return uri.toString()
-        } else {
-            return ""
-        }
-        } else {
-            console.log("No current editor defined")
-            return ""
-        }
-    }
+    // getStringUriOfCurrentEditor(): string {
+    //     if (this.editor) {
+    //     const uri = this.editor.getResourceUri()
+    //     if (uri) {
+    //         return uri.toString()
+    //     } else {
+    //         return ""
+    //     }
+    //     } else {
+    //         console.log("No current editor defined")
+    //         return ""
+    //     }
+    // }
 }
 
 export const SAVE: Command = {

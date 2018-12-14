@@ -15,25 +15,25 @@ import { ContainerModule, interfaces } from 'inversify'
 import { KiCoolContribution} from './kicool-contribution'
 import { CommandContribution } from '@theia/core/lib/common'
 import { BaseWidget, KeybindingContext,
-    WidgetFactory, bindViewContribution} from '@theia/core/lib/browser'
+    WidgetFactory, bindViewContribution, FrontendApplicationContribution, createTreeContainer, TreeWidget} from '@theia/core/lib/browser'
 import { TextWidget } from '../widgets/text-widget'
 import { KeithCommandContribution } from './keith-commands'
 import '../../src/frontend/widgets/style/index.css'
-import { Constants } from "keith-language/lib/frontend/utils"
 import { KiCoolKeybindingContext } from './kicool-keybinding-context'
-import { CompilerWidget } from '../widgets/compiler-widget'
+import { CompilerWidget, KiCoolViewWidgetFactory } from '../widgets/compiler-widget'
+import { KiCoolViewService } from './kicool-view-service';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
 
     // widgets
     bind(TextWidget).toSelf()
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))
-    bind(CompilerWidget).toSelf()
-    bind(WidgetFactory).toDynamicValue(context => ({
-        id: Constants.compilerWidgetId,
-        area: "bottom",
-        createWidget: () => context.container.get<CompilerWidget>(CompilerWidget)
-    })).inSingletonScope()
+    // bind(CompilerWidget).toSelf()
+    // bind(WidgetFactory).toDynamicValue(context => ({
+    //     id: Constants.compilerWidgetId,
+    //     area: "bottom",
+    //     createWidget: () => context.container.get<CompilerWidget>(CompilerWidget)
+    // })).inSingletonScope()
 
     bind(CommandContribution).to(KeithCommandContribution)
 
@@ -42,4 +42,24 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bind(KeybindingContext).toDynamicValue(context => context.container.get(KiCoolKeybindingContext));
 
     bindViewContribution(bind, KiCoolContribution)
+    bind(FrontendApplicationContribution).toService(KiCoolContribution);
+
+
+    bind(KiCoolViewWidgetFactory).toFactory(ctx =>
+        () => createKiCoolViewWidget(ctx.container)
+    )
+    bind(KiCoolViewService).toSelf().inSingletonScope();
+    bind(WidgetFactory).toDynamicValue(context => context.container.get(KiCoolViewService));
+
 })
+
+
+
+function createKiCoolViewWidget(parent: interfaces.Container): CompilerWidget {
+const child = createTreeContainer(parent);
+
+child.unbind(TreeWidget);
+child.bind(CompilerWidget).toSelf();
+
+return child.get(CompilerWidget);
+}
