@@ -16,7 +16,8 @@ import { CommandContribution, CommandRegistry, Command } from '@theia/core/lib/c
 import { EditorCommands, EditorManager, EditorWidget } from "@theia/editor/lib/browser"
 import { WorkspaceEdit, Workspace } from "@theia/languages/lib/browser"
 import { WidgetManager } from "@theia/core/lib/browser"
-import { KeithLanguageClientContribution } from "keith-language/lib/frontend/keith-language-client-contribution"
+// import { KeithLanguageClientContribution } from "keith-language/lib/frontend/keith-language-client-contribution"
+import { KeithDiagramLanguageClientContribution } from "keith-diagram/lib/keith-diagram-language-client-contribution"
 
 /**
  * Show references
@@ -45,7 +46,7 @@ export class KeithCommandContribution implements CommandContribution {
         @inject(Workspace) protected readonly workspace: Workspace,
         @inject(EditorManager) protected readonly editorManager: EditorManager,
         @inject(WidgetManager) protected readonly widgetManager: WidgetManager,
-        @inject(KeithLanguageClientContribution) protected readonly client: KeithLanguageClientContribution
+        @inject(KeithDiagramLanguageClientContribution) protected readonly client: KeithDiagramLanguageClientContribution
     ) {
         if (editorManager.activeEditor) {
             // if there is already an active editor, use that to initialize

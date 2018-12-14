@@ -17,7 +17,8 @@ import { DiagramOptionsViewWidget } from './diagramoptions-view-widget'
 import { FrontendApplicationContribution, FrontendApplication } from '@theia/core/lib/browser/frontend-application'
 import { EditorManager, EditorWidget } from '@theia/editor/lib/browser';
 import { WidgetManager, Widget, DidCreateWidgetEvent } from '@theia/core/lib/browser';
-import { KeithLanguageClientContribution } from 'keith-language/lib/frontend/keith-language-client-contribution';
+// import { KeithLanguageClientContribution } from 'keith-language/lib/frontend/keith-language-client-contribution';
+import { KeithDiagramLanguageClientContribution } from 'keith-diagram/lib/keith-diagram-language-client-contribution'
 import { KeithDiagramManager } from 'keith-diagram/lib/keith-diagram-manager';
 import URI from "@theia/core/lib/common/uri";
 import { SynthesisOption } from './synthesis-option';
@@ -35,7 +36,7 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
     constructor(
         @inject(EditorManager) protected readonly editorManager: EditorManager,
         @inject(WidgetManager) protected readonly widgetManager: WidgetManager,
-        @inject(KeithLanguageClientContribution) protected readonly client: KeithLanguageClientContribution,
+        @inject(KeithDiagramLanguageClientContribution) protected readonly client: KeithDiagramLanguageClientContribution,
         @inject(KeithDiagramManager) protected readonly diagramManager: KeithDiagramManager
     ) {
         super({
