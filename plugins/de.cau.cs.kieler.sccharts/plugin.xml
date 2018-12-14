@@ -195,6 +195,12 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.csv.CSVImporter">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.csv.CSVExporter">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -239,6 +245,12 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.csvImport.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.csvExport.kico">
         </TransformationSystem>
      </extension>
 

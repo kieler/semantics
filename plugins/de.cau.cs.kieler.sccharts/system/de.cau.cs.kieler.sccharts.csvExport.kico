@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.sccharts.csvExport
+	label "CSV Exporter"
+
+de.cau.cs.kieler.sccharts.processors.CSVExporter

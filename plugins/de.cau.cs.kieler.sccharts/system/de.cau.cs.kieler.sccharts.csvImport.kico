@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.sccharts.csvImport
+	label "CSV Importer"
+
+de.cau.cs.kieler.sccharts.processors.CSVImporter

@@ -15,12 +15,13 @@ package de.cau.cs.kieler.sccharts.processors.csv
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -31,17 +32,19 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import org.eclipse.emf.common.util.EList
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author stu114663
  *
  */
 class StateTransitionTableInterpreter implements ICSVInterpreter {
-    @Inject extension KExpressionsDeclarationExtensions
+//    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension KExtDeclarationExtensions
+//    @Inject extension KExpressionsCreateExtensions
+//    @Inject extension KEffectsExtensions
+//    @Inject extension KExtDeclarationExtensions
     
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsControlflowRegionExtensions
@@ -50,13 +53,12 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
     
     SCCharts scc
     
-    int headerLines = 0
+    int headerLines = 1
     StateTransitionTableInterpreter.HeaderNumbers[] headerLine = #[
         HeaderNumbers.STATE,
-        HeaderNumbers.TARGET_STATE,
         HeaderNumbers.CONDITION,
         HeaderNumbers.EFFECT,
-        HeaderNumbers.DISCARDABLE
+        HeaderNumbers.TARGET_STATE
     ]
     enum HeaderNumbers {
         STATE,
@@ -66,22 +68,22 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
         CONDITION
     }
     
+    @Accessors
     var ArrayList<ArrayList<String>> table
     var HashMap<String, State> stateMap
     
-    new (ArrayList<ArrayList<String>> table) {
-        this.table = table
-    }
-    
     override interpret() {
+        // TODO check for empty table
         if (headerLine.length > table.get(0).length) {
             // TODO handle bad case
         }
         
         val rootstate = createState => [name = "root"]
         this.scc = createSCChart => [rootStates += rootstate]
-        val ControlflowRegion rootRegion = createControlflowRegionWithoutLabel(rootstate, "")
+        val ControlflowRegion rootRegion = createControlflowRegionWithoutLabel(rootstate, "rootRegion")
+        
         createStates(rootRegion)
+        createTransitions
         
         return scc
     }
@@ -98,12 +100,17 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
         for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
             val stateName = table.get(rowIndex).get(stateColumn)
             // get the state or create a new one if needed
-            val State state = this.stateMap.getOrDefault(stateName, region.createState(stateName))
-            // add the new state, if it didn't exist (returned default)
-            this.stateMap.putIfAbsent(stateName, state)
+            if(!this.stateMap.containsKey(stateName)) {
+                val State state = region.createState(stateName)
+                // add the new state, if it didn't exist (returned default)
+                this.stateMap.putIfAbsent(stateName, state)
+            }
         }
     }
     
+    /**
+     * create a transition for each line
+     */
     def createTransitions() {
         for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
             createTransition(this.table.get(rowIndex))
@@ -115,14 +122,35 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
         val targetState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.TARGET_STATE)))
         var Transition trans = createTransitionTo(sourceState, targetState)
         
-        // TODO are the declarations of super states also included?
-        val decls = sourceState.declarations
+        trans.trigger = conditions2TriggerExpression(
+            indicesToSublist(row, getAllHeaderColumns(row, HeaderNumbers.CONDITION))
+        )
         
-        trans.trigger = conditions2Expression(indicesToSublist(row, getAllHeaderColumns(row, HeaderNumbers.CONDITION)), decls)
+        matchAndMakeValuedObjects(trans.trigger, sourceState)
         
-        trans.createEffects(indicesToSublist(row, getAllHeaderColumns(row, HeaderNumbers.EFFECT)), decls)
+//        createEffects(trans, indicesToSublist(row, getAllHeaderColumns(row, HeaderNumbers.EFFECT)), decls)
     }
     
+    /** 
+     * creates a list of declarations by recursively adding parent region/state declarations
+     */
+    def EList<Declaration> getAllDeclarations(State state) {
+        // reached root state?
+        if (state.enclosingState === null) {
+            return state.declarations
+        }
+        
+        val list = state.declarations
+        val Region region = state.parentRegion
+        val State sState = region.parentState
+        list += region.declarations
+        list += getAllDeclarations(sState)
+        return list
+    }
+    
+    /** Create a subset of the sourceList from a list of indices.
+     * Indices are *not* sorted or checked for duplicates.
+     */
     def <T> indicesToSublist(ArrayList<T> sourceList, ArrayList<Integer> indices) {
         val targetList = <T> newArrayList
         for (index : indices) {
@@ -137,7 +165,7 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
     def getAllHeaderColumns(ArrayList<String> row, StateTransitionTableInterpreter.HeaderNumbers hn) {
         var indices = <Integer> newArrayList
         for(var int index = 0; index < headerLine.length; index++) {
-            if (headerLine.get(index) == hn.ordinal) {
+            if (headerLine.get(index) == hn) {
                 indices.add(index)
             }
         }
@@ -145,10 +173,14 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
         return indices
     }
     
-    def Expression conditions2Expression(ArrayList<String> conditionStrs, List<Declaration> decls) {
+    /**
+     * The condition strings are concatenated with && and then turned into an expression.
+     */
+    def Expression conditions2TriggerExpression(ArrayList<String> conditionStrs) {
+        // connect all transition conditions with the AND Operator
         var String exStr = conditionStrs.fold(
             "",
-            [ String r, String t |
+            [ String t, String r |
                 if (!r.isEmpty) {
                     r.concat(" && ")
                 }
@@ -156,33 +188,48 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
             ]
         )
         
-        // TODO wait for Alex to implement something
-        // TODO also consider existing declarations
-//        kext.parse(exStr)
-        return null
+        return KExtStandaloneParser.parseExpression(exStr)
     }
     
-    def createEffects(Transition trans, ArrayList<String> effectStrs, List<Declaration> decls) {
-        var String condStr = effectStrs.fold(
-            "",
-            [ String r, String t |
-                if (!r.isEmpty) {
-                    r.concat(" && ")
+    /** recursively extract valued object references from an expression */
+    def List<ValuedObjectReference> getValuedObjectReferences(Expression expr) {
+        val valOExpressionList = new ArrayList<ValuedObjectReference>
+        if (expr instanceof OperatorExpression) {
+            for(sexp : expr.subExpressions) {
+                valOExpressionList += getValuedObjectReferences(sexp)
+            }
+        } else if (expr instanceof ValuedObjectReference) {
+            valOExpressionList.add(expr)
+        }
+        return valOExpressionList
+    }
+    
+    /** 
+     * Match new valued object declarations with existing ones.
+     * Add non existing ones to the declarations of the <b>parent state</b>.
+     */
+    def matchAndMakeValuedObjects(Expression expr, State state) {
+        // TODO Test and Debug
+        val decls = state.allDeclarations
+        
+        val valuedObjectsReferences = getValuedObjectReferences(expr)
+        val declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
+            l += d.getValuedObjects
+            return l
+        ])
+        
+        for (valOR : valuedObjectsReferences) {
+            for (dValO : declaredValuedObjects) {
+                if(valOR.valuedObject.name == dValO.name) {
+                    // YES -> connect valued object expression with existing VO
+                    valOR.valuedObject = dValO
+                } else {
+                    // NO  -> add created VO to parent state declarations
+                    state.parentRegion.parentState.declarations.add(
+                        getDeclaration(valOR.valuedObject)
+                    )
                 }
-                return r.concat(t)
-            ]
-        )
-        
-        // siehe conditions2Expression()
-//        kext.parse(exStr)???
-        
-        trans.effects.addAll()
-    }
-    
-    def createValuedObjects(ArrayList<String> ids, State state) {
-        for (String id : ids) {
-            // TODO continue here!
-//            createValuedObjec
+            }
         }
     }
 }
