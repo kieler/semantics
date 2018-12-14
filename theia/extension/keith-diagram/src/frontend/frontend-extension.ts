@@ -23,9 +23,11 @@ import { ThemeManager } from './theme-manager'
 import { ContextMenuCommands } from './dynamic-commands';
 import { KeithDiagramLanguageClientContribution } from './keith-diagram-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
+// import { KeithLanguageClientContribution } from 'keith-language/lib/frontend/keith-language-client-contribution'
 
-export default new ContainerModule((bind: interfaces.Bind) => {
+export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithDiagramLanguageClientContribution))
+    // rebind(KeithLanguageClientContribution).to(KeithDiagramLanguageClientContribution)
     bind(DiagramConfiguration).to(KeithDiagramConfiguration).inSingletonScope()
     bind(DiagramManagerProvider).toProvider<DiagramManager>(context => {
         return () => {

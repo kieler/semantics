@@ -22,8 +22,8 @@ import { configuration as kextConfiguration, monarchLanguage as kextMonarchLangu
 import { configuration as annoConfiguration, monarchLanguage as annoMonarchLanguage} from './anno-monaco-language'
 import { configuration as strlConfiguration, monarchLanguage as strlMonarchLanguage} from './strl-monaco-language'
 import { configuration as lusConfiguration, monarchLanguage as lusMonarchLanguage} from './lus-monaco-language'
-import { KeithLanguageClientContribution } from './keith-language-client-contribution';
-import { LanguageClientContribution } from '@theia/languages/lib/browser';
+// import { KeithLanguageClientContribution } from './keith-language-client-contribution';
+// import { LanguageClientContribution } from '@theia/languages/lib/browser';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
     // register kgt
@@ -112,7 +112,7 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
 
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
     // languages
-    bind(KeithLanguageClientContribution).toSelf().inSingletonScope()
-    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithLanguageClientContribution))
+    // bind(KeithLanguageClientContribution).toSelf().inSingletonScope()
+    // bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithLanguageClientContribution))
 
 })
