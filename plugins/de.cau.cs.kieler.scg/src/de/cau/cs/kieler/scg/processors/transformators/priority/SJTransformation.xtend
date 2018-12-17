@@ -42,6 +42,7 @@ import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
 import java.util.Stack
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -220,7 +221,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         for(declaration : scg.variableDeclarations) {
             if (declaration.valuedObjects.exists[ cardinalities.empty ]) {
                 sb.appendInd("public ")
-                sb.append(declaration.type.serialize)
+                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    declaration.type.serializeHR
+                    else declaration.hostType
+                sb.append(declarationType)
                 for (variable : declaration.valuedObjects.filter[ cardinalities.empty ].indexed) {
                     if (variable.key !== 0) {
                         sb.append(",")
@@ -232,11 +236,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             }
             if (declaration.valuedObjects.exists[ !cardinalities.empty ]) {
                 sb.appendInd("public ")
-                var type = declaration.type.toString
-                if(type == "bool") {
-                    type = "boolean"
-                }
-                sb.append(type)
+                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    declaration.type.serializeHR
+                    else declaration.hostType
+                sb.append(declarationType)
                 sb.append("[]")
                 for (variable : declaration.valuedObjects.filter[ !cardinalities.empty ].indexed) {
                     if (variable.key !== 0) {
@@ -256,9 +259,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         if (!valuedObject.cardinalities.empty) {
             val declaration = valuedObject.eContainer as VariableDeclaration
             sb.append(" = new ")
-            var type = declaration.type.toString
-            if (type == "bool") { type = "boolean" }
-            sb.append(type)
+            val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                declaration.type.serializeHR
+                else declaration.hostType
+            sb.append(declarationType)
             for (card : valuedObject.cardinalities) {
                 sb.append("[" + card.serializeHR + "]")
             } 
