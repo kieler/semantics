@@ -33,7 +33,7 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="de.cau.cs.kieler.kgraph.feature.feature.group" version="0.0.0"/>
-      <unit id="de.cau.cs.kieler.klighd.kgraph.dsp" version="0.0.0"/>
+      <unit id="de.cau.cs.kieler.klighd.lsp" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
