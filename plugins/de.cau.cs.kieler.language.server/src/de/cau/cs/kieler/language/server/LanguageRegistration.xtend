@@ -19,8 +19,8 @@ import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
 import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
+import de.cau.cs.kieler.kicool.ide.language.server.KiCoolServerModule
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
-import de.cau.cs.kieler.language.server.kicool.KiCoolServerModule
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
