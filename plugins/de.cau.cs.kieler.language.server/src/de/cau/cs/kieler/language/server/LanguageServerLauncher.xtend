@@ -14,8 +14,8 @@ package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
-import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
+import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import java.util.function.Function

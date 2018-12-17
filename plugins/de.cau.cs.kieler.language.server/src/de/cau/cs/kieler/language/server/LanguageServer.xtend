@@ -32,7 +32,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
 import java.util.function.Consumer
 import com.google.gson.GsonBuilder
-import de.cau.cs.kieler.klighd.kgraph.dsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import io.typefox.sprotty.layout.ElkLayoutEngine
 
 /**
