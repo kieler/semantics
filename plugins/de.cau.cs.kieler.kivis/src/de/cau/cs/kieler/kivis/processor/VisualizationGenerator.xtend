@@ -242,7 +242,7 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
         if (uri.platform) {
             return Paths.get(
                 ResourcesPlugin.workspace.root.getFile(
-                    new org.eclipse.core.runtime.Path(uri.toPlatformString(false))
+                    new org.eclipse.core.runtime.Path(uri.toPlatformString(true))
                 ).parent.location.toString
             )
         } else {
