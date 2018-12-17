@@ -159,6 +159,15 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGenerator">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SimplifyNamesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.DefineUnboundVariablesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.ReplacePreOperatorOfSCG">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
