@@ -351,7 +351,7 @@ class SSATransformationExtensions {
         for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
             val bb = node.basicBlock
             val parameter = node.expression.eContents.filter(Parameter).toList
-            for (entry : (bb.firstNode.incomingLinks.groupBy[(it.eContainer as Node).basicBlock] => [entrySet.removeIf[!parameterMapping.containsKey(key)]]).entrySet) {
+            for (entry : (bb.firstNode.incomingLinks.groupBy[(it.eContainer as Node).basicBlock] => [entrySet.removeIf[!parameterMapping.containsValue(key)]]).entrySet) {
                 val link = entry.value.head
                 val linkBB = entry.key
                 val linkNode = (link.eContainer as Node)
