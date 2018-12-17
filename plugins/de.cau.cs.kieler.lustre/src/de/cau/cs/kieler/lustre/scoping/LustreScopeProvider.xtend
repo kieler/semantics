@@ -38,10 +38,10 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
         if (context instanceof Package_Provided_IO &&
             reference == LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME) {
             val providedElement = EcoreUtil2.getContainerOfType(context, Package_Provided)
-            if (providedElement.parameters.contains(context))
-                return Scopes.scopeFor(providedElement.name.parameters)
-            else
-                return Scopes.scopeFor(providedElement.name.returned)
+//            if (providedElement.parameters.contains(context))
+//                return Scopes.scopeFor(providedElement.name.inputParameter)
+//            else
+//                return Scopes.scopeFor(providedElement.name.outputParameter)
         }
 
         return super.getScope(context, reference);

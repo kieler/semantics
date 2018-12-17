@@ -11,12 +11,16 @@ import de.cau.cs.kieler.lustre.lustre.Array_Type;
 import de.cau.cs.kieler.lustre.lustre.Arrow;
 import de.cau.cs.kieler.lustre.lustre.Automaton;
 import de.cau.cs.kieler.lustre.lustre.BoolConstant;
+import de.cau.cs.kieler.lustre.lustre.ByNameStaticArg;
 import de.cau.cs.kieler.lustre.lustre.Comparison;
 import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
+import de.cau.cs.kieler.lustre.lustre.ConstantsDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Current;
 import de.cau.cs.kieler.lustre.lustre.Div;
+import de.cau.cs.kieler.lustre.lustre.EnumType;
 import de.cau.cs.kieler.lustre.lustre.Equality;
 import de.cau.cs.kieler.lustre.lustre.Equation;
+import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Fby;
 import de.cau.cs.kieler.lustre.lustre.Field;
 import de.cau.cs.kieler.lustre.lustre.FloatConstant;
@@ -24,23 +28,35 @@ import de.cau.cs.kieler.lustre.lustre.IfThenElse;
 import de.cau.cs.kieler.lustre.lustre.IntConstant;
 import de.cau.cs.kieler.lustre.lustre.Left;
 import de.cau.cs.kieler.lustre.lustre.Left_List;
+import de.cau.cs.kieler.lustre.lustre.LustreClockedIdDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.LustreProgram;
+import de.cau.cs.kieler.lustre.lustre.LustreTypedId;
+import de.cau.cs.kieler.lustre.lustre.LustreTypedValuedIds;
 import de.cau.cs.kieler.lustre.lustre.Minus;
 import de.cau.cs.kieler.lustre.lustre.Mod;
+import de.cau.cs.kieler.lustre.lustre.ModelDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Not;
 import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
+import de.cau.cs.kieler.lustre.lustre.PackBody;
+import de.cau.cs.kieler.lustre.lustre.PackList;
+import de.cau.cs.kieler.lustre.lustre.PackageDeclaration;
+import de.cau.cs.kieler.lustre.lustre.PackageEquation;
 import de.cau.cs.kieler.lustre.lustre.Package_Provided;
 import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
+import de.cau.cs.kieler.lustre.lustre.Params;
 import de.cau.cs.kieler.lustre.lustre.Plus;
 import de.cau.cs.kieler.lustre.lustre.Pre;
+import de.cau.cs.kieler.lustre.lustre.Provide;
 import de.cau.cs.kieler.lustre.lustre.Record_Type;
 import de.cau.cs.kieler.lustre.lustre.Selector;
+import de.cau.cs.kieler.lustre.lustre.StaticArg;
+import de.cau.cs.kieler.lustre.lustre.StaticParam;
+import de.cau.cs.kieler.lustre.lustre.StructType;
 import de.cau.cs.kieler.lustre.lustre.Type;
-import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.UMinus;
 import de.cau.cs.kieler.lustre.lustre.VariableReference;
 import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
@@ -91,6 +107,9 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.BOOL_CONSTANT:
 				sequence_ConstantExpression(context, (BoolConstant) semanticObject); 
 				return; 
+			case LustrePackage.BY_NAME_STATIC_ARG:
+				sequence_ByNameStaticArg(context, (ByNameStaticArg) semanticObject); 
+				return; 
 			case LustrePackage.COMPARISON:
 				sequence_Comparison(context, (Comparison) semanticObject); 
 				return; 
@@ -105,17 +124,26 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 					return; 
 				}
 				else break;
+			case LustrePackage.CONSTANTS_DECLARATION:
+				sequence_ConstantsDeclaration(context, (ConstantsDeclaration) semanticObject); 
+				return; 
 			case LustrePackage.CURRENT:
 				sequence_Primary(context, (Current) semanticObject); 
 				return; 
 			case LustrePackage.DIV:
 				sequence_MulOrDiv(context, (Div) semanticObject); 
 				return; 
+			case LustrePackage.ENUM_TYPE:
+				sequence_EnumType(context, (EnumType) semanticObject); 
+				return; 
 			case LustrePackage.EQUALITY:
 				sequence_Equality(context, (Equality) semanticObject); 
 				return; 
 			case LustrePackage.EQUATION:
 				sequence_Equation(context, (Equation) semanticObject); 
+				return; 
+			case LustrePackage.EXTERNAL_NODE_DECLARATION:
+				sequence_ExternalNodeDeclaration(context, (ExternalNodeDeclaration) semanticObject); 
 				return; 
 			case LustrePackage.FBY:
 				sequence_Fby(context, (Fby) semanticObject); 
@@ -138,8 +166,17 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.LEFT_LIST:
 				sequence_Left_List(context, (Left_List) semanticObject); 
 				return; 
+			case LustrePackage.LUSTRE_CLOCKED_ID_DECLARATION:
+				sequence_LustreClockedIdDeclaration(context, (LustreClockedIdDeclaration) semanticObject); 
+				return; 
 			case LustrePackage.LUSTRE_PROGRAM:
 				sequence_LustreProgram(context, (LustreProgram) semanticObject); 
+				return; 
+			case LustrePackage.LUSTRE_TYPED_ID:
+				sequence_LustreTypedId(context, (LustreTypedId) semanticObject); 
+				return; 
+			case LustrePackage.LUSTRE_TYPED_VALUED_IDS:
+				sequence_LustreTypedValuedIds(context, (LustreTypedValuedIds) semanticObject); 
 				return; 
 			case LustrePackage.MINUS:
 				sequence_PlusOrMinus(context, (Minus) semanticObject); 
@@ -147,11 +184,14 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.MOD:
 				sequence_Mod(context, (Mod) semanticObject); 
 				return; 
+			case LustrePackage.MODEL_DECLARATION:
+				sequence_ModelDeclaration(context, (ModelDeclaration) semanticObject); 
+				return; 
 			case LustrePackage.MUL:
 				sequence_MulOrDiv(context, (Mul) semanticObject); 
 				return; 
 			case LustrePackage.NODE_DECLARATION:
-				sequence_Node_Declaration(context, (Node_Declaration) semanticObject); 
+				sequence_NodeDeclaration(context, (NodeDeclaration) semanticObject); 
 				return; 
 			case LustrePackage.NOT:
 				sequence_Primary(context, (Not) semanticObject); 
@@ -159,8 +199,17 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.OR:
 				sequence_Or(context, (Or) semanticObject); 
 				return; 
+			case LustrePackage.PACK_BODY:
+				sequence_PackBody(context, (PackBody) semanticObject); 
+				return; 
+			case LustrePackage.PACK_LIST:
+				sequence_PackList(context, (PackList) semanticObject); 
+				return; 
 			case LustrePackage.PACKAGE_DECLARATION:
-				sequence_Package_Declaration(context, (Package_Declaration) semanticObject); 
+				sequence_PackageDeclaration(context, (PackageDeclaration) semanticObject); 
+				return; 
+			case LustrePackage.PACKAGE_EQUATION:
+				sequence_PackageEquation(context, (PackageEquation) semanticObject); 
 				return; 
 			case LustrePackage.PACKAGE_PROVIDED:
 				sequence_Package_Provided(context, (Package_Provided) semanticObject); 
@@ -168,11 +217,17 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.PACKAGE_PROVIDED_IO:
 				sequence_Package_Provided_IO(context, (Package_Provided_IO) semanticObject); 
 				return; 
+			case LustrePackage.PARAMS:
+				sequence_Params(context, (Params) semanticObject); 
+				return; 
 			case LustrePackage.PLUS:
 				sequence_PlusOrMinus(context, (Plus) semanticObject); 
 				return; 
 			case LustrePackage.PRE:
 				sequence_Primary(context, (Pre) semanticObject); 
+				return; 
+			case LustrePackage.PROVIDE:
+				sequence_Provide(context, (Provide) semanticObject); 
 				return; 
 			case LustrePackage.RECORD_TYPE:
 				sequence_Record_Type(context, (Record_Type) semanticObject); 
@@ -180,11 +235,20 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.SELECTOR:
 				sequence_Selector(context, (Selector) semanticObject); 
 				return; 
+			case LustrePackage.STATIC_ARG:
+				sequence_StaticArg(context, (StaticArg) semanticObject); 
+				return; 
+			case LustrePackage.STATIC_PARAM:
+				sequence_StaticParam(context, (StaticParam) semanticObject); 
+				return; 
+			case LustrePackage.STRUCT_TYPE:
+				sequence_StructType(context, (StructType) semanticObject); 
+				return; 
 			case LustrePackage.TYPE:
 				sequence_Type(context, (Type) semanticObject); 
 				return; 
 			case LustrePackage.TYPE_DECLARATION:
-				sequence_Type_Declaration(context, (Type_Declaration) semanticObject); 
+				sequence_TypeDeclaration(context, (TypeDeclaration) semanticObject); 
 				return; 
 			case LustrePackage.UMINUS:
 				sequence_Primary(context, (UMinus) semanticObject); 
@@ -226,6 +290,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns And
 	 *     Assertion returns And
 	 *     SelTrancheEnd returns And
 	 *     Right_Part returns And
@@ -265,7 +330,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     Array_Type returns Array_Type
 	 *
 	 * Constraint:
-	 *     (type=[Type_Declaration|IDENT] length=INT)
+	 *     (type=[TypeDeclaration|IDENT] length=INT)
 	 */
 	protected void sequence_Array_Type(ISerializationContext context, Array_Type semanticObject) {
 		if (errorAcceptor != null) {
@@ -275,7 +340,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARRAY_TYPE__LENGTH));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getArray_TypeAccess().getTypeType_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.eGet(LustrePackage.Literals.ARRAY_TYPE__TYPE, false));
+		feeder.accept(grammarAccess.getArray_TypeAccess().getTypeTypeDeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.eGet(LustrePackage.Literals.ARRAY_TYPE__TYPE, false));
 		feeder.accept(grammarAccess.getArray_TypeAccess().getLengthINTTerminalRuleCall_2_0(), semanticObject.getLength());
 		feeder.finish();
 	}
@@ -283,6 +348,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Arrow
 	 *     Assertion returns Arrow
 	 *     SelTrancheEnd returns Arrow
 	 *     Right_Part returns Arrow
@@ -331,6 +397,24 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     ByNameStaticArg returns ByNameStaticArg
+	 *
+	 * Constraint:
+	 *     (
+	 *         (name=IDENT type=Type) | 
+	 *         (name=IDENT expr=LustreExpression) | 
+	 *         (name=IDENT nodeRef=IdentRef (staticArgs+=StaticArg staticArgs+=StaticArg*)?) | 
+	 *         name=IDENT
+	 *     )
+	 */
+	protected void sequence_ByNameStaticArg(ISerializationContext context, ByNameStaticArg semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreExpression returns Comparison
 	 *     Assertion returns Comparison
 	 *     SelTrancheEnd returns Comparison
 	 *     Right_Part returns Comparison
@@ -367,6 +451,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns BoolConstant
 	 *     Assertion returns BoolConstant
 	 *     SelTrancheEnd returns BoolConstant
 	 *     Right_Part returns BoolConstant
@@ -411,6 +496,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns FloatConstant
 	 *     Assertion returns FloatConstant
 	 *     SelTrancheEnd returns FloatConstant
 	 *     Right_Part returns FloatConstant
@@ -455,6 +541,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns IntConstant
 	 *     Assertion returns IntConstant
 	 *     SelTrancheEnd returns IntConstant
 	 *     Right_Part returns IntConstant
@@ -512,6 +599,31 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     ConstantsDeclaration returns ConstantsDeclaration
+	 *
+	 * Constraint:
+	 *     (constants+=LustreTypedValuedIds constants+=LustreTypedValuedIds*)
+	 */
+	protected void sequence_ConstantsDeclaration(ISerializationContext context, ConstantsDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumType returns EnumType
+	 *
+	 * Constraint:
+	 *     (values+=IDENT values+=IDENT*)
+	 */
+	protected void sequence_EnumType(ISerializationContext context, EnumType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreExpression returns Equality
 	 *     Assertion returns Equality
 	 *     SelTrancheEnd returns Equality
 	 *     Right_Part returns Equality
@@ -551,24 +663,20 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     Equation returns Equation
 	 *
 	 * Constraint:
-	 *     (left=[Variable_Declaration|IDENT] right=Right_Part)
+	 *     (
+	 *         (left=[LustreTypedId|IDENT] right=Right_Part) | 
+	 *         (left=[LustreTypedValuedIds|IDENT] right=Right_Part) | 
+	 *         (left=[LustreClockedIdDeclaration|IDENT] right=Right_Part)
+	 *     )
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.EQUATION__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.EQUATION__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.EQUATION__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.EQUATION__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEquationAccess().getLeftVariable_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.eGet(LustrePackage.Literals.EQUATION__LEFT, false));
-		feeder.accept(grammarAccess.getEquationAccess().getRightRight_PartParserRuleCall_2_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns IfThenElse
 	 *     Assertion returns IfThenElse
 	 *     SelTrancheEnd returns IfThenElse
 	 *     Right_Part returns IfThenElse
@@ -617,6 +725,19 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     ExternalNodeDeclaration returns ExternalNodeDeclaration
+	 *
+	 * Constraint:
+	 *     (isUnsafe?='unsafe'? hasState?='node'? name=IDENT input=Params output=Params)
+	 */
+	protected void sequence_ExternalNodeDeclaration(ISerializationContext context, ExternalNodeDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreExpression returns Fby
 	 *     Assertion returns Fby
 	 *     SelTrancheEnd returns Fby
 	 *     Right_Part returns Fby
@@ -711,10 +832,22 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreClockedIdDeclaration returns LustreClockedIdDeclaration
+	 *
+	 * Constraint:
+	 *     ((typedIds+=LustreTypedId clockExpr=ClockExpression?) | (typedIds+=LustreTypedId typedIds+=LustreTypedId* clockExpr=ClockExpression))
+	 */
+	protected void sequence_LustreClockedIdDeclaration(ISerializationContext context, LustreClockedIdDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LustreProgram returns LustreProgram
 	 *
 	 * Constraint:
-	 *     nodes+=Node_Declaration+
+	 *     (includes+=Include* (packBody=PackBody | packList=PackList))
 	 */
 	protected void sequence_LustreProgram(ISerializationContext context, LustreProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -723,6 +856,31 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreTypedId returns LustreTypedId
+	 *
+	 * Constraint:
+	 *     (variableNames+=IDENT variableNames+=IDENT* type=Type)
+	 */
+	protected void sequence_LustreTypedId(ISerializationContext context, LustreTypedId semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreTypedValuedIds returns LustreTypedValuedIds
+	 *
+	 * Constraint:
+	 *     (variableNames+=IDENT ((variableNames+=IDENT* type=Type? value=LustreExpression?) | value=LustreExpression)?)
+	 */
+	protected void sequence_LustreTypedValuedIds(ISerializationContext context, LustreTypedValuedIds semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreExpression returns Mod
 	 *     Assertion returns Mod
 	 *     SelTrancheEnd returns Mod
 	 *     Right_Part returns Mod
@@ -759,6 +917,26 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     ModelDeclaration returns ModelDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         name=IDENT 
+	 *         (usesIds+=IDENT usesIds+=IDENT*)? 
+	 *         needsParams+=StaticParam 
+	 *         needsParams+=StaticParam* 
+	 *         (provisions+=Provide provisions+=Provide*)? 
+	 *         body=PackBody
+	 *     )
+	 */
+	protected void sequence_ModelDeclaration(ISerializationContext context, ModelDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreExpression returns Div
 	 *     Assertion returns Div
 	 *     SelTrancheEnd returns Div
 	 *     Right_Part returns Div
@@ -795,6 +973,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Mul
 	 *     Assertion returns Mul
 	 *     SelTrancheEnd returns Mul
 	 *     Right_Part returns Mul
@@ -831,27 +1010,38 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
-	 *     Entity_Declaration returns Node_Declaration
-	 *     Node_Declaration returns Node_Declaration
+	 *     NodeDeclaration returns NodeDeclaration
 	 *
 	 * Constraint:
 	 *     (
+	 *         isUnsafe?='unsafe'? 
+	 *         hasState?='node'? 
 	 *         name=IDENT 
-	 *         (parameters+=Variable_Declaration parameters+=Variable_Declaration*)? 
-	 *         returned+=Variable_Declaration 
-	 *         returned+=Variable_Declaration* 
-	 *         variables+=Local_Variable_Declaration? 
-	 *         (constants+=Local_Constant_Declaration? variables+=Local_Variable_Declaration?)* 
-	 *         (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+	 *         (staticParams+=StaticParam staticParams+=StaticParam*)? 
+	 *         (
+	 *             (
+	 *                 input=Params 
+	 *                 output=Params 
+	 *                 (
+	 *                     (effectiveNode=IdentRef (staticArgs+=StaticArg staticArgs+=StaticArg*)?) | 
+	 *                     (
+	 *                         (constants+=ConstantsDeclaration? (variables+=LustreClockedIdDeclaration variables+=LustreClockedIdDeclaration*)?)+ 
+	 *                         (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+	 *                     )
+	 *                 )
+	 *             ) | 
+	 *             (effectiveNode=IdentRef (staticArgs+=StaticArg staticArgs+=StaticArg*)?)
+	 *         )
 	 *     )
 	 */
-	protected void sequence_Node_Declaration(ISerializationContext context, Node_Declaration semanticObject) {
+	protected void sequence_NodeDeclaration(ISerializationContext context, NodeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Or
 	 *     Assertion returns Or
 	 *     SelTrancheEnd returns Or
 	 *     Right_Part returns Or
@@ -888,17 +1078,48 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
-	 *     Package_Declaration returns Package_Declaration
+	 *     PackBody returns PackBody
 	 *
 	 * Constraint:
-	 *     (
-	 *         name=IDENT 
-	 *         (uses+=IDENT uses+=IDENT*)? 
-	 *         provides+=Package_Provided+ 
-	 *         (nodes+=Node_Declaration | types+=Type_Declaration | constants+=Constant_Declaration)*
-	 *     )
+	 *     (constants+=ConstantsDeclaration | types+=TypeDeclaration | externals+=ExternalNodeDeclaration | nodes+=NodeDeclaration)+
 	 */
-	protected void sequence_Package_Declaration(ISerializationContext context, Package_Declaration semanticObject) {
+	protected void sequence_PackBody(ISerializationContext context, PackBody semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackList returns PackList
+	 *
+	 * Constraint:
+	 *     (modelDeclarations+=ModelDeclaration | packageDeclarations+=PackageDeclaration | packageEquations+=PackageEquation)+
+	 */
+	protected void sequence_PackList(ISerializationContext context, PackList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackageDeclaration returns PackageDeclaration
+	 *
+	 * Constraint:
+	 *     (name=IDENT (usesIds+=IDENT usesIds+=IDENT*)? (provisions+=Provide provisions+=Provide*)? body=PackBody)
+	 */
+	protected void sequence_PackageDeclaration(ISerializationContext context, PackageDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackageEquation returns PackageEquation
+	 *
+	 * Constraint:
+	 *     (name=IDENT eqOrIs=IDENT byNameStaticArgs+=ByNameStaticArg byNameStaticArgs+=ByNameStaticArg*)
+	 */
+	protected void sequence_PackageEquation(ISerializationContext context, PackageEquation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -930,7 +1151,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=[Node_Declaration|IDENT] 
+	 *         name=[NodeDeclaration|IDENT] 
 	 *         (parameters+=Package_Provided_IO parameters+=Package_Provided_IO*)? 
 	 *         returned+=Package_Provided_IO 
 	 *         returned+=Package_Provided_IO*
@@ -943,6 +1164,19 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     Params returns Params
+	 *
+	 * Constraint:
+	 *     (parameter+=LustreClockedIdDeclaration parameter+=LustreClockedIdDeclaration*)?
+	 */
+	protected void sequence_Params(ISerializationContext context, Params semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreExpression returns Minus
 	 *     Assertion returns Minus
 	 *     SelTrancheEnd returns Minus
 	 *     Right_Part returns Minus
@@ -979,6 +1213,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Plus
 	 *     Assertion returns Plus
 	 *     SelTrancheEnd returns Plus
 	 *     Right_Part returns Plus
@@ -1015,6 +1250,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Current
 	 *     Assertion returns Current
 	 *     SelTrancheEnd returns Current
 	 *     Right_Part returns Current
@@ -1057,6 +1293,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Not
 	 *     Assertion returns Not
 	 *     SelTrancheEnd returns Not
 	 *     Right_Part returns Not
@@ -1099,6 +1336,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns Pre
 	 *     Assertion returns Pre
 	 *     SelTrancheEnd returns Pre
 	 *     Right_Part returns Pre
@@ -1141,6 +1379,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns UMinus
 	 *     Assertion returns UMinus
 	 *     SelTrancheEnd returns UMinus
 	 *     Right_Part returns UMinus
@@ -1183,6 +1422,22 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
+	 *     Provide returns Provide
+	 *
+	 * Constraint:
+	 *     (
+	 *         (name=IDENT type=Type value=LustreExpression?) | 
+	 *         types=TypeDeclaration | 
+	 *         (name=IDENT (staticParams+=StaticParam staticParams+=StaticParam*)? input=Params output=Params)
+	 *     )
+	 */
+	protected void sequence_Provide(ISerializationContext context, Provide semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Record_Type returns Record_Type
 	 *
 	 * Constraint:
@@ -1207,13 +1462,48 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
-	 *     Entity_Declaration returns Type_Declaration
-	 *     Type_Declaration returns Type_Declaration
+	 *     StaticArg returns StaticArg
 	 *
 	 * Constraint:
-	 *     (name=IDENT | (name=IDENT type=Type))
+	 *     (type=Type | expr=LustreExpression | (name=IdentRef (staticArgs+=StaticArg staticArgs+=StaticArg*)?))
 	 */
-	protected void sequence_Type_Declaration(ISerializationContext context, Type_Declaration semanticObject) {
+	protected void sequence_StaticArg(ISerializationContext context, StaticArg semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StaticParam returns StaticParam
+	 *
+	 * Constraint:
+	 *     (name=IDENT | (name=IDENT type=Type) | (name=IDENT nodeInput=Params nodeOutput=Params))
+	 */
+	protected void sequence_StaticParam(ISerializationContext context, StaticParam semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StructType returns StructType
+	 *
+	 * Constraint:
+	 *     (elements+=LustreTypedValuedIds elements+=LustreTypedValuedIds*)
+	 */
+	protected void sequence_StructType(ISerializationContext context, StructType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeDeclaration returns TypeDeclaration
+	 *
+	 * Constraint:
+	 *     (name=IDENT (types=Type | enums=EnumType | struct=StructType)?)
+	 */
+	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1223,21 +1513,16 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     Type returns Type
 	 *
 	 * Constraint:
-	 *     name=IDENT
+	 *     ((name='bool' | name='int' | name='real' | name=IDENT) arraySize+=LustreExpression*)
 	 */
 	protected void sequence_Type(ISerializationContext context, Type semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.TYPE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.TYPE__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getNameIDENTTerminalRuleCall_0(), semanticObject.getName());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
+	 *     LustreExpression returns VariableReference
 	 *     Assertion returns VariableReference
 	 *     SelTrancheEnd returns VariableReference
 	 *     Right_Part returns VariableReference

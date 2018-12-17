@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.lustre.lustre.LustreFactory
 import de.cau.cs.kieler.lustre.lustre.impl.LustreFactoryImpl
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
@@ -71,49 +71,49 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
     }
     
     def processSuperState(State state, SCCharts scc, LustreProgram program) {
-        val cfr = state.regions.filter(ControlflowRegion).head
-         
-        val node = createNode_Declaration => [
-            name = state.name
-        ]
-        
-        for (input : state.variableDeclarations.filter[ input ].map[ valuedObjects ].flatten) {
-            val newVar = createVariable_Declaration => [
-                name = input.name
-                type = createType => [
-                    name = "bool"
-                ]
-            ]
-            
-            expConv.variableMapping.put(input, newVar)            
-            node.parameters += newVar
-        }
-
-        for (output : state.variableDeclarations.filter[ output ].map[ valuedObjects ].flatten) {
-            val newVar = createVariable_Declaration => [
-                name = output.name
-                type = createType => [
-                    name = "bool"
-                ]
-            ]
-            
-            expConv.variableMapping.put(output, newVar)
-            node.returned += newVar
-        }
-
-
-        val initial = cfr.states.filter[ initial ].head
-        
-        if (initial.outgoingTransitions.size == 1) {
-            initial.processAssignment(node)
-        } else if (initial.outgoingTransitions.size == 2) {
-            initial.processConditional(node) 
-        }
-            
-        program.nodes += node
+//        val cfr = state.regions.filter(ControlflowRegion).head
+//         
+//        val node = createNode_Declaration => [
+//            name = state.name
+//        ]
+//        
+//        for (input : state.variableDeclarations.filter[ input ].map[ valuedObjects ].flatten) {
+//            val newVar = createVariable_Declaration => [
+//                name = input.name
+//                type = createType => [
+//                    name = "bool"
+//                ]
+//            ]
+//            
+//            expConv.variableMapping.put(input, newVar)            
+//            node.parameters += newVar
+//        }
+//
+//        for (output : state.variableDeclarations.filter[ output ].map[ valuedObjects ].flatten) {
+//            val newVar = createVariable_Declaration => [
+//                name = output.name
+//                type = createType => [
+//                    name = "bool"
+//                ]
+//            ]
+//            
+//            expConv.variableMapping.put(output, newVar)
+//            node.returned += newVar
+//        }
+//
+//
+//        val initial = cfr.states.filter[ initial ].head
+//        
+//        if (initial.outgoingTransitions.size == 1) {
+//            initial.processAssignment(node)
+//        } else if (initial.outgoingTransitions.size == 2) {
+//            initial.processConditional(node) 
+//        }
+//            
+//        program.nodes += node
     }
     
-    protected def processAssignment(State state, Node_Declaration node) {
+    protected def processAssignment(State state, NodeDeclaration node) {
         val t = state.outgoingTransitions.head
         val a = t.effects.head as Assignment
         
@@ -123,7 +123,7 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
         ]
     }
     
-    protected def processConditional(State state, Node_Declaration node) {
+    protected def processConditional(State state, NodeDeclaration node) {
         val tThen = state.outgoingTransitions.head
         val tElse = state.outgoingTransitions.get(1)
         val aThen = tThen.effects.head as Assignment

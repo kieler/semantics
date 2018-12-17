@@ -34,10 +34,10 @@ import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.Minus
 import de.cau.cs.kieler.lustre.lustre.Mod
 import de.cau.cs.kieler.lustre.lustre.Mul
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 import de.cau.cs.kieler.lustre.lustre.Not
 import de.cau.cs.kieler.lustre.lustre.Or
-import de.cau.cs.kieler.lustre.lustre.Package_Declaration
+import de.cau.cs.kieler.lustre.lustre.PackageDeclaration
 import de.cau.cs.kieler.lustre.lustre.Plus
 import de.cau.cs.kieler.lustre.lustre.Pre
 import de.cau.cs.kieler.lustre.lustre.UMinus
@@ -105,11 +105,11 @@ class LustreToSccTransformation extends Processor<LustreProgram, SCCharts> {
         stateNameIdx = 0
         // transformPackage_Declaration(p.packages.get(0))
         return createSCCharts => [
-            rootStates += transformNode(p.nodes.get(0))
+//            rootStates += transformNode(p.nodes.get(0))
         ]
     }
 
-    private def State transformPackage_Declaration(Package_Declaration p) {
+    private def State transformPackage_Declaration(PackageDeclaration p) {
         val rootState = createState => [ root |
             root.label = "test"
             root.name = root.label
@@ -122,35 +122,35 @@ class LustreToSccTransformation extends Processor<LustreProgram, SCCharts> {
             ]
         ]
 
-        for (Constant_Declaration c : p.constants)
-            rootState.addDeclaration(c)
+//        for (Constant_Declaration c : p.constants)
+//            rootState.addDeclaration(c)
 
-        for (Node_Declaration node : p.nodes)
-            rootState.regions.filter(ControlflowRegion).head.states += transformNode(node)
+//        for (NodeDeclaration node : p.nodes)
+//            rootState.regions.filter(ControlflowRegion).head.states += transformNode(node)
 
         rootState
     }
 
-    private def transformNode(Node_Declaration node) {
+    private def transformNode(NodeDeclaration node) {
 
         val state = createState => [ root |
             root.label = node.name
             root.name = root.label
         ]
 
-        for (Variable_Declaration v : node.parameters)
-            state.addDeclaration(v, IOType.INPUT)
-        for (Variable_Declaration v : node.returned)
-            state.addDeclaration(v, IOType.OUTPUT)
-        for (Variable_Declaration v : node.variables)
-            state.addDeclaration(v, IOType.LOCAL)
-        for (Constant_Declaration c : node.constants)
-            state.addDeclaration(c)
+//        for (Variable_Declaration v : node.parameters)
+//            state.addDeclaration(v, IOType.INPUT)
+//        for (Variable_Declaration v : node.returned)
+//            state.addDeclaration(v, IOType.OUTPUT)
+//        for (Variable_Declaration v : node.variables)
+//            state.addDeclaration(v, IOType.LOCAL)
+//        for (Constant_Declaration c : node.constants)
+//            state.addDeclaration(c)
 
         for (Equation eq : node.equations) {
             if (eq.right.isPureExpression)
                 state.createImmediateDuringAction() => [
-                    effects += createAssignment(VO.get(eq.left.name), eq.right.toKexpression)
+//                    effects += createAssignment(VO.get(eq.left.name), eq.right.toKexpression)
                 ]
             else {
                 val region = createControlflowRegion => [
@@ -167,13 +167,13 @@ class LustreToSccTransformation extends Processor<LustreProgram, SCCharts> {
                 ]
 
                 region.states += initialState
-                val stateList = eq.right.transformEquation(eq.left.name, state, initialState, region)
-                for (State s : stateList) {
-                    createTransition => [
-                        targetState = initialState
-                        s.outgoingTransitions += it
-                    ]
-                }
+//                val stateList = eq.right.transformEquation(eq.left.name, state, initialState, region)
+//                for (State s : stateList) {
+//                    createTransition => [
+//                        targetState = initialState
+//                        s.outgoingTransitions += it
+//                    ]
+//                }
             }
         }
         for (Automaton a : node.automatons) {
@@ -468,7 +468,7 @@ class LustreToSccTransformation extends Processor<LustreProgram, SCCharts> {
             for (Equation eq : astate.equations) {
                 if (eq.right.isPureExpression)
                     state.createImmediateDuringAction() => [
-                        effects += createAssignment(VO.get(eq.left.name), eq.right.toKexpression)
+//                        effects += createAssignment(VO.get(eq.left.name), eq.right.toKexpression)
                     ]
                 else {
                     val r = createControlflowRegion => [
@@ -486,13 +486,13 @@ class LustreToSccTransformation extends Processor<LustreProgram, SCCharts> {
     
                     r.states += initialState
                     
-                    val sList = eq.right.transformEquation(eq.left.name, state, initialState, r)
-                    for (State s : sList) {
-                        createTransition => [
-                            targetState = initialState
-                            s.outgoingTransitions += it
-                        ]
-                    }
+//                    val sList = eq.right.transformEquation(eq.left.name, state, initialState, r)
+//                    for (State s : sList) {
+//                        createTransition => [
+//                            targetState = initialState
+//                            s.outgoingTransitions += it
+//                        ]
+//                    }
                 }
             }
             

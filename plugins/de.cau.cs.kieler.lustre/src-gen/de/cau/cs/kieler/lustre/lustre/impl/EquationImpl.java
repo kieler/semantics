@@ -6,12 +6,12 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 import de.cau.cs.kieler.lustre.lustre.Equation;
 import de.cau.cs.kieler.lustre.lustre.Expression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -41,7 +41,7 @@ public class EquationImpl extends MinimalEObjectImpl.Container implements Equati
    * @generated
    * @ordered
    */
-  protected Variable_Declaration left;
+  protected EObject left;
 
   /**
    * The cached value of the '{@link #getRight() <em>Right</em>}' containment reference.
@@ -79,12 +79,12 @@ public class EquationImpl extends MinimalEObjectImpl.Container implements Equati
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable_Declaration getLeft()
+  public EObject getLeft()
   {
     if (left != null && left.eIsProxy())
     {
       InternalEObject oldLeft = (InternalEObject)left;
-      left = (Variable_Declaration)eResolveProxy(oldLeft);
+      left = eResolveProxy(oldLeft);
       if (left != oldLeft)
       {
         if (eNotificationRequired())
@@ -99,7 +99,7 @@ public class EquationImpl extends MinimalEObjectImpl.Container implements Equati
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable_Declaration basicGetLeft()
+  public EObject basicGetLeft()
   {
     return left;
   }
@@ -109,9 +109,9 @@ public class EquationImpl extends MinimalEObjectImpl.Container implements Equati
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLeft(Variable_Declaration newLeft)
+  public void setLeft(EObject newLeft)
   {
-    Variable_Declaration oldLeft = left;
+    EObject oldLeft = left;
     left = newLeft;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.EQUATION__LEFT, oldLeft, left));
@@ -211,7 +211,7 @@ public class EquationImpl extends MinimalEObjectImpl.Container implements Equati
     switch (featureID)
     {
       case LustrePackage.EQUATION__LEFT:
-        setLeft((Variable_Declaration)newValue);
+        setLeft((EObject)newValue);
         return;
       case LustrePackage.EQUATION__RIGHT:
         setRight((Expression)newValue);
@@ -231,7 +231,7 @@ public class EquationImpl extends MinimalEObjectImpl.Container implements Equati
     switch (featureID)
     {
       case LustrePackage.EQUATION__LEFT:
-        setLeft((Variable_Declaration)null);
+        setLeft((EObject)null);
         return;
       case LustrePackage.EQUATION__RIGHT:
         setRight((Expression)null);

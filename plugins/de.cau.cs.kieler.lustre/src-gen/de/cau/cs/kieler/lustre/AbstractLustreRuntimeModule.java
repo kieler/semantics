@@ -14,6 +14,7 @@ import de.cau.cs.kieler.lustre.scoping.LustreScopeProvider;
 import de.cau.cs.kieler.lustre.serializer.LustreSemanticSequencer;
 import de.cau.cs.kieler.lustre.serializer.LustreSyntacticSequencer;
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess;
+import de.cau.cs.kieler.lustre.validation.LustreConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.lustre.validation.LustreValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link LustreRuntimeModule}.
@@ -135,6 +137,11 @@ public abstract class AbstractLustreRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends LustreValidator> bindLustreValidator() {
 		return LustreValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return LustreConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

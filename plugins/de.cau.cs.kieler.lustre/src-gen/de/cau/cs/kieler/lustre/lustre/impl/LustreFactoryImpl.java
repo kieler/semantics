@@ -66,18 +66,35 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
     switch (eClass.getClassifierID())
     {
       case LustrePackage.LUSTRE_PROGRAM: return createLustreProgram();
-      case LustrePackage.PACKAGE_DECLARATION: return createPackage_Declaration();
+      case LustrePackage.PACK_BODY: return createPackBody();
+      case LustrePackage.CONSTANTS_DECLARATION: return createConstantsDeclaration();
+      case LustrePackage.TYPE_DECLARATION: return createTypeDeclaration();
+      case LustrePackage.TYPE: return createType();
+      case LustrePackage.ENUM_TYPE: return createEnumType();
+      case LustrePackage.STRUCT_TYPE: return createStructType();
+      case LustrePackage.EXTERNAL_NODE_DECLARATION: return createExternalNodeDeclaration();
+      case LustrePackage.NODE_DECLARATION: return createNodeDeclaration();
+      case LustrePackage.PARAMS: return createParams();
+      case LustrePackage.STATIC_PARAM: return createStaticParam();
+      case LustrePackage.STATIC_ARG: return createStaticArg();
+      case LustrePackage.BY_NAME_STATIC_ARG: return createByNameStaticArg();
+      case LustrePackage.LUSTRE_TYPED_ID: return createLustreTypedId();
+      case LustrePackage.LUSTRE_TYPED_VALUED_IDS: return createLustreTypedValuedIds();
+      case LustrePackage.LUSTRE_CLOCKED_ID_DECLARATION: return createLustreClockedIdDeclaration();
+      case LustrePackage.LUSTRE_EXPRESSION: return createLustreExpression();
+      case LustrePackage.PACK_LIST: return createPackList();
+      case LustrePackage.MODEL_DECLARATION: return createModelDeclaration();
+      case LustrePackage.PROVIDE: return createProvide();
+      case LustrePackage.PACKAGE_DECLARATION: return createPackageDeclaration();
+      case LustrePackage.PACKAGE_EQUATION: return createPackageEquation();
       case LustrePackage.PACKAGE_PROVIDED: return createPackage_Provided();
       case LustrePackage.PACKAGE_PROVIDED_IO: return createPackage_Provided_IO();
       case LustrePackage.ENTITY_DECLARATION: return createEntity_Declaration();
-      case LustrePackage.TYPE_DECLARATION: return createType_Declaration();
-      case LustrePackage.TYPE: return createType();
       case LustrePackage.ARRAY_TYPE: return createArray_Type();
       case LustrePackage.RECORD_TYPE: return createRecord_Type();
       case LustrePackage.FIELD: return createField();
       case LustrePackage.CONSTANT_DECLARATION: return createConstant_Declaration();
       case LustrePackage.VARIABLE_DECLARATION: return createVariable_Declaration();
-      case LustrePackage.NODE_DECLARATION: return createNode_Declaration();
       case LustrePackage.EQUATION: return createEquation();
       case LustrePackage.ASSERTION: return createAssertion();
       case LustrePackage.AUTOMATON: return createAutomaton();
@@ -129,10 +146,230 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Declaration createPackage_Declaration()
+  public PackBody createPackBody()
   {
-    Package_DeclarationImpl package_Declaration = new Package_DeclarationImpl();
-    return package_Declaration;
+    PackBodyImpl packBody = new PackBodyImpl();
+    return packBody;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConstantsDeclaration createConstantsDeclaration()
+  {
+    ConstantsDeclarationImpl constantsDeclaration = new ConstantsDeclarationImpl();
+    return constantsDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeDeclaration createTypeDeclaration()
+  {
+    TypeDeclarationImpl typeDeclaration = new TypeDeclarationImpl();
+    return typeDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type createType()
+  {
+    TypeImpl type = new TypeImpl();
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EnumType createEnumType()
+  {
+    EnumTypeImpl enumType = new EnumTypeImpl();
+    return enumType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StructType createStructType()
+  {
+    StructTypeImpl structType = new StructTypeImpl();
+    return structType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExternalNodeDeclaration createExternalNodeDeclaration()
+  {
+    ExternalNodeDeclarationImpl externalNodeDeclaration = new ExternalNodeDeclarationImpl();
+    return externalNodeDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NodeDeclaration createNodeDeclaration()
+  {
+    NodeDeclarationImpl nodeDeclaration = new NodeDeclarationImpl();
+    return nodeDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Params createParams()
+  {
+    ParamsImpl params = new ParamsImpl();
+    return params;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StaticParam createStaticParam()
+  {
+    StaticParamImpl staticParam = new StaticParamImpl();
+    return staticParam;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StaticArg createStaticArg()
+  {
+    StaticArgImpl staticArg = new StaticArgImpl();
+    return staticArg;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ByNameStaticArg createByNameStaticArg()
+  {
+    ByNameStaticArgImpl byNameStaticArg = new ByNameStaticArgImpl();
+    return byNameStaticArg;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LustreTypedId createLustreTypedId()
+  {
+    LustreTypedIdImpl lustreTypedId = new LustreTypedIdImpl();
+    return lustreTypedId;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LustreTypedValuedIds createLustreTypedValuedIds()
+  {
+    LustreTypedValuedIdsImpl lustreTypedValuedIds = new LustreTypedValuedIdsImpl();
+    return lustreTypedValuedIds;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LustreClockedIdDeclaration createLustreClockedIdDeclaration()
+  {
+    LustreClockedIdDeclarationImpl lustreClockedIdDeclaration = new LustreClockedIdDeclarationImpl();
+    return lustreClockedIdDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LustreExpression createLustreExpression()
+  {
+    LustreExpressionImpl lustreExpression = new LustreExpressionImpl();
+    return lustreExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackList createPackList()
+  {
+    PackListImpl packList = new PackListImpl();
+    return packList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ModelDeclaration createModelDeclaration()
+  {
+    ModelDeclarationImpl modelDeclaration = new ModelDeclarationImpl();
+    return modelDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Provide createProvide()
+  {
+    ProvideImpl provide = new ProvideImpl();
+    return provide;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackageDeclaration createPackageDeclaration()
+  {
+    PackageDeclarationImpl packageDeclaration = new PackageDeclarationImpl();
+    return packageDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackageEquation createPackageEquation()
+  {
+    PackageEquationImpl packageEquation = new PackageEquationImpl();
+    return packageEquation;
   }
 
   /**
@@ -166,28 +403,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     Entity_DeclarationImpl entity_Declaration = new Entity_DeclarationImpl();
     return entity_Declaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Type_Declaration createType_Declaration()
-  {
-    Type_DeclarationImpl type_Declaration = new Type_DeclarationImpl();
-    return type_Declaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Type createType()
-  {
-    TypeImpl type = new TypeImpl();
-    return type;
   }
 
   /**
@@ -243,17 +458,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     Variable_DeclarationImpl variable_Declaration = new Variable_DeclarationImpl();
     return variable_Declaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Node_Declaration createNode_Declaration()
-  {
-    Node_DeclarationImpl node_Declaration = new Node_DeclarationImpl();
-    return node_Declaration;
   }
 
   /**

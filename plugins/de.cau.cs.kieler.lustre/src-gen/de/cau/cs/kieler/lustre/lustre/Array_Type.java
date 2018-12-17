@@ -33,12 +33,12 @@ public interface Array_Type extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' reference.
-   * @see #setType(Type_Declaration)
+   * @see #setType(TypeDeclaration)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getArray_Type_Type()
    * @model
    * @generated
    */
-  Type_Declaration getType();
+  TypeDeclaration getType();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Array_Type#getType <em>Type</em>}' reference.
@@ -48,7 +48,7 @@ public interface Array_Type extends EObject
    * @see #getType()
    * @generated
    */
-  void setType(Type_Declaration value);
+  void setType(TypeDeclaration value);
 
   /**
    * Returns the value of the '<em><b>Length</b></em>' attribute.

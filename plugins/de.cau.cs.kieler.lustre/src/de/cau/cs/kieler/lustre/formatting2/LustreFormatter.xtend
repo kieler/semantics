@@ -25,17 +25,17 @@ import de.cau.cs.kieler.lustre.lustre.Left_List;
 import de.cau.cs.kieler.lustre.lustre.Minus;
 import de.cau.cs.kieler.lustre.lustre.Mod;
 import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Not;
 import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
+import de.cau.cs.kieler.lustre.lustre.PackageDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Package_Provided;
 import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
 import de.cau.cs.kieler.lustre.lustre.Plus;
 import de.cau.cs.kieler.lustre.lustre.Pre;
 import de.cau.cs.kieler.lustre.lustre.Record_Type;
 import de.cau.cs.kieler.lustre.lustre.Selector;
-import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.UMinus;
 import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess;
@@ -49,40 +49,40 @@ class LustreFormatter extends AbstractFormatter2 {
 
 	def dispatch void format(LustreProgram program, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Node_Declaration nodes : program.getNodes()) {
-			format(nodes, document);
-		}
+//		for (Node_Declaration nodes : program.getNodes()) {
+//			format(nodes, document);
+//		}
 	}
 
-	def dispatch void format(Package_Declaration package_declaration, extension IFormattableDocument document) {
+	def dispatch void format(PackageDeclaration package_declaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Package_Provided provides : package_declaration.getProvides()) {
-			format(provides, document);
-		}
-		for (Node_Declaration nodes : package_declaration.getNodes()) {
-			format(nodes, document);
-		}
-		for (Type_Declaration types : package_declaration.getTypes()) {
-			format(types, document);
-		}
-		for (Constant_Declaration constants : package_declaration.getConstants()) {
-			format(constants, document);
-		}
+//		for (Package_Provided provides : package_declaration.getProvides()) {
+//			format(provides, document);
+//		}
+//		for (Node_Declaration nodes : package_declaration.getNodes()) {
+//			format(nodes, document);
+//		}
+//		for (Type_Declaration types : package_declaration.getTypes()) {
+//			format(types, document);
+//		}
+//		for (Constant_Declaration constants : package_declaration.getConstants()) {
+//			format(constants, document);
+//		}
 	}
 
 	def dispatch void format(Package_Provided package_provided, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Package_Provided_IO parameters : package_provided.getParameters()) {
-			format(parameters, document);
-		}
-		for (Package_Provided_IO returned : package_provided.getReturned()) {
-			format(returned, document);
-		}
+//		for (Package_Provided_IO parameters : package_provided.getParameters()) {
+//			format(parameters, document);
+//		}
+//		for (Package_Provided_IO returned : package_provided.getReturned()) {
+//			format(returned, document);
+//		}
 	}
 
-	def dispatch void format(Type_Declaration type_declaration, extension IFormattableDocument document) {
+	def dispatch void format(TypeDeclaration type_declaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(type_declaration.getType(), document);
+//		format(type_declaration.getType(), document);
 	}
 
 	def dispatch void format(Record_Type record_type, extension IFormattableDocument document) {
@@ -103,50 +103,50 @@ class LustreFormatter extends AbstractFormatter2 {
 		format(variable_declaration.getType(), document);
 	}
 
-	def dispatch void format(Node_Declaration node_declaration, extension IFormattableDocument document) {
+	def dispatch void format(NodeDeclaration node_declaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
 		node_declaration.regionFor.keyword("let")?.prepend[ newLine ]
 		node_declaration.regionFor.keywordPairs("let", "tel").head?.interior[ indent ]
 		node_declaration.regionFor.keyword("tel")?.prepend[ newLine ]
 		node_declaration.regionFor.keyword("tel")?.append[ setNewLines(2) ]
-		
-		node_declaration.regionFor.keyword("(")?.append[ noSpace ]
-		node_declaration.regionFor.keyword(")")?.prepend[ noSpace ]
-		node_declaration.regionFor.keyword(node_DeclarationAccess.leftParenthesisKeyword_6)?.append[ noSpace ]
-		node_declaration.regionFor.keyword(node_DeclarationAccess.rightParenthesisKeyword_9)?.prepend[ noSpace ]
-		node_declaration.regionFor.keyword(node_DeclarationAccess.semicolonKeyword_15)?.prepend[ noSpace ]
-		node_declaration.regionFor.keyword(node_DeclarationAccess.semicolonKeyword_10)?.prepend[ noSpace ]
-		node_declaration.regionFor.keyword(node_DeclarationAccess.commaKeyword_3_1_0)?.prepend[ noSpace ]
-		node_declaration.regionFor.keyword(node_DeclarationAccess.commaKeyword_8_0)?.prepend[ noSpace ]
-		
-		for (Variable_Declaration parameters : node_declaration.getParameters()) {
-			format(parameters, document);
-		}
-		for (Variable_Declaration returned : node_declaration.getReturned()) {
-			format(returned, document);
-		}
-		for (Constant_Declaration constants : node_declaration.getConstants()) {
-			format(constants, document);
-		}
-		for (Variable_Declaration variables : node_declaration.getVariables()) {
-			format(variables, document);
-		}
-		for (Equation equations : node_declaration.getEquations()) {
-			format(equations, document);
-			equations.prepend[ newLine ]
-		}
-		for (Assertion assertions : node_declaration.getAssertions()) {
-			format(assertions, document);
-		}
-		for (Automaton automatons : node_declaration.getAutomatons()) {
-			format(automatons, document);
-		}
+//		
+//		node_declaration.regionFor.keyword("(")?.append[ noSpace ]
+//		node_declaration.regionFor.keyword(")")?.prepend[ noSpace ]
+//		node_declaration.regionFor.keyword(nodeDeclarationAccess.leftParenthesisKeyword_6)?.append[ noSpace ]
+//		node_declaration.regionFor.keyword(nodeDeclarationAccess.rightParenthesisKeyword_9)?.prepend[ noSpace ]
+//		node_declaration.regionFor.keyword(nodeDeclarationAccess.semicolonKeyword_15)?.prepend[ noSpace ]
+//		node_declaration.regionFor.keyword(nodeDeclarationAccess.semicolonKeyword_10)?.prepend[ noSpace ]
+//		node_declaration.regionFor.keyword(nodeDeclarationAccess.commaKeyword_3_1_0)?.prepend[ noSpace ]
+//		node_declaration.regionFor.keyword(nodeDeclarationAccess.commaKeyword_8_0)?.prepend[ noSpace ]
+//		
+//		for (Variable_Declaration parameters : node_declaration.getParameters()) {
+//			format(parameters, document);
+//		}
+//		for (Variable_Declaration returned : node_declaration.getReturned()) {
+//			format(returned, document);
+//		}
+//		for (Constant_Declaration constants : node_declaration.getConstants()) {
+//			format(constants, document);
+//		}
+//		for (Variable_Declaration variables : node_declaration.getVariables()) {
+//			format(variables, document);
+//		}
+//		for (Equation equations : node_declaration.getEquations()) {
+//			format(equations, document);
+//			equations.prepend[ newLine ]
+//		}
+//		for (Assertion assertions : node_declaration.getAssertions()) {
+//			format(assertions, document);
+//		}
+//		for (Automaton automatons : node_declaration.getAutomatons()) {
+//			format(automatons, document);
+//		}
 	}
 
 	def dispatch void format(Equation equation, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc.
-        equation.regionFor.keyword(equationAccess.semicolonKeyword_3)?.prepend[ noSpace ]		 
+//        equation.regionFor.keyword(equationAccess.semicolonKeyword_3)?.prepend[ noSpace ]		 
 		format(equation.getRight(), document);
 	}
 

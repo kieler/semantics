@@ -33,13 +33,193 @@ public interface LustreFactory extends EFactory
   LustreProgram createLustreProgram();
 
   /**
+   * Returns a new object of class '<em>Pack Body</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Pack Body</em>'.
+   * @generated
+   */
+  PackBody createPackBody();
+
+  /**
+   * Returns a new object of class '<em>Constants Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Constants Declaration</em>'.
+   * @generated
+   */
+  ConstantsDeclaration createConstantsDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Type Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Type Declaration</em>'.
+   * @generated
+   */
+  TypeDeclaration createTypeDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Type</em>'.
+   * @generated
+   */
+  Type createType();
+
+  /**
+   * Returns a new object of class '<em>Enum Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Enum Type</em>'.
+   * @generated
+   */
+  EnumType createEnumType();
+
+  /**
+   * Returns a new object of class '<em>Struct Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Struct Type</em>'.
+   * @generated
+   */
+  StructType createStructType();
+
+  /**
+   * Returns a new object of class '<em>External Node Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External Node Declaration</em>'.
+   * @generated
+   */
+  ExternalNodeDeclaration createExternalNodeDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Node Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node Declaration</em>'.
+   * @generated
+   */
+  NodeDeclaration createNodeDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Params</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Params</em>'.
+   * @generated
+   */
+  Params createParams();
+
+  /**
+   * Returns a new object of class '<em>Static Param</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Static Param</em>'.
+   * @generated
+   */
+  StaticParam createStaticParam();
+
+  /**
+   * Returns a new object of class '<em>Static Arg</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Static Arg</em>'.
+   * @generated
+   */
+  StaticArg createStaticArg();
+
+  /**
+   * Returns a new object of class '<em>By Name Static Arg</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>By Name Static Arg</em>'.
+   * @generated
+   */
+  ByNameStaticArg createByNameStaticArg();
+
+  /**
+   * Returns a new object of class '<em>Typed Id</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Typed Id</em>'.
+   * @generated
+   */
+  LustreTypedId createLustreTypedId();
+
+  /**
+   * Returns a new object of class '<em>Typed Valued Ids</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Typed Valued Ids</em>'.
+   * @generated
+   */
+  LustreTypedValuedIds createLustreTypedValuedIds();
+
+  /**
+   * Returns a new object of class '<em>Clocked Id Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Clocked Id Declaration</em>'.
+   * @generated
+   */
+  LustreClockedIdDeclaration createLustreClockedIdDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression</em>'.
+   * @generated
+   */
+  LustreExpression createLustreExpression();
+
+  /**
+   * Returns a new object of class '<em>Pack List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Pack List</em>'.
+   * @generated
+   */
+  PackList createPackList();
+
+  /**
+   * Returns a new object of class '<em>Model Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Model Declaration</em>'.
+   * @generated
+   */
+  ModelDeclaration createModelDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Provide</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Provide</em>'.
+   * @generated
+   */
+  Provide createProvide();
+
+  /**
    * Returns a new object of class '<em>Package Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return a new object of class '<em>Package Declaration</em>'.
    * @generated
    */
-  Package_Declaration createPackage_Declaration();
+  PackageDeclaration createPackageDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Package Equation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Package Equation</em>'.
+   * @generated
+   */
+  PackageEquation createPackageEquation();
 
   /**
    * Returns a new object of class '<em>Package Provided</em>'.
@@ -67,24 +247,6 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   Entity_Declaration createEntity_Declaration();
-
-  /**
-   * Returns a new object of class '<em>Type Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type Declaration</em>'.
-   * @generated
-   */
-  Type_Declaration createType_Declaration();
-
-  /**
-   * Returns a new object of class '<em>Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type</em>'.
-   * @generated
-   */
-  Type createType();
 
   /**
    * Returns a new object of class '<em>Array Type</em>'.
@@ -130,15 +292,6 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   Variable_Declaration createVariable_Declaration();
-
-  /**
-   * Returns a new object of class '<em>Node Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Node Declaration</em>'.
-   * @generated
-   */
-  Node_Declaration createNode_Declaration();
 
   /**
    * Returns a new object of class '<em>Equation</em>'.

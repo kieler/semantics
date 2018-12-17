@@ -81,9 +81,109 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
         return createLustreProgramAdapter();
       }
       @Override
-      public Adapter casePackage_Declaration(Package_Declaration object)
+      public Adapter casePackBody(PackBody object)
       {
-        return createPackage_DeclarationAdapter();
+        return createPackBodyAdapter();
+      }
+      @Override
+      public Adapter caseConstantsDeclaration(ConstantsDeclaration object)
+      {
+        return createConstantsDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseTypeDeclaration(TypeDeclaration object)
+      {
+        return createTypeDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseType(Type object)
+      {
+        return createTypeAdapter();
+      }
+      @Override
+      public Adapter caseEnumType(EnumType object)
+      {
+        return createEnumTypeAdapter();
+      }
+      @Override
+      public Adapter caseStructType(StructType object)
+      {
+        return createStructTypeAdapter();
+      }
+      @Override
+      public Adapter caseExternalNodeDeclaration(ExternalNodeDeclaration object)
+      {
+        return createExternalNodeDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseNodeDeclaration(NodeDeclaration object)
+      {
+        return createNodeDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseParams(Params object)
+      {
+        return createParamsAdapter();
+      }
+      @Override
+      public Adapter caseStaticParam(StaticParam object)
+      {
+        return createStaticParamAdapter();
+      }
+      @Override
+      public Adapter caseStaticArg(StaticArg object)
+      {
+        return createStaticArgAdapter();
+      }
+      @Override
+      public Adapter caseByNameStaticArg(ByNameStaticArg object)
+      {
+        return createByNameStaticArgAdapter();
+      }
+      @Override
+      public Adapter caseLustreTypedId(LustreTypedId object)
+      {
+        return createLustreTypedIdAdapter();
+      }
+      @Override
+      public Adapter caseLustreTypedValuedIds(LustreTypedValuedIds object)
+      {
+        return createLustreTypedValuedIdsAdapter();
+      }
+      @Override
+      public Adapter caseLustreClockedIdDeclaration(LustreClockedIdDeclaration object)
+      {
+        return createLustreClockedIdDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseLustreExpression(LustreExpression object)
+      {
+        return createLustreExpressionAdapter();
+      }
+      @Override
+      public Adapter casePackList(PackList object)
+      {
+        return createPackListAdapter();
+      }
+      @Override
+      public Adapter caseModelDeclaration(ModelDeclaration object)
+      {
+        return createModelDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseProvide(Provide object)
+      {
+        return createProvideAdapter();
+      }
+      @Override
+      public Adapter casePackageDeclaration(PackageDeclaration object)
+      {
+        return createPackageDeclarationAdapter();
+      }
+      @Override
+      public Adapter casePackageEquation(PackageEquation object)
+      {
+        return createPackageEquationAdapter();
       }
       @Override
       public Adapter casePackage_Provided(Package_Provided object)
@@ -99,16 +199,6 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseEntity_Declaration(Entity_Declaration object)
       {
         return createEntity_DeclarationAdapter();
-      }
-      @Override
-      public Adapter caseType_Declaration(Type_Declaration object)
-      {
-        return createType_DeclarationAdapter();
-      }
-      @Override
-      public Adapter caseType(Type object)
-      {
-        return createTypeAdapter();
       }
       @Override
       public Adapter caseArray_Type(Array_Type object)
@@ -134,11 +224,6 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseVariable_Declaration(Variable_Declaration object)
       {
         return createVariable_DeclarationAdapter();
-      }
-      @Override
-      public Adapter caseNode_Declaration(Node_Declaration object)
-      {
-        return createNode_DeclarationAdapter();
       }
       @Override
       public Adapter caseEquation(Equation object)
@@ -328,16 +413,316 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Package_Declaration <em>Package Declaration</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.PackBody <em>Pack Body</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.lustre.lustre.Package_Declaration
+   * @see de.cau.cs.kieler.lustre.lustre.PackBody
    * @generated
    */
-  public Adapter createPackage_DeclarationAdapter()
+  public Adapter createPackBodyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.ConstantsDeclaration <em>Constants Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.ConstantsDeclaration
+   * @generated
+   */
+  public Adapter createConstantsDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.TypeDeclaration <em>Type Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.TypeDeclaration
+   * @generated
+   */
+  public Adapter createTypeDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Type <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Type
+   * @generated
+   */
+  public Adapter createTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.EnumType <em>Enum Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.EnumType
+   * @generated
+   */
+  public Adapter createEnumTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.StructType <em>Struct Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.StructType
+   * @generated
+   */
+  public Adapter createStructTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration <em>External Node Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
+   * @generated
+   */
+  public Adapter createExternalNodeDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration <em>Node Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration
+   * @generated
+   */
+  public Adapter createNodeDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Params <em>Params</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Params
+   * @generated
+   */
+  public Adapter createParamsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.StaticParam <em>Static Param</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.StaticParam
+   * @generated
+   */
+  public Adapter createStaticParamAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.StaticArg <em>Static Arg</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.StaticArg
+   * @generated
+   */
+  public Adapter createStaticArgAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg <em>By Name Static Arg</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.ByNameStaticArg
+   * @generated
+   */
+  public Adapter createByNameStaticArgAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.LustreTypedId <em>Typed Id</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreTypedId
+   * @generated
+   */
+  public Adapter createLustreTypedIdAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.LustreTypedValuedIds <em>Typed Valued Ids</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreTypedValuedIds
+   * @generated
+   */
+  public Adapter createLustreTypedValuedIdsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.LustreClockedIdDeclaration <em>Clocked Id Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreClockedIdDeclaration
+   * @generated
+   */
+  public Adapter createLustreClockedIdDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.LustreExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreExpression
+   * @generated
+   */
+  public Adapter createLustreExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.PackList <em>Pack List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.PackList
+   * @generated
+   */
+  public Adapter createPackListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration <em>Model Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration
+   * @generated
+   */
+  public Adapter createModelDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Provide <em>Provide</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Provide
+   * @generated
+   */
+  public Adapter createProvideAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration <em>Package Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.PackageDeclaration
+   * @generated
+   */
+  public Adapter createPackageDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.PackageEquation <em>Package Equation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.PackageEquation
+   * @generated
+   */
+  public Adapter createPackageEquationAdapter()
   {
     return null;
   }
@@ -383,36 +768,6 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEntity_DeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Type_Declaration <em>Type Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.lustre.lustre.Type_Declaration
-   * @generated
-   */
-  public Adapter createType_DeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Type <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.lustre.lustre.Type
-   * @generated
-   */
-  public Adapter createTypeAdapter()
   {
     return null;
   }
@@ -488,21 +843,6 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariable_DeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Node_Declaration <em>Node Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.lustre.lustre.Node_Declaration
-   * @generated
-   */
-  public Adapter createNode_DeclarationAdapter()
   {
     return null;
   }

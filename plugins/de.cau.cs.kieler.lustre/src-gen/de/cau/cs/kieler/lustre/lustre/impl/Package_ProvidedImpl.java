@@ -4,7 +4,7 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Package_Provided;
 import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
 
@@ -49,7 +49,7 @@ public class Package_ProvidedImpl extends MinimalEObjectImpl.Container implement
    * @generated
    * @ordered
    */
-  protected Node_Declaration name;
+  protected NodeDeclaration name;
 
   /**
    * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
@@ -97,12 +97,12 @@ public class Package_ProvidedImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public Node_Declaration getName()
+  public NodeDeclaration getName()
   {
     if (name != null && name.eIsProxy())
     {
       InternalEObject oldName = (InternalEObject)name;
-      name = (Node_Declaration)eResolveProxy(oldName);
+      name = (NodeDeclaration)eResolveProxy(oldName);
       if (name != oldName)
       {
         if (eNotificationRequired())
@@ -117,7 +117,7 @@ public class Package_ProvidedImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public Node_Declaration basicGetName()
+  public NodeDeclaration basicGetName()
   {
     return name;
   }
@@ -127,9 +127,9 @@ public class Package_ProvidedImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(Node_Declaration newName)
+  public void setName(NodeDeclaration newName)
   {
-    Node_Declaration oldName = name;
+    NodeDeclaration oldName = name;
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.PACKAGE_PROVIDED__NAME, oldName, name));
@@ -214,7 +214,7 @@ public class Package_ProvidedImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
       case LustrePackage.PACKAGE_PROVIDED__NAME:
-        setName((Node_Declaration)newValue);
+        setName((NodeDeclaration)newValue);
         return;
       case LustrePackage.PACKAGE_PROVIDED__PARAMETERS:
         getParameters().clear();
@@ -239,7 +239,7 @@ public class Package_ProvidedImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
       case LustrePackage.PACKAGE_PROVIDED__NAME:
-        setName((Node_Declaration)null);
+        setName((NodeDeclaration)null);
         return;
       case LustrePackage.PACKAGE_PROVIDED__PARAMETERS:
         getParameters().clear();

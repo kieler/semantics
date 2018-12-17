@@ -36,12 +36,12 @@ public interface Package_Provided extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' reference.
-   * @see #setName(Node_Declaration)
+   * @see #setName(NodeDeclaration)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getPackage_Provided_Name()
    * @model
    * @generated
    */
-  Node_Declaration getName();
+  NodeDeclaration getName();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Package_Provided#getName <em>Name</em>}' reference.
@@ -51,7 +51,7 @@ public interface Package_Provided extends EObject
    * @see #getName()
    * @generated
    */
-  void setName(Node_Declaration value);
+  void setName(NodeDeclaration value);
 
   /**
    * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.

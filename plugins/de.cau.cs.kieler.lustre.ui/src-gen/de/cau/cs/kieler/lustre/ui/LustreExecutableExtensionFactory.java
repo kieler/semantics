@@ -5,6 +5,7 @@ package de.cau.cs.kieler.lustre.ui;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.lustre.ui.internal.LustreActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class LustreExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 
 	@Override
 	protected Bundle getBundle() {
-		return LustreActivator.getInstance().getBundle();
+		return Platform.getBundle(LustreActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return LustreActivator.getInstance().getInjector(LustreActivator.DE_CAU_CS_KIELER_LUSTRE_LUSTRE);
+		LustreActivator activator = LustreActivator.getInstance();
+		return activator != null ? activator.getInjector(LustreActivator.DE_CAU_CS_KIELER_LUSTRE_LUSTRE) : null;
 	}
-	
+
 }

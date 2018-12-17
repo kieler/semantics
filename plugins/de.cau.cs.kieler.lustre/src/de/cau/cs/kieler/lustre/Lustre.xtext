@@ -3,35 +3,251 @@
 generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+
+LustreProgram hidden(WS, LUSTRE_COMMENT):
+    (includes += Include)*
+    (packBody = PackBody | packList = PackList)
+;
+
+/*
+ * ---------- Include
+ */
+Include:
+    'include' STRING_CONSTANT
+;
+
+/*
+ * ---------- PackBody
+ */
+PackBody:
+    (
+        constants+=ConstantsDeclaration
+        | ('type' (types+=TypeDeclaration)+)
+        | externals+=ExternalNodeDeclaration
+        | nodes+=NodeDeclaration
+    )+
+;
+
+ConstantsDeclaration:
+    'const'
+    constants+=LustreTypedValuedIds ';' 
+    (constants+=LustreTypedValuedIds ';')*
+;
+
+TypeDeclaration:
+    name=IDENT 
+    ('=' 
+        (
+            types=Type
+            | enums=EnumType
+            | struct=StructType
+        )
+    )?    
+    ';'
+;
+
+Type: 
+    (
+        name='bool'
+        | name='int'
+        | name='real'
+        | name=IDENT
+    ) 
+    ('^' arraySize+=LustreExpression)*
+;
+
+EnumType: 
+    'enum' '{' values+=IDENT (',' values+=IDENT)* '}'
+;
+
+StructType: 
+    ('struct')? '{' elements+=LustreTypedValuedIds (';' elements+=LustreTypedValuedIds)* (';')? '}'  
+;
+
+// External Node Declaration
+ExternalNodeDeclaration:
+    (isUnsafe?='unsafe')? 'extern' ('function' | hasState?='node') 
+    name=IDENT 
+    input=Params
+    'returns' 
+    output=Params
+    (';')?
+;
+
+// Node Declaration
+NodeDeclaration:
+    (isUnsafe?='unsafe')? ('function' | hasState?='node') name=IDENT
+    
+    ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
+    
+    (( 
+        input=Params 'returns' output=Params
+        ( // --- Effective Node (with interface)
+            ('=' effectiveNode=IdentRef ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?)
+        | // Regular Body
+            (
+                (';')?
+                
+                // Local Declarations
+                (
+                    constants+=ConstantsDeclaration |
+                    ('var' variables+=LustreClockedIdDeclaration (';' variables+=LustreClockedIdDeclaration)* ';')
+                )*
+                
+                // Body 
+                'let' 
+                (
+                    equations+=Equation 
+                    | assertions+=Assertion 
+                    | automatons+=Automaton
+                )*
+                'tel'
+                
+                ('.' | (';')?)  
+            )
+        )
+              
+    ) 
+    | ( // --- Effective Node (without interface)
+        '=' effectiveNode=IdentRef 
+        ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?        
+    ))
+;
+
+Params:
+    {Params} 
+    '(' (parameter+=LustreClockedIdDeclaration (';' parameter+=LustreClockedIdDeclaration)*)? ')'
+;
+
+StaticParam:
+    'type' name=IDENT
+    | 'const' name=IDENT ':' type=Type
+    | ('unsafe')? ('node'|'function') name=IDENT nodeInput=Params 'returns' nodeOutput=Params
+;
+
+StaticArg:
+    'type' type=Type
+    | 'const' expr=LustreExpression
+    | ('node'|'function') name=IdentRef ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?      
+//    | PredefOp
+//    | SimpleExpr
+//    | SurelyType
+//    | SurelyNode
+;
+
+ByNameStaticArg:    
+    ('type' name=IDENT '=' type=Type)
+    | ('const' name=IDENT '=' expr=LustreExpression)
+    | (('function' | 'node') name=IDENT '=' nodeRef=IdentRef ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?)
+    | (name=IDENT '=' )//(PredefOp | SimpleEx | SurelyType | SurelyNode))    
+;
+// --------------------------
+LustreTypedId:
+        variableNames+=IDENT (',' variableNames+=IDENT)* ':' type=Type
+;
+
+LustreTypedValuedIds:
+        variableNames+=IDENT (
+                                ((',' variableNames+=IDENT)* ':' type=Type? ('=' value=LustreExpression)?)
+                                | ('=' value=LustreExpression) 
+                             )
+//        | variableNames+=IDENT '=' value=LustreExpression
+;
+
+LustreClockedIdDeclaration:
+    (typedIds+=LustreTypedId ('when' clockExpr=ClockExpression)?)
+    | '(' typedIds+=LustreTypedId (';' typedIds+=LustreTypedId)* ')' 'when' clockExpr=ClockExpression
+;
+
+LustreExpression:
+    Expression
+;
+
+ClockExpression:
+    (IdentRef '(' IDENT ')')
+    | IDENT
+    | 'not' IDENT
+    | '(' 'not' ')' IDENT
+;
+/*
+ * ---------- PackList
+ */
+PackList:
+    (
+        modelDeclarations+=ModelDeclaration
+        | packageDeclarations+=PackageDeclaration
+        | packageEquations+=PackageEquation
+    )+
+;
+
+ModelDeclaration:
+   'model' name=IDENT 
+   ('uses' usesIds+=IDENT (',' usesIds+=IDENT)* ';')?
+   'needs' needsParams+=StaticParam (';' needsParams+=StaticParam)* ';'
+   ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
+   'body'
+   body=PackBody
+   'end'	
+;
+
+Provide:
+    'const' name=IDENT ':' type=Type ('=' value=LustreExpression)?
+    | 'type' types=TypeDeclaration
+    | (
+        ('unsafe')? ('node' | 'function') 
+        name=IDENT 
+        ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
+        input=Params 'returns' output=Params)
+;
+
+PackageDeclaration:
+    'package' name=IDENT 
+    ('uses' usesIds+=IDENT (',' usesIds+=IDENT)* ';')?
+    ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
+    'body'
+    body=PackBody
+    'end'    
+;
+
+PackageEquation:    
+    'package' name=IDENT
+    // Eq_or_Is
+    eqOrIs=IDENT
+    '(' byNameStaticArgs+=ByNameStaticArg ((','|';') byNameStaticArgs+=ByNameStaticArg)* ')' ';'  
+;
+
+
+// --------------------------------------------------------- Old stuff
+
 /**
  * @author cpa
  */
 
-LustreProgram hidden(WS, LUSTRE_COMMENT):
-    nodes += Node_Declaration+    
-//    packages+=Package_Declaration+   
-;
+//LustreProgram hidden(WS, LUSTRE_COMMENT):
+//    nodes += Node_Declaration+    
+////    packages+=Package_Declaration+   
+//;
 
 
 /*
  * Packages
  */
 
-Package_Declaration:
-    'package' name=IDENT 
-        ('uses' uses+=IDENT (',' uses+=IDENT)*)? 
-        'provides' provides+=Package_Provided+
-    'body'
-    (
-        nodes+=Node_Declaration |
-        types+=Type_Declaration |
-        constants+=Constant_Declaration
-    )*
-    'end'
-;
+//Package_Declaration:
+//    'package' name=IDENT 
+//        ('uses' uses+=IDENT (',' uses+=IDENT)*)? 
+//        'provides' provides+=Package_Provided+
+//    'body'
+//    (
+//        nodes+=Node_Declaration |
+//        types+=Type_Declaration |
+//        constants+=Constant_Declaration
+//    )*
+//    'end'
+//;
 
 Package_Provided:
-    'node' name=[Node_Declaration | IDENT] 
+    'node' name=[NodeDeclaration | IDENT] 
         '(' (parameters+=Package_Provided_IO (',' parameters+=Package_Provided_IO)*)? ')' 
         'returns' '(' returned+=Package_Provided_IO (',' returned+=Package_Provided_IO)* ')' 
     ';'
@@ -42,9 +258,9 @@ Package_Provided_IO:
 ;
 
 Entity_Declaration:
-    Node_Declaration
-    | Type_Declaration
-    | Constant_Declaration
+//    Node_Declaration
+//    /*|*/ Type_Declaration
+    /*| */ Constant_Declaration
 ;
 
 /*
@@ -59,20 +275,20 @@ Entity_Declaration:
  * Types
  */
 
-Type_Declaration:
-    'type' name=IDENT ';'
-    | 'type' name=IDENT '=' type=Type  ';'
-;
+//Type_Declaration:
+//    'type' name=IDENT ';'
+//    | 'type' name=IDENT '=' type=Type  ';'
+//;
 
-Type:
-    name=IDENT
-//    | Array_Type
-//    | Record_Type
-//    | Enum_Type
-;
+//Type:
+//    name=IDENT
+////    | Array_Type
+////    | Record_Type
+////    | Enum_Type
+//;
 
 Array_Type:
-    type=[Type_Declaration | IDENT] '^' length=INT
+    type=[TypeDeclaration | IDENT] '^' length=INT
     // XXX Original Lustre allows Type^Expression  
 ;
 
@@ -118,27 +334,29 @@ Local_Constant_Declaration returns Constant_Declaration:
  * Nodes
  */
  
-Node_Declaration:
-    'node'  
-        name=IDENT 
-        '(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')' 
-        'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')' 
-    ';'
-    (
-        constants+=Local_Constant_Declaration |
-        variables+=Local_Variable_Declaration
-    )* 
-    'let' 
-    (
-        equations+=Equation | 
-        assertions+=Assertion |
-        automatons+=Automaton
-    )*
-    'tel' ';'?
-;
+//Node_Declaration:
+//    'node'  
+//        name=IDENT 
+//        '(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')' 
+//        'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')' 
+//    ';'
+//    (
+//        constants+=Local_Constant_Declaration |
+//        variables+=Local_Variable_Declaration
+//    )* 
+//    'let' 
+//    (
+//        equations+=Equation | 
+//        assertions+=Assertion |
+//        automatons+=Automaton
+//    )*
+//    'tel' ';'?
+//;
 
 Equation:
-    left=[Variable_Declaration | IDENT] '=' right=Right_Part ';'
+    left=[LustreTypedId | IDENT] '=' right=Right_Part ';'
+    | left=[LustreTypedValuedIds | IDENT] '=' right=Right_Part ';'
+    | left=[LustreClockedIdDeclaration | IDENT] '=' right=Right_Part ';'
 ;
 
 Assertion:
@@ -254,10 +472,13 @@ ConstantExpression returns Expression:
     | {IntConstant} value=INT
 ;
 
+IdentRef:
+    IDENT | (IDENT '::' IDENT)
+;
+ 
 /*
  * Lexical tokens
  */
- 
 terminal BOOL returns ecore::EBoolean:
     'true' | 'false';
  

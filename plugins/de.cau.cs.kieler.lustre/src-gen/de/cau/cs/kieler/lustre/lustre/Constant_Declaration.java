@@ -13,6 +13,7 @@ package de.cau.cs.kieler.lustre.lustre;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Constant_Declaration#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Constant_Declaration#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Constant_Declaration#getExpr <em>Expr</em>}</li>
  * </ul>
@@ -23,6 +24,32 @@ package de.cau.cs.kieler.lustre.lustre;
  */
 public interface Constant_Declaration extends Entity_Declaration
 {
+  /**
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getConstant_Declaration_Name()
+   * @model
+   * @generated
+   */
+  String getName();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Constant_Declaration#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
+   * @generated
+   */
+  void setName(String value);
+
   /**
    * Returns the value of the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->

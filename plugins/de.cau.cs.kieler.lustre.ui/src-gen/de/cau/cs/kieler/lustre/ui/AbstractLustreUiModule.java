@@ -13,6 +13,7 @@ import de.cau.cs.kieler.lustre.ui.labeling.LustreDescriptionLabelProvider;
 import de.cau.cs.kieler.lustre.ui.labeling.LustreLabelProvider;
 import de.cau.cs.kieler.lustre.ui.outline.LustreOutlineTreeProvider;
 import de.cau.cs.kieler.lustre.ui.quickfix.LustreQuickfixProvider;
+import de.cau.cs.kieler.lustre.validation.LustreValidatorConfigurationBlock;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ide.LexerIdeBindings;
@@ -49,6 +50,7 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
+import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link LustreUiModule}.
@@ -106,6 +108,11 @@ public abstract class AbstractLustreUiModule extends DefaultUiModule {
 		binder.bind(InternalLustreLexer.class).toProvider(LexerProvider.create(InternalLustreLexer.class));
 	}
 	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
+		return LustreValidatorConfigurationBlock.class;
+	}
+	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
 	public Class<? extends PrefixMatcher> bindPrefixMatcher() {
 		return FQNPrefixMatcher.class;
@@ -152,6 +159,13 @@ public abstract class AbstractLustreUiModule extends DefaultUiModule {
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public void configureIPreferenceStoreInitializer(Binder binder) {
+		binder.bind(IPreferenceStoreInitializer.class)
+			.annotatedWith(Names.named("RefactoringPreferences"))
+			.to(RefactoringPreferences.Initializer.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameStrategy> bindIRenameStrategy() {
 		return DefaultRenameStrategy.class;
 	}
@@ -159,13 +173,6 @@ public abstract class AbstractLustreUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IReferenceUpdater> bindIReferenceUpdater() {
 		return DefaultReferenceUpdater.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
-	public void configureIPreferenceStoreInitializer(Binder binder) {
-		binder.bind(IPreferenceStoreInitializer.class)
-			.annotatedWith(Names.named("RefactoringPreferences"))
-			.to(RefactoringPreferences.Initializer.class);
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2

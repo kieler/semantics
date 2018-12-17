@@ -5,7 +5,7 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.Array_Type;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -39,7 +39,7 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
    * @generated
    * @ordered
    */
-  protected Type_Declaration type;
+  protected TypeDeclaration type;
 
   /**
    * The default value of the '{@link #getLength() <em>Length</em>}' attribute.
@@ -87,12 +87,12 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
    * <!-- end-user-doc -->
    * @generated
    */
-  public Type_Declaration getType()
+  public TypeDeclaration getType()
   {
     if (type != null && type.eIsProxy())
     {
       InternalEObject oldType = (InternalEObject)type;
-      type = (Type_Declaration)eResolveProxy(oldType);
+      type = (TypeDeclaration)eResolveProxy(oldType);
       if (type != oldType)
       {
         if (eNotificationRequired())
@@ -107,7 +107,7 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
    * <!-- end-user-doc -->
    * @generated
    */
-  public Type_Declaration basicGetType()
+  public TypeDeclaration basicGetType()
   {
     return type;
   }
@@ -117,9 +117,9 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(Type_Declaration newType)
+  public void setType(TypeDeclaration newType)
   {
-    Type_Declaration oldType = type;
+    TypeDeclaration oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ARRAY_TYPE__TYPE, oldType, type));
@@ -178,7 +178,7 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
     switch (featureID)
     {
       case LustrePackage.ARRAY_TYPE__TYPE:
-        setType((Type_Declaration)newValue);
+        setType((TypeDeclaration)newValue);
         return;
       case LustrePackage.ARRAY_TYPE__LENGTH:
         setLength((Integer)newValue);
@@ -198,7 +198,7 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
     switch (featureID)
     {
       case LustrePackage.ARRAY_TYPE__TYPE:
-        setType((Type_Declaration)null);
+        setType((TypeDeclaration)null);
         return;
       case LustrePackage.ARRAY_TYPE__LENGTH:
         setLength(LENGTH_EDEFAULT);
@@ -235,7 +235,7 @@ public class Array_TypeImpl extends MinimalEObjectImpl.Container implements Arra
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (length: ");
     result.append(length);
     result.append(')');

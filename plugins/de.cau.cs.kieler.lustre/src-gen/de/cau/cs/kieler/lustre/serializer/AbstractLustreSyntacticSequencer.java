@@ -11,6 +11,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
@@ -20,18 +21,46 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected LustreGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0;
+	protected AbstractElementAlias match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1;
+	protected AbstractElementAlias match_ExternalNodeDeclaration_SemicolonKeyword_7_q;
 	protected AbstractElementAlias match_Left_Part_LeftParenthesisKeyword_0_0_q;
-	protected AbstractElementAlias match_Node_Declaration_SemicolonKeyword_15_q;
+	protected AbstractElementAlias match_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q;
+	protected AbstractElementAlias match_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q;
+	protected AbstractElementAlias match_PackBody_TypeKeyword_1_0_q;
+	protected AbstractElementAlias match_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1;
 	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_0_0_a;
 	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_0_0_p;
+	protected AbstractElementAlias match_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0;
+	protected AbstractElementAlias match_Provide_UnsafeKeyword_2_0_q;
+	protected AbstractElementAlias match_StaticArg_CommaKeyword_2_2_2_0_1_or_SemicolonKeyword_2_2_2_0_0;
+	protected AbstractElementAlias match_StaticArg_FunctionKeyword_2_0_1_or_NodeKeyword_2_0_0;
+	protected AbstractElementAlias match_StaticParam_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0;
+	protected AbstractElementAlias match_StaticParam_UnsafeKeyword_2_0_q;
+	protected AbstractElementAlias match_StructType_SemicolonKeyword_4_q;
+	protected AbstractElementAlias match_StructType_StructKeyword_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (LustreGrammarAccess) access;
+		match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getCommaKeyword_2_4_2_0_1()), new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getSemicolonKeyword_2_4_2_0_0()));
+		match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getFunctionKeyword_2_0_0()), new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getNodeKeyword_2_0_1()));
+		match_ExternalNodeDeclaration_SemicolonKeyword_7_q = new TokenAlias(false, true, grammarAccess.getExternalNodeDeclarationAccess().getSemicolonKeyword_7());
 		match_Left_Part_LeftParenthesisKeyword_0_0_q = new TokenAlias(false, true, grammarAccess.getLeft_PartAccess().getLeftParenthesisKeyword_0_0());
-		match_Node_Declaration_SemicolonKeyword_15_q = new TokenAlias(false, true, grammarAccess.getNode_DeclarationAccess().getSemicolonKeyword_15());
+		match_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q = new TokenAlias(false, true, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_4_0_3_1_0());
+		match_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getFullStopKeyword_4_0_3_1_5_0()), new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_4_0_3_1_5_1()));
+		match_PackBody_TypeKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getPackBodyAccess().getTypeKeyword_1_0());
+		match_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPackageEquationAccess().getCommaKeyword_5_0_0()), new TokenAlias(false, false, grammarAccess.getPackageEquationAccess().getSemicolonKeyword_5_0_1()));
 		match_Primary_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_0_0());
 		match_Primary_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_0_0());
+		match_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getProvideAccess().getFunctionKeyword_2_1_1()), new TokenAlias(false, false, grammarAccess.getProvideAccess().getNodeKeyword_2_1_0()));
+		match_Provide_UnsafeKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getProvideAccess().getUnsafeKeyword_2_0());
+		match_StaticArg_CommaKeyword_2_2_2_0_1_or_SemicolonKeyword_2_2_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getStaticArgAccess().getCommaKeyword_2_2_2_0_1()), new TokenAlias(false, false, grammarAccess.getStaticArgAccess().getSemicolonKeyword_2_2_2_0_0()));
+		match_StaticArg_FunctionKeyword_2_0_1_or_NodeKeyword_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getStaticArgAccess().getFunctionKeyword_2_0_1()), new TokenAlias(false, false, grammarAccess.getStaticArgAccess().getNodeKeyword_2_0_0()));
+		match_StaticParam_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getStaticParamAccess().getFunctionKeyword_2_1_1()), new TokenAlias(false, false, grammarAccess.getStaticParamAccess().getNodeKeyword_2_1_0()));
+		match_StaticParam_UnsafeKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getStaticParamAccess().getUnsafeKeyword_2_0());
+		match_StructType_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getStructTypeAccess().getSemicolonKeyword_4());
+		match_StructType_StructKeyword_0_q = new TokenAlias(false, true, grammarAccess.getStructTypeAccess().getStructKeyword_0());
 	}
 	
 	@Override
@@ -46,18 +75,79 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Left_Part_LeftParenthesisKeyword_0_0_q.equals(syntax))
+			if (match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0.equals(syntax))
+				emit_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1.equals(syntax))
+				emit_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ExternalNodeDeclaration_SemicolonKeyword_7_q.equals(syntax))
+				emit_ExternalNodeDeclaration_SemicolonKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Left_Part_LeftParenthesisKeyword_0_0_q.equals(syntax))
 				emit_Left_Part_LeftParenthesisKeyword_0_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Node_Declaration_SemicolonKeyword_15_q.equals(syntax))
-				emit_Node_Declaration_SemicolonKeyword_15_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q.equals(syntax))
+				emit_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q.equals(syntax))
+				emit_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PackBody_TypeKeyword_1_0_q.equals(syntax))
+				emit_PackBody_TypeKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1.equals(syntax))
+				emit_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Primary_LeftParenthesisKeyword_0_0_a.equals(syntax))
 				emit_Primary_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Primary_LeftParenthesisKeyword_0_0_p.equals(syntax))
 				emit_Primary_LeftParenthesisKeyword_0_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0.equals(syntax))
+				emit_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Provide_UnsafeKeyword_2_0_q.equals(syntax))
+				emit_Provide_UnsafeKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StaticArg_CommaKeyword_2_2_2_0_1_or_SemicolonKeyword_2_2_2_0_0.equals(syntax))
+				emit_StaticArg_CommaKeyword_2_2_2_0_1_or_SemicolonKeyword_2_2_2_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StaticArg_FunctionKeyword_2_0_1_or_NodeKeyword_2_0_0.equals(syntax))
+				emit_StaticArg_FunctionKeyword_2_0_1_or_NodeKeyword_2_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StaticParam_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0.equals(syntax))
+				emit_StaticParam_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StaticParam_UnsafeKeyword_2_0_q.equals(syntax))
+				emit_StaticParam_UnsafeKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StructType_SemicolonKeyword_4_q.equals(syntax))
+				emit_StructType_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StructType_StructKeyword_0_q.equals(syntax))
+				emit_StructType_StructKeyword_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ';' | ','
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     staticArgs+=StaticArg (ambiguity) staticArgs+=StaticArg
+	 */
+	protected void emit_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'function' | 'node'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) name=IDENT
+	 */
+	protected void emit_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     output=Params (ambiguity) (rule end)
+	 */
+	protected void emit_ExternalNodeDeclaration_SemicolonKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     '('?
@@ -74,14 +164,52 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     output=Params (ambiguity) 'let' 'tel' ('.' | ';')? (rule end)
+	 *     output=Params (ambiguity) 'let' assertions+=Assertion
+	 *     output=Params (ambiguity) 'let' automatons+=Automaton
+	 *     output=Params (ambiguity) 'let' equations+=Equation
+	 *     output=Params (ambiguity) 'var' variables+=LustreClockedIdDeclaration
+	 *     output=Params (ambiguity) constants+=ConstantsDeclaration
+	 */
+	protected void emit_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('.' | ';')?
+	 *
+	 * This ambiguous syntax occurs at:
 	 *     assertions+=Assertion 'tel' (ambiguity) (rule end)
 	 *     automatons+=Automaton 'tel' (ambiguity) (rule end)
-	 *     constants+=Local_Constant_Declaration 'let' 'tel' (ambiguity) (rule end)
+	 *     constants+=ConstantsDeclaration 'let' 'tel' (ambiguity) (rule end)
 	 *     equations+=Equation 'tel' (ambiguity) (rule end)
-	 *     returned+=Variable_Declaration ')' ';' 'let' 'tel' (ambiguity) (rule end)
-	 *     variables+=Local_Variable_Declaration 'let' 'tel' (ambiguity) (rule end)
+	 *     output=Params ';'? 'let' 'tel' (ambiguity) (rule end)
+	 *     variables+=LustreClockedIdDeclaration ';' 'let' 'tel' (ambiguity) (rule end)
 	 */
-	protected void emit_Node_Declaration_SemicolonKeyword_15_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'type'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     types+=TypeDeclaration (ambiguity) types+=TypeDeclaration
+	 */
+	protected void emit_PackBody_TypeKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ',' | ';'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     byNameStaticArgs+=ByNameStaticArg (ambiguity) byNameStaticArgs+=ByNameStaticArg
+	 */
+	protected void emit_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -174,6 +302,94 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) {Plus.subExpressions+=}
 	 */
 	protected void emit_Primary_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'node' | 'function'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) 'unsafe'? (ambiguity) name=IDENT
+	 */
+	protected void emit_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'unsafe'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) ('node' | 'function') name=IDENT
+	 */
+	protected void emit_Provide_UnsafeKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';' | ','
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     staticArgs+=StaticArg (ambiguity) staticArgs+=StaticArg
+	 */
+	protected void emit_StaticArg_CommaKeyword_2_2_2_0_1_or_SemicolonKeyword_2_2_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'node' | 'function'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) name=IdentRef
+	 */
+	protected void emit_StaticArg_FunctionKeyword_2_0_1_or_NodeKeyword_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'node' | 'function'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) 'unsafe'? (ambiguity) name=IDENT
+	 */
+	protected void emit_StaticParam_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'unsafe'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) ('node' | 'function') name=IDENT
+	 */
+	protected void emit_StaticParam_UnsafeKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     elements+=LustreTypedValuedIds (ambiguity) '}' (rule end)
+	 */
+	protected void emit_StructType_SemicolonKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'struct'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '{' elements+=LustreTypedValuedIds
+	 */
+	protected void emit_StructType_StructKeyword_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

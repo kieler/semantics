@@ -3,15 +3,25 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.lustre.lustre.LustreExpression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Type;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,6 +32,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeImpl#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,6 +58,16 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getArraySize() <em>Array Size</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArraySize()
+   * @generated
+   * @ordered
+   */
+  protected EList<LustreExpression> arraySize;
 
   /**
    * <!-- begin-user-doc -->
@@ -97,6 +118,36 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<LustreExpression> getArraySize()
+  {
+    if (arraySize == null)
+    {
+      arraySize = new EObjectContainmentEList<LustreExpression>(LustreExpression.class, this, LustrePackage.TYPE__ARRAY_SIZE);
+    }
+    return arraySize;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case LustrePackage.TYPE__ARRAY_SIZE:
+        return ((InternalEList<?>)getArraySize()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -104,6 +155,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     {
       case LustrePackage.TYPE__NAME:
         return getName();
+      case LustrePackage.TYPE__ARRAY_SIZE:
+        return getArraySize();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -113,6 +166,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -120,6 +174,10 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     {
       case LustrePackage.TYPE__NAME:
         setName((String)newValue);
+        return;
+      case LustrePackage.TYPE__ARRAY_SIZE:
+        getArraySize().clear();
+        getArraySize().addAll((Collection<? extends LustreExpression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -138,6 +196,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
       case LustrePackage.TYPE__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case LustrePackage.TYPE__ARRAY_SIZE:
+        getArraySize().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -154,6 +215,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     {
       case LustrePackage.TYPE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case LustrePackage.TYPE__ARRAY_SIZE:
+        return arraySize != null && !arraySize.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -168,7 +231,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
     result.append(')');

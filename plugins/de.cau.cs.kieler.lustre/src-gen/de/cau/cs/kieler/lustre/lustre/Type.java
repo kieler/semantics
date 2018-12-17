@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Type#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Type#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getType()
@@ -48,5 +51,21 @@ public interface Type extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Array Size</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.LustreExpression}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Array Size</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Array Size</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getType_ArraySize()
+   * @model containment="true"
+   * @generated
+   */
+  EList<LustreExpression> getArraySize();
 
 } // Type

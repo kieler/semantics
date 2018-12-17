@@ -33,12 +33,12 @@ public interface Equation extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Left</em>' reference.
-   * @see #setLeft(Variable_Declaration)
+   * @see #setLeft(EObject)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation_Left()
    * @model
    * @generated
    */
-  Variable_Declaration getLeft();
+  EObject getLeft();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Equation#getLeft <em>Left</em>}' reference.
@@ -48,7 +48,7 @@ public interface Equation extends EObject
    * @see #getLeft()
    * @generated
    */
-  void setLeft(Variable_Declaration value);
+  void setLeft(EObject value);
 
   /**
    * Returns the value of the '<em><b>Right</b></em>' containment reference.

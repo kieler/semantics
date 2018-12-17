@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Constant_DeclarationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Constant_DeclarationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Constant_DeclarationImpl#getExpr <em>Expr</em>}</li>
  * </ul>
@@ -32,6 +33,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class Constant_DeclarationImpl extends Entity_DeclarationImpl implements Constant_Declaration
 {
+  /**
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -71,6 +92,29 @@ public class Constant_DeclarationImpl extends Entity_DeclarationImpl implements 
   protected EClass eStaticClass()
   {
     return LustrePackage.Literals.CONSTANT_DECLARATION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.CONSTANT_DECLARATION__NAME, oldName, name));
   }
 
   /**
@@ -197,6 +241,8 @@ public class Constant_DeclarationImpl extends Entity_DeclarationImpl implements 
   {
     switch (featureID)
     {
+      case LustrePackage.CONSTANT_DECLARATION__NAME:
+        return getName();
       case LustrePackage.CONSTANT_DECLARATION__TYPE:
         return getType();
       case LustrePackage.CONSTANT_DECLARATION__EXPR:
@@ -215,6 +261,9 @@ public class Constant_DeclarationImpl extends Entity_DeclarationImpl implements 
   {
     switch (featureID)
     {
+      case LustrePackage.CONSTANT_DECLARATION__NAME:
+        setName((String)newValue);
+        return;
       case LustrePackage.CONSTANT_DECLARATION__TYPE:
         setType((Type)newValue);
         return;
@@ -235,6 +284,9 @@ public class Constant_DeclarationImpl extends Entity_DeclarationImpl implements 
   {
     switch (featureID)
     {
+      case LustrePackage.CONSTANT_DECLARATION__NAME:
+        setName(NAME_EDEFAULT);
+        return;
       case LustrePackage.CONSTANT_DECLARATION__TYPE:
         setType((Type)null);
         return;
@@ -255,12 +307,31 @@ public class Constant_DeclarationImpl extends Entity_DeclarationImpl implements 
   {
     switch (featureID)
     {
+      case LustrePackage.CONSTANT_DECLARATION__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case LustrePackage.CONSTANT_DECLARATION__TYPE:
         return type != null;
       case LustrePackage.CONSTANT_DECLARATION__EXPR:
         return expr != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
   }
 
 } //Constant_DeclarationImpl

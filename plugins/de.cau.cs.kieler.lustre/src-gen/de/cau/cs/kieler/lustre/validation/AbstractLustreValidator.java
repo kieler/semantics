@@ -16,5 +16,4 @@ public abstract class AbstractLustreValidator extends AbstractDeclarativeValidat
 		result.add(de.cau.cs.kieler.lustre.lustre.LustrePackage.eINSTANCE);
 		return result;
 	}
-	
 }
