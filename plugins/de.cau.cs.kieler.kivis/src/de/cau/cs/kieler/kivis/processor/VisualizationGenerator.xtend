@@ -227,6 +227,16 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
                     <script src="«url»" type="text/javascript"></script>
                 «ENDFOR»
               </head>
+              <style>
+                svg text { // Suppress text selection
+                  -webkit-touch-callout: none;
+                  -webkit-user-select: none;
+                  -moz-user-select: none;
+                  -ms-user-select: none;
+                  user-select: none;
+                  pointer-events: none;
+                }
+              </style>
               <body>
                 «svg»
                 
