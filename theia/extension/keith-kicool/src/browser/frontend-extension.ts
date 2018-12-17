@@ -15,10 +15,10 @@ import { ContainerModule, interfaces } from 'inversify'
 import { KiCoolContribution} from './kicool-contribution'
 import { BaseWidget, KeybindingContext,
     WidgetFactory, bindViewContribution, FrontendApplicationContribution, createTreeContainer, TreeWidget} from '@theia/core/lib/browser'
-import { TextWidget } from '../widgets/text-widget'
-import '../../src/frontend/widgets/style/index.css'
+import { TextWidget } from './text-widget'
+import '../../src/browser/style/index.css'
 import { KiCoolKeybindingContext } from './kicool-keybinding-context'
-import { CompilerWidget, KiCoolViewWidgetFactory } from '../widgets/compiler-widget'
+import { CompilerWidget, KiCoolViewWidgetFactory } from './compiler-widget'
 import { KiCoolViewService } from './kicool-view-service';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {

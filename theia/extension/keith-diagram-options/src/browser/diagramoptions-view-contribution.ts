@@ -21,12 +21,10 @@ import { WidgetManager, Widget, DidCreateWidgetEvent } from '@theia/core/lib/bro
 import { KeithDiagramLanguageClientContribution } from 'keith-diagram/lib/keith-diagram-language-client-contribution'
 import { KeithDiagramManager } from 'keith-diagram/lib/keith-diagram-manager';
 import URI from "@theia/core/lib/common/uri";
-import { SynthesisOption } from './synthesis-option';
+import { SynthesisOption } from '../common/option-models';
+import { GET_OPTIONS, SET_OPTIONS } from '../common'
 
 export const DIAGRAM_OPTIONS_WIDGET_FACTORY_ID = 'diagramoptions-view'
-
-export const GET_OPTIONS = 'keith/getOptions'
-export const SET_OPTIONS = 'keith/setOptions'
 
 @injectable()
 export class DiagramOptionsViewContribution extends AbstractViewContribution<DiagramOptionsViewWidget> implements FrontendApplicationContribution {

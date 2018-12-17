@@ -16,7 +16,7 @@ import { FrontendApplication, KeybindingRegistry } from '@theia/core/lib/browser
 import URI from '@theia/core/lib/common/uri'
 import { DiagramManagerProvider, DiagramManager } from 'theia-sprotty/lib'
 import { ContextMenuCommands } from './dynamic-commands'
-import { KeithLanguageClientContribution } from 'keith-language/lib/frontend/keith-language-client-contribution'
+import { KeithLanguageClientContribution } from 'keith-language/lib/browser/keith-language-client-contribution'
 import { Disposable } from '@theia/core/lib/common'
 import { LanguageClientFactory, Languages, Workspace } from '@theia/languages/lib/browser'
 import { CommandRegistry } from '@theia/core/lib/common'

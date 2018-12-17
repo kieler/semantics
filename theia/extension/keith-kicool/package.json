@@ -35,12 +35,11 @@
   "files": [
     "lib",
     "src",
-    "build",
-    "src/widgets/style/*.css"
+    "build"
   ],
   "theiaExtensions": [
     {
-      "frontend": "lib/language/frontend-extension"
+      "frontend": "lib/browser/frontend-extension"
     }
   ]
 }

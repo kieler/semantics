@@ -1,11 +1,3 @@
-/*
- * Copyright (C) 2017 TypeFox and others.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- */
-
- // TODO: use a auto generated version of this file.
 export const configuration: monaco.languages.LanguageConfiguration = {
     // the default separators except `@$`
     wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
@@ -22,30 +14,131 @@ export const configuration: monaco.languages.LanguageConfiguration = {
         { open: '(', close: ')', notIn: ['string', 'comment'] }
     ]
 };
-
 export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
 
     tokenPostfix: '.kgt',
 
-    keywords: [ // TODO: maybe fill in some more keywords
-        'kgraph', 'knode', 'kedge', 'klabel', 'kport'
-    ],
+    keywords: [
+        'absolutePos',
+        'actions',
+        'anchor',
+        'areaData',
+        'background',
+        'bevel',
+        'bold',
+        'bottom',
+        'bottomRightAnchor',
+        'center',
+        'chord',
+        'clipShape',
+        'columns',
+        'custom',
+        'dash',
+        'dashOffset',
+        'dashPattern',
+        'decoratorData',
+        'dot',
+        'double',
+        'doubleClick',
+        'error',
+        'flat',
+        'flexibleHeight',
+        'flexibleWidth',
+        'fontName',
+        'fontSize',
+        'foreground',
+        'grid',
+        'gridData',
+        'hAlign',
+        'height',
+        'horizontalAlignment',
+        'horizontalMargin',
+        'insets',
+        'invisible',
+        'italic',
+        'junction',
+        'karc',
+        'kchildArea',
+        'kcustomRendering',
+        'kedge',
+        'kellipse',
+        'kgraph',
+        'kimage',
+        'klabel',
+        'knode',
+        'kpolygon',
+        'kpolyline',
+        'kport',
+        'krectangle',
+        'krendering',
+        'krenderingLibrary',
+        'kroundedPolyline',
+        'kroundedRectangle',
+        'kspline',
+        'kstylesTemplate',
+        'ktext',
+        'left',
+        'lineCap',
+        'lineJoin',
+        'lineStyle',
+        'lineWidth',
+        'link',
+        'middleDoubleClick',
+        'middleSingleClick',
+        'middleSingleOrMultiClick',
+        'minCellHeight',
+        'minCellWidth',
+        'minimalHeight',
+        'minimalWidth',
+        'miter',
+        'modifier',
+        'none',
+        'null',
+        'open',
+        'pie',
+        'pointData',
+        'points',
+        'pos',
+        'propagate',
+        'properties',
+        'reference',
+        'referencePoint',
+        'relativePos',
+        'right',
+        'rotateWithLine',
+        'rotation',
+        'round',
+        'scale',
+        'selection',
+        'shadow',
+        'single',
+        'singleClick',
+        'singleOrMultiClick',
+        'size',
+        'solid',
+        'square',
+        'squiggle',
+        'styles',
+        'top',
+        'topLeftAnchor',
+        'underline',
+        'vAlign',
+        'verticalAlignment',
+        'verticalMargin',
+        'width',
+        'x',
+        'xoffset',
+        'y',
+        'yoffset',
 
-    operators: [
-        // '=', '>', '<', '!', ':',
-        // '==', '<=', '>=', '!=', 'and', 'or',
-        // '+', '-', '*', '/'
     ],
-
-    // we include these common regular expressions
     symbols: /[=><!~?:&|+\-*\/\^%]+/,
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
     digits: /\d+(_+\d+)*/,
     octaldigits: /[0-7]+(_+[0-7]+)*/,
     binarydigits: /[0-1]+(_+[0-1]+)*/,
     hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,
-
-    // The main tokenizer for our languages
+// The main tokenizer for our languages
     tokenizer: {
         root: [
             // identifiers and keywords
@@ -64,10 +157,11 @@ export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
             [/[<>](?!@symbols)/, '@brackets'],
             [/@symbols/, {
                 cases: {
-                    '@operators': 'delimiter',
                     '@default': ''
                 }
             }],
+
+            [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
 
             // numbers
             [/(@digits)[eE]([\-+]?(@digits))?[fFdD]?/, 'number.float'],

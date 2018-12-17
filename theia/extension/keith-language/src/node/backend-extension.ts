@@ -17,7 +17,7 @@ import { createSocketConnection } from 'vscode-ws-jsonrpc/lib/server'
 import * as net from 'net'
 import * as path from 'path'
 import { isWindows, isOSX } from "@theia/core";
-import { Constants } from '../frontend/utils';
+import { LanguageRegister } from '../common';
 
 const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app/Contents/MacOs/kieler' : '/kieler')
 
@@ -45,21 +45,22 @@ function getLsPath(): string | undefined {
 @injectable()
 class KeithLanguageServerContribution extends BaseLanguageServerContribution {
 
-    readonly id = Constants.sctxId
-    readonly name = Constants.sctxName
+    readonly id = LanguageRegister.sctxId
+    readonly name = LanguageRegister.sctxName
 
     readonly description = {
-        id: 'sctx',
-        name: 'SCTX',
-        documentSelector: [Constants.kgtId, Constants.annoId, Constants.esterelId, Constants.kextId, Constants.lustreId, Constants.sclId, Constants.sctxId],
+        id: LanguageRegister.sctxId,
+        name: LanguageRegister.sctxName,
+        documentSelector: [LanguageRegister.kgtId, LanguageRegister.annoId, LanguageRegister.esterelId, LanguageRegister.kextId,
+            LanguageRegister.lustreId, LanguageRegister.sclId, LanguageRegister.sctxId],
         fileEvents: [
-            '**/*.' + Constants.kgtId,
-            '**/*.' + Constants.sctxId,
-            '**/*.' + Constants.sclId,
-            '**/*.' + Constants.kextId,
-            '**/*.' + Constants.annoId,
-            '**/*.' + Constants.esterelId,
-            '**/*.' + Constants.lustreId
+            '**/*.' + LanguageRegister.kgtId,
+            '**/*.' + LanguageRegister.sctxId,
+            '**/*.' + LanguageRegister.sclId,
+            '**/*.' + LanguageRegister.kextId,
+            '**/*.' + LanguageRegister.annoId,
+            '**/*.' + LanguageRegister.esterelId,
+            '**/*.' + LanguageRegister.lustreId
         ]
     }
 

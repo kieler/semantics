@@ -23,10 +23,11 @@ import { Message,
     ContextMenuRenderer } from "@theia/core/lib/browser";
 import { Event } from '@theia/core/lib/common'
 import * as React from "react";
-import { Constants, CompilationSystems, Snapshots } from "keith-language/lib/frontend/utils";
-import { KiCoolContribution } from "../language/kicool-contribution";
+import { CompilationSystems, Snapshots } from "../common/kicool-models";
+import { compilerWidgetId } from "../common";
+import { KiCoolContribution } from "./kicool-contribution";
 import { Emitter } from "@theia/core";
-import '../../src/frontend/widgets/style/index.css'
+import '../../src/browser/style/index.css'
 
 export interface KiCoolSymbolInformationNode extends CompositeTreeNode, SelectableTreeNode, ExpandableTreeNode {
     iconClass: string
@@ -47,7 +48,7 @@ export const KiCoolViewWidgetFactory = Symbol('KiCoolViewWidgetFactory')
 @injectable()
 export class CompilerWidget extends TreeWidget implements StatefulWidget {
 
-    public static widgetId = Constants.compilerWidgetId
+    public static widgetId = compilerWidgetId
 
 
     protected readonly onRequestSystemDescriptionsEmitter = new Emitter<CompilerWidget | undefined>()
@@ -71,10 +72,10 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
         @inject(new LazyServiceIdentifer(() => KiCoolContribution)) protected readonly commands: KiCoolContribution
     ) {
         super(treeProps, model, contextMenuRenderer);
-        this.id = Constants.compilerWidgetId
+        this.id = compilerWidgetId
         this.title.label = 'Compile'
         this.title.iconClass = 'fa fa-play-circle';
-        this.addClass(Constants.compilerWidgetId) // class for index.css
+        this.addClass(compilerWidgetId) // class for index.css
         this.systems = [{id: "NONE", label: "NONE", isPublic: true}]
         this.autoCompile = false
         this.showPrivateSystems = false

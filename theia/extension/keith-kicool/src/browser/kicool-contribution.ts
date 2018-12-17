@@ -26,13 +26,14 @@ import {
 } from "@theia/core/lib/browser";
 import { KeithDiagramLanguageClientContribution } from "keith-diagram/lib/keith-diagram-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
-import { TextWidget } from "../widgets/text-widget";
-import { CompilerWidget } from "../widgets/compiler-widget";
+import { TextWidget } from "./text-widget";
+import { CompilerWidget } from "./compiler-widget";
 import { Workspace } from "@theia/languages/lib/browser";
-import { Constants, CompilationSystems, CodeContainer } from "keith-language/lib/frontend/utils";
+import { CompilationSystems, Snapshots, CodeContainer } from "../common/kicool-models";
+import { compilerWidgetId, OPEN_COMPILER_WIDGET_KEYBINDING, COMPILE, GET_SYSTEMS, SHOW_PREVIOUS_KEYBINDING,
+    SHOW_NEXT_KEYBINDING, EDITOR_UNDEFINED_MESSAGE, SHOW } from "../common";
 import { KiCoolKeybindingContext } from "./kicool-keybinding-context";
 import { FileSystemWatcher, FileChange } from "@theia/filesystem/lib/browser";
-import { Snapshots } from "keith-language/lib/frontend/utils";
 
 /**
  * Contribution for CompilerWidget to add functionality to it and link with the current editor.
@@ -62,14 +63,14 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         @inject(FileSystemWatcher) protected readonly fileSystemWatcher: FileSystemWatcher,
     ) {
         super({
-            widgetId: Constants.compilerWidgetId,
+            widgetId: compilerWidgetId,
             widgetName: 'Compiler',
             defaultWidgetOptions: {
                 area: 'bottom',
                 rank: 500
             },
             toggleCommandId: COMPILER.id,
-            toggleKeybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
+            toggleKeybinding: OPEN_COMPILER_WIDGET_KEYBINDING
         });
         this.fileSystemWatcher.onFilesChanged(this.onFilesChanged.bind(this))
 
@@ -133,7 +134,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         if (this.editor) {
             const lClient = await this.client.languageClient
             const uri = this.editor.editor.uri.toString()
-            const systems: CompilationSystems[] = await lClient.sendRequest(Constants.GET_SYSTEMS, [uri, true]) as CompilationSystems[]
+            const systems: CompilationSystems[] = await lClient.sendRequest(GET_SYSTEMS, [uri, true]) as CompilationSystems[]
             this.compilerWidget.systems = systems
             this.compilerWidget.sourceModelPath = this.editor.editor.uri.toString()
             this.compilerWidget.update()
@@ -145,16 +146,16 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
             {
                 command: SHOW_PREVIOUS.id,
                 context: this.kicoolKeybindingContext.id,
-                keybinding: Constants.SHOW_PREVIOUS_KEYBINDING
+                keybinding: SHOW_PREVIOUS_KEYBINDING
             },
             {
                 command: SHOW_NEXT.id,
                 context: this.kicoolKeybindingContext.id,
-                keybinding: Constants.SHOW_NEXT_KEYBINDING
+                keybinding: SHOW_NEXT_KEYBINDING
             },
             {
                 command: COMPILER.id,
-                keybinding: Constants.OPEN_COMPILER_WIDGET_KEYBINDING
+                keybinding: OPEN_COMPILER_WIDGET_KEYBINDING
             }
         ].forEach(binding => {
             keybindings.registerKeybinding(binding);
@@ -180,7 +181,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         commands.registerCommand(SHOW_NEXT, {
             execute: () => {
                 if (!this.editor) {
-                    this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
+                    this.message(EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
                 const uri = this.compilerWidget.sourceModelPath
@@ -204,7 +205,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         commands.registerCommand(SHOW_PREVIOUS, {
             execute: () => {
                 if (!this.editor) {
-                    this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
+                    this.message(EDITOR_UNDEFINED_MESSAGE, "error")
                     return false;
                 }
                 const uri = this.compilerWidget.sourceModelPath
@@ -249,7 +250,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
      */
     public async show(uri: string, index: number) {
         const lclient = await this.client.languageClient
-        const svg = await lclient.sendRequest(Constants.SHOW, [uri, index])
+        const svg = await lclient.sendRequest(SHOW, [uri, index])
         const result = this.resultMap.get(uri)
         const infoList = this.infoMap.get(uri)
         let info = ""
@@ -287,14 +288,14 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
 
     async executeCompile(command: string): Promise<void> {
         if (!this.editor) {
-            this.message(Constants.EDITOR_UNDEFINED_MESSAGE, "error")
+            this.message(EDITOR_UNDEFINED_MESSAGE, "error")
             return;
         }
 
         const uri = this.compilerWidget.sourceModelPath
         console.log("Compiling " + uri)
         const lclient = await this.client.languageClient
-        const snapshotsDescriptions: CodeContainer = await lclient.sendRequest(Constants.COMPILE, [uri, command, this.compilerWidget.compileInplace]) as CodeContainer
+        const snapshotsDescriptions: CodeContainer = await lclient.sendRequest(COMPILE, [uri, command, this.compilerWidget.compileInplace]) as CodeContainer
         if (!this.compilerWidget.autoCompile) {
             this.message("Got compilation result for " + uri, "info")
         }
@@ -329,7 +330,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         this.resultMap.set(uri as string, snapshotsDescriptions)
         this.indexMap.set(uri as string, -1)
         this.lengthMap.set(uri as string, snapshotsDescriptions.files.length)
-        this.front.shell.activateWidget(Constants.compilerWidgetId)
+        this.front.shell.activateWidget(compilerWidgetId)
     }
 }
 

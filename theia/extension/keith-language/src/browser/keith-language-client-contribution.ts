@@ -20,7 +20,7 @@ import {
     Workspace,
 } from '@theia/languages/lib/browser'
 import { CommandRegistry } from '@theia/core/lib/common';
-import { Constants } from './utils';
+import { LanguageRegister } from '../common';
 
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
@@ -44,13 +44,13 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
      */
     protected get globPatterns() {
         return [
-            '**/*.' + Constants.kgtId,
-            '**/*.' + Constants.sctxId,
-            '**/*.' + Constants.sclId,
-            '**/*.' + Constants.kextId,
-            '**/*.' + Constants.annoId,
-            '**/*.' + Constants.esterelId,
-            '**/*.' + Constants.lustreId
+            '**/*.' + LanguageRegister.kgtId,
+            '**/*.' + LanguageRegister.sctxId,
+            '**/*.' + LanguageRegister.sclId,
+            '**/*.' + LanguageRegister.kextId,
+            '**/*.' + LanguageRegister.annoId,
+            '**/*.' + LanguageRegister.esterelId,
+            '**/*.' + LanguageRegister.lustreId
         ]
     }
 
@@ -59,13 +59,13 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
      */
     protected get documentSelector(): string[] {
         return [
-            Constants.kgtId,
-            Constants.sctxId,
-            Constants.sclId,
-            Constants.kextId,
-            Constants.annoId,
-            Constants.esterelId,
-            Constants.lustreId
+            LanguageRegister.kgtId,
+            LanguageRegister.sctxId,
+            LanguageRegister.sclId,
+            LanguageRegister.kextId,
+            LanguageRegister.annoId,
+            LanguageRegister.esterelId,
+            LanguageRegister.lustreId
 
         ];
     }

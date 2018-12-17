@@ -14,14 +14,14 @@
 import { injectable, inject } from 'inversify'
 import { Event, Emitter, DisposableCollection } from '@theia/core'
 import { WidgetFactory } from '@theia/core/lib/browser'
-import { CompilerWidget, KiCoolViewWidgetFactory, KiCoolSymbolInformationNode } from '../widgets/compiler-widget'
+import { CompilerWidget, KiCoolViewWidgetFactory, KiCoolSymbolInformationNode } from './compiler-widget'
 import { Widget } from '@phosphor/widgets'
-import { Constants } from 'keith-language/lib/frontend/utils';
+import { compilerWidgetId } from '../common';
 
 @injectable()
 export class KiCoolViewService implements WidgetFactory {
 
-    id = Constants.compilerWidgetId
+    id = compilerWidgetId
 
     protected widget?: CompilerWidget
     protected readonly onDidChangeDiagramOptionsEmitter = new Emitter<KiCoolSymbolInformationNode[]>()

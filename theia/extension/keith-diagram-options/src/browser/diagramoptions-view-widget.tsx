@@ -17,7 +17,7 @@ import { TreeWidget, TreeNode, SelectableTreeNode, TreeProps, ContextMenuRendere
 import { Emitter } from '@theia/core'
 import { Event } from '@theia/core/lib/common'
 import { CompositeTreeNode } from '@theia/core/lib/browser'
-import { SynthesisOption, TransformationOptionType } from './synthesis-option'
+import { SynthesisOption, TransformationOptionType } from '../common/option-models'
 import { isNullOrUndefined } from 'util'
 import * as React from 'react'
 
