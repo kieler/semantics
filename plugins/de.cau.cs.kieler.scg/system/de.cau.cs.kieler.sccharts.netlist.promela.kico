@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.promela
+public system de.cau.cs.kieler.sccharts.netlist.promela
 	label "SCCharts to Promela"
 	
 system de.cau.cs.kieler.sccharts.extended.core

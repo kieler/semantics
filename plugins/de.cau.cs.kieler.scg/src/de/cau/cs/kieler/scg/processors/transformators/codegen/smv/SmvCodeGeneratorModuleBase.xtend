@@ -10,17 +10,16 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.codegen.promela
+package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
 import de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorModuleBase
 
 /** 
  * @author aas
  */
-abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
-    protected static val TICK_LOOP_FUNCTION_NAME = "tick_loop"
+abstract class SmvCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
     
     override String getLineCommentToken() {
-        return "//";
+        return "--";
     }
 }

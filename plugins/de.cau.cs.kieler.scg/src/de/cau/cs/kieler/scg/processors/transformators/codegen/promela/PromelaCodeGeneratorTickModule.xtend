@@ -139,15 +139,18 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     private def void generateSettingRandomBool(ValuedObject valuedObject) {
-        appendIndentation
-        code.append("select(").append(valuedObject.name).append(" : 0 .. 1);\n")
+        appendIndentedLine('''if''')
+        appendIndentedLine(''':: «valuedObject.name» = true;''')
+        appendIndentedLine(''':: «valuedObject.name» = false;''')
+        appendIndentedLine('''fi''')
     }
     
     private def void generateSettingRandomInt(ValuedObject valuedObject) {
-        appendIndented('''do\n''')
-        appendIndented(''':: «valuedObject.name»++;\n''')
-        appendIndented(''':: break;''')
-        appendIndented('''od''')
+        appendIndentedLine('''do''')
+        appendIndentedLine(''':: «valuedObject.name»++;''')
+        appendIndentedLine(''':: «valuedObject.name»--;''')
+        appendIndentedLine(''':: break;''')
+        appendIndentedLine('''od''')
     }
     
     private def void generateSequentialScgLogic() {
@@ -182,10 +185,9 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         if (!conditionalStack.empty) { 
             conditional.handleConditionalNesting
         }
+        
         appendIndentation
-        code.append("if\n")
-        appendIndentation
-        code.append(":: (")
+        code.append("if :: (")
         code.append(conditional.condition.serializeHR)
         code.append(") -> \n")
         incIndentationLevel
@@ -222,6 +224,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     protected def dispatch void generate(Exit exit, Deque<Node> nodes) {
-        
+        if (!conditionalStack.empty) { 
+            exit.handleConditionalNesting
+        }
     }
 }

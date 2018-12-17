@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.codegen.promela
+package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHR
  *
  */
 @Singleton
-class PromelaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
+class SmvCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     override dispatch CharSequence serialize(ValueType valueType) {
         return valueType.literal

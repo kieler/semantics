@@ -156,6 +156,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGenerator">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGenerator">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -190,7 +193,10 @@
             system="system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.promela.kico">
+            system="system/de.cau.cs.kieler.sccharts.netlist.promela.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.smv.kico">
       </TransformationSystem>
    </extension>
 

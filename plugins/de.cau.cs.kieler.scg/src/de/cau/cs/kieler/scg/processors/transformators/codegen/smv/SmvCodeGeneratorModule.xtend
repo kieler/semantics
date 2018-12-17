@@ -10,18 +10,19 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.codegen.promela
+package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scg.Assignment
+import javax.management.OperationsException
 
 /**
  * Root Promela Code Generator Module
@@ -29,25 +30,19 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  * 
  */
-class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
+class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     
     @Inject Injector injector
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension PromelaCodeSerializeHRExtensions serializer
+    @Inject extension SmvCodeSerializeHRExtensions serializer
     
-    public static val PROMELA_EXTENSION = ".pml"
+    public static val SMV_EXTENSION = ".smv"
     
-    @Accessors var SCGCodeGeneratorModule declarations
-    @Accessors var SCGCodeGeneratorModule init
     @Accessors var SCGCodeGeneratorModule tick
     
     override configure() {
-        declarations = injector.getInstance(PromelaCodeGeneratorDeclarationModule)
-        declarations.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
-        init = injector.getInstance(PromelaCodeGeneratorInitModule)
-        init.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
-        tick = injector.getInstance(PromelaCodeGeneratorTickModule)
-        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
+        tick = injector.getInstance(SmvCodeGeneratorTickModule)
+        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + SMV_EXTENSION, this)
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
@@ -55,37 +50,27 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
     }
     
     override generateInit() {
-        declarations.generateInit
-        init.generateInit
         tick.generateInit
     }
     
     override generate() {
-        declarations.generate
-        init.generate
         tick.generate
     }
     
     
     override generateDone() {
-        declarations.generateDone
-        init.generateDone
         tick.generateDone
     }
     
     override generateWrite(CodeContainer codeContainer) {
-        val pmlFilename = codeFilename + PROMELA_EXTENSION
-        val pmlFile = new StringBuilder
+        val smvFilename = codeFilename + SMV_EXTENSION
+        val smvFile = new StringBuilder
 
-        pmlFile.addHeader
-        pmlFile.append(declarations.code)
-        pmlFile.append("\n")
-        pmlFile.append(init.code)
-        pmlFile.append("\n")
-        pmlFile.append(tick.code)
-        pmlFile.append("\n")
+        smvFile.addHeader
+        smvFile.append(tick.code)
+        smvFile.append("\n")
         
-        codeContainer.add(pmlFilename, pmlFile.toString)
+        codeContainer.add(smvFilename, smvFile.toString)
     }
     
     protected def addPreGuardsToVariableStore() {
