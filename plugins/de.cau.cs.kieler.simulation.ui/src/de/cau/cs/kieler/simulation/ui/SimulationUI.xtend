@@ -213,6 +213,9 @@ class SimulationUI {
     
     static def registerObserver(SimulationListener listener) {
         listeners += listener
+        if (currentSimulation !== null) {
+            currentSimulation.addObserver(listener)
+        }
     }
     
     static def getObservers() {
