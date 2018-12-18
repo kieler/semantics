@@ -12,42 +12,30 @@
  */
 package de.cau.cs.kieler.kivis.processor
 
+import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.VariableInformation
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
-import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
-
-import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
-
-import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
-import de.cau.cs.kieler.kicool.deploy.processor.AbstractDeploymentProcessor
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kivis.kivis.Visualization
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import java.io.File
-import java.nio.file.Paths
-import java.nio.file.Path
-import de.cau.cs.kieler.kivis.KiVisStandaloneSetup
-import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.emf.common.util.URI
-import java.nio.file.Files
-import java.nio.charset.StandardCharsets
-import java.io.FileWriter
-
-import static de.cau.cs.kieler.kivis.KiVisConstants.*
-import static org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.*
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.deploy.Logger
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kivis.KiVisStandaloneSetup
+import de.cau.cs.kieler.kivis.kivis.Visualization
+import java.io.File
+import java.io.FileWriter
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
 import org.eclipse.core.resources.ResourcesPlugin
-import java.net.URL
+import org.eclipse.core.runtime.Path
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResourceSet
+
+import static de.cau.cs.kieler.kivis.KiVisConstants.*
 
 /**
  * @author als
@@ -63,6 +51,8 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
     public static val IProperty<Boolean> SEARCH = 
         new Property<Boolean>("de.cau.cs.kieler.kivis.autosearch", false)
         
+    public static val VIZ_PRAGMA = PragmaRegistry.register("visualization", StringPragma, "The path to the visualiuation file.")
+        
     val jsProcessor = KiCoolRegistration.getInstance(KiVisJSGenerator) as KiVisJSGenerator
     val logger = new Logger
         
@@ -77,7 +67,8 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
     override process() {
         var Visualization viz = null
         var File vizFile = null
-        var Path vizFolder = null
+        var java.nio.file.Path vizFolder = null
+        val origin = compilationContext.originalModel
         
         if (model instanceof Visualization) {
             viz = model as Visualization
@@ -85,7 +76,7 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
                 if (viz.eResource.URI.platform) {
                     vizFile = new File(
                         ResourcesPlugin.workspace.root.getFile(
-                            new org.eclipse.core.runtime.Path(viz.eResource.URI.toPlatformString(false))
+                            new Path(viz.eResource.URI.toPlatformString(false))
                         ).location.toString
                     )
                 } else {
@@ -95,8 +86,17 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
             } else {
                 vizFolder = Paths.get("")
             }
-        } else if (environment.getProperty(SOURCE) !== null) {
-            val source = environment.getProperty(SOURCE)
+        } else if (environment.getProperty(SOURCE) !== null ||
+            (model instanceof Pragmatable && (model as Pragmatable).pragmas.filter(StringPragma).exists[VIZ_PRAGMA.equals(name)]) ||
+            (origin instanceof Pragmatable && (origin as Pragmatable).pragmas.filter(StringPragma).exists[VIZ_PRAGMA.equals(name)])
+        ) {
+            var source = environment.getProperty(SOURCE)
+            if (source.nullOrEmpty && model instanceof Pragmatable) {
+                source = (model as Pragmatable).pragmas.filter(StringPragma).findFirst[VIZ_PRAGMA.equals(name)].values.head
+            }
+            if (source.nullOrEmpty && origin instanceof Pragmatable) {
+                source = (origin as Pragmatable).pragmas.filter(StringPragma).findFirst[VIZ_PRAGMA.equals(name)].values.head
+            }
             if (!source.nullOrEmpty) {
                 vizFile = new File(source)
                 if (vizFile.exists) {
@@ -252,7 +252,7 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
         if (uri.platform) {
             return Paths.get(
                 ResourcesPlugin.workspace.root.getFile(
-                    new org.eclipse.core.runtime.Path(uri.toPlatformString(true))
+                    new Path(uri.toPlatformString(true))
                 ).parent.location.toString
             )
         } else {
