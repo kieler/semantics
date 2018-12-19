@@ -13,7 +13,8 @@ export const configuration: monaco.languages.LanguageConfiguration = {
         { open: '[', close: ']', notIn: ['string', 'comment'] },
         { open: '(', close: ')', notIn: ['string', 'comment'] }
     ]
-};export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
+};
+export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
 
     tokenPostfix: '.scl',
 
@@ -68,7 +69,7 @@ export const configuration: monaco.languages.LanguageConfiguration = {
     digits: /\d+(_+\d+)*/,
     octaldigits: /[0-7]+(_+[0-7]+)*/,
     binarydigits: /[0-1]+(_+[0-1]+)*/,
-    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,// The main tokenizer for our languages
+    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/, // The main tokenizer for our languages
     tokenizer: {
         root: [
             // identifiers and keywords

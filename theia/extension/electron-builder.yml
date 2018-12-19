@@ -50,10 +50,7 @@ linux:
     - 
       from: "../../../language-server"
       to: "app/kieler/"
-      filter: ["**/*", "!kieler.ini"]
-    - 
-      from: "../../plugins/de.cau.cs.kieler.language.server/resources/kieler.ini"
-      to: "app/kieler/kieler.ini"
+      filter: ["**/*"]
   target:
     # - deb
     - AppImage
