@@ -17,7 +17,6 @@ import { EditorManager } from '@theia/editor/lib/browser'
 import { KeithDiagramLanguageClientContribution } from './keith-diagram-language-client-contribution'
 import { TheiaFileSaver, DiagramManagerImpl, DiagramWidgetRegistry, TheiaDiagramServer, TheiaSprottyConnector } from 'theia-sprotty/lib'
 import { ThemeManager } from './theme-manager';
-// import { KeithSprottyConnector } from './keith-sprotty-connector';
 import URI from '@theia/core/lib/common/uri';
 import { ApplicationShell } from '@theia/core/lib/browser';
 import { ModelSource, DiagramServer, IActionDispatcher, TYPES, RequestModelAction } from 'sprotty/lib';
@@ -31,7 +30,6 @@ export class KeithDiagramManager extends DiagramManagerImpl {
     readonly iconClass = 'fa fa-square-o'
 
     _diagramConnector: TheiaSprottyConnector
-    // diagramWidgetRegistry: DiagramWidgetRegistry
 
     constructor(@inject(KeithDiagramLanguageClientContribution) languageClientContribution: LanguageClientContribution,
                 @inject(TheiaFileSaver) theiaFileSaver: TheiaFileSaver,
@@ -42,20 +40,7 @@ export class KeithDiagramManager extends DiagramManagerImpl {
         super()
         themeManager.initialize()
         this._diagramConnector = new TheiaSprottyConnector(languageClientContribution, theiaFileSaver, editorManager, diagramWidgetRegistry)
-        // this.diagramWidgetRegistry = diagramWidgetRegistry
     }
-
-    // same.
-    // open(uri: URI, input?: OpenerOptions): Promise<DiagramWidget> {
-    //     const promiseDiagramWidget = this.getOrCreateDiagramWidget(uri)
-    //     promiseDiagramWidget.then(diagramWidget => {
-    //         window.requestAnimationFrame(() => {
-    //             this.shell.activateWidget(diagramWidget.id)
-    //             this.onDiagramOpenedEmitter.fire(uri)
-    //         })
-    //     })
-    //     return promiseDiagramWidget
-    // }
 
     async getOrCreateDiagramWidget(uri: URI): Promise<KeithDiagramWidget> {
         const widget = await this.widgetRegistry.getWidget(uri, this.diagramType)
@@ -79,7 +64,6 @@ export class KeithDiagramManager extends DiagramManagerImpl {
     }
 
     createDiagramWidget(uri: URI): KeithDiagramWidget {
-        // const widgetId = this.widgetRegistry.nextId()
         const widgetId = this.widgetRegistry.id()
         const svgContainerId = widgetId + '_sprotty'
         const diagramConfiguration = this.diagramConfigurationRegistry.get(this.diagramType)
@@ -94,7 +78,7 @@ export class KeithDiagramManager extends DiagramManagerImpl {
             actionDispatcher: diContainer.get<IActionDispatcher>(TYPES.IActionDispatcher)
         })
         newWidget.title.closable = true
-        newWidget.title.label = "Diagram"
+        newWidget.title.label = 'Diagram'
         newWidget.title.icon = this.iconClass
         this.widgetRegistry.addWidget(uri, this.diagramType, newWidget)
         newWidget.disposed.connect(() => {
