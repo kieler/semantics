@@ -65,7 +65,7 @@ class SctxFileWizard extends BasicNewResourceWizard {
 
 
     override initializeDefaultPageImageDescriptor() {
-       setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/sccharts_icon16.png"))
+       setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/newscc_wiz.png"))
     }
     
     override boolean performFinish() {
