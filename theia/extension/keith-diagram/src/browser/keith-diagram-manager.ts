@@ -13,7 +13,7 @@
 
 import { inject, injectable } from 'inversify'
 import { LanguageClientContribution } from '@theia/languages/lib/browser'
-import { EditorManager } from '@theia/editor/lib/browser'
+import { EditorManager, EditorWidget } from '@theia/editor/lib/browser'
 import { KeithDiagramLanguageClientContribution } from './keith-diagram-language-client-contribution'
 import { TheiaFileSaver, DiagramManagerImpl, DiagramWidgetRegistry, TheiaDiagramServer, TheiaSprottyConnector } from 'theia-sprotty/lib'
 import { ThemeManager } from './theme-manager';
@@ -40,6 +40,21 @@ export class KeithDiagramManager extends DiagramManagerImpl {
         super()
         themeManager.initialize()
         this._diagramConnector = new TheiaSprottyConnector(languageClientContribution, theiaFileSaver, editorManager, diagramWidgetRegistry)
+        editorManager.onCurrentEditorChanged(this.onCurrentEditorChanged.bind(this))
+    }
+
+    /**
+     * Opens the diagram widget automatically if the current editor has changed.
+     *
+     * @param editorWidget The editor that is now active.
+     */
+    onCurrentEditorChanged(editorWidget: EditorWidget | undefined): void {
+        if (editorWidget) {
+            const uri = editorWidget.getResourceUri()
+            if (uri instanceof URI) {
+                this.open(editorWidget.getResourceUri() as URI)
+            }
+        }
     }
 
     async getOrCreateDiagramWidget(uri: URI): Promise<KeithDiagramWidget> {
