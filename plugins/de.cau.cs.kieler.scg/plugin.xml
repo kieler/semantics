@@ -166,7 +166,7 @@
             class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.DefineUnboundVariablesOfSSA">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.ReplacePreOperatorOfSCG">
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.PreFinalVariableValuesOfSSA">
       </Processor>
    </extension>
    <extension

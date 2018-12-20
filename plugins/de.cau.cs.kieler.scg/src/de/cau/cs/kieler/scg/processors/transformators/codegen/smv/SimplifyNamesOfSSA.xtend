@@ -12,20 +12,13 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
-import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import javax.inject.Inject
 
 /**
@@ -37,7 +30,7 @@ class SimplifyNamesOfSSA extends InplaceProcessor<SCGraphs> implements Traceable
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.scg.processors.ssa.simplenames"
+        return "de.cau.cs.kieler.scg.processors.ssa.simpleNames"
     }
 
     override getName() {
@@ -51,16 +44,9 @@ class SimplifyNamesOfSSA extends InplaceProcessor<SCGraphs> implements Traceable
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    @Inject extension SCGManipulationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SSACoreExtensions
-    @Inject extension SSATransformationExtensions
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsCreateExtensions   
     @Inject extension IOPreserverExtensions      
-    @Inject extension AnnotationsExtensions
-    extension AnnotationsFactory = AnnotationsFactory::eINSTANCE
-    @Inject extension KEffectsExtensions
     
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
