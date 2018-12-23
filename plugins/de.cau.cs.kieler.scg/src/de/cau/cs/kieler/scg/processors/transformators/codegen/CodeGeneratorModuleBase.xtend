@@ -54,16 +54,4 @@ abstract class CodeGeneratorModuleBase extends SCGCodeGeneratorModule {
     protected def void decIndentationLevel() {
         indentationModifier = indentationModifier - 1
     }
-    
-    /**
-     * Adds the header for KIELER generated code.
-     */
-    protected def void addHeader(StringBuilder sb) {
-        sb.append("/*\n" +
-                  " * Automatically generated code by\n" +
-                  " * KIELER SCCharts - The Key to Efficient Modeling\n" +
-                  " *\n" +
-                  " * http://rtsys.informatik.uni-kiel.de/kieler\n" +
-                  " */\n\n") 
-    }
 }

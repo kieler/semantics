@@ -12,36 +12,35 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.ValueType
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import java.util.List
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.PrintCall
-import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
+import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
-import de.cau.cs.kieler.kexpressions.RandomCall
-import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
-import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm

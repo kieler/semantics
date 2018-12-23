@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Root SMV Code Generator Module
@@ -40,6 +41,8 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     public static val SMV_EXTENSION = ".smv"
     
     private var List<SCGCodeGeneratorModule> codeGeneratorModules
+    
+    private val preVariableToOriginalVariable = <String,String>newHashMap
     
     override configure() {
         val declarations= createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
@@ -83,16 +86,30 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     }
     
     protected def addPreGuardsToVariableStore() {
+        preVariableToOriginalVariable.clear
         val store = VariableStore.get(processorInstance.environment)
         for( assignment : scg.nodes.filter(Assignment) ) {
             if(assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
                 val operatorExpression = assignment.expression as OperatorExpression
                 for(preOp : operatorExpression.getPreOperatorExpressions) {
-                    val preOpName = preOp.serializeHR
-                    val variableInformation = store.add(preOpName, PROPERTY_GUARD, PROPERTY_PREGUARD)
-                    variableInformation.type = ValueType.BOOL    
+                    val preVariableName = preOp.serializeHR
+                    val variableInformation = store.add(preVariableName, PROPERTY_GUARD, PROPERTY_PREGUARD)
+                    variableInformation.type = ValueType.BOOL
+                    val originalVariableName = preOp.subExpressions.head.serializeHR
+                    preVariableToOriginalVariable.put(preVariableName.toString, originalVariableName.toString)
                 }
             }
         }
+    }
+    
+    protected def String getOriginalVariableName(String preVariableName) {
+        return preVariableToOriginalVariable.get(preVariableName)
+    }
+    
+    protected def void addHeader(StringBuilder sb) {
+        sb.append("-- Automatically generated code by\n" +
+                  "-- KIELER SCCharts - The Key to Efficient Modeling\n" +
+                  "--\n" +
+                  "-- http://rtsys.informatik.uni-kiel.de/kieler\n\n") 
     }
 }

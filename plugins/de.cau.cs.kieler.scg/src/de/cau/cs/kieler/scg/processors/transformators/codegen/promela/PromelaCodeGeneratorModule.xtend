@@ -97,4 +97,13 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
             }
         }
     }
+    
+    protected def void addHeader(StringBuilder sb) {
+        sb.append("/*\n" +
+                  " * Automatically generated code by\n" +
+                  " * KIELER SCCharts - The Key to Efficient Modeling\n" +
+                  " *\n" +
+                  " * http://rtsys.informatik.uni-kiel.de/kieler\n" +
+                  " */\n\n") 
+    }
 }
