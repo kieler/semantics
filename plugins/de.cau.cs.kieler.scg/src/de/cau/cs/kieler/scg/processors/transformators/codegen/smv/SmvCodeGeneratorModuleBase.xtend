@@ -12,12 +12,29 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorModuleBase
 
 /** 
  * @author aas
  */
 abstract class SmvCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
+    public static val GUARD_PREFIX = "_g"
+    public static val PRE_GUARD_PREFIX = "_p"
+    public static val CONDITIONAL_GUARD_PREFIX = "_cg"
+    public static val GO_GUARD = "_GO"
+    
+    protected def boolean isGuard(ValuedObject valuedObject) {
+        return valuedObject.name.startsWith(GUARD_PREFIX)
+    }
+
+    protected def boolean isConditionGuard(ValuedObject valuedObject) {
+        return valuedObject.name.startsWith(CONDITIONAL_GUARD_PREFIX)
+    }
+
+    protected def boolean isPreGuard(ValuedObject valuedObject) {
+        return valuedObject.name.startsWith(PRE_GUARD_PREFIX)
+    }
     
     override String getLineCommentToken() {
         return "--";

@@ -25,26 +25,18 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
  */
 class SmvCodeGeneratorTickModule extends SmvCodeGeneratorModuleBase {
 
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension SCGControlFlowExtensions
     @Inject extension SmvCodeSerializeHRExtensions serializer
 
-    /** Conditional Stack that keeps track of the nesting depth of conditionals */
-    protected val conditionalStack = <Conditional> newLinkedList
-    
     override getName() {
         return class.simpleName;
     }
 
     override generateInit() {
-        serializer.valuedObjectPrefix = ""
-        serializer.prePrefix = PRE_GUARD_PREFIX
     }
 
     override generate() {
-        appendIndentedLine('''MODULE main''')
+        incIndentationLevel
+        appendIndentedLine("ASSIGN")
     }
 
     override generateDone() {

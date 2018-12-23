@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -35,21 +36,17 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension PromelaCodeSerializeHRExtensions serializer
     
-    public static val PROPERTY_GUARD= "guard"
-    public static val PROPERTY_PREGUARD= "preGuard"
-    public static val PROMELA_EXTENSION = ".pml"
+    protected static val PROPERTY_GUARD= "guard"
+    protected static val PROPERTY_PREGUARD= "preGuard"
+    protected static val PROMELA_EXTENSION = ".pml"
     
-    @Accessors var SCGCodeGeneratorModule declarations
-    @Accessors var SCGCodeGeneratorModule init
-    @Accessors var SCGCodeGeneratorModule tick
+    private var List<SCGCodeGeneratorModule> codeGeneratorModules
     
     override configure() {
-        declarations = injector.getInstance(PromelaCodeGeneratorDeclarationModule)
-        declarations.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
-        init = injector.getInstance(PromelaCodeGeneratorInitModule)
-        init.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
-        tick = injector.getInstance(PromelaCodeGeneratorTickModule)
-        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
+        val declarations = createAndConfigureModule(PromelaCodeGeneratorDeclarationModule)
+        val init = createAndConfigureModule(PromelaCodeGeneratorInitModule)
+        val tick = createAndConfigureModule(PromelaCodeGeneratorTickModule)
+        codeGeneratorModules = #[declarations, init, tick]
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
@@ -57,22 +54,16 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
     }
     
     override generateInit() {
-        declarations.generateInit
-        init.generateInit
-        tick.generateInit
+        codeGeneratorModules.forEach[it.generateInit]
     }
     
     override generate() {
-        declarations.generate
-        init.generate
-        tick.generate
+        codeGeneratorModules.forEach[it.generate]
     }
     
     
     override generateDone() {
-        declarations.generateDone
-        init.generateDone
-        tick.generateDone
+        codeGeneratorModules.forEach[it.generateDone]
     }
     
     override generateWrite(CodeContainer codeContainer) {
@@ -80,14 +71,17 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
         val pmlFile = new StringBuilder
 
         pmlFile.addHeader
-        pmlFile.append(declarations.code)
-        pmlFile.append("\n")
-        pmlFile.append(init.code)
-        pmlFile.append("\n")
-        pmlFile.append(tick.code)
-        pmlFile.append("\n")
-        
+        codeGeneratorModules.forEach[
+            pmlFile.append(it.code)
+            pmlFile.append("\n")
+        ]
         codeContainer.add(pmlFilename, pmlFile.toString)
+    }
+    
+    protected def SCGCodeGeneratorModule createAndConfigureModule(Class<? extends SCGCodeGeneratorModule> clazz) {
+        val module = injector.getInstance(clazz)
+        module.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
+        return module
     }
     
     protected def addPreGuardsToVariableStore() {
@@ -102,5 +96,5 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
                 }
             }
         }
-    } 
+    }
 }

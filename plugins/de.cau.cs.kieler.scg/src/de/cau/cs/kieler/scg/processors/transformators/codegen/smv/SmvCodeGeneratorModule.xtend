@@ -14,18 +14,17 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scg.Assignment
-import javax.management.OperationsException
+import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import java.util.List
 
 /**
- * Root Promela Code Generator Module
+ * Root SMV Code Generator Module
  * 
  * @author aas
  * 
@@ -36,13 +35,16 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SmvCodeSerializeHRExtensions serializer
     
+    public static val PROPERTY_GUARD= "guard"
+    public static val PROPERTY_PREGUARD= "preGuard"
     public static val SMV_EXTENSION = ".smv"
     
-    @Accessors var SCGCodeGeneratorModule tick
+    private var List<SCGCodeGeneratorModule> codeGeneratorModules
     
     override configure() {
-        tick = injector.getInstance(SmvCodeGeneratorTickModule)
-        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + SMV_EXTENSION, this)
+        val declarations= createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
+        val tick = createAndConfigureModule(SmvCodeGeneratorTickModule)
+        codeGeneratorModules = #[declarations, tick]
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
@@ -50,16 +52,15 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     }
     
     override generateInit() {
-        tick.generateInit
+        codeGeneratorModules.forEach[it.generateInit]
     }
     
     override generate() {
-        tick.generate
-    }
-    
+        codeGeneratorModules.forEach[it.generate]
+    }    
     
     override generateDone() {
-        tick.generateDone
+        codeGeneratorModules.forEach[it.generateDone]
     }
     
     override generateWrite(CodeContainer codeContainer) {
@@ -67,10 +68,18 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
         val smvFile = new StringBuilder
 
         smvFile.addHeader
-        smvFile.append(tick.code)
-        smvFile.append("\n")
-        
+        smvFile.append("MODULE main\n")
+        codeGeneratorModules.forEach[
+            smvFile.append(it.code)
+            smvFile.append("\n")
+        ]
         codeContainer.add(smvFilename, smvFile.toString)
+    }
+    
+    protected def SCGCodeGeneratorModule createAndConfigureModule(Class<? extends SCGCodeGeneratorModule> clazz) {
+        val module = injector.getInstance(clazz)
+        module.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + SMV_EXTENSION, this)
+        return module
     }
     
     protected def addPreGuardsToVariableStore() {
@@ -80,10 +89,10 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
                 val operatorExpression = assignment.expression as OperatorExpression
                 for(preOp : operatorExpression.getPreOperatorExpressions) {
                     val preOpName = preOp.serializeHR
-                    val variableInformation = store.add(preOpName, "guard", "preGuard")
+                    val variableInformation = store.add(preOpName, PROPERTY_GUARD, PROPERTY_PREGUARD)
                     variableInformation.type = ValueType.BOOL    
                 }
             }
         }
-    } 
+    }
 }
