@@ -139,7 +139,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
                     node.handleConditionalNesting
                 }
                 node.generate
-                processedNodes += node
+                processedNodes.add(node)
             }
         }
     }
@@ -155,9 +155,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     
     protected def dispatch void generate(Conditional conditional) {
         appendIndentation
-        code.append("if :: (")
-        code.append(conditional.condition.serializeHR)
-        code.append(") -> \n")
+        code.append("if :: (").append(conditional.condition.serializeHR).append(") -> \n")
         incIndentationLevel
         
         conditionalStack.push(conditional)
@@ -172,18 +170,17 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         if (conditional.^else !== null && conditional.^else.target == node) {
             if (incomingControlFlows.size == 1) { 
                 decIndentationLevel
-                appendIndentation
-                code.append(":: else -> ")
+                appendIndentedLine(":: else -> ")
                 incIndentationLevel
             }
         }
-        if (incomingControlFlows.size > 1) for (i : 2..incomingControlFlows.size) {
-            decIndentationLevel
-            appendIndentation
-            code.append(":: else -> skip;\n")
-            appendIndentation
-            code.append("fi\n")
-            conditionalStack.pop
+        if (incomingControlFlows.size > 1) {
+            for (i : 2..incomingControlFlows.size) {
+                decIndentationLevel
+                appendIndentedLine(":: else -> skip;")
+                appendIndentedLine("fi")
+                conditionalStack.pop    
+            }
         }            
     }
     
