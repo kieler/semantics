@@ -24,7 +24,6 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import java.util.Deque
 
 /**
  * Adds the code for the tick loop logic.
@@ -38,6 +37,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     @Inject extension SCGControlFlowExtensions
     @Inject extension PromelaCodeSerializeHRExtensions serializer
 
+    /** Stack of nodes to be serialized to code */
+    protected val nodeStack = <Node> newLinkedList
     /** Conditional Stack that keeps track of the nesting depth of conditionals */
     protected val conditionalStack = <Conditional> newLinkedList
     
@@ -126,37 +127,33 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     
     private def void generateSequentialScgLogic() {
         generateSeparatorComment("tick logic")
-        var nodes = newLinkedList(scg.nodes.head)
         val processedNodes = <Node> newHashSet
+        nodeStack.clear
+        nodeStack.add(scg.nodes.head)
         conditionalStack.clear
         
-        while(!nodes.empty) {
-            val node = nodes.pop
+        while(!nodeStack.empty) {
+            val node = nodeStack.pop
             if (!processedNodes.contains(node)) {
-                node.generate(nodes)
+                if (!conditionalStack.empty) { 
+                    node.handleConditionalNesting
+                }
+                node.generate
                 processedNodes += node
             }
         }
     }
     
-    protected def dispatch void generate(Assignment assignment, Deque<Node> nodes) {
-        if (!conditionalStack.empty) { 
-            assignment.handleConditionalNesting
-        }
-        
+    protected def dispatch void generate(Assignment assignment) {
         if (assignment.valuedObject !== null) {
             appendIndentation
             code.append(assignment.serializeHR).append(";\n")
         }
     
-        if (assignment.next !== null) nodes.push(assignment.next.targetNode)
+        if (assignment.next !== null) nodeStack.push(assignment.next.targetNode)
     }
     
-    protected def dispatch void generate(Conditional conditional, Deque<Node> nodes) {
-        if (!conditionalStack.empty) { 
-            conditional.handleConditionalNesting
-        }
-        
+    protected def dispatch void generate(Conditional conditional) {
         appendIndentation
         code.append("if :: (")
         code.append(conditional.condition.serializeHR)
@@ -165,8 +162,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         
         conditionalStack.push(conditional)
         
-        if (conditional.^else !== null) nodes.push(conditional.^else.targetNode)        
-        if (conditional.^then !== null) nodes.push(conditional.^then.targetNode)
+        if (conditional.^else !== null) nodeStack.push(conditional.^else.targetNode)        
+        if (conditional.^then !== null) nodeStack.push(conditional.^then.targetNode)
     }
     
     protected def void handleConditionalNesting(Node node) {
@@ -190,13 +187,10 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         }            
     }
     
-    protected def dispatch void generate(Entry entry, Deque<Node> nodes) {
-        nodes += entry.next?.targetNode
+    protected def dispatch void generate(Entry entry) {
+        nodeStack.add(entry.next?.targetNode)
     }
     
-    protected def dispatch void generate(Exit exit, Deque<Node> nodes) {
-        if (!conditionalStack.empty) { 
-            exit.handleConditionalNesting
-        }
+    protected def dispatch void generate(Exit exit) {
     }
 }
