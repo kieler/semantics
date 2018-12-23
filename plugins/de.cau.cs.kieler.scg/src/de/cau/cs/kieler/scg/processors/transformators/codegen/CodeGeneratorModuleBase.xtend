@@ -12,34 +12,14 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 
 /** 
  * @author aas
  */
 abstract class CodeGeneratorModuleBase extends SCGCodeGeneratorModule {
-    @Inject extension KExpressionsValuedObjectExtensions
     
-    protected static val GUARD_PREFIX = "_g"
-    protected static val PRE_GUARD_PREFIX = "_p"
-    protected static val CONDITIONAL_GUARD_PREFIX = "_cg"
-    
-    abstract protected def String getLineCommentToken()
-    
-    protected def boolean isGuard(ValuedObject valuedObject) {
-        return valuedObject.name.startsWith("_g")
-    }
-
-    protected def boolean isConditionGuard(ValuedObject valuedObject) {
-        return valuedObject.name.startsWith("_cg")
-    }
-
-    protected def boolean isPreGuard(ValuedObject valuedObject) {
-        return valuedObject.name.startsWith("_p")
-    }
+    abstract def String getLineCommentToken()
     
     protected def void appendIndentation() {
         indent(0) // The indentationModifier is always added

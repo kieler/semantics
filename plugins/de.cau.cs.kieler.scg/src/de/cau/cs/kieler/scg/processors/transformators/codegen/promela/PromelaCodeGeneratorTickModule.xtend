@@ -51,7 +51,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
 
     override generate() {
-        appendIndentedLine('''proctype «TICK_LOOP_FUNCTION_NAME»() {''')
+        appendIndentedLine('''proctype «TICK_LOOP_FUNCTION»() {''')
         incIndentationLevel
         appendIndentedLine("do")
         appendIndentedLine("::")
@@ -77,11 +77,12 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     
     private def void generateAfterTickLogic() {
         generateSeparatorComment("after tick logic")
-        appendIndentedLine("_GO = 0;")
+        appendIndentedLine('''«GO_GUARD» = 0;''')
+        // Set pre guards
         val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
             val variableInformation = entry.value
-            if(variableInformation.properties.contains("preGuard")) {
+            if(variableInformation.properties.contains(PromelaCodeGeneratorModule.PROPERTY_PREGUARD)) {
                 val preGuardName = entry.key
                 // The variable of which the previous value should be used comes after the prefix of pre guards
                 val predVariableName = "_" + preGuardName.substring(PRE_GUARD_PREFIX.length)

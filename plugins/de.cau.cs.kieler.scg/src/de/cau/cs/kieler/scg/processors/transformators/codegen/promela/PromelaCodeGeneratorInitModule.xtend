@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  * 
  */
 class PromelaCodeGeneratorInitModule extends PromelaCodeGeneratorModuleBase {
-
+    
     override getName() {
         return class.simpleName;
     }
@@ -35,8 +35,7 @@ class PromelaCodeGeneratorInitModule extends PromelaCodeGeneratorModuleBase {
         incIndentationLevel
         
         // Add the initialization of _GO and pre-guards
-        appendIndentation()
-        code.append("_GO = 1;\n")
+        appendIndentedLine('''«GO_GUARD» = 1;''')
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
                 if (declaration instanceof VariableDeclaration) {
@@ -48,7 +47,7 @@ class PromelaCodeGeneratorInitModule extends PromelaCodeGeneratorModuleBase {
             }
         }
         // Run the tick loop
-        appendIndentedLine('''run «TICK_LOOP_FUNCTION_NAME»();''')
+        appendIndentedLine('''run «TICK_LOOP_FUNCTION»();''')
         
         decIndentationLevel
         appendIndentedLine("}")
