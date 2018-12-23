@@ -35,6 +35,8 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension PromelaCodeSerializeHRExtensions serializer
     
+    public static val PROPERTY_GUARD= "guard"
+    public static val PROPERTY_PREGUARD= "preGuard"
     public static val PROMELA_EXTENSION = ".pml"
     
     @Accessors var SCGCodeGeneratorModule declarations
@@ -95,7 +97,7 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
                 val operatorExpression = assignment.expression as OperatorExpression
                 for(preOp : operatorExpression.getPreOperatorExpressions) {
                     val preOpName = preOp.serializeHR
-                    val variableInformation = store.add(preOpName, "guard", "preGuard")
+                    val variableInformation = store.add(preOpName, PROPERTY_GUARD, PROPERTY_PREGUARD)
                     variableInformation.type = ValueType.BOOL    
                 }
             }

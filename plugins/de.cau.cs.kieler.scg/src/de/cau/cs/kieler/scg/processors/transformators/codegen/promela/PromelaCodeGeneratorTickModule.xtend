@@ -13,13 +13,10 @@
 package de.cau.cs.kieler.scg.processors.transformators.codegen.promela
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -28,8 +25,6 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.Deque
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.compilation.VariableInformation
 
 /**
  * Adds the code for the tick loop logic.
@@ -39,8 +34,6 @@ import de.cau.cs.kieler.kicool.compilation.VariableInformation
  */
 class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
 
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension PromelaCodeSerializeHRExtensions serializer
@@ -67,8 +60,6 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         incIndentationLevel
         generateSettingRandomInputs()
         code.append("\n")
-        generateGuardInitialization()
-        code.append("\n")
         generateSequentialScgLogic()
         code.append("\n")
         generateAfterTickLogic()
@@ -82,27 +73,6 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
 
     override generateDone() {
         
-    }
-    
-    private def void generateGuardInitialization() {
-        generateSeparatorComment("guard initialization")
-        for (declaration : scg.declarations) {
-            for (valuedObject : declaration.valuedObjects) {
-                if (declaration instanceof VariableDeclaration) {
-                    if (isGuard(valuedObject) || isConditionGuard(valuedObject)) {
-                        val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
-                            declaration.type.serializeHR
-                            else declaration.hostType
-                        appendIndentation
-                        code.append(declarationType)
-                        code.append(" ")
-                        code.append(valuedObject.name)
-                        code.append(" = 0");
-                        code.append(";\n")
-                    }
-                }
-            }
-        }
     }
     
     private def void generateAfterTickLogic() {

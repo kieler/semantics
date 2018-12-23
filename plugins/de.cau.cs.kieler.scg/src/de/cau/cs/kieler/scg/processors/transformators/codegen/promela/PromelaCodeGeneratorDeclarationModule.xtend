@@ -40,15 +40,13 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
                 if (declaration instanceof VariableDeclaration) {
-                    if(!isGuard(valuedObject) && !isConditionGuard(valuedObject)) {
-                        val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
-                            declaration.type.serializeHR
-                            else declaration.hostType
-                        code.append(declarationType)
-                        code.append(" ")
-                        code.append(valuedObject.name)
-                        code.append(";\n")
-                    }
+                    val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                        declaration.type.serializeHR
+                        else declaration.hostType
+                    code.append(declarationType)
+                    code.append(" ")
+                    code.append(valuedObject.name)
+                    code.append(";\n")
                 }
             }
         }
@@ -57,7 +55,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
             val variableInformation = entry.value
-            if(variableInformation.properties.contains("preGuard")) {
+            if(variableInformation.properties.contains(PromelaCodeGeneratorModule.PROPERTY_PREGUARD)) {
                 val preGuardName = entry.key
                 appendIndentation()
                 code.append("bool ").append(preGuardName).append(" = 0;\n")
