@@ -125,19 +125,15 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
             const widgetPromise = this.widgetManager.getWidget('diagramoptions-view')
             widgetPromise.then(widget => {
                 this.initializeDiagramOptionsViewWidget(widget)
-                // if (widget) {
-                //     this.updateContent()
-                // }
             })
         }
     }
 
-    async updateContent(waitForDiagram = false) {
+    async updateContent() {
         if (this.diagramOptionsViewWidget.sourceModelPath !== this.editorWidget.editor.uri.toString() || !this.diagramOptionsViewWidget.hasContent) {
             const lClient = await this.client.languageClient
             const param = {
-                uri: this.editorWidget.editor.uri.toString(),
-                waitForDiagram : waitForDiagram
+                uri: this.editorWidget.editor.uri.toString()
             }
             const options: SynthesisOption[] = await lClient.sendRequest(GET_OPTIONS, param) as SynthesisOption[]
             if (options) {
