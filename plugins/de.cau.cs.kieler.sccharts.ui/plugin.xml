@@ -543,5 +543,17 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.sccharts.ui.verification.VerificationView"
+            icon="icons/no_bugs.png"
+            id="de.cau.cs.kieler.sccharts.ui.verification.verificationView"
+            name="Model Checking"
+            restorable="true">
+      </view>
+   </extension>
    
 </plugin>
