@@ -14,7 +14,7 @@
 import { inject, injectable } from 'inversify'
 import { LanguageClientContribution } from '@theia/languages/lib/browser'
 import { EditorManager, EditorWidget } from '@theia/editor/lib/browser'
-import { KeithDiagramLanguageClientContribution } from './keith-diagram-language-client-contribution'
+import { KeithLanguageClientContribution } from 'keith-language/lib/browser/keith-language-client-contribution'
 import { TheiaFileSaver, DiagramManagerImpl, DiagramWidgetRegistry, TheiaDiagramServer, TheiaSprottyConnector } from 'theia-sprotty/lib'
 import { ThemeManager } from './theme-manager';
 import URI from '@theia/core/lib/common/uri';
@@ -31,7 +31,7 @@ export class KeithDiagramManager extends DiagramManagerImpl {
 
     _diagramConnector: TheiaSprottyConnector
 
-    constructor(@inject(KeithDiagramLanguageClientContribution) languageClientContribution: LanguageClientContribution,
+    constructor(@inject(KeithLanguageClientContribution) languageClientContribution: LanguageClientContribution,
                 @inject(TheiaFileSaver) theiaFileSaver: TheiaFileSaver,
                 @inject(EditorManager) editorManager: EditorManager,
                 @inject(DiagramWidgetRegistry) diagramWidgetRegistry: DiagramWidgetRegistry,

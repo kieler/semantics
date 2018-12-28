@@ -31,6 +31,7 @@ import de.cau.cs.kieler.scl.SCLRuntimeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 import org.eclipse.xtext.util.Modules2
+import de.cau.cs.kieler.language.server.registration.RegistrationServerModule
 
 /**
  * @author sdo
@@ -58,7 +59,7 @@ class LanguageRegistration {
         
         new LustreIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
+                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule, new RegistrationServerModule))
             }
         }.createInjectorAndDoEMFRegistration()
         

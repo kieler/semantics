@@ -20,15 +20,11 @@ import { FrontendApplicationContribution, OpenHandler } from '@theia/core/lib/br
 import 'sprotty/css/sprotty.css'
 import 'theia-sprotty/css/theia-sprotty.css'
 import { ThemeManager } from './theme-manager'
-import { ContextMenuCommands } from './dynamic-commands';
-import { KeithDiagramLanguageClientContribution } from './keith-diagram-language-client-contribution';
-import { LanguageClientContribution } from '@theia/languages/lib/browser';
 import { CommandContribution } from '@theia/core';
 import { KeithDiagramCommandContribution } from './keith-diagram-command-contribution';
 import { KeithDiagramWidgetRegistry } from './keith-diagram-widget-registry';
 
 export default new ContainerModule((bind, unbind, isBound, rebind) => {
-    bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithDiagramLanguageClientContribution))
     bind(DiagramConfiguration).to(KeithDiagramConfiguration).inSingletonScope()
     bind(DiagramManagerProvider).toProvider<DiagramManager>(context => {
         return () => {
@@ -42,9 +38,6 @@ export default new ContainerModule((bind, unbind, isBound, rebind) => {
     bind(OpenHandler).toDynamicValue(context => context.container.get(KeithDiagramManager))
 
     bind(ThemeManager).toSelf().inSingletonScope()
-    bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
-
-    bind(KeithDiagramLanguageClientContribution).toSelf().inSingletonScope()
     bind(CommandContribution).to(KeithDiagramCommandContribution).inSingletonScope()
     rebind(DiagramWidgetRegistry).to(KeithDiagramWidgetRegistry).inSingletonScope()
     bind(KeithDiagramWidgetRegistry).toSelf().inSingletonScope()
