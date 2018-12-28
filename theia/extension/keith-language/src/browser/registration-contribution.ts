@@ -13,12 +13,6 @@
 
 import { inject, injectable } from 'inversify';
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
-import { configuration as kgtConfiguration, monarchLanguage as kgtMonarchLanguage} from './kgt-monaco-language'
-import { configuration as kextConfiguration, monarchLanguage as kextMonarchLanguage} from './kext-monaco-language'
-import { configuration as annoConfiguration, monarchLanguage as annoMonarchLanguage} from './anno-monaco-language'
-import { configuration as strlConfiguration, monarchLanguage as strlMonarchLanguage} from './strl-monaco-language'
-import { configuration as lusConfiguration, monarchLanguage as lusMonarchLanguage} from './lus-monaco-language'
-import { configuration as sclConfiguration, monarchLanguage as sclMonarchLanguage} from './scl-monaco-language';
 import { CommandContribution, CommandRegistry } from '@theia/core';
 
 @injectable()
@@ -48,32 +42,10 @@ export class RegistrationContribution implements CommandContribution {
                 mimetypes: ['text/' + language.id]
             })
             monaco.languages.onLanguage(language.id, () => {
-                switch (language.id) {
-                    case "scl":
-                        monaco.languages.setLanguageConfiguration(language.id, sclConfiguration)
-                        monaco.languages.setMonarchTokensProvider(language.id, sclMonarchLanguage)
-                        break
-                    case "anno":
-                        monaco.languages.setLanguageConfiguration(language.id, annoConfiguration)
-                        monaco.languages.setMonarchTokensProvider(language.id, annoMonarchLanguage)
-                        break
-                    case "kgt":
-                        monaco.languages.setLanguageConfiguration(language.id, kgtConfiguration)
-                        monaco.languages.setMonarchTokensProvider(language.id, kgtMonarchLanguage)
-                        break
-                    case "kext":
-                        monaco.languages.setLanguageConfiguration(language.id, kextConfiguration)
-                        monaco.languages.setMonarchTokensProvider(language.id, kextMonarchLanguage)
-                        break
-                    case "lus":
-                        monaco.languages.setLanguageConfiguration(language.id, lusConfiguration)
-                        monaco.languages.setMonarchTokensProvider(language.id, lusMonarchLanguage)
-                        break
-                    case "strl":
-                        monaco.languages.setLanguageConfiguration(language.id, strlConfiguration)
-                        monaco.languages.setMonarchTokensProvider(language.id, strlMonarchLanguage)
-                        break
-                }
+                let mLanguage = monarchLanguage as MyMonarchLanguage
+                mLanguage.keywords = language.keywords
+                monaco.languages.setLanguageConfiguration(language.id, configuration)
+                monaco.languages.setMonarchTokensProvider(language.id, mLanguage)
             });
             this.client.patterns.push("**/*." + language.id)
             this.client.documentSelectors.push(language.id)
@@ -82,7 +54,116 @@ export class RegistrationContribution implements CommandContribution {
     }
 }
 
+export interface MyMonarchLanguage extends monaco.languages.IMonarchLanguage {
+    tokenizer: { [name: string]: monaco.languages.IMonarchLanguageRule[]; };    ignoreCase?: boolean | undefined;
+    defaultToken?: string | undefined;
+    brackets?: monaco.languages.IMonarchLanguageBracket[] | undefined;
+    start?: string | undefined;
+    tokenPostfix?: string | undefined;
+    keywords: string[]
+
+}
+
 export class LanguageDescription {
     id: string
     name: string
+    keywords: string[]
 }
+
+export const configuration: monaco.languages.LanguageConfiguration = {
+    // the default separators except `@$`
+    wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
+    comments: {
+        lineComment: '//',
+        blockComment: ['/*', '*/'],
+    },
+    brackets: [['{', '}'], ['[', ']'], ['(', ')']],
+    autoClosingPairs: [
+        { open: '"', close: '"', notIn: ['string', 'comment'] },
+        { open: '\'', close: '\'', notIn: ['string', 'comment'] },
+        { open: '{', close: '}', notIn: ['string', 'comment'] },
+        { open: '[', close: ']', notIn: ['string', 'comment'] },
+        { open: '(', close: ')', notIn: ['string', 'comment'] }
+    ]
+};
+
+export const monarchLanguage = <MyMonarchLanguage>{
+
+    tokenPostfix: '.lus',
+
+    keywords: [
+    ],
+    symbols: /[=><!~?:&|+\-*\/\^%]+/,
+    escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+    digits: /\d+(_+\d+)*/,
+    octaldigits: /[0-7]+(_+[0-7]+)*/,
+    binarydigits: /[0-1]+(_+[0-1]+)*/,
+    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/, // The main tokenizer for our languages
+    tokenizer: {
+        root: [
+            // identifiers and keywords
+            [/[a-zA-Z_][a-zA-Z_0-9\-\.]*/, {
+                cases: {
+                    '@keywords': { token: 'keyword.$0' },
+                    '@default': 'identifier'
+                }
+            }],
+
+            // whitespace
+            { include: '@whitespace' },
+
+            // delimiters and operators
+            [/[{}()\[\]]/, '@brackets'],
+            [/[<>](?!@symbols)/, '@brackets'],
+            [/@symbols/, {
+                cases: {
+                    '@default': ''
+                }
+            }],
+
+            [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
+
+            // numbers
+            [/(@digits)[eE]([\-+]?(@digits))?[fFdD]?/, 'number.float'],
+            [/(@digits)\.(@digits)([eE][\-+]?(@digits))?[fFdD]?/, 'number.float'],
+            [/0[xX](@hexdigits)[Ll]?/, 'number.hex'],
+            [/0(@octaldigits)[Ll]?/, 'number.octal'],
+            [/0[bB](@binarydigits)[Ll]?/, 'number.binary'],
+            [/(@digits)[fFdD]/, 'number.float'],
+            [/(@digits)[lL]?/, 'number'],
+
+            // delimiter: after number because of .\d floats
+            [/[;,.]/, 'delimiter'],
+
+            // strings
+            [/"/, 'string', '@string'],
+            [/'/, 'string', '@singleQuotedString'],
+        ],
+
+        whitespace: [
+            [/[ \t\r\n]+/, ''],
+            [/\/\*/, 'comment', '@comment'],
+            [/\/\/.*$/, 'comment'],
+        ],
+
+        comment: [
+            [/[^\/*]+/, 'comment'],
+            // [/\/\*/, 'comment', '@push' ],    // nested comment not allowed :-(
+            // [/\/\*/,    'comment.invalid' ],    // this breaks block comments in the shape of /* //*/
+            [/\*\//, 'comment', '@pop'],
+            [/[\/*]/, 'comment']
+        ],
+
+        string: [
+            [/[^\\"]+/, 'string'],
+            [/@escapes/, 'string.escape'],
+            [/\\./, 'string.escape.invalid'],
+            [/"/, 'string', '@pop']
+        ],
+
+        singleQuotedString: [
+            [/[^\\']+/, 'string'],
+            [/'/, 'string', '@pop']
+        ],
+    },
+};

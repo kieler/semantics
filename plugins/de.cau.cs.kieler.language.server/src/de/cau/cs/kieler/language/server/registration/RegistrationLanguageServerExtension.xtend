@@ -22,6 +22,9 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import java.util.List
+import de.cau.cs.kieler.scl.ide.SCLIdeModule
+import org.eclipse.xtext.GrammarUtil
+import org.eclipse.xtext.Grammar
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -49,12 +52,12 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
     
     override getLanguages() {
         val list = new ArrayList()
-        list.add(new Language("scl", "SCL"))
-        list.add(new Language("anno", "Annotations"))
-        list.add(new Language("kext", "Kext"))
-        list.add(new Language("strl", "Esterel"))
-        list.add(new Language("lus", "Lustre"))
-        list.add(new Language("kgt", "KGraph"))
+        list.add(new Language("scl", "SCL", new ArrayList()))
+        list.add(new Language("anno", "Annotations", new ArrayList()))
+        list.add(new Language("kext", "Kext", new ArrayList))
+        list.add(new Language("strl", "Esterel", new ArrayList))
+        list.add(new Language("lus", "Lustre", new ArrayList))
+        list.add(new Language("kgt", "KGraph", new ArrayList))
         return requestManager.runRead[ cancelIndicator |
             list
         ]
@@ -65,75 +68,6 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
 class Language {
     String id
     String name
-//    MonarchLanguage monarchLanguage
-//    MonarchConfiguration configuration
-    
-}
-
-@Data
-class MonarchConfiguration {
-    String wordPattern
-    Comments comments
-    List<List<String>> brackets
-    AutoClosingPairs autoClosingPairs
-}
-
-@Data
-class Comments {
-    String lineComment
-    List<String> blockComment
-}
-
-@Data
-class AutoClosingPairs {
-    String open
-    String close
-    List<String> notIn
-}
-
-@Data
-class MonarchLanguage {
-    String tokenPostfix
     List<String> keywords
-    String symbols
-    String escapes
-    String digits
-    String octaldigits
-    String binarydigits
-    String hexdigits
-    Tokenizer tokenizer
-}
-
-@Data
-class Tokenizer {
-    Root root
-    Whitespace whitespace
-    Comment comment
-    MString string
-    SingleQuotedString singleQuotedString
-}
-
-@Data 
-class Root {
     
-}
-
-@Data
-class Whitespace {
-    //TODO
-}
-
-@Data
-class Comment {
-    //TODO
-}
-
-@Data
-class MString {
-    //TODO 
-}
-
-@Data
-class SingleQuotedString {
-    //TODO
 }
