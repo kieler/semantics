@@ -58,8 +58,8 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         val kextKeywords = #['_','bool','call','combine','conflict','confluent','const','expression','extern',
         'float','global','host','input','int','max','min','none','output','pre','print','pure','random','randomize',
         'ref','schedule','scope','signal','static','string','unsigned','val']
-        val esterelKeywords = #[]
-        val lustreKeywords = #[]
+        val strlKeywords = #[]
+        val lusKeywords = #[]
         val kgtKeywords = #['absolutePos','actions','anchor','areaData','background','bevel','bold','bottom',
         'bottomRightAnchor','center','chord','clipShape','columns','custom','dash','dashOffset','dashPattern',
         'decoratorData','dot','double','doubleClick','error','flat','flexibleHeight','flexibleWidth','fontName',
@@ -73,13 +73,20 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         'selection','shadow','single','singleClick','singleOrMultiClick','size','solid','square','squiggle','styles',
         'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
         'yoffset']
+        val sctxKeywords = #['Pr','_','abort','auto','bool','call','clock','combine','conflict','confluent','connector',
+        'const','dataflow','deferred','delayed','do','during','entry','exit','expression','extern','final','float',
+        'for','global','go','history','host','if','immediate','initial','input','int','is','join','label','max','min',
+        'nondeterministic','none','once','output','period','pre','preceding','print','pure','random','randomize','ref','region',
+        'reset','scchart','schedule','scope','shallow','signal','state','static','string','succeeding','suspend',
+        'to','undefined','unsigned','val','violation','weak']
         val list = new ArrayList()
         list.add(new Language("scl", "SCL", sclKeywords))
         list.add(new Language("anno", "Annotations", #[]))
         list.add(new Language("kext", "Kext", kextKeywords))
-        list.add(new Language("strl", "Esterel", new ArrayList))
-        list.add(new Language("lus", "Lustre", new ArrayList))
-        list.add(new Language("kgt", "KGraph", new ArrayList))
+        list.add(new Language("strl", "Esterel",strlKeywords))
+        list.add(new Language("lus", "Lustre", lusKeywords))
+        list.add(new Language("kgt", "KGraph", kgtKeywords))
+        list.add(new Language("sctx", "SCCharts", sctxKeywords))
         return requestManager.runRead[ cancelIndicator |
             list
         ]

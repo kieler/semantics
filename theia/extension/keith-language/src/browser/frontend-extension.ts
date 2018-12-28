@@ -19,8 +19,7 @@ import { KeithLanguageClientContribution } from './keith-language-client-contrib
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
 import { RegistrationContribution } from './registration-contribution';
 import { CommandContribution } from '@theia/core';
-import { LanguageRegister } from '../common';
-import { configuration as sctxConfiguration, monarchLanguage as sctxMonarchLanguage } from './sctx-monaco-language'
+// import { LanguageRegister } from '../common';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
     // register kgt
@@ -36,16 +35,12 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     // });
 
     // register sctx
-    monaco.languages.register({
-        id: LanguageRegister.sctxId,
-        aliases: [LanguageRegister.sctxName, LanguageRegister.sctxId],
-        extensions: ['.' + LanguageRegister.sctxId],
-        mimetypes: ['text/' + LanguageRegister.sctxId]
-    })
-    monaco.languages.onLanguage(LanguageRegister.sctxId, () => {
-        monaco.languages.setLanguageConfiguration(LanguageRegister.sctxId, sctxConfiguration)
-        monaco.languages.setMonarchTokensProvider(LanguageRegister.sctxId, sctxMonarchLanguage)
-    });
+    // monaco.languages.register({
+    //     id: LanguageRegister.sctxId,
+    //     aliases: [LanguageRegister.sctxName, LanguageRegister.sctxId],
+    //     extensions: ['.' + LanguageRegister.sctxId],
+    //     mimetypes: ['text/' + LanguageRegister.sctxId]
+    // })
 
     // // register kext
     // monaco.languages.register({

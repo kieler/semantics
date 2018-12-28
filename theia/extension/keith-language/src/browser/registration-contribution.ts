@@ -43,6 +43,7 @@ export class RegistrationContribution implements CommandContribution {
             })
             monaco.languages.onLanguage(language.id, () => {
                 let mLanguage = monarchLanguage as MyMonarchLanguage
+                console.log("Adding highlighting for " + language.name)
                 mLanguage.keywords = language.keywords
                 monaco.languages.setLanguageConfiguration(language.id, configuration)
                 monaco.languages.setMonarchTokensProvider(language.id, mLanguage)
