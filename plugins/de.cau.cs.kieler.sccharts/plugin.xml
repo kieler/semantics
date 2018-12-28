@@ -27,6 +27,7 @@
    <extension-point id="text.generator.extension" 
         name="SCT Generator Extension" 
         schema="schema/de.cau.cs.kieler.sccharts.text.generator.extension.exsd"/>
+   <extension-point id="verification.verificationBackend" name="Verification Backend" schema="schema/de.cau.cs.kieler.sccharts.verification.verificationBackend.exsd"/>
    <extension
          point="de.cau.cs.kieler.sccharts.text.generator.extension">
       <SCTGeneratorExtension
@@ -234,6 +235,15 @@
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
         </TransformationSystem>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.sccharts.verification.verificationBackend">
+        <VerificationBackendExtension
+              class="de.cau.cs.kieler.sccharts.verification.backends.SpinVerificationBackend">
+        </VerificationBackendExtension>
+        <VerificationBackendExtension
+              class="de.cau.cs.kieler.sccharts.verification.backends.NusmvVerificationBackend">
+        </VerificationBackendExtension>
      </extension>
 
 

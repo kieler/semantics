@@ -12,14 +12,25 @@
  */
 package de.cau.cs.kieler.sccharts.verification
 
+import de.cau.cs.kieler.sccharts.verification.backends.VerificationBackend
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.Delegate
 
 /** 
  * @author aas
  */
-class VerificationContext {
+class VerificationContext implements VerificationControls {
+    @Delegate
+    @Accessors
+    private val VerificationController controller
+    
     @Accessors private EObject model = null
     @Accessors private List<VerificationProperty> verificationProperties = newArrayList
+    @Accessors private VerificationBackend backend    
+    
+    new() {
+       controller = new VerificationController(this)
+    }
 }

@@ -13,6 +13,13 @@
 package de.cau.cs.kieler.sccharts.ui.verification
 
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
+import de.cau.cs.kieler.sccharts.verification.VerificationContext
+import de.cau.cs.kieler.sccharts.verification.VerificationProperty
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.viewers.ArrayContentProvider
@@ -24,11 +31,10 @@ import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
+import de.cau.cs.kieler.sccharts.verification.backends.VerificationBackend
+import de.cau.cs.kieler.sccharts.verification.backends.NusmvVerificationBackend
 
 /** 
  * @author aas
@@ -41,6 +47,7 @@ class VerificationView extends ViewPart {
     public static var VerificationView instance
     
     private val scchartsVerificationPropertyAnalyzer = new SCChartsVerificationPropertyAnalyzer
+    private var VerificationContext runningVerificationContext = null
     
     // == UI ELEMENTS ==
     /**
@@ -78,23 +85,41 @@ class VerificationView extends ViewPart {
         viewer.control.setFocus
     }
     
-     /**
+    /**
      * Creates the menu.
      */
     private def void createMenu() {
         runCheck = new Action("Start Check", IAction.AS_PUSH_BUTTON) {
             override run() {
-               
+                val property = selectedProperty
+                if(property === null) {
+                    return
+                }
+                val model = currentDiagramModel
+                if(model === null || !(model instanceof EObject)) {
+                    return
+                }
+                if(runningVerificationContext !== null) {
+                    runningVerificationContext.stop
+                }
+                runningVerificationContext = new VerificationContext()
+                runningVerificationContext.verificationProperties = #[property]
+                runningVerificationContext.model = model as EObject
+                runningVerificationContext.backend = selectedBackend
+                runningVerificationContext.start(true)
             }
         }
         stopCheck = new Action("Stop Check", IAction.AS_PUSH_BUTTON) {
             override run() {
-               
+                if(runningVerificationContext !== null) {
+                    runningVerificationContext.stop
+                    runningVerificationContext = null
+                }
             }
         }
         runCounterexample = new Action("Run Counterexample", IAction.AS_PUSH_BUTTON) {
             override run() {
-               
+                
             }
         }
         readModel = new Action("Read Model", IAction.AS_PUSH_BUTTON) {
@@ -158,12 +183,21 @@ class VerificationView extends ViewPart {
         return viewer
     }
     
+    private def VerificationBackend getSelectedBackend() {
+        // TODO: add ui control to set this
+        return new NusmvVerificationBackend()
+    }
+    
+    private def VerificationProperty getSelectedProperty() {
+        return viewer.structuredSelection?.firstElement as VerificationProperty
+    }
+    
     /**
      * Returns the current model in the diagram.
      * 
      * @param the current model in the diagram
      */
-    protected def Object getCurrentDiagramModel() {
+    private def Object getCurrentDiagramModel() {
         val diagramViewContext = getDiagramViewContext
         if(diagramViewContext === null) {
             return null
@@ -176,7 +210,7 @@ class VerificationView extends ViewPart {
      * 
      * @return the diagram view context
      */
-    protected def ViewContext getDiagramViewContext() {
+    private def ViewContext getDiagramViewContext() {
         val diagramViews = DiagramView.getAllDiagramViews
         if (!diagramViews.isNullOrEmpty) {
             val DiagramView viewPart = diagramViews.head
