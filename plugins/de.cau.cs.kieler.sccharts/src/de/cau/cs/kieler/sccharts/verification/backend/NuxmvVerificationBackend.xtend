@@ -10,14 +10,18 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
- package de.cau.cs.kieler.sccharts.verification.backends
+ package de.cau.cs.kieler.sccharts.verification.backend
 
 import de.cau.cs.kieler.sccharts.verification.VerificationContext
-import java.util.List
+import de.cau.cs.kieler.sccharts.verification.backend.task.CompileToSmvTask
 
 /**
  * @author aas
  */
-interface VerificationBackend {
-    def List<VerificationSubTask> getVerificationTasks(VerificationContext context)
+class NuxmvVerificationBackend implements VerificationBackend {
+    
+    override getVerificationTasks(VerificationContext context) {
+        val compileTask = new CompileToSmvTask(context)
+        return newArrayList(compileTask)
+    }
 }

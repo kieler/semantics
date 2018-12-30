@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
- package de.cau.cs.kieler.sccharts.verification.backends
+ package de.cau.cs.kieler.sccharts.verification.backend
 
 import de.cau.cs.kieler.sccharts.verification.VerificationContext
 
@@ -20,7 +20,7 @@ import de.cau.cs.kieler.sccharts.verification.VerificationContext
 class NusmvVerificationBackend implements VerificationBackend {
     
     override getVerificationTasks(VerificationContext context) {
-        val dummyTask = new VerificationSubTask {
+        val dummyTask = new VerificationBackendTask {
             override getName() {
                 return "Dummy Task"
             }

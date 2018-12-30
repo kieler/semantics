@@ -55,7 +55,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.sccharts.verification.backends.VerificationBackend"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.sccharts.verification.backend.VerificationBackend"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
- package de.cau.cs.kieler.sccharts.verification.backends
+ package de.cau.cs.kieler.sccharts.verification.backend
 
 import java.util.List
 import org.eclipse.core.runtime.IConfigurationElement

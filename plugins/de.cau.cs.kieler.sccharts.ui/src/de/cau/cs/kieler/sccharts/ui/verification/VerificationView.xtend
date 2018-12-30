@@ -18,7 +18,8 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
 import de.cau.cs.kieler.sccharts.verification.VerificationContext
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
-import java.util.List
+import de.cau.cs.kieler.sccharts.verification.backend.NuxmvVerificationBackend
+import de.cau.cs.kieler.sccharts.verification.backend.VerificationBackend
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
@@ -33,8 +34,6 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import de.cau.cs.kieler.sccharts.verification.backends.VerificationBackend
-import de.cau.cs.kieler.sccharts.verification.backends.NusmvVerificationBackend
 
 /** 
  * @author aas
@@ -185,7 +184,7 @@ class VerificationView extends ViewPart {
     
     private def VerificationBackend getSelectedBackend() {
         // TODO: add ui control to set this
-        return new NusmvVerificationBackend()
+        return new NuxmvVerificationBackend()
     }
     
     private def VerificationProperty getSelectedProperty() {

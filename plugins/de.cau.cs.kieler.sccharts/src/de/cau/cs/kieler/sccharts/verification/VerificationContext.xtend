@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.verification
 
-import de.cau.cs.kieler.sccharts.verification.backends.VerificationBackend
+import de.cau.cs.kieler.sccharts.verification.backend.VerificationBackend
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors

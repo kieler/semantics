@@ -12,7 +12,7 @@
  */
  package de.cau.cs.kieler.sccharts.verification
 
-import de.cau.cs.kieler.sccharts.verification.backends.VerificationSubTask
+import de.cau.cs.kieler.sccharts.verification.backend.VerificationBackendTask
 import java.util.List
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.ICoreRunnable
@@ -30,7 +30,7 @@ class VerificationController implements VerificationControls {
     @Accessors(PUBLIC_GETTER) boolean running = false
     @Accessors(PUBLIC_GETTER) boolean asynchronous = false
     
-    protected var List<VerificationSubTask> tasks = newArrayList
+    protected var List<VerificationBackendTask> tasks = newArrayList
     protected int currentTaskIndex
     
     // Async worker
@@ -89,7 +89,7 @@ class VerificationController implements VerificationControls {
         currentTaskIndex++
     }
     
-    private def VerificationSubTask getCurrentTask() {
+    private def VerificationBackendTask getCurrentTask() {
         if(tasks !== null && currentTaskIndex >= 0 && currentTaskIndex < tasks.size) {
             return tasks.get(currentTaskIndex)
         } else {

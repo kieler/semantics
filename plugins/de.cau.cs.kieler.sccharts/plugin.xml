@@ -239,10 +239,13 @@
      <extension
            point="de.cau.cs.kieler.sccharts.verification.verificationBackend">
         <VerificationBackendExtension
-              class="de.cau.cs.kieler.sccharts.verification.backends.SpinVerificationBackend">
+              class="de.cau.cs.kieler.sccharts.verification.backend.SpinVerificationBackend">
         </VerificationBackendExtension>
         <VerificationBackendExtension
-              class="de.cau.cs.kieler.sccharts.verification.backends.NusmvVerificationBackend">
+              class="de.cau.cs.kieler.sccharts.verification.backend.NusmvVerificationBackend">
+        </VerificationBackendExtension>
+        <VerificationBackendExtension
+              class="de.cau.cs.kieler.sccharts.verification.backend.NuxmvVerificationBackend">
         </VerificationBackendExtension>
      </extension>
 
