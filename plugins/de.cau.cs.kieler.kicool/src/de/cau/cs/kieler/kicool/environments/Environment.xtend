@@ -14,11 +14,12 @@ package de.cau.cs.kieler.kicool.environments
 
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import java.util.List
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -104,6 +105,9 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Boolean> DEBUG_ENVIRONMENT_MODELS = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.debugEnvironmentModels", false)
         
+    public static val IProperty<Object> VERIFICATION_PROPERTIES = 
+        new Property<Object>("de.cau.cs.kieler.kicool.verificationProperties")
+    
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
              
     new() {

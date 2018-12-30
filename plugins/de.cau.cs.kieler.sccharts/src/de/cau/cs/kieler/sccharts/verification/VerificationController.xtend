@@ -47,6 +47,7 @@ class VerificationController implements VerificationControls {
                     doCurrentVerificationTask
                 }
                 monitor.done()
+                context.finished
             }
         })
         this.asyncJob.user = true
@@ -69,6 +70,7 @@ class VerificationController implements VerificationControls {
             while(currentTask !== null) {
                 doCurrentVerificationTask
             }
+            context.finished
         }
     }
    

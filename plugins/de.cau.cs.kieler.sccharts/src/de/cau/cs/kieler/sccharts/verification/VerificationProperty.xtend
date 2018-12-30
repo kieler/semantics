@@ -28,4 +28,8 @@ class VerificationProperty {
         this.formula = formula
         this.type = type
     }
+    
+    override toString() {
+        return '''VerificationProperty(name:«name», formula:«formula», type:«type», result:«result.status»)'''
+    }
 }

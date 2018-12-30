@@ -14,6 +14,7 @@
 
 import de.cau.cs.kieler.sccharts.verification.VerificationContext
 import de.cau.cs.kieler.sccharts.verification.backend.task.CompileToSmvTask
+import de.cau.cs.kieler.sccharts.verification.backend.task.RunNuxmvTask
 
 /**
  * @author aas
@@ -22,6 +23,7 @@ class NuxmvVerificationBackend implements VerificationBackend {
     
     override getVerificationTasks(VerificationContext context) {
         val compileTask = new CompileToSmvTask(context)
-        return newArrayList(compileTask)
+        val runTask = new RunNuxmvTask(context, compileTask)
+        return newArrayList(compileTask, runTask)
     }
 }

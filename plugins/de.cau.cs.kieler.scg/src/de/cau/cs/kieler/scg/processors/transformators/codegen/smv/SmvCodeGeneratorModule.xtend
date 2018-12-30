@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import java.util.List
@@ -36,18 +37,20 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SmvCodeSerializeHRExtensions serializer
     
-    public static val PROPERTY_GUARD= "guard"
-    public static val PROPERTY_PREGUARD= "preGuard"
-    public static val SMV_EXTENSION = ".smv"
+    protected static val PROPERTY_GUARD= "guard"
+    protected static val PROPERTY_PREGUARD= "preGuard"
+    protected static val SMV_EXTENSION = ".smv"
+    
+    @Accessors private var List<VerificationProperty> verificationProperties
     
     private var List<SCGCodeGeneratorModule> codeGeneratorModules
-    
     private val preVariableToOriginalVariable = <String,String>newHashMap
     
     override configure() {
-        val declarations= createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
+        val declarations = createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
         val tick = createAndConfigureModule(SmvCodeGeneratorTickModule)
-        codeGeneratorModules = #[declarations, tick]
+        val specifications = createAndConfigureModule(SmvCodeGeneratorSpecificationsModule)
+        codeGeneratorModules = #[declarations, tick, specifications]
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX

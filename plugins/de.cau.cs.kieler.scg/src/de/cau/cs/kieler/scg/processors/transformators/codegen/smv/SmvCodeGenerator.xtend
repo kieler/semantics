@@ -12,16 +12,19 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.SCGraph
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import java.util.List
 import java.util.Map
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 
 /**
  * SMV Code Processor
@@ -60,7 +63,12 @@ class SmvCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     }
     
     override createCodeGenetatorModule() {
-        return injector.getInstance(SmvCodeGeneratorModule)
+        val module = injector.getInstance(SmvCodeGeneratorModule)
+        val props = environment.getProperty(Environment.VERIFICATION_PROPERTIES)
+        if(props !== null && props instanceof List<?>) {
+            module.verificationProperties = props as List<VerificationProperty>
+        }
+        return module
     }
 
 }

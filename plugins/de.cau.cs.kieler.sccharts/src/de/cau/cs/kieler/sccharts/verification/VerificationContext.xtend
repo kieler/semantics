@@ -30,7 +30,15 @@ class VerificationContext implements VerificationControls {
     @Accessors private List<VerificationProperty> verificationProperties = newArrayList
     @Accessors private VerificationBackend backend    
     
+    @Accessors private Runnable onFinished
+    
     new() {
        controller = new VerificationController(this)
+    }
+    
+    protected def void finished() {
+        if(onFinished !== null) {
+            onFinished.run()
+        }
     }
 }

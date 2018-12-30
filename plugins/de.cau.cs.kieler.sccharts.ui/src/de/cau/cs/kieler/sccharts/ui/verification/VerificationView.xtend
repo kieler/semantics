@@ -34,6 +34,8 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.swt.widgets.Display
 
 /** 
  * @author aas
@@ -106,6 +108,7 @@ class VerificationView extends ViewPart {
                 runningVerificationContext.model = model as EObject
                 runningVerificationContext.backend = selectedBackend
                 runningVerificationContext.start(true)
+                runningVerificationContext.onFinished = [ Display.getDefault().asyncExec([ viewer.refresh ]) ]
             }
         }
         stopCheck = new Action("Stop Check", IAction.AS_PUSH_BUTTON) {
@@ -128,8 +131,11 @@ class VerificationView extends ViewPart {
                    return
                }
                if(currentModel instanceof SCCharts) {
-                   val properties = scchartsVerificationPropertyAnalyzer.getVerificationProperties(currentModel)
-                   viewer.input = properties
+                    val properties = scchartsVerificationPropertyAnalyzer.getVerificationProperties(currentModel)
+                    viewer.input = properties
+                    if(!properties.isNullOrEmpty) {
+                        viewer.selection = new StructuredSelection(properties.head)
+                    }
                }
             }
         }
