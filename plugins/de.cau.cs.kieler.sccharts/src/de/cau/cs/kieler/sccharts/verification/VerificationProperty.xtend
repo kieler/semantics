@@ -32,4 +32,9 @@ class VerificationProperty {
     override toString() {
         return '''VerificationProperty(name:«name», formula:«formula», type:«type», result:«result.status»)'''
     }
+    
+    public def void failWithException(Exception e) {
+        result.status = VerificationResultStatus.EXCEPTION
+        result.cause = e
+    }
 }

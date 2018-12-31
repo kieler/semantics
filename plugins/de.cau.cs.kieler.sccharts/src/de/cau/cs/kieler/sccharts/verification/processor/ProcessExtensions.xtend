@@ -25,21 +25,17 @@ class ProcessExtensions {
     
     public static def String execute(ProcessBuilder processBuilder, Function<Void, Boolean> processCanceled) {
         var String processOutput = null
-        try {
-            val proc = processBuilder.start()
-            var boolean finished = false
-            var boolean canceled = false
-            while(!canceled && !finished && proc.isAlive) {
-                canceled = processCanceled.apply(null)
-                finished = proc.waitFor(500, TimeUnit.MILLISECONDS)
-            }
-            if(canceled) {
-                proc.destroyForcibly
-            } else {
-                processOutput = proc.readInputStream
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
+        val proc = processBuilder.start()
+        var boolean finished = false
+        var boolean canceled = false
+        while(!canceled && !finished && proc.isAlive) {
+            canceled = processCanceled.apply(null)
+            finished = proc.waitFor(500, TimeUnit.MILLISECONDS)
+        }
+        if(canceled) {
+            proc.destroyForcibly
+        } else {
+            processOutput = proc.readInputStream
         }
         return processOutput
     }

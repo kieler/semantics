@@ -14,13 +14,14 @@ package de.cau.cs.kieler.sccharts.ui.verification
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
+import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
 import java.util.List
 import java.util.Observable
 import org.eclipse.emf.ecore.EObject
@@ -95,8 +96,8 @@ class VerificationView extends ViewPart {
     private def void createMenu() {
         runCheck = new Action("Start Check", IAction.AS_PUSH_BUTTON) {
             override run() {
-                val property = selectedProperty
-                if(property === null) {
+                val verificationProperties = selectedProperties
+                if(verificationProperties === null) {
                     return
                 }
                 val model = currentDiagramModel
@@ -106,7 +107,6 @@ class VerificationView extends ViewPart {
                 // Stop last verification if not done yet
                 stopVerification()
                 // Start new verification
-                val verificationProperties = newArrayList(property)
                 startVerification(model as EObject, verificationProperties)
            }
         }
@@ -173,10 +173,26 @@ class VerificationView extends ViewPart {
         resultColumn = viewer.createTableColumn("Result", 256, true)
         resultColumn.labelProvider = new AbstractVerificationViewColumnLabelProvider(this) {
             override String getText(Object element) {
-                return element.asVerificationProperty.result.status.toString
+                val result = element.asVerificationProperty.result
+                switch(result.status) {
+                    case null,
+                    case PENDING : return ""
+                    case COMPILING : return "Compiling..."
+                    case RUNNING : return "Running..."
+                    case FAILED : return "FAILED"
+                    case PASSED : return "PASSED"
+                    case EXCEPTION : {
+                        if(result.cause !== null) {
+                            return result.cause.class.simpleName + ": " + result.cause.message
+                        } else {
+                            return "EXCEPTION (of unkown cause)"
+                        }    
+                    }
+                    default : return result.status.toString
+                }
             }
         };
-
+        
         // Create content
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = null
@@ -191,6 +207,10 @@ class VerificationView extends ViewPart {
     
     private def VerificationProperty getSelectedProperty() {
         return viewer.structuredSelection?.firstElement as VerificationProperty
+    }
+    
+    private def List<VerificationProperty> getSelectedProperties() {
+        return viewer.structuredSelection?.toList as List<VerificationProperty>
     }
     
     /**
@@ -231,8 +251,8 @@ class VerificationView extends ViewPart {
         verificationContext = Compile.createCompilationContext(selectedSystemId, model)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
         verificationContext.addObserver[ Observable o, Object arg |
-            if(arg instanceof CompilationFinished) {
-                Display.getDefault().asyncExec([ viewer.refresh ])    
+            if(arg instanceof VerificationPropertyChanged) {
+                Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    
             }
         ]
         verificationContext.compileAsynchronously

@@ -19,7 +19,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
-import java.util.List
+import java.util.Map
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -107,6 +107,10 @@ class Environment extends EnvironmentPropertyHolder {
         
     public static val IProperty<Object> VERIFICATION_PROPERTIES = 
         new Property<Object>("de.cau.cs.kieler.kicool.verificationProperties")
+    
+    public static val IProperty<Object> INDEX_MAP_OF_SMV_SPECS =
+        new Property<Object>("de.cau.cs.kieler.verification.smv.indexOfProperties")
+    
     
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
              

@@ -19,9 +19,11 @@ import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
 import java.io.File
 import java.util.List
+import java.util.Map
 import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtext.util.StringInputStream
@@ -46,9 +48,24 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
     }
     
     override process() {
+        val verificationProperties = compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
+        if(verificationProperties.isNullOrEmpty) {
+            return
+        }
+        
         val smvFile = saveCodeFile()
-        val processOutput = runModelChecker(smvFile)
-        updateVerificationResult(processOutput)
+        for(property : verificationProperties) {
+            try {
+                property.result.status = VerificationResultStatus.RUNNING
+                compilationContext.notify(new VerificationPropertyChanged(property))
+                // Calling the model checker is possibly long running
+                val processOutput = runModelChecker(smvFile, property)
+                updateVerificationResult(processOutput, property)
+            } catch (Exception e) {
+                property.failWithException(e)
+                compilationContext.notify(new VerificationPropertyChanged(property))
+            }
+        }
     }
     
     private def IFile saveCodeFile() {
@@ -64,28 +81,41 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         return smvFile
     }
     
-    private def String runModelChecker(IFile smvFile) {
+    private def String runModelChecker(IFile smvFile, VerificationProperty property) {
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(smvFile.parent.location.toOSString))
-        processBuilder.command("nuXmv", smvFile.name)
+        val indexMap = sourceEnvironment.getProperty(Environment.INDEX_MAP_OF_SMV_SPECS) as Map<VerificationProperty, Integer>
+        val index = indexMap.get(property)
+        if(index === null || index < 0) {
+            throw new Exception("Could not determine which arguments to send to the model checker")
+        }
+        processBuilder.command("nuXmv", "-n", index.toString, smvFile.name)
         processBuilder.redirectErrorStream(true)
         val processOutput = processBuilder.execute([ return isCanceled ])
         return processOutput
     }
     
-    private def void updateVerificationResult(String processsOutput) {
-        val verificationProperties = compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
-        if(verificationProperties.isNullOrEmpty || processsOutput.isNullOrEmpty) {
-            return
+    private def void updateVerificationResult(String processOutput, VerificationProperty property) {
+        if(processOutput.isNullOrEmpty) {
+            throw new Exception("nuXmv process returned nothing")
         }
-        val pattern = Pattern.compile("-- specification .* is true")
-        val matcher = pattern.matcher(processsOutput)
-        val propertyHolds = matcher.find()
-        if(propertyHolds) {
-            verificationProperties.head.result.status = VerificationResultStatus.PASSED
+        val passedPattern = Pattern.compile("-- (specification|invariant) .* is true")
+        val passedMatcher = passedPattern.matcher(processOutput)
+        val passed = passedMatcher.find()
+        
+        if(passed) {
+            property.result.status = VerificationResultStatus.PASSED
         } else {
-            verificationProperties.head.result.status = VerificationResultStatus.FAILED
-        }    
+            val failedPattern = Pattern.compile("-- (specification|invariant) .* is false")
+            val failedMatcher = failedPattern.matcher(processOutput)
+            val failed = failedMatcher.find()
+            if(failed) {
+                property.result.status = VerificationResultStatus.FAILED                
+            } else {
+               throw new Exception("Property did not clearly pass or fail")
+            }
+        }
+        compilationContext.notify(new VerificationPropertyChanged(property))
     }
     
     private def boolean isCanceled() {

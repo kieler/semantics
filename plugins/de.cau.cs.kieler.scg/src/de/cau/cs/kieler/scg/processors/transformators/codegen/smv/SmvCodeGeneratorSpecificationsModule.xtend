@@ -12,18 +12,10 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import java.util.List
-import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Comparator
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 
 /**
  * @author aas
@@ -31,16 +23,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
 
-    @Inject extension KEffectsExtensions
-    @Inject extension SCGControlFlowExtensions
-    @Inject extension SCGCoreExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension SSACoreExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsCreateExtensions   
-    @Inject extension IOPreserverExtensions      
-    @Inject extension SmvCodeSerializeHRExtensions serializer
-    
     override getName() {
         return class.simpleName;
     }
@@ -53,13 +35,20 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
         if(verificationProperties.isNullOrEmpty) {
             return
         }
+        // In SMV the internal specifications are numbered CTL first then LTL, then invariants
+        verificationProperties.sort(new SmvPropertyComparator())
+        val indexMap = <VerificationProperty, Integer>newHashMap()
+        var index = 0
         for(property : verificationProperties) {
             val specName = property.getSmvSpecName
             appendIndentedLine('''«specName»''')
             incIndentationLevel
             appendIndentedLine('''«property.formula»;''')
             decIndentationLevel
+            indexMap.put(property, index)
+            index++
         }
+        processorInstance.environment.setProperty(Environment.INDEX_MAP_OF_SMV_SPECS, indexMap)
     }
     
     override generateDone() {
@@ -71,6 +60,27 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
             case LTL : return "LTLSPEC"
             case CTL : return "CTLSPEC"
             default : throw new Exception("Cannot translate VerificationProperty '"+property+"' to SMV code")
+        }
+    }
+    
+    private static class SmvPropertyComparator implements Comparator<VerificationProperty> {
+        override compare(VerificationProperty o1, VerificationProperty o2) {
+            if(o1.weight < o2.weight) {
+                return -1
+            } else if(o1.weight > o2.weight) {
+                return 1
+            } else {
+                return 0    
+            } 
+        }
+        
+        private def int getWeight(VerificationProperty o) {
+            // In NuSMV and nuXmv CTL specs come first, then LTL specs, and then invariants
+            switch(o.type) {
+                case VerificationPropertyType.CTL : return 0
+                case VerificationPropertyType.LTL : return 1
+                case VerificationPropertyType.INVARIANT : return 2
+            }
         }
     }
 }
