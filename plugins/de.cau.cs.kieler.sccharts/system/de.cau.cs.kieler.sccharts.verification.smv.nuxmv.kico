@@ -1,0 +1,5 @@
+system de.cau.cs.kieler.sccharts.verification.smv.nuxmv
+	label "nuXmv Model Checker"
+
+system de.cau.cs.kieler.sccharts.netlist.smv 
+de.cau.cs.kieler.sccharts.verification.runNuxmv

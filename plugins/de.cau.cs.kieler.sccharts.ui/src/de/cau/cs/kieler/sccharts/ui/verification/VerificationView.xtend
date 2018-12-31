@@ -12,30 +12,33 @@
  */
 package de.cau.cs.kieler.sccharts.ui.verification
 
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
-import de.cau.cs.kieler.sccharts.verification.VerificationContext
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
-import de.cau.cs.kieler.sccharts.verification.backend.NuxmvVerificationBackend
-import de.cau.cs.kieler.sccharts.verification.backend.VerificationBackend
+import java.util.List
+import java.util.Observable
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import org.eclipse.jface.viewers.StructuredSelection
-import org.eclipse.swt.widgets.Display
 
 /** 
  * @author aas
@@ -48,7 +51,7 @@ class VerificationView extends ViewPart {
     public static var VerificationView instance
     
     private val scchartsVerificationPropertyAnalyzer = new SCChartsVerificationPropertyAnalyzer
-    private var VerificationContext runningVerificationContext = null
+    private var CompilationContext verificationContext = null
     
     // == UI ELEMENTS ==
     /**
@@ -100,23 +103,16 @@ class VerificationView extends ViewPart {
                 if(model === null || !(model instanceof EObject)) {
                     return
                 }
-                if(runningVerificationContext !== null) {
-                    runningVerificationContext.stop
-                }
-                runningVerificationContext = new VerificationContext()
-                runningVerificationContext.verificationProperties = #[property]
-                runningVerificationContext.model = model as EObject
-                runningVerificationContext.backend = selectedBackend
-                runningVerificationContext.start(true)
-                runningVerificationContext.onFinished = [ Display.getDefault().asyncExec([ viewer.refresh ]) ]
-            }
+                // Stop last verification if not done yet
+                stopVerification()
+                // Start new verification
+                val verificationProperties = newArrayList(property)
+                startVerification(model as EObject, verificationProperties)
+           }
         }
         stopCheck = new Action("Stop Check", IAction.AS_PUSH_BUTTON) {
             override run() {
-                if(runningVerificationContext !== null) {
-                    runningVerificationContext.stop
-                    runningVerificationContext = null
-                }
+                stopVerification
             }
         }
         runCounterexample = new Action("Run Counterexample", IAction.AS_PUSH_BUTTON) {
@@ -188,9 +184,9 @@ class VerificationView extends ViewPart {
         return viewer
     }
     
-    private def VerificationBackend getSelectedBackend() {
+    private def String getSelectedSystemId() {
         // TODO: add ui control to set this
-        return new NuxmvVerificationBackend()
+        return "de.cau.cs.kieler.sccharts.verification.smv.nuxmv"
     }
     
     private def VerificationProperty getSelectedProperty() {
@@ -222,5 +218,23 @@ class VerificationView extends ViewPart {
             val viewer = viewPart.getViewer()
             return viewer.getViewContext();
         }
+    }
+    
+    private def void stopVerification() {
+        if(verificationContext !== null) {
+            verificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
+            verificationContext = null
+        }
+    }
+    
+    private def void startVerification(EObject model, List<VerificationProperty> verificationProperties) {
+        verificationContext = Compile.createCompilationContext(selectedSystemId, model)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
+        verificationContext.addObserver[ Observable o, Object arg |
+            if(arg instanceof CompilationFinished) {
+                Display.getDefault().asyncExec([ viewer.refresh ])    
+            }
+        ]
+        verificationContext.compileAsynchronously
     }
 }
