@@ -18,8 +18,8 @@ import { CommandContribution, CommandRegistry } from '@theia/core';
 @injectable()
 export class RegistrationContribution implements CommandContribution {
 
-    constructor(@inject(KeithLanguageClientContribution) protected client: KeithLanguageClientContribution) {
-        console.log("Is the construvtor called?")
+    constructor(@inject(KeithLanguageClientContribution) public client: KeithLanguageClientContribution) {
+        console.log("Is the constructor called?")
     }
 
     registerCommands(commands: CommandRegistry): void {
@@ -32,18 +32,11 @@ export class RegistrationContribution implements CommandContribution {
 
     async registerLanguages() {
         const lClient = await this.client.languageClient
-        const languages = await lClient.sendRequest("registration/get-languages") as LanguageDescription[]
+        const languages = await lClient.sendRequest("keith/registration/get-languages") as LanguageDescription[]
         console.log(languages)
         languages.forEach(language => {
-            monaco.languages.register({
-                id: language.id,
-                aliases: [language.name, language.id],
-                extensions: ['.' + language.id],
-                mimetypes: ['text/' + language.id]
-            })
             monaco.languages.onLanguage(language.id, () => {
                 let mLanguage = monarchLanguage as MyMonarchLanguage
-                console.log("Adding highlighting for " + language.name)
                 mLanguage.keywords = language.keywords
                 monaco.languages.setLanguageConfiguration(language.id, configuration)
                 monaco.languages.setMonarchTokensProvider(language.id, mLanguage)

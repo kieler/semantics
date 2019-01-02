@@ -17,7 +17,6 @@ import { createSocketConnection } from 'vscode-ws-jsonrpc/lib/server'
 import * as net from 'net'
 import * as path from 'path'
 import { isWindows, isOSX } from "@theia/core";
-import { LanguageRegister } from '../common';
 
 const osExtension = isWindows ? '/kieler.exe' : (isOSX ? '.app/Contents/MacOs/kieler' : '/kieler')
 
@@ -45,24 +44,8 @@ function getLsPath(): string | undefined {
 @injectable()
 class KeithLanguageServerContribution extends BaseLanguageServerContribution {
 
-    readonly id = LanguageRegister.sctxId
-    readonly name = LanguageRegister.sctxName
-
-    readonly description = {
-        id: LanguageRegister.sctxId,
-        name: LanguageRegister.sctxName,
-        documentSelector: [LanguageRegister.kgtId, LanguageRegister.annoId, LanguageRegister.esterelId, LanguageRegister.kextId,
-            LanguageRegister.lustreId, LanguageRegister.sclId, LanguageRegister.sctxId],
-        fileEvents: [
-            '**/*.' + LanguageRegister.kgtId,
-            '**/*.' + LanguageRegister.sctxId,
-            '**/*.' + LanguageRegister.sclId,
-            '**/*.' + LanguageRegister.kextId,
-            '**/*.' + LanguageRegister.annoId,
-            '**/*.' + LanguageRegister.esterelId,
-            '**/*.' + LanguageRegister.lustreId
-        ]
-    }
+    readonly id = "keith"
+    readonly name = "Keith"
 
     start(clientConnection: IConnection): void {
         let socketPort = getPort();

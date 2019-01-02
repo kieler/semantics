@@ -27,8 +27,8 @@ import URI from '@theia/core/lib/common/uri';
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
 
-    readonly id = 'sctx'
-    readonly name = 'SCTX'
+    readonly id = 'keith'
+    readonly name = 'Keith'
 
     patterns: string[];
     documentSelectors: string[]
@@ -50,15 +50,7 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
      * Name for extension defined by mapping via monaco registration in frotend
      */
     protected get globPatterns() {
-        return [
-            '**/*.' + LanguageRegister.kgtId,
-            '**/*.' + LanguageRegister.sctxId,
-            '**/*.' + LanguageRegister.sclId,
-            '**/*.' + LanguageRegister.kextId,
-            '**/*.' + LanguageRegister.annoId,
-            '**/*.' + LanguageRegister.esterelId,
-            '**/*.' + LanguageRegister.lustreId
-        ].concat(this.patterns)
+        return this.patterns
     }
 
     /**

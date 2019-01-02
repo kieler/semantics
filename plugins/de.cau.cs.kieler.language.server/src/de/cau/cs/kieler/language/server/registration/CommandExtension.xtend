@@ -22,7 +22,7 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
  * @author sdo
  *
  */
-@JsonSegment('registration')
+@JsonSegment('keith/registration')
 interface CommandExtension {
     
     /**

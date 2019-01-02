@@ -17,83 +17,100 @@ import { KeithMonacoEditorProvider } from "./keith-monaco-editor-provider"
 import { ContextMenuCommands } from './dynamic-commands';
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
-import { RegistrationContribution } from './registration-contribution';
+import { RegistrationContribution, LanguageDescription, monarchLanguage, MyMonarchLanguage, configuration } from './registration-contribution';
 import { CommandContribution } from '@theia/core';
-// import { LanguageRegister } from '../common';
+import { LanguageRegister } from '../common';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
+    let languageDescriptions: LanguageDescription[] = []
     // register kgt
-    // monaco.languages.register({
-    //     id: LanguageRegister.kgtId,
-    //     aliases: [LanguageRegister.kgtName, LanguageRegister.kgtId],
-    //     extensions: ['.' + LanguageRegister.kgtId],
-    //     mimetypes: ['text/' + LanguageRegister.kgtId]
-    // })
-    // monaco.languages.onLanguage(LanguageRegister.kgtId, () => {
-    //     monaco.languages.setLanguageConfiguration(LanguageRegister.kgtId, kgtConfiguration)
-    //     monaco.languages.setMonarchTokensProvider(LanguageRegister.kgtId, kgtMonarchLanguage)
-    // });
+    monaco.languages.register({
+        id: LanguageRegister.kgtId,
+        aliases: [LanguageRegister.kgtName, LanguageRegister.kgtId],
+        extensions: ['.' + LanguageRegister.kgtId],
+        mimetypes: ['text/' + LanguageRegister.kgtId]
+    })
 
     // register sctx
-    // monaco.languages.register({
-    //     id: LanguageRegister.sctxId,
-    //     aliases: [LanguageRegister.sctxName, LanguageRegister.sctxId],
-    //     extensions: ['.' + LanguageRegister.sctxId],
-    //     mimetypes: ['text/' + LanguageRegister.sctxId]
-    // })
+    monaco.languages.register({
+        id: LanguageRegister.sctxId,
+        aliases: [LanguageRegister.sctxName, LanguageRegister.sctxId],
+        extensions: ['.' + LanguageRegister.sctxId],
+        mimetypes: ['text/' + LanguageRegister.sctxId]
+    })
+
+    // register scl
+    monaco.languages.register({
+        id: LanguageRegister.sclId,
+        aliases: [LanguageRegister.sclName, LanguageRegister.sclId],
+        extensions: ['.' + LanguageRegister.sclId],
+        mimetypes: ['text/' + LanguageRegister.sclId]
+    })
 
     // // register kext
-    // monaco.languages.register({
-    //     id: LanguageRegister.kextId,
-    //     aliases: [LanguageRegister.kextName, LanguageRegister.kextId],
-    //     extensions: ['.' + LanguageRegister.kextId],
-    //     mimetypes: ['text/' + LanguageRegister.kextId]
-    // })
-    // monaco.languages.onLanguage(LanguageRegister.kextId, () => {
-    //     monaco.languages.setLanguageConfiguration(LanguageRegister.kextId, kextConfiguration)
-    //     monaco.languages.setMonarchTokensProvider(LanguageRegister.kextId, kextMonarchLanguage)
-    // });
+    monaco.languages.register({
+        id: LanguageRegister.kextId,
+        aliases: [LanguageRegister.kextName, LanguageRegister.kextId],
+        extensions: ['.' + LanguageRegister.kextId],
+        mimetypes: ['text/' + LanguageRegister.kextId]
+    })
 
     // // register anno
-    // monaco.languages.register({
-    //     id: LanguageRegister.annoId,
-    //     aliases: [LanguageRegister.annoName, LanguageRegister.annoId],
-    //     extensions: ['.' + LanguageRegister.annoId],
-    //     mimetypes: ['text/' + LanguageRegister.annoId]
-    // })
-    // monaco.languages.onLanguage(LanguageRegister.annoId, () => {
-    //     monaco.languages.setLanguageConfiguration(LanguageRegister.annoId, annoConfiguration)
-    //     monaco.languages.setMonarchTokensProvider(LanguageRegister.annoId, annoMonarchLanguage)
-    // });
+    monaco.languages.register({
+        id: LanguageRegister.annoId,
+        aliases: [LanguageRegister.annoName, LanguageRegister.annoId],
+        extensions: ['.' + LanguageRegister.annoId],
+        mimetypes: ['text/' + LanguageRegister.annoId]
+    })
 
     // // register esterel
-    // monaco.languages.register({
-    //     id: LanguageRegister.esterelId,
-    //     aliases: [LanguageRegister.esterelName, LanguageRegister.esterelId],
-    //     extensions: ['.' + LanguageRegister.esterelId],
-    //     mimetypes: ['text/' + LanguageRegister.esterelId]
-    // })
-    // monaco.languages.onLanguage(LanguageRegister.esterelId, () => {
-    //     monaco.languages.setLanguageConfiguration(LanguageRegister.esterelId, strlConfiguration)
-    //     monaco.languages.setMonarchTokensProvider(LanguageRegister.esterelId, strlMonarchLanguage)
-    // });
+    monaco.languages.register({
+        id: LanguageRegister.esterelId,
+        aliases: [LanguageRegister.esterelName, LanguageRegister.esterelId],
+        extensions: ['.' + LanguageRegister.esterelId],
+        mimetypes: ['text/' + LanguageRegister.esterelId]
+    })
 
     // // register lustre
-    // monaco.languages.register({
-    //     id: LanguageRegister.lustreId,
-    //     aliases: [LanguageRegister.lustreName, LanguageRegister.lustreId],
-    //     extensions: ['.' + LanguageRegister.lustreId],
-    //     mimetypes: ['text/' + LanguageRegister.lustreId]
-    // })
-    // monaco.languages.onLanguage(LanguageRegister.lustreId, () => {
-    //     monaco.languages.setLanguageConfiguration(LanguageRegister.lustreId, lusConfiguration)
-    //     monaco.languages.setMonarchTokensProvider(LanguageRegister.lustreId, lusMonarchLanguage)
-    // });
+    monaco.languages.register({
+        id: LanguageRegister.lustreId,
+        aliases: [LanguageRegister.lustreName, LanguageRegister.lustreId],
+        extensions: ['.' + LanguageRegister.lustreId],
+        mimetypes: ['text/' + LanguageRegister.lustreId]
+    })
+
     bind(LanguageClientContribution).toDynamicValue(ctx => ctx.container.get(KeithLanguageClientContribution))
     bind(ContextMenuCommands).to(ContextMenuCommands).inSingletonScope()
 
     bind(KeithLanguageClientContribution).toSelf().inSingletonScope()
-    bind(RegistrationContribution).toSelf()
-    bind(CommandContribution).to(RegistrationContribution)
+    bind(CommandContribution).toDynamicValue(ctx => {
+        const returnValue = ctx.container.get(RegistrationContribution)
+        returnValue.client.languageClient.then(lClient => {
+            lClient.sendRequest("keith/registration/get-languages").then((languages: LanguageDescription[]) => {
+                languages.forEach((language: LanguageDescription) => {
+                    console.log("Registered " + language.name)
+                    let mLanguage = monarchLanguage as MyMonarchLanguage
+                    mLanguage.keywords = language.keywords
+                    monaco.languages.setLanguageConfiguration(language.id, configuration)
+                    monaco.languages.setMonarchTokensProvider(language.id, mLanguage)
+                    returnValue.client.patterns.push("**/*." + language.id)
+                    returnValue.client.documentSelectors.push(language.id)
+                    languageDescriptions.push(language)
+                })
+            })
+        }).catch(() => {
+            throw new Error("Failed registration")
+        })
+        return returnValue
+    })
+    languageDescriptions.forEach((language: LanguageDescription) => {
+        monaco.languages.register({
+            id: language.id,
+            aliases: [language.name, language.id],
+            extensions: ['.' + language.id],
+            mimetypes: ['text/' + language.id]
+        })
+    })
+    bind(RegistrationContribution).toSelf().inSingletonScope()
     rebind(MonacoEditorProvider).to(KeithMonacoEditorProvider).inSingletonScope()
 })
