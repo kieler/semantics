@@ -11,57 +11,30 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-import { inject, injectable } from 'inversify';
-import { KeithLanguageClientContribution } from './keith-language-client-contribution';
+import { injectable } from 'inversify';
 import { CommandContribution, CommandRegistry } from '@theia/core';
 
 @injectable()
 export class RegistrationContribution implements CommandContribution {
 
-    constructor(@inject(KeithLanguageClientContribution) public client: KeithLanguageClientContribution) {
-        console.log("Is the constructor called?")
-    }
-
     registerCommands(commands: CommandRegistry): void {
-        commands.registerCommand({id: "register", label: "Register Languages"}, {
-            execute: () => {
-                this.registerLanguages()
-            }
-        })
-    }
-
-    async registerLanguages() {
-        const lClient = await this.client.languageClient
-        const languages = await lClient.sendRequest("keith/registration/get-languages") as LanguageDescription[]
-        console.log(languages)
-        languages.forEach(language => {
-            monaco.languages.onLanguage(language.id, () => {
-                let mLanguage = monarchLanguage as MyMonarchLanguage
-                mLanguage.keywords = language.keywords
-                monaco.languages.setLanguageConfiguration(language.id, configuration)
-                monaco.languages.setMonarchTokensProvider(language.id, mLanguage)
-            });
-            this.client.patterns.push("**/*." + language.id)
-            this.client.documentSelectors.push(language.id)
-        });
-        return
+        // not needed
     }
 }
 
-export interface MyMonarchLanguage extends monaco.languages.IMonarchLanguage {
+export interface KeithMonarchLanguage extends monaco.languages.IMonarchLanguage {
     tokenizer: { [name: string]: monaco.languages.IMonarchLanguageRule[]; };    ignoreCase?: boolean | undefined;
     defaultToken?: string | undefined;
     brackets?: monaco.languages.IMonarchLanguageBracket[] | undefined;
     start?: string | undefined;
     tokenPostfix?: string | undefined;
     keywords: string[]
-
 }
 
 export class LanguageDescription {
     id: string
     name: string
-    keywords: string[]
+    keywords?: string[]
 }
 
 export const configuration: monaco.languages.LanguageConfiguration = {
@@ -81,9 +54,9 @@ export const configuration: monaco.languages.LanguageConfiguration = {
     ]
 };
 
-export const monarchLanguage = <MyMonarchLanguage>{
+export const monarchLanguage = <KeithMonarchLanguage>{
 
-    tokenPostfix: '.lus',
+    tokenPostfix: '',
 
     keywords: [
     ],

@@ -53,7 +53,7 @@ class LanguageRegistration {
         
         new EsterelIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
+                Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule, new KGraphDiagramModule))
             }
         }.createInjectorAndDoEMFRegistration()
         
@@ -66,7 +66,7 @@ class LanguageRegistration {
         new KGraphIdeSetup {
             override createInjector() {
                 Guice.createInjector(Modules2.mixin(
-                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
+                    new KGraphRuntimeModule, new KGraphIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
     }
