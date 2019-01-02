@@ -17,12 +17,15 @@ import { DiagramOptionsViewWidget } from './diagramoptions-view-widget'
 import { FrontendApplicationContribution, FrontendApplication } from '@theia/core/lib/browser/frontend-application'
 import { EditorManager, EditorWidget } from '@theia/editor/lib/browser';
 import { WidgetManager, Widget, DidCreateWidgetEvent } from '@theia/core/lib/browser';
-// import { KeithLanguageClientContribution } from 'keith-language/lib/frontend/keith-language-client-contribution';
 import { KeithLanguageClientContribution } from 'keith-language/lib/browser/keith-language-client-contribution'
 import { KeithDiagramManager } from 'keith-diagram/lib/keith-diagram-manager';
 import URI from "@theia/core/lib/common/uri";
 import { SynthesisOption } from '../common/option-models';
 import { GET_OPTIONS, SET_OPTIONS } from '../common'
+import { KeithDiagramWidgetRegistry } from 'keith-diagram/lib/keith-diagram-widget-registry';
+import { DiagramWidgetRegistry } from 'theia-sprotty/lib'
+import { KeithDiagramWidget } from 'keith-diagram/lib/keith-diagram-widget';
+import { KeithDiagramServer } from 'keith-diagram/lib/keith-diagram-server';
 
 export const DIAGRAM_OPTIONS_WIDGET_FACTORY_ID = 'diagramoptions-view'
 
@@ -30,12 +33,14 @@ export const DIAGRAM_OPTIONS_WIDGET_FACTORY_ID = 'diagramoptions-view'
 export class DiagramOptionsViewContribution extends AbstractViewContribution<DiagramOptionsViewWidget> implements FrontendApplicationContribution {
     editorWidget: EditorWidget
     diagramOptionsViewWidget: DiagramOptionsViewWidget
+    protected boundDiagramServer: KeithDiagramServer
 
     constructor(
         @inject(EditorManager) protected readonly editorManager: EditorManager,
         @inject(WidgetManager) protected readonly widgetManager: WidgetManager,
         @inject(KeithLanguageClientContribution) protected readonly client: KeithLanguageClientContribution,
-        @inject(KeithDiagramManager) protected readonly diagramManager: KeithDiagramManager
+        @inject(KeithDiagramManager) protected readonly diagramManager: KeithDiagramManager,
+        @inject(DiagramWidgetRegistry) protected readonly diagramWidgetRegistry: DiagramWidgetRegistry
     ) {
         super({
             widgetId: DIAGRAM_OPTIONS_WIDGET_FACTORY_ID,
@@ -73,7 +78,6 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
             this.diagramOptionsViewWidget.onActivateRequest(this.updateContent.bind(this))
             if (this.editorWidget) {
                 this.diagramOptionsViewWidget.sourceModelPath = this.editorWidget.editor.uri.toString()
-                this.updateContent()
             }
         }
      }
@@ -95,15 +99,22 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
     }
 
     async onDiagramOpened(uri: URI) {
-        if (this.diagramOptionsViewWidget && this.diagramOptionsViewWidget.sourceModelPath === uri.toString()) {
-            this.updateContent(true)
+        if (this.diagramWidgetRegistry instanceof KeithDiagramWidgetRegistry) {
+            const diagramWidget = this.diagramWidgetRegistry.getWidgetById(this.diagramWidgetRegistry.id())
+            if (diagramWidget instanceof KeithDiagramWidget
+                && diagramWidget.currentModelSource instanceof KeithDiagramServer
+                && this.boundDiagramServer !== diagramWidget.currentModelSource) {
+                    // Binds the diagram server to call this onModelUpdated function when its model gets updated.
+                this.boundDiagramServer = diagramWidget.currentModelSource
+                diagramWidget.currentModelSource.onModelUpdated(this.onModelUpdated.bind(this))
+            }
         }
     }
 
-    async delay(milliseconds: number) {
-        return new Promise<void>(resolve => {
-            setTimeout(resolve, milliseconds)
-        })
+    async onModelUpdated(uri: string) {
+        if (this.diagramOptionsViewWidget) {
+            this.updateContent()
+        }
     }
 
     currentEditorChanged(eWidget: EditorWidget | undefined): void {
@@ -114,21 +125,15 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
             const widgetPromise = this.widgetManager.getWidget('diagramoptions-view')
             widgetPromise.then(widget => {
                 this.initializeDiagramOptionsViewWidget(widget)
-                // if (widget) {
-                //     this.updateContent()
-                // }
             })
-        } else {
-            this.updateContent()
         }
     }
 
-    async updateContent(waitForDiagram = false) {
+    async updateContent() {
         if (this.diagramOptionsViewWidget.sourceModelPath !== this.editorWidget.editor.uri.toString() || !this.diagramOptionsViewWidget.hasContent) {
             const lClient = await this.client.languageClient
             const param = {
-                uri: this.editorWidget.editor.uri.toString(),
-                waitForDiagram : waitForDiagram
+                uri: this.editorWidget.editor.uri.toString()
             }
             const options: SynthesisOption[] = await lClient.sendRequest(GET_OPTIONS, param) as SynthesisOption[]
             if (options) {
