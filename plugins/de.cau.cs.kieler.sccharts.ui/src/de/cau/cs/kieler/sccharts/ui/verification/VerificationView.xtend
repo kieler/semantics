@@ -12,26 +12,37 @@
  */
 package de.cau.cs.kieler.sccharts.ui.verification
 
+import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
-import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
 import java.util.List
 import java.util.Observable
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.ControlContribution
 import org.eclipse.jface.action.IAction
+import org.eclipse.jface.action.Separator
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
+import org.eclipse.swt.events.KeyAdapter
+import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
@@ -51,8 +62,14 @@ class VerificationView extends ViewPart {
      */
     public static var VerificationView instance
     
+    private static val PLAY_ICON = SCChartsUiModule.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/runIcon.png")
+    private static val STOP_ICON = SCChartsUiModule.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/stopIcon.png")
+    private static val REFRESH_ICON = SCChartsUiModule.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/refresh.png")
+    private static val RUN_COUNTEREXAMPLE_ICON = SCChartsUiModule.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/rerunFailed.png")
+    
     private val scchartsVerificationPropertyAnalyzer = new SCChartsVerificationPropertyAnalyzer
     private var CompilationContext verificationContext = null
+    private var String selectedSystemId
     
     // == UI ELEMENTS ==
     /**
@@ -79,7 +96,9 @@ class VerificationView extends ViewPart {
         instance = this
         // Create controls
         viewer = createTable(parent)
-        createMenu
+        createMenu()
+        createToolbar()
+        addKeyListeners()
     }
     
     /**
@@ -94,53 +113,81 @@ class VerificationView extends ViewPart {
      * Creates the menu.
      */
     private def void createMenu() {
-        runCheck = new Action("Start Check", IAction.AS_PUSH_BUTTON) {
+        val menuHelp = new Action("Show Controls") {
             override run() {
-                val verificationProperties = selectedProperties
-                if(verificationProperties === null) {
-                    return
-                }
-                val model = currentDiagramModel
-                if(model === null || !(model instanceof EObject)) {
-                    return
-                }
-                // Stop last verification if not done yet
-                stopVerification()
-                // Start new verification
-                startVerification(model as EObject, verificationProperties)
-           }
-        }
-        stopCheck = new Action("Stop Check", IAction.AS_PUSH_BUTTON) {
-            override run() {
-                stopVerification
-            }
-        }
-        runCounterexample = new Action("Run Counterexample", IAction.AS_PUSH_BUTTON) {
-            override run() {
-                
-            }
-        }
-        readModel = new Action("Read Model", IAction.AS_PUSH_BUTTON) {
-            override run() {
-               val currentModel = getCurrentDiagramModel
-               if(currentModel === null) {
-                   return
-               }
-               if(currentModel instanceof SCCharts) {
-                    val properties = scchartsVerificationPropertyAnalyzer.getVerificationProperties(currentModel)
-                    viewer.input = properties
-                    if(!properties.isNullOrEmpty) {
-                        viewer.selection = new StructuredSelection(properties.head)
-                    }
-               }
+                val title = "Controls for the Verification View"
+                val message = "Space : Toggle verification start/stop\n"
+                val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
+                dialog.open
             }
         }
         
         getViewSite().getActionBars().getMenuManager() => [
-            add(runCheck)
-            add(stopCheck)
+            add(menuHelp)
+        ]
+    }
+    
+    /**
+     * Creates the toolbar.
+     */
+    private def void createToolbar() {
+        val comboContrib = new ControlContribution("Model Checker") {
+            override protected createControl(Composite parent) {
+                val comboViewer = new ComboViewer(parent, SWT.DROP_DOWN.bitwiseOr(SWT.READ_ONLY))
+                comboViewer.labelProvider = new LabelProvider {
+                    override getText(Object element) {
+                        val system = element as System
+                        return system.label
+                    }
+                }
+                comboViewer.addSelectionChangedListener [SelectionChangedEvent e | 
+                    val selectedSystem = e.structuredSelection.firstElement as System
+                    selectedSystemId = selectedSystem.id
+                ]
+                val modelCheckingSystemIds = #["de.cau.cs.kieler.sccharts.verification.smv.nuxmv"]
+                val modelCheckingSystems = modelCheckingSystemIds.map[KiCoolRegistration.getSystemById(it)]
+                comboViewer.setContentProvider(ArrayContentProvider.instance);
+                comboViewer.input = modelCheckingSystems
+                comboViewer.selection = new StructuredSelection(modelCheckingSystems.head)
+                return comboViewer.combo
+            }
+        }
+        
+        val run = new Action("Start Verification", IAction.AS_PUSH_BUTTON) {
+            override run() {
+                startVerification
+            }
+        }
+        run.imageDescriptor = PLAY_ICON
+        
+        val stop = new Action("Stop Verification", IAction.AS_PUSH_BUTTON) {
+            override run() {
+                stopVerification
+            }
+        }
+        stop.imageDescriptor = STOP_ICON
+        
+        val refresh = new Action("Reload Properties", IAction.AS_PUSH_BUTTON) {
+            override run() {
+                reloadPropertiesFromModel()
+            }
+        }
+        refresh.imageDescriptor = REFRESH_ICON
+        
+        val runCounterexample = new Action("Run Counterexample", IAction.AS_PUSH_BUTTON) {
+            override run() {
+                runCounterexample()
+            }
+        }
+        runCounterexample.imageDescriptor = RUN_COUNTEREXAMPLE_ICON
+        
+        getViewSite().getActionBars().getToolBarManager() => [
+            add(comboContrib)
+            add(new Separator())
+            add(refresh)
+            add(run)
             add(runCounterexample)
-            add(readModel)
+            add(stop)
         ]
     }
     
@@ -200,9 +247,19 @@ class VerificationView extends ViewPart {
         return viewer
     }
     
-    private def String getSelectedSystemId() {
-        // TODO: add ui control to set this
-        return "de.cau.cs.kieler.sccharts.verification.smv.nuxmv"
+    /**
+     * Adds key listeners to the table for easy control of the simulation.
+     */
+    private def void addKeyListeners() {
+        viewer.control.addKeyListener(new KeyAdapter() {
+            override keyPressed(KeyEvent e) {
+                val modifier = e.stateMask
+                // SPACE
+                if (e.keyCode == SWT.SPACE) {
+                    toggleVerificationStartStop()
+                }
+            }
+        })
     }
     
     private def VerificationProperty getSelectedProperty() {
@@ -240,6 +297,51 @@ class VerificationView extends ViewPart {
         }
     }
     
+    private def void reloadPropertiesFromModel() {
+        val currentModel = getCurrentDiagramModel
+        if(currentModel === null) {
+            return
+        }
+        if(currentModel instanceof SCCharts) {
+            val lastSelection = selectedProperties
+            val properties = scchartsVerificationPropertyAnalyzer.getVerificationProperties(currentModel)
+            viewer.input = properties
+            if(!properties.isNullOrEmpty) {
+                // Restore selection
+                var newSelection = <VerificationProperty>newArrayList
+                if(lastSelection !== null) {
+                    val namesOfLastSelection = lastSelection.map[it.name]
+                    val propertiesOfLastSelection = properties.filter[namesOfLastSelection.contains(it.name)]
+                    newSelection.addAll(propertiesOfLastSelection)
+                }
+                // Select first element if no last selection that can be transfered
+                if(newSelection.isEmpty) {
+                    newSelection.add(properties.head)
+                }
+                viewer.selection = new StructuredSelection(newSelection)
+            }
+        }
+    }
+    
+    private def void runCounterexample() {
+        
+    }
+    
+    private def void startVerification() {
+        val verificationProperties = selectedProperties
+        if(verificationProperties === null) {
+            return
+        }
+        val model = currentDiagramModel
+        if(model === null || !(model instanceof EObject)) {
+            return
+        }
+        // Stop last verification if not done yet
+        stopVerification()
+        // Start new verification
+        startVerification(model as EObject, verificationProperties)
+    }
+    
     private def void stopVerification() {
         if(verificationContext !== null) {
             verificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
@@ -253,8 +355,18 @@ class VerificationView extends ViewPart {
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    
+            } else if(arg instanceof CompilationFinished) {
+                verificationContext = null
             }
         ]
         verificationContext.compileAsynchronously
+    }
+    
+    private def void toggleVerificationStartStop() {
+        if(verificationContext !== null) {
+            stopVerification()    
+        } else {
+            startVerification()
+        }
     }
 }

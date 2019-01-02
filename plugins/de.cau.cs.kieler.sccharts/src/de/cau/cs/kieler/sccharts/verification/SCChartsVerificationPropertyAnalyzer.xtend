@@ -21,6 +21,10 @@ import java.util.Optional
  * @author aas
  */
 class SCChartsVerificationPropertyAnalyzer {
+    public static val INVARIANT_ANNOTATION_NAME = "Invariant"
+    public static val CTL_ANNOTATION_NAME = "CTL"
+    public static val LTL_ANNOTATION_NAME = "LTL"
+    
     public def List<VerificationProperty> getVerificationProperties(SCCharts model) {
         val properties = <VerificationProperty>newArrayList
         model.eAllContents.filter(StringAnnotation).forEach [ anno |
@@ -36,9 +40,9 @@ class SCChartsVerificationPropertyAnalyzer {
         val propertyName = anno.values.getIfExists(1)
         val propertyType = 
             switch(anno.name) {
-                case "Invariant" : VerificationPropertyType.INVARIANT
-                case "CTL" : VerificationPropertyType.CTL
-                case "LTL" : VerificationPropertyType.LTL
+                case INVARIANT_ANNOTATION_NAME : VerificationPropertyType.INVARIANT
+                case CTL_ANNOTATION_NAME : VerificationPropertyType.CTL
+                case LTL_ANNOTATION_NAME : VerificationPropertyType.LTL
             }
         if(propertyFormula !== null && propertyType !== null) {
             return Optional.of(new VerificationProperty(propertyName, propertyFormula, propertyType))

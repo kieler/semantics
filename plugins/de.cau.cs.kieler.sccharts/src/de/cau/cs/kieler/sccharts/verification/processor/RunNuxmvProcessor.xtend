@@ -56,6 +56,7 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         val smvFile = saveCodeFile()
         for(property : verificationProperties) {
             try {
+                throwIfCanceled
                 property.result.status = VerificationResultStatus.RUNNING
                 compilationContext.notify(new VerificationPropertyChanged(property))
                 // Calling the model checker is possibly long running
@@ -69,6 +70,7 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
     }
     
     private def IFile saveCodeFile() {
+        throwIfCanceled
         val codeContainer = getSourceModel
         val code = codeContainer.head.code
         val tmpProject = ProjectInfrastructure.getTemporaryProject()
@@ -82,6 +84,7 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
     }
     
     private def String runModelChecker(IFile smvFile, VerificationProperty property) {
+        throwIfCanceled
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(smvFile.parent.location.toOSString))
         val indexMap = sourceEnvironment.getProperty(Environment.INDEX_MAP_OF_SMV_SPECS) as Map<VerificationProperty, Integer>
@@ -96,6 +99,7 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
     }
     
     private def void updateVerificationResult(String processOutput, VerificationProperty property) {
+        throwIfCanceled
         if(processOutput.isNullOrEmpty) {
             throw new Exception("nuXmv process returned nothing")
         }
@@ -120,5 +124,11 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
     
     private def boolean isCanceled() {
         return compilationContext.startEnvironment.getProperty(Environment.CANCEL_COMPILATION)
+    }
+    
+    private def void throwIfCanceled() {
+        if(isCanceled) {
+            throw new Exception("User canceled verification")
+        }
     }
 }
