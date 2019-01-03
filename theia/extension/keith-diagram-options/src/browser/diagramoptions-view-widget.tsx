@@ -11,31 +11,16 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-import { injectable, inject } from 'inversify'
-import { TreeWidget, TreeNode, SelectableTreeNode, TreeProps, ContextMenuRenderer,
-    TreeModel, ExpandableTreeNode, Message } from '@theia/core/lib/browser'
+import { injectable } from 'inversify'
+import { Message, ReactWidget } from '@theia/core/lib/browser'
 import { Emitter } from '@theia/core'
 import { Event } from '@theia/core/lib/common'
-import { CompositeTreeNode } from '@theia/core/lib/browser'
 import { SynthesisOption, TransformationOptionType } from '../common/option-models'
 import { isNullOrUndefined } from 'util'
 import * as React from 'react'
 
-export interface DiagramOptionsSymbolInformationNode extends CompositeTreeNode, SelectableTreeNode, ExpandableTreeNode {
-    iconClass: string
-}
-
-export namespace DiagramOptionsSymbolInformationNode {
-    export function is(node: TreeNode): node is DiagramOptionsSymbolInformationNode {
-        return !!node && SelectableTreeNode.is(node) && 'iconClass' in node
-    }
-}
-
-export type DiagramOptionsViewWidgetFactory = () => DiagramOptionsViewWidget
-export const DiagramOptionsViewWidgetFactory = Symbol('DiagramOptionsViewWidgetFactory')
-
 @injectable()
-export class DiagramOptionsViewWidget extends TreeWidget {
+export class DiagramOptionsViewWidget extends ReactWidget {
     public static widgetId = 'diagramoptions-view'
 
     readonly onDidChangeOpenStateEmitter = new Emitter<boolean>()
@@ -44,11 +29,8 @@ export class DiagramOptionsViewWidget extends TreeWidget {
     public hasContent: boolean
 
     constructor(
-        @inject(TreeProps) protected readonly treeProps: TreeProps,
-        @inject(TreeModel) model: TreeModel,
-        @inject(ContextMenuRenderer) protected readonly contextMenuRenderer: ContextMenuRenderer
     ) {
-        super(treeProps, model, contextMenuRenderer)
+        super()
 
         this.id = DiagramOptionsViewWidget.widgetId
         this.title.label = 'Diagram Options'
