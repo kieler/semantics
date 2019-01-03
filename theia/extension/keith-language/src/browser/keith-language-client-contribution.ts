@@ -11,29 +11,31 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-import { inject, injectable } from 'inversify'
-import { KeybindingRegistry, FrontendApplication } from '@theia/core/lib/browser'
+import { inject, injectable, named } from 'inversify';
+import { FrontendApplication } from '@theia/core/lib/browser';
 import {
     BaseLanguageClientContribution,
     LanguageClientFactory,
     Languages,
     Workspace,
-} from '@theia/languages/lib/browser'
-import { CommandRegistry } from '@theia/core/lib/common';
-import { LanguageRegister } from '../common';
-
+} from '@theia/languages/lib/browser';
+import { Disposable } from '@theia/core/lib/common';
+import { DiagramManagerProvider, DiagramManager } from 'theia-sprotty/lib';
+import { ContextMenuCommands } from './dynamic-commands';
+import URI from '@theia/core/lib/common/uri';
+import { languageDescriptions } from './frontend-extension';
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
 
-    readonly id = 'sctx'
-    readonly name = 'SCTX'
+    readonly id = 'keith'
+    readonly name = 'Keith'
 
     constructor(
+        @inject(DiagramManagerProvider)@named('keith-diagram') protected keithDiagramManagerProvider: DiagramManagerProvider,
+        @inject(ContextMenuCommands) protected commands: ContextMenuCommands,
         @inject(Workspace) workspace: Workspace,
         @inject(Languages) languages: Languages,
-        @inject(LanguageClientFactory) languageClientFactory: LanguageClientFactory,
-        @inject(KeybindingRegistry) protected keybindingRegistry: KeybindingRegistry,
-        @inject(CommandRegistry) protected commandRegistry: CommandRegistry
+        @inject(LanguageClientFactory) languageClientFactory: LanguageClientFactory
     ) {
         super(workspace, languages, languageClientFactory)
     }
@@ -43,37 +45,35 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
      * Name for extension defined by mapping via monaco registration in frotend
      */
     protected get globPatterns() {
-        return [
-            '**/*.' + LanguageRegister.kgtId,
-            '**/*.' + LanguageRegister.sctxId,
-            '**/*.' + LanguageRegister.sclId,
-            '**/*.' + LanguageRegister.kextId,
-            '**/*.' + LanguageRegister.annoId,
-            '**/*.' + LanguageRegister.esterelId,
-            '**/*.' + LanguageRegister.lustreId
-        ]
+        return []
     }
 
     /**
      * Define id for pattern seen in globPatterns()
      */
     protected get documentSelector(): string[] {
-        return [
-            LanguageRegister.kgtId,
-            LanguageRegister.sctxId,
-            LanguageRegister.sclId,
-            LanguageRegister.kextId,
-            LanguageRegister.annoId,
-            LanguageRegister.esterelId,
-            LanguageRegister.lustreId
-
-        ];
+        return languageDescriptions.map(languageDescription => languageDescription.id)
     }
 
     waitForActivation(app: FrontendApplication): Promise<any> {
         return Promise.race([
             super.waitForActivation(app),
-            // this.waitForOpenDiagrams(this.keithDiagramManagerProvider())
+            this.waitForOpenDiagrams(this.keithDiagramManagerProvider())
         ])
+    }
+
+    protected waitForOpenDiagrams(diagramManagerProvider: Promise<DiagramManager>): Promise<any> {
+        return diagramManagerProvider.then(diagramManager => {
+            return new Promise<URI>((resolve) => {
+                const disposable = diagramManager.onDiagramOpened(uri => {
+                    disposable.dispose()
+                    resolve(uri)
+                })
+            })
+        })
+    }
+
+    registerCommand(id: string, callback: (...args: any[]) => any, thisArg?: any): Disposable {
+        return this.commands.registerCommand(id, callback, thisArg)
     }
 }

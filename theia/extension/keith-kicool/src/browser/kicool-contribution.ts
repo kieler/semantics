@@ -24,7 +24,7 @@ import {
     FrontendApplicationContribution,
     CommonMenus
 } from "@theia/core/lib/browser";
-import { KeithDiagramLanguageClientContribution } from "keith-diagram/lib/keith-diagram-language-client-contribution";
+import { KeithLanguageClientContribution } from "keith-language/lib/browser/keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { CompilerWidget } from "./compiler-widget";
 import { Workspace } from "@theia/languages/lib/browser";
@@ -55,7 +55,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
         @inject(WidgetManager) protected readonly widgetManager: WidgetManager,
         @inject(MessageService) protected readonly messageService: MessageService,
         @inject(FrontendApplication) public readonly front: FrontendApplication,
-        @inject(KeithDiagramLanguageClientContribution) public readonly client: KeithDiagramLanguageClientContribution,
+        @inject(KeithLanguageClientContribution) public readonly client: KeithLanguageClientContribution,
         @inject(EditorManager) public readonly editorManager: EditorManager,
         @inject(OutputChannelManager) protected readonly outputManager: OutputChannelManager,
         @inject(KiCoolKeybindingContext) protected readonly kicoolKeybindingContext: KiCoolKeybindingContext,
