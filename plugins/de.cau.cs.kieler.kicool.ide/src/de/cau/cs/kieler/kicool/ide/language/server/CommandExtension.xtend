@@ -35,7 +35,7 @@ interface CommandExtension {
      * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.
      */
     @JsonRequest('show')
-    def CompletableFuture<Object> show(String uri, int index)
+    def CompletableFuture<String> show(String uri, int index)
     
     /**
      * Returns all compilation systems which are applicable for the file at given uri.

@@ -26,7 +26,6 @@ import {
 } from "@theia/core/lib/browser";
 import { KeithDiagramLanguageClientContribution } from "keith-diagram/lib/keith-diagram-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
-import { TextWidget } from "./text-widget";
 import { CompilerWidget } from "./compiler-widget";
 import { Workspace } from "@theia/languages/lib/browser";
 import { CompilationSystems, Snapshots, CodeContainer } from "../common/kicool-models";
@@ -250,32 +249,7 @@ export class KiCoolContribution extends AbstractViewContribution<CompilerWidget>
      */
     public async show(uri: string, index: number) {
         const lclient = await this.client.languageClient
-        const svg = await lclient.sendRequest(SHOW, [uri, index])
-        const result = this.resultMap.get(uri)
-        const infoList = this.infoMap.get(uri)
-        let info = ""
-        if (infoList) {
-            info = infoList[index]
-        }
-        if (result) {
-            const snapshotDescription = result.files[index];
-            const textWidget = await this.front.shell.getWidgets("main").find((widget, index) => {
-                return widget.id === uri
-            }) as TextWidget
-            if (textWidget) {
-                textWidget.updateContent("Diagram: " + snapshotDescription.name + " " +
-                    snapshotDescription.snapshotIndex, info + svg)
-            } else {
-                console.log("Adding new widget since old was not found")
-
-                this.front.shell.addWidget(new TextWidget("Diagram:" + snapshotDescription.name + " " +
-                    snapshotDescription.snapshotIndex, info + svg, uri), { area: "main", mode: "split-right" })
-            }
-            this.front.shell.activateWidget(uri)
-        } else {
-            this.message("File not compiled yet", "error")
-        }
-        this.indexMap.set(uri, index)
+        await lclient.sendRequest(SHOW, [uri, index])
     }
 
 

@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolServerModule
-import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
@@ -65,7 +64,7 @@ class LanguageRegistration {
         new KGraphIdeSetup {
             override createInjector() {
                 Guice.createInjector(Modules2.mixin(
-                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
+                    new KGraphRuntimeModule, new KGraphIdeModule/* , new KGraphDiagramModule*/))
             }
         }.createInjectorAndDoEMFRegistration()
     }

@@ -17,9 +17,6 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.klighd.IOffscreenRenderer
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import java.io.ByteArrayOutputStream
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
@@ -29,11 +26,11 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -41,7 +38,7 @@ import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
  * @author sdo
  * 
  */
-class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
     
@@ -61,20 +58,11 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
      */
     protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
-
-    protected extension ILanguageServerAccess languageServerAccess
-    
+  
     /**
      * Used to filter the compilation system according to the compiler preferences
      */
     var Class<?> modelClassFilter
-    
-    override initialize(ILanguageServerAccess access) {
-        this.languageServerAccess = access
-    }
-    def ILanguageServerAccess getLanguageServerAccess() {
-        return languageServerAccess
-    }
     
     override compile(String uri, String command, boolean inplace) {
         var fileUri = uri
@@ -134,12 +122,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override show(String uri, int index) {
-        var Object model = this.objectMap.get(uri).get(index)
-        var writer = new ByteArrayOutputStream()
-        LightDiagramServices.renderOffScreen(model, IOffscreenRenderer.SVG, writer)
-        val svg = writer.toString
         return requestManager.runRead[ cancelIndicator |
-            svg
+            showSnapshot(uri, this.objectMap.get(uri).get(index), cancelIndicator)
         ]
     }
     

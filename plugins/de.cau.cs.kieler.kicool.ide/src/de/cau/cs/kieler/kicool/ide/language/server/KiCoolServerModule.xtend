@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.ide.language.server
 
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
-import org.eclipse.xtext.service.AbstractGenericModule
 
 /**
  * Module to register additional classes for language support.
@@ -21,12 +21,12 @@ import org.eclipse.xtext.service.AbstractGenericModule
  * @author sdo
  *
  */
-class KiCoolServerModule extends AbstractGenericModule {
+class KiCoolServerModule extends KGraphDiagramModule {
     
     /**
      * Bind language server extension for keith.
      */
-    def Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
+    override Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
         KiCoolLanguageServerExtension
     }
 }
