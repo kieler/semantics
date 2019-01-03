@@ -23,8 +23,7 @@ import java.util.function.Function
  */
 class ProcessExtensions {
     
-    public static def String execute(ProcessBuilder processBuilder, Function<Void, Boolean> processCanceled) {
-        var String processOutput = null
+    public static def Process runToTermination(ProcessBuilder processBuilder, Function<Void, Boolean> processCanceled) {
         val proc = processBuilder.start()
         var boolean finished = false
         var boolean canceled = false
@@ -34,10 +33,8 @@ class ProcessExtensions {
         }
         if(canceled) {
             proc.destroyForcibly
-        } else {
-            processOutput = proc.readInputStream
         }
-        return processOutput
+        return proc
     }
     
     public static def String readInputStream(Process process) {

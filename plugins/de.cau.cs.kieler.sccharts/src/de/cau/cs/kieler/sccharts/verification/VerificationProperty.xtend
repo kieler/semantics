@@ -21,7 +21,7 @@ class VerificationProperty {
     @Accessors private String name = ""
     @Accessors private String formula = ""
     @Accessors private VerificationPropertyType type = VerificationPropertyType.INVARIANT
-    @Accessors private VerificationResult result = new VerificationResult
+    @Accessors private VerificationResult result = new VerificationResult(VerificationResultStatus.PENDING)
     
     new(String name, String formula, VerificationPropertyType type) {
         this.name = name
@@ -34,7 +34,6 @@ class VerificationProperty {
     }
     
     public def void failWithException(Exception e) {
-        result.status = VerificationResultStatus.EXCEPTION
-        result.cause = e
+        result = new VerificationResult(e)
     }
 }

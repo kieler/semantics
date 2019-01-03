@@ -26,4 +26,18 @@ class VerificationResult {
      * Exception that caused the corresponding status
      */
     @Accessors Exception cause = null
+    
+    new(VerificationResultStatus status) {
+        this.status = status
+    }
+    
+    new(Exception e) {
+        this(VerificationResultStatus.EXCEPTION)
+        this.cause = e
+    }
+    
+    new(IFile counterexample) {
+        this(VerificationResultStatus.FAILED)
+        this.counterexample = counterexample
+    }
 }

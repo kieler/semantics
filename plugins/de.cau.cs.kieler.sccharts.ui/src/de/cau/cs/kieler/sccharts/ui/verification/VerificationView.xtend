@@ -82,12 +82,6 @@ class VerificationView extends ViewPart {
     private var TableViewerColumn formulaColumn
     private var TableViewerColumn resultColumn
     
-    // -- Menu --
-    private var IAction runCheck
-    private var IAction stopCheck
-    private var IAction runCounterexample
-    private var IAction readModel
-    
      /**
      * @see IWorkbenchPart#createPartControl(Composite)
      */
