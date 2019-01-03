@@ -1,6 +1,6 @@
 {
   "name": "keith-language",
-  "version": "0.1.1-0",
+  "version": "0.1.0",
   "description": "An extension for Theia connection language support for KEITH",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
