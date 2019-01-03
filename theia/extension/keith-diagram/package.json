@@ -5,7 +5,7 @@
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
   "keywords": [
-    "keith-extension",
+    "keith-extension", 
     "theia",
     "diagram",
     "sprotty"
@@ -18,10 +18,10 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "keith-language": "^0.1.0",
-    "keith-sprotty": "^0.1.0",
-    "sprotty": "0.4.2",
-    "theia-sprotty": "0.1.20"
+    "theia-sprotty": "0.1.20",
+    "keith-language": "0.1.0",
+    "keith-sprotty": "0.1.0",
+    "sprotty": "0.4.2"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
