@@ -46,3 +46,6 @@ input[type="radio"] {
     top: -1px;
     *overflow: hidden;
 }
+input[type="range"] {
+    width: 90%;
+}
