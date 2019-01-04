@@ -130,19 +130,17 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
         }
     }
 
-    async updateContent() { // TODO: this should only update if a new diagram for a new source file or a new snapshot is requested, not when a diagram gets updated as well.
-        // if (this.diagramOptionsViewWidget.sourceModelPath !== this.editorWidget.editor.uri.toString() || !this.diagramOptionsViewWidget.hasContent) {
-            const lClient = await this.client.languageClient
-            const param = {
-                uri: this.editorWidget.editor.uri.toString()
-            }
-            const options: SynthesisOption[] = await lClient.sendRequest(GET_OPTIONS, param) as SynthesisOption[]
-            if (options) {
-                options.forEach(option => option.currentValue = option.initialValue)
-            }
-            this.diagramOptionsViewWidget.setDiagramOptions(options)
-            this.diagramOptionsViewWidget.sourceModelPath = this.editorWidget.editor.uri.toString()
-            this.diagramOptionsViewWidget.update()
-        // }
+    async updateContent() {
+        const lClient = await this.client.languageClient
+        const param = {
+            uri: this.editorWidget.editor.uri.toString()
+        }
+        const options: SynthesisOption[] = await lClient.sendRequest(GET_OPTIONS, param) as SynthesisOption[]
+        if (options) {
+            options.forEach(option => option.currentValue = option.initialValue)
+        }
+        this.diagramOptionsViewWidget.setDiagramOptions(options)
+        this.diagramOptionsViewWidget.sourceModelPath = this.editorWidget.editor.uri.toString()
+        this.diagramOptionsViewWidget.update()
     }
 }
