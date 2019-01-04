@@ -17,6 +17,17 @@ export interface SynthesisOption {
     initialValue: any
     values: any[]
     currentValue: any
+    category?: SynthesisOption
+}
+
+export interface RangeOption extends SynthesisOption {
+    range: Range
+    stepSize: number
+}
+
+export interface Range {
+    first: number
+    second: number
 }
 
 export enum TransformationOptionType {

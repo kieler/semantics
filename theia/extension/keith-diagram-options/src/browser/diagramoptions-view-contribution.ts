@@ -131,16 +131,18 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
     }
 
     async updateContent() {
-        const lClient = await this.client.languageClient
-        const param = {
-            uri: this.editorWidget.editor.uri.toString()
+        if (this.editorWidget) {
+            const lClient = await this.client.languageClient
+            const param = {
+                uri: this.editorWidget.editor.uri.toString()
+            }
+            const options: SynthesisOption[] = await lClient.sendRequest(GET_OPTIONS, param) as SynthesisOption[]
+            if (options) {
+                options.forEach(option => option.currentValue = option.initialValue)
+            }
+            this.diagramOptionsViewWidget.setDiagramOptions(options)
+            this.diagramOptionsViewWidget.sourceModelPath = this.editorWidget.editor.uri.toString()
+            this.diagramOptionsViewWidget.update()
         }
-        const options: SynthesisOption[] = await lClient.sendRequest(GET_OPTIONS, param) as SynthesisOption[]
-        if (options) {
-            options.forEach(option => option.currentValue = option.initialValue)
-        }
-        this.diagramOptionsViewWidget.setDiagramOptions(options)
-        this.diagramOptionsViewWidget.sourceModelPath = this.editorWidget.editor.uri.toString()
-        this.diagramOptionsViewWidget.update()
     }
 }
