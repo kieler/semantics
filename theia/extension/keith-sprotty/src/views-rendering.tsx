@@ -59,7 +59,8 @@ export function renderKEllipse(rendering: KEllipse, parent: KGraphElement, conte
     const fill = styles.kBackground === null ? DEFAULT_FILL : fillBackground((parent as KGraphElement).id + rendering.id)
     const stroke = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground((parent as KGraphElement).id + rendering.id)
     const backgroundDefinition = styles.kBackground === null ? <g/> : background(styles.kBackground, (parent as KGraphElement).id + rendering.id)
-    const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id) // TODO: how to remove these completely? (empty <g/> elements should not be in the svg)
+    // TODO: how to remove these completely? (empty <g/> elements should not be in the svg)
+    const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id)
     const lineWidth = styles.kLineWidth === null ? DEFAULT_LINE_WIDTH : styles.kLineWidth.lineWidth
     let bounds = undefined
     if (!isNullOrUndefined(rendering.calculatedBounds)) {
@@ -126,7 +127,8 @@ export function renderKRoundedRectangle(rendering: KRoundedRectangle, parent: KG
     const fill = styles.kBackground === null ? DEFAULT_FILL : fillBackground((parent as KGraphElement).id + rendering.id)
     const stroke = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground((parent as KGraphElement).id + rendering.id)
     const backgroundDefinition = styles.kBackground === null ? <g/> : background(styles.kBackground, (parent as KGraphElement).id + rendering.id)
-    const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id) // TODO: how to remove these completely? (empty <g/> elements should not be in the svg)
+    // TODO: how to remove these completely? (empty <g/> elements should not be in the svg)
+    const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id)
     const lineWidth = styles.kLineWidth === null ? DEFAULT_LINE_WIDTH : styles.kLineWidth.lineWidth
     const opacity = styles.kInvisibility === null || styles.kInvisibility.invisible === false ? undefined : 0
     const shadow = styles.kShadow === undefined ? DEFAULT_SHADOW : shadowFilter((parent as KGraphElement).id + rendering.id)
@@ -172,7 +174,7 @@ export function renderKRoundedRectangle(rendering: KRoundedRectangle, parent: KG
         width = parent.size.width
         height = parent.size.height
     }
-    
+
     // translate for each rectangle, so the children have that as their new origin point
     return <g transform = {`translate(${x}, ${y})`/*fixes chrome syntax HL: `*/}>
         {backgroundDefinition}
@@ -263,13 +265,15 @@ export function renderKSpline(rendering: KSpline, edge: KGraphElement | KEdge, c
             path += ` Q ${edge.routingPoints[i].x},${edge.routingPoints[i].y} ${edge.routingPoints[i + 1].x},${edge.routingPoints[i + 1].y}`
         } else  {
             // if three or more routing points are left, draw a cubic bezier curve with those points.
-            path += ` C ${edge.routingPoints[i].x},${edge.routingPoints[i].y} ${edge.routingPoints[i + 1].x},${edge.routingPoints[i + 1].y} ${edge.routingPoints[i + 2].x},${edge.routingPoints[i + 2].y}`
+            path += ` C ${edge.routingPoints[i].x},${edge.routingPoints[i].y} `
+            + `${edge.routingPoints[i + 1].x},${edge.routingPoints[i + 1].y} `
+            + `${edge.routingPoints[i + 2].x},${edge.routingPoints[i + 2].y}`
         }
     }
 
     return <g>
     {foregroundDefinition}
-        <path 
+        <path
             d = {path}
             stroke = {stroke}
             fill = 'none'
@@ -342,7 +346,7 @@ export function renderKPolyline(rendering: KPolyline, edge: KGraphElement | KEdg
     }
     return <g>
     {foregroundDefinition}
-        <path 
+        <path
             d = {path}
             stroke = {stroke}
             fill = 'none'
@@ -419,10 +423,12 @@ export function renderKPolygon(rendering: KPolygon, parent: KGraphElement, conte
     path += ' Z'
 
     // TODO: when replacing snabbdom with react or something similar: have all styles as attributes and in camelCase
-    return <g {...decoration ? {transform: `translate(${decoration.origin.x},${decoration.origin.y}) rotate(${toDegrees(decoration.rotation)}) translate(${-decoration.origin.x},${-decoration.origin.y})`} : {}}>
+    return <g {...decoration ? {transform: `translate(${decoration.origin.x},${decoration.origin.y}) `
+                                         + `rotate(${toDegrees(decoration.rotation)}) `
+                                         + `translate(${-decoration.origin.x},${-decoration.origin.y})`} : {}}>
         {backgroundDefinition}
         {foregroundDefinition}
-        <path 
+        <path
             d = {path}
             {...(stroke ? {stroke: stroke} : {})}
             fill = {fill}
@@ -443,7 +449,7 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
 
     let text = null
     // KText elements as renderings of labels have their text in the KLabel, not the KText
-    if ('text' in parent) { // if parent is KLabel 
+    if ('text' in parent) { // if parent is KLabel
         text = parent.text
     } else {
         text = rendering.text
@@ -456,7 +462,8 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
 
     const fill = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground((parent as KGraphElement).id + rendering.id)
 
-    const horizontalAlignment = horizontalAlignmentText(styles.kHorizontalAlignment.horizontalAlignment === null ? DEFAULT_HORIZONTAL_ALIGNMENT : styles.kHorizontalAlignment.horizontalAlignment)
+    const horizontalAlignment = horizontalAlignmentText(styles.kHorizontalAlignment.horizontalAlignment === null ?
+        DEFAULT_HORIZONTAL_ALIGNMENT : styles.kHorizontalAlignment.horizontalAlignment)
     const verticalAlignment = verticalAlignmentText(styles.kVerticalAlignment.verticalAlignment === null ? DEFAULT_VERTICAL_ALIGNMENT : styles.kVerticalAlignment.verticalAlignment)
 
     const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id)
@@ -486,7 +493,8 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
                 'font-size': styles.kFontSize.size + 'pt',
                 'font-style': italic,
                 'font-weight': bold,
-                'alignment-baseline': verticalAlignment, // TODO: this might still not be correct vertical alignment, 'baseline' is not high enough for lower letters like g, y, p, q
+                // TODO: this might still not be correct vertical alignment, 'baseline' is not high enough for lower letters like g, y, p, q
+                'alignment-baseline': verticalAlignment,
                 'text-anchor': horizontalAlignment
             } as React.CSSProperties}
             x = {x}
@@ -498,7 +506,7 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
 }
 
 export function renderChildRenderings(parentRendering: KContainerRendering, parentElement: KGraphElement, context: KGraphRenderingContext): (VNode | null)[] {
-    let renderings : (VNode | null)[] = []
+    let renderings: (VNode | null)[] = []
     for (let childRendering of parentRendering.children) {
         let rendering = getRendering([childRendering], parentElement, context)
         renderings.push(rendering)
@@ -511,7 +519,7 @@ export function getRendering(datas: KGraphData[], parent: KGraphElement, context
         if (data === null)
             continue
         if (data.type === K_RENDERING_REF) {
-            var id = (data as KRenderingRef).id
+            const id = (data as KRenderingRef).id
             for (let rendering of context.kRenderingLibrary.renderings) {
                 if (rendering.id === id) {
                     context.boundsMap = (data as KRenderingRef).calculatedBoundsMap
@@ -529,7 +537,7 @@ export function getRendering(datas: KGraphData[], parent: KGraphElement, context
             case K_CONTAINER_RENDERING: {
                 console.error('A rendering can not be a ' + data.type + ' by itself, it needs to be a subclass of it.')
                 break
-            } 
+            }
             case K_CHILD_AREA: {
                 return renderChildArea(data as KChildArea, parent, context)
             }
@@ -575,7 +583,7 @@ export function getRendering(datas: KGraphData[], parent: KGraphElement, context
                 return renderKText(data as KText, parent, context)
             }
             default: {
-                // do nothing. The data is something other than a rendering 
+                // do nothing. The data is something other than a rendering
                 break
             }
         }

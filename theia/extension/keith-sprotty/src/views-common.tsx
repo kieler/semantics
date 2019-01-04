@@ -154,8 +154,8 @@ export function evaluateKPosition(position: KPosition, parentBounds: Bounds, top
 
     if (isNullOrUndefined(xPos)) {
         xPos = {
-            absolute: 0, 
-            relative: 0, 
+            absolute: 0,
+            relative: 0,
             type: topLeft ? K_LEFT_POSITION : K_RIGHT_POSITION
         }
     }

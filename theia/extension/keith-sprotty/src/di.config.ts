@@ -33,7 +33,7 @@ const kGraphDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) 
 
 const textBoundsModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     bind(TYPES.ICommand).toConstructor(RequestTextBoundsCommand)
-    bind(TYPES.HiddenVNodeDecorator).to(HiddenTextBoundsUpdater).inSingletonScope()  
+    bind(TYPES.HiddenVNodeDecorator).to(HiddenTextBoundsUpdater).inSingletonScope()
 });
 
 export default function createContainer(widgetId: string): Container {

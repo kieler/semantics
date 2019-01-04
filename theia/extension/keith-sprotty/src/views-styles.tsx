@@ -1,11 +1,10 @@
 /** @jsx svg */
 import { svg } from 'snabbdom-jsx'
-import { KStyle, KBackground, KForeground, KFontBold, KFontItalic, KFontName, KFontSize, KInvisibility, 
+import { KStyle, KBackground, KForeground, KFontBold, KFontItalic, KFontName, KFontSize, KInvisibility,
     KHorizontalAlignment, KLineCap, KLineJoin, KLineStyle, KLineWidth, KRotation, KShadow, KTextStrikeout,
     KTextUnderline, KVerticalAlignment, HorizontalAlignment, LineCap, LineJoin, LineStyle,
     VerticalAlignment, KStyleRef, KColoring } from "./kgraph-models"
 import { VNode } from "snabbdom/vnode"
-import { VNodeStyle } from "snabbdom/modules/style"
 import { toSVG } from "sprotty/lib"
 import { isNullOrUndefined } from "util"
 import { foregroundId, backgroundId, shadowId } from "./views-common"
@@ -242,7 +241,7 @@ export function gradientDef(style: KColoring, id: string): VNode {
         style = {{
             'stop-color': toSVG(style.color),
             'stop-opacity': (style.alpha / 255).toString()
-        } as VNodeStyle}
+        } as React.CSSProperties}
     />
 
     let stopColorStop = <g/>
@@ -253,7 +252,7 @@ export function gradientDef(style: KColoring, id: string): VNode {
             style = {{
                 'stop-color': toSVG(style.targetColor),
                 'stop-opacity': (style.targetAlpha / 255).toString()
-            } as VNodeStyle}
+            } as React.CSSProperties}
         />
     }
 
@@ -278,7 +277,7 @@ export function background(style: KBackground, id: string): VNode {
     return gradientDef(style, backgroundId(id))
 }
 
-export function shadowDefinition(style: KShadow, id: string) : VNode {
+export function shadowDefinition(style: KShadow, id: string): VNode {
     // stdDev of 1 looks closest to KIELER style shadows, but looks nicer with this blur
     const STD_DEV = 1
     return <defs>

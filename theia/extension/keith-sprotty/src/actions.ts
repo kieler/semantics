@@ -35,7 +35,7 @@ export class RequestTextBoundsCommand extends HiddenCommand {
         super()
     }
 
-    execute(context: CommandExecutionContext): SModelRoot {        
+    execute(context: CommandExecutionContext): SModelRoot {
         return context.modelFactory.createRoot(this.action.textDiagram)
     }
 

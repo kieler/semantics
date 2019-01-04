@@ -18,7 +18,7 @@ export class KNode extends RectangularNode implements KGraphElement {
     hasFeature(feature: symbol): boolean { // TODO: how do I use all these features?
         return feature === selectFeature || feature === boundsFeature
                     || feature === layoutContainerFeature || feature === fadeFeature
-                    || (feature === openFeature && this.trace !== undefined) 
+                    || (feature === openFeature && this.trace !== undefined)
     }
 }
 
@@ -73,7 +73,7 @@ export interface KIdentifier extends KGraphData {
 export interface KRendering extends KGraphData, KStyleHolder {
     placementData: KPlacementData
     action: KAction[]
-    // not in the original java model, but is included in messages to remove the need to call '[Grid]?PlacementUtil.evaluate[Grid|Area|Point]Placement' 
+    // not in the original java model, but is included in messages to remove the need to call '[Grid]?PlacementUtil.evaluate[Grid|Area|Point]Placement'
     // and similar methods on client side for every rendering
     calculatedBounds: Bounds
     calculatedDecoration: Decoration
