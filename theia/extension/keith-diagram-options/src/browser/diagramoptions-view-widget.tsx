@@ -18,6 +18,7 @@ import { Event } from '@theia/core/lib/common'
 import { SynthesisOption, TransformationOptionType, RangeOption } from '../common/option-models'
 import { isNullOrUndefined } from 'util'
 import * as React from 'react'
+import '../../src/browser/style/index.css'
 
 @injectable()
 export class DiagramOptionsViewWidget extends ReactWidget {
@@ -113,7 +114,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                     break
                 }
                 case TransformationOptionType.SEPARATOR: {
-                    // TODO: implement
+                    children.push(this.renderSeperator(option))
                     break
                 }
                 case TransformationOptionType.CATEGORY: {
@@ -140,7 +141,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
             step: option.stepSize,
             onChange: (event: React.ChangeEvent<HTMLInputElement>) => this.onRange(event, option)
         }
-        return <div key={option.name}>
+        return <div key={option.name} className="diagram-option">
             <label htmlFor = {option.name}>{option.name}: {option.currentValue}</label>
             <input {...inputAttrs}/>
         </div>
@@ -153,8 +154,8 @@ export class DiagramOptionsViewWidget extends ReactWidget {
     }
 
     private renderCategory(name: string, synthesisOptions: SynthesisOption[]): JSX.Element {
-        return <div key={name}>
-            <details>
+        return <div key={name} className="diagram-option category">
+            <details open>
                 <summary>{name}</summary>
                 {this.renderCategoryOptions(synthesisOptions)}
             </details>
@@ -178,7 +179,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                     break
                 }
                 case TransformationOptionType.SEPARATOR: {
-                    // TODO: implement
+                    children.push(this.renderSeperator(option))
                     break
                 }
                 case TransformationOptionType.CATEGORY: {
@@ -190,7 +191,11 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                 }
             }
         })
-        return <div>{...children}</div>
+        return <div className="category-options">{...children}</div>
+    }
+
+    private renderSeperator(option: SynthesisOption) {
+        return <div key={option.name} className="seperator"></div>
     }
 
     /**
@@ -207,9 +212,11 @@ export class DiagramOptionsViewWidget extends ReactWidget {
             onClick: (e: React.MouseEvent<HTMLInputElement>) => this.onCheck(e, option)
         }
 
-        return <div key = {option.name}>
-            <input {...inputAttrs}/>
-            <label htmlFor = {option.name}>{option.name}</label>
+        return <div key = {option.name} className="diagram-option">
+            <label htmlFor = {option.name}>
+                <input className="diagram-inputbox" {...inputAttrs}/>
+                {option.name}
+            </label>
         </div>
     }
 
@@ -245,7 +252,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
      * @param option The choice option to generate
      */
     private renderChoice(option: SynthesisOption): JSX.Element {
-        return <fieldset key = {option.name}>
+        return <fieldset key = {option.name} className="diagram-option">
             <legend>{option.name}</legend>
             {option.values.map(value => this.renderChoiceValue(value, option))}
         </fieldset>
@@ -259,15 +266,16 @@ export class DiagramOptionsViewWidget extends ReactWidget {
      */
     private renderChoiceValue(value: any, option: SynthesisOption): JSX.Element {
         return <div key = {value}>
-            <input
-                type = "radio"
-                id = {value}
-                name = {option.name}
-                defaultChecked = {value === option.currentValue}
-                onClick = {e => this.onChoice(option, value)}
-            />
-            <label htmlFor = {value}/>
-            {value}
+            <label htmlFor = {value}>
+                <input
+                    type = "radio"
+                    id = {value}
+                    name = {option.name}
+                    defaultChecked = {value === option.currentValue}
+                    onClick = {e => this.onChoice(option, value)}
+                />
+                {value}
+            </label>
         </div>
     }
 }

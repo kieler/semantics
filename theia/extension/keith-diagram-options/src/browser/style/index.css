@@ -1,0 +1,48 @@
+.diagram-option {
+    color: var(--theia-ui-font-color1);
+    font-size: var(--theia-ui-font-size1);
+    margin-top: 5px
+}
+
+.category {
+    font-size: var(--theia-ui-font-size2);
+    padding: 5px;
+}
+
+.category-options {
+    padding: 5px;
+}
+
+.diagram-inputbox {
+    color: var(--theia-ui-font-color2);
+    align-content: center;
+}
+
+.seperator {
+    margin-top: 20px
+}
+
+label {
+    padding-left: 15px;
+    text-indent: -15px;
+}
+input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
+input[type="radio"] {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
