@@ -95,6 +95,7 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
     onDidCreateWidget(e: DidCreateWidgetEvent): void {
         if (e.factoryId === DiagramOptionsViewWidget.widgetId) {
             this.initializeDiagramOptionsViewWidget(e.widget)
+            this.updateContent()
         }
     }
 
@@ -129,8 +130,8 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
         }
     }
 
-    async updateContent() {
-        if (this.diagramOptionsViewWidget.sourceModelPath !== this.editorWidget.editor.uri.toString() || !this.diagramOptionsViewWidget.hasContent) {
+    async updateContent() { // TODO: this should only update if a new diagram for a new source file or a new snapshot is requested, not when a diagram gets updated as well.
+        // if (this.diagramOptionsViewWidget.sourceModelPath !== this.editorWidget.editor.uri.toString() || !this.diagramOptionsViewWidget.hasContent) {
             const lClient = await this.client.languageClient
             const param = {
                 uri: this.editorWidget.editor.uri.toString()
@@ -142,6 +143,6 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
             this.diagramOptionsViewWidget.setDiagramOptions(options)
             this.diagramOptionsViewWidget.sourceModelPath = this.editorWidget.editor.uri.toString()
             this.diagramOptionsViewWidget.update()
-        }
+        // }
     }
 }
