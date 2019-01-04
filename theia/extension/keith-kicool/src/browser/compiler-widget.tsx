@@ -15,12 +15,7 @@
 import { injectable, LazyServiceIdentifer, inject } from "inversify";
 import { Message,
     StatefulWidget,
-    CompositeTreeNode,
-    SelectableTreeNode,
-    ExpandableTreeNode,
-    TreeNode, TreeModel,
-    TreeWidget, TreeProps,
-    ContextMenuRenderer } from "@theia/core/lib/browser";
+    ReactWidget} from "@theia/core/lib/browser";
 import { Event } from '@theia/core/lib/common'
 import * as React from "react";
 import { CompilationSystems, Snapshots } from "../common/kicool-models";
@@ -29,24 +24,11 @@ import { KiCoolContribution } from "./kicool-contribution";
 import { Emitter } from "@theia/core";
 import '../../src/browser/style/index.css'
 
-export interface KiCoolSymbolInformationNode extends CompositeTreeNode, SelectableTreeNode, ExpandableTreeNode {
-    iconClass: string
-}
-
-export namespace KiCoolSymbolInformationNode {
-    export function is(node: TreeNode): node is KiCoolSymbolInformationNode {
-        return !!node && SelectableTreeNode.is(node) && 'iconClass' in node
-    }
-}
-
-export type KiCoolViewWidgetFactory = () => CompilerWidget
-export const KiCoolViewWidgetFactory = Symbol('KiCoolViewWidgetFactory')
-
 /**
  * Widget to compile and navigate compilation results. Should be linked to editor.
  */
 @injectable()
-export class CompilerWidget extends TreeWidget implements StatefulWidget {
+export class CompilerWidget extends ReactWidget implements StatefulWidget {
 
     public static widgetId = compilerWidgetId
 
@@ -66,12 +48,9 @@ export class CompilerWidget extends TreeWidget implements StatefulWidget {
     public sourceModelPath: string
 
     constructor(
-        @inject(TreeProps) protected readonly treeProps: TreeProps,
-        @inject(TreeModel) model: TreeModel,
-        @inject(ContextMenuRenderer) protected readonly contextMenuRenderer: ContextMenuRenderer,
         @inject(new LazyServiceIdentifer(() => KiCoolContribution)) protected readonly commands: KiCoolContribution
     ) {
-        super(treeProps, model, contextMenuRenderer);
+        super();
         this.id = compilerWidgetId
         this.title.label = 'Compile'
         this.title.iconClass = 'fa fa-play-circle';

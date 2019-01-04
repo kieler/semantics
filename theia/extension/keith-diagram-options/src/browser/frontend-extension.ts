@@ -12,28 +12,17 @@
  */
 
 import { ContainerModule, interfaces } from "inversify"
-import { bindViewContribution, FrontendApplicationContribution, WidgetFactory, createTreeContainer, TreeWidget } from "@theia/core/lib/browser"
+import { bindViewContribution, FrontendApplicationContribution, WidgetFactory } from "@theia/core/lib/browser"
 import { DiagramOptionsViewContribution } from "./diagramoptions-view-contribution"
-import { DiagramOptionsViewWidgetFactory, DiagramOptionsViewWidget } from "./diagramoptions-view-widget"
-import { DiagramOptionsViewService } from "./diagramoptions-view-service"
+import { DiagramOptionsViewWidget } from "./diagramoptions-view-widget"
 
 export default new ContainerModule((bind: interfaces.Bind) => {
     bindViewContribution(bind, DiagramOptionsViewContribution);
     bind(FrontendApplicationContribution).toService(DiagramOptionsViewContribution);
 
-    bind(DiagramOptionsViewWidgetFactory).toFactory(ctx =>
-        () => createDiagramOptionsViewWidget(ctx.container)
-    )
-
-    bind(DiagramOptionsViewService).toSelf().inSingletonScope();
-    bind(WidgetFactory).toDynamicValue(context => context.container.get(DiagramOptionsViewService));
+    bind(WidgetFactory).toDynamicValue(ctx => ({
+        id: "diagramoptions-view",
+        createWidget: () => ctx.container.get(DiagramOptionsViewWidget)
+    }))
+    bind(DiagramOptionsViewWidget).toSelf()
 })
-
-function createDiagramOptionsViewWidget(parent: interfaces.Container): DiagramOptionsViewWidget {
-    const child = createTreeContainer(parent);
-
-    child.unbind(TreeWidget);
-    child.bind(DiagramOptionsViewWidget).toSelf();
-
-    return child.get(DiagramOptionsViewWidget);
-}

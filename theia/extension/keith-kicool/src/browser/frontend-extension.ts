@@ -14,12 +14,12 @@
 import { ContainerModule, interfaces } from 'inversify'
 import { KiCoolContribution} from './kicool-contribution'
 import { BaseWidget, KeybindingContext,
-    WidgetFactory, bindViewContribution, FrontendApplicationContribution, createTreeContainer, TreeWidget} from '@theia/core/lib/browser'
+    WidgetFactory, bindViewContribution, FrontendApplicationContribution} from '@theia/core/lib/browser'
 import { TextWidget } from './text-widget'
 import '../../src/browser/style/index.css'
 import { KiCoolKeybindingContext } from './kicool-keybinding-context'
-import { CompilerWidget, KiCoolViewWidgetFactory } from './compiler-widget'
-import { KiCoolViewService } from './kicool-view-service';
+import { CompilerWidget } from './compiler-widget'
+// import { KiCoolViewService } from './kicool-view-service';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
 
@@ -34,19 +34,9 @@ export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Un
     bindViewContribution(bind, KiCoolContribution)
     bind(FrontendApplicationContribution).toService(KiCoolContribution);
 
-    bind(KiCoolViewWidgetFactory).toFactory(ctx =>
-        () => createKiCoolViewWidget(ctx.container)
-    )
-    bind(KiCoolViewService).toSelf().inSingletonScope();
-    bind(WidgetFactory).toDynamicValue(context => context.container.get(KiCoolViewService));
-
+    bind(WidgetFactory).toDynamicValue(ctx => ({
+        id: "compiler-widget",
+        createWidget: () => ctx.container.get(CompilerWidget)
+    }))
+    bind(CompilerWidget).toSelf()
 })
-
-function createKiCoolViewWidget(parent: interfaces.Container): CompilerWidget {
-const child = createTreeContainer(parent);
-
-child.unbind(TreeWidget);
-child.bind(CompilerWidget).toSelf();
-
-return child.get(CompilerWidget);
-}

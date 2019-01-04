@@ -12,10 +12,9 @@
  */
 
 export const compilerWidgetId = "compiler-widget"
-export const COMPILE: string = 'sccharts/compile'
-export const SHOW: string = 'sccharts/show'
-export const GET_SYSTEMS: string = 'sccharts/get-systems'
-export const UPDATE_PREFERENCES: string = "sccharts/update-preferences"
+export const COMPILE: string = 'keith/kicool/compile'
+export const SHOW: string = 'keith/kicool/show'
+export const GET_SYSTEMS: string = 'keith/kicool/get-systems'
 
 export const OPEN_COMPILER_WIDGET_KEYBINDING = "ctrlcmd+alt+c"
 export const SHOW_PREVIOUS_KEYBINDING = "alt+g"
