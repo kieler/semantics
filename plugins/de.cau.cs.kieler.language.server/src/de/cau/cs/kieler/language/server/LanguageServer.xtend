@@ -12,16 +12,12 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
-import io.typefox.sprotty.layout.ElkLayoutEngine
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
 import java.util.concurrent.Executors
-import java.util.function.Consumer
 import org.apache.log4j.Logger
 import org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider
 import org.eclipse.elk.core.util.persistence.ElkGraphResourceFactory
@@ -34,6 +30,10 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import java.util.function.Consumer
+import com.google.gson.GsonBuilder
+import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
+import io.typefox.sprotty.layout.ElkLayoutEngine
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -79,10 +79,10 @@ class LanguageServer implements IApplication {
             println("Connection to: " + host + ":" + port)
                
                
-            // Initialize ELK
+//            // Initialize ELK
             ElkLayoutEngine.initialize(new LayeredMetaDataProvider)
             Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put('elkg', new ElkGraphResourceFactory)
-
+//        
             // Register all languages
             println("Starting language server socket")
             bindAndRegisterLanguages()
