@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolServerModule
+import de.cau.cs.kieler.language.server.registration.RegistrationServerModule
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
@@ -29,8 +30,9 @@ import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
 import de.cau.cs.kieler.scl.SCLRuntimeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
+import java.util.concurrent.ExecutorService
+import org.eclipse.xtext.ide.ExecutorServiceProvider
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.language.server.registration.RegistrationServerModule
 
 /**
  * @author sdo
@@ -68,5 +70,7 @@ class LanguageRegistration {
                     new KGraphRuntimeModule, new KGraphIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
+        Guice.createInjector(new KiCoolServerModule, [bind(ExecutorService).toProvider(ExecutorServiceProvider)])
+        
     }
 }
