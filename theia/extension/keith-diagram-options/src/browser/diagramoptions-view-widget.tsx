@@ -27,6 +27,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
     private synthesisOptions: SynthesisOption[]
     public sourceModelPath: string
     public hasContent: boolean
+    private categoryMap: Map<string, SynthesisOption[]> = new Map
 
     constructor(
     ) {
@@ -64,9 +65,40 @@ export class DiagramOptionsViewWidget extends ReactWidget {
         }
     }
 
+    /**
+     * Renders the options, it is assumed that the options are ordered in a way
+     * that the category for each option comes before its correspoding options.
+     * @param synthesisOptions options for diagram synthesis
+     */
     private renderOptions(synthesisOptions: SynthesisOption[]): JSX.Element {
+        this.categoryMap.clear()
         let children: JSX.Element[] = []
+        let optionsToRender: SynthesisOption[] = []
+        // add all options to their categories
         synthesisOptions.forEach(option => {
+            if (option.type === TransformationOptionType.CATEGORY) {
+                this.categoryMap.set(option.name, [])
+                if (option.category) {
+                    let list = this.categoryMap.get(option.category.name)
+                    if (list) {
+                        list.push(option)
+                    }
+                } else {
+                    optionsToRender.push(option)
+                }
+            } else {
+                if (option.category) {
+                    let list = this.categoryMap.get(option.category.name)
+                    if (list) {
+                        list.push(option)
+                    }
+                } else {
+                    optionsToRender.push(option)
+                }
+            }
+        })
+        // render all top level options
+        optionsToRender.forEach(option => {
             switch (option.type) {
                 case TransformationOptionType.CHECK: {
                     children.push(this.renderCheck(option))
@@ -85,7 +117,51 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                     break
                 }
                 case TransformationOptionType.CATEGORY: {
+                    const list = this.categoryMap.get(option.name)
+                    if (list) {
+                        children.push(this.renderCategory(option.name, list))
+                    }
+                    break
+                }
+            }
+        })
+        return <div>{...children}</div>
+    }
+
+    private renderCategory(name: string, synthesisOptions: SynthesisOption[]): JSX.Element {
+        return <div>
+            <details>
+                <summary>{name}</summary>
+                {this.renderCategoryOptions(synthesisOptions)}
+            </details>
+        </div>
+    }
+
+    private renderCategoryOptions(options: SynthesisOption[]): JSX.Element {
+        let children: JSX.Element[] = []
+        options.forEach(option => {
+            switch (option.type) {
+                case TransformationOptionType.CHECK: {
+                    children.push(this.renderCheck(option))
+                    break
+                }
+                case TransformationOptionType.CHOICE: {
+                    children.push(this.renderChoice(option))
+                    break
+                }
+                case TransformationOptionType.RANGE: {
                     // TODO: implement
+                    break
+                }
+                case TransformationOptionType.SEPARATOR: {
+                    // TODO: implement
+                    break
+                }
+                case TransformationOptionType.CATEGORY: {
+                    const list = this.categoryMap.get(option.name)
+                    if (list) {
+                        children.push(this.renderCategory(option.name, list))
+                    }
                     break
                 }
             }

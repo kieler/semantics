@@ -17,6 +17,7 @@ export interface SynthesisOption {
     initialValue: any
     values: any[]
     currentValue: any
+    category?: SynthesisOption
 }
 
 export enum TransformationOptionType {
