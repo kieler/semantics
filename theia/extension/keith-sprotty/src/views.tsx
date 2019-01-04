@@ -27,10 +27,6 @@ export class KNodeView implements IView {
             </g>
         }
         if (rendering === null) {
-            console.error('Did not find a rendering for the KNode :' )
-            console.error(node)
-            console.error('\n\nfound data:')
-            console.error(node.data)
             return <g>
                 {context.renderChildren(node)}
             </g>
@@ -97,8 +93,6 @@ export class KLabelView implements IView {
         label.areChildrenRendered = false
         let rendering = getRendering(label.data, label, context as any)
         if (rendering === null) {
-            console.error('Did not find a rendering for the KLabel ' + label + '\n\n'
-                + 'found data:' + label.data)
             return <g>
                 {context.renderChildren(label)}
             </g>
@@ -121,8 +115,6 @@ export class KEdgeView implements IView {
         edge.areChildrenRendered = false
         let rendering = getRendering(edge.data, edge, context as any)
         if (rendering === null) {
-            console.error('Did not find a rendering for the KEdge ' + edge + '\n\n'
-                + 'found data:' + edge.data)
             return <g>
                 {context.renderChildren(edge)}
             </g>
