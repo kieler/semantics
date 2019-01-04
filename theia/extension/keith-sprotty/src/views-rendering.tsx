@@ -2,7 +2,7 @@
 import { svg } from 'snabbdom-jsx'
 import { KChildArea, KGraphElement, KEllipse, KNode, KPort, KRoundedRectangle, KRectangle,
     KSpline, KEdge, KPolyline, KPolygon, KText, KLabel, KContainerRendering, KGraphData,
-    KRenderingRef, KRenderingLibrary } from "./kgraph-models"
+    KRenderingRef, KRenderingLibrary, KRoundedBendsPolyline } from "./kgraph-models"
 import { KGraphRenderingContext, fillBackground, fillForeground, findById, shadowFilter,
     lineCapText, lineJoinText, lineStyleText, evaluateKPosition, camelToKebab,
     horizontalAlignmentText, verticalAlignmentText, calculateX, calculateY } from "./views-common"
@@ -362,6 +362,95 @@ export function renderKPolyline(rendering: KPolyline, edge: KGraphElement | KEdg
     </g>
 }
 
+// TODO: if the parent element is not an edge, use the rendering.points instead of edge.routingPoints
+export function renderKRoundedBendsPolyline(rendering: KRoundedBendsPolyline, edge: KGraphElement | KEdge, context: KGraphRenderingContext): VNode {
+    // TODO: implement junction point rendering
+    if (!('routingPoints' in edge)) { // parent has to be a KEdge, other elements will not have a Polyline as their rendering
+        console.error('Polyline renderings are only possible for KEdges')
+        return <g/>
+    }
+    const styles = getStyles(rendering.styles, (edge as KGraphElement).id + rendering.id)
+    const stroke = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground((edge as KGraphElement).id + rendering.id)
+    const lineCap = styles.kLineCap === null ? undefined : lineCapText(styles.kLineCap)
+    const lineWidth = styles.kLineWidth === null ? DEFAULT_LINE_WIDTH : styles.kLineWidth.lineWidth
+    const lineJoin = styles.kLineJoin === null ? undefined : lineJoinText(styles.kLineJoin)
+    const lineStyle = styles.kLineStyle === null ? undefined : lineStyleText(styles.kLineStyle, lineWidth)
+    const miterLimit = styles.kLineJoin.miterLimit === null ? DEFAULT_MITER_LIMIT : styles.kLineJoin.miterLimit
+    const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (edge as KGraphElement).id + rendering.id)
+    const bendRadius = rendering.bendRadius
+
+    const firstPoint = edge.routingPoints[0]
+    let minX = firstPoint.x
+    let maxX = firstPoint.x
+    let minY = firstPoint.y
+    let maxY = firstPoint.y
+    let path = `M ${firstPoint.x},${firstPoint.y}`
+    for (let i = 1; i < edge.routingPoints.length - 1; i++) {
+        const p0 = edge.routingPoints[i - 1]
+        const p = edge.routingPoints[i]
+        const p1 = edge.routingPoints[i + 1]
+        const x0 = p0.x
+        const y0 = p0.y
+        const xp = p.x
+        const yp = p.y
+        const x1 = p1.x
+        const y1 = p1.y
+        // start and end points of the bend
+        // TODO: two consecutive points are not allowed to be equal, otherwise a divide by 0 will happen.
+        // TODO: If they are too close together (less than bendRadius), use the middle between both points? Look up how KIELER does it
+        const xs = xp + (bendRadius * (x0 - xp)) / Math.sqrt((x0 - xp) * (x0 - xp) + (y0 - yp) * (y0 - yp))
+        const ys = yp + (bendRadius * (y0 - yp)) / Math.sqrt((x0 - xp) * (x0 - xp) + (y0 - yp) * (y0 - yp))
+        const xe = xp + (bendRadius * (x1 - xp)) / Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp))
+        const ye = yp + (bendRadius * (y1 - yp)) / Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp))
+        path += ` L ${xs},${ys} Q ${xp},${yp} ${xe},${ye}`
+
+        if (xp < minX) {
+            minX = xp
+        }
+        if (xp > maxX) {
+            maxX = xp
+        }
+        if (yp < minY) {
+            minX = yp
+        }
+        if (yp > maxY) {
+            maxY = yp
+        }
+    }
+    // hack to avoid paths with no width / height. These paths will not get drawn by chrome due to a bug in their svg renderer
+    const EPSILON = 0.001
+    if (edge.routingPoints.length > 1) {
+        let lastPoint = edge.routingPoints[edge.routingPoints.length - 1]
+        let lastX = lastPoint.x
+        let lastY = lastPoint.y
+        // if this path has no width and the last point does not add anything to that, we need to shift one value by a tiny, invisible value so the width will now be bigger than 0.
+        if (maxX - minX === 0 && lastX === maxX) {
+            lastX += EPSILON
+        }
+        // same for Y
+        if (maxY - minY === 0 && lastY === maxY) {
+            lastY += EPSILON
+        }
+        path += ` L ${lastX},${lastY}`
+    }
+    return <g>
+    {foregroundDefinition}
+        <path
+            d = {path}
+            stroke = {stroke}
+            fill = 'none'
+            style = {{
+                'stroke-linecap': lineCap,
+                'stroke-linejoin': lineJoin,
+                'stroke-width': lineWidth,
+                'stroke-dasharray': lineStyle,
+                'stroke-miterlimit': miterLimit
+            } as React.CSSProperties}
+        />
+        {renderChildRenderings(rendering, edge, context)}
+    </g>
+}
+
 export function renderKPolygon(rendering: KPolygon, parent: KGraphElement, context: KGraphRenderingContext): VNode {
     const styles = getStyles(rendering.styles, parent.id + rendering.id)
     let stroke: string | null = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground(parent.id + rendering.id)
@@ -566,9 +655,7 @@ export function getRendering(datas: KGraphData[], parent: KGraphElement, context
                 return renderKPolygon(data as KPolygon, parent, context)
             }
             case K_ROUNDED_BENDS_POLYLINE: {
-                console.error('The rendering for ' + data.type + ' is not implemented yet.')
-                // data as KRoundedBendsPolyline
-                break
+                return renderKRoundedBendsPolyline(data as KRoundedBendsPolyline, parent, context)
             }
             case K_SPLINE: {
                 return renderKSpline(data as KSpline, parent, context)
