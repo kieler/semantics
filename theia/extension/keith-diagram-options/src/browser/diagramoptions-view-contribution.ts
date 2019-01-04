@@ -95,6 +95,7 @@ export class DiagramOptionsViewContribution extends AbstractViewContribution<Dia
     onDidCreateWidget(e: DidCreateWidgetEvent): void {
         if (e.factoryId === DiagramOptionsViewWidget.widgetId) {
             this.initializeDiagramOptionsViewWidget(e.widget)
+            this.updateContent()
         }
     }
 
