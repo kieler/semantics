@@ -15,7 +15,7 @@ import { injectable } from 'inversify'
 import { Message, ReactWidget } from '@theia/core/lib/browser'
 import { Emitter } from '@theia/core'
 import { Event } from '@theia/core/lib/common'
-import { SynthesisOption, TransformationOptionType } from '../common/option-models'
+import { SynthesisOption, TransformationOptionType, RangeOption } from '../common/option-models'
 import { isNullOrUndefined } from 'util'
 import * as React from 'react'
 
@@ -109,7 +109,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                     break
                 }
                 case TransformationOptionType.RANGE: {
-                    // TODO: implement
+                    children.push(this.renderRange(option as RangeOption))
                     break
                 }
                 case TransformationOptionType.SEPARATOR: {
@@ -128,8 +128,32 @@ export class DiagramOptionsViewWidget extends ReactWidget {
         return <div>{...children}</div>
     }
 
+    private renderRange(option: RangeOption): JSX.Element {
+        const currentValue = option.currentValue
+        let inputAttrs = {
+            type: "range",
+            id: option.name,
+            name: option.name,
+            min: option.range.first,
+            max: option.range.second,
+            value: currentValue,
+            step: option.stepSize,
+            onChange: (event: React.ChangeEvent<HTMLInputElement>) => this.onRange(event, option)
+        }
+        return <div key={option.name}>
+            <label htmlFor = {option.name}>{option.name}: {option.currentValue}</label>
+            <input {...inputAttrs}/>
+        </div>
+    }
+
+    private onRange(event: React.ChangeEvent<HTMLInputElement>, option: SynthesisOption) {
+        option.currentValue = event.currentTarget.value
+        this.update()
+        this.sendNewOptions()
+    }
+
     private renderCategory(name: string, synthesisOptions: SynthesisOption[]): JSX.Element {
-        return <div>
+        return <div key={name}>
             <details>
                 <summary>{name}</summary>
                 {this.renderCategoryOptions(synthesisOptions)}
@@ -150,7 +174,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                     break
                 }
                 case TransformationOptionType.RANGE: {
-                    // TODO: implement
+                    children.push(this.renderRange(option as RangeOption))
                     break
                 }
                 case TransformationOptionType.SEPARATOR: {
@@ -180,7 +204,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
             id: option.name,
             name: option.name,
             defaultChecked: currentValue,
-            onClick: (e: React.MouseEvent) => this.onCheck(e, option)
+            onClick: (e: React.MouseEvent<HTMLInputElement>) => this.onCheck(e, option)
         }
 
         return <div key = {option.name}>
@@ -189,8 +213,8 @@ export class DiagramOptionsViewWidget extends ReactWidget {
         </div>
     }
 
-    private onCheck(event: React.MouseEvent, option: SynthesisOption) {
-        option.currentValue = (event.currentTarget as HTMLInputElement).checked
+    private onCheck(event: React.MouseEvent<HTMLInputElement>, option: SynthesisOption) {
+        option.currentValue = event.currentTarget.checked
         this.sendNewOptions()
     }
 

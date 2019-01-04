@@ -20,6 +20,16 @@ export interface SynthesisOption {
     category?: SynthesisOption
 }
 
+export interface RangeOption extends SynthesisOption {
+    range: Range
+    stepSize: number
+}
+
+export interface Range {
+    first: number
+    second: number
+}
+
 export enum TransformationOptionType {
     CHECK = 0,
     CHOICE = 1,
