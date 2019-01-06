@@ -25,8 +25,16 @@ import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
+import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
+import de.cau.cs.kieler.simulation.trace.TraceFileUtil
+import de.cau.cs.kieler.simulation.ui.SimulationUI
+import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
+import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
+import java.io.File
 import java.util.List
 import java.util.Observable
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.ControlContribution
@@ -48,6 +56,7 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
@@ -168,7 +177,7 @@ class VerificationView extends ViewPart {
         }
         refresh.imageDescriptor = REFRESH_ICON
         
-        val runCounterexample = new Action("Run Counterexample", IAction.AS_PUSH_BUTTON) {
+        val runCounterexample = new Action("Start Counterexample", IAction.AS_PUSH_BUTTON) {
             override run() {
                 runCounterexample()
             }
@@ -318,7 +327,26 @@ class VerificationView extends ViewPart {
     }
     
     private def void runCounterexample() {
-        
+        val property = selectedProperty
+        if(property !== null
+            && property.result.status == VerificationResultStatus.FAILED
+            && property.result.counterexample !== null) {
+            try {
+                // Start simulation with the trace from the counterexample
+                val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
+                SimulationUI.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
+                val counterexampleLocation = property.result.counterexample.location.toOSString
+                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
+                // TODO: Dirty fix to wait until simulation is started
+                Thread.sleep(500)
+                SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true)
+                DataPoolView.bringToTopIfOpen
+            } catch (Exception e) {
+                e.printStackTrace
+                StatusManager.getManager().handle(new Status(IStatus.ERROR,
+                    SCChartsUiModule.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
+            }
+        }
     }
     
     private def void startVerification() {
