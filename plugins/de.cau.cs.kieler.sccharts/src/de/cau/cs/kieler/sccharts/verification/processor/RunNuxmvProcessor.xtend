@@ -15,6 +15,7 @@
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -30,7 +31,6 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.xtext.util.StringInputStream
 
 import static extension de.cau.cs.kieler.sccharts.verification.processor.ProcessExtensions.*
-import static extension com.google.common.base.Strings.nullToEmpty
 
 /**
  * @author aas
@@ -97,7 +97,8 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
         if(counterexample !== null && property.matches(counterexample.spec)) {
-            val ktrace = counterexample.getCode
+            val store = VariableStore.get(compilationContext.startEnvironment)
+            val ktrace = counterexample.getKtrace(store)
             val ktraceFile = saveText(getCounterexampleFilePath(property, propertyIndex), ktrace)
             property.result = new VerificationResult(ktraceFile)    
         } else if(passedSpec !== null && property.matches(passedSpec)) {

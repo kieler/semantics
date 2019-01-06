@@ -168,6 +168,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.PreFinalVariableValuesOfSSA">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
