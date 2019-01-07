@@ -280,8 +280,15 @@ export function background(style: KBackground, id: string): VNode {
 export function shadowDefinition(style: KShadow, id: string): VNode {
     // stdDev of 1 looks closest to KIELER style shadows, but looks nicer with this blur
     const STD_DEV = 1
+    const blurClip = 25
     return <defs>
-        <filter id = {shadowId(id)}>
+        <filter
+            id = {shadowId(id)}
+            x = {`-${blurClip}%`}
+            y = {`-${blurClip}%`}
+            width = {`${100 + 2 * blurClip}%`}
+            height = {`${100 + 2 * blurClip}%`}
+        >
             <feDropShadow
                 dx = {style.xOffset / 4}
                 dy = {style.yOffset / 4}
