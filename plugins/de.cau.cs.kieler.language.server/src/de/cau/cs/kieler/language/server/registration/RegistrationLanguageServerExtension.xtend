@@ -14,6 +14,12 @@ package de.cau.cs.kieler.language.server.registration
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting
+import de.cau.cs.kieler.esterel.ide.highlighting.EsterelHighlighting
+import de.cau.cs.kieler.kexpressions.ide.kext.highlighting.KExtHighlighting
+import de.cau.cs.kieler.lustre.ide.highlighting.LustreHighlighting
+import de.cau.cs.kieler.sccharts.ide.text.highlighting.SCTXHighlighting
+import de.cau.cs.kieler.scl.ide.highlighting.SCLHighlighting
 import java.util.ArrayList
 import java.util.List
 import org.apache.log4j.Logger
@@ -22,8 +28,6 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
-import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting
-import de.cau.cs.kieler.sccharts.ide.text.highlighting.SCTXHighlighting
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -50,15 +54,6 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
     }
     
     override getLanguages() {
-        val sclKeywords = #['_','bool','call','combine','conflict','confluent','const','else','end','expression','extern',
-        'float','fork','global','goto','host','if','input','int','join','max','min','module','none','output','par',
-        'pause','pre','print','pure','random','randomize','ref','run','schedule','scope','signal','static','string',
-        'then','to','unsigned','val']
-        val kextKeywords = #['_','bool','call','combine','conflict','confluent','const','expression','extern',
-        'float','global','host','input','int','max','min','none','output','pre','print','pure','random','randomize',
-        'ref','schedule','scope','signal','static','string','unsigned','val']
-        val strlKeywords = #[]
-        val lusKeywords = #[]
         val kgtKeywords = #['absolutePos','actions','anchor','areaData','background','bevel','bold','bottom',
         'bottomRightAnchor','center','chord','clipShape','columns','custom','dash','dashOffset','dashPattern',
         'decoratorData','dot','double','doubleClick','error','flat','flexibleHeight','flexibleWidth','fontName',
@@ -73,11 +68,11 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
         'yoffset']
         val list = new ArrayList()
-        list.add(new Language("scl", "SCL", sclKeywords))
+        list.add(new Language("scl", "SCL", SCLHighlighting.keywords))
         list.add(new Language("anno", "Annotations", AnnotationsHighlighting.keywords))
-        list.add(new Language("kext", "Kext", kextKeywords))
-        list.add(new Language("strl", "Esterel",strlKeywords))
-        list.add(new Language("lus", "Lustre", lusKeywords))
+        list.add(new Language("kext", "Kext", KExtHighlighting.keywords))
+        list.add(new Language("strl", "Esterel", EsterelHighlighting.keywords))
+        list.add(new Language("lus", "Lustre", LustreHighlighting.keywords))
         list.add(new Language("kgt", "KGraph", kgtKeywords))
         list.add(new Language("sctx", "SCCharts", SCTXHighlighting.keywords))
         return requestManager.runRead[ cancelIndicator |

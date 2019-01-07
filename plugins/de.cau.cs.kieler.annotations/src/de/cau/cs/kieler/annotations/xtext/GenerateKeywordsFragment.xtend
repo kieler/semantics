@@ -79,7 +79,7 @@ class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
         xtendFile.resourceSet = language.resourceSet
         val List<String> keywords = getKeywords()
         xtendFile.content = '''
-            import import java.util.List
+            import java.util.List
         
             class «className» {
                 

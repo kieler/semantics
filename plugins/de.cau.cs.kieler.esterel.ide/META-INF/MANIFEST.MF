@@ -15,6 +15,7 @@ Require-Bundle: org.antlr.runtime,
 Export-Package: de.cau.cs.kieler.esterel.ide,
  de.cau.cs.kieler.esterel.ide.contentassist.antlr,
  de.cau.cs.kieler.esterel.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.esterel.ide.highlighting,
  de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr,
  de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr.internal
 
