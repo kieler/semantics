@@ -22,6 +22,8 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
+import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting
+import de.cau.cs.kieler.sccharts.ide.text.highlighting.SCTXHighlighting
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -70,20 +72,14 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         'selection','shadow','single','singleClick','singleOrMultiClick','size','solid','square','squiggle','styles',
         'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
         'yoffset']
-        val sctxKeywords = #['Pr','_','abort','auto','bool','call','clock','combine','conflict','confluent','connector',
-        'const','dataflow','deferred','delayed','do','during','entry','exit','expression','extern','final','float',
-        'for','global','go','history','host','if','immediate','initial','input','int','is','join','label','max','min',
-        'nondeterministic','none','once','output','period','pre','preceding','print','pure','random','randomize','ref','region',
-        'reset','scchart','schedule','scope','shallow','signal','state','static','string','succeeding','suspend',
-        'to','undefined','unsigned','val','violation','weak']
         val list = new ArrayList()
         list.add(new Language("scl", "SCL", sclKeywords))
-        list.add(new Language("anno", "Annotations", #[]))
+        list.add(new Language("anno", "Annotations", AnnotationsHighlighting.keywords))
         list.add(new Language("kext", "Kext", kextKeywords))
         list.add(new Language("strl", "Esterel",strlKeywords))
         list.add(new Language("lus", "Lustre", lusKeywords))
         list.add(new Language("kgt", "KGraph", kgtKeywords))
-        list.add(new Language("sctx", "SCCharts", sctxKeywords))
+        list.add(new Language("sctx", "SCCharts", SCTXHighlighting.keywords))
         return requestManager.runRead[ cancelIndicator |
             list
         ]

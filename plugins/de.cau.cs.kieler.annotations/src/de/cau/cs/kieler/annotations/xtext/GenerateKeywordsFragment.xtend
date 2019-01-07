@@ -44,11 +44,11 @@ class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
      */
     override void generate() {
         var xtendFile = doGetXtendStubFile(GrammarUtil.getSimpleName(grammar) + "Highlighting")
-        xtendFile.writeTo(this.getProjectConfig().getRuntime().getSrc);
+        xtendFile.writeTo(this.getProjectConfig().genericIde.src);
     }
 
     protected def TypeReference getFormatter2Stub(Grammar grammar, String className) {
-        new TypeReference(grammar.runtimeBasePackage + '.highlighting.' + className)
+        new TypeReference(grammar.genericIdeBasePackage + '.highlighting.' + className)
     }
 
     private def getKeywords() {
@@ -79,9 +79,11 @@ class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
         xtendFile.resourceSet = language.resourceSet
         val List<String> keywords = getKeywords()
         xtendFile.content = '''
+            import import java.util.List
+        
             class «className» {
                 
-                static val keywords = «prettyPrintKeywords(keywords)»
+                public static val List<String> keywords = «prettyPrintKeywords(keywords)»
             }
         '''
         return xtendFile

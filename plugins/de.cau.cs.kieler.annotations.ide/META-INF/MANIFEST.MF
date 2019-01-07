@@ -19,6 +19,7 @@ Require-Bundle: org.antlr.runtime,
  org.eclipse.lsp4j;bundle-version="0.2.0",
  org.eclipse.lsp4j.jsonrpc;bundle-version="0.2.0",
  com.google.gson;bundle-version="2.7.0"
-Export-Package: de.cau.cs.kieler.annotations.ide.contentassist.antlr.internal,
- de.cau.cs.kieler.annotations.ide.contentassist.antlr
+Export-Package: de.cau.cs.kieler.annotations.ide.contentassist.antlr,
+ de.cau.cs.kieler.annotations.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.annotations.ide.highlighting
 
