@@ -74,6 +74,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     for (vo : newDecl.valuedObjects) {
                         vo.name = GENERATED_PREFIX + (baseDelc.eContainer as State).name + "_" + vo.name
                     }
+                    newDecl.private = false
                 }
 
                 for (baseVoIdx : baseDelc.valuedObjects.indexed) {

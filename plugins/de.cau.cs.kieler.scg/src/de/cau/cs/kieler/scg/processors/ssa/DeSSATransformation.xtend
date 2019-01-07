@@ -64,7 +64,7 @@ class DeSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         if (scg.nodes.exists[it instanceof Fork || it instanceof Surface]) {
             environment.warnings.add("Cannot handle SCG with concurrency or synchronous ticks!")
         }
-        if (scg.nodes.exists[!isSSA || isSSA(PHI)]) {
+        if (scg.nodes.exists[isSSA && !isSSA(PHI)]) {
             environment.warnings.add("Cannot handle SSA function other than phi!")
         }
         

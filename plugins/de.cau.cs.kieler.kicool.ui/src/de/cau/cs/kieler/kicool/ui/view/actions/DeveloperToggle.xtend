@@ -26,7 +26,7 @@ import org.eclipse.jface.action.Separator
  */
 class DeveloperToggle extends AbstractAction {
 
-    private static val DEVELOPER_TOGGLE_ACTION_DEFAULT = true
+    private static val DEVELOPER_TOGGLE_ACTION_DEFAULT = false
 
     /** The action for toggling debug mode. */
     @Accessors private IToolBarManager toolBar
