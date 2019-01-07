@@ -11,5 +11,5 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-export const GET_OPTIONS = 'keith/getOptions'
-export const SET_OPTIONS = 'keith/setOptions'
+export const GET_OPTIONS = 'keith/diagramOptions/getOptions'
+export const SET_OPTIONS = 'keith/diagramOptions/setOptions'
