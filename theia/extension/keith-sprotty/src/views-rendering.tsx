@@ -389,19 +389,36 @@ export function renderKRoundedBendsPolyline(rendering: KRoundedBendsPolyline, ed
         const p0 = edge.routingPoints[i - 1]
         const p = edge.routingPoints[i]
         const p1 = edge.routingPoints[i + 1]
+        // last point
         const x0 = p0.x
         const y0 = p0.y
+        // current point where a bend should be rendered
         const xp = p.x
         const yp = p.y
+        // next point
         const x1 = p1.x
         const y1 = p1.y
+        // distance between the last point and the current point
+        const dist0 = Math.sqrt((x0 - xp) * (x0 - xp) + (y0 - yp) * (y0 - yp))
+        // distance between the current point and the next point
+        const dist1 = Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp))
+        // If the previous / next point is too close, use a smaller bend radius
+        const usedBendRadius = Math.min(bendRadius, dist0 / 2, dist1 / 2)
         // start and end points of the bend
-        // TODO: two consecutive points are not allowed to be equal, otherwise a divide by 0 will happen.
-        // TODO: If they are too close together (less than bendRadius), use the middle between both points? Look up how KIELER does it
-        const xs = xp + (bendRadius * (x0 - xp)) / Math.sqrt((x0 - xp) * (x0 - xp) + (y0 - yp) * (y0 - yp))
-        const ys = yp + (bendRadius * (y0 - yp)) / Math.sqrt((x0 - xp) * (x0 - xp) + (y0 - yp) * (y0 - yp))
-        const xe = xp + (bendRadius * (x1 - xp)) / Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp))
-        const ye = yp + (bendRadius * (y1 - yp)) / Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp))
+        let xs, ys, xe, ye
+        if (usedBendRadius === 0) {
+            // Avoid division by zero if two points are identical.
+            xs = xp
+            ys = yp
+            xe = xp
+            ye = yp
+        } else {
+            xs = xp + (usedBendRadius * (x0 - xp)) / dist0
+            ys = yp + (usedBendRadius * (y0 - yp)) / dist0
+            xe = xp + (usedBendRadius * (x1 - xp)) / dist1
+            ye = yp + (usedBendRadius * (y1 - yp)) / dist1
+        }
+        // draw a line to the start of the bend point (from the last end of its bend) and then draw the bend with the control points of the point itself and the bend end point.
         path += ` L ${xs},${ys} Q ${xp},${yp} ${xe},${ye}`
 
         if (xp < minX) {
