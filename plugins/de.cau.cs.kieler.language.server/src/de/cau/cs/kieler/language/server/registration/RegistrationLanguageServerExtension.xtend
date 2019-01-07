@@ -15,16 +15,13 @@ package de.cau.cs.kieler.language.server.registration
 import com.google.inject.Inject
 import com.google.inject.Injector
 import java.util.ArrayList
+import java.util.List
 import org.apache.log4j.Logger
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
-import java.util.List
-import de.cau.cs.kieler.scl.ide.SCLIdeModule
-import org.eclipse.xtext.GrammarUtil
-import org.eclipse.xtext.Grammar
 
 /**
  * Implements methods to extend the LSP to allow compilation
