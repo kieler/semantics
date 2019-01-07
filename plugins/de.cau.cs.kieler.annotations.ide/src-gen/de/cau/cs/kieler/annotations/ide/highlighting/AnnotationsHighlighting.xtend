@@ -3,9 +3,10 @@
  */
 package de.cau.cs.kieler.annotations.ide.highlighting
 
+
 import java.util.List
 
 class AnnotationsHighlighting {
-    
+
     public static val List<String> keywords = #[]
 }

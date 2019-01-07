@@ -3,10 +3,11 @@
  */
 package de.cau.cs.kieler.sccharts.ide.text.highlighting
 
+
 import java.util.List
 
 class SCTXHighlighting {
-    
+
     public static val List<String> keywords = #["Pr",
     "_",
     "abort",

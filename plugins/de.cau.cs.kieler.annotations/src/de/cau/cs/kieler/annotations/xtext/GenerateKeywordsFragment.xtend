@@ -24,7 +24,6 @@ import org.eclipse.xtext.GrammarUtil
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming
-import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 
@@ -44,7 +43,7 @@ class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
      */
     override void generate() {
         var xtendFile = doGetXtendStubFile(GrammarUtil.getSimpleName(grammar) + "Highlighting")
-        xtendFile.writeTo(this.getProjectConfig().genericIde.src);
+        xtendFile.writeTo(this.getProjectConfig().genericIde.srcGen);
     }
 
     protected def TypeReference getFormatter2Stub(Grammar grammar, String className) {
@@ -79,12 +78,12 @@ class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
         xtendFile.resourceSet = language.resourceSet
         val List<String> keywords = getKeywords()
         xtendFile.content = '''
-            import java.util.List
-        
-            class «className» {
-                
-                public static val List<String> keywords = «prettyPrintKeywords(keywords)»
-            }
+    import java.util.List
+    
+    class «className» {
+    
+        public static val List<String> keywords = «prettyPrintKeywords(keywords)»
+    }
         '''
         return xtendFile
     }
