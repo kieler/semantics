@@ -100,6 +100,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
 
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
@@ -110,6 +111,7 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.TickBoundaryDependency
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
+import java.util.Map
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -137,6 +139,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension SCGSerializeHRExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGDependencyExtensions
+    @Inject extension ColorStore
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -247,6 +250,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Show relative write-read dependencies */
     private static val SynthesisOption SHOW_DEPENDENCY_RELWRITE_READ = SynthesisOption::
         createCheckOption(DEPENDENCYFILTERSTRING_RELWRITE_READ, true);
+        
+    private static val SynthesisOption SHOW_ANNOTATIONS = SynthesisOption::createCheckOption("Show Annotations", false);
 
     /**  
      * Returns a list of KlighD visualization options. Called by KlighD.
@@ -266,6 +271,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_SCHEDULINGBLOCKS,
             SHOW_SCHEDULINGPATH,
             SHOW_POTENTIALPROBLEMS,
+            SHOW_ANNOTATIONS,
             USE_ADAPTIVEZOOM,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
@@ -490,6 +496,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private LinkedList<LinkedList<Node>> scc    
     
     protected val HashMultimap<KNode, KNode> hierarchyAttachment = HashMultimap.create  
+    
+    protected val Map<KNode, KNode> annotationNodeAttachments = <KNode, KNode> newHashMap
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -519,6 +527,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Invoke the synthesis.
         SCGraph = model
         hierarchyAttachment.clear
+        annotationNodeAttachments.clear
         
         // Start the synthesis.
         val timestamp = System.currentTimeMillis
@@ -634,6 +643,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     (it as Conditional).then?.synthesizeControlFlow(SCGPORTID_OUTGOING_THEN)
                     (it as Conditional).^else?.synthesizeControlFlow(SCGPORTID_OUTGOING_ELSE)
                 }
+                it.synthesizeAnnotations
                 
                 // If the dependency edges shall be layouted as well, they must be drawn before any 
                 // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
@@ -1494,6 +1504,46 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
         ]
     }
+    
+    private def synthesizeAnnotations(Node node) {
+        if (!SHOW_ANNOTATIONS.booleanValue) return; 
+        if (node.annotations.empty) return;
+        
+        var commentText = "Annotations:\n"
+        
+        for (a : node.annotations) {
+            commentText += "\n"
+            commentText += a.name
+            switch(a) {
+                StringAnnotation: commentText += ": " + a.values
+                IntAnnotation: commentText += ": " + a.value
+            }  
+        }
+        
+        val aNode = createNode()
+        aNode.addLayoutParam(CoreOptions.COMMENT_BOX, true)
+    
+        aNode.setMinimalNodeSize(16, 16)
+        aNode.addRoundedRectangle(1, 1, 1) => [
+            setBackgroundGradient(COMMENT_BACKGROUND_GRADIENT_1.color2, COMMENT_BACKGROUND_GRADIENT_2.color2, 90);
+            foreground = COMMENT_FOREGROND.color2;
+        ]
+        aNode.getKContainerRendering.addText(commentText) => [
+            fontSize = 8;
+            setGridPlacementData().from(LEFT, 4, 0, TOP, 4, 0).to(RIGHT, 4, 0, BOTTOM, 4, 0);
+        ]
+        
+        val edge = createEdge()
+        edge.source = node.getNode
+        edge.target = aNode
+        edge.addPolyline => [
+            lineWidth = 1;
+            foreground = COMMENT_EDGE.color
+        ]
+        
+        node.getNode.parent.children += aNode
+        annotationNodeAttachments.put(node.getNode, aNode)
+    }
 
     /**
 	 * Draw a dotted line from the corresponding surface node to the given depth node.
@@ -1802,6 +1852,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val attachments = hierarchyAttachment.get(e.node)
             if (!attachments.empty) {
                 attachments.forEach[ kNodeList += it]
+            }
+            val annotationNode = annotationNodeAttachments.get(e.node)
+            if (annotationNode !== null) {
+                kNodeList += annotationNode
             }
         ]
 
