@@ -80,6 +80,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     /** Recording of the notifications if enabled. */
     @Accessors(PUBLIC_GETTER) List<AbstractContextNotification> notifications
     
+    private var Processor<?,?> actualProcessor = null
+    
     new() {
         systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
         processorMap = <ProcessorReference, Processor<?,?>> newLinkedHashMap
@@ -159,6 +161,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             System.err.println("An instance for processor reference " + processorReference + " was not found!")
             return environment    
         }
+        actualProcessor = processorInstance;
         
         // Set environment information that come from the outside, e.g. the system.
         environment.processEnvironmentConfig(processorReference.preconfig)
@@ -470,5 +473,44 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
         return null
     } 
+    
+    /** 
+     * Convenient toString method mainly for debugging purposes.
+     */
+    override toString() {
+        val text = new StringBuilder
+        text.append("CompilationContext@")
+        text.append(hashCode)
+        if (actualProcessor !== null) {
+            text.append(": ")
+            text.append(actualProcessor.toString)
+        }
+        return text.toString
+    }
+    
+    /** 
+     * Convenient toString method printing the complete processor list mainly for debugging purposes.
+     */
+    def String toStringComplete() {
+        val text = new StringBuilder
+        text.append("CompilationContext@")
+        text.append(hashCode)
+        if (actualProcessor !== null) {
+            text.append(": ")
+            text.append(actualProcessor.toString)
+        }
+        if (!processorInstancesSequence.empty) {
+            text.append("\n[")
+            for (p : processorInstancesSequence.indexed) {
+                if (p.key != 0) {
+                    text.append(", ")
+                }
+                text.append(p.value.toString)
+            }
+            text.append("]")
+        }
+        return text.toString
+    }
+    
        
 }
