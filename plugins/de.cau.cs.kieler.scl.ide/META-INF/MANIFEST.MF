@@ -19,5 +19,6 @@ Require-Bundle: org.antlr.runtime,
  org.eclipse.xtext.xtext.ide;bundle-version="2.12.0"
 Export-Package: de.cau.cs.kieler.scl.ide,
  de.cau.cs.kieler.scl.ide.contentassist.antlr,
- de.cau.cs.kieler.scl.ide.contentassist.antlr.internal
+ de.cau.cs.kieler.scl.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.scl.ide.highlighting
 

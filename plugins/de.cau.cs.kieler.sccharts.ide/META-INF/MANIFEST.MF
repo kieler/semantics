@@ -19,5 +19,6 @@ Require-Bundle: org.antlr.runtime,
  org.eclipse.lsp4j.generator;bundle-version="0.4.1"
 Export-Package: de.cau.cs.kieler.sccharts.ide.text,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr,
- de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal
+ de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal,
+ de.cau.cs.kieler.sccharts.ide.text.highlighting
 
