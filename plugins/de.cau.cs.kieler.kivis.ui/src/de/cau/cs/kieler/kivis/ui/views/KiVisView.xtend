@@ -48,6 +48,7 @@ import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kivis.ui.views.KiVisView.ActionIndicatorFunction
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 
 /**
  * The KiVis View.
@@ -194,6 +195,12 @@ class KiVisView extends ViewPart implements SimulationListener {
                 val exception = new Text(parent, SWT.WRAP);
                 exception.setText(err.message);
             }
+        }
+        
+        // Late start
+        if (SimulationUI.currentSimulation !== null && SimulationUI.currentSimulation.running) {
+            // Reemit missed start
+            this.update(SimulationUI.currentSimulation, new SimulationControlEvent(SimulationUI.currentSimulation, SimulationOperation.START))
         }
     }
 

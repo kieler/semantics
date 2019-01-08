@@ -10,7 +10,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>1.2.0</tycho-version>
-    <xtend-version>2.14.0</xtend-version>
+    <xtend-version>2.16.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -229,18 +229,8 @@
           <artifactId>xtend-maven-plugin</artifactId>
           <version>${xtend-version}</version>
           <dependencies>
-            <!-- Workaround for broken build from https://github.com/eclipse/xtext/issues/1231 -->
-            <dependency>
-              <groupId>org.eclipse.jdt</groupId>
-              <artifactId>org.eclipse.jdt.core</artifactId>
-              <version>3.12.2</version>
-            </dependency>
-            <!-- Workaround for broken xtend compilation from https://github.com/eclipse/xtext-xtend/issues/116 -->
-            <dependency>
-              <groupId>org.eclipse.jdt</groupId>
-              <artifactId>org.eclipse.jdt.compiler.apt</artifactId>
-              <version>1.2.100</version>
-            </dependency>
+            <!-- Here was a now deprecated workaround for broken build from https://github.com/eclipse/xtext/issues/1231 -->
+            <!-- Here was a now deprecated workaround for broken xtend compilation from https://github.com/eclipse/xtext-xtend/issues/116 -->
           </dependencies>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>

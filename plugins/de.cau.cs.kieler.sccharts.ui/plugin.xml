@@ -521,7 +521,7 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             hasPages="true"
             icon="icons/sccharts_icon16.png"
             id="de.cau.cs.kieler.sccharts.ui.sctxWizard"
-            name="SCTX File"
+            name="SCChart"
             project="false">
          <description>
             Create a new SCCharts Text file.

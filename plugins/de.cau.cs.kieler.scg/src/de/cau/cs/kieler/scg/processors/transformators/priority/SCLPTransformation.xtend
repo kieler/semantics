@@ -270,7 +270,6 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
             + "#define _SC_ID_MAX " + maxPID + "\n\n"
             + "#include \""+ scg.name + ".h\"\n"
             + "#include \"scl.h\"\n"
-            + "#include \"scl.h\"\n"
             + "#include \"sc.h\"\n"
             + "#include \"sc-generic.h\"\n\n")
 //            + "#define true 1\n"
