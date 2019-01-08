@@ -12,11 +12,12 @@
  */
  package de.cau.cs.kieler.sccharts.verification.processor
 
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import java.io.BufferedReader
 import java.io.StringReader
 import java.util.List
+import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * @author aas
@@ -31,14 +32,10 @@ class NuxmvOutputInterpreter {
     NuxmvCounterexample currentCounterexample
     NuxmvCounterexampleState currentCounterexampleState
     ParseTarget parseTarget = ParseTarget.SPEC_RESULT
-    
-    static val specificationCommentText = "-- specification"
-    static val invariantCommentText = "-- invariant"
-    static val isTrueText = "is true"
-    static val isFalseText = "is false"
-    static val stateStartText = "-> State:"
-    static val stateEndText = "<-"
-    static val variableAssignmentRegex = "[a-zA-Z_][a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z_0-9.-]*"
+
+    static val SPECIFICATION_RESULT_PATTERN = Pattern.compile("-- (specification|invariant) (.*) is (true|false)")
+    static val STATE_PATTERN = Pattern.compile("-> State:(.*)<-")
+    static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile("([a-zA-Z_][a-zA-Z_0-9]*)\\s*=\\s*([a-zA-Z_0-9.-]*)")
     
     private enum ParseTarget {
         SPEC_RESULT,
@@ -63,42 +60,40 @@ class NuxmvOutputInterpreter {
     
     private def void parseCurrentLine() {
         val trimmedLine = currentLine.trim
-        var int specificationNameStart = -1
-        var int specificationNameEnd = -1
-        if(trimmedLine.startsWith(specificationCommentText)) {
-            specificationNameStart = specificationCommentText.length
-        }
-        if(trimmedLine.startsWith(invariantCommentText)) {
-            specificationNameStart = invariantCommentText.length
-        }
-        if(specificationNameStart >= 0) {
-            // a specification result can also be the end of a counterexample
+        
+        val specificationResultMatcher = SPECIFICATION_RESULT_PATTERN.matcher(trimmedLine)
+        if(specificationResultMatcher.matches) {
+            // a specification result ends the last counterexample
             parseTarget = ParseTarget.SPEC_RESULT
             currentCounterexample = null
             currentCounterexampleState = null
-            if(trimmedLine.endsWith(isTrueText)) {
-                specificationNameEnd = trimmedLine.length - isTrueText.length
-                val spec = trimmedLine.substring(specificationNameStart, specificationNameEnd)
-                passedSpecs.add(spec)
-            } else if(trimmedLine.endsWith(isFalseText)) {
-                specificationNameEnd = trimmedLine.length - isFalseText.length
-                val spec = trimmedLine.substring(specificationNameStart, specificationNameEnd)
-                readNextLine()
-                // this specification does not hold, so prepare for counterexample
-                currentCounterexample = new NuxmvCounterexample(spec)
+            
+            val formula =  specificationResultMatcher.group(2)
+            val trueOrFalse = specificationResultMatcher.group(3)
+            if(trueOrFalse == "true") {
+                passedSpecs.add(formula)
+            } else if(trueOrFalse == "false") {
+                currentCounterexample = new NuxmvCounterexample(formula)
                 counterexamples.add(currentCounterexample)
                 parseTarget = ParseTarget.COUNTEREXAMPLE
+            } else {
+                // This should never happen
+                throw new Exception("Inconsistent specification result state")
             }
         } else if (parseTarget == ParseTarget.COUNTEREXAMPLE) {
             // Find the start of the next state
-            if(trimmedLine.startsWith(stateStartText) && trimmedLine.endsWith(stateEndText)) {
+            val stateMatcher = STATE_PATTERN.matcher(trimmedLine)
+            if(stateMatcher.matches) {
                 currentCounterexampleState = new NuxmvCounterexampleState()
                 currentCounterexample.states.add(currentCounterexampleState)
-            } else if(trimmedLine.matches(variableAssignmentRegex)) {
-                // Add this variable assignment to the current counterexample state
-                val variable = trimmedLine.substring(0, trimmedLine.indexOf('=')).trim
-                val expression = trimmedLine.substring(trimmedLine.indexOf('=')+1, trimmedLine.length).trim
-                currentCounterexampleState.variableMappings.put(variable, expression)
+            } else {
+                val variableAssignmentMatcher = VARIABLE_ASSIGNMENT_PATTERN.matcher(trimmedLine)
+                if(variableAssignmentMatcher.matches) {
+                    // Add this variable assignment to the current counterexample state
+                    val variable = variableAssignmentMatcher.group(1)
+                    val expression = variableAssignmentMatcher.group(2)
+                    currentCounterexampleState.variableMappings.put(variable, expression)    
+                }
             }
         }
     }
@@ -144,7 +139,8 @@ class NuxmvOutputInterpreter {
         }
         
         private static def String toKtraceExpression(String exp) {
-            return exp.replace("FALSE","false").replace("TRUE","true").replace("|","||").replace("&","&&")
+            return exp.replace("FALSE","false").replace("TRUE","true")
+                      .replace("|","||").replace("&","&&").replace("=", "==")
         }
         
         private static def boolean isInput(String variable, VariableStore store) {
