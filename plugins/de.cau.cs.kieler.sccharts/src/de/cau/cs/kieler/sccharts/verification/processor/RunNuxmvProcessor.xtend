@@ -12,13 +12,13 @@
  */
  package de.cau.cs.kieler.sccharts.verification.processor
 
+import com.google.common.io.Files
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.sccharts.verification.VerificationResult
@@ -27,7 +27,13 @@ import java.io.File
 import java.util.List
 import java.util.Map
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IFolder
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.resources.IWorkspace
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.StringInputStream
 
 import static extension de.cau.cs.kieler.sccharts.verification.processor.ProcessExtensions.*
@@ -128,9 +134,9 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         }
     }
     
-    private def IFile saveText(String fullPath, String text) {
+    private def IFile saveText(IPath fullPath, String text) {
         val tmpProject = ProjectInfrastructure.getTemporaryProject()
-        val file = tmpProject.getFile(new Path(fullPath))
+        val file = tmpProject.getFile(fullPath)
         file.saveText(text)
         return file
     }
@@ -139,32 +145,51 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         if(file.exists) {
             file.delete(true, null)
         }
+        file.createDirectories
         file.create(new StringInputStream(text), true, null)
         return file
     }
     
-    private def String getModelName() {
-        return (compilationContext.originalModel as SCCharts).name
+    private def IFile getModelFile() {
+        val model = (compilationContext.originalModel as EObject)
+        val eUri = model.eResource.getURI();
+        if (eUri.isPlatformResource()) {
+            val platformString = eUri.toPlatformString(true);
+            val res = ResourcesPlugin.getWorkspace().getRoot().findMember(platformString)
+            if(res.exists && res instanceof IFile) {
+                return res as IFile
+            }
+        }
     }
     
-    private def String getSmvFilePath() {
-        return modelName+".smv"
+    private def IPath getOutputFolder() {
+        val folderInKielerTemp = getModelFile.fullPath.toString.replace("/","-").replace(".","-")
+        return new Path(folderInKielerTemp).append("kieler-gen").append("verification")
+    }
+    
+    private def IPath getOutputFile(String fileName) {
+        return outputFolder.append(fileName)
+    }
+    
+    private def IPath getOutputFile(VerificationProperty property, int propertyIndex, String fileExtension) {
+        var String name = modelFile.nameWithoutExtension
+        if(!property.name.isNullOrEmpty) {
+            name += "-'"+property.name+"'"
+        }
+        name += fileExtension
+        return getOutputFile(name)
+    }
+    
+    private def IPath getSmvFilePath() {
+        return getOutputFile(modelFile.nameWithoutExtension+".smv")
+    }
+  
+    private def IPath getProcessOutputFilePath(VerificationProperty property, int propertyIndex) {
+        return getOutputFile(property, propertyIndex, ".smv.log")
     }
 
-    private def String getProcessOutputFilePath(VerificationProperty property, int propertyIndex) {
-        if(property.name.isNullOrEmpty) {
-            return modelName+"-"+propertyIndex+".smv.log"
-        } else {
-            return modelName+"-"+propertyIndex+"-'"+property.name+"'"+".smv.log"
-        }
-    }
-
-    private def String getCounterexampleFilePath(VerificationProperty property, int propertyIndex) {
-        if(property.name.isNullOrEmpty) {
-            return modelName+"-"+propertyIndex+".ktrace"
-        } else {
-            return modelName+"-"+propertyIndex+"-'"+property.name+"'"+".ktrace"
-        }
+    private def IPath getCounterexampleFilePath(VerificationProperty property, int propertyIndex) {
+        return getOutputFile(property, propertyIndex, ".ktrace")
     }
     
     private static def String toSmvExpression(String kexpression) {
@@ -178,6 +203,23 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
             return text.substring(1, text.length-1)
         } else {
             return text
+        }
+    }
+    
+    private static def String nameWithoutExtension(IFile file) {
+        return Files.getNameWithoutExtension(file.name)
+    }
+    
+    private static def void createDirectories(IResource res) {
+        if(res.exists) {
+            return
+        }
+        if(res instanceof IWorkspace) {
+            return
+        }
+        res.parent?.createDirectories
+        if(res instanceof IFolder) {    
+            res.create(false, false, null)
         }
     }
 }
