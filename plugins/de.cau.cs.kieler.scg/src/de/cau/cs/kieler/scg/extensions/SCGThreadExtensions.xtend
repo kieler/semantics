@@ -569,7 +569,7 @@ class SCGThreadExtensions {
         	for (entry : entries) {
         		val childMap = (entry as Entry).getThreadControlFlowTypes
         		threadTypes.putAll(childMap)
-        		newType = threadTypes.get(entry).combineThreadType(newType)
+        		newType = threadTypes.get(entry).combineThreadTypeFork(newType)
         	}
         	fork.join.next?.accumulateThreadControlFlowsTypes(
         		localFlow, newType, threadTypes, source
@@ -582,7 +582,7 @@ class SCGThreadExtensions {
         }
         
         if (next.target instanceof Surface) {
-        	val newType = type.combineThreadType(ThreadPathType::DELAYED)
+        	val newType = type.combineThreadTypeDirect(ThreadPathType::DELAYED)
             (next.target as Surface).depth.next.accumulateThreadControlFlowsTypes( 
                 localFlow, newType, threadTypes, source
             )
@@ -595,42 +595,66 @@ class SCGThreadExtensions {
    	    threadTypes 
     }
     
-    private def ThreadPathType combineThreadType(ThreadPathType oldType, ThreadPathType type) {
+    /**
+     * Combines two thread types when considering direct paths from entry to exit nodes.
+     * E.g., if there exists two paths, one delayed and one potentially instantaneous, the whole thread becomes
+     * potentially instantaneous. 
+     */
+    private def ThreadPathType combineThreadTypeDirect(ThreadPathType oldType, ThreadPathType type) {
     	var newType = type
-    	if (oldType == ThreadPathType::DISCONNECTED) {
-    		// Do nothing. Take the new type.
-    	}
-    	else if (oldType == ThreadPathType::INSTANTANEOUS) {
-    		if (type == ThreadPathType::DISCONNECTED) {
-    			newType = oldType
-    		}
-    		else if (type != ThreadPathType::INSTANTANEOUS) {
-    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
-    		}
-    	} 
-    	else if (oldType == ThreadPathType::DELAYED) {
-    		if (type == ThreadPathType::DISCONNECTED) {
-    			newType = oldType
-    		}
-    		else if (type != ThreadPathType::DELAYED) {
-    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
-    		}
-    	}
-    	else if (oldType == ThreadPathType::POTENTIALLY_INSTANTANEOUS) {
-    	    newType = oldType
-    	    // FIXME: This is bugged. Potentially instantaneous threads are marked as delayed.
-    	    // Planned revision of the whole thread path type system should solve this. KISEMA-1258
-//    	    if (type == ThreadPathType::DELAYED) {
-//                newType = ThreadPathType::DELAYED
-//    		}
-    	}
     	
-    	newType
+        switch (oldType) {
+            case DISCONNECTED: {} // Do nothing
+            case INSTANTANEOUS: switch(type) {
+                case DISCONNECTED: newType = oldType
+                case INSTANTANEOUS: {}
+                default: newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS 
+            }
+            case DELAYED: switch(type) {
+                case DISCONNECTED: newType = oldType
+                case DELAYED: {} 
+                default: newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS 
+            }
+            case POTENTIALLY_INSTANTANEOUS: {
+                newType = oldType
+            }
+            default: {}
+        }    	
+    	
+    	return newType
     }
+    
+    /**
+     * Combines two thread types when returning types from nested threads after a fork.
+     * E.g. if two child threads are delayed and potentially instantaneous, the parent path becomes delayed, because 
+     * both paths are executed and the thread has to wait for the delayed thread.
+     */
+    private def ThreadPathType combineThreadTypeFork(ThreadPathType oldType, ThreadPathType type) {
+        var newType = type
+        switch (oldType) {
+            case DISCONNECTED: {} // Do nothing
+            case INSTANTANEOUS: switch(type) {
+                case DISCONNECTED: newType = oldType
+                case INSTANTANEOUS: {}
+                default: newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS 
+            }
+            case DELAYED: {
+                newType = oldType 
+            }
+            case POTENTIALLY_INSTANTANEOUS: switch(type) {
+                case DISCONNECTED: newType = oldType
+                case DELAYED: {}
+                default: newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS 
+            }
+            default: {}
+        }
+        
+        newType
+    }    
     
     private def ThreadPathType addToThreadPathTypeMap(Map<Entry, ThreadPathType> map, Entry node, ThreadPathType type) {
     	val oldType = map.get(node)
-    	val newType = oldType.combineThreadType(type)
+    	val newType = oldType.combineThreadTypeDirect(type)
     	map.put(node, newType)
     	newType
     }
