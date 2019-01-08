@@ -26,9 +26,12 @@ import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyz
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.ui.SimulationUI
-import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 import java.io.File
 import java.util.List
@@ -332,15 +335,29 @@ class VerificationView extends ViewPart {
             && property.result.status == VerificationResultStatus.FAILED
             && property.result.counterexample !== null) {
             try {
-                // Start simulation with the trace from the counterexample
+                // Start a simulation, and when the simulation is started, load the trace from the counterexample
                 val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
                 SimulationUI.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
-                val counterexampleLocation = property.result.counterexample.location.toOSString
-                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
-                // TODO: Dirty fix to wait until simulation is started
-                Thread.sleep(500)
-                SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true)
-                DataPoolView.bringToTopIfOpen
+                SimulationUI.registerObserver(new SimulationListener() {
+                    
+                    override update(SimulationContext ctx, SimulationEvent e) {
+                        if(e instanceof SimulationControlEvent) {
+                            if(e.operation == SimulationControlEvent.SimulationOperation.START) {
+                                val counterexampleLocation = property.result.counterexample.location.toOSString
+                                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
+                                SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true)
+                                DataPoolView.bringToTopIfOpen
+                                // TODO: Remove simulation listener needed?
+                            }    
+                        }
+                    }
+                    
+                    override getName() {
+                        return "Model Checking View"
+                    }
+                    
+                })
+
             } catch (Exception e) {
                 e.printStackTrace
                 StatusManager.getManager().handle(new Status(IStatus.ERROR,
