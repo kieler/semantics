@@ -20,11 +20,11 @@ import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import java.util.List
 import java.util.Map
-import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 
 /**
  * SMV Code Processor

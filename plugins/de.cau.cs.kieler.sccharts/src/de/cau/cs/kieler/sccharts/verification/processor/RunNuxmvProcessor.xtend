@@ -109,8 +109,13 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         compilationContext.notify(new VerificationPropertyChanged(property))
     }
     
-    private def boolean matches(VerificationProperty property, String formula) {
-        return formula.replaceAll("\\s","") == formula.replaceAll("\\s", "")
+    private def boolean matches(VerificationProperty property, String smvFormula) {
+        val smvFormulaNoWhitespace = smvFormula.replaceAll("\\s","")
+        val smvFormulaNoSurroundingBrackets = smvFormulaNoWhitespace.removeSurroundingBrackets
+        val propertySmvFormula = property.formula.toSmvExpression()
+        val propertySmvFormulaNoWhitespace = propertySmvFormula.replaceAll("\\s", "")
+        val propertySmvFormulaNoSurroundingBrackets = propertySmvFormulaNoWhitespace.removeSurroundingBrackets
+        return smvFormulaNoSurroundingBrackets == propertySmvFormulaNoSurroundingBrackets
     }
     
     private def boolean isCanceled() {
@@ -159,6 +164,20 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
             return modelName+"-"+propertyIndex+".ktrace"
         } else {
             return modelName+"-"+propertyIndex+"-'"+property.name+"'"+".ktrace"
+        }
+    }
+    
+    private static def String toSmvExpression(String kexpression) {
+        // TODO: duplicate of SmvCodeGeneratorSpecificationModule.toSmvExpression, but cannot import from there
+        return kexpression.replace("==", "=").replace("&&", "&").replace("||", "|")
+                          .replace("false", "FALSE").replace("true", "TRUE")
+    }
+    
+    private static def String removeSurroundingBrackets(String text) {
+        if(text.startsWith('(') && text.endsWith(')')) {
+            return text.substring(1, text.length-1)
+        } else {
+            return text
         }
     }
 }

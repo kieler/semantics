@@ -23,6 +23,11 @@ import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
  */
 class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
 
+    public static def String toSmvExpression(String kexpression) {
+        return kexpression.replace("==", "=").replace("&&", "&").replace("||", "|")
+                          .replace("false", "FALSE").replace("true", "TRUE")
+    }
+    
     override getName() {
         return class.simpleName;
     }
@@ -43,7 +48,7 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
             val specName = property.getSmvSpecName
             appendIndentedLine('''«specName»''')
             incIndentationLevel
-            appendIndentedLine('''«property.formula»;''')
+            appendIndentedLine('''«property.formula.toSmvExpression»;''')
             decIndentationLevel
             indexMap.put(property, index)
             index++
