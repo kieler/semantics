@@ -161,9 +161,11 @@ class SmvCodeGeneratorTickModule extends SmvCodeGeneratorModuleBase {
         for(entry : store.variables.entries) {
             val variableInformation = entry.value
             if(variableInformation.properties.contains(SmvCodeGeneratorModule.PROPERTY_PREGUARD)) {
+                val predValuedObject = variableInformation.valuedObject
+                val initValue = if(variableInformation.type == ValueType.INT) "0" else "FALSE"
                 val preVariableName = entry.key
                 val origVariableName = smvCodeGeneratorModule.getOriginalVariableName(preVariableName)
-                appendIndentedLine('''init(«preVariableName») := FALSE;''')
+                appendIndentedLine('''init(«preVariableName») := «initValue»;''')
                 appendIndentedLine('''next(«preVariableName») := «origVariableName»;''')
                 code.append("\n")
             }

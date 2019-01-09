@@ -16,6 +16,8 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.util.List
 import java.util.Optional
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /** 
  * @author aas
@@ -24,15 +26,46 @@ class SCChartsVerificationPropertyAnalyzer {
     public static val INVARIANT_ANNOTATION_NAME = "Invariant"
     public static val CTL_ANNOTATION_NAME = "CTL"
     public static val LTL_ANNOTATION_NAME = "LTL"
+    public static val RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRange"
     
-    public def List<VerificationProperty> getVerificationProperties(SCCharts model) {
-        val properties = <VerificationProperty>newArrayList
+    @Accessors(PUBLIC_GETTER) private val SCCharts model
+    @Accessors(PUBLIC_GETTER) private val verificationProperties = <VerificationProperty>newArrayList
+    @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
+    
+    new(SCCharts model) {
+        this.model = model
         model.eAllContents.filter(StringAnnotation).forEach [ anno |
             getVerificationProperty(anno).ifPresent [ property | 
-                properties.add(property)
+                verificationProperties.add(property)
+            ]
+            getRangeAssumptions(anno).forEach[ assumption | 
+                verificationAssumptions.add(assumption)
             ]
         ]
-        return properties
+    }
+    
+    private def List<VerificationAssumption> getRangeAssumptions(StringAnnotation anno) {
+        if(anno.name != RANGE_ASSUMPTION_ANNOTATION_NAME) {
+            return #[]
+        }
+        val minValueString = anno.values.getIfExists(0)
+        val maxValueString = anno.values.getIfExists(1)
+        if(minValueString === null || maxValueString === null) {
+            throw new Exception("Range assumption is missing minValue or maxValue as arguments")
+        }
+        val minValue = Integer.valueOf(minValueString)
+        val maxValue = Integer.valueOf(maxValueString)
+        val container = anno.eContainer
+        if(container instanceof VariableDeclaration) {
+            val assumptions = newArrayList
+            for(vo : container.valuedObjects) {
+                val assumption = new RangeAssumption(vo, minValue, maxValue)
+                assumptions.add(assumption)
+            }
+            return assumptions
+        } else {
+            throw new Exception("Range assumption can only be used on integer variables")
+        }
     }
     
     private def Optional<VerificationProperty> getVerificationProperty(StringAnnotation anno) {

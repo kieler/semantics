@@ -23,6 +23,7 @@ import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
+import de.cau.cs.kieler.sccharts.verification.VerificationAssumption
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
@@ -79,9 +80,9 @@ class VerificationView extends ViewPart {
     private static val REFRESH_ICON = SCChartsUiModule.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/refresh.png")
     private static val RUN_COUNTEREXAMPLE_ICON = SCChartsUiModule.imageDescriptorFromPlugin(SCChartsUiModule.PLUGIN_ID, "icons/rerunFailed.png")
     
-    private val scchartsVerificationPropertyAnalyzer = new SCChartsVerificationPropertyAnalyzer
     private var CompilationContext verificationContext = null
     private var String selectedSystemId
+    private var SCChartsVerificationPropertyAnalyzer currentPropertyAnalyzer
     
     // == UI ELEMENTS ==
     /**
@@ -310,7 +311,8 @@ class VerificationView extends ViewPart {
         }
         if(currentModel instanceof SCCharts) {
             val lastSelection = selectedProperties
-            val properties = scchartsVerificationPropertyAnalyzer.getVerificationProperties(currentModel)
+            currentPropertyAnalyzer = new SCChartsVerificationPropertyAnalyzer(currentModel)
+            val properties = currentPropertyAnalyzer.verificationProperties
             viewer.input = properties
             if(!properties.isNullOrEmpty) {
                 // Restore selection
@@ -390,7 +392,8 @@ class VerificationView extends ViewPart {
     
     private def void startVerification(EObject model, List<VerificationProperty> verificationProperties) {
         verificationContext = Compile.createCompilationContext(selectedSystemId, model)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, currentPropertyAnalyzer.verificationProperties)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, currentPropertyAnalyzer.verificationAssumptions)
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    

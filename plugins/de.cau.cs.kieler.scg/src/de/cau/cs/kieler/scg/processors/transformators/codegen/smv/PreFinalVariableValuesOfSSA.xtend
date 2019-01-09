@@ -52,7 +52,7 @@ class PreFinalVariableValuesOfSSA extends InplaceProcessor<SCGraphs> implements 
     // -------------------------------------------------------------------------
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SSACoreExtensions
-    @Inject extension IOPreserverExtensions      
+    @Inject extension IOPreserverExtensions
     
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {

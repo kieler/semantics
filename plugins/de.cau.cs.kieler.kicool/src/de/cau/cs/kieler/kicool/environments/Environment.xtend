@@ -107,6 +107,9 @@ class Environment extends EnvironmentPropertyHolder {
         
     public static val IProperty<Object> VERIFICATION_PROPERTIES = 
         new Property<Object>("de.cau.cs.kieler.kicool.verificationProperties")
+        
+    public static val IProperty<Object> VERIFICATION_ASSUMPTIONS = 
+        new Property<Object>("de.cau.cs.kieler.kicool.verificationAssumptions")
     
     public static val IProperty<Object> INDEX_MAP_OF_SMV_SPECS =
         new Property<Object>("de.cau.cs.kieler.verification.smv.indexOfProperties")

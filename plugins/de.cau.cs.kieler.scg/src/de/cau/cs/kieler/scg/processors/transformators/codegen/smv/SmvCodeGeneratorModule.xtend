@@ -15,7 +15,8 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
@@ -95,10 +96,12 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
             if(assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
                 val operatorExpression = assignment.expression as OperatorExpression
                 for(preOp : operatorExpression.getPreOperatorExpressions) {
+                    val predValuedObject = preOp.valuedObject
                     val preVariableName = preOp.serializeHR
                     val variableInformation = store.add(preVariableName, PROPERTY_GUARD, PROPERTY_PREGUARD)
-                    variableInformation.type = ValueType.BOOL
-                    val originalVariableName = preOp.subExpressions.head.serializeHR
+                    variableInformation.valuedObject = predValuedObject
+                    variableInformation.type = predValuedObject.variableDeclaration.type
+                    val originalVariableName = predValuedObject.serializeHR
                     preVariableToOriginalVariable.put(preVariableName.toString, originalVariableName.toString)
                 }
             }
@@ -114,5 +117,9 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
                   "-- KIELER SCCharts - The Key to Efficient Modeling\n" +
                   "--\n" +
                   "-- http://rtsys.informatik.uni-kiel.de/kieler\n\n") 
+    }
+    
+    private def ValuedObject getValuedObject(OperatorExpression preOperator) {
+        return (preOperator.subExpressions.head as ValuedObjectReference).valuedObject
     }
 }

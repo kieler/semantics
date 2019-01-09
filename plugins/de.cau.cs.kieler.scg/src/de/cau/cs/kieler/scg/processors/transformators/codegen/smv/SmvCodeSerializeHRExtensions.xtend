@@ -24,9 +24,10 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHR
 class SmvCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     override dispatch CharSequence serialize(ValueType valueType) {
-        if (valueType == ValueType.BOOL) {
-            return "boolean"
+        switch(valueType) {
+            case BOOL : return "boolean"
+            case INT : return "integer"
+            default : return valueType.literal
         }
-        return valueType.literal
     }
 }
