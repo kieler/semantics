@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "keith-app",
-    "version": "0.2.0-local.e1c2f2ad",
+    "version": "0.1.0",
     "author": "Kiel University <rt-kieler-devel@informatik.uni-kiel.de>",
     "license": "EPL-1.0",
     "dependencies": {
@@ -27,8 +27,12 @@
         "@theia/userstorage": "latest",
         "@theia/variable-resolver": "latest",
         "@theia/workspace": "latest",
+        "keith-diagram": "local",
         "keith-diagram-options": "local",
         "keith-kicool": "local",
+        "keith-language-pragmatics": "local",
+        "keith-language-semantics": "local",
+        "keith-sprotty": "local",
         "vscode-jsonrpc": "^3.6.2",
         "vscode-nsfw": "^1.0.17"
     },
