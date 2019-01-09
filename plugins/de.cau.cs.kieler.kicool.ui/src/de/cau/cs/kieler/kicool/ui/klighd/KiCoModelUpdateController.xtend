@@ -63,13 +63,12 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
-import org.eclipse.jface.viewers.SelectionChangedEvent
+import java.util.List
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
@@ -168,7 +167,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** The compiled model. */
     @Accessors(PUBLIC_GETTER)
-    private var Object compiledModel = null
+    private val List<Object> compiledModel = <Object> newArrayList
     
     // -- Visual --
 
@@ -310,7 +309,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onDeactivate() {
         sourceModel = null
-        compiledModel = null
+        compiledModel.clear()
         saveAdapter.deactivate()
     }
     
@@ -322,7 +321,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onEditorSaved(IEditorPart editor) {
         if (syncEditorToggleAction.isChecked() &&
-            (!compilerToggleAction.isChecked() || compiledModel === null)) {
+            (!compilerToggleAction.isChecked() || compiledModel.empty)) {
             update(ChangeEvent.EDITOR)
         }
         if (sourceModel instanceof EObject) {
@@ -336,7 +335,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     override void refresh() {
-        if (!compilerToggleAction.isChecked() || compiledModel === null) {
+        if (!compilerToggleAction.isChecked() || compiledModel.empty) {
             update(ChangeEvent.EDITOR)
         } else {
             diagramView.updateDiagram
@@ -423,7 +422,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             } else {
                 syncCompilerToggleAction.setChecked(source.syncCompilerToggleAction.isChecked())
             }
-            compiledModel = source.compiledModel
+            compiledModel.clear
+            compiledModel.addAll(source.compiledModel)
             syncEditorToggleAction.setChecked(source.syncEditorToggleAction.isChecked())
             sideBySideToggleAction.setChecked(source.sideBySideToggleAction.isChecked())
             diagramPlaceholderToggleAction.setChecked(source.diagramPlaceholderToggleAction.isChecked())
@@ -439,7 +439,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         lastSaveDirectory = null
         compilerToggleAction.setChecked(COMPILER_TOGGLE_ACTION_DEFAULT_STATE)
         syncCompilerToggleAction.setChecked(SYNC_COMPILER_TOGGLE_ACTION_DEFAULT_STATE)
-        compiledModel = null
+        compiledModel.clear
         syncEditorToggleAction.setChecked(SYNC_EDITOR_TOGGLE_ACTION_DEFAULT_STATE)
         sideBySideToggleAction.setChecked(SIDE_BY_SIDE_TOGGLE_ACTION_DEFAULT_STATE)
         diagramPlaceholderToggleAction.setChecked(DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE)
@@ -654,10 +654,25 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     package def void updateCompilerModel(Object model) {
         if (isActive() && syncCompilerToggleAction.isChecked()) {
-            compiledModel = model
+            compiledModel.clear
+            if (model !== null) compiledModel += model
             update(ChangeEvent.COMPILER)
         }
     }
+    
+    /**
+     * Updates the compiler model and compilation context.
+     * 
+     * @param model
+     * @param context
+     */
+    package def void updateCompilerModels(List<Object> models) {
+        if (isActive() && syncCompilerToggleAction.isChecked()) {
+            compiledModel.clear
+            compiledModel.addAll(models)
+            update(ChangeEvent.COMPILER)
+        }
+    }    
     
     /**
      * Updates the model caused by changeEvent.
@@ -728,13 +743,20 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
                     if (chainToggleAction.isChecked && compilerToggleAction.isChecked && tracing !== null) {
                         model = new ModelChain(tracing, getEditor().getTitle(), null)
-                    } else if (compilerToggleAction.isChecked && compilerToggleAction.isChecked && compiledModel !== null) {
-                        model = new ModelChain(sourceModel, compiledModel)
+                    } else if (compilerToggleAction.isChecked && !compiledModel.empty) {
+                        if (compiledModel.size == 1) {
+                        model = new ModelChain(sourceModel, compiledModel.head)
+                        } else {
+                            model = new ModelChain(compiledModel.head, compiledModel.get(1))
+                            for (int i : 2..<compiledModel.size) {
+                                (model as ModelChain).models += compiledModel.get(i)
+                            }
+                        }
                     } else {
                         model = new ModelChain(sourceModel, sourceModel)
                     }
-                } else if (compilerToggleAction.isChecked && compiledModel !== null) {
-                    model = compiledModel
+                } else if (compilerToggleAction.isChecked && !compiledModel.empty) {
+                    model = compiledModel.head
                 } else {
                     model = sourceModel
                 }
