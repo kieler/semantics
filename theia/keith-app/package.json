@@ -1,11 +1,11 @@
 {
     "private": true,
     "name": "keith-app",
-    "version": "0.1.0",
+    "version": "0.2.0-local.e1c2f2ad",
     "author": "Kiel University <rt-kieler-devel@informatik.uni-kiel.de>",
     "license": "EPL-1.0",
     "dependencies": {
-        "@fortawesome/fontawesome-free" : "^5.2.0",
+        "@fortawesome/fontawesome-free": "^5.2.0",
         "@theia/core": "latest",
         "@theia/editor": "latest",
         "@theia/editorconfig": "latest",
@@ -37,6 +37,7 @@
         "reflect-metadata": "^0.1.12"
     },
     "scripts": {
+        "dev": "yarn upgrade --registry=http://localhost:4873 --pattern keith- && yarn prepare",
         "prepare": "theia build --mode development",
         "start": "theia start --root-dir=../workspace",
         "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5007 --port=3000 --loglevel=debug",

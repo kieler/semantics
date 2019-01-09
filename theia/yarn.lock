@@ -5220,44 +5220,40 @@ jszip@^2.4.0:
     pako "~1.0.2"
 
 keith-diagram-options@local:
-  version "0.2.0-local.d6af013e"
-  resolved "http://localhost:4873/keith-diagram-options/-/keith-diagram-options-0.2.0-local.d6af013e.tgz#b14ecd0ba07f27f51b7a97d1358a3b2cfd01bfab"
-  integrity sha512-Lkio+TX4Rg81qctakPQ590ilhFkHR0oHIhe0fQiix+1CjAF+5SdhMMtQ3F7zcLhD0ENQfhAY8s+5FPkRinOeSA==
+  version "0.2.0-local.22baa281"
+  resolved "http://localhost:4873/keith-diagram-options/-/keith-diagram-options-0.2.0-local.22baa281.tgz#fab1fbbdcc25271ca09f9051dee0394a631c601a"
+  integrity sha512-fgtloE6SynCfEmffT7IG0PU2DNlqFb6ZvBvc+FJvXo6meNnoqmKD8uA4HFdURxD1chT10p7RbiTfxS2/w8a7qA==
   dependencies:
     keith-diagram local
     sprotty "0.4.2"
 
 keith-diagram@local:
-  version "0.2.0-local.d6af013e"
-  resolved "http://localhost:4873/keith-diagram/-/keith-diagram-0.2.0-local.d6af013e.tgz#2b9b37e13b58fdcbaf748d44659ec3a31429d4c6"
-  integrity sha512-JpCtrQDwGBUyICWBPbdxCXgCGrfcL5aMSJUZjW+aTdJAYbAkQItYMsH172HErr6zILUVXvOZhwhiyPuogdFVYg==
+  version "0.2.0-local.22baa281"
+  resolved "http://localhost:4873/keith-diagram/-/keith-diagram-0.2.0-local.22baa281.tgz#329e4a30f558696a4203d1cafc1088f9534eeeb6"
+  integrity sha512-0wIWRKOrelmeT1uZsKTkxfIWxLni5ZqF2ai0SJYuCz5ydZGEdCMg2oJYbPYo8c5R51sHAqnmgWD3bbRg/e05kQ==
   dependencies:
-    keith-language local
+    keith-language-pragmatics local
     keith-sprotty local
     sprotty "0.4.2"
     theia-sprotty "0.1.20"
 
-keith-kicool@local:
-  version "0.2.0-local.90cce802"
-  resolved "http://localhost:4873/keith-kicool/-/keith-kicool-0.2.0-local.90cce802.tgz#0b724b08b0af1556e713db01972f34c1e15214c1"
-  integrity sha512-ohfbybzZOtaxwQZ5UZWU/si3ZPCfUbj8ab3n07uAe76nT7ldUdD/bDtXXXcTKBy0chtg6/oifetFvSXtCnVkxw==
+keith-language-pragmatics@local:
+  version "0.2.0-local.22baa281"
+  resolved "http://localhost:4873/keith-language-pragmatics/-/keith-language-pragmatics-0.2.0-local.22baa281.tgz#a5d9ae3b62524e8e3a1b3d3598868dd11a419171"
+  integrity sha512-KsFWzqUQBUN5fcmFvlL6uzVc6W6S2d4v1MWHbkYitS6z86y/Bhj8W7G1pkDQ3EKkHV/JO7OLPjswX87Y4R7jiQ==
+
+keith-language-semantics@local:
+  version "0.2.0-local.e1c2f2ad"
+  resolved "http://localhost:4873/keith-language-semantics/-/keith-language-semantics-0.2.0-local.e1c2f2ad.tgz#8a4064ad2a4d08272d7627d5278f84e7841dedc7"
+  integrity sha512-jADDoeAhFRV3wLZzx+bNwXJUICfZgepczFGBUmExE5yUxNcnCyw94HIJSmsTLggj4CZzKyDl3G1jH9/xURBwLA==
   dependencies:
     "@theia/core" latest
-    "@theia/editor" latest
-    "@theia/filesystem" latest
     "@theia/languages" latest
-    keith-diagram local
-    keith-language local
-
-keith-language@local:
-  version "0.2.0-local.d6af013e"
-  resolved "http://localhost:4873/keith-language/-/keith-language-0.2.0-local.d6af013e.tgz#96176a7ee839099ed245a32c70e3abfa176ce776"
-  integrity sha512-AjKhRDBypHIz6J/ALVZEe+dG5R51SHOvcSG2LaK0wp1sxtl5PpnELyVuujd7b6ZuqV5YZgiZzfeCmPdCTdKcqA==
 
 keith-sprotty@local:
-  version "0.2.0-local.d6af013e"
-  resolved "http://localhost:4873/keith-sprotty/-/keith-sprotty-0.2.0-local.d6af013e.tgz#a828738de0925aa5003a94edbd0df5b117d1be07"
-  integrity sha512-xskHF7CVsva7CCLvb744VJ874vu/DyF0SiGuR4NgAhu2r8lJjqdZ90UgcpQ0NlcS2MOazKArnI+j55QeMWbbvA==
+  version "0.2.0-local.22baa281"
+  resolved "http://localhost:4873/keith-sprotty/-/keith-sprotty-0.2.0-local.22baa281.tgz#4004cd9d0fdb972106c5db10a01242a01b7084e2"
+  integrity sha512-OAu7zCexGhG3dghViIh/k9ubIdDDIb4tqgEscMkDp1NpknekjvvK8051Hrw4ITH97nkGGMiztaI6Y8SaitNHPQ==
   dependencies:
     sprotty "0.4.2"
 

@@ -19,15 +19,8 @@
     "See why `xterm` is an explicit dependency: https://github.com/theia-ide/theia/issues/737"
   ],
   "scripts": {
-    "build": "theia build",
-    "package": "yarn run build && electron-builder",
-    "package:all": "yarn run build && electron-builder --linux --x64 && electron-builder --mac --x64",
-    "package:all_old": "yarn run build && electron-builder --linux --x64 && electron-builder --mac --x64 && electron-builder --win --x64",
-    "package:win": "yarn run build && electron-builder --win --x64",
-    "package:linux": "yarn run build && electron-builder --linux --x64",
-    "package:mac": "yarn run build && electron-builder --mac --x64",
-    "postinstall": "electron-builder install-app-deps",
     "prepare": "lerna run prepare",
+    "publish:dev:version": "lerna link && lerna publish --registry=http://localhost:4873 --exact --canary=local --npm-tag=local --skip-git --skip-npm --yes",
     "publish:dev": "yarn unpublish:dev && lerna link && lerna publish --registry=http://localhost:4873 --exact --canary=local --npm-tag=local --force-publish --skip-git --yes",
     "publish:version": "lerna --help",
     "unpublish:dev": "lerna run unpublish:dev"
@@ -86,6 +79,7 @@
     "webpack": "^4.16.1"
   },
   "workspaces": [
-    "keith-*"
+    "keith-language-semantics",
+    "keith-kicool"
   ]
 }

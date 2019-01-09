@@ -1,11 +1,11 @@
 {
     "private": true,
     "name": "keith-app-electron",
-    "version": "0.1.0",
+    "version": "0.2.0-local.e1c2f2ad",
     "author": "Kiel University <rt-kieler-devel@informatik.uni-kiel.de>",
     "license": "EPL-1.0",
     "dependencies": {
-        "@fortawesome/fontawesome-free" : "^5.2.0",
+        "@fortawesome/fontawesome-free": "^5.2.0",
         "@theia/core": "latest",
         "@theia/editor": "latest",
         "@theia/editorconfig": "latest",

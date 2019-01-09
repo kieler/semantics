@@ -1,13 +1,14 @@
 {
-  "name": "keith-kicool",
+  "name": "keith-language-semantics",
   "version": "0.2.0-local.e1c2f2ad",
-  "description": "An extension for Theia connection language support for KEITH to compile models",
+  "description": "An extension for Theia connection language support for KEITH",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
   "keywords": [
     "keith-extension",
     "theia",
-    "kicool"
+    "SCCharts",
+    "language"
   ],
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
@@ -15,20 +16,18 @@
     "lint": "tslint -c ../tslint.json --project ./tsconfig.json",
     "build": "tsc && yarn lint",
     "watch": "tsc -w",
-    "unpublish:dev": "npm unpublish --registry=http://localhost:4873 --force keith-kicool"
+    "unpublish:dev": "npm unpublish --registry=http://localhost:4873 --force keith-language-semantics"
   },
   "dependencies": {
     "@theia/core": "latest",
-    "@theia/editor": "latest",
-    "@theia/filesystem": "latest",
-    "@theia/languages": "latest",
-    "keith-language-semantics": "local"
+    "@theia/languages": "latest"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/chai-as-promised": "0.0.31",
     "@types/mocha": "^2.2.41",
     "mocha": "^3.4.2",
+    "rimraf": "^2.6.3",
     "ts-node": "^3.2.0",
     "typescript": "2.9.1"
   },
@@ -39,7 +38,8 @@
   ],
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/frontend-extension"
+      "frontend": "lib/browser/frontend-extension",
+      "backend": "lib/node/backend-extension"
     }
   ]
 }
