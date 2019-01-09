@@ -1,14 +1,13 @@
 {
-  "name": "keith-diagram",
+  "name": "keith-kicool",
   "version": "0.1.0",
-  "description": "An extension for Theia with diagram support for KEITH",
+  "description": "An extension for Theia connection language support for KEITH to compile models",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
   "keywords": [
-    "keith-extension", 
+    "keith-extension",
     "theia",
-    "diagram",
-    "sprotty"
+    "kicool"
   ],
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
@@ -18,10 +17,11 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "theia-sprotty": "0.1.20",
-    "keith-language": "0.1.0",
-    "keith-sprotty": "0.1.0",
-    "sprotty": "0.4.2"
+    "@theia/core": "latest",
+    "@theia/editor": "latest",
+    "@theia/filesystem": "latest",
+    "@theia/languages": "latest",
+    "keith-language": "local"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
@@ -38,7 +38,7 @@
   ],
   "theiaExtensions": [
     {
-      "frontend": "lib/frontend-extension"
+      "frontend": "lib/browser/frontend-extension"
     }
   ]
 }

@@ -28,11 +28,9 @@
     "package:mac": "yarn run build && electron-builder --mac --x64",
     "postinstall": "electron-builder install-app-deps",
     "prepare": "lerna run prepare",
-    "rebuild:browser": "theia rebuild:browser",
-    "rebuild:electron": "theia rebuild:electron",
-    "publish:latest": "lerna publish --registry=https://registry.npmjs.org/ --exact --skip-git",
-    "publish:next": "lerna publish --registry=https://registry.npmjs.org/ --exact --canary=next --npm-tag=next --skip-git --yes",
-    "update": "git pull origin master && git submodule foreach git pull origin master"
+    "publish:dev": "yarn unpublish:dev && lerna link && lerna publish --registry=http://localhost:4873 --exact --canary=local --npm-tag=local --force-publish --skip-git --yes",
+    "publish:version": "lerna --help",
+    "unpublish:dev": "lerna run unpublish:dev"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
@@ -58,11 +56,8 @@
     "@theia/variable-resolver": "latest",
     "@theia/workspace": "latest",
     "@types/node": "^8.0.14",
-    "keith-diagram": "0.1.0",
-    "keith-diagram-options": "0.1.0",
-    "keith-kicool": "0.1.0",
-    "keith-language": "0.1.0",
-    "keith-sprotty": "0.1.0",
+    "keith-diagram-options": "local",
+    "keith-kicool": "local",
     "monaco-editor-core": "^0.14.6",
     "sprotty": "0.4.2",
     "theia-sprotty": "0.1.20",
@@ -91,11 +86,6 @@
     "webpack": "^4.16.1"
   },
   "workspaces": [
-    "keith-diagram",
-    "keith-diagram-options",
-    "keith-app",
-    "keith-language",
-    "keith-sprotty",
-    "keith-kicool"
+    "keith-*"
   ]
 }
