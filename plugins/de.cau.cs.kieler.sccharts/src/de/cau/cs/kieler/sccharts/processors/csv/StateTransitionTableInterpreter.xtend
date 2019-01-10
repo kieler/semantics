@@ -13,242 +13,49 @@
 package de.cau.cs.kieler.sccharts.processors.csv
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Effect
-import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.util.ArrayList
-import java.util.HashMap
 import java.util.List
-import org.eclipse.emf.common.util.EList
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author stu114663
  *
  */
-class StateTransitionTableInterpreter implements ICSVInterpreter {
-//    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-//    @Inject extension KExpressionsCreateExtensions
-//    @Inject extension KEffectsExtensions
-//    @Inject extension KExtDeclarationExtensions
-    
-    @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsStateExtensions
+class StateTransitionTableInterpreter extends TableInterpreter implements ICSVInterpreter {
     @Inject extension SCChartsTransitionExtensions
     
-    SCCharts scc
-    
     int headerLines = 1
-    StateTransitionTableInterpreter.HeaderNumbers[] headerLine = #[
+    HeaderNumbers[] headerLine = #[
         HeaderNumbers.STATE,
         HeaderNumbers.CONDITION,
         HeaderNumbers.EFFECT,
         HeaderNumbers.TARGET_STATE
     ]
-    enum HeaderNumbers {
-        STATE,
-        TARGET_STATE,
-        EFFECT,
-        DISCARDABLE,
-        CONDITION
-    }
     
-    @Accessors
-    var ArrayList<ArrayList<String>> table
-    var HashMap<String, State> stateMap
-    
-    override interpret() {
-        // TODO check for empty table
-        if (headerLine.length > table.get(0).length) {
-            // TODO handle bad case
-        }
-        
-        val rootstate = createState => [name = "root"]
-        this.scc = createSCChart => [rootStates += rootstate]
-        val ControlflowRegion rootRegion = createControlflowRegionWithoutLabel(rootstate, "rootRegion")
-        
-        createStates(rootRegion)
-        createTransitions
-        
-        return scc
-    }
-    
-    /** 
-     * create the map of all state names to their correlated states from the table
-     * and add them to the given region as needed
-     */
-    def createStates(ControlflowRegion region) {
-        this.stateMap = new HashMap<String, State>
-        
-        val stateColumn = headerLine.indexOf(HeaderNumbers.STATE)
-        
-        for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
-            val stateName = table.get(rowIndex).get(stateColumn)
-            // get the state or create a new one if needed
-            if(!this.stateMap.containsKey(stateName)) {
-                val State state = region.createState(stateName)
-                // add the new state, if it didn't exist (returned default)
-                this.stateMap.putIfAbsent(stateName, state)
-            }
-        }
-    }
+    final String TRIGGER_EXPRESSION_CONNECTOR = " && "
     
     /**
      * create a transition for each line
      */
-    def createTransitions() {
+    override createTransitions() {
         for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
             createTransition(this.table.get(rowIndex))
         }
     }
     
-    def createTransition(ArrayList<String> row) {
+    def createTransition(List<String> row) {
         val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.STATE)))
         val targetState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.TARGET_STATE)))
         var Transition trans = createTransitionTo(sourceState, targetState)
         
         trans.trigger = conditions2TriggerExpression(
-            indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.CONDITION))
+            indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.CONDITION)),
+            TRIGGER_EXPRESSION_CONNECTOR
         )
         
         matchAndMakeValuedObjects(trans.trigger, sourceState)
         
         trans.effects.addAll(effectStrings2Expression(indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.EFFECT))))
-    }
-    
-    /** 
-     * creates a list of declarations by recursively adding parent region/state declarations
-     */
-    def EList<Declaration> getAllDeclarations(State state) {
-        // reached root state?
-        if (state.isRootState) {
-            return state.declarations
-        }
-        
-        val list = state.declarations
-        val Region region = state.parentRegion
-        val State sState = region.parentState
-        list += region.declarations
-        list += getAllDeclarations(sState)
-        return list
-    }
-    
-    /** Create a subset of the sourceList from a list of indices.
-     * Indices are *not* sorted or checked for duplicates.
-     */
-    def <T> indicesToSublist(ArrayList<T> sourceList, ArrayList<Integer> indices) {
-        val targetList = <T> newArrayList
-        for (index : indices) {
-            if (index < sourceList.length) {
-                targetList.add(sourceList.get(index))
-            }
-        }
-        return targetList
-    }
-    
-    /** returns the list of indices that have the given HeaderNumber */
-    def getAllHeaderColumns(StateTransitionTableInterpreter.HeaderNumbers hn) {
-        var indices = <Integer> newArrayList
-        for(var int index = 0; index < headerLine.length; index++) {
-            if (headerLine.get(index) == hn) {
-                indices.add(index)
-            }
-        }
-        
-        return indices
-    }
-    
-    def List<Effect> effectStrings2Expression(List<String> effectStrs) {
-        val effects = new ArrayList<Effect>
-        for (eff : effectStrs) {
-            // TODO does this 
-            effects.add(KExtStandaloneParser.parseEffect(eff))
-        }
-        return effects
-    }
-    
-    /**
-     * The condition strings are concatenated with && and then turned into an expression.
-     */
-    def Expression conditions2TriggerExpression(List<String> conditionStrs) {
-        // connect all transition conditions with the AND Operator
-        var String exStr = conditionStrs.fold(
-            "",
-            [ String t, String r |
-                if (!r.isEmpty) {
-                    r.concat(" && ")
-                }
-                return r.concat(t)
-            ]
-        )
-        
-        return KExtStandaloneParser.parseExpression(exStr)
-    }
-    
-    /** recursively extract valued object references from an expression */
-    def List<ValuedObjectReference> getValuedObjectReferences(Expression expr) {
-        val valOExpressionList = new ArrayList<ValuedObjectReference>
-        if (expr instanceof OperatorExpression) {
-            for(sexp : expr.subExpressions) {
-                valOExpressionList += getValuedObjectReferences(sexp)
-            }
-        } else if (expr instanceof ValuedObjectReference) {
-            valOExpressionList.add(expr)
-        }
-        return valOExpressionList
-    }
-    
-    /** 
-     * Match new valued object declarations with existing ones.
-     * Add non existing ones to the declarations of the <b>parent state</b>.
-     */
-    def matchAndMakeValuedObjects(Expression expr, State state) {
-        var decls = state.allDeclarations
-        
-        val valuedObjectsReferences = getValuedObjectReferences(expr)
-        var declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-            l += d.getValuedObjects
-            return l
-        ])
-        
-        for (valOR : valuedObjectsReferences) {
-            var alreadyDeclared = false
-            for (dValO : declaredValuedObjects) {
-                if(valOR.valuedObject.name == dValO.name) {
-                    alreadyDeclared = true
-                    valOR.valuedObject = dValO
-                }
-            }
-            
-            // TODO Debug: declarations are not created properly
-            if (!alreadyDeclared) {
-                state.parentRegion.parentState.declarations.add(
-                    getDeclaration(valOR.valuedObject)
-                )
-                
-                decls = state.allDeclarations
-                declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-                    l += d.getValuedObjects
-                    return l
-                ])
-            }
-        }
     }
 }
 

@@ -19,16 +19,15 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -49,7 +48,8 @@ abstract class TableInterpreter implements ICSVInterpreter {
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsTransitionExtensions
+    
+    final String EFFECT_SPLITTER = ";"
     
     SCCharts scc
     
@@ -70,6 +70,7 @@ abstract class TableInterpreter implements ICSVInterpreter {
     
     @Accessors
     var ArrayList<ArrayList<String>> table
+    @Accessors
     var HashMap<String, State> stateMap
     
     override interpret() {
@@ -130,7 +131,7 @@ abstract class TableInterpreter implements ICSVInterpreter {
     /** Create a subset of the sourceList from a list of indices.
      * Indices are *not* sorted or checked for duplicates.
      */
-    def <T> indicesToSublist(ArrayList<T> sourceList, List<Integer> indices) {
+    def <T> indicesToSublist(List<T> sourceList, List<Integer> indices) {
         val targetList = new ArrayList<T>
         for (index : indices) {
             if (index < sourceList.length) {
@@ -141,7 +142,7 @@ abstract class TableInterpreter implements ICSVInterpreter {
     }
     
     /** returns the list of indices that have the given HeaderNumber */
-    def getAllHeaderColumns(StateTransitionTableInterpreter.HeaderNumbers hn) {
+    def getAllHeaderColumns(TableInterpreter.HeaderNumbers hn) {
         var indices = <Integer> newArrayList
         for(var int index = 0; index < headerLine.length; index++) {
             if (headerLine.get(index) == hn) {
@@ -168,6 +169,22 @@ abstract class TableInterpreter implements ICSVInterpreter {
         )
         
         return KExtStandaloneParser.parseExpression(exStr)
+    }
+    
+    def List<Effect> effectStrings2Expression(List<String> rawEffectStrs) {
+        val List<String> effectStrs = rawEffectStrs.fold(
+            new ArrayList<String>,
+            [ List<String> l, String raw |
+                l.addAll(raw.split(EFFECT_SPLITTER))
+                return l
+        ])
+        
+        val effects = new ArrayList<Effect>
+        for (eff : effectStrs) {
+            // TODO does this 
+            effects.add(KExtStandaloneParser.parseEffect(eff))
+        }
+        return effects
     }
     
     /** recursively extract valued object references from an expression */
@@ -219,6 +236,39 @@ abstract class TableInterpreter implements ICSVInterpreter {
             }
         }
     }
+    
+//    def matchAndMakeValuedObjects(Effect effect, State state) {
+//        var decls = state.allDeclarations
+//        
+//        val valuedObjectsReferences = getValuedObjectReferences(expr)
+//        var declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
+//            l += d.getValuedObjects
+//            return l
+//        ])
+//        
+//        for (valOR : valuedObjectsReferences) {
+//            var alreadyDeclared = false
+//            for (dValO : declaredValuedObjects) {
+//                if(valOR.valuedObject.name == dValO.name) {
+//                    alreadyDeclared = true
+//                    valOR.valuedObject = dValO
+//                }
+//            }
+//            
+//            // TODO Debug: declarations are not created properly
+//            if (!alreadyDeclared) {
+//                state.parentRegion.parentState.declarations.add(
+//                    getDeclaration(valOR.valuedObject)
+//                )
+//                
+//                decls = state.allDeclarations
+//                declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
+//                    l += d.getValuedObjects
+//                    return l
+//                ])
+//            }
+//        }
+//    }
 }
 
 
