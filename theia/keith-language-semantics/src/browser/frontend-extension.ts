@@ -21,6 +21,7 @@ import { languageDescriptions, LanguageDescription } from "../common"
 import { CommandContribution } from '@theia/core';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
+    console.log("Register semantic languages")
     // register languages
     languageDescriptions.forEach((language: LanguageDescription) => {
         monaco.languages.register({

@@ -35,8 +35,9 @@
         "reflect-metadata": "^0.1.12"
     },
     "scripts": {
-        "dev": "yarn verdaccio && yarn upgrade --registry=http://localhost:4873 --pattern \"keith-*\" && yarn prepare && fuser -k 4873/tcp",
+        "dev": "yarn verdaccio && yarn cache clean && yarn delete:files && yarn install --registry=http://localhost:4873 && yarn prepare && fuser -k 4873/tcp",
         "verdaccio": "verdaccio &",
+        "delete:files": "(rm ./yarn.lock || true) && (rm ./lib -rf || true) && (rm ./node_modules -rf || true) && (rm ./src-gen -rf || true)",
         "prepare": "theia build --mode development",
         "start": "theia start --root-dir=../workspace",
         "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5007 --port=3000 --loglevel=debug",
