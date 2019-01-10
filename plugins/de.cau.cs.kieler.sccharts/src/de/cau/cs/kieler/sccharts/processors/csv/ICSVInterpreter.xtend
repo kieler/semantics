@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.processors.csv
 
 import de.cau.cs.kieler.sccharts.SCCharts
-import java.util.ArrayList
 
 /**
  * @author stu114663

@@ -12,10 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.processors.csv
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.SCCharts
-import java.util.ArrayList
-import com.google.inject.Inject
 
 /**
  * @author stu114663
@@ -25,6 +24,8 @@ class CSVImporter extends ExogenousProcessor<String, SCCharts> {
     
     @Inject
     var StateTransitionTableInterpreter stti
+    @Inject
+    var StateEventTableInterpreter seti
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.CSVImporter"
@@ -38,12 +39,9 @@ class CSVImporter extends ExogenousProcessor<String, SCCharts> {
         val sourceString = getModel
         
         val CSVParser parser = new CSVParser(sourceString, ",", "\\")
+        stti.table = parser.getTable()
         
-        val ArrayList<ArrayList<String>> table = parser.getTable()
-        
-        stti.table = table
-        stti.interpret
-        
-        println("TableInterpreter")
+        val SCCharts scc = stti.interpret
+        setModel(scc)
     }
 }

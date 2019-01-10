@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -40,7 +39,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author stu114663
  *
  */
-class StateTransitionTableInterpreter implements ICSVInterpreter {
+abstract class TableInterpreter implements ICSVInterpreter {
 //    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
 //    @Inject extension KExpressionsCreateExtensions
@@ -55,7 +54,7 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
     SCCharts scc
     
     int headerLines = 1
-    StateTransitionTableInterpreter.HeaderNumbers[] headerLine = #[
+    HeaderNumbers[] headerLine = #[
         HeaderNumbers.STATE,
         HeaderNumbers.CONDITION,
         HeaderNumbers.EFFECT,
@@ -109,28 +108,7 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
         }
     }
     
-    /**
-     * create a transition for each line
-     */
-    def createTransitions() {
-        for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
-            createTransition(this.table.get(rowIndex))
-        }
-    }
-    
-    def createTransition(ArrayList<String> row) {
-        val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.STATE)))
-        val targetState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.TARGET_STATE)))
-        var Transition trans = createTransitionTo(sourceState, targetState)
-        
-        trans.trigger = conditions2TriggerExpression(
-            indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.CONDITION))
-        )
-        
-        matchAndMakeValuedObjects(trans.trigger, sourceState)
-        
-        trans.effects.addAll(effectStrings2Expression(indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.EFFECT))))
-    }
+    abstract def void createTransitions();
     
     /** 
      * creates a list of declarations by recursively adding parent region/state declarations
@@ -152,8 +130,8 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
     /** Create a subset of the sourceList from a list of indices.
      * Indices are *not* sorted or checked for duplicates.
      */
-    def <T> indicesToSublist(ArrayList<T> sourceList, ArrayList<Integer> indices) {
-        val targetList = <T> newArrayList
+    def <T> indicesToSublist(ArrayList<T> sourceList, List<Integer> indices) {
+        val targetList = new ArrayList<T>
         for (index : indices) {
             if (index < sourceList.length) {
                 targetList.add(sourceList.get(index))
@@ -174,25 +152,16 @@ class StateTransitionTableInterpreter implements ICSVInterpreter {
         return indices
     }
     
-    def List<Effect> effectStrings2Expression(List<String> effectStrs) {
-        val effects = new ArrayList<Effect>
-        for (eff : effectStrs) {
-            // TODO does this 
-            effects.add(KExtStandaloneParser.parseEffect(eff))
-        }
-        return effects
-    }
-    
     /**
-     * The condition strings are concatenated with && and then turned into an expression.
+     * The condition strings are concatenated with a connector and then turned into an expression.
      */
-    def Expression conditions2TriggerExpression(List<String> conditionStrs) {
+    def Expression conditions2TriggerExpression(List<String> conditionStrs, String connector) {
         // connect all transition conditions with the AND Operator
         var String exStr = conditionStrs.fold(
             "",
             [ String t, String r |
                 if (!r.isEmpty) {
-                    r.concat(" && ")
+                    r.concat(connector)
                 }
                 return r.concat(t)
             ]
