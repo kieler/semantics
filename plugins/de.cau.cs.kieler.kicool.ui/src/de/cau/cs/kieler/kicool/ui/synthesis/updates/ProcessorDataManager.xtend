@@ -90,6 +90,8 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
+import java.util.List
+import org.eclipse.ui.IEditorPart
 
 /**
  * The data manager handles all synthesis updates.
@@ -550,37 +552,62 @@ class ProcessorDataManager {
     }
     
     
-    static def Object retrieveIntermediateModel(KNode node, CompilerView view, Object model, IntermediateSelection selection) {
-        retrieveIntermediateModel(node, view, model, selection, true)
+    static def List<Object> retrieveIntermediateModel(KNode node, CompilerView view, Object model, IntermediateSelection selection, IEditorPart editor) {
+        retrieveIntermediateModel(node, view, model, selection, editor, true)
     }
     
-    package static def Object retrieveIntermediateModel(KNode node, CompilerView view, Object model, 
-        IntermediateSelection selection, boolean scheduleUIJob
+    package static def List<Object> retrieveIntermediateModel(KNode node, CompilerView view, Object model, 
+        IntermediateSelection selection, IEditorPart editor, boolean scheduleUIJob
     ) {
-        val processorReference = selection.processor?.processorReference
-        val processorNode = if (selection.processor === null) node.findNode(NODE_SOURCE)
-            else node.eAllContents.filter(KNode).filter[ getData(KIdentifier)?.id.startsWith(processorReference.id) ]?.head
+        val processorNodes = <Pair<KNode, Integer>> newArrayList
+        for (s : selection.entries) {
+            if (s.processor === null) {
+                processorNodes += new Pair<KNode, Integer>(node.findNode(NODE_SOURCE), s.intermediateIndex)
+            } else {
+                val processorReference = s.processor.processorReference
+                processorNodes += new Pair<KNode, Integer>(
+                    node.eAllContents.filter(KNode).filter[ getData(KIdentifier)?.id.startsWith(processorReference.id) ]?.head,
+                    s.intermediateIndex)
+            }
+        }
         
-        if (processorNode !== null) {
-            val intermediateData = processorNode.eAllContents.filter(KNode).filter[ 
+        val intermediateData = <IntermediateData> newArrayList
+        for (p : processorNodes.filter[ it.key !== null] ) {
+            val iD = p.key.eAllContents.filter(KNode).filter[ 
                 val iData = getProperty(INTERMEDIATE_DATA)
-                return (iData !== null) && (iData.intermediateIndex <= selection.intermediateIndex)
+                return (iData !== null) && (iData.intermediateIndex <= p.value)
             ].map[ getProperty(INTERMEDIATE_DATA) ].toIterable.sortBy[ -intermediateIndex ].head
             
-            if (intermediateData !== null) {
-                if (scheduleUIJob) {
-                    new Thread(new DelayedSelectionUpdate(node, view, model, selection)).start
-                } else {
-                    view.viewer.resetSelectionTo(intermediateData.parentNode)
-                    intermediateData.parentNode.containers.forEach[ 
+            if (iD !== null) 
+                intermediateData += iD
+        }
+        
+        if (!intermediateData.empty) {
+            if (scheduleUIJob) {
+                new Thread(new DelayedSelectionUpdate(node, view, model, selection, editor)).start
+            } else {
+                val modelList = <Object> newArrayList
+                if (intermediateData.size == 1) {
+                    view.viewer.resetSelectionTo(intermediateData.head.parentNode)
+                    intermediateData.head.parentNode.containers.forEach[ 
                         setProperty(KlighdInternalProperties.SELECTED, true)
                     ]
+                    modelList += intermediateData.head.model
+                } else {
+                    val selectionIter = intermediateData.map[parentNode]
+                    view.viewer.resetSelectionToDiagramElements(selectionIter)
+                    for (iM : intermediateData) {
+                        iM.parentNode.containers.forEach[ 
+                            setProperty(KlighdInternalProperties.SELECTED, true)
+                        ]
+                        modelList += iM.model
+                    }
                 }
-                return intermediateData.model
+                return modelList
             }
         }
          
-        return model 
+        return <Object> newArrayList => [ it += model ]  
     }
     
     
