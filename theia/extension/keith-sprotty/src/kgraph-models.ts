@@ -139,6 +139,8 @@ export interface KText extends KRendering {
     text: string
     cursorSelectable: boolean
     editable: boolean
+    // Not in the original model, but here to store the precalculated bounds this text alone takes.
+    calculatedTextBounds: Bounds
 }
 
 export interface KRenderingLibrary extends KGraphData {

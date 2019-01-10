@@ -108,28 +108,48 @@ export function verticalAlignmentText(verticalAlignment: VerticalAlignment): str
         }
     }
 }
-
-export function calculateX(x: number, width: number, horizontalAlignment: KHorizontalAlignment): number {
-    switch (horizontalAlignment.horizontalAlignment) {
-        case HorizontalAlignment.CENTER: {
-            return x + width / 2
+// This will now always return the left coordinate of the text's bounding box.
+export function calculateX(x: number, width: number, horizontalAlignment: KHorizontalAlignment, textWidth: number | undefined): number {
+    if (textWidth === undefined) {
+        switch (horizontalAlignment.horizontalAlignment) {
+            case HorizontalAlignment.CENTER: {
+                return x + width / 2
+            }
+            case HorizontalAlignment.LEFT: {
+                return x
+            }
+            case HorizontalAlignment.RIGHT: {
+                return x + width
+            }
         }
-        case HorizontalAlignment.LEFT: {
-            return x
-        }
-        case HorizontalAlignment.RIGHT: {
-            return x + width
+    } else {
+        switch (horizontalAlignment.horizontalAlignment) {
+            case HorizontalAlignment.CENTER: {
+                return x + width / 2 - textWidth / 2
+            }
+            case HorizontalAlignment.LEFT: {
+                return x
+            }
+            case HorizontalAlignment.RIGHT: {
+                return x + width - textWidth
+            }
         }
     }
+    console.error("horizontalAlignment is not defined.")
+    return 0
 }
 
-export function calculateY(y: number, height: number, verticalAlignment: KVerticalAlignment): number {
+export function calculateY(y: number, height: number, verticalAlignment: KVerticalAlignment, numberOfLines: number): number {
+    let lineHeight = height / numberOfLines
+    if (numberOfLines === 0) {
+        lineHeight = height
+    }
     switch (verticalAlignment.verticalAlignment) {
         case VerticalAlignment.CENTER: {
-            return y + height / 2
+            return y + lineHeight / 2
         }
         case VerticalAlignment.BOTTOM: {
-            return y + height
+            return y + lineHeight
         }
         case VerticalAlignment.TOP: {
             return y

@@ -5,13 +5,13 @@ import { KChildArea, KGraphElement, KEllipse, KNode, KPort, KRoundedRectangle, K
     KRenderingRef, KRenderingLibrary, KRoundedBendsPolyline } from "./kgraph-models"
 import { KGraphRenderingContext, fillBackground, fillForeground, findById, shadowFilter,
     lineCapText, lineJoinText, lineStyleText, evaluateKPosition, camelToKebab,
-    horizontalAlignmentText, verticalAlignmentText, calculateX, calculateY } from "./views-common"
+   /* horizontalAlignmentText,*/ verticalAlignmentText, calculateX, calculateY } from "./views-common"
 import { isNullOrUndefined } from "util"
 import { toDegrees } from "sprotty/lib"
 import { VNode } from "snabbdom/vnode"
 import { getStyles, background, foreground, DEFAULT_FOREGROUND, DEFAULT_LINE_WIDTH,
     DEFAULT_SHADOW, shadowDefinition, DEFAULT_MITER_LIMIT, DEFAULT_FONT_ITALIC,
-    DEFAULT_FONT_BOLD, DEFAULT_HORIZONTAL_ALIGNMENT, DEFAULT_VERTICAL_ALIGNMENT,
+    DEFAULT_FONT_BOLD, /*DEFAULT_HORIZONTAL_ALIGNMENT,*/ DEFAULT_VERTICAL_ALIGNMENT,
     DEFAULT_SHADOW_DEF, DEFAULT_FILL } from "./views-styles"
 // import * as snabbdom from 'snabbdom-jsx'
 // const JSX = {createElement: snabbdom.svg}
@@ -568,16 +568,23 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
 
     const fill = styles.kForeground === null ? DEFAULT_FOREGROUND : fillForeground((parent as KGraphElement).id + rendering.id)
 
-    const horizontalAlignment = horizontalAlignmentText(styles.kHorizontalAlignment.horizontalAlignment === null ?
-        DEFAULT_HORIZONTAL_ALIGNMENT : styles.kHorizontalAlignment.horizontalAlignment)
+    // const horizontalAlignment = horizontalAlignmentText(styles.kHorizontalAlignment.horizontalAlignment === null ?
+    //     DEFAULT_HORIZONTAL_ALIGNMENT : styles.kHorizontalAlignment.horizontalAlignment)
     const verticalAlignment = verticalAlignmentText(styles.kVerticalAlignment.verticalAlignment === null ? DEFAULT_VERTICAL_ALIGNMENT : styles.kVerticalAlignment.verticalAlignment)
 
+    let lines = text.split("\n")
+
     const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (parent as KGraphElement).id + rendering.id)
-    let x = undefined
-    let y = undefined
+    let x: number | undefined = undefined
+    let y: number | undefined = undefined
+    let textWidth = undefined
+    if (!isNullOrUndefined(rendering.calculatedTextBounds)) {
+        textWidth = rendering.calculatedTextBounds.width
+    }
+
     if (!isNullOrUndefined(rendering.calculatedBounds)) {
-        x = calculateX(rendering.calculatedBounds.x, rendering.calculatedBounds.width, styles.kHorizontalAlignment)
-        y = calculateY(rendering.calculatedBounds.y, rendering.calculatedBounds.height, styles.kVerticalAlignment)
+        x = calculateX(rendering.calculatedBounds.x, rendering.calculatedBounds.width, styles.kHorizontalAlignment, textWidth)
+        y = calculateY(rendering.calculatedBounds.y, rendering.calculatedBounds.height, styles.kVerticalAlignment, lines.length)
     }
     // if no bounds have been found yet, they should be in the boundsMap
     if (isNullOrUndefined(x) && !isNullOrUndefined(context.boundsMap)) {
@@ -585,29 +592,56 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
         if (isNullOrUndefined(bounds)) {
             console.error('the boundsMap does not contain the id for this rendering.')
         } else {
-            x = calculateX(bounds.x, bounds.width, styles.kHorizontalAlignment)
-            y = calculateY(bounds.y, bounds.height, styles.kVerticalAlignment)
+            x = calculateX(bounds.x, bounds.width, styles.kHorizontalAlignment, textWidth)
+            y = calculateY(bounds.y, bounds.height, styles.kVerticalAlignment, lines.length)
         }
     }
+
+    // If still no bounds are found, set x to 0. This will be the case when the texts are drawn first to estimate their sizes.
+    // Multiline texts should still be rendered beneath each other, so the x coordinate is important for each <tspan>
+    if (isNullOrUndefined(x)) {
+        x = 0
+    }
+
+    let style = {
+        ...{'font-family': fontName},
+        ...{'font-size': styles.kFontSize.size + 'pt'},
+        ...{'font-style': italic},
+        ...{'font-weight': bold}
+        // TODO: this might still not be correct vertical alignment, 'baseline' is not high enough for lower letters like g, y, p, q
+        // 'alignment-baseline': verticalAlignment,
+    } as React.CSSProperties
+    // if (!textWidth) {
+    //     // If there is a text width defined, the x coordinate always stores the left border and not a value depending on the horizontal alignment.
+    //     (style as any)['text-anchor'] = horizontalAlignment
+    // }
+
+    let textNode = <text
+        style = {style}
+        // {...(x ? {x: x} : {})}
+        {...(y ? {y: y} : {})}
+        fill = {fill}
+        {...{'xml:space' : "preserve"}/* This attribute makes the text size estimation include any trailing white spaces. */}
+    />
+
+    let dy: string | undefined = undefined
+    lines.forEach((line, index) => {
+        (textNode.children as (string | VNode)[]).push(
+            <tspan
+                style = {{
+                    'alignment-baseline': verticalAlignment, // Somehow, svg ignores this style on its parent. So repeat it here for every individual tspan.
+                } as React.CSSProperties}
+                x = {x}
+                {...(dy ? {dy: dy} : {})}
+            >{line}</tspan>
+        )
+        dy = '1.1em' // Have a distance of 1.1em for every new line after the first one.
+    });
 
     // TODO: maybe if foregroundDefinition is undefined just render the text without surrounding g
     return <g>
         {foregroundDefinition}
-        <text
-            style = {{
-                'font-family': fontName,
-                'font-size': styles.kFontSize.size + 'pt',
-                'font-style': italic,
-                'font-weight': bold,
-                // TODO: this might still not be correct vertical alignment, 'baseline' is not high enough for lower letters like g, y, p, q
-                'alignment-baseline': verticalAlignment,
-                'text-anchor': horizontalAlignment
-            } as React.CSSProperties}
-            x = {x}
-            y = {y}
-            fill = {fill}
-            {...{'xml:space' : "preserve"}/* This attribute makes the text size estimation include any trailing white spaces. */}
-        >{text}</text>
+        {textNode}
     </g>
 }
 
