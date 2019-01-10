@@ -110,8 +110,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
     def getModels() {
         return models.unmodifiableView
     }
-    
-    def setTrace(Trace trace, boolean check) {
+
+    def setTrace(Trace trace, boolean check, boolean allowLoops) {
         val root = system.processors as ProcessorGroup
         if (trace === null) {
             // Remove trace processors
@@ -130,9 +130,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
                 root.processors.add(KiCoolFactory.eINSTANCE.createProcessorReference => [
                     id = CheckTrace.ID
                 ])
-            } 
-               
-            TraceProcessor.prepareTraceInformation(this, trace)
+            }
+            TraceProcessor.prepareTraceInformation(this, trace, allowLoops)
             startEnvironment.setProperty(CheckTrace.MATCH, check)
         }
     }

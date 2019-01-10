@@ -49,7 +49,10 @@ KTrace returns ktrace::Trace:
 
 KTick returns ktrace::Tick:
     {ktrace::Tick}
+    (name=ID ':')?
     (inputs+=Assignment)*
     ('=>' (outputs+=Assignment)+)?
-    'pause'? ';'
+    'pause'?
+    ('goto' goto=[ktrace::Tick|ID])?
+    ';'
 ;    
