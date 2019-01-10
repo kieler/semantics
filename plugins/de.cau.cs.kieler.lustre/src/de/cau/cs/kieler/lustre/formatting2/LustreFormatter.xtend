@@ -4,297 +4,297 @@
 package de.cau.cs.kieler.lustre.formatting2;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.lustre.lustre.AState;
-import de.cau.cs.kieler.lustre.lustre.ATransition;
-import de.cau.cs.kieler.lustre.lustre.And;
-import de.cau.cs.kieler.lustre.lustre.Arrow;
-import de.cau.cs.kieler.lustre.lustre.Assertion;
-import de.cau.cs.kieler.lustre.lustre.Automaton;
-import de.cau.cs.kieler.lustre.lustre.Comparison;
-import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
-import de.cau.cs.kieler.lustre.lustre.Current;
-import de.cau.cs.kieler.lustre.lustre.Div;
-import de.cau.cs.kieler.lustre.lustre.Equality;
-import de.cau.cs.kieler.lustre.lustre.Equation;
-import de.cau.cs.kieler.lustre.lustre.Expression;
-import de.cau.cs.kieler.lustre.lustre.Fby;
-import de.cau.cs.kieler.lustre.lustre.Field;
-import de.cau.cs.kieler.lustre.lustre.IfThenElse;
-import de.cau.cs.kieler.lustre.lustre.Left;
-import de.cau.cs.kieler.lustre.lustre.Left_List;
-import de.cau.cs.kieler.lustre.lustre.Minus;
-import de.cau.cs.kieler.lustre.lustre.Mod;
-import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
-import de.cau.cs.kieler.lustre.lustre.Not;
-import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.PackageDeclaration;
-import de.cau.cs.kieler.lustre.lustre.Package_Provided;
-import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
-import de.cau.cs.kieler.lustre.lustre.Plus;
-import de.cau.cs.kieler.lustre.lustre.Pre;
-import de.cau.cs.kieler.lustre.lustre.Record_Type;
-import de.cau.cs.kieler.lustre.lustre.Selector;
-import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
-import de.cau.cs.kieler.lustre.lustre.UMinus;
-import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
+//import de.cau.cs.kieler.lustre.lustre.AState;
+//import de.cau.cs.kieler.lustre.lustre.ATransition;
+//import de.cau.cs.kieler.lustre.lustre.And;
+//import de.cau.cs.kieler.lustre.lustre.Arrow;
+//import de.cau.cs.kieler.lustre.lustre.Assertion;
+//import de.cau.cs.kieler.lustre.lustre.Automaton;
+//import de.cau.cs.kieler.lustre.lustre.Comparison;
+//import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
+//import de.cau.cs.kieler.lustre.lustre.Current;
+//import de.cau.cs.kieler.lustre.lustre.Div;
+//import de.cau.cs.kieler.lustre.lustre.Equality;
+//import de.cau.cs.kieler.lustre.lustre.Equation;
+//import de.cau.cs.kieler.lustre.lustre.Expression;
+//import de.cau.cs.kieler.lustre.lustre.Fby;
+//import de.cau.cs.kieler.lustre.lustre.Field;
+//import de.cau.cs.kieler.lustre.lustre.IfThenElse;
+//import de.cau.cs.kieler.lustre.lustre.Left;
+//import de.cau.cs.kieler.lustre.lustre.Left_List;
+//import de.cau.cs.kieler.lustre.lustre.Minus;
+//import de.cau.cs.kieler.lustre.lustre.Mod;
+//import de.cau.cs.kieler.lustre.lustre.Mul;
+//import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
+//import de.cau.cs.kieler.lustre.lustre.Not;
+//import de.cau.cs.kieler.lustre.lustre.Or;
+//import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
+//import de.cau.cs.kieler.lustre.lustre.Package_Provided;
+//import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
+//import de.cau.cs.kieler.lustre.lustre.Plus;
+//import de.cau.cs.kieler.lustre.lustre.Pre;
+//import de.cau.cs.kieler.lustre.lustre.Record_Type;
+//import de.cau.cs.kieler.lustre.lustre.Selector;
+//import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
+//import de.cau.cs.kieler.lustre.lustre.UMinus;
+//import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess;
 import org.eclipse.xtext.formatting2.AbstractFormatter2;
 import org.eclipse.xtext.formatting2.IFormattableDocument;
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
 
 class LustreFormatter extends AbstractFormatter2 {
-	
-	@Inject extension LustreGrammarAccess
+    
+    @Inject extension LustreGrammarAccess
 
-	def dispatch void format(LustreProgram program, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-//		for (Node_Declaration nodes : program.getNodes()) {
-//			format(nodes, document);
-//		}
-	}
+    def dispatch void format(LustreProgram program, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Node_Declaration nodes : program.getNodes()) {
+//            format(nodes, document);
+//        }
+    }
 
-	def dispatch void format(PackageDeclaration package_declaration, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-//		for (Package_Provided provides : package_declaration.getProvides()) {
-//			format(provides, document);
-//		}
-//		for (Node_Declaration nodes : package_declaration.getNodes()) {
-//			format(nodes, document);
-//		}
-//		for (Type_Declaration types : package_declaration.getTypes()) {
-//			format(types, document);
-//		}
-//		for (Constant_Declaration constants : package_declaration.getConstants()) {
-//			format(constants, document);
-//		}
-	}
-
-	def dispatch void format(Package_Provided package_provided, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-//		for (Package_Provided_IO parameters : package_provided.getParameters()) {
-//			format(parameters, document);
-//		}
-//		for (Package_Provided_IO returned : package_provided.getReturned()) {
-//			format(returned, document);
-//		}
-	}
-
-	def dispatch void format(TypeDeclaration type_declaration, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-//		format(type_declaration.getType(), document);
-	}
-
-	def dispatch void format(Record_Type record_type, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Field fields : record_type.getFields()) {
-			format(fields, document);
-		}
-	}
-
-	def dispatch void format(Constant_Declaration constant_declaration, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(constant_declaration.getType(), document);
-		format(constant_declaration.getExpr(), document);
-	}
-
-	def dispatch void format(Variable_Declaration variable_declaration, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(variable_declaration.getType(), document);
-	}
-
-	def dispatch void format(NodeDeclaration node_declaration, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		
-		node_declaration.regionFor.keyword("let")?.prepend[ newLine ]
-		node_declaration.regionFor.keywordPairs("let", "tel").head?.interior[ indent ]
-		node_declaration.regionFor.keyword("tel")?.prepend[ newLine ]
-		node_declaration.regionFor.keyword("tel")?.append[ setNewLines(2) ]
-//		
-//		node_declaration.regionFor.keyword("(")?.append[ noSpace ]
-//		node_declaration.regionFor.keyword(")")?.prepend[ noSpace ]
-//		node_declaration.regionFor.keyword(nodeDeclarationAccess.leftParenthesisKeyword_6)?.append[ noSpace ]
-//		node_declaration.regionFor.keyword(nodeDeclarationAccess.rightParenthesisKeyword_9)?.prepend[ noSpace ]
-//		node_declaration.regionFor.keyword(nodeDeclarationAccess.semicolonKeyword_15)?.prepend[ noSpace ]
-//		node_declaration.regionFor.keyword(nodeDeclarationAccess.semicolonKeyword_10)?.prepend[ noSpace ]
-//		node_declaration.regionFor.keyword(nodeDeclarationAccess.commaKeyword_3_1_0)?.prepend[ noSpace ]
-//		node_declaration.regionFor.keyword(nodeDeclarationAccess.commaKeyword_8_0)?.prepend[ noSpace ]
-//		
-//		for (Variable_Declaration parameters : node_declaration.getParameters()) {
-//			format(parameters, document);
-//		}
-//		for (Variable_Declaration returned : node_declaration.getReturned()) {
-//			format(returned, document);
-//		}
-//		for (Constant_Declaration constants : node_declaration.getConstants()) {
-//			format(constants, document);
-//		}
-//		for (Variable_Declaration variables : node_declaration.getVariables()) {
-//			format(variables, document);
-//		}
-//		for (Equation equations : node_declaration.getEquations()) {
-//			format(equations, document);
-//			equations.prepend[ newLine ]
-//		}
-//		for (Assertion assertions : node_declaration.getAssertions()) {
-//			format(assertions, document);
-//		}
-//		for (Automaton automatons : node_declaration.getAutomatons()) {
-//			format(automatons, document);
-//		}
-	}
-
-	def dispatch void format(Equation equation, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc.
-//        equation.regionFor.keyword(equationAccess.semicolonKeyword_3)?.prepend[ noSpace ]		 
-		format(equation.getRight(), document);
-	}
-
-	def dispatch void format(Automaton automaton, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (AState states : automaton.getStates()) {
-			format(states, document);
-		}
-	}
-
-	def dispatch void format(AState astate, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Equation equations : astate.getEquations()) {
-			format(equations, document);
-		}
-		for (Assertion assertions : astate.getAssertions()) {
-			format(assertions, document);
-		}
-		for (Automaton automatons : astate.getAutomatons()) {
-			format(automatons, document);
-		}
-		for (ATransition transitions : astate.getTransitions()) {
-			format(transitions, document);
-		}
-	}
-
-	def dispatch void format(ATransition atransition, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(atransition.getCondition(), document);
-	}
-
-	def dispatch void format(Left_List left_list, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Left id : left_list.getId()) {
-			format(id, document);
-		}
-	}
-
-	def dispatch void format(Left left, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(left.getSelector(), document);
-	}
-
-	def dispatch void format(Selector selector, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(selector.getBegin(), document);
-		format(selector.getEnd(), document);
-	}
-
-	def dispatch void format(IfThenElse ifthenelse, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(ifthenelse.getIfexpr(), document);
-		format(ifthenelse.getThenexpr(), document);
-		format(ifthenelse.getElseexpr(), document);
-	}
-
-	def dispatch void format(Fby fby, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : fby.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Arrow arrow, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : arrow.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Or or, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : or.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(And and, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : and.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Equality equality, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(equality.getRight(), document);
-		format(equality.getLeft(), document);
-	}
-
-	def dispatch void format(Comparison comparison, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(comparison.getRight(), document);
-		format(comparison.getLeft(), document);
-	}
-
-	def dispatch void format(Mod mod, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : mod.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Not not, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(not.getExpression(), document);
-	}
-
-	def dispatch void format(UMinus uminus, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(uminus.getExpression(), document);
-	}
-
-	def dispatch void format(Pre pre, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(pre.getExpression(), document);
-	}
-
-	def dispatch void format(Current current, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(current.getExpression(), document);
-	}
-
-	def dispatch void format(Plus plus, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : plus.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Minus minus, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : minus.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Mul mul, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : mul.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
-
-	def dispatch void format(Div div, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Expression subExpressions : div.getSubExpressions()) {
-			format(subExpressions, document);
-		}
-	}
+//    def dispatch void format(Package_Declaration package_declaration, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Package_Provided provides : package_declaration.getProvides()) {
+//            format(provides, document);
+//        }
+//        for (Node_Declaration nodes : package_declaration.getNodes()) {
+//            format(nodes, document);
+//        }
+//        for (Type_Declaration types : package_declaration.getTypes()) {
+//            format(types, document);
+//        }
+//        for (Constant_Declaration constants : package_declaration.getConstants()) {
+//            format(constants, document);
+//        }
+//    }
+//
+//    def dispatch void format(Package_Provided package_provided, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Package_Provided_IO parameters : package_provided.getParameters()) {
+//            format(parameters, document);
+//        }
+//        for (Package_Provided_IO returned : package_provided.getReturned()) {
+//            format(returned, document);
+//        }
+//    }
+//
+//    def dispatch void format(Type_Declaration type_declaration, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(type_declaration.getType(), document);
+//    }
+//
+//    def dispatch void format(Record_Type record_type, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Field fields : record_type.getFields()) {
+//            format(fields, document);
+//        }
+//    }
+//
+//    def dispatch void format(Constant_Declaration constant_declaration, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(constant_declaration.getType(), document);
+//        format(constant_declaration.getExpr(), document);
+//    }
+//
+//    def dispatch void format(Variable_Declaration variable_declaration, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(variable_declaration.getType(), document);
+//    }
+//
+//    def dispatch void format(Node_Declaration node_declaration, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        
+//        node_declaration.regionFor.keyword("let")?.prepend[ newLine ]
+//        node_declaration.regionFor.keywordPairs("let", "tel").head?.interior[ indent ]
+//        node_declaration.regionFor.keyword("tel")?.prepend[ newLine ]
+//        node_declaration.regionFor.keyword("tel")?.append[ setNewLines(2) ]
+//        
+//        node_declaration.regionFor.keyword("(")?.append[ noSpace ]
+//        node_declaration.regionFor.keyword(")")?.prepend[ noSpace ]
+//        node_declaration.regionFor.keyword(node_DeclarationAccess.leftParenthesisKeyword_6)?.append[ noSpace ]
+//        node_declaration.regionFor.keyword(node_DeclarationAccess.rightParenthesisKeyword_9)?.prepend[ noSpace ]
+//        node_declaration.regionFor.keyword(node_DeclarationAccess.semicolonKeyword_15)?.prepend[ noSpace ]
+//        node_declaration.regionFor.keyword(node_DeclarationAccess.semicolonKeyword_10)?.prepend[ noSpace ]
+//        node_declaration.regionFor.keyword(node_DeclarationAccess.commaKeyword_3_1_0)?.prepend[ noSpace ]
+//        node_declaration.regionFor.keyword(node_DeclarationAccess.commaKeyword_8_0)?.prepend[ noSpace ]
+//        
+//        for (Variable_Declaration parameters : node_declaration.getParameters()) {
+//            format(parameters, document);
+//        }
+//        for (Variable_Declaration returned : node_declaration.getReturned()) {
+//            format(returned, document);
+//        }
+//        for (Constant_Declaration constants : node_declaration.getConstants()) {
+//            format(constants, document);
+//        }
+//        for (Variable_Declaration variables : node_declaration.getVariables()) {
+//            format(variables, document);
+//        }
+//        for (Equation equations : node_declaration.getEquations()) {
+//            format(equations, document);
+//            equations.prepend[ newLine ]
+//        }
+//        for (Assertion assertions : node_declaration.getAssertions()) {
+//            format(assertions, document);
+//        }
+//        for (Automaton automatons : node_declaration.getAutomatons()) {
+//            format(automatons, document);
+//        }
+//    }
+//
+//    def dispatch void format(Equation equation, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc.
+//        equation.regionFor.keyword(equationAccess.semicolonKeyword_3)?.prepend[ noSpace ]        
+//        format(equation.getRight(), document);
+//    }
+//
+//    def dispatch void format(Automaton automaton, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (AState states : automaton.getStates()) {
+//            format(states, document);
+//        }
+//    }
+//
+//    def dispatch void format(AState astate, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Equation equations : astate.getEquations()) {
+//            format(equations, document);
+//        }
+//        for (Assertion assertions : astate.getAssertions()) {
+//            format(assertions, document);
+//        }
+//        for (Automaton automatons : astate.getAutomatons()) {
+//            format(automatons, document);
+//        }
+//        for (ATransition transitions : astate.getTransitions()) {
+//            format(transitions, document);
+//        }
+//    }
+//
+//    def dispatch void format(ATransition atransition, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(atransition.getCondition(), document);
+//    }
+//
+//    def dispatch void format(Left_List left_list, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Left id : left_list.getId()) {
+//            format(id, document);
+//        }
+//    }
+//
+//    def dispatch void format(Left left, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(left.getSelector(), document);
+//    }
+//
+//    def dispatch void format(Selector selector, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(selector.getBegin(), document);
+//        format(selector.getEnd(), document);
+//    }
+//
+//    def dispatch void format(IfThenElse ifthenelse, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(ifthenelse.getIfexpr(), document);
+//        format(ifthenelse.getThenexpr(), document);
+//        format(ifthenelse.getElseexpr(), document);
+//    }
+//
+//    def dispatch void format(Fby fby, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : fby.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Arrow arrow, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : arrow.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Or or, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : or.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(And and, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : and.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Equality equality, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(equality.getRight(), document);
+//        format(equality.getLeft(), document);
+//    }
+//
+//    def dispatch void format(Comparison comparison, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(comparison.getRight(), document);
+//        format(comparison.getLeft(), document);
+//    }
+//
+//    def dispatch void format(Mod mod, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : mod.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Not not, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(not.getExpression(), document);
+//    }
+//
+//    def dispatch void format(UMinus uminus, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(uminus.getExpression(), document);
+//    }
+//
+//    def dispatch void format(Pre pre, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(pre.getExpression(), document);
+//    }
+//
+//    def dispatch void format(Current current, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        format(current.getExpression(), document);
+//    }
+//
+//    def dispatch void format(Plus plus, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : plus.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Minus minus, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : minus.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Mul mul, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : mul.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
+//
+//    def dispatch void format(Div div, extension IFormattableDocument document) {
+//        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//        for (Expression subExpressions : div.getSubExpressions()) {
+//            format(subExpressions, document);
+//        }
+//    }
 }

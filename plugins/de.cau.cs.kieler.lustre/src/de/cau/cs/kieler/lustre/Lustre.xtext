@@ -1,73 +1,108 @@
- grammar de.cau.cs.kieler.lustre.Lustre
+ grammar de.cau.cs.kieler.lustre.Lustre with de.cau.cs.kieler.kexpressions.kext.KExt
 
 generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
+// TODO: Inconsistent hierarchy, if content assist is enabled in mwe2
 
-LustreProgram hidden(WS, LUSTRE_COMMENT):
-    (includes += Include)*
-    (packBody = PackBody | packList = PackList)
+LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
+    (includes+=Include)*
+    (packBody=PackBody | packList=PackList)
 ;
 
 /*
- * ---------- Include
+ * -------------------- PACKLIST
  */
-Include:
-    'include' STRING_CONSTANT
+PackList:
+    (
+        modelDeclarations+=ModelDeclaration
+        | packageDeclarations+=PackageDeclaration
+        | packageEquations+=PackageEquation
+    )+
+;
+
+ModelDeclaration:
+   'model' name=ID 
+   ('uses' usesIds+=ID (',' usesIds+=ID)* ';')?
+   'needs' needsParams+=StaticParam (';' needsParams+=StaticParam)* ';'
+   ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
+   'body'
+   body=PackBody
+   'end'    
+;
+
+Provide:
+    'const' name=ID ':' type=ValueType ('=' value=Expression)?
+    | 'type' types=TypeDeclaration
+    | (
+        ('unsafe')? ('node' | 'function') 
+        name=ID 
+        ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
+        input=Params 'returns' output=Params)
+;
+
+PackageDeclaration:
+    'package' name=ID 
+    ('uses' usesIds+=ID (',' usesIds+=ID)* ';')?
+    ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
+    'body'
+    body=PackBody
+    'end'    
+;
+
+PackageEquation:    
+    'package' name=ID
+    // Lv6 reference manual referes to using 'Eq_Or_Is' which is not defined
+    eqOrIs=ID
+    '(' byNameStaticArgs+=ByNameStaticArg ((','|';') byNameStaticArgs+=ByNameStaticArg)* ')' ';'  
 ;
 
 /*
- * ---------- PackBody
+ * -------------------- PACKBODY
  */
 PackBody:
     (
-        constants+=ConstantsDeclaration
-        | ('type' (types+=TypeDeclaration)+)
+        ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* )
+//        | ('type' (types+=TypeDeclaration)+)
         | externals+=ExternalNodeDeclaration
         | nodes+=NodeDeclaration
     )+
 ;
 
-ConstantsDeclaration:
-    'const'
-    constants+=LustreTypedValuedIds ';' 
-    (constants+=LustreTypedValuedIds ';')*
-;
-
+// Type Declaration
+// TODO: This should be a VariableDeclaration too, since it can be a node parameter and thus must be scoped
 TypeDeclaration:
-    name=IDENT 
+    name=ID 
     ('=' 
         (
-            types=Type
-            | enums=EnumType
-            | struct=StructType
+            types=ValueType
+            | type=EnumType '{' enums+=PrimeID (',' enums+=PrimeID)* '}'
+            // TODO: StructType may also be left empty
+            | type=StructType '{' variables=VariableDeclaration (';' values+=VariableDeclaration)* (';')? '}'
         )
     )?    
     ';'
 ;
 
-Type: 
-    (
-        name='bool'
-        | name='int'
-        | name='real'
-        | name=IDENT
-    ) 
-    ('^' arraySize+=LustreExpression)*
+@Override 
+enum ValueType returns kexpressions::ValueType:
+    BOOL="bool" 
+    | INT="int" 
+    | FLOAT="real"
 ;
 
-EnumType: 
-    'enum' '{' values+=IDENT (',' values+=IDENT)* '}'
-;
-
-StructType: 
-    ('struct')? '{' elements+=LustreTypedValuedIds (';' elements+=LustreTypedValuedIds)* (';')? '}'  
+enum EnumType returns kexpressions::ValueType:
+    ENUM="enum" 
 ;
 
 // External Node Declaration
 ExternalNodeDeclaration:
     (isUnsafe?='unsafe')? 'extern' ('function' | hasState?='node') 
-    name=IDENT 
+    name=ID 
     input=Params
     'returns' 
     output=Params
@@ -76,22 +111,24 @@ ExternalNodeDeclaration:
 
 // Node Declaration
 NodeDeclaration:
-    (isUnsafe?='unsafe')? ('function' | hasState?='node') name=IDENT
+    (isUnsafe?='unsafe')? ('function' | hasState?='node') name=ID
     
+    // Allows parametric nodes
     ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
     
     (( 
         input=Params 'returns' output=Params
         ( // --- Effective Node (with interface)
-            ('=' effectiveNode=IdentRef ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?)
+            ('=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?)
         | // Regular Body
             (
                 (';')?
                 
                 // Local Declarations
                 (
-                    constants+=ConstantsDeclaration |
-                    ('var' variables+=LustreClockedIdDeclaration (';' variables+=LustreClockedIdDeclaration)* ';')
+                    ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* ) 
+                    | 
+                    ('var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')
                 )*
                 
                 // Body 
@@ -109,130 +146,320 @@ NodeDeclaration:
               
     ) 
     | ( // --- Effective Node (without interface)
-        '=' effectiveNode=IdentRef 
+        '=' effectiveNode=NodeReference 
         ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?        
     ))
 ;
 
+// Node Declaration - Body Part 1: Equations
+Equation returns keffects::Assignment:
+    // TODO: ValuedObjectReference cannot be found due to scoping problems
+    reference=ValuedObjectReference
+    operator=AssignOperator 
+    expression=Expression   
+    ';' 
+;
+
+// Node Declaration - Body Part 2: Assertions
+Assertion returns kexpressions::Expression:
+    'assert' Expression ';'
+;
+
+// Node Declaration - Body Part 3: Automatons
+Automaton:
+    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
+;
+
+AState:
+    name=ID '->'
+    (
+        equations+=Equation | 
+        assertions+=Assertion |
+        automatons+=Automaton
+    )*
+    transitions+=ATransition+
+;
+
+ATransition:
+    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|ID] ';'    
+;
+
+/**
+ * -------------------- Expression Adjustments
+ */
+// Force IntDivExpression inbetween ModExpression and NegExpression
+@Override 
+ModExpression returns kexpressions::Expression:
+    IntDivExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=ModOperator subExpressions+=AtomicValuedExpression)
+        ('%' subExpressions+=AtomicValuedExpression)*
+    )?
+;
+
+IntDivExpression returns kexpressions::Expression:
+    {OperatorExpression}
+    subExpressions+=NegExpression operator=IntDivOperator subExpressions+=NegExpression
+    | NegExpression
+;
+
+// Skip TernaryOperation after NegExpression
+@Override 
+NegExpression returns kexpressions::Expression:
+    {OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
+    | FBYExpression;
+
+// Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
+@Override 
+FBYExpression returns kexpressions::Expression:
+    {OperatorExpression} subExpressions += AtomicValuedExpression operator=FBYOperator subExpressions += AtomicValuedExpression
+    | WhenExpression;
+
+WhenExpression returns kexpressions::Expression:
+    {OperatorExpression} subExpressions += AtomicValuedExpression operator=WhenOperator subExpressions += AtomicValuedExpression
+    | CurrentExpression;   
+
+CurrentExpression returns kexpressions::Expression:
+    {OperatorExpression} operator=CurrentOperator subExpressions += AtomicValuedExpression
+    | PreExpression;
+
+PreExpression returns kexpressions::Expression:
+    {OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
+    | AtomicValuedExpression;
+
+// Force TernaryOperation, InitExpression, ImpliesExpression and LogicalXorExpression inbetween BoolExpression and LogicalOrExpression
+@Override
+BoolExpression returns kexpressions::Expression: 
+    InitExpression;
+    
+InitExpression returns kexpressions::Expression:
+    {OperatorExpression} subExpressions += TernaryOperation operator=InitOperator subExpressions += TernaryOperation
+    | TernaryOperation;   
+
+// Overwide Ternary operator to support if ... then ... else
+@Override 
+TernaryOperation returns kexpressions::Expression:
+    {OperatorExpression} 
+    operator=ConditionalOperator subExpressions += BoolExpression 'then' subExpressions += ImpliesExpression 'else' subExpressions += ImpliesExpression
+    | 
+    ImpliesExpression;
+
+ImpliesExpression returns kexpressions::Expression:
+    {OperatorExpression}
+    operator=ImpliesOperator subExpressions+=LogicalXorExpression
+    |    
+    LogicalXorExpression;
+    
+LogicalXorExpression returns kexpressions::Expression:
+    LogicalOrExpression
+    (
+        {OperatorExpression.subExpressions+=current}
+        (operator=LogicalXorOperator subExpressions+=LogicalOrExpression)
+        ('xor' subExpressions+=LogicalOrExpression)*
+    )?;
+
+/**
+ * -------------------- Operator Adjustments
+ */
+// Override operators that are different in Lustre 
+@Override 
+enum AssignOperator returns keffects::AssignOperator:
+    // Reduce possible assignments to only work with '='
+    ASSIGN="=";
+    
+@Override 
+enum CompareOperator returns kexpressions::OperatorType:
+    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+
+@Override 
+enum LogicalOrOperator returns kexpressions::OperatorType:
+    LOGICAL_OR="or";
+
+@Override 
+enum LogicalAndOperator returns kexpressions::OperatorType:
+    LOGICAL_AND="and";
+
+@Override 
+enum NotOperator returns kexpressions::OperatorType:
+    NOT="not";
+
+@Override 
+enum FBYOperator returns kexpressions::OperatorType:  
+    FBY="fby";
+
+// Define operators that are Lustre specific
+enum CurrentOperator returns kexpressions::OperatorType:  
+    CURRENT="current";
+    
+enum WhenOperator returns kexpressions::OperatorType:  
+    WHEN="when";
+
+enum InitOperator returns kexpressions::OperatorType:  
+    INIT="->";
+
+enum LogicalXorOperator returns kexpressions::OperatorType:  
+    LOGICAL_XOR="xor";
+
+enum ImpliesOperator returns kexpressions::OperatorType:  
+    IMPLIES="=>";
+
+enum IntDivOperator returns kexpressions::OperatorType:  
+    INTDIV="div";
+
+@Override 
+enum ConditionalOperator returns kexpressions::OperatorType:
+    CONDITIONAL = "if";        
+
+// TODO: Cast operators?
+//enum IntOperator returns kexpressions::OperatorType:  
+//    INT="int";
+//
+//enum RealOperator returns kexpressions::OperatorType:  
+//    REAL="real";
+ 
+/**
+ * -------------------- Variable parameter types.
+ */ 
+ 
+// Used everywhere where there need to be parameter
 Params:
     {Params} 
-    '(' (parameter+=LustreClockedIdDeclaration (';' parameter+=LustreClockedIdDeclaration)*)? ')'
+    (
+        ('(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')')
+        | '()'
+    )
 ;
 
+// Declarations and used within << ... >>
+// Examples: type test
+//           const a : int
+//           node ydd( ) returns( )
 StaticParam:
-    'type' name=IDENT
-    | 'const' name=IDENT ':' type=Type
-    | ('unsafe')? ('node'|'function') name=IDENT nodeInput=Params 'returns' nodeOutput=Params
+    'type' name=ID
+    | 'const' name=ID ':' type=ValueType
+    | ('unsafe')? ('node'|'function') name=ID nodeInput=Params 'returns' nodeOutput=Params
 ;
 
+// Calls and used within << ... >>
 StaticArg:
-    'type' type=Type
-    | 'const' expr=LustreExpression
-    | ('node'|'function') name=IdentRef ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?      
+    'type' type=ValueType
+    | 'const' expr=Expression
+    | ('node'|'function') name=NodeReference ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?      
 //    | PredefOp
 //    | SimpleExpr
 //    | SurelyType
 //    | SurelyNode
 ;
 
-ByNameStaticArg:    
-    ('type' name=IDENT '=' type=Type)
-    | ('const' name=IDENT '=' expr=LustreExpression)
-    | (('function' | 'node') name=IDENT '=' nodeRef=IdentRef ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?)
-    | (name=IDENT '=' )//(PredefOp | SimpleEx | SurelyType | SurelyNode))    
+// Used in package equation
+// Examples: const ddd = 5
+//           type three = bool
+//           node whatever = He::ne<<type b; const 6, node b>>
+ByNameStaticArg:  
+    ('type' name=ID '=' type=ValueType)
+    | ('const' name=ID '=' expr=Expression)
+    | (('function' | 'node') name=ID '=' nodeRef=NodeReference ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?)
+    | (name=ID '=' /*(PredefOp | SimpleExpr | SurelyType | SurelyNode))*/ )    
 ;
-// --------------------------
-LustreTypedId:
-        variableNames+=IDENT (',' variableNames+=IDENT)* ':' type=Type
-;
-
-LustreTypedValuedIds:
-        variableNames+=IDENT (
-                                ((',' variableNames+=IDENT)* ':' type=Type? ('=' value=LustreExpression)?)
-                                | ('=' value=LustreExpression) 
-                             )
-//        | variableNames+=IDENT '=' value=LustreExpression
-;
-
-LustreClockedIdDeclaration:
-    (typedIds+=LustreTypedId ('when' clockExpr=ClockExpression)?)
-    | '(' typedIds+=LustreTypedId (';' typedIds+=LustreTypedId)* ')' 'when' clockExpr=ClockExpression
-;
-
-LustreExpression:
-    Expression
-;
-
-ClockExpression:
-    (IdentRef '(' IDENT ')')
-    | IDENT
-    | 'not' IDENT
-    | '(' 'not' ')' IDENT
-;
-/*
- * ---------- PackList
- */
-PackList:
-    (
-        modelDeclarations+=ModelDeclaration
-        | packageDeclarations+=PackageDeclaration
-        | packageEquations+=PackageEquation
-    )+
-;
-
-ModelDeclaration:
-   'model' name=IDENT 
-   ('uses' usesIds+=IDENT (',' usesIds+=IDENT)* ';')?
-   'needs' needsParams+=StaticParam (';' needsParams+=StaticParam)* ';'
-   ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
-   'body'
-   body=PackBody
-   'end'	
-;
-
-Provide:
-    'const' name=IDENT ':' type=Type ('=' value=LustreExpression)?
-    | 'type' types=TypeDeclaration
-    | (
-        ('unsafe')? ('node' | 'function') 
-        name=IDENT 
-        ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
-        input=Params 'returns' output=Params)
-;
-
-PackageDeclaration:
-    'package' name=IDENT 
-    ('uses' usesIds+=IDENT (',' usesIds+=IDENT)* ';')?
-    ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
-    'body'
-    body=PackBody
-    'end'    
-;
-
-PackageEquation:    
-    'package' name=IDENT
-    // Eq_or_Is
-    eqOrIs=IDENT
-    '(' byNameStaticArgs+=ByNameStaticArg ((','|';') byNameStaticArgs+=ByNameStaticArg)* ')' ';'  
-;
-
-
-// --------------------------------------------------------- Old stuff
 
 /**
- * @author cpa
+ * -------------------- Variable declaration
  */
+@Override 
+VariableDeclaration returns kexpressions::VariableDeclaration:
+    // TODO: declaration is name : type = initalValue
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    ':' 
+    type=ValueType    
+; 
 
+ClockedVariableDeclaration: 
+    vardecl=VariableDeclaration ('when' clockExpr=BoolExpression)?
+;
+
+/**
+ * -------------------- Data Type Rules
+ */
+Include:
+    'include' 
+    (
+        '"' STRING '"' 
+        | "'" STRING "'"
+    )
+;
+
+NodeReference:
+    // TODO: Reference for existing nodes (allow to call existing nodes/functions)
+    ID | (ID '::' ID)
+;
+
+/*
+ * -------------------- Lexical tokens
+ */
+@Override 
+terminal ML_COMMENT: 
+    '(*' -> '*)'
+;
+ 
+@Override 
+terminal SL_COMMENT: 
+    '--' !('\n'|'\r')* ('\r'? '\n')?
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------ OLD SYNTAX ------------------------------------
+///**
+// * @author cpa
+// */
+//
 //LustreProgram hidden(WS, LUSTRE_COMMENT):
 //    nodes += Node_Declaration+    
 ////    packages+=Package_Declaration+   
 //;
-
-
-/*
- * Packages
- */
-
+//
+//
+///*
+// * Packages
+// */
+//
 //Package_Declaration:
 //    'package' name=IDENT 
 //        ('uses' uses+=IDENT (',' uses+=IDENT)*)? 
@@ -245,95 +472,95 @@ PackageEquation:
 //    )*
 //    'end'
 //;
-
-Package_Provided:
-    'node' name=[NodeDeclaration | IDENT] 
-        '(' (parameters+=Package_Provided_IO (',' parameters+=Package_Provided_IO)*)? ')' 
-        'returns' '(' returned+=Package_Provided_IO (',' returned+=Package_Provided_IO)* ')' 
-    ';'
-;
-
-Package_Provided_IO:
-    name=[Variable_Declaration | IDENT] ':' type=IDENT
-;
-
-Entity_Declaration:
+//
+//Package_Provided:
+//    'node' name=[Node_Declaration | IDENT] 
+//        '(' (parameters+=Package_Provided_IO (',' parameters+=Package_Provided_IO)*)? ')' 
+//        'returns' '(' returned+=Package_Provided_IO (',' returned+=Package_Provided_IO)* ')' 
+//    ';'
+//;
+//
+//Package_Provided_IO:
+//    name=[Variable_Declaration | IDENT] ':' type=IDENT
+//;
+//
+//Entity_Declaration:
 //    Node_Declaration
-//    /*|*/ Type_Declaration
-    /*| */ Constant_Declaration
-;
-
-/*
- * Identifiers
- */
- 
-//Identifier:
-//    (package=[Package | IDENT] '::')? name=[Variable_Declaration | IDENT] | name=[Node_Declaration | IDENT];
-
-
-/* 
- * Types
- */
-
+//    | Type_Declaration
+//    | Constant_Declaration
+//;
+//
+///*
+// * Identifiers
+// */
+// 
+////Identifier:
+////    (package=[Package | IDENT] '::')? name=[Variable_Declaration | IDENT] | name=[Node_Declaration | IDENT];
+//
+//
+///* 
+// * Types
+// */
+//
 //Type_Declaration:
 //    'type' name=IDENT ';'
 //    | 'type' name=IDENT '=' type=Type  ';'
 //;
-
+//
 //Type:
 //    name=IDENT
 ////    | Array_Type
 ////    | Record_Type
 ////    | Enum_Type
 //;
-
-Array_Type:
-    type=[TypeDeclaration | IDENT] '^' length=INT
-    // XXX Original Lustre allows Type^Expression  
-;
-
-Record_Type:
-    'struct' '{' fields+=Field (',' fields+=Field)* '}'
-;
-
-Field:
-    name=IDENT ':' type=[Type | IDENT]
-;
-
-//Enum_Type:
-//    'enum' '{' nameList=Ident_List '}'
+//
+//Array_Type:
+//    type=[Type_Declaration | IDENT] '^' length=INT
+//    // XXX Original Lustre allows Type^Expression  
 //;
-
-
-/*
- * Constants and variables
- */
-
-Constant_Declaration:
-    'const' name=IDENT ':' type=Type ';'
-    | 'const' name=IDENT '=' expr=ConstantExpression ';'
-    | 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
-    // XXX Original Lustre allows Expressions
-;
-
-Variable_Declaration:
-    name=IDENT ':' type=Type ('when' clock=IDENT)?;
-
-Local_Variable_Declaration returns Variable_Declaration:
-    'var' Variable_Declaration ';'
-; 
-
-Local_Constant_Declaration returns Constant_Declaration:
-    {Constant_Declaration} 'const' name=IDENT '=' expr=ConstantExpression ';'
-    | {Constant_Declaration} 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
-    // XXX Original Lustre allows Expressions
-;
-
-
-/*
- * Nodes
- */
- 
+//
+//Record_Type:
+//    'struct' '{' fields+=Field (',' fields+=Field)* '}'
+//;
+//
+//Field:
+//    name=IDENT ':' type=[Type | IDENT]
+//;
+//
+////Enum_Type:
+////    'enum' '{' nameList=Ident_List '}'
+////;
+//
+//
+///*
+// * Constants and variables
+// */
+//
+//Constant_Declaration:
+//    'const' name=IDENT ':' type=Type ';'
+//    | 'const' name=IDENT '=' expr=ConstantExpression ';'
+//    | 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
+//    // XXX Original Lustre allows Expressions
+//;
+//
+//Variable_Declaration:
+//    name=IDENT ':' type=Type ('when' clock=IDENT)?;
+//
+//Local_Variable_Declaration returns Variable_Declaration:
+//    'var' Variable_Declaration ';'
+//; 
+//
+//Local_Constant_Declaration returns Constant_Declaration:
+//    {Constant_Declaration} 'const' name=IDENT '=' expr=ConstantExpression ';'
+//    | {Constant_Declaration} 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
+//    // XXX Original Lustre allows Expressions
+//;
+//
+//
+///*
+// * Nodes
+// */
+// 
 //Node_Declaration:
 //    'node'  
 //        name=IDENT 
@@ -352,160 +579,155 @@ Local_Constant_Declaration returns Constant_Declaration:
 //    )*
 //    'tel' ';'?
 //;
-
-Equation:
-    left=[LustreTypedId | IDENT] '=' right=Right_Part ';'
-    | left=[LustreTypedValuedIds | IDENT] '=' right=Right_Part ';'
-    | left=[LustreClockedIdDeclaration | IDENT] '=' right=Right_Part ';'
-;
-
-Assertion:
-    'assert' Expression ';'
-;
-
-Automaton:
-    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
-;
-
-AState:
-    name=IDENT '->'
-    (
-        equations+=Equation | 
-        assertions+=Assertion |
-        automatons+=Automaton
-    )*
-    transitions+=ATransition+
-;
-
-ATransition:
-    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|IDENT] ';'    
-;
-
-Left_Part:
-    '(' Left_List ')'
-    | Left_List;
-
-Left_List:
-    id+=Left (',' id+=Left)*;
-
-Left:
-    name=IDENT selector=Selector?
-;
-
-Selector:
-     '.' name=IDENT
-     | '[' begin=Expression end=SelTrancheEnd? ']'
- ;
-
-SelTrancheEnd returns Expression:
-    '..' Expression;
-
-Right_Part returns Expression:
-    Expression
-;
-
-/*
- * Expressions
- */
- 
-Expression:
-    {IfThenElse} 'if' ifexpr=Expression 'then' thenexpr=Expression 'else' elseexpr=Expression
-    | Fby
-;
-
-Fby returns Expression:
-    Arrow ({Fby.subExpressions+=current} ('fby' subExpressions+=Arrow)+)?
-;
-
-Arrow returns Expression:
-    Or ({Arrow.subExpressions+=current} ('->' subExpressions+=Or)+)?
-;
-
-Or returns Expression:
-    And ({Or.subExpressions+=current} ('or' subExpressions+=And)+)?
-;
-
-And returns Expression:
-    Equality ({And.subExpressions+=current} ('and' subExpressions+=Equality)+)?
-;
-
-Equality returns Expression:
-    Comparison ({Equality.left=current} op=('='|'<>') right=Comparison)*
-;
-
-Comparison returns Expression:
-    Mod ({Comparison.left=current} op=('>='|'<='|'>'|'<') right=Mod)*
-;
-
-Mod returns Expression:
-    PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
-;
-
-PlusOrMinus returns Expression:
-    MulOrDiv ((({Plus.subExpressions+=current} '+') | ({Minus.subExpressions+=current} '-')) subExpressions+=MulOrDiv)*
-;
-
-MulOrDiv returns Expression:
-    Primary ((({Mul.subExpressions+=current} '*') | ({Div.subExpressions+=current} '/')) subExpressions+=Primary)*
-;
-
-Primary returns Expression:
-    '(' Expression ')'
-    | {Not} 'not' expression=Primary
-    | {UMinus} '-' expression=Primary
-    | {Pre} 'pre' expression=Primary
-    | {Current} 'current' expression=Primary
-    | AtomicExpression
-;
-
-AtomicExpression returns Expression:
-    ConstantExpression | VariableReference
-;
-
-VariableReference:
-    {VariableReference} value=[Variable_Declaration | IDENT]
-;
-
-ConstantExpression returns Expression:
-    {BoolConstant} value=BOOL 
-    | {FloatConstant} value=FLOAT
-    | {IntConstant} value=INT
-;
-
-IdentRef:
-    IDENT | (IDENT '::' IDENT)
-;
- 
-/*
- * Lexical tokens
- */
-terminal BOOL returns ecore::EBoolean:
-    'true' | 'false';
- 
-terminal IDENT returns ecore::EString: 
-    '^'?('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
-
-terminal INT returns ecore::EInt: 
-    ('0'..'9')+;
-
-terminal FLOAT returns ecore::EFloat:
-    ('0'..'9')+ '.' ('0'..'9')*
-    | '.' ('0'..'9')+;
-
-terminal STRING_CONSTANT: 
-    '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
-    "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
-
-terminal LUSTRE_COMMENT:
-    ML_COMMENT | SL_COMMENT;
-
-terminal ML_COMMENT: 
-    '(*' -> '*)'
-;
- 
-terminal SL_COMMENT: 
-    '--' !('\n'|'\r')* ('\r'? '\n')?
-;
-
-terminal WS: 
-    (' '|'\t'|'\r'|'\n')+;
+//
+//Equation:
+//    left=[Variable_Declaration | IDENT] '=' right=Right_Part ';'
+//;
+//
+//Assertion:
+//    'assert' Expression ';'
+//;
+//
+//Automaton:
+//    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
+//;
+//
+//AState:
+//    name=IDENT '->'
+//    (
+//        equations+=Equation | 
+//        assertions+=Assertion |
+//        automatons+=Automaton
+//    )*
+//    transitions+=ATransition+
+//;
+//
+//ATransition:
+//    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|IDENT] ';'    
+//;
+//
+//Left_Part:
+//    '(' Left_List ')'
+//    | Left_List;
+//
+//Left_List:
+//    id+=Left (',' id+=Left)*;
+//
+//Left:
+//    name=IDENT selector=Selector?
+//;
+//
+//Selector:
+//     '.' name=IDENT
+//     | '[' begin=Expression end=SelTrancheEnd? ']'
+// ;
+//
+//SelTrancheEnd returns Expression:
+//    '..' Expression;
+//
+//Right_Part returns Expression:
+//    Expression
+//;
+//
+///*
+// * Expressions
+// */
+// 
+//Expression:
+//    {IfThenElse} 'if' ifexpr=Expression 'then' thenexpr=Expression 'else' elseexpr=Expression
+//    | Fby
+//;
+//
+//Fby returns Expression:
+//    Arrow ({Fby.subExpressions+=current} ('fby' subExpressions+=Arrow)+)?
+//;
+//
+//Arrow returns Expression:
+//    Or ({Arrow.subExpressions+=current} ('->' subExpressions+=Or)+)?
+//;
+//
+//Or returns Expression:
+//    And ({Or.subExpressions+=current} ('or' subExpressions+=And)+)?
+//;
+//
+//And returns Expression:
+//    Equality ({And.subExpressions+=current} ('and' subExpressions+=Equality)+)?
+//;
+//
+//Equality returns Expression:
+//    Comparison ({Equality.left=current} op=('='|'<>') right=Comparison)*
+//;
+//
+//Comparison returns Expression:
+//    Mod ({Comparison.left=current} op=('>='|'<='|'>'|'<') right=Mod)*
+//;
+//
+//Mod returns Expression:
+//    PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
+//;
+//
+//PlusOrMinus returns Expression:
+//    MulOrDiv ((({Plus.subExpressions+=current} '+') | ({Minus.subExpressions+=current} '-')) subExpressions+=MulOrDiv)*
+//;
+//
+//MulOrDiv returns Expression:
+//    Primary ((({Mul.subExpressions+=current} '*') | ({Div.subExpressions+=current} '/')) subExpressions+=Primary)*
+//;
+//
+//Primary returns Expression:
+//    '(' Expression ')'
+//    | {Not} 'not' expression=Primary
+//    | {UMinus} '-' expression=Primary
+//    | {Pre} 'pre' expression=Primary
+//    | {Current} 'current' expression=Primary
+//    | AtomicExpression
+//;
+//
+//AtomicExpression returns Expression:
+//    ConstantExpression | VariableReference
+//;
+//
+//VariableReference:
+//    {VariableReference} value=[Variable_Declaration | IDENT]
+//;
+//
+//ConstantExpression returns Expression:
+//    {BoolConstant} value=BOOL 
+//    | {FloatConstant} value=FLOAT
+//    | {IntConstant} value=INT
+//;
+//
+///*
+// * Lexical tokens
+// */
+// 
+//terminal BOOL returns ecore::EBoolean:
+//    'true' | 'false';
+// 
+//terminal IDENT returns ecore::EString: 
+//    '^'?('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+//
+//terminal INT returns ecore::EInt: 
+//    ('0'..'9')+;
+//
+//terminal FLOAT returns ecore::EFloat:
+//    ('0'..'9')+ '.' ('0'..'9')*
+//    | '.' ('0'..'9')+;
+//
+//terminal STRING_CONSTANT: 
+//    '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+//    "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
+//
+//terminal LUSTRE_COMMENT:
+//    ML_COMMENT | SL_COMMENT;
+//
+//terminal ML_COMMENT: 
+//    '(*' -> '*)'
+//;
+// 
+//terminal SL_COMMENT: 
+//    '--' !('\n'|'\r')* ('\r'? '\n')?
+//;
+//
+//terminal WS: 
+//    (' '|'\t'|'\r'|'\n')+;

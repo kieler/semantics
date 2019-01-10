@@ -22,14 +22,14 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.lustre.lustre.LustreFactory
-import de.cau.cs.kieler.lustre.lustre.impl.LustreFactoryImpl
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
+//import de.cau.cs.kieler.lustre.lustre.LustreFactory
+//import de.cau.cs.kieler.lustre.lustre.impl.LustreFactoryImpl
+//import de.cau.cs.kieler.lustre.lustre.Node_Declaration
 
 /**
  * @author ssm
@@ -38,39 +38,56 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 class SCCToLustre extends Processor<SCCharts, LustreProgram> {
     
-    static extension LustreFactory lustre = new LustreFactoryImpl
-    extension ExpressionConverter expConv = new ExpressionConverter
-    
-    @Inject extension SCChartsActionExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KEffectsExtensions
-    
     override getId() {
-        "de.cau.cs.kieler.lustre.processors.SCCToLustre"
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
     override getName() {
-        "Lustre"
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
     override getType() {
-        return ProcessorType.EXOGENOUS_TRANSFORMATOR
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
     override process() {
-        val model = getModel
-        expConv.variableMapping.clear
-        
-        val program = createLustreProgram
-        
-        for (subModel : model.rootStates.filter[ regions.head instanceof ControlflowRegion ].toList) {
-            subModel.processSuperState(model, program)
-        }
-        
-        setModel(program)
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
-    def processSuperState(State state, SCCharts scc, LustreProgram program) {
+//    
+//    static extension LustreFactory lustre = new LustreFactoryImpl
+//    extension ExpressionConverter expConv = new ExpressionConverter
+//    
+//    @Inject extension SCChartsActionExtensions
+//    @Inject extension KExpressionsDeclarationExtensions
+//    @Inject extension KEffectsExtensions
+//    
+//    override getId() {
+//        "de.cau.cs.kieler.lustre.processors.SCCToLustre"
+//    }
+//    
+//    override getName() {
+//        "Lustre"
+//    }
+//    
+//    override getType() {
+//        return ProcessorType.EXOGENOUS_TRANSFORMATOR
+//    }
+//    
+//    override process() {
+//        val model = getModel
+//        expConv.variableMapping.clear
+//        
+//        val program = createLustreProgram
+//        
+//        for (subModel : model.rootStates.filter[ regions.head instanceof ControlflowRegion ].toList) {
+//            subModel.processSuperState(model, program)
+//        }
+//        
+//        setModel(program)
+//    }
+//    
+//    def processSuperState(State state, SCCharts scc, LustreProgram program) {
 //        val cfr = state.regions.filter(ControlflowRegion).head
 //         
 //        val node = createNode_Declaration => [
@@ -111,31 +128,31 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
 //        }
 //            
 //        program.nodes += node
-    }
-    
-    protected def processAssignment(State state, NodeDeclaration node) {
-        val t = state.outgoingTransitions.head
-        val a = t.effects.head as Assignment
-        
-        node.equations += createEquation => [
-            left = a.valuedObject.getVar
-            right = a.expression.convertExpression
-        ]
-    }
-    
-    protected def processConditional(State state, NodeDeclaration node) {
-        val tThen = state.outgoingTransitions.head
-        val tElse = state.outgoingTransitions.get(1)
-        val aThen = tThen.effects.head as Assignment
-        val aElse = tElse.effects.head as Assignment
-        
-        val asgn = aThen.valuedObject
-        // TODO: check if asgn is the same for both tansitions
-        
-        node.equations += createEquation => [
-            left = asgn.getVar
-            right = createConditional(tThen.trigger, aThen.expression, aElse.expression)
-        ]
-    }
+//    }
+//    
+//    protected def processAssignment(State state, Node_Declaration node) {
+//        val t = state.outgoingTransitions.head
+//        val a = t.effects.head as Assignment
+//        
+//        node.equations += createEquation => [
+//            left = a.valuedObject.getVar
+//            right = a.expression.convertExpression
+//        ]
+//    }
+//    
+//    protected def processConditional(State state, Node_Declaration node) {
+//        val tThen = state.outgoingTransitions.head
+//        val tElse = state.outgoingTransitions.get(1)
+//        val aThen = tThen.effects.head as Assignment
+//        val aElse = tElse.effects.head as Assignment
+//        
+//        val asgn = aThen.valuedObject
+//        // TODO: check if asgn is the same for both tansitions
+//        
+//        node.equations += createEquation => [
+//            left = asgn.getVar
+//            right = createConditional(tThen.trigger, aThen.expression, aElse.expression)
+//        ]
+//    }
     
 }

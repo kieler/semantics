@@ -138,6 +138,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject createValuedObject() {
         ValuedObjectImpl valuedObject = new ValuedObjectImpl();
         return valuedObject;
@@ -148,6 +149,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference createValuedObjectReference() {
         ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
         return valuedObjectReference;
@@ -158,6 +160,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntValue createIntValue() {
         IntValueImpl intValue = new IntValueImpl();
         return intValue;
@@ -168,6 +171,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FloatValue createFloatValue() {
         FloatValueImpl floatValue = new FloatValueImpl();
         return floatValue;
@@ -178,6 +182,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BoolValue createBoolValue() {
         BoolValueImpl boolValue = new BoolValueImpl();
         return boolValue;
@@ -188,6 +193,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperatorExpression createOperatorExpression() {
         OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
         return operatorExpression;
@@ -198,6 +204,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TextExpression createTextExpression() {
         TextExpressionImpl textExpression = new TextExpressionImpl();
         return textExpression;
@@ -208,6 +215,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public VariableDeclaration createVariableDeclaration() {
         VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
         return variableDeclaration;
@@ -218,6 +226,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferenceDeclaration createReferenceDeclaration() {
         ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
         return referenceDeclaration;
@@ -228,6 +237,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScheduleDeclaration createScheduleDeclaration() {
         ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
         return scheduleDeclaration;
@@ -238,6 +248,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScheduleObjectReference createScheduleObjectReference() {
         ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
         return scheduleObjectReference;
@@ -248,6 +259,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FunctionCall createFunctionCall() {
         FunctionCallImpl functionCall = new FunctionCallImpl();
         return functionCall;
@@ -258,6 +270,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrintCall createPrintCall() {
         PrintCallImpl printCall = new PrintCallImpl();
         return printCall;
@@ -268,6 +281,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RandomCall createRandomCall() {
         RandomCallImpl randomCall = new RandomCallImpl();
         return randomCall;
@@ -278,6 +292,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RandomizeCall createRandomizeCall() {
         RandomizeCallImpl randomizeCall = new RandomizeCallImpl();
         return randomizeCall;
@@ -288,6 +303,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ExternString createExternString() {
         ExternStringImpl externString = new ExternStringImpl();
         return externString;
@@ -298,6 +314,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Parameter createParameter() {
         ParameterImpl parameter = new ParameterImpl();
         return parameter;
@@ -308,6 +325,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StringValue createStringValue() {
         StringValueImpl stringValue = new StringValueImpl();
         return stringValue;
@@ -318,6 +336,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public VectorValue createVectorValue() {
         VectorValueImpl vectorValue = new VectorValueImpl();
         return vectorValue;
@@ -328,6 +347,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IgnoreValue createIgnoreValue() {
         IgnoreValueImpl ignoreValue = new IgnoreValueImpl();
         return ignoreValue;
@@ -338,6 +358,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectValue createJsonObjectValue() {
         JsonObjectValueImpl jsonObjectValue = new JsonObjectValueImpl();
         return jsonObjectValue;
@@ -348,6 +369,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectMember createJsonObjectMember() {
         JsonObjectMemberImpl jsonObjectMember = new JsonObjectMemberImpl();
         return jsonObjectMember;
@@ -358,6 +380,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonArrayValue createJsonArrayValue() {
         JsonArrayValueImpl jsonArrayValue = new JsonArrayValueImpl();
         return jsonArrayValue;
@@ -368,6 +391,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public NullValue createNullValue() {
         NullValueImpl nullValue = new NullValueImpl();
         return nullValue;
@@ -378,6 +402,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferenceCall createReferenceCall() {
         ReferenceCallImpl referenceCall = new ReferenceCallImpl();
         return referenceCall;
@@ -468,6 +493,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExpressionsPackage getKExpressionsPackage() {
         return (KExpressionsPackage)getEPackage();
     }

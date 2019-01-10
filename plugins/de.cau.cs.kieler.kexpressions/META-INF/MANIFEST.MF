@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER Expressions Infrastructure
+Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.kexpressions;singleton:=true
 Automatic-Module-Name: de.cau.cs.kieler.kexpressions
 Bundle-Version: 0.14.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: Kiel University
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kexpressions,

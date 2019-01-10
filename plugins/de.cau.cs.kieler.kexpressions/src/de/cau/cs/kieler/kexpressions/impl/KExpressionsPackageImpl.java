@@ -379,6 +379,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExpression() {
         return expressionEClass;
     }
@@ -388,6 +389,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getValuedObject() {
         return valuedObjectEClass;
     }
@@ -397,6 +399,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObject_InitialValue() {
         return (EReference)valuedObjectEClass.getEStructuralFeatures().get(1);
     }
@@ -406,7 +409,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getValuedObject_Cardinalities() {
+	@Override
+    public EReference getValuedObject_Cardinalities() {
         return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
     }
 
@@ -415,6 +419,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getValuedObject_CombineOperator() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(0);
     }
@@ -424,6 +429,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getValuedObjectReference() {
         return valuedObjectReferenceEClass;
     }
@@ -433,6 +439,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObjectReference_ValuedObject() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -442,6 +449,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObjectReference_Indices() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -451,6 +459,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObjectReference_SubReference() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -460,6 +469,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getValue() {
         return valueEClass;
     }
@@ -469,6 +479,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntValue() {
         return intValueEClass;
     }
@@ -478,6 +489,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntValue_Value() {
         return (EAttribute)intValueEClass.getEStructuralFeatures().get(0);
     }
@@ -487,6 +499,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFloatValue() {
         return floatValueEClass;
     }
@@ -496,6 +509,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getFloatValue_Value() {
         return (EAttribute)floatValueEClass.getEStructuralFeatures().get(0);
     }
@@ -505,6 +519,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getBoolValue() {
         return boolValueEClass;
     }
@@ -514,6 +529,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getBoolValue_Value() {
         return (EAttribute)boolValueEClass.getEStructuralFeatures().get(0);
     }
@@ -523,6 +539,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperatorExpression() {
         return operatorExpressionEClass;
     }
@@ -532,6 +549,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperatorExpression_Operator() {
         return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(0);
     }
@@ -541,6 +559,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperatorExpression_SubExpressions() {
         return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(1);
     }
@@ -550,6 +569,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTextExpression() {
         return textExpressionEClass;
     }
@@ -559,6 +579,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTextExpression_Text() {
         return (EAttribute)textExpressionEClass.getEStructuralFeatures().get(0);
     }
@@ -568,6 +589,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDeclaration() {
         return declarationEClass;
     }
@@ -577,6 +599,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDeclaration_ValuedObjects() {
         return (EReference)declarationEClass.getEStructuralFeatures().get(0);
     }
@@ -586,6 +609,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDeclaration_Private() {
         return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
     }
@@ -595,6 +619,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getVariableDeclaration() {
         return variableDeclarationEClass;
     }
@@ -604,6 +629,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Type() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(0);
     }
@@ -613,6 +639,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Input() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(1);
     }
@@ -622,6 +649,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Output() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
     }
@@ -631,6 +659,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Static() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(3);
     }
@@ -640,6 +669,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Signal() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(4);
     }
@@ -649,6 +679,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Const() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(5);
     }
@@ -658,6 +689,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Extern() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(6);
     }
@@ -667,6 +699,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Volatile() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(7);
     }
@@ -676,6 +709,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_Global() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(8);
     }
@@ -685,6 +719,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVariableDeclaration_HostType() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(9);
     }
@@ -694,6 +729,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferenceDeclaration() {
         return referenceDeclarationEClass;
     }
@@ -703,6 +739,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferenceDeclaration_Reference() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(0);
     }
@@ -712,6 +749,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferenceDeclaration_Extern() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
     }
@@ -721,6 +759,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferenceDeclaration_Parameters() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(1);
     }
@@ -730,6 +769,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getScheduleDeclaration() {
         return scheduleDeclarationEClass;
     }
@@ -739,6 +779,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getScheduleDeclaration_Name() {
         return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(0);
     }
@@ -748,6 +789,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getScheduleDeclaration_Priorities() {
         return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
     }
@@ -757,6 +799,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getScheduleDeclaration_Global() {
         return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(1);
     }
@@ -766,6 +809,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getScheduleObjectReference() {
         return scheduleObjectReferenceEClass;
     }
@@ -775,6 +819,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getScheduleObjectReference_Priority() {
         return (EAttribute)scheduleObjectReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -784,6 +829,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFunctionCall() {
         return functionCallEClass;
     }
@@ -793,6 +839,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getFunctionCall_FunctionName() {
         return (EAttribute)functionCallEClass.getEStructuralFeatures().get(0);
     }
@@ -802,6 +849,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrintCall() {
         return printCallEClass;
     }
@@ -811,6 +859,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRandomCall() {
         return randomCallEClass;
     }
@@ -820,6 +869,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRandomizeCall() {
         return randomizeCallEClass;
     }
@@ -829,6 +879,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferenceable() {
         return referenceableEClass;
     }
@@ -838,6 +889,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSchedulable() {
         return schedulableEClass;
     }
@@ -847,6 +899,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSchedulable_Schedule() {
         return (EReference)schedulableEClass.getEStructuralFeatures().get(0);
     }
@@ -856,6 +909,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExternString() {
         return externStringEClass;
     }
@@ -865,6 +919,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getExternString_Code() {
         return (EAttribute)externStringEClass.getEStructuralFeatures().get(0);
     }
@@ -874,6 +929,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getParameter() {
         return parameterEClass;
     }
@@ -883,6 +939,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getParameter_CallByReference() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
     }
@@ -892,6 +949,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getParameter_PureOutput() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
     }
@@ -901,6 +959,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParameter_Expression() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(2);
     }
@@ -910,6 +969,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParameter_ExplicitBinding() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(3);
     }
@@ -919,6 +979,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParameter_ExplicitBindingIndices() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(4);
     }
@@ -928,6 +989,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getStringValue() {
         return stringValueEClass;
     }
@@ -937,6 +999,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getStringValue_Value() {
         return (EAttribute)stringValueEClass.getEStructuralFeatures().get(0);
     }
@@ -946,6 +1009,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getVectorValue() {
         return vectorValueEClass;
     }
@@ -955,6 +1019,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getVectorValue_Values() {
         return (EReference)vectorValueEClass.getEStructuralFeatures().get(0);
     }
@@ -964,6 +1029,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIgnoreValue() {
         return ignoreValueEClass;
     }
@@ -973,6 +1039,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getJsonObjectValue() {
         return jsonObjectValueEClass;
     }
@@ -982,6 +1049,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getJsonObjectValue_Members() {
         return (EReference)jsonObjectValueEClass.getEStructuralFeatures().get(0);
     }
@@ -991,6 +1059,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getJsonObjectMember() {
         return jsonObjectMemberEClass;
     }
@@ -1000,6 +1069,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getJsonObjectMember_Key() {
         return (EAttribute)jsonObjectMemberEClass.getEStructuralFeatures().get(0);
     }
@@ -1009,6 +1079,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getJsonObjectMember_Value() {
         return (EReference)jsonObjectMemberEClass.getEStructuralFeatures().get(1);
     }
@@ -1018,6 +1089,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getJsonArrayValue() {
         return jsonArrayValueEClass;
     }
@@ -1027,6 +1099,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getJsonArrayValue_Elements() {
         return (EReference)jsonArrayValueEClass.getEStructuralFeatures().get(0);
     }
@@ -1036,6 +1109,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getNullValue() {
         return nullValueEClass;
     }
@@ -1045,6 +1119,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCall() {
         return callEClass;
     }
@@ -1054,6 +1129,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getCall_Parameters() {
         return (EReference)callEClass.getEStructuralFeatures().get(0);
     }
@@ -1063,6 +1139,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferenceCall() {
         return referenceCallEClass;
     }
@@ -1072,6 +1149,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -1081,6 +1159,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getOperatorType() {
         return operatorTypeEEnum;
     }
@@ -1090,6 +1169,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getValueType() {
         return valueTypeEEnum;
     }
@@ -1099,6 +1179,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getPriorityProtocol() {
         return priorityProtocolEEnum;
     }
@@ -1108,6 +1189,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExpressionsFactory getKExpressionsFactory() {
         return (KExpressionsFactory)getEFactoryInstance();
     }
@@ -1465,6 +1547,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(operatorTypeEEnum, OperatorType.BITWISE_NOT);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.CONDITIONAL);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.FBY);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.CURRENT);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.WHEN);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.INIT);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.INTDIV);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_XOR);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.IMPLIES);
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
@@ -1481,6 +1569,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.CLOCK);
         addEEnumLiteral(valueTypeEEnum, ValueType.JSON);
         addEEnumLiteral(valueTypeEEnum, ValueType.STRUCT);
+        addEEnumLiteral(valueTypeEEnum, ValueType.ENUM);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);

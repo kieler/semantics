@@ -3,6 +3,10 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -57,7 +61,7 @@ public interface AState extends EObject
 
   /**
    * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Equation}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Assignment}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,
@@ -69,11 +73,11 @@ public interface AState extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Equation> getEquations();
+  EList<Assignment> getEquations();
 
   /**
    * Returns the value of the '<em><b>Assertions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Assertion}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Assertions</em>' containment reference list isn't clear,
@@ -85,7 +89,7 @@ public interface AState extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Assertion> getAssertions();
+  EList<Expression> getAssertions();
 
   /**
    * Returns the value of the '<em><b>Automatons</b></em>' containment reference list.

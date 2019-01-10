@@ -103,6 +103,7 @@ public class FunctionCallImpl extends EObjectImpl implements FunctionCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.FUNCTION_CALL__SCHEDULE);
@@ -115,6 +116,7 @@ public class FunctionCallImpl extends EObjectImpl implements FunctionCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.FUNCTION_CALL__PARAMETERS);
@@ -127,6 +129,7 @@ public class FunctionCallImpl extends EObjectImpl implements FunctionCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getFunctionName() {
         return functionName;
     }
@@ -136,6 +139,7 @@ public class FunctionCallImpl extends EObjectImpl implements FunctionCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFunctionName(String newFunctionName) {
         String oldFunctionName = functionName;
         functionName = newFunctionName;

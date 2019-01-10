@@ -3,9 +3,10 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
-import de.cau.cs.kieler.lustre.lustre.Expression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
 import org.eclipse.emf.common.notify.Notification;

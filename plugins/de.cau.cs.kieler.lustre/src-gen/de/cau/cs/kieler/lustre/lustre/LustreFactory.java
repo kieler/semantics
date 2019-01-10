@@ -33,150 +33,6 @@ public interface LustreFactory extends EFactory
   LustreProgram createLustreProgram();
 
   /**
-   * Returns a new object of class '<em>Pack Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pack Body</em>'.
-   * @generated
-   */
-  PackBody createPackBody();
-
-  /**
-   * Returns a new object of class '<em>Constants Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constants Declaration</em>'.
-   * @generated
-   */
-  ConstantsDeclaration createConstantsDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Type Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type Declaration</em>'.
-   * @generated
-   */
-  TypeDeclaration createTypeDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type</em>'.
-   * @generated
-   */
-  Type createType();
-
-  /**
-   * Returns a new object of class '<em>Enum Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Enum Type</em>'.
-   * @generated
-   */
-  EnumType createEnumType();
-
-  /**
-   * Returns a new object of class '<em>Struct Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Type</em>'.
-   * @generated
-   */
-  StructType createStructType();
-
-  /**
-   * Returns a new object of class '<em>External Node Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>External Node Declaration</em>'.
-   * @generated
-   */
-  ExternalNodeDeclaration createExternalNodeDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Node Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Node Declaration</em>'.
-   * @generated
-   */
-  NodeDeclaration createNodeDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Params</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Params</em>'.
-   * @generated
-   */
-  Params createParams();
-
-  /**
-   * Returns a new object of class '<em>Static Param</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Static Param</em>'.
-   * @generated
-   */
-  StaticParam createStaticParam();
-
-  /**
-   * Returns a new object of class '<em>Static Arg</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Static Arg</em>'.
-   * @generated
-   */
-  StaticArg createStaticArg();
-
-  /**
-   * Returns a new object of class '<em>By Name Static Arg</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>By Name Static Arg</em>'.
-   * @generated
-   */
-  ByNameStaticArg createByNameStaticArg();
-
-  /**
-   * Returns a new object of class '<em>Typed Id</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Typed Id</em>'.
-   * @generated
-   */
-  LustreTypedId createLustreTypedId();
-
-  /**
-   * Returns a new object of class '<em>Typed Valued Ids</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Typed Valued Ids</em>'.
-   * @generated
-   */
-  LustreTypedValuedIds createLustreTypedValuedIds();
-
-  /**
-   * Returns a new object of class '<em>Clocked Id Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Clocked Id Declaration</em>'.
-   * @generated
-   */
-  LustreClockedIdDeclaration createLustreClockedIdDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression</em>'.
-   * @generated
-   */
-  LustreExpression createLustreExpression();
-
-  /**
    * Returns a new object of class '<em>Pack List</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -222,94 +78,40 @@ public interface LustreFactory extends EFactory
   PackageEquation createPackageEquation();
 
   /**
-   * Returns a new object of class '<em>Package Provided</em>'.
+   * Returns a new object of class '<em>Pack Body</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Provided</em>'.
+   * @return a new object of class '<em>Pack Body</em>'.
    * @generated
    */
-  Package_Provided createPackage_Provided();
+  PackBody createPackBody();
 
   /**
-   * Returns a new object of class '<em>Package Provided IO</em>'.
+   * Returns a new object of class '<em>Type Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Provided IO</em>'.
+   * @return a new object of class '<em>Type Declaration</em>'.
    * @generated
    */
-  Package_Provided_IO createPackage_Provided_IO();
+  TypeDeclaration createTypeDeclaration();
 
   /**
-   * Returns a new object of class '<em>Entity Declaration</em>'.
+   * Returns a new object of class '<em>External Node Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Entity Declaration</em>'.
+   * @return a new object of class '<em>External Node Declaration</em>'.
    * @generated
    */
-  Entity_Declaration createEntity_Declaration();
+  ExternalNodeDeclaration createExternalNodeDeclaration();
 
   /**
-   * Returns a new object of class '<em>Array Type</em>'.
+   * Returns a new object of class '<em>Node Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Array Type</em>'.
+   * @return a new object of class '<em>Node Declaration</em>'.
    * @generated
    */
-  Array_Type createArray_Type();
-
-  /**
-   * Returns a new object of class '<em>Record Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Record Type</em>'.
-   * @generated
-   */
-  Record_Type createRecord_Type();
-
-  /**
-   * Returns a new object of class '<em>Field</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Field</em>'.
-   * @generated
-   */
-  Field createField();
-
-  /**
-   * Returns a new object of class '<em>Constant Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constant Declaration</em>'.
-   * @generated
-   */
-  Constant_Declaration createConstant_Declaration();
-
-  /**
-   * Returns a new object of class '<em>Variable Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Declaration</em>'.
-   * @generated
-   */
-  Variable_Declaration createVariable_Declaration();
-
-  /**
-   * Returns a new object of class '<em>Equation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Equation</em>'.
-   * @generated
-   */
-  Equation createEquation();
-
-  /**
-   * Returns a new object of class '<em>Assertion</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Assertion</em>'.
-   * @generated
-   */
-  Assertion createAssertion();
+  NodeDeclaration createNodeDeclaration();
 
   /**
    * Returns a new object of class '<em>Automaton</em>'.
@@ -339,229 +141,58 @@ public interface LustreFactory extends EFactory
   ATransition createATransition();
 
   /**
-   * Returns a new object of class '<em>Left Part</em>'.
+   * Returns a new object of class '<em>Params</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Left Part</em>'.
+   * @return a new object of class '<em>Params</em>'.
    * @generated
    */
-  Left_Part createLeft_Part();
+  Params createParams();
 
   /**
-   * Returns a new object of class '<em>Left List</em>'.
+   * Returns a new object of class '<em>Static Param</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Left List</em>'.
+   * @return a new object of class '<em>Static Param</em>'.
    * @generated
    */
-  Left_List createLeft_List();
+  StaticParam createStaticParam();
 
   /**
-   * Returns a new object of class '<em>Left</em>'.
+   * Returns a new object of class '<em>Static Arg</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Left</em>'.
+   * @return a new object of class '<em>Static Arg</em>'.
    * @generated
    */
-  Left createLeft();
+  StaticArg createStaticArg();
 
   /**
-   * Returns a new object of class '<em>Selector</em>'.
+   * Returns a new object of class '<em>By Name Static Arg</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Selector</em>'.
+   * @return a new object of class '<em>By Name Static Arg</em>'.
    * @generated
    */
-  Selector createSelector();
+  ByNameStaticArg createByNameStaticArg();
 
   /**
-   * Returns a new object of class '<em>Expression</em>'.
+   * Returns a new object of class '<em>Clocked Variable Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression</em>'.
+   * @return a new object of class '<em>Clocked Variable Declaration</em>'.
    * @generated
    */
-  Expression createExpression();
+  ClockedVariableDeclaration createClockedVariableDeclaration();
 
   /**
-   * Returns a new object of class '<em>Variable Reference</em>'.
+   * Returns a new object of class '<em>Operator Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Reference</em>'.
+   * @return a new object of class '<em>Operator Expression</em>'.
    * @generated
    */
-  VariableReference createVariableReference();
-
-  /**
-   * Returns a new object of class '<em>If Then Else</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>If Then Else</em>'.
-   * @generated
-   */
-  IfThenElse createIfThenElse();
-
-  /**
-   * Returns a new object of class '<em>Fby</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Fby</em>'.
-   * @generated
-   */
-  Fby createFby();
-
-  /**
-   * Returns a new object of class '<em>Arrow</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Arrow</em>'.
-   * @generated
-   */
-  Arrow createArrow();
-
-  /**
-   * Returns a new object of class '<em>Or</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Or</em>'.
-   * @generated
-   */
-  Or createOr();
-
-  /**
-   * Returns a new object of class '<em>And</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>And</em>'.
-   * @generated
-   */
-  And createAnd();
-
-  /**
-   * Returns a new object of class '<em>Equality</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Equality</em>'.
-   * @generated
-   */
-  Equality createEquality();
-
-  /**
-   * Returns a new object of class '<em>Comparison</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Comparison</em>'.
-   * @generated
-   */
-  Comparison createComparison();
-
-  /**
-   * Returns a new object of class '<em>Mod</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Mod</em>'.
-   * @generated
-   */
-  Mod createMod();
-
-  /**
-   * Returns a new object of class '<em>Plus</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Plus</em>'.
-   * @generated
-   */
-  Plus createPlus();
-
-  /**
-   * Returns a new object of class '<em>Minus</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Minus</em>'.
-   * @generated
-   */
-  Minus createMinus();
-
-  /**
-   * Returns a new object of class '<em>Mul</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Mul</em>'.
-   * @generated
-   */
-  Mul createMul();
-
-  /**
-   * Returns a new object of class '<em>Div</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Div</em>'.
-   * @generated
-   */
-  Div createDiv();
-
-  /**
-   * Returns a new object of class '<em>Not</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Not</em>'.
-   * @generated
-   */
-  Not createNot();
-
-  /**
-   * Returns a new object of class '<em>UMinus</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>UMinus</em>'.
-   * @generated
-   */
-  UMinus createUMinus();
-
-  /**
-   * Returns a new object of class '<em>Pre</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pre</em>'.
-   * @generated
-   */
-  Pre createPre();
-
-  /**
-   * Returns a new object of class '<em>Current</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Current</em>'.
-   * @generated
-   */
-  Current createCurrent();
-
-  /**
-   * Returns a new object of class '<em>Bool Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Bool Constant</em>'.
-   * @generated
-   */
-  BoolConstant createBoolConstant();
-
-  /**
-   * Returns a new object of class '<em>Float Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Float Constant</em>'.
-   * @generated
-   */
-  FloatConstant createFloatConstant();
-
-  /**
-   * Returns a new object of class '<em>Int Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Int Constant</em>'.
-   * @generated
-   */
-  IntConstant createIntConstant();
+  OperatorExpression createOperatorExpression();
 
   /**
    * Returns the package supported by this factory.

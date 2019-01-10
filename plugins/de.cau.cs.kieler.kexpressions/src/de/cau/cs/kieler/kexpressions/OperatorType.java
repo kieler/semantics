@@ -305,7 +305,55 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    FBY(25, "FBY", "FBY");
+    FBY(25, "FBY", "FBY"), /**
+     * The '<em><b>CURRENT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CURRENT_VALUE
+     * @generated
+     * @ordered
+     */
+    CURRENT(26, "CURRENT", "CURRENT"), /**
+     * The '<em><b>WHEN</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #WHEN_VALUE
+     * @generated
+     * @ordered
+     */
+    WHEN(27, "WHEN", "WHEN"), /**
+     * The '<em><b>INIT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #INIT_VALUE
+     * @generated
+     * @ordered
+     */
+    INIT(28, "INIT", "INIT"), /**
+     * The '<em><b>INTDIV</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #INTDIV_VALUE
+     * @generated
+     * @ordered
+     */
+    INTDIV(29, "INTDIV", "INTDIV"), /**
+     * The '<em><b>LOGICAL XOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #LOGICAL_XOR_VALUE
+     * @generated
+     * @ordered
+     */
+    LOGICAL_XOR(30, "LOGICAL_XOR", "LOGICAL_XOR"), /**
+     * The '<em><b>IMPLIES</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #IMPLIES_VALUE
+     * @generated
+     * @ordered
+     */
+    IMPLIES(31, "IMPLIES", "IMPLIES");
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -698,6 +746,96 @@ public enum OperatorType implements Enumerator {
     public static final int FBY_VALUE = 25;
 
     /**
+     * The '<em><b>CURRENT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>CURRENT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #CURRENT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int CURRENT_VALUE = 26;
+
+    /**
+     * The '<em><b>WHEN</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>WHEN</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #WHEN
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int WHEN_VALUE = 27;
+
+    /**
+     * The '<em><b>INIT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>INIT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #INIT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int INIT_VALUE = 28;
+
+    /**
+     * The '<em><b>INTDIV</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>INTDIV</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #INTDIV
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int INTDIV_VALUE = 29;
+
+    /**
+     * The '<em><b>LOGICAL XOR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>LOGICAL XOR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #LOGICAL_XOR
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int LOGICAL_XOR_VALUE = 30;
+
+    /**
+     * The '<em><b>IMPLIES</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>IMPLIES</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #IMPLIES
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int IMPLIES_VALUE = 31;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -732,6 +870,12 @@ public enum OperatorType implements Enumerator {
             BITWISE_NOT,
             CONDITIONAL,
             FBY,
+            CURRENT,
+            WHEN,
+            INIT,
+            INTDIV,
+            LOGICAL_XOR,
+            IMPLIES,
         };
 
     /**
@@ -814,6 +958,12 @@ public enum OperatorType implements Enumerator {
             case BITWISE_XOR_VALUE: return BITWISE_XOR;
             case BITWISE_NOT_VALUE: return BITWISE_NOT;
             case CONDITIONAL_VALUE: return CONDITIONAL;
+            case CURRENT_VALUE: return CURRENT;
+            case WHEN_VALUE: return WHEN;
+            case INIT_VALUE: return INIT;
+            case INTDIV_VALUE: return INTDIV;
+            case LOGICAL_XOR_VALUE: return LOGICAL_XOR;
+            case IMPLIES_VALUE: return IMPLIES;
         }
         return null;
     }
@@ -856,6 +1006,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -865,6 +1016,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -874,6 +1026,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

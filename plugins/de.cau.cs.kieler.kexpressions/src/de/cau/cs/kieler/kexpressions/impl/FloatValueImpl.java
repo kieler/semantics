@@ -92,6 +92,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.FLOAT_VALUE__SCHEDULE);
@@ -104,6 +105,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Float getValue() {
         return value;
     }
@@ -113,6 +115,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(Float newValue) {
         Float oldValue = value;
         value = newValue;
