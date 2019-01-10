@@ -258,19 +258,6 @@
     "@theia/monaco" "^0.3.18"
     editorconfig "^0.15.0"
 
-"@theia/file-search@latest":
-  version "0.3.18"
-  resolved "http://localhost:4873/@theia%2ffile-search/-/file-search-0.3.18.tgz#30ccb099ca0a8e8f53ba3c1a8bf7ce90fc3663fd"
-  integrity sha512-ky3VC0FtNMurOklpE42y3tTYUC1J1HQA4bxEu6Nhpr6rDUy6DrcnUME7Nl8rdgaIMwz3FRDspFN9X5xlj+/ULA==
-  dependencies:
-    "@theia/core" "^0.3.18"
-    "@theia/editor" "^0.3.18"
-    "@theia/filesystem" "^0.3.18"
-    "@theia/process" "^0.3.18"
-    "@theia/workspace" "^0.3.18"
-    fuzzy "^0.1.3"
-    vscode-ripgrep "^1.2.4"
-
 "@theia/filesystem@^0.3.18", "@theia/filesystem@latest":
   version "0.3.18"
   resolved "http://localhost:4873/@theia%2ffilesystem/-/filesystem-0.3.18.tgz#b8620d194a61ed71f624065ee98310bf94e05f71"
@@ -441,19 +428,6 @@
     "@theia/core" "^0.3.18"
     node-pty "0.7.6"
     string-argv "^0.1.1"
-
-"@theia/search-in-workspace@latest":
-  version "0.3.18"
-  resolved "http://localhost:4873/@theia%2fsearch-in-workspace/-/search-in-workspace-0.3.18.tgz#f0a88f067d29d6746c60ec798058fac73df8e77c"
-  integrity sha512-jWi7SasGo09R4U4QGmQk21lfSIG1QrBbOKYj/j2/c2gIcz+YVuHy00CrZYt7obPMy23wF2HuDAZ+SFR1Nn/wDw==
-  dependencies:
-    "@theia/core" "^0.3.18"
-    "@theia/editor" "^0.3.18"
-    "@theia/filesystem" "^0.3.18"
-    "@theia/navigator" "^0.3.18"
-    "@theia/process" "^0.3.18"
-    "@theia/workspace" "^0.3.18"
-    vscode-ripgrep "^1.2.4"
 
 "@theia/terminal@latest":
   version "0.3.18"
@@ -2298,9 +2272,9 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000927"
-  resolved "http://localhost:4873/caniuse-db/-/caniuse-db-1.0.30000927.tgz#9906eecf59ae7ee5d1bb2c16cf06fc31b642bfda"
-  integrity sha512-CX/QvLA8oh7kQ9cHCCzFm0UZW4KwSyQSRJ5A1XtH42HaMJQ0yh+9fEVWagMqv9I1vSCtaqA5Mb8k0uKfv7jhDw==
+  version "1.0.30000928"
+  resolved "http://localhost:4873/caniuse-db/-/caniuse-db-1.0.30000928.tgz#2e83d2b14276442da239511615eb7c62fed0cfa7"
+  integrity sha512-nAoeTspAEzLjqGSeibzM09WojORi08faeOOI5GBmFWC3/brydovb9lYJWM+p48rEQsdevfpufK58gPiDtwOWKw==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -2726,9 +2700,9 @@ copy-webpack-plugin@^4.5.0:
     serialize-javascript "^1.4.0"
 
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
-  version "2.6.1"
-  resolved "http://localhost:4873/core-js/-/core-js-2.6.1.tgz#87416ae817de957a3f249b3b5ca475d4aaed6042"
-  integrity sha512-L72mmmEayPJBejKIWe2pYtGis5r0tQ5NaJekdhyXgeMQTpJoBsH0NL4ElY2LfSoV15xeQWKQ+XTTOZdyero5Xg==
+  version "2.6.2"
+  resolved "http://localhost:4873/core-js/-/core-js-2.6.2.tgz#267988d7268323b349e20b4588211655f0e83944"
+  integrity sha512-NdBPF/RVwPW6jr0NCILuyN9RiqLo2b1mddWHkUL+VnvcB7dzlnBJ1bXYntjpTGOgkZiiLWj2JxmOr7eGE3qK6g==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3119,9 +3093,9 @@ dir-glob@2.0.0:
     path-type "^3.0.0"
 
 dir-glob@^2.0.0:
-  version "2.2.0"
-  resolved "http://localhost:4873/dir-glob/-/dir-glob-2.2.0.tgz#7c2986acade3beda2a037dcd9d20af7256cff6c5"
-  integrity sha512-YqrO+bduKFqPgspvpjDAaKk0qhmvY+SY7NjIRljCDAy6CX7Ft65irIduHbrYXhy+BxJnYKjWuREw6X42w9/+DQ==
+  version "2.2.1"
+  resolved "http://localhost:4873/dir-glob/-/dir-glob-2.2.1.tgz#ce8413234ffe8452b76b7741c32f116cf2a7b1a7"
+  integrity sha512-UN6X6XwRjllabfRhBdkVSo63uurJ8nSvMGrwl94EYVz6g+exhTV+yVSYk5VC/xl3MBFBTtC0J20uFKce4Brrng==
   dependencies:
     path-type "^3.0.0"
 
@@ -5104,52 +5078,52 @@ jszip@^2.4.0:
   dependencies:
     pako "~1.0.2"
 
-keith-diagram-options@local:
-  version "0.2.0-local.8d795a72"
-  resolved "http://localhost:4873/keith-diagram-options/-/keith-diagram-options-0.2.0-local.8d795a72.tgz#966f6a5a13f4b3138ca57b938e41048a4a0c6187"
-  integrity sha512-dtKQ8V4oGhSpYAqzsrsFi7+hfMHo0PhzX9NqUh0Cm43lCbuy7aMVBIxaQyldGVhXyWOkRaB/UT/cgkR/scF67Q==
+keith-diagram-options@^0.1.0:
+  version "0.1.0"
+  resolved "http://localhost:4873/keith-diagram-options/-/keith-diagram-options-0.1.0.tgz#8ad6f58f5d5193161c23380451f21e2270d982f9"
+  integrity sha512-nwnTjsCMifOftveX1u2V4IB331QqjPeiKT8kD3GZBAQRmspPLp4ZOwhQcP2jx5hvDtNInofT7qWjt0d7FhNjIQ==
   dependencies:
-    keith-diagram local
+    keith-diagram "^0.1.0"
     sprotty "0.4.2"
 
-keith-diagram@local:
-  version "0.2.0-local.8d795a72"
-  resolved "http://localhost:4873/keith-diagram/-/keith-diagram-0.2.0-local.8d795a72.tgz#60d49de53b8a09fa3d8263570e7bf9df6ecd38ff"
-  integrity sha512-D7k+RWW8IcN+xw8emQckbuXbYyFPCH2y/r0EAl9AoiIXy7PgvFw6/duB/4Gpp2FqLf5dN8oMNZw0529xoN8q6A==
+keith-diagram@^0.1.0:
+  version "0.1.0"
+  resolved "http://localhost:4873/keith-diagram/-/keith-diagram-0.1.0.tgz#6b267cf09d97ce4027249291b53ddd79011a2c81"
+  integrity sha512-rzLBPvCrr+DTY3Ntiq2Z4FeG1fzHwLevknMWLjliE2Ki7y7gQdOfXi+w+0aBAx1aNi+9g1rrd+n9Fl+AZM3LSw==
   dependencies:
-    keith-language-pragmatics local
-    keith-sprotty local
+    keith-language-pragmatics "^0.1.0"
+    keith-sprotty "^0.1.0"
     sprotty "0.4.2"
     theia-sprotty "0.1.20"
 
-keith-kicool@local:
-  version "0.2.0-local.e1c2f2ad"
-  resolved "http://localhost:4873/keith-kicool/-/keith-kicool-0.2.0-local.e1c2f2ad.tgz#371eb7a7d0a7f56b3ae37337a4b0541e57646d90"
-  integrity sha512-maD8qSHKtmWmZYN9AE7KIk7Fz9VQNV283V9kOkQkpbI4sDnO8bELyNJZuwIiPrM2UCACs3ObtzHlsnJGLLo3bQ==
+keith-kicool@^0.1.0:
+  version "0.1.0"
+  resolved "http://localhost:4873/keith-kicool/-/keith-kicool-0.1.0.tgz#64d3f49b7e8d20cc4a5e2f44ad2f4af026f38528"
+  integrity sha512-yKTcyfby5lWiUa1dTl+KS3tdieazn5hRKavTXMe1Bwpc3roELAGVOBGkC+3Z1fcFKBwPE+1YqDHBS9/zhcZlwA==
   dependencies:
     "@theia/core" latest
     "@theia/editor" latest
     "@theia/filesystem" latest
     "@theia/languages" latest
-    keith-language-semantics local
+    keith-language-semantics "^0.1.0"
 
-keith-language-pragmatics@local:
-  version "0.2.0-local.8d795a72"
-  resolved "http://localhost:4873/keith-language-pragmatics/-/keith-language-pragmatics-0.2.0-local.8d795a72.tgz#2a263a30edf4f5e795fd227a42d7f6e2dc8849df"
-  integrity sha512-2+pfBCIDUfR/nRmaoSfwG8rgffJZzNQPLF/bcJNiKYRVPk7mbyBlQwP7ISIdXC2iKk8xywgMLrIrvBGs0vb6VA==
+keith-language-pragmatics@^0.1.0:
+  version "0.1.0"
+  resolved "http://localhost:4873/keith-language-pragmatics/-/keith-language-pragmatics-0.1.0.tgz#6478f9d483d1b3db0457a5ff7e68640ad4e4d96e"
+  integrity sha512-qq5+NbdqOb4EnAfrhLhs5eMaNVy0Hk+VzVIyyz4McxIgQiV2q6K1Wj0hqQpxyxk6G01bByWPN+ctORGNAphCTg==
 
-keith-language-semantics@local:
-  version "0.2.0-local.e1c2f2ad"
-  resolved "http://localhost:4873/keith-language-semantics/-/keith-language-semantics-0.2.0-local.e1c2f2ad.tgz#3ee5f25e5096632654739052451edd314b427923"
-  integrity sha512-aFYCwv633ExW2b57OG4sNmp9wAXSvTmRTwDYZ7QqFpwPGY5qzlEy4/ZCagFm6S6BIcE3RYbkPpbzPTim+P2Erw==
+keith-language-semantics@^0.1.0:
+  version "0.1.0"
+  resolved "http://localhost:4873/keith-language-semantics/-/keith-language-semantics-0.1.0.tgz#f8a0e482cfd8a59fddb59584822acce59b02a3e8"
+  integrity sha512-sZHdL52fWT3crTSqoCMWt/SD3O5SlqKpreGcxkGz3z9oz+eCqBUBL4yoLg30YxO4KbCV9THa5PKLjJ2Acpe0yA==
   dependencies:
     "@theia/core" latest
     "@theia/languages" latest
 
-keith-sprotty@local:
-  version "0.2.0-local.8d795a72"
-  resolved "http://localhost:4873/keith-sprotty/-/keith-sprotty-0.2.0-local.8d795a72.tgz#0c0cb6b21e83f2c3489a649d5fa21842672982c7"
-  integrity sha512-fI8NDMgma/sjhCzS0GUH1UwIvSQsxEUGuJngIojf1DH3fGhbpcBxF9nou2rB2LqcNcStc14XHFEqcuoXphJgAg==
+keith-sprotty@^0.1.0:
+  version "0.1.0"
+  resolved "http://localhost:4873/keith-sprotty/-/keith-sprotty-0.1.0.tgz#efea15a2c384430f7c7cac5f781643be197a41d7"
+  integrity sha512-7MaIbKOWZ9Eb9RFPZ7V4rq5/u9ATJAKNeKeHCWsZwOf9jwcjT8zG853e+qdN3gPIRmt+f4pUuZoscuE5RyJJ8Q==
   dependencies:
     sprotty "0.4.2"
 
@@ -8868,11 +8842,6 @@ vscode-nsfw@^1.0.17:
     lodash.isinteger "^4.0.4"
     lodash.isundefined "^3.0.1"
     nan "^2.10.0"
-
-vscode-ripgrep@^1.2.4:
-  version "1.2.5"
-  resolved "http://localhost:4873/vscode-ripgrep/-/vscode-ripgrep-1.2.5.tgz#2093c8f36d52bd2dab9eb45b003dd02533c5499c"
-  integrity sha512-n5XBm9od5hahpljw9T8wbkuMnAY7LlAG1OyEEtcCZEX9aCHFuBKSP0IcvciGRTbtWRovNuT83A2iRjt6PL3bLg==
 
 vscode-textmate@^4.0.1:
   version "4.0.1"

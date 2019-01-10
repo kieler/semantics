@@ -1,6 +1,6 @@
 {
   "name": "keith-kicool",
-  "version": "0.2.0-local.e1c2f2ad",
+  "version": "0.1.0",
   "description": "An extension for Theia connection language support for KEITH to compile models",
   "author": "Kiel University https://rtsys.informatik.uni-kiel.de/kieler",
   "license": "EPL-1.0",
@@ -15,6 +15,7 @@
     "lint": "tslint -c ../tslint.json --project ./tsconfig.json",
     "build": "tsc && yarn lint",
     "watch": "tsc -w",
+    "publish:dev": "npm publish --registry=http://localhost:4873",
     "unpublish:dev": "npm unpublish --registry=http://localhost:4873 --force keith-kicool"
   },
   "dependencies": {
@@ -22,7 +23,7 @@
     "@theia/editor": "latest",
     "@theia/filesystem": "latest",
     "@theia/languages": "latest",
-    "keith-language-semantics": "local"
+    "keith-language-semantics": "^0.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
