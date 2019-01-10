@@ -21,8 +21,9 @@
   "scripts": {
     "prepare": "lerna run prepare",
     "dev": "yarn upgrade --pattern \"keith-*\" --registry=http://localhost:4873  && yarn prepare",
-    "publish:dev": "yarn unpublish:dev && yarn && lerna link && lerna run publish:dev",
+    "publish:dev": "yarn verdaccio && yarn unpublish:dev && yarn && lerna link && lerna run publish:dev && fuser -k 4873/tcp",
     "publish:version": "lerna --help",
+    "verdaccio": "verdaccio &",
     "unpublish:dev": "lerna run unpublish:dev"
   },
   "dependencies": {
