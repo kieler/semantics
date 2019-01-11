@@ -605,10 +605,34 @@ ruleKTick returns [EObject current=null]
 		)
 		(
 			(
+				(
+					lv_name_1_0=RULE_ID
+					{
+						newLeafNode(lv_name_1_0, grammarAccess.getKTickAccess().getNameIDTerminalRuleCall_1_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getKTickRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"name",
+							lv_name_1_0,
+							"de.cau.cs.kieler.annotations.Annotations.ID");
+					}
+				)
+			)
+			otherlv_2=':'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getKTickAccess().getColonKeyword_1_1());
+			}
+		)?
+		(
+			(
 				{
-					newCompositeNode(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_2_0());
 				}
-				lv_inputs_1_0=ruleAssignment
+				lv_inputs_3_0=ruleAssignment
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getKTickRule());
@@ -616,23 +640,23 @@ ruleKTick returns [EObject current=null]
 					add(
 						$current,
 						"inputs",
-						lv_inputs_1_0,
+						lv_inputs_3_0,
 						"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
 		(
-			otherlv_2='=>'
+			otherlv_4='=>'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getKTickAccess().getEqualsSignGreaterThanSignKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getKTickAccess().getEqualsSignGreaterThanSignKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_3_1_0());
 					}
-					lv_outputs_3_0=ruleAssignment
+					lv_outputs_5_0=ruleAssignment
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getKTickRule());
@@ -640,7 +664,7 @@ ruleKTick returns [EObject current=null]
 						add(
 							$current,
 							"outputs",
-							lv_outputs_3_0,
+							lv_outputs_5_0,
 							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 						afterParserOrEnumRuleCall();
 					}
@@ -648,14 +672,36 @@ ruleKTick returns [EObject current=null]
 			)+
 		)?
 		(
-			otherlv_4='pause'
+			otherlv_6='pause'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getKTickAccess().getPauseKeyword_3());
+				newLeafNode(otherlv_6, grammarAccess.getKTickAccess().getPauseKeyword_4());
 			}
 		)?
-		otherlv_5=';'
+		(
+			otherlv_7='goto'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getKTickAccess().getGotoKeyword_5_0());
+			}
+			(
+				(
+					{
+						/* */
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getKTickRule());
+						}
+					}
+					otherlv_8=RULE_ID
+					{
+						newLeafNode(otherlv_8, grammarAccess.getKTickAccess().getGotoTickCrossReference_5_1_0());
+					}
+				)
+			)
+		)?
+		otherlv_9=';'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getKTickAccess().getSemicolonKeyword_4());
+			newLeafNode(otherlv_9, grammarAccess.getKTickAccess().getSemicolonKeyword_6());
 		}
 	)
 ;
