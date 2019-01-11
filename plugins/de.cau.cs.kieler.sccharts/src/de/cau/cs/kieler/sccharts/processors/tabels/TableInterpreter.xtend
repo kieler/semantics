@@ -82,10 +82,9 @@ abstract class TableInterpreter implements ITableInterpreter {
         val rootstate = createState => [name = "root"]
         this.scc = createSCChart => [rootStates += rootstate]
         val ControlflowRegion rootRegion = createControlflowRegionWithoutLabel(rootstate, "rootRegion")
-        rootRegion.createState("a")
         
-//        createStates(rootRegion)
-//        createTransitions
+        createStates(rootRegion)
+        createTransitions
 
         println("interpreted")
         
