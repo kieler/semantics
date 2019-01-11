@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv
+package de.cau.cs.kieler.sccharts.processors.tabels
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
@@ -38,7 +38,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author stu114663
  *
  */
-abstract class TableInterpreter implements ICSVInterpreter {
+abstract class TableInterpreter implements ITableInterpreter {
 //    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
 //    @Inject extension KExpressionsCreateExtensions
@@ -69,7 +69,7 @@ abstract class TableInterpreter implements ICSVInterpreter {
     }
     
     @Accessors
-    var ArrayList<ArrayList<String>> table
+    var List<List<String>> table
     @Accessors
     var HashMap<String, State> stateMap
     
@@ -82,9 +82,12 @@ abstract class TableInterpreter implements ICSVInterpreter {
         val rootstate = createState => [name = "root"]
         this.scc = createSCChart => [rootStates += rootstate]
         val ControlflowRegion rootRegion = createControlflowRegionWithoutLabel(rootstate, "rootRegion")
+        rootRegion.createState("a")
         
-        createStates(rootRegion)
-        createTransitions
+//        createStates(rootRegion)
+//        createTransitions
+
+        println("interpreted")
         
         return scc
     }
@@ -93,7 +96,7 @@ abstract class TableInterpreter implements ICSVInterpreter {
      * create the map of all state names to their correlated states from the table
      * and add them to the given region as needed
      */
-    def createStates(ControlflowRegion region) {
+    override createStates(ControlflowRegion region) {
         this.stateMap = new HashMap<String, State>
         
         val stateColumn = headerLine.indexOf(HeaderNumbers.STATE)
@@ -108,8 +111,6 @@ abstract class TableInterpreter implements ICSVInterpreter {
             }
         }
     }
-    
-    abstract def void createTransitions();
     
     /** 
      * creates a list of declarations by recursively adding parent region/state declarations

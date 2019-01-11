@@ -12,36 +12,28 @@
  */
 package de.cau.cs.kieler.sccharts.processors.csv
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import de.cau.cs.kieler.sccharts.SCCharts
+import java.util.List
 
 /**
  * @author stu114663
  *
  */
-class CSVImporter extends ExogenousProcessor<String, SCCharts> {
-    
-    @Inject
-    var StateTransitionTableInterpreter stti
-    @Inject
-    var StateEventTableInterpreter seti
+class Table2CSV extends ExogenousProcessor<List<List<String>>, String> {
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.CSVImporter"
+        "de.cau.cs.kieler.sccharts.processors.Table2CSV"
     }
     
     override getName() {
-        "CSV to SCTX Importer"
+        "Table2CSV"
     }
     
     override process() {
         val sourceString = getModel
-        
-        val CSVParser parser = new CSVParser(sourceString, ",", "\\")
-        stti.table = parser.getTable()
-        
-        val SCCharts scc = stti.interpret
-        setModel(scc)
+        // TODO check for empty model
+        val CSVBuilder cb = new CSVBuilder
     }
+    
+    
 }

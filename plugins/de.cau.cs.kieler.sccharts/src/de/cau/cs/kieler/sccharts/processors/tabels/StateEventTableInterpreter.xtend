@@ -10,19 +10,18 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv
+package de.cau.cs.kieler.sccharts.processors.tabels
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.util.ArrayList
 import java.util.List
 
 /**
  * @author stu114663
  *
  */
-class StateEventTableInterpreter extends TableInterpreter implements ICSVInterpreter {
+class StateEventTableInterpreter extends TableInterpreter {
     @Inject extension SCChartsTransitionExtensions
     
     static final String CELL_DELIMITER = "\\"
@@ -45,7 +44,7 @@ class StateEventTableInterpreter extends TableInterpreter implements ICSVInterpr
         }
     }
     
-    def createTransition(ArrayList<String> row, int condi) {
+    def createTransition(List<String> row, int condi) {
         val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.STATE)))
         
         var targetState = this.stateMap.get(getTargetName(row.get(condi)))
@@ -59,7 +58,7 @@ class StateEventTableInterpreter extends TableInterpreter implements ICSVInterpr
         trans.effects.addAll(effectStrings2Expression(indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.EFFECT))))
     }
     
-    def ArrayList<String> getCondRow() {table.get(headerLines-1)}
+    def List<String> getCondRow() {table.get(headerLines-1)}
     
     def List<String> getEffectString(String cell) {
         val effectTargetList = getEffectTargetList(cell)

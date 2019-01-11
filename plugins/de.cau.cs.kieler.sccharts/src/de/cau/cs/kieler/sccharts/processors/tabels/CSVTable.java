@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv;
+package de.cau.cs.kieler.sccharts.processors.tabels;
 
 import java.util.LinkedList;
 import java.util.List;

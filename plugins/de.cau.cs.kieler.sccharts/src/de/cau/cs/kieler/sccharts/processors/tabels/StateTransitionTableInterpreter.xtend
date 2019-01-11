@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv
+package de.cau.cs.kieler.sccharts.processors.tabels
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.Transition
@@ -21,7 +21,7 @@ import java.util.List
  * @author stu114663
  *
  */
-class StateTransitionTableInterpreter extends TableInterpreter implements ICSVInterpreter {
+class StateTransitionTableInterpreter extends TableInterpreter {
     @Inject extension SCChartsTransitionExtensions
     
     int headerLines = 1

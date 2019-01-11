@@ -10,27 +10,32 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv
+package de.cau.cs.kieler.sccharts.processors.tabels
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.SCCharts
-import java.util.ArrayList
+import java.util.List
 
 /**
  * @author stu114663
  *
  */
-class CSVExporter extends ExogenousProcessor<SCCharts, String> {
+class SCTX2Table extends ExogenousProcessor<SCCharts, List<List<String>>> {
+    
+    @Inject
+    var de.cau.cs.kieler.sccharts.processors.tabels.StateTransitionTableBuilder sttb
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.CSVExporter"
+        "de.cau.cs.kieler.sccharts.processors.SCTX2Table"
     }
     
     override getName() {
-        "SCTX to CSV Exporter"
+        "SCTX2Table"
     }
     
     override process() {
-        val sourceString = getModel
+        val SCCharts scc = getModel
+        // TODO check for empty model
     }
 }

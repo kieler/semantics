@@ -10,27 +10,21 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv
+package de.cau.cs.kieler.sccharts.processors.tabels
 
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.ArrayList
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 
 /**
  * @author stu114663
  *
  */
-class StateTransitionTableTabulator {
+class StateTransitionTableBuilder extends TableBuilder {
     // header line: [ID] State Condition Effect Target Comment
     
-    SCCharts model
-    ArrayList<ArrayList<String>> table
+    override build() {}
     
-    def addLine(Transition outTrans
-//        , String ID
-    ) {
+    override insertTransition(Transition outTrans) {
         val ArrayList<String> line = <String> newArrayList
         
         // fill line list

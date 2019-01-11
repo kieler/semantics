@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.sccharts.processors.csv
 
 import java.util.ArrayList
+import java.util.List
 
 /**
  * @author stu114663
@@ -22,7 +23,7 @@ class CSVParser {
 	String csvSource
 	String delim
     String escape
-    ArrayList<ArrayList<String>> table
+    List<List<String>> table
     boolean parsed = false
     
     new(String source, String delimiter, String escapeCharacter) {
@@ -32,7 +33,7 @@ class CSVParser {
     }
     
     private def parse() {
-        this.table = new ArrayList<ArrayList<String>>()
+        this.table = new ArrayList<List<String>>()
         
         // prototype parser that should probably be replaced by a library call
         var String[] splitLines = csvSource.split("\n")
@@ -55,7 +56,7 @@ class CSVParser {
         this.parsed = true
     }
     
-    def getTable() {
+    def List<List<String>> getTable() {
         if (!parsed) {
         	parse()
         }

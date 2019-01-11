@@ -10,14 +10,16 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.csv
+package de.cau.cs.kieler.sccharts.processors.tabels
 
-import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.Transition
+import java.util.List
 
 /**
  * @author stu114663
  *
  */
-interface ICSVInterpreter {
-    def SCCharts interpret()
+interface ITableBuilder {
+    def List<List<String>> build()
+    def void insertTransition(Transition outTrans)
 }

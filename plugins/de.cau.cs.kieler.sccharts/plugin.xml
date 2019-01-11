@@ -187,7 +187,7 @@
               class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
+              class="de.cau.cs.kieler.sccharts.processors.tabels.CSVToSCTX">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.obfuscator.ObfuscationProcessor">
@@ -196,10 +196,16 @@
               class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.csv.CSVImporter">
+              class="de.cau.cs.kieler.sccharts.processors.tabels.Table2SCTX">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.csv.CSVExporter">
+              class="de.cau.cs.kieler.sccharts.processors.csv.CSV2Table">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.tabels.SCTX2Table">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.csv.Table2CSV">
         </Processor>
      </extension>
      <extension
