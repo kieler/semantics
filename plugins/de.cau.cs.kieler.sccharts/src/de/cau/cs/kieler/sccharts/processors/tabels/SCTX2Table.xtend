@@ -35,7 +35,8 @@ class SCTX2Table extends ExogenousProcessor<SCCharts, List<List<String>>> {
     }
     
     override process() {
-        val SCCharts scc = getModel
+        sttb.model = getModel
         // TODO check for empty model
+        model = sttb.build
     }
 }

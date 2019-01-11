@@ -21,6 +21,9 @@ import java.util.List
  */
 class CSV2Table extends ExogenousProcessor<String, List<List<String>>> {
     
+    static final String CSV_DELIMITER_CHARACTER = ","
+    static final String CSV_ESCAPE_CHARACTER = "\\"
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.CSV2Table"
     }
@@ -32,7 +35,7 @@ class CSV2Table extends ExogenousProcessor<String, List<List<String>>> {
     override process() {
         val sourceString = getModel
         // TODO check for empty model
-        val CSVParser parser = new CSVParser(sourceString, ",", "\\")
+        val CSVParser parser = new CSVParser(sourceString, CSV_DELIMITER_CHARACTER, CSV_ESCAPE_CHARACTER)
         model = parser.getTable()
     }
 }

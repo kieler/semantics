@@ -21,6 +21,9 @@ import java.util.List
  */
 class Table2CSV extends ExogenousProcessor<List<List<String>>, String> {
     
+    static final String CSV_DELIMITER_CHARACTER = ","
+    static final String CSV_ESCAPE_CHARACTER = "\\"
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.Table2CSV"
     }
@@ -32,7 +35,7 @@ class Table2CSV extends ExogenousProcessor<List<List<String>>, String> {
     override process() {
         val table = getModel
         // TODO check for empty model
-        val CSVBuilder cb = new CSVBuilder(table, ",", "\\")
+        val CSVBuilder cb = new CSVBuilder(table, CSV_DELIMITER_CHARACTER, CSV_ESCAPE_CHARACTER)
         model = cb.getCSV()
     }
     

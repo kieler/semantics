@@ -24,6 +24,8 @@ import java.util.List
 class StateTransitionTableInterpreter extends TableInterpreter {
     @Inject extension SCChartsTransitionExtensions
     
+    static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
+    
     int headerLines = 1
     HeaderNumbers[] headerLine = #[
         HeaderNumbers.STATE,
@@ -31,8 +33,6 @@ class StateTransitionTableInterpreter extends TableInterpreter {
         HeaderNumbers.EFFECT,
         HeaderNumbers.TARGET_STATE
     ]
-    
-    final String TRIGGER_EXPRESSION_CONNECTOR = " && "
     
     /**
      * create a transition for each line

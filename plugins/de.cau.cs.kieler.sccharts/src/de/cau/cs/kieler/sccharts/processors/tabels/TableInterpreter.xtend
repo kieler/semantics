@@ -54,12 +54,6 @@ abstract class TableInterpreter implements ITableInterpreter {
     SCCharts scc
     
     int headerLines = 1
-    HeaderNumbers[] headerLine = #[
-        HeaderNumbers.STATE,
-        HeaderNumbers.CONDITION,
-        HeaderNumbers.EFFECT,
-        HeaderNumbers.TARGET_STATE
-    ]
     enum HeaderNumbers {
         STATE,
         TARGET_STATE,
@@ -67,6 +61,12 @@ abstract class TableInterpreter implements ITableInterpreter {
         DISCARDABLE,
         CONDITION
     }
+    HeaderNumbers[] headerLine = #[
+        HeaderNumbers.STATE,
+        HeaderNumbers.CONDITION,
+        HeaderNumbers.EFFECT,
+        HeaderNumbers.TARGET_STATE
+    ]
     
     @Accessors
     var List<List<String>> table
@@ -74,7 +74,7 @@ abstract class TableInterpreter implements ITableInterpreter {
     var HashMap<String, State> stateMap
     
     override interpret() {
-        // TODO check for empty table
+        // TODO check for empty/null table
         if (headerLine.length > table.get(0).length) {
             // TODO handle bad case
         }
