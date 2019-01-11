@@ -256,19 +256,16 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) '(' (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) '(' (ambiguity) operator=ConditionalOperator
-	 *     (rule start) '(' (ambiguity) operator=ImpliesOperator
 	 *     (rule start) '(' (ambiguity) operator=NotOperator
 	 *     (rule start) '(' (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) '(' (ambiguity) {OperatorExpression.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) 'assert' (ambiguity) operator=ConditionalOperator
-	 *     (rule start) 'assert' (ambiguity) operator=ImpliesOperator
 	 *     (rule start) 'assert' (ambiguity) operator=NotOperator
 	 *     (rule start) 'assert' (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) 'assert' (ambiguity) {OperatorExpression.subExpressions+=}
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
-	 *     (rule start) (ambiguity) operator=ImpliesOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
@@ -284,7 +281,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
-	 *     (rule start) (ambiguity) operator=ImpliesOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}

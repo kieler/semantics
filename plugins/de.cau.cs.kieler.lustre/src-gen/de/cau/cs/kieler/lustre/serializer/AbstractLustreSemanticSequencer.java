@@ -239,6 +239,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 						|| rule == grammarAccess.getInitExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getImpliesExpressionRule()
+						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getLogicalXorExpressionRule()
 						|| action == grammarAccess.getLogicalXorExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getRootRule()
@@ -488,6 +489,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     InitExpression returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     LogicalXorExpression returns OperatorExpression
 	 *     LogicalXorExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     Root returns OperatorExpression
@@ -642,6 +644,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     InitExpression returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     LogicalXorExpression returns OperatorExpression
 	 *     LogicalXorExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     Root returns OperatorExpression
@@ -696,7 +699,12 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
 	 *         (operator=ConditionalOperator subExpressions+=BoolExpression subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression) | 
-	 *         (operator=ImpliesOperator subExpressions+=LogicalXorExpression) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
 	 *             operator=LogicalXorOperator 

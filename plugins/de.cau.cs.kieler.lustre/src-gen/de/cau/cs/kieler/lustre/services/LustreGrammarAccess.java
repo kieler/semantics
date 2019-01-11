@@ -1993,43 +1993,65 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class ImpliesExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ImpliesExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cOperatorImpliesOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cSubExpressionsLogicalXorExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cLogicalXorExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cLogicalXorExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorLogicalXorOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsLogicalXorExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsLogicalXorExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//ImpliesExpression kexpressions::Expression:
-		//	{OperatorExpression} operator=ImpliesOperator subExpressions+=LogicalXorExpression
-		//	| LogicalXorExpression;
+		//	LogicalXorExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalXorOperator
+		//	subExpressions+=LogicalXorExpression) ('=>' subExpressions+=LogicalXorExpression)*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} operator=ImpliesOperator subExpressions+=LogicalXorExpression | LogicalXorExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//LogicalXorExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalXorOperator
+		//subExpressions+=LogicalXorExpression) ('=>' subExpressions+=LogicalXorExpression)*)?
+		public Group getGroup() { return cGroup; }
 		
-		//{OperatorExpression} operator=ImpliesOperator subExpressions+=LogicalXorExpression
-		public Group getGroup_0() { return cGroup_0; }
+		//LogicalXorExpression
+		public RuleCall getLogicalXorExpressionParserRuleCall_0() { return cLogicalXorExpressionParserRuleCall_0; }
 		
-		//{OperatorExpression}
-		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+		//({OperatorExpression.subExpressions+=current} (operator=LogicalXorOperator subExpressions+=LogicalXorExpression) ('=>'
+		//subExpressions+=LogicalXorExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
 		
-		//operator=ImpliesOperator
-		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//ImpliesOperator
-		public RuleCall getOperatorImpliesOperatorEnumRuleCall_0_1_0() { return cOperatorImpliesOperatorEnumRuleCall_0_1_0; }
+		//operator=LogicalXorOperator subExpressions+=LogicalXorExpression
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//operator=LogicalXorOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+		
+		//LogicalXorOperator
+		public RuleCall getOperatorLogicalXorOperatorEnumRuleCall_1_1_0_0() { return cOperatorLogicalXorOperatorEnumRuleCall_1_1_0_0; }
 		
 		//subExpressions+=LogicalXorExpression
-		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
 		//LogicalXorExpression
-		public RuleCall getSubExpressionsLogicalXorExpressionParserRuleCall_0_2_0() { return cSubExpressionsLogicalXorExpressionParserRuleCall_0_2_0; }
+		public RuleCall getSubExpressionsLogicalXorExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsLogicalXorExpressionParserRuleCall_1_1_1_0; }
+		
+		//('=>' subExpressions+=LogicalXorExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_1_2_0() { return cEqualsSignGreaterThanSignKeyword_1_2_0; }
+		
+		//subExpressions+=LogicalXorExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
 		//LogicalXorExpression
-		public RuleCall getLogicalXorExpressionParserRuleCall_1() { return cLogicalXorExpressionParserRuleCall_1; }
+		public RuleCall getSubExpressionsLogicalXorExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsLogicalXorExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class LogicalXorExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LogicalXorExpression");
@@ -3560,8 +3582,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ImpliesExpression kexpressions::Expression:
-	//	{OperatorExpression} operator=ImpliesOperator subExpressions+=LogicalXorExpression
-	//	| LogicalXorExpression;
+	//	LogicalXorExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalXorOperator
+	//	subExpressions+=LogicalXorExpression) ('=>' subExpressions+=LogicalXorExpression)*)?;
 	public ImpliesExpressionElements getImpliesExpressionAccess() {
 		return pImpliesExpression;
 	}

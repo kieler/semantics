@@ -245,10 +245,12 @@ TernaryOperation returns kexpressions::Expression:
     ImpliesExpression;
 
 ImpliesExpression returns kexpressions::Expression:
-    {OperatorExpression}
-    operator=ImpliesOperator subExpressions+=LogicalXorExpression
-    |    
-    LogicalXorExpression;
+    LogicalXorExpression
+    (
+        {OperatorExpression.subExpressions+=current}
+        (operator=LogicalXorOperator subExpressions+=LogicalXorExpression)
+        ('=>' subExpressions+=LogicalXorExpression)*
+    )?;
     
 LogicalXorExpression returns kexpressions::Expression:
     LogicalOrExpression

@@ -477,8 +477,9 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_2(), "rule__TernaryOperation__SubExpressionsAssignment_0_2");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4(), "rule__TernaryOperation__SubExpressionsAssignment_0_4");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_6(), "rule__TernaryOperation__SubExpressionsAssignment_0_6");
-			builder.put(grammarAccess.getImpliesExpressionAccess().getOperatorAssignment_0_1(), "rule__ImpliesExpression__OperatorAssignment_0_1");
-			builder.put(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__ImpliesExpression__SubExpressionsAssignment_0_2");
+			builder.put(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__ImpliesExpression__SubExpressionsAssignment_0_1");
+			builder.put(grammarAccess.getImpliesExpressionAccess().getOperatorAssignment_0_2(), "rule__ImpliesExpression__OperatorAssignment_0_2");
+			builder.put(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ImpliesExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getLogicalXorExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalXorExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getLogicalXorExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalXorExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getLogicalXorExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalXorExpression__SubExpressionsAssignment_1_2_1");

@@ -3335,68 +3335,94 @@ ruleImpliesExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getImpliesExpressionAccess().getLogicalXorExpressionParserRuleCall_0());
+		}
+		this_LogicalXorExpression_0=ruleLogicalXorExpression
+		{
+			$current = $this_LogicalXorExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
 			(
 				{
 					/* */
 				}
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getImpliesExpressionAccess().getOperatorExpressionAction_0_0(),
+					$current = forceCreateModelElementAndAdd(
+						grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
 						$current);
 				}
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getOperatorImpliesOperatorEnumRuleCall_0_1_0());
-					}
-					lv_operator_1_0=ruleImpliesOperator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getImpliesExpressionAccess().getOperatorLogicalXorOperatorEnumRuleCall_1_1_0_0());
 						}
-						set(
-							$current,
-							"operator",
-							lv_operator_1_0,
-							"de.cau.cs.kieler.lustre.Lustre.ImpliesOperator");
-						afterParserOrEnumRuleCall();
-					}
+						lv_operator_2_0=ruleLogicalXorOperator
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+							}
+							set(
+								$current,
+								"operator",
+								lv_operator_2_0,
+								"de.cau.cs.kieler.lustre.Lustre.LogicalXorOperator");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsLogicalXorExpressionParserRuleCall_1_1_1_0());
+						}
+						lv_subExpressions_3_0=ruleLogicalXorExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_3_0,
+								"de.cau.cs.kieler.lustre.Lustre.LogicalXorExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)
 			(
+				otherlv_4='=>'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getImpliesExpressionAccess().getEqualsSignGreaterThanSignKeyword_1_2_0());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsLogicalXorExpressionParserRuleCall_0_2_0());
-					}
-					lv_subExpressions_2_0=ruleLogicalXorExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsLogicalXorExpressionParserRuleCall_1_2_1_0());
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_2_0,
-							"de.cau.cs.kieler.lustre.Lustre.LogicalXorExpression");
-						afterParserOrEnumRuleCall();
-					}
+						lv_subExpressions_5_0=ruleLogicalXorExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.lustre.Lustre.LogicalXorExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
-			)
-		)
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getImpliesExpressionAccess().getLogicalXorExpressionParserRuleCall_1());
-		}
-		this_LogicalXorExpression_3=ruleLogicalXorExpression
-		{
-			$current = $this_LogicalXorExpression_3.current;
-			afterParserOrEnumRuleCall();
-		}
+			)*
+		)?
 	)
 ;
 
@@ -12442,23 +12468,6 @@ ruleLogicalXorOperator returns [Enumerator current=null]
 		{
 			$current = grammarAccess.getLogicalXorOperatorAccess().getLOGICAL_XOREnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getLogicalXorOperatorAccess().getLOGICAL_XOREnumLiteralDeclaration());
-		}
-	)
-;
-
-// Rule ImpliesOperator
-ruleImpliesOperator returns [Enumerator current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		enumLiteral_0='=>'
-		{
-			$current = grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration().getEnumLiteral().getInstance();
-			newLeafNode(enumLiteral_0, grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration());
 		}
 	)
 ;
