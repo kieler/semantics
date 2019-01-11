@@ -46,12 +46,14 @@ class TraceDataProvider {
     val Trace trace
     @Accessors
     val TraceFile tracefile
+    @Accessors
+    val boolean followGotos
     
     @Accessors
     val boolean signalSemantics
     
-    var int inputTick = -1
-    var int outputTick = -1   
+    val inputTicks = <Integer>newArrayList()
+    val outputTicks = <Integer>newArrayList()
     val DataPool state = new DataPool
     val inputNames = <String>newHashSet
     val outputNames = <String>newHashSet
@@ -61,9 +63,10 @@ class TraceDataProvider {
        
     // -----------------------------------------------------------------------------------------
     
-    new(Trace trace) {
+    new(Trace trace, boolean followGotos) {
         this.trace = trace
         this.tracefile = trace.eContainer as TraceFile
+        this.followGotos = followGotos
         checkNotNull(tracefile, "Trace is not contained in a TraceFile")
         this.signalSemantics = if (trace.eResource !== null && trace.eResource.URI !== null) {
             val fileExt = trace.eResource.URI.fileExtension
@@ -80,25 +83,47 @@ class TraceDataProvider {
     }
     
     def reset() {
-        inputTick = -1
-        outputTick = -1
+        inputTicks.clear
+        outputTicks.clear
         state.clear
         inputNames.clear
-        outputNames.clear  
+        outputNames.clear
+        if (!trace.ticks.empty) {
+            inputTicks += 0
+            outputTicks += 0
+        }
+    }
+    
+    def boolean isNextInputTick(int tick) {
+        return tick == inputTicks.size - 1
     }
     
     def applyTraceInputs(int tick) {
-        checkArgument(tick >= 0 && tick < trace.ticks.size, "Current tick number out of trace range")
-        checkArgument(inputTick + 1 == tick, "Trace and simulation out of sync")
-        trace.ticks.get(tick).applyTickEffects(true)
-        inputTick++
+        checkArgument(tick >= 0 && tick.isNextInputTick, "Current tick number out of trace range")
+        val tickIdx = inputTicks.get(tick)
+        val tickData = trace.ticks.get(tickIdx)
+        tickData.applyTickEffects(true)
+        if (tickData.goto !== null && followGotos) {
+            inputTicks += trace.ticks.indexOf(tickData.goto)
+        } else if (tickIdx + 1 < trace.ticks.size) { // has next
+            inputTicks += tickIdx + 1
+        }
     }
         
+    def boolean isNextOutputTick(int tick) {
+        return tick == outputTicks.size - 1
+    }
+
     def applyTraceOutputs(int tick) {
-        checkArgument(tick >= 0 && tick < trace.ticks.size, "Current tick number out of trace range")
-        checkArgument(outputTick + 1 == tick, "Trace and simulation out of sync")
-        trace.ticks.get(tick).applyTickEffects(false)
-        outputTick++
+        checkArgument(tick >= 0 && tick.isNextOutputTick, "Current tick number out of trace range")
+        val tickIdx = outputTicks.get(tick)
+        val tickData = trace.ticks.get(tickIdx)
+        tickData.applyTickEffects(false)
+        if (tickData.goto !== null && followGotos) {
+            outputTicks += trace.ticks.indexOf(tickData.goto)
+        } else if (tickIdx + 1 < trace.ticks.size) { // has next
+            outputTicks += tickIdx + 1
+        }
     }
     
     private def void applyTickEffects(Tick tick, boolean applyInputs) {

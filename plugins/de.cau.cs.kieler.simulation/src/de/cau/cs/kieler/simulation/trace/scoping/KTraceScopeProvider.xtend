@@ -4,6 +4,9 @@
 package de.cau.cs.kieler.simulation.trace.scoping
 
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
+import de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage
+import de.cau.cs.kieler.simulation.trace.ktrace.Tick
+import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
@@ -18,6 +21,14 @@ import org.eclipse.xtext.scoping.Scopes
  *
  */
 class KTraceScopeProvider extends KExtScopeProvider {
+
+    override getScope(EObject context, EReference reference) {
+        if (context instanceof Tick && reference == KTracePackage.Literals.TICK__GOTO) {
+            return Scopes.scopeFor(((context as Tick).eContainer as Trace).ticks)
+        }
+        
+        return super.getScope(context, reference);
+    }
 
     override getScopeForValuedObjectReference(EObject context, EReference reference) {
         context.getScopeForValuedObject(reference)

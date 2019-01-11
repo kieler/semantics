@@ -16,6 +16,7 @@ import de.cau.cs.kieler.simulation.trace.ktrace.Tick;
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace;
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -194,6 +195,15 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getTick_Goto() {
+        return (EReference)tickEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public KTraceFactory getKTraceFactory() {
         return (KTraceFactory)getEFactoryInstance();
     }
@@ -227,6 +237,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
         tickEClass = createEClass(TICK);
         createEReference(tickEClass, TICK__INPUTS);
         createEReference(tickEClass, TICK__OUTPUTS);
+        createEReference(tickEClass, TICK__GOTO);
     }
 
     /**
@@ -265,6 +276,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
         traceFileEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
         traceEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
         tickEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        tickEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
 
         // Initialize classes and features; add operations and parameters
         initEClass(traceFileEClass, TraceFile.class, "TraceFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -277,6 +289,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
         initEClass(tickEClass, Tick.class, "Tick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTick_Inputs(), theKEffectsPackage.getEffect(), null, "inputs", null, 0, -1, Tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTick_Outputs(), theKEffectsPackage.getEffect(), null, "outputs", null, 0, -1, Tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTick_Goto(), this.getTick(), null, "goto", null, 0, 1, Tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

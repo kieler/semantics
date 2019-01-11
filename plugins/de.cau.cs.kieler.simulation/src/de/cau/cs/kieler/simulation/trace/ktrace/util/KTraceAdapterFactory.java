@@ -3,6 +3,8 @@
 package de.cau.cs.kieler.simulation.trace.ktrace.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
@@ -92,6 +94,14 @@ public class KTraceAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
+            }
+            @Override
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -178,6 +188,34 @@ public class KTraceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.NamedObject
+     * @generated
+     */
+    public Adapter createNamedObjectAdapter() {
         return null;
     }
 

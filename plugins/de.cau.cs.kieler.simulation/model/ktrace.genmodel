@@ -17,6 +17,7 @@
     <genClasses ecoreClass="ktrace.ecore#//Tick">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//Tick/inputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ktrace.ecore#//Tick/outputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ktrace.ecore#//Tick/goto"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
