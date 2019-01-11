@@ -35,7 +35,6 @@ class CSVParser {
     private def parse() {
         this.table = new ArrayList<List<String>>()
         
-        // prototype parser that should probably be replaced by a library call
         var String[] splitLines = csvSource.split("\n")
         for (var i = 0; i < splitLines.length; i++) {
             var String[] splitDelim = splitLines.get(i).split(delim, -1)

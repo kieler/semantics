@@ -1,5 +1,7 @@
 public system de.cau.cs.kieler.sccharts.csvExport
 	label "CSV Exporter"
 
-de.cau.cs.kieler.sccharts.processors.SCTX2Table
-de.cau.cs.kieler.sccharts.processors.Table2CSV
+[ label "CSV Exporter"
+    de.cau.cs.kieler.sccharts.processors.SCTX2Table
+    de.cau.cs.kieler.sccharts.processors.Table2CSV
+]

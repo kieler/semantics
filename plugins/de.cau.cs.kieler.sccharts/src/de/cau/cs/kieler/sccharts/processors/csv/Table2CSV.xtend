@@ -30,9 +30,10 @@ class Table2CSV extends ExogenousProcessor<List<List<String>>, String> {
     }
     
     override process() {
-        val sourceString = getModel
+        val table = getModel
         // TODO check for empty model
-        val CSVBuilder cb = new CSVBuilder
+        val CSVBuilder cb = new CSVBuilder(table, ",", "\\")
+        model = cb.getCSV()
     }
     
     
