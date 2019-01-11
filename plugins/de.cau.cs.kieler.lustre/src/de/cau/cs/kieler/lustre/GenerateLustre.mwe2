@@ -89,7 +89,7 @@ Workflow {
             fragment = ui.outline.QuickOutlineFragment2 {}
             fragment = ui.outline.OutlineTreeProviderFragment2 {}
             fragment = ui.quickfix.QuickfixProviderFragment2 {}
-//            fragment = ui.contentAssist.ContentAssistFragment2 {}
+            fragment = ui.contentAssist.ContentAssistFragment2 {}
             fragment = ui.refactoring.RefactorElementNameFragment2 {}
    
         }

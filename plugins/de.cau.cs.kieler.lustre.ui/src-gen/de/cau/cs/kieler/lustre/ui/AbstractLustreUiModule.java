@@ -8,6 +8,7 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import de.cau.cs.kieler.lustre.ide.contentassist.antlr.LustreParser;
 import de.cau.cs.kieler.lustre.ide.contentassist.antlr.internal.InternalLustreLexer;
+import de.cau.cs.kieler.lustre.ui.contentassist.LustreProposalProvider;
 import de.cau.cs.kieler.lustre.ui.labeling.LustreDescriptionLabelProvider;
 import de.cau.cs.kieler.lustre.ui.labeling.LustreLabelProvider;
 import de.cau.cs.kieler.lustre.ui.outline.LustreOutlineTreeProvider;
@@ -24,6 +25,7 @@ import org.eclipse.xtext.resource.containers.IAllContainersState;
 import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher;
+import org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider;
 import org.eclipse.xtext.ui.editor.contentassist.IProposalConflictHelper;
 import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.AntlrProposalConflictHelper;
@@ -142,6 +144,11 @@ public abstract class AbstractLustreUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.quickfix.QuickfixProviderFragment2
 	public Class<? extends IssueResolutionProvider> bindIssueResolutionProvider() {
 		return LustreQuickfixProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ui.contentAssist.ContentAssistFragment2
+	public Class<? extends IContentProposalProvider> bindIContentProposalProvider() {
+		return LustreProposalProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2

@@ -58,6 +58,7 @@ import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration;
 import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.LustreProgram;
+import de.cau.cs.kieler.lustre.lustre.LustreValuedObject;
 import de.cau.cs.kieler.lustre.lustre.ModelDeclaration;
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.PackBody;
@@ -331,8 +332,19 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				sequence_TextExpression(context, (TextExpression) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
-				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getLustreValuedObjectListRule()) {
+					sequence_LustreValuedObjectList(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getNodeValuedObjectRule()) {
+					sequence_NodeValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
@@ -408,6 +420,9 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				return; 
 			case LustrePackage.LUSTRE_PROGRAM:
 				sequence_LustreProgram(context, (LustreProgram) semanticObject); 
+				return; 
+			case LustrePackage.LUSTRE_VALUED_OBJECT:
+				sequence_LustreValuedObjectInit(context, (LustreValuedObject) semanticObject); 
 				return; 
 			case LustrePackage.MODEL_DECLARATION:
 				sequence_ModelDeclaration(context, (ModelDeclaration) semanticObject); 
@@ -768,6 +783,30 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     LustreValuedObjectInit returns LustreValuedObject
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=Expression* type=ValueType initialValue=Expression)
+	 */
+	protected void sequence_LustreValuedObjectInit(ISerializationContext context, LustreValuedObject semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LustreValuedObjectList returns ValuedObject
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=Expression*)
+	 */
+	protected void sequence_LustreValuedObjectList(ISerializationContext context, ValuedObject semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ModelDeclaration returns ModelDeclaration
 	 *
 	 * Constraint:
@@ -793,7 +832,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     (
 	 *         isUnsafe?='unsafe'? 
 	 *         hasState?='node'? 
-	 *         name=ID 
+	 *         valuedObjects+=NodeValuedObject 
 	 *         (staticParams+=StaticParam staticParams+=StaticParam*)? 
 	 *         (
 	 *             (
@@ -821,10 +860,28 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     NodeValuedObject returns ValuedObject
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_NodeValuedObject(ISerializationContext context, ValuedObject semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getNodeValuedObjectAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     PackBody returns PackBody
 	 *
 	 * Constraint:
-	 *     ((constants+=VariableDeclaration constants+=VariableDeclaration*) | externals+=ExternalNodeDeclaration | nodes+=NodeDeclaration)+
+	 *     (constants+=VariableDeclaration | types+=TypeDeclaration | externals+=ExternalNodeDeclaration | nodes+=NodeDeclaration)*
 	 */
 	protected void sequence_PackBody(ISerializationContext context, PackBody semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -926,7 +983,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         name=ID 
-	 *         (types=ValueType | (type=EnumType enums+=PrimeID enums+=PrimeID*) | (type=StructType variables=VariableDeclaration values+=VariableDeclaration*))?
+	 *         (type=ValueType | (type=EnumType enums+=PrimeID enums+=PrimeID*) | (type=StructType variables=VariableDeclaration values+=VariableDeclaration*))?
 	 *     )
 	 */
 	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
@@ -940,7 +997,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     Declaration returns VariableDeclaration
 	 *
 	 * Constraint:
-	 *     (valuedObjects+=ValuedObject valuedObjects+=ValuedObject* type=ValueType)
+	 *     (valuedObjects+=LustreValuedObjectInit | (valuedObjects+=LustreValuedObjectList valuedObjects+=LustreValuedObjectList* type=ValueType))
 	 */
 	protected void sequence_VariableDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

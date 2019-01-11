@@ -105,15 +105,6 @@ public interface LustreFactory extends EFactory
   ExternalNodeDeclaration createExternalNodeDeclaration();
 
   /**
-   * Returns a new object of class '<em>Node Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Node Declaration</em>'.
-   * @generated
-   */
-  NodeDeclaration createNodeDeclaration();
-
-  /**
    * Returns a new object of class '<em>Automaton</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -186,6 +177,15 @@ public interface LustreFactory extends EFactory
   ClockedVariableDeclaration createClockedVariableDeclaration();
 
   /**
+   * Returns a new object of class '<em>Node Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node Declaration</em>'.
+   * @generated
+   */
+  NodeDeclaration createNodeDeclaration();
+
+  /**
    * Returns a new object of class '<em>Operator Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -193,6 +193,15 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   OperatorExpression createOperatorExpression();
+
+  /**
+   * Returns a new object of class '<em>Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Valued Object</em>'.
+   * @generated
+   */
+  LustreValuedObject createLustreValuedObject();
 
   /**
    * Returns the package supported by this factory.

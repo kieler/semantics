@@ -32,8 +32,10 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	protected AbstractElementAlias match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0;
 	protected AbstractElementAlias match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1;
 	protected AbstractElementAlias match_ExternalNodeDeclaration_SemicolonKeyword_7_q;
-	protected AbstractElementAlias match_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q;
-	protected AbstractElementAlias match_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q;
+	protected AbstractElementAlias match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q;
+	protected AbstractElementAlias match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q;
+	protected AbstractElementAlias match_PackBody_ConstKeyword_1_0_0_q;
+	protected AbstractElementAlias match_PackBody_TypeKeyword_1_1_0_q;
 	protected AbstractElementAlias match_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1;
 	protected AbstractElementAlias match_Params_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__;
 	protected AbstractElementAlias match_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0;
@@ -59,8 +61,10 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 		match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getCommaKeyword_2_4_2_0_1()), new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getSemicolonKeyword_2_4_2_0_0()));
 		match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getFunctionKeyword_2_0_0()), new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getNodeKeyword_2_0_1()));
 		match_ExternalNodeDeclaration_SemicolonKeyword_7_q = new TokenAlias(false, true, grammarAccess.getExternalNodeDeclarationAccess().getSemicolonKeyword_7());
-		match_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q = new TokenAlias(false, true, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_4_0_3_1_0());
-		match_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getFullStopKeyword_4_0_3_1_5_0()), new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_4_0_3_1_5_1()));
+		match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q = new TokenAlias(false, true, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_0());
+		match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getFullStopKeyword_5_0_3_1_5_0()), new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_5_1()));
+		match_PackBody_ConstKeyword_1_0_0_q = new TokenAlias(false, true, grammarAccess.getPackBodyAccess().getConstKeyword_1_0_0());
+		match_PackBody_TypeKeyword_1_1_0_q = new TokenAlias(false, true, grammarAccess.getPackBodyAccess().getTypeKeyword_1_1_0());
 		match_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPackageEquationAccess().getCommaKeyword_5_0_0()), new TokenAlias(false, false, grammarAccess.getPackageEquationAccess().getSemicolonKeyword_5_0_1()));
 		match_Params_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getParamsAccess().getLeftParenthesisKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getParamsAccess().getRightParenthesisKeyword_1_0_2())), new TokenAlias(false, false, grammarAccess.getParamsAccess().getLeftParenthesisRightParenthesisKeyword_1_1()));
 		match_Provide_FunctionKeyword_2_1_1_or_NodeKeyword_2_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getProvideAccess().getFunctionKeyword_2_1_1()), new TokenAlias(false, false, grammarAccess.getProvideAccess().getNodeKeyword_2_1_0()));
@@ -106,10 +110,14 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 				emit_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ExternalNodeDeclaration_SemicolonKeyword_7_q.equals(syntax))
 				emit_ExternalNodeDeclaration_SemicolonKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q.equals(syntax))
-				emit_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q.equals(syntax))
-				emit_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q.equals(syntax))
+				emit_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q.equals(syntax))
+				emit_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PackBody_ConstKeyword_1_0_0_q.equals(syntax))
+				emit_PackBody_ConstKeyword_1_0_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PackBody_TypeKeyword_1_1_0_q.equals(syntax))
+				emit_PackBody_TypeKeyword_1_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1.equals(syntax))
 				emit_PackageEquation_CommaKeyword_5_0_0_or_SemicolonKeyword_5_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Params_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__.equals(syntax))
@@ -334,7 +342,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     output=Params (ambiguity) 'let' equations+=Equation
 	 *     output=Params (ambiguity) 'var' variables+=ClockedVariableDeclaration
 	 */
-	protected void emit_NodeDeclaration_SemicolonKeyword_4_0_3_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -350,7 +358,29 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     output=Params ';'? 'let' 'tel' (ambiguity) (rule end)
 	 *     variables+=ClockedVariableDeclaration ';' 'let' 'tel' (ambiguity) (rule end)
 	 */
-	protected void emit_NodeDeclaration___FullStopKeyword_4_0_3_1_5_0_or_SemicolonKeyword_4_0_3_1_5_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'const'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     constants+=VariableDeclaration ';' (ambiguity) constants+=VariableDeclaration
+	 */
+	protected void emit_PackBody_ConstKeyword_1_0_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'type'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     types+=TypeDeclaration (ambiguity) types+=TypeDeclaration
+	 */
+	protected void emit_PackBody_TypeKeyword_1_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

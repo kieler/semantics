@@ -3,8 +3,15 @@
  */
 package de.cau.cs.kieler.lustre.lustre.util;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
+import de.cau.cs.kieler.annotations.NamedObject;
+
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.lustre.lustre.*;
 
@@ -139,13 +146,6 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.NODE_DECLARATION:
-      {
-        NodeDeclaration nodeDeclaration = (NodeDeclaration)theEObject;
-        T result = caseNodeDeclaration(nodeDeclaration);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case LustrePackage.AUTOMATON:
       {
         Automaton automaton = (Automaton)theEObject;
@@ -202,12 +202,33 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LustrePackage.NODE_DECLARATION:
+      {
+        NodeDeclaration nodeDeclaration = (NodeDeclaration)theEObject;
+        T result = caseNodeDeclaration(nodeDeclaration);
+        if (result == null) result = caseDeclaration(nodeDeclaration);
+        if (result == null) result = caseAnnotatable(nodeDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LustrePackage.OPERATOR_EXPRESSION:
       {
         OperatorExpression operatorExpression = (OperatorExpression)theEObject;
         T result = caseOperatorExpression(operatorExpression);
         if (result == null) result = caseExpression(operatorExpression);
         if (result == null) result = caseSchedulable(operatorExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LustrePackage.LUSTRE_VALUED_OBJECT:
+      {
+        LustreValuedObject lustreValuedObject = (LustreValuedObject)theEObject;
+        T result = caseLustreValuedObject(lustreValuedObject);
+        if (result == null) result = caseValuedObject(lustreValuedObject);
+        if (result == null) result = caseNamedObject(lustreValuedObject);
+        if (result == null) result = caseAnnotatable(lustreValuedObject);
+        if (result == null) result = caseReferenceable(lustreValuedObject);
+        if (result == null) result = caseNameable(lustreValuedObject);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -360,22 +381,6 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Node Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Node Declaration</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseNodeDeclaration(NodeDeclaration object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Automaton</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -504,6 +509,22 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Node Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Node Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNodeDeclaration(NodeDeclaration object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -515,6 +536,54 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseOperatorExpression(OperatorExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLustreValuedObject(LustreValuedObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotatable(Annotatable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeclaration(Declaration object)
   {
     return null;
   }
@@ -547,6 +616,70 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExpression(Expression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNameable(Nameable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNamedObject(NamedObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseReferenceable(Referenceable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValuedObject(ValuedObject object)
   {
     return null;
   }

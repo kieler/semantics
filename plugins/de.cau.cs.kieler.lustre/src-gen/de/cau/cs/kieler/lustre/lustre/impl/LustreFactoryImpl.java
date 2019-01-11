@@ -74,7 +74,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.PACK_BODY: return createPackBody();
       case LustrePackage.TYPE_DECLARATION: return createTypeDeclaration();
       case LustrePackage.EXTERNAL_NODE_DECLARATION: return createExternalNodeDeclaration();
-      case LustrePackage.NODE_DECLARATION: return createNodeDeclaration();
       case LustrePackage.AUTOMATON: return createAutomaton();
       case LustrePackage.ASTATE: return createAState();
       case LustrePackage.ATRANSITION: return createATransition();
@@ -83,7 +82,9 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.STATIC_ARG: return createStaticArg();
       case LustrePackage.BY_NAME_STATIC_ARG: return createByNameStaticArg();
       case LustrePackage.CLOCKED_VARIABLE_DECLARATION: return createClockedVariableDeclaration();
+      case LustrePackage.NODE_DECLARATION: return createNodeDeclaration();
       case LustrePackage.OPERATOR_EXPRESSION: return createOperatorExpression();
+      case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -193,17 +194,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public NodeDeclaration createNodeDeclaration()
-  {
-    NodeDeclarationImpl nodeDeclaration = new NodeDeclarationImpl();
-    return nodeDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Automaton createAutomaton()
   {
     AutomatonImpl automaton = new AutomatonImpl();
@@ -292,10 +282,32 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public NodeDeclaration createNodeDeclaration()
+  {
+    NodeDeclarationImpl nodeDeclaration = new NodeDeclarationImpl();
+    return nodeDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public OperatorExpression createOperatorExpression()
   {
     OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
     return operatorExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LustreValuedObject createLustreValuedObject()
+  {
+    LustreValuedObjectImpl lustreValuedObject = new LustreValuedObjectImpl();
+    return lustreValuedObject;
   }
 
   /**

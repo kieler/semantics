@@ -7,8 +7,6 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
-// TODO: Inconsistent hierarchy, if content assist is enabled in mwe2
-
 LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
     (includes+=Include)*
     (packBody=PackBody | packList=PackList)
@@ -32,7 +30,7 @@ ModelDeclaration:
    ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
    'body'
    body=PackBody
-   'end'    
+   'end'
 ;
 
 Provide:
@@ -51,7 +49,7 @@ PackageDeclaration:
     ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
     'body'
     body=PackBody
-    'end'    
+    'end'
 ;
 
 PackageEquation:    
@@ -65,12 +63,13 @@ PackageEquation:
  * -------------------- PACKBODY
  */
 PackBody:
+    {PackBody}
     (
-        ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* )
-//        | ('type' (types+=TypeDeclaration)+)
+        ('const' (constants+=VariableDeclaration ';')+)
+        | ('type' (types+=TypeDeclaration)+)
         | externals+=ExternalNodeDeclaration
         | nodes+=NodeDeclaration
-    )+
+    )*
 ;
 
 // Type Declaration
@@ -79,7 +78,7 @@ TypeDeclaration:
     name=ID 
     ('=' 
         (
-            types=ValueType
+            type=ValueType
             | type=EnumType '{' enums+=PrimeID (',' enums+=PrimeID)* '}'
             // TODO: StructType may also be left empty
             | type=StructType '{' variables=VariableDeclaration (';' values+=VariableDeclaration)* (';')? '}'
@@ -110,8 +109,10 @@ ExternalNodeDeclaration:
 ;
 
 // Node Declaration
-NodeDeclaration:
-    (isUnsafe?='unsafe')? ('function' | hasState?='node') name=ID
+NodeDeclaration returns kexpressions::Declaration:
+    {NodeDeclaration}
+    (isUnsafe?='unsafe')? ('function' | hasState?='node')
+    valuedObjects+=NodeValuedObject
     
     // Allows parametric nodes
     ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
@@ -149,6 +150,10 @@ NodeDeclaration:
         '=' effectiveNode=NodeReference 
         ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?        
     ))
+;
+
+NodeValuedObject returns kexpressions::ValuedObject:
+    name=ID
 ;
 
 // Node Declaration - Body Part 1: Equations
@@ -369,11 +374,27 @@ ByNameStaticArg:
  */
 @Override 
 VariableDeclaration returns kexpressions::VariableDeclaration:
-    // TODO: declaration is name : type = initalValue
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-    ':' 
-    type=ValueType    
-; 
+    (
+        valuedObjects+=LustreValuedObjectInit
+        |
+        valuedObjects+=LustreValuedObjectList (',' valuedObjects+=LustreValuedObjectList)* ':' type=ValueType
+    )
+;
+
+LustreValuedObjectList returns kexpressions::ValuedObject:
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('[' cardinalities+=Expression ']')*
+;
+
+LustreValuedObjectInit returns kexpressions::ValuedObject:
+    {LustreValuedObject}
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('[' cardinalities+=Expression ']')*
+    (':' type=ValueType)
+    ('=' initialValue=Expression)
+;
 
 ClockedVariableDeclaration: 
     vardecl=VariableDeclaration ('when' clockExpr=BoolExpression)?
@@ -391,7 +412,6 @@ Include:
 ;
 
 NodeReference:
-    // TODO: Reference for existing nodes (allow to call existing nodes/functions)
     ID | (ID '::' ID)
 ;
 
