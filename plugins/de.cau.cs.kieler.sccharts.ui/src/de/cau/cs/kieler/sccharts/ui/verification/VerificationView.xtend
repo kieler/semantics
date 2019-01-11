@@ -392,7 +392,7 @@ class VerificationView extends ViewPart {
     
     private def void startVerification(EObject model, List<VerificationProperty> verificationProperties) {
         verificationContext = Compile.createCompilationContext(selectedSystemId, model)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, currentPropertyAnalyzer.verificationProperties)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, currentPropertyAnalyzer.verificationAssumptions)
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
