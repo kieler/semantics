@@ -42,17 +42,16 @@ class CheckTrace extends TraceProcessor {
         val context = simulationContext
         val traceProvider = traceDataProvider
 
-        if (traceProvider !== null) {
+        if (traceProvider !== null && traceProvider.isNextOutputTick(context.stepNumber)) {
             traceProvider.applyTraceOutputs(context.stepNumber)
             val mm = traceProvider.mismatches(dataPool)
             if (!mm.empty) {
                 context.notify(new TraceMismatchEvent(context, traceProvider.trace, context.stepNumber, mm.entries.map[new Pair(key, value)].toSet))
             }
-        }
-
-        if (traceProvider.trace.ticks.size <= context.stepNumber + 1) {
-            // Trace finished
-            context.notify(new TraceFinishedEvent(context, traceProvider.trace, context.stepNumber))
+            if (!traceProvider.isNextOutputTick(context.stepNumber + 1)) {
+                // Trace finished
+                context.notify(new TraceFinishedEvent(context, traceProvider.trace, context.stepNumber))
+            }
         }
     }
     

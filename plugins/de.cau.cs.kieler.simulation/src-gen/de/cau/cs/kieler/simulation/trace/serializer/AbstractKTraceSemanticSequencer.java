@@ -453,7 +453,7 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	 *     KTick returns Tick
 	 *
 	 * Constraint:
-	 *     (inputs+=Assignment* outputs+=Assignment*)
+	 *     (name=ID? inputs+=Assignment* outputs+=Assignment* goto=[Tick|ID]?)
 	 */
 	protected void sequence_KTick(ISerializationContext context, Tick semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -248,7 +248,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
                                     val traceFile = TraceFileUtil.loadTraceFile(new File(file.locationURI))
                                     if (traceFile !== null) {
                                         if (traceFile.traces.size == 1) {
-                                            currentSimulation.setTrace(traceFile.traces.head, menuCheckTrace.checked)
+                                            currentSimulation.setTrace(traceFile.traces.head, menuCheckTrace.checked, true)
                                             MessageDialog.openInformation(shell, "Success",
                                                 "Trace loading successfull.")
                                             return
@@ -263,7 +263,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
                                                 if (selection !== null) {
                                                     currentSimulation.setTrace(
                                                         traceFile.traces.get(elements.indexOf(selection.head)),
-                                                        menuCheckTrace.checked)
+                                                        menuCheckTrace.checked, true)
                                                 }
                                             }
                                             return
@@ -810,7 +810,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
         } else if (e instanceof TraceFinishedEvent) {
             updateUI[
                 MessageDialog.openInformation(instance.site.shell, "Trace finished",
-                    "The current Trace haas reach its last tick.")
+                    "The current Trace reached its last tick.")
             ]
         } else if (e instanceof TraceMismatchEvent && menuCheckTrace.checked) {
             updateUI[
