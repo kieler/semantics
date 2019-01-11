@@ -14,7 +14,6 @@ import de.cau.cs.kieler.kexpressions.scoping.KExpressionsScopeProvider;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSyntacticSequencer;
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
-import de.cau.cs.kieler.kexpressions.validation.KExpressionsConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.kexpressions.validation.KExpressionsValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -46,7 +45,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
-import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link KExpressionsRuntimeModule}.
@@ -137,11 +135,6 @@ public abstract class AbstractKExpressionsRuntimeModule extends DefaultRuntimeMo
 	@SingletonBinding(eager=true)
 	public Class<? extends KExpressionsValidator> bindKExpressionsValidator() {
 		return KExpressionsValidator.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
-		return KExpressionsConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

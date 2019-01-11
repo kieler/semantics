@@ -14,7 +14,6 @@ import de.cau.cs.kieler.annotations.scoping.AnnotationsScopeProvider;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSyntacticSequencer;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
-import de.cau.cs.kieler.annotations.validation.AnnotationsConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.annotations.validation.AnnotationsValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -46,7 +45,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
-import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link AnnotationsRuntimeModule}.
@@ -137,11 +135,6 @@ public abstract class AbstractAnnotationsRuntimeModule extends DefaultRuntimeMod
 	@SingletonBinding(eager=true)
 	public Class<? extends AnnotationsValidator> bindAnnotationsValidator() {
 		return AnnotationsValidator.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
-		return AnnotationsConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
