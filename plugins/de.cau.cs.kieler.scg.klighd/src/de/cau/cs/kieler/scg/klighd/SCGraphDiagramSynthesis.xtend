@@ -697,9 +697,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             val regionLabel = label
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
+                            	if (!regionLabel.nullOrEmpty) text = regionLabel
                                 val threadPathType = threadTypes.get(entry)
                                 if (threadPathType !== null) {
-                                    if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
+                                    if (!regionLabel.nullOrEmpty) text = text + " - "
                                     text = text + threadPathType.toString2
                                 }
                                 
@@ -1206,18 +1207,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
-            
-            if (!entry.name.nullOrEmpty) {
-                val label = entry.name.createLabel(node).associateWith(entry).
-                    configureOutsideTopCenteredNodeLabel(entry.name, 7, KlighdConstants::DEFAULT_FONT_NAME)
-                 label.KRendering.foreground = "black".color
-                 node.setLayoutOption(CoreOptions::NODE_LABELS_PLACEMENT, NodeLabelPlacement::outsideTopCenter)
-                 label.setLayoutOption(CoreOptions::NODE_LABELS_PLACEMENT, null)
-                 if (entry.name.equals(mainEntry)) {
-                     label.KRendering.fontBold = true
-                 }
-            }
-            
             
             // Add ports for control-flow routing.
             if (isGuardSCG) {
