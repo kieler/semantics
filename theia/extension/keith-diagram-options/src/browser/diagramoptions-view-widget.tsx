@@ -195,7 +195,9 @@ export class DiagramOptionsViewWidget extends ReactWidget {
     }
 
     private renderSeperator(option: SynthesisOption) {
-        return <div key={option.sourceHash} className="seperator"></div>
+        return <div key={option.sourceHash} className="diagram-option seperator">
+            <label htmlFor = {option.name}>{option.name}</label>
+        </div>
     }
 
     /**
