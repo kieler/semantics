@@ -18,6 +18,7 @@ export interface SynthesisOption {
     values: any[]
     currentValue: any
     category?: SynthesisOption
+    sourceHash: number
 }
 
 export interface RangeOption extends SynthesisOption {

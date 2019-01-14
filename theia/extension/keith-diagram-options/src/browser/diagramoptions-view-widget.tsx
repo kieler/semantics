@@ -120,7 +120,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                 case TransformationOptionType.CATEGORY: {
                     const list = this.categoryMap.get(option.name)
                     if (list) {
-                        children.push(this.renderCategory(option.name, list))
+                        children.push(this.renderCategory(option, list))
                     }
                     break
                 }
@@ -141,7 +141,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
             step: option.stepSize,
             onChange: (event: React.ChangeEvent<HTMLInputElement>) => this.onRange(event, option)
         }
-        return <div key={option.name} className="diagram-option">
+        return <div key={option.sourceHash} className="diagram-option">
             <label htmlFor = {option.name}>{option.name}: {option.currentValue}</label>
             <input {...inputAttrs}/>
         </div>
@@ -153,10 +153,10 @@ export class DiagramOptionsViewWidget extends ReactWidget {
         this.sendNewOptions()
     }
 
-    private renderCategory(name: string, synthesisOptions: SynthesisOption[]): JSX.Element {
-        return <div key={name} className="diagram-option category">
+    private renderCategory(option: SynthesisOption, synthesisOptions: SynthesisOption[]): JSX.Element {
+        return <div key={option.sourceHash} className="diagram-option category">
             <details open>
-                <summary>{name}</summary>
+                <summary>{option.name}</summary>
                 {this.renderCategoryOptions(synthesisOptions)}
             </details>
         </div>
@@ -185,7 +185,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
                 case TransformationOptionType.CATEGORY: {
                     const list = this.categoryMap.get(option.name)
                     if (list) {
-                        children.push(this.renderCategory(option.name, list))
+                        children.push(this.renderCategory(option, list))
                     }
                     break
                 }
@@ -195,7 +195,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
     }
 
     private renderSeperator(option: SynthesisOption) {
-        return <div key={option.name} className="seperator"></div>
+        return <div key={option.sourceHash} className="seperator"></div>
     }
 
     /**
@@ -212,7 +212,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
             onClick: (e: React.MouseEvent<HTMLInputElement>) => this.onCheck(e, option)
         }
 
-        return <div key = {option.name} className="diagram-option">
+        return <div key = {option.sourceHash} className="diagram-option">
             <label htmlFor = {option.name}>
                 <input className="diagram-inputbox" {...inputAttrs}/>
                 {option.name}
@@ -252,7 +252,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
      * @param option The choice option to generate
      */
     private renderChoice(option: SynthesisOption): JSX.Element {
-        return <fieldset key = {option.name} className="diagram-option">
+        return <fieldset key = {option.sourceHash} className="diagram-option">
             <legend>{option.name}</legend>
             {option.values.map(value => this.renderChoiceValue(value, option))}
         </fieldset>
@@ -265,7 +265,7 @@ export class DiagramOptionsViewWidget extends ReactWidget {
      * @param option The option this radio button belongs to.
      */
     private renderChoiceValue(value: any, option: SynthesisOption): JSX.Element {
-        return <div key = {value}>
+        return <div key = {'' + option.sourceHash + value}>
             <label htmlFor = {value}>
                 <input
                     type = "radio"
