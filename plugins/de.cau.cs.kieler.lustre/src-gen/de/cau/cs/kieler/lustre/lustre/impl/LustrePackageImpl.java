@@ -11,9 +11,11 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
+import de.cau.cs.kieler.lustre.lustre.Assertion;
 import de.cau.cs.kieler.lustre.lustre.Automaton;
 import de.cau.cs.kieler.lustre.lustre.ByNameStaticArg;
 import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration;
+import de.cau.cs.kieler.lustre.lustre.Equation;
 import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustreFactory;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
@@ -21,6 +23,8 @@ import de.cau.cs.kieler.lustre.lustre.LustreProgram;
 import de.cau.cs.kieler.lustre.lustre.LustreValuedObject;
 import de.cau.cs.kieler.lustre.lustre.ModelDeclaration;
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
+import de.cau.cs.kieler.lustre.lustre.NodeReference;
+import de.cau.cs.kieler.lustre.lustre.NodeValuedObject;
 import de.cau.cs.kieler.lustre.lustre.OperatorExpression;
 import de.cau.cs.kieler.lustre.lustre.PackBody;
 import de.cau.cs.kieler.lustre.lustre.PackList;
@@ -178,6 +182,27 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass nodeValuedObjectEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass equationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass assertionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass operatorExpressionEClass = null;
 
   /**
@@ -186,6 +211,13 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * @generated
    */
   private EClass lustreValuedObjectEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass nodeReferenceEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -970,9 +1002,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getStaticArg_Name()
+  public EReference getStaticArg_Name()
   {
-    return (EAttribute)staticArgEClass.getEStructuralFeatures().get(2);
+    return (EReference)staticArgEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1023,26 +1055,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
   public EReference getByNameStaticArg_Expr()
   {
     return (EReference)byNameStaticArgEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getByNameStaticArg_NodeRef()
-  {
-    return (EAttribute)byNameStaticArgEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getByNameStaticArg_StaticArgs()
-  {
-    return (EReference)byNameStaticArgEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1140,9 +1152,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getNodeDeclaration_EffectiveNode()
+  public EReference getNodeDeclaration_EffectiveNode()
   {
-    return (EAttribute)nodeDeclarationEClass.getEStructuralFeatures().get(5);
+    return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1210,6 +1222,56 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getNodeValuedObject()
+  {
+    return nodeValuedObjectEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEquation()
+  {
+    return equationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEquation_References()
+  {
+    return (EReference)equationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAssertion()
+  {
+    return assertionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAssertion_Expr()
+  {
+    return (EReference)assertionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getOperatorExpression()
   {
     return operatorExpressionEClass;
@@ -1253,6 +1315,16 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
   public EAttribute getLustreValuedObject_Type()
   {
     return (EAttribute)lustreValuedObjectEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getNodeReference()
+  {
+    return nodeReferenceEClass;
   }
 
   /**
@@ -1370,15 +1442,13 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     staticArgEClass = createEClass(STATIC_ARG);
     createEAttribute(staticArgEClass, STATIC_ARG__TYPE);
     createEReference(staticArgEClass, STATIC_ARG__EXPR);
-    createEAttribute(staticArgEClass, STATIC_ARG__NAME);
+    createEReference(staticArgEClass, STATIC_ARG__NAME);
     createEReference(staticArgEClass, STATIC_ARG__STATIC_ARGS);
 
     byNameStaticArgEClass = createEClass(BY_NAME_STATIC_ARG);
     createEAttribute(byNameStaticArgEClass, BY_NAME_STATIC_ARG__NAME);
     createEAttribute(byNameStaticArgEClass, BY_NAME_STATIC_ARG__TYPE);
     createEReference(byNameStaticArgEClass, BY_NAME_STATIC_ARG__EXPR);
-    createEAttribute(byNameStaticArgEClass, BY_NAME_STATIC_ARG__NODE_REF);
-    createEReference(byNameStaticArgEClass, BY_NAME_STATIC_ARG__STATIC_ARGS);
 
     clockedVariableDeclarationEClass = createEClass(CLOCKED_VARIABLE_DECLARATION);
     createEReference(clockedVariableDeclarationEClass, CLOCKED_VARIABLE_DECLARATION__VARDECL);
@@ -1390,7 +1460,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__STATIC_PARAMS);
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__INPUT);
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__OUTPUT);
-    createEAttribute(nodeDeclarationEClass, NODE_DECLARATION__EFFECTIVE_NODE);
+    createEReference(nodeDeclarationEClass, NODE_DECLARATION__EFFECTIVE_NODE);
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__STATIC_ARGS);
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__CONSTANTS);
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__VARIABLES);
@@ -1398,12 +1468,22 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__ASSERTIONS);
     createEReference(nodeDeclarationEClass, NODE_DECLARATION__AUTOMATONS);
 
+    nodeValuedObjectEClass = createEClass(NODE_VALUED_OBJECT);
+
+    equationEClass = createEClass(EQUATION);
+    createEReference(equationEClass, EQUATION__REFERENCES);
+
+    assertionEClass = createEClass(ASSERTION);
+    createEReference(assertionEClass, ASSERTION__EXPR);
+
     operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
     createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
     createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
 
     lustreValuedObjectEClass = createEClass(LUSTRE_VALUED_OBJECT);
     createEAttribute(lustreValuedObjectEClass, LUSTRE_VALUED_OBJECT__TYPE);
+
+    nodeReferenceEClass = createEClass(NODE_REFERENCE);
   }
 
   /**
@@ -1440,8 +1520,12 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
 
     // Add supertypes to classes
     nodeDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getDeclaration());
+    nodeValuedObjectEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
+    equationEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
+    assertionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     operatorExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     lustreValuedObjectEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
+    nodeReferenceEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
 
     // Initialize classes and features; add operations and parameters
     initEClass(lustreProgramEClass, LustreProgram.class, "LustreProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1529,15 +1613,13 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEClass(staticArgEClass, StaticArg.class, "StaticArg", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStaticArg_Type(), theKExpressionsPackage.getValueType(), "type", null, 0, 1, StaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStaticArg_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, StaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStaticArg_Name(), ecorePackage.getEString(), "name", null, 0, 1, StaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStaticArg_Name(), theKExpressionsPackage.getValuedObjectReference(), null, "name", null, 0, 1, StaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStaticArg_StaticArgs(), this.getStaticArg(), null, "staticArgs", null, 0, -1, StaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(byNameStaticArgEClass, ByNameStaticArg.class, "ByNameStaticArg", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getByNameStaticArg_Name(), ecorePackage.getEString(), "name", null, 0, 1, ByNameStaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getByNameStaticArg_Type(), theKExpressionsPackage.getValueType(), "type", null, 0, 1, ByNameStaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getByNameStaticArg_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, ByNameStaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getByNameStaticArg_NodeRef(), ecorePackage.getEString(), "nodeRef", null, 0, 1, ByNameStaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getByNameStaticArg_StaticArgs(), this.getStaticArg(), null, "staticArgs", null, 0, -1, ByNameStaticArg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(clockedVariableDeclarationEClass, ClockedVariableDeclaration.class, "ClockedVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClockedVariableDeclaration_Vardecl(), theKExpressionsPackage.getVariableDeclaration(), null, "vardecl", null, 0, 1, ClockedVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1549,7 +1631,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEReference(getNodeDeclaration_StaticParams(), this.getStaticParam(), null, "staticParams", null, 0, -1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNodeDeclaration_Input(), this.getParams(), null, "input", null, 0, 1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNodeDeclaration_Output(), this.getParams(), null, "output", null, 0, 1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNodeDeclaration_EffectiveNode(), ecorePackage.getEString(), "effectiveNode", null, 0, 1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeDeclaration_EffectiveNode(), theKExpressionsPackage.getValuedObjectReference(), null, "effectiveNode", null, 0, 1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNodeDeclaration_StaticArgs(), this.getStaticArg(), null, "staticArgs", null, 0, -1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNodeDeclaration_Constants(), theKExpressionsPackage.getVariableDeclaration(), null, "constants", null, 0, -1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNodeDeclaration_Variables(), this.getClockedVariableDeclaration(), null, "variables", null, 0, -1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1557,12 +1639,22 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEReference(getNodeDeclaration_Assertions(), theKExpressionsPackage.getExpression(), null, "assertions", null, 0, -1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNodeDeclaration_Automatons(), this.getAutomaton(), null, "automatons", null, 0, -1, NodeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(nodeValuedObjectEClass, NodeValuedObject.class, "NodeValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(equationEClass, Equation.class, "Equation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEquation_References(), theKExpressionsPackage.getValuedObjectReference(), null, "references", null, 0, -1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(assertionEClass, Assertion.class, "Assertion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAssertion_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Assertion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getOperatorExpression_SubExpressions(), theKExpressionsPackage.getExpression(), null, "subExpressions", null, 0, -1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOperatorExpression_Operator(), theKExpressionsPackage.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(lustreValuedObjectEClass, LustreValuedObject.class, "LustreValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLustreValuedObject_Type(), theKExpressionsPackage.getValueType(), "type", null, 0, 1, LustreValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeReferenceEClass, NodeReference.class, "NodeReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

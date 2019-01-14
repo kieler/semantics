@@ -21,7 +21,7 @@
    <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.lustre.transformations.LustreToSccTransformation">
+            class="de.cau.cs.kieler.lustre.transformations.LustreToScc">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.lustre.processors.SCCToLustre">

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.lustre.lustre;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
@@ -161,30 +162,30 @@ public interface NodeDeclaration extends Declaration
   void setOutput(Params value);
 
   /**
-   * Returns the value of the '<em><b>Effective Node</b></em>' attribute.
+   * Returns the value of the '<em><b>Effective Node</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Effective Node</em>' attribute isn't clear,
+   * If the meaning of the '<em>Effective Node</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Effective Node</em>' attribute.
-   * @see #setEffectiveNode(String)
+   * @return the value of the '<em>Effective Node</em>' containment reference.
+   * @see #setEffectiveNode(ValuedObjectReference)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_EffectiveNode()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getEffectiveNode();
+  ValuedObjectReference getEffectiveNode();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEffectiveNode <em>Effective Node</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEffectiveNode <em>Effective Node</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Effective Node</em>' attribute.
+   * @param value the new value of the '<em>Effective Node</em>' containment reference.
    * @see #getEffectiveNode()
    * @generated
    */
-  void setEffectiveNode(String value);
+  void setEffectiveNode(ValuedObjectReference value);
 
   /**
    * Returns the value of the '<em><b>Static Args</b></em>' containment reference list.

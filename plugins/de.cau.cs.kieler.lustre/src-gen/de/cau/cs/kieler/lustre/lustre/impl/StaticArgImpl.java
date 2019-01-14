@@ -5,6 +5,7 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.StaticArg;
@@ -74,24 +75,14 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
   protected Expression expr;
 
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+  protected ValuedObjectReference name;
 
   /**
    * The cached value of the '{@link #getStaticArgs() <em>Static Args</em>}' containment reference list.
@@ -200,7 +191,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public ValuedObjectReference getName()
   {
     return name;
   }
@@ -210,12 +201,37 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public NotificationChain basicSetName(ValuedObjectReference newName, NotificationChain msgs)
   {
-    String oldName = name;
+    ValuedObjectReference oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.STATIC_ARG__NAME, oldName, name));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.STATIC_ARG__NAME, oldName, newName);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setName(ValuedObjectReference newName)
+  {
+    if (newName != name)
+    {
+      NotificationChain msgs = null;
+      if (name != null)
+        msgs = ((InternalEObject)name).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.STATIC_ARG__NAME, null, msgs);
+      if (newName != null)
+        msgs = ((InternalEObject)newName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.STATIC_ARG__NAME, null, msgs);
+      msgs = basicSetName(newName, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.STATIC_ARG__NAME, newName, newName));
   }
 
   /**
@@ -244,6 +260,8 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
     {
       case LustrePackage.STATIC_ARG__EXPR:
         return basicSetExpr(null, msgs);
+      case LustrePackage.STATIC_ARG__NAME:
+        return basicSetName(null, msgs);
       case LustrePackage.STATIC_ARG__STATIC_ARGS:
         return ((InternalEList<?>)getStaticArgs()).basicRemove(otherEnd, msgs);
     }
@@ -290,7 +308,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
         setExpr((Expression)newValue);
         return;
       case LustrePackage.STATIC_ARG__NAME:
-        setName((String)newValue);
+        setName((ValuedObjectReference)newValue);
         return;
       case LustrePackage.STATIC_ARG__STATIC_ARGS:
         getStaticArgs().clear();
@@ -317,7 +335,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
         setExpr((Expression)null);
         return;
       case LustrePackage.STATIC_ARG__NAME:
-        setName(NAME_EDEFAULT);
+        setName((ValuedObjectReference)null);
         return;
       case LustrePackage.STATIC_ARG__STATIC_ARGS:
         getStaticArgs().clear();
@@ -341,7 +359,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
       case LustrePackage.STATIC_ARG__EXPR:
         return expr != null;
       case LustrePackage.STATIC_ARG__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+        return name != null;
       case LustrePackage.STATIC_ARG__STATIC_ARGS:
         return staticArgs != null && !staticArgs.isEmpty();
     }
@@ -361,8 +379,6 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (type: ");
     result.append(type);
-    result.append(", name: ");
-    result.append(name);
     result.append(')');
     return result.toString();
   }

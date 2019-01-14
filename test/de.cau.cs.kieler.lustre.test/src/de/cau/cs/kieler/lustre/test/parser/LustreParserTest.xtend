@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.test.parser
+package de.cau.cs.kieler.lustre.test.parser
 
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -98,7 +98,7 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
         val iResult = result.processorInstancesSequence.head
         
         assertNotNull("The model is null", iResult.model)
-        assertTrue("The model is not an Esterel program", iResult.model instanceof LustreProgram)
+        assertTrue("The model is not an Lustre program", iResult.model instanceof LustreProgram)
 
         try {
             // Serialize

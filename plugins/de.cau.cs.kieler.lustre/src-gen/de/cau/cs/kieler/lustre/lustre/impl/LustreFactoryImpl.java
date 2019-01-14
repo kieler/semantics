@@ -83,8 +83,12 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.BY_NAME_STATIC_ARG: return createByNameStaticArg();
       case LustrePackage.CLOCKED_VARIABLE_DECLARATION: return createClockedVariableDeclaration();
       case LustrePackage.NODE_DECLARATION: return createNodeDeclaration();
+      case LustrePackage.NODE_VALUED_OBJECT: return createNodeValuedObject();
+      case LustrePackage.EQUATION: return createEquation();
+      case LustrePackage.ASSERTION: return createAssertion();
       case LustrePackage.OPERATOR_EXPRESSION: return createOperatorExpression();
       case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
+      case LustrePackage.NODE_REFERENCE: return createNodeReference();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -293,6 +297,39 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public NodeValuedObject createNodeValuedObject()
+  {
+    NodeValuedObjectImpl nodeValuedObject = new NodeValuedObjectImpl();
+    return nodeValuedObject;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Equation createEquation()
+  {
+    EquationImpl equation = new EquationImpl();
+    return equation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assertion createAssertion()
+  {
+    AssertionImpl assertion = new AssertionImpl();
+    return assertion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public OperatorExpression createOperatorExpression()
   {
     OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
@@ -308,6 +345,17 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     LustreValuedObjectImpl lustreValuedObject = new LustreValuedObjectImpl();
     return lustreValuedObject;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NodeReference createNodeReference()
+  {
+    NodeReferenceImpl nodeReference = new NodeReferenceImpl();
+    return nodeReference;
   }
 
   /**

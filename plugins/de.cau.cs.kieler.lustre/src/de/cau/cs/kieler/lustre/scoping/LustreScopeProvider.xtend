@@ -68,35 +68,4 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
         }
         return IScope.NULLSCOPE
     }
-
-
-//    override getScope(EObject context, EReference reference) {
-////
-////        // Scope provider for variable references inside a node
-////        // Allows references to local variables and constants, inputs, outputs, and package variables and constants
-////        if ((context instanceof VariableReference && reference == LustrePackage.Literals.VARIABLE_REFERENCE__VALUE) ||
-////            context instanceof Equation && reference == LustrePackage.Literals.EQUATION__LEFT) {
-////            val elementNode = EcoreUtil2.getContainerOfType(context, Node_Declaration)
-////            val elementPackage = EcoreUtil2.getContainerOfType(context, Package_Declaration)
-////            val candidates = new ArrayList<EObject>
-////            candidates +=
-////                elementNode.variables + elementNode.constants + elementNode.parameters + elementNode.returned +
-////                    elementPackage.constants
-////            return Scopes.scopeFor(candidates)
-////        } 
-//        
-//        // Scope provider for parameters/returns inside a node header of a package header
-//        // Allows references to the corresponding parameters/returns inside the actual node header
-//        if (context instanceof Package_Provided_IO &&
-//            reference == LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME) {
-//            val providedElement = EcoreUtil2.getContainerOfType(context, Package_Provided)
-//            if (providedElement.parameters.contains(context))
-//                return Scopes.scopeFor(providedElement.name.parameters)
-//            else
-//                return Scopes.scopeFor(providedElement.name.returned)
-//        }
-//
-//        return super.getScope(context, reference);
-//    }
-
 }

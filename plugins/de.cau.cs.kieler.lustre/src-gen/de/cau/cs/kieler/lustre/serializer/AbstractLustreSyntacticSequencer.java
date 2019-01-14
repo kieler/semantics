@@ -29,8 +29,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p;
-	protected AbstractElementAlias match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0;
-	protected AbstractElementAlias match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1;
 	protected AbstractElementAlias match_ExternalNodeDeclaration_SemicolonKeyword_7_q;
 	protected AbstractElementAlias match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q;
 	protected AbstractElementAlias match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q;
@@ -58,8 +56,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getCommaKeyword_2_4_2_0_1()), new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getSemicolonKeyword_2_4_2_0_0()));
-		match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getFunctionKeyword_2_0_0()), new TokenAlias(false, false, grammarAccess.getByNameStaticArgAccess().getNodeKeyword_2_0_1()));
 		match_ExternalNodeDeclaration_SemicolonKeyword_7_q = new TokenAlias(false, true, grammarAccess.getExternalNodeDeclarationAccess().getSemicolonKeyword_7());
 		match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q = new TokenAlias(false, true, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_0());
 		match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getFullStopKeyword_5_0_3_1_5_0()), new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_5_1()));
@@ -104,10 +100,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0.equals(syntax))
-				emit_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1.equals(syntax))
-				emit_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ExternalNodeDeclaration_SemicolonKeyword_7_q.equals(syntax))
 				emit_ExternalNodeDeclaration_SemicolonKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q.equals(syntax))
@@ -173,7 +165,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) (ambiguity) subExpressions+=NegExpression
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
@@ -200,24 +191,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'assert' (ambiguity) 'extern' functionName=ID
-	 *     (rule start) 'assert' (ambiguity) 'random' ';' (rule start)
-	 *     (rule start) 'assert' (ambiguity) 'randomize' ';' (rule start)
-	 *     (rule start) 'assert' (ambiguity) '{' values+=VectorValueMember
-	 *     (rule start) 'assert' (ambiguity) annotations+=Annotation
-	 *     (rule start) 'assert' (ambiguity) operator=CurrentOperator
-	 *     (rule start) 'assert' (ambiguity) operator=PreOperator
-	 *     (rule start) 'assert' (ambiguity) operator=SubOperator
-	 *     (rule start) 'assert' (ambiguity) operator=ValOperator
-	 *     (rule start) 'assert' (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) 'assert' (ambiguity) subExpressions+=NegExpression
-	 *     (rule start) 'assert' (ambiguity) text=HOSTCODE
-	 *     (rule start) 'assert' (ambiguity) value=BOOLEAN
-	 *     (rule start) 'assert' (ambiguity) value=FLOAT
-	 *     (rule start) 'assert' (ambiguity) value=INT
-	 *     (rule start) 'assert' (ambiguity) value=STRING
-	 *     (rule start) 'assert' (ambiguity) valuedObject=[ValuedObject|PrimeID]
-	 *     (rule start) 'assert' (ambiguity) {OperatorExpression.subExpressions+=}
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
@@ -228,7 +201,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) (ambiguity) subExpressions+=NegExpression
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
@@ -250,7 +222,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) (ambiguity) subExpressions+=NegExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -267,11 +238,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) '(' (ambiguity) operator=NotOperator
 	 *     (rule start) '(' (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) '(' (ambiguity) {OperatorExpression.subExpressions+=}
-	 *     (rule start) 'assert' (ambiguity) operator=BitwiseNotOperator
-	 *     (rule start) 'assert' (ambiguity) operator=ConditionalOperator
-	 *     (rule start) 'assert' (ambiguity) operator=NotOperator
-	 *     (rule start) 'assert' (ambiguity) subExpressions+=TernaryOperation
-	 *     (rule start) 'assert' (ambiguity) {OperatorExpression.subExpressions+=}
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
@@ -294,28 +260,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ';' | ','
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     staticArgs+=StaticArg (ambiguity) staticArgs+=StaticArg
-	 */
-	protected void emit_ByNameStaticArg_CommaKeyword_2_4_2_0_1_or_SemicolonKeyword_2_4_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     'function' | 'node'
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) name=ID
-	 */
-	protected void emit_ByNameStaticArg_FunctionKeyword_2_0_0_or_NodeKeyword_2_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.lustre.processors
+package de.cau.cs.kieler.lustre.processors.sccToLustre
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
@@ -70,7 +70,7 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
         val cfr = state.regions.filter(ControlflowRegion).head
 
         val node = createNodeDeclaration => [
-            name = state.name
+//            name = state.name
             input = createParams => []
             output = createParams => []
         ]

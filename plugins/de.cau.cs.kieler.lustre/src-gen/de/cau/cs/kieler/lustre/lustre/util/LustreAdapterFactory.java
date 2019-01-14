@@ -12,6 +12,11 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 import de.cau.cs.kieler.lustre.lustre.*;
 
@@ -176,6 +181,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
         return createNodeDeclarationAdapter();
       }
       @Override
+      public Adapter caseNodeValuedObject(NodeValuedObject object)
+      {
+        return createNodeValuedObjectAdapter();
+      }
+      @Override
+      public Adapter caseEquation(Equation object)
+      {
+        return createEquationAdapter();
+      }
+      @Override
+      public Adapter caseAssertion(Assertion object)
+      {
+        return createAssertionAdapter();
+      }
+      @Override
       public Adapter caseOperatorExpression(OperatorExpression object)
       {
         return createOperatorExpressionAdapter();
@@ -186,6 +206,11 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
         return createLustreValuedObjectAdapter();
       }
       @Override
+      public Adapter caseNodeReference(NodeReference object)
+      {
+        return createNodeReferenceAdapter();
+      }
+      @Override
       public Adapter caseAnnotatable(Annotatable object)
       {
         return createAnnotatableAdapter();
@@ -194,16 +219,6 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseDeclaration(Declaration object)
       {
         return createDeclarationAdapter();
-      }
-      @Override
-      public Adapter caseSchedulable(Schedulable object)
-      {
-        return createSchedulableAdapter();
-      }
-      @Override
-      public Adapter caseExpression(Expression object)
-      {
-        return createExpressionAdapter();
       }
       @Override
       public Adapter caseNameable(Nameable object)
@@ -224,6 +239,36 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseValuedObject(ValuedObject object)
       {
         return createValuedObjectAdapter();
+      }
+      @Override
+      public Adapter caseSchedulable(Schedulable object)
+      {
+        return createSchedulableAdapter();
+      }
+      @Override
+      public Adapter caseLinkable(Linkable object)
+      {
+        return createLinkableAdapter();
+      }
+      @Override
+      public Adapter caseEffect(Effect object)
+      {
+        return createEffectAdapter();
+      }
+      @Override
+      public Adapter caseAssignment(Assignment object)
+      {
+        return createAssignmentAdapter();
+      }
+      @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
+      }
+      @Override
+      public Adapter caseValuedObjectReference(ValuedObjectReference object)
+      {
+        return createValuedObjectReferenceAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -518,6 +563,51 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.NodeValuedObject <em>Node Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.NodeValuedObject
+   * @generated
+   */
+  public Adapter createNodeValuedObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Equation <em>Equation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Equation
+   * @generated
+   */
+  public Adapter createEquationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Assertion <em>Assertion</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Assertion
+   * @generated
+   */
+  public Adapter createAssertionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.OperatorExpression <em>Operator Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -548,6 +638,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.NodeReference <em>Node Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.NodeReference
+   * @generated
+   */
+  public Adapter createNodeReferenceAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -573,36 +678,6 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kexpressions.Schedulable
-   * @generated
-   */
-  public Adapter createSchedulableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kexpressions.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
   {
     return null;
   }
@@ -663,6 +738,96 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createValuedObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.Schedulable
+   * @generated
+   */
+  public Adapter createSchedulableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
+   * @generated
+   */
+  public Adapter createLinkableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Effect <em>Effect</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.keffects.Effect
+   * @generated
+   */
+  public Adapter createEffectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.keffects.Assignment
+   * @generated
+   */
+  public Adapter createAssignmentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.ValuedObjectReference
+   * @generated
+   */
+  public Adapter createValuedObjectReferenceAdapter()
   {
     return null;
   }

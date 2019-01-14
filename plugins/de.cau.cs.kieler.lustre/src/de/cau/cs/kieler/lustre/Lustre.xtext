@@ -1,4 +1,4 @@
- grammar de.cau.cs.kieler.lustre.Lustre with de.cau.cs.kieler.kexpressions.kext.KExt
+grammar de.cau.cs.kieler.lustre.Lustre with de.cau.cs.kieler.kexpressions.kext.KExt
 
 generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
@@ -8,7 +8,7 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
 LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
-    (includes+=Include)*
+    ('include' (includes+=STRING | includes+=STRING))*
     (packBody=PackBody | packList=PackList)
 ;
 
@@ -145,7 +145,7 @@ NodeDeclaration returns kexpressions::Declaration:
             )
         )
               
-    ) 
+    )
     | ( // --- Effective Node (without interface)
         '=' effectiveNode=NodeReference 
         ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?        
@@ -153,13 +153,16 @@ NodeDeclaration returns kexpressions::Declaration:
 ;
 
 NodeValuedObject returns kexpressions::ValuedObject:
+    {NodeValuedObject}
     name=ID
 ;
 
 // Node Declaration - Body Part 1: Equations
 Equation returns keffects::Assignment:
-    // TODO: ValuedObjectReference cannot be found due to scoping problems
-    reference=ValuedObjectReference
+    {Equation}
+    (reference=ValuedObjectReference |         
+        ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference 
+        (',' references+=ValuedObjectReference)* ')'))
     operator=AssignOperator 
     expression=Expression   
     ';' 
@@ -167,7 +170,8 @@ Equation returns keffects::Assignment:
 
 // Node Declaration - Body Part 2: Assertions
 Assertion returns kexpressions::Expression:
-    'assert' Expression ';'
+    {Assertion}
+    'assert' expr=Expression ';'
 ;
 
 // Node Declaration - Body Part 3: Automatons
@@ -191,21 +195,66 @@ ATransition:
 
 /**
  * -------------------- Expression Adjustments
+ * 
+ * The precedence hierarchy is not as follows:
+ * 
+ * Expression
+ * + BoolExpression
+ *   + InitExpression
+ *     + TernaryOperation *
+ *       + ImpliesExpression
+ *         + LogicalXorExpression
+ *           + LogicalOrExpression
+ *             + LogicalAndExpression
+ *               + CompareExpression
+ *                 + NotOrValuedExpression
+ *                   + ValuedExpression (see valued expression below)
+ *                   + NotExpression *
+ *                     + AtomicExpression *
+ *                       + BoolValue
+ *                       + ValuedObjectTestExpression
+ *                         + ValuedObjectReference
+ *                       + FunctionCall
+ *                       + TextExpression
+ * + ValuedExpression
+ *   + ShiftLeftExpression
+ *     + ShiftRightExpression
+ *    + ShiftRightUnsignedExpression
+ *      + AddExpression
+ *          + SubExpression
+ *            + MultExpression
+ *              + DivExpression
+ *                + ModExpression
+ *                  + IntDivExpression
+ *                    + NegExpression *
+ *                      + FBYExpression
+ *                        + WhenExpression
+ *                          + CurrentExpression
+ *                            + PreExpression
+ *                              + AtomicValuedExpression *
+ *                                + IntValue
+ *                                + FloatValue
+ *                                + StringValue
+ *                                + AtomicExpression
+ * 
  */
+ 
 // Force IntDivExpression inbetween ModExpression and NegExpression
 @Override 
 ModExpression returns kexpressions::Expression:
     IntDivExpression 
     ({OperatorExpression.subExpressions+=current} 
         (operator=ModOperator subExpressions+=AtomicValuedExpression)
-        ('%' subExpressions+=AtomicValuedExpression)*
+        ('mod' subExpressions+=AtomicValuedExpression)*
     )?
 ;
 
 IntDivExpression returns kexpressions::Expression:
-    {OperatorExpression}
-    subExpressions+=NegExpression operator=IntDivOperator subExpressions+=NegExpression
-    | NegExpression
+    NegExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=IntDivOperator subExpressions+=NegExpression)
+        ('div' subExpressions+=AtomicValuedExpression)*
+    )?
 ;
 
 // Skip TernaryOperation after NegExpression
@@ -245,7 +294,7 @@ InitExpression returns kexpressions::Expression:
 @Override 
 TernaryOperation returns kexpressions::Expression:
     {OperatorExpression} 
-    operator=ConditionalOperator subExpressions += BoolExpression 'then' subExpressions += ImpliesExpression 'else' subExpressions += ImpliesExpression
+    operator=ConditionalOperator subExpressions += TernaryOperation 'then' subExpressions += TernaryOperation 'else' subExpressions += TernaryOperation
     | 
     ImpliesExpression;
 
@@ -253,7 +302,7 @@ ImpliesExpression returns kexpressions::Expression:
     LogicalXorExpression
     (
         {OperatorExpression.subExpressions+=current}
-        (operator=LogicalXorOperator subExpressions+=LogicalXorExpression)
+        (operator=ImpliesOperator subExpressions+=LogicalXorExpression)
         ('=>' subExpressions+=LogicalXorExpression)*
     )?;
     
@@ -263,6 +312,24 @@ LogicalXorExpression returns kexpressions::Expression:
         {OperatorExpression.subExpressions+=current}
         (operator=LogicalXorOperator subExpressions+=LogicalOrExpression)
         ('xor' subExpressions+=LogicalOrExpression)*
+    )?;
+    
+// Override LogicalAndExpresssion and LogicalOrExpression to allow asssociativity
+@Override 
+LogicalOrExpression returns kexpressions::Expression:
+    LogicalAndExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
+        ('or' subExpressions+=LogicalAndExpression)*
+    )?;
+
+// Directly redirect to CompareOperation to exclude the bitwise operations
+@Override 
+LogicalAndExpression returns kexpressions::Expression:
+    CompareOperation 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=LogicalAndOperator subExpressions+=CompareOperation)
+        ('and' subExpressions+=CompareOperation)*
     )?;
 
 /**
@@ -293,6 +360,10 @@ enum NotOperator returns kexpressions::OperatorType:
 @Override 
 enum FBYOperator returns kexpressions::OperatorType:  
     FBY="fby";
+
+@Override 
+enum ModOperator returns kexpressions::OperatorType:  
+    MOD="mod";
 
 // Define operators that are Lustre specific
 enum CurrentOperator returns kexpressions::OperatorType:  
@@ -365,7 +436,7 @@ StaticArg:
 ByNameStaticArg:  
     ('type' name=ID '=' type=ValueType)
     | ('const' name=ID '=' expr=Expression)
-    | (('function' | 'node') name=ID '=' nodeRef=NodeReference ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?)
+//    | (('function' | 'node') name=ID '=' (nodePath=ID '::')? nodeRef=ID ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?)
     | (name=ID '=' /*(PredefOp | SimpleExpr | SurelyType | SurelyNode))*/ )    
 ;
 
@@ -374,6 +445,8 @@ ByNameStaticArg:
  */
 @Override 
 VariableDeclaration returns kexpressions::VariableDeclaration:
+    // TODO: Constants use this too, and they may be declared without specifying a type.
+    // This is not possible at the moment.
     (
         valuedObjects+=LustreValuedObjectInit
         |
@@ -381,38 +454,28 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     )
 ;
 
-LustreValuedObjectList returns kexpressions::ValuedObject:
-    annotations+=QuotedStringAnnotation*
-    name=PrimeID
-    ('[' cardinalities+=Expression ']')*
-;
-
 LustreValuedObjectInit returns kexpressions::ValuedObject:
     {LustreValuedObject}
     annotations+=QuotedStringAnnotation*
     name=PrimeID
-    ('[' cardinalities+=Expression ']')*
+    ('^' cardinalities+=Expression)*
     (':' type=ValueType)
     ('=' initialValue=Expression)
+;
+
+LustreValuedObjectList returns kexpressions::ValuedObject:
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('^' cardinalities+=Expression)*
 ;
 
 ClockedVariableDeclaration: 
     vardecl=VariableDeclaration ('when' clockExpr=BoolExpression)?
 ;
 
-/**
- * -------------------- Data Type Rules
- */
-Include:
-    'include' 
-    (
-        '"' STRING '"' 
-        | "'" STRING "'"
-    )
-;
-
-NodeReference:
-    ID | (ID '::' ID)
+NodeReference returns kexpressions::ValuedObjectReference:
+    {NodeReference}
+    valuedObject=[NodeValuedObject]    
 ;
 
 /*
@@ -427,329 +490,3 @@ terminal ML_COMMENT:
 terminal SL_COMMENT: 
     '--' !('\n'|'\r')* ('\r'? '\n')?
 ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ------------------------------------ OLD SYNTAX ------------------------------------
-///**
-// * @author cpa
-// */
-//
-//LustreProgram hidden(WS, LUSTRE_COMMENT):
-//    nodes += Node_Declaration+    
-////    packages+=Package_Declaration+   
-//;
-//
-//
-///*
-// * Packages
-// */
-//
-//Package_Declaration:
-//    'package' name=IDENT 
-//        ('uses' uses+=IDENT (',' uses+=IDENT)*)? 
-//        'provides' provides+=Package_Provided+
-//    'body'
-//    (
-//        nodes+=Node_Declaration |
-//        types+=Type_Declaration |
-//        constants+=Constant_Declaration
-//    )*
-//    'end'
-//;
-//
-//Package_Provided:
-//    'node' name=[Node_Declaration | IDENT] 
-//        '(' (parameters+=Package_Provided_IO (',' parameters+=Package_Provided_IO)*)? ')' 
-//        'returns' '(' returned+=Package_Provided_IO (',' returned+=Package_Provided_IO)* ')' 
-//    ';'
-//;
-//
-//Package_Provided_IO:
-//    name=[Variable_Declaration | IDENT] ':' type=IDENT
-//;
-//
-//Entity_Declaration:
-//    Node_Declaration
-//    | Type_Declaration
-//    | Constant_Declaration
-//;
-//
-///*
-// * Identifiers
-// */
-// 
-////Identifier:
-////    (package=[Package | IDENT] '::')? name=[Variable_Declaration | IDENT] | name=[Node_Declaration | IDENT];
-//
-//
-///* 
-// * Types
-// */
-//
-//Type_Declaration:
-//    'type' name=IDENT ';'
-//    | 'type' name=IDENT '=' type=Type  ';'
-//;
-//
-//Type:
-//    name=IDENT
-////    | Array_Type
-////    | Record_Type
-////    | Enum_Type
-//;
-//
-//Array_Type:
-//    type=[Type_Declaration | IDENT] '^' length=INT
-//    // XXX Original Lustre allows Type^Expression  
-//;
-//
-//Record_Type:
-//    'struct' '{' fields+=Field (',' fields+=Field)* '}'
-//;
-//
-//Field:
-//    name=IDENT ':' type=[Type | IDENT]
-//;
-//
-////Enum_Type:
-////    'enum' '{' nameList=Ident_List '}'
-////;
-//
-//
-///*
-// * Constants and variables
-// */
-//
-//Constant_Declaration:
-//    'const' name=IDENT ':' type=Type ';'
-//    | 'const' name=IDENT '=' expr=ConstantExpression ';'
-//    | 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
-//    // XXX Original Lustre allows Expressions
-//;
-//
-//Variable_Declaration:
-//    name=IDENT ':' type=Type ('when' clock=IDENT)?;
-//
-//Local_Variable_Declaration returns Variable_Declaration:
-//    'var' Variable_Declaration ';'
-//; 
-//
-//Local_Constant_Declaration returns Constant_Declaration:
-//    {Constant_Declaration} 'const' name=IDENT '=' expr=ConstantExpression ';'
-//    | {Constant_Declaration} 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
-//    // XXX Original Lustre allows Expressions
-//;
-//
-//
-///*
-// * Nodes
-// */
-// 
-//Node_Declaration:
-//    'node'  
-//        name=IDENT 
-//        '(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')' 
-//        'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')' 
-//    ';'
-//    (
-//        constants+=Local_Constant_Declaration |
-//        variables+=Local_Variable_Declaration
-//    )* 
-//    'let' 
-//    (
-//        equations+=Equation | 
-//        assertions+=Assertion |
-//        automatons+=Automaton
-//    )*
-//    'tel' ';'?
-//;
-//
-//Equation:
-//    left=[Variable_Declaration | IDENT] '=' right=Right_Part ';'
-//;
-//
-//Assertion:
-//    'assert' Expression ';'
-//;
-//
-//Automaton:
-//    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
-//;
-//
-//AState:
-//    name=IDENT '->'
-//    (
-//        equations+=Equation | 
-//        assertions+=Assertion |
-//        automatons+=Automaton
-//    )*
-//    transitions+=ATransition+
-//;
-//
-//ATransition:
-//    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|IDENT] ';'    
-//;
-//
-//Left_Part:
-//    '(' Left_List ')'
-//    | Left_List;
-//
-//Left_List:
-//    id+=Left (',' id+=Left)*;
-//
-//Left:
-//    name=IDENT selector=Selector?
-//;
-//
-//Selector:
-//     '.' name=IDENT
-//     | '[' begin=Expression end=SelTrancheEnd? ']'
-// ;
-//
-//SelTrancheEnd returns Expression:
-//    '..' Expression;
-//
-//Right_Part returns Expression:
-//    Expression
-//;
-//
-///*
-// * Expressions
-// */
-// 
-//Expression:
-//    {IfThenElse} 'if' ifexpr=Expression 'then' thenexpr=Expression 'else' elseexpr=Expression
-//    | Fby
-//;
-//
-//Fby returns Expression:
-//    Arrow ({Fby.subExpressions+=current} ('fby' subExpressions+=Arrow)+)?
-//;
-//
-//Arrow returns Expression:
-//    Or ({Arrow.subExpressions+=current} ('->' subExpressions+=Or)+)?
-//;
-//
-//Or returns Expression:
-//    And ({Or.subExpressions+=current} ('or' subExpressions+=And)+)?
-//;
-//
-//And returns Expression:
-//    Equality ({And.subExpressions+=current} ('and' subExpressions+=Equality)+)?
-//;
-//
-//Equality returns Expression:
-//    Comparison ({Equality.left=current} op=('='|'<>') right=Comparison)*
-//;
-//
-//Comparison returns Expression:
-//    Mod ({Comparison.left=current} op=('>='|'<='|'>'|'<') right=Mod)*
-//;
-//
-//Mod returns Expression:
-//    PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
-//;
-//
-//PlusOrMinus returns Expression:
-//    MulOrDiv ((({Plus.subExpressions+=current} '+') | ({Minus.subExpressions+=current} '-')) subExpressions+=MulOrDiv)*
-//;
-//
-//MulOrDiv returns Expression:
-//    Primary ((({Mul.subExpressions+=current} '*') | ({Div.subExpressions+=current} '/')) subExpressions+=Primary)*
-//;
-//
-//Primary returns Expression:
-//    '(' Expression ')'
-//    | {Not} 'not' expression=Primary
-//    | {UMinus} '-' expression=Primary
-//    | {Pre} 'pre' expression=Primary
-//    | {Current} 'current' expression=Primary
-//    | AtomicExpression
-//;
-//
-//AtomicExpression returns Expression:
-//    ConstantExpression | VariableReference
-//;
-//
-//VariableReference:
-//    {VariableReference} value=[Variable_Declaration | IDENT]
-//;
-//
-//ConstantExpression returns Expression:
-//    {BoolConstant} value=BOOL 
-//    | {FloatConstant} value=FLOAT
-//    | {IntConstant} value=INT
-//;
-//
-///*
-// * Lexical tokens
-// */
-// 
-//terminal BOOL returns ecore::EBoolean:
-//    'true' | 'false';
-// 
-//terminal IDENT returns ecore::EString: 
-//    '^'?('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
-//
-//terminal INT returns ecore::EInt: 
-//    ('0'..'9')+;
-//
-//terminal FLOAT returns ecore::EFloat:
-//    ('0'..'9')+ '.' ('0'..'9')*
-//    | '.' ('0'..'9')+;
-//
-//terminal STRING_CONSTANT: 
-//    '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
-//    "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
-//
-//terminal LUSTRE_COMMENT:
-//    ML_COMMENT | SL_COMMENT;
-//
-//terminal ML_COMMENT: 
-//    '(*' -> '*)'
-//;
-// 
-//terminal SL_COMMENT: 
-//    '--' !('\n'|'\r')* ('\r'? '\n')?
-//;
-//
-//terminal WS: 
-//    (' '|'\t'|'\r'|'\n')+;

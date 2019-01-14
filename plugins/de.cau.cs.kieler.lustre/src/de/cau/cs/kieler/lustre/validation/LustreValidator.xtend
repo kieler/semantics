@@ -1,5 +1,25 @@
 package de.cau.cs.kieler.lustre.validation
 
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.lustre.lustre.Assertion
+import de.cau.cs.kieler.lustre.lustre.Equation
+import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
+import de.cau.cs.kieler.lustre.lustre.ModelDeclaration
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
+import de.cau.cs.kieler.lustre.lustre.NodeReference
+import de.cau.cs.kieler.lustre.lustre.NodeValuedObject
+import de.cau.cs.kieler.lustre.lustre.PackBody
+import de.cau.cs.kieler.lustre.lustre.PackageDeclaration
+import de.cau.cs.kieler.lustre.lustre.PackageEquation
+import de.cau.cs.kieler.lustre.lustre.StaticParam
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration
+import java.util.Set
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.validation.Check
+
 /**
  * This class contains custom validation rules. 
  * 
@@ -7,8 +27,188 @@ package de.cau.cs.kieler.lustre.validation
  * 
  * @author cpa
  */
-class LustreValidator extends AbstractLustreValidator {
+class LustreValidator extends AbstractLustreValidator {    
+    
+    static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this body."
+    static val String NOT_SUPPORTED_FEATURE = "The feature is not supported."
+    static val String EQUATION_LIST_PARAM_NUM_MISMATCH = "Left side of equation does not match number of return values of the ReferenceCall."
+    
+    @Check
+    override void checkPureSignal(VariableDeclaration declaration) {
+        // For LustreValuedObjects in VariableDeclaration the VariableDeclaration type is pure (default)
+        // but this does not matter for Lustre and signals 
+        // -> dont throw an error is type is pure and variable is not a signal
+    }
+    
+    @Check
+    def void checkDuplicateVariable(NodeDeclaration nodeDeclaration) {
+        val Set<String> variableNames = newHashSet()
+        var superContainer = nodeDeclaration.eContainer
+        
+        // Check the constants
+        if (superContainer instanceof PackBody) {
+            for (constantVariableDeclaration : superContainer.constants) {
+                warnVariableExistsOrAddVariableToSet(variableNames, constantVariableDeclaration.valuedObjects)
+            }
+        }
+        
+        // Check the input parameter
+        for (parameter : nodeDeclaration.input.parameter) {
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.vardecl.valuedObjects) 
+        }
+        
+        // Check the output parameter
+        for (parameter : nodeDeclaration.output.parameter) {
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.vardecl.valuedObjects)
+        }
+        
+        // Check the node constant variables        
+        for (constantDeclaration : nodeDeclaration.constants) {
+            warnVariableExistsOrAddVariableToSet(variableNames, constantDeclaration.valuedObjects)
+        }
+        
+        // Check the node variables        
+        for (clockedVariableDeclaration : nodeDeclaration.variables) {
+            warnVariableExistsOrAddVariableToSet(variableNames, clockedVariableDeclaration.vardecl.valuedObjects)
+        }
+    }
+    
+    @Check
+    def checkDuplicateNodeName (PackBody packBody) {
+        val Set<String> variableNames = newHashSet()
+        
+        for (node : packBody.nodes) {
+            warnVariableExistsOrAddVariableToSet(variableNames, node.valuedObjects)
+        }
+        
+        
+    }
+    
+    @Check
+    def checkCallReferenceReturnCardinalities(Equation equation) {
 
+        val rightExpression = equation.expression
+        if (rightExpression instanceof ReferenceCall) {
+
+            val referenceValuedObject = rightExpression.valuedObject
+            if (referenceValuedObject instanceof NodeValuedObject) {
+
+                val calledNode = referenceValuedObject.eContainer;
+                if (calledNode instanceof NodeDeclaration) {
+
+                    val numReturnValues = calledNode.output.parameter.size;
+
+                    if (numReturnValues == 1) {
+                        if (equation.reference === null) {
+                            error(EQUATION_LIST_PARAM_NUM_MISMATCH, equation, null)
+                        }
+                    } else {
+                        if (numReturnValues != equation.references.length) {
+                            error(EQUATION_LIST_PARAM_NUM_MISMATCH, equation, null)
+                        }
+                    }
+                }
+            }
+        }
+    }
+       
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private def warnVariableExistsOrAddVariableToSet(Set<String> set, EList<ValuedObject> valuedObjectList) {
+        for (valuedObject : valuedObjectList) {
+            val name = valuedObject.name
+            if (set.contains(name)) {
+                warning(DUPLICATE_VARIABLE, valuedObject, null)
+            } else {
+                set.add(name)
+            }
+        }
+
+    }
+    
+    
+    /*
+     * Checks for not supported language features.
+     */    
+    @Check
+    def checkModelDeclaration(ModelDeclaration modelDeclaration) {
+        featureNotSupported(modelDeclaration);
+    }
+    
+    @Check
+    def checkPackageDeclaration(PackageDeclaration packageDeclaration) {
+        featureNotSupported(packageDeclaration);
+    }
+    
+    @Check
+    def checkPackageEquation(PackageEquation packageEquation) {
+        featureNotSupported(packageEquation);
+    }
+    
+    @Check
+    def checkExternalNodeDeclaration(ExternalNodeDeclaration externalNodeDeclaration) {
+        featureNotSupported(externalNodeDeclaration);
+    }
+    
+    @Check
+    def checkTypeDeclaration(TypeDeclaration typeNodeDeclaration) {
+        featureNotSupported(typeNodeDeclaration);
+    }
+    
+    @Check
+    def checkStaticParam(StaticParam staticParam) {
+        featureNotSupported(staticParam);
+    }
+    
+    @Check
+    def checkNodeReference(NodeReference nodeReference) {
+        featureNotSupported(nodeReference);
+    }
+    
+    @Check
+    def checkAssertion(Assertion assertion) {
+        featureNotSupported(assertion);
+    }
+    
+    private def featureNotSupported(EObject object) {
+        error(NOT_SUPPORTED_FEATURE + object.class.toString, object, null);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    public static val ALREADY_DEFINED = "alreadyDefined"
 //    public static val TYPE_MISMATCH = "TypeMismatch"
 //

@@ -6,8 +6,6 @@ package de.cau.cs.kieler.lustre.lustre;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValueType;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -22,8 +20,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getNodeRef <em>Node Ref</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getStaticArgs <em>Static Args</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getByNameStaticArg()
@@ -112,47 +108,5 @@ public interface ByNameStaticArg extends EObject
    * @generated
    */
   void setExpr(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Node Ref</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Node Ref</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Node Ref</em>' attribute.
-   * @see #setNodeRef(String)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getByNameStaticArg_NodeRef()
-   * @model
-   * @generated
-   */
-  String getNodeRef();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getNodeRef <em>Node Ref</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Node Ref</em>' attribute.
-   * @see #getNodeRef()
-   * @generated
-   */
-  void setNodeRef(String value);
-
-  /**
-   * Returns the value of the '<em><b>Static Args</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.StaticArg}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Static Args</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Static Args</em>' containment reference list.
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getByNameStaticArg_StaticArgs()
-   * @model containment="true"
-   * @generated
-   */
-  EList<StaticArg> getStaticArgs();
 
 } // ByNameStaticArg

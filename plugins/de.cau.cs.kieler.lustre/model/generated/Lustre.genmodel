@@ -91,15 +91,13 @@
     <genClasses ecoreClass="Lustre.ecore#//StaticArg">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//StaticArg/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticArg/expr"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//StaticArg/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticArg/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticArg/staticArgs"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//ByNameStaticArg">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ByNameStaticArg/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ByNameStaticArg/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ByNameStaticArg/expr"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ByNameStaticArg/nodeRef"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ByNameStaticArg/staticArgs"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//ClockedVariableDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ClockedVariableDeclaration/vardecl"/>
@@ -111,13 +109,20 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/staticParams"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/input"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/output"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//NodeDeclaration/effectiveNode"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/effectiveNode"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/staticArgs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/constants"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/equations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/assertions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/automatons"/>
+    </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//NodeValuedObject"/>
+    <genClasses ecoreClass="Lustre.ecore#//Equation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Equation/references"/>
+    </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//Assertion">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Assertion/expr"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//OperatorExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//OperatorExpression/subExpressions"/>
@@ -126,5 +131,6 @@
     <genClasses ecoreClass="Lustre.ecore#//LustreValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//LustreValuedObject/type"/>
     </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//NodeReference"/>
   </genPackages>
 </genmodel:GenModel>

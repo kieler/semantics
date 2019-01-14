@@ -4,6 +4,7 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
@@ -130,24 +131,14 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
   protected Params output;
 
   /**
-   * The default value of the '{@link #getEffectiveNode() <em>Effective Node</em>}' attribute.
+   * The cached value of the '{@link #getEffectiveNode() <em>Effective Node</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getEffectiveNode()
    * @generated
    * @ordered
    */
-  protected static final String EFFECTIVE_NODE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEffectiveNode() <em>Effective Node</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEffectiveNode()
-   * @generated
-   * @ordered
-   */
-  protected String effectiveNode = EFFECTIVE_NODE_EDEFAULT;
+  protected ValuedObjectReference effectiveNode;
 
   /**
    * The cached value of the '{@link #getStaticArgs() <em>Static Args</em>}' containment reference list.
@@ -391,7 +382,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEffectiveNode()
+  public ValuedObjectReference getEffectiveNode()
   {
     return effectiveNode;
   }
@@ -401,12 +392,37 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEffectiveNode(String newEffectiveNode)
+  public NotificationChain basicSetEffectiveNode(ValuedObjectReference newEffectiveNode, NotificationChain msgs)
   {
-    String oldEffectiveNode = effectiveNode;
+    ValuedObjectReference oldEffectiveNode = effectiveNode;
     effectiveNode = newEffectiveNode;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, oldEffectiveNode, effectiveNode));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, oldEffectiveNode, newEffectiveNode);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEffectiveNode(ValuedObjectReference newEffectiveNode)
+  {
+    if (newEffectiveNode != effectiveNode)
+    {
+      NotificationChain msgs = null;
+      if (effectiveNode != null)
+        msgs = ((InternalEObject)effectiveNode).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, null, msgs);
+      if (newEffectiveNode != null)
+        msgs = ((InternalEObject)newEffectiveNode).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, null, msgs);
+      msgs = basicSetEffectiveNode(newEffectiveNode, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, newEffectiveNode, newEffectiveNode));
   }
 
   /**
@@ -509,6 +525,8 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         return basicSetInput(null, msgs);
       case LustrePackage.NODE_DECLARATION__OUTPUT:
         return basicSetOutput(null, msgs);
+      case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
+        return basicSetEffectiveNode(null, msgs);
       case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
         return ((InternalEList<?>)getStaticArgs()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
@@ -591,7 +609,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         setOutput((Params)newValue);
         return;
       case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        setEffectiveNode((String)newValue);
+        setEffectiveNode((ValuedObjectReference)newValue);
         return;
       case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
         getStaticArgs().clear();
@@ -647,7 +665,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         setOutput((Params)null);
         return;
       case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        setEffectiveNode(EFFECTIVE_NODE_EDEFAULT);
+        setEffectiveNode((ValuedObjectReference)null);
         return;
       case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
         getStaticArgs().clear();
@@ -692,7 +710,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
       case LustrePackage.NODE_DECLARATION__OUTPUT:
         return output != null;
       case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        return EFFECTIVE_NODE_EDEFAULT == null ? effectiveNode != null : !EFFECTIVE_NODE_EDEFAULT.equals(effectiveNode);
+        return effectiveNode != null;
       case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
         return staticArgs != null && !staticArgs.isEmpty();
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
@@ -724,8 +742,6 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
     result.append(isUnsafe);
     result.append(", hasState: ");
     result.append(hasState);
-    result.append(", effectiveNode: ");
-    result.append(effectiveNode);
     result.append(')');
     return result.toString();
   }

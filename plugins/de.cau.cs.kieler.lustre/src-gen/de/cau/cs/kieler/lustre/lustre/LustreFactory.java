@@ -186,6 +186,33 @@ public interface LustreFactory extends EFactory
   NodeDeclaration createNodeDeclaration();
 
   /**
+   * Returns a new object of class '<em>Node Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node Valued Object</em>'.
+   * @generated
+   */
+  NodeValuedObject createNodeValuedObject();
+
+  /**
+   * Returns a new object of class '<em>Equation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Equation</em>'.
+   * @generated
+   */
+  Equation createEquation();
+
+  /**
+   * Returns a new object of class '<em>Assertion</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assertion</em>'.
+   * @generated
+   */
+  Assertion createAssertion();
+
+  /**
    * Returns a new object of class '<em>Operator Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -202,6 +229,15 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   LustreValuedObject createLustreValuedObject();
+
+  /**
+   * Returns a new object of class '<em>Node Reference</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node Reference</em>'.
+   * @generated
+   */
+  NodeReference createNodeReference();
 
   /**
    * Returns the package supported by this factory.

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.lustre.lustre;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -87,30 +88,30 @@ public interface StaticArg extends EObject
   void setExpr(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Name</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * If the meaning of the '<em>Name</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
+   * @return the value of the '<em>Name</em>' containment reference.
+   * @see #setName(ValuedObjectReference)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getStaticArg_Name()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getName();
+  ValuedObjectReference getName();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.StaticArg#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.StaticArg#getName <em>Name</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
+   * @param value the new value of the '<em>Name</em>' containment reference.
    * @see #getName()
    * @generated
    */
-  void setName(String value);
+  void setName(ValuedObjectReference value);
 
   /**
    * Returns the value of the '<em><b>Static Args</b></em>' containment reference list.

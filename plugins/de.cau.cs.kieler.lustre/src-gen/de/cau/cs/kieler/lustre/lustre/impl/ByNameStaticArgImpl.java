@@ -8,23 +8,15 @@ import de.cau.cs.kieler.kexpressions.ValueType;
 
 import de.cau.cs.kieler.lustre.lustre.ByNameStaticArg;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.StaticArg;
-
-import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,8 +29,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl#getNodeRef <em>Node Ref</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl#getStaticArgs <em>Static Args</em>}</li>
  * </ul>
  *
  * @generated
@@ -94,36 +84,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected Expression expr;
-
-  /**
-   * The default value of the '{@link #getNodeRef() <em>Node Ref</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNodeRef()
-   * @generated
-   * @ordered
-   */
-  protected static final String NODE_REF_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getNodeRef() <em>Node Ref</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNodeRef()
-   * @generated
-   * @ordered
-   */
-  protected String nodeRef = NODE_REF_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getStaticArgs() <em>Static Args</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStaticArgs()
-   * @generated
-   * @ordered
-   */
-  protected EList<StaticArg> staticArgs;
 
   /**
    * <!-- begin-user-doc -->
@@ -245,43 +205,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getNodeRef()
-  {
-    return nodeRef;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setNodeRef(String newNodeRef)
-  {
-    String oldNodeRef = nodeRef;
-    nodeRef = newNodeRef;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.BY_NAME_STATIC_ARG__NODE_REF, oldNodeRef, nodeRef));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<StaticArg> getStaticArgs()
-  {
-    if (staticArgs == null)
-    {
-      staticArgs = new EObjectContainmentEList<StaticArg>(StaticArg.class, this, LustrePackage.BY_NAME_STATIC_ARG__STATIC_ARGS);
-    }
-    return staticArgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -289,8 +212,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
     {
       case LustrePackage.BY_NAME_STATIC_ARG__EXPR:
         return basicSetExpr(null, msgs);
-      case LustrePackage.BY_NAME_STATIC_ARG__STATIC_ARGS:
-        return ((InternalEList<?>)getStaticArgs()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -311,10 +232,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
         return getType();
       case LustrePackage.BY_NAME_STATIC_ARG__EXPR:
         return getExpr();
-      case LustrePackage.BY_NAME_STATIC_ARG__NODE_REF:
-        return getNodeRef();
-      case LustrePackage.BY_NAME_STATIC_ARG__STATIC_ARGS:
-        return getStaticArgs();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -324,7 +241,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -338,13 +254,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
         return;
       case LustrePackage.BY_NAME_STATIC_ARG__EXPR:
         setExpr((Expression)newValue);
-        return;
-      case LustrePackage.BY_NAME_STATIC_ARG__NODE_REF:
-        setNodeRef((String)newValue);
-        return;
-      case LustrePackage.BY_NAME_STATIC_ARG__STATIC_ARGS:
-        getStaticArgs().clear();
-        getStaticArgs().addAll((Collection<? extends StaticArg>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -369,12 +278,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
       case LustrePackage.BY_NAME_STATIC_ARG__EXPR:
         setExpr((Expression)null);
         return;
-      case LustrePackage.BY_NAME_STATIC_ARG__NODE_REF:
-        setNodeRef(NODE_REF_EDEFAULT);
-        return;
-      case LustrePackage.BY_NAME_STATIC_ARG__STATIC_ARGS:
-        getStaticArgs().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -395,10 +298,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
         return type != TYPE_EDEFAULT;
       case LustrePackage.BY_NAME_STATIC_ARG__EXPR:
         return expr != null;
-      case LustrePackage.BY_NAME_STATIC_ARG__NODE_REF:
-        return NODE_REF_EDEFAULT == null ? nodeRef != null : !NODE_REF_EDEFAULT.equals(nodeRef);
-      case LustrePackage.BY_NAME_STATIC_ARG__STATIC_ARGS:
-        return staticArgs != null && !staticArgs.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -418,8 +317,6 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
     result.append(name);
     result.append(", type: ");
     result.append(type);
-    result.append(", nodeRef: ");
-    result.append(nodeRef);
     result.append(')');
     return result.toString();
   }
