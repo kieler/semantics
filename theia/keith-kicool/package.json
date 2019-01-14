@@ -16,6 +16,7 @@
     "build": "tsc && yarn lint",
     "watch": "tsc -w",
     "publish:dev": "npm publish --registry=http://localhost:4873",
+    "linking": "(npm unlink || true) && npm link",
     "unpublish:dev": "npm unpublish --registry=http://localhost:4873 --force keith-kicool"
   },
   "dependencies": {

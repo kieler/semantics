@@ -21,7 +21,9 @@
   "scripts": {
     "prepare": "lerna run prepare",
     "dev": "yarn upgrade --pattern \"keith-*\" --registry=http://localhost:4873  && yarn prepare",
-    "publish:dev": "yarn verdaccio && yarn unpublish:dev && yarn && lerna link && lerna run publish:dev && fuser -k 4873/tcp",
+    "publish:dev": "yarn unpublish:dev && yarn && lerna run publish:dev ",
+    "publish:verdaccio": "yarn verdaccio && yarn publish:dev && fuser -k 4873/tcp",
+    "publish:link": "yarn && lerna run linking",
     "publish:version": "lerna --help",
     "verdaccio": "verdaccio &",
     "unpublish:dev": "lerna run unpublish:dev"
@@ -31,6 +33,7 @@
     "@theia/core": "latest",
     "@theia/editor": "latest",
     "@theia/editorconfig": "latest",
+    "@theia/file-search": "latest",
     "@theia/filesystem": "latest",
     "@theia/languages": "latest",
     "@theia/markers": "latest",
@@ -43,6 +46,7 @@
     "@theia/preferences-api": "latest",
     "@theia/preview": "latest",
     "@theia/process": "latest",
+    "@theia/search-in-workspace": "latest",
     "@theia/terminal": "latest",
     "@theia/userstorage": "latest",
     "@theia/variable-resolver": "latest",
