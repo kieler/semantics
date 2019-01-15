@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +29,7 @@ public interface Params extends EObject
 {
   /**
    * Returns the value of the '<em><b>Parameter</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Parameter</em>' containment reference list isn't clear,
@@ -39,6 +41,6 @@ public interface Params extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<ClockedVariableDeclaration> getParameter();
+  EList<VariableDeclaration> getParameter();
 
 } // Params

@@ -3,7 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
-import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Params;
 
@@ -44,7 +45,7 @@ public class ParamsImpl extends MinimalEObjectImpl.Container implements Params
    * @generated
    * @ordered
    */
-  protected EList<ClockedVariableDeclaration> parameter;
+  protected EList<VariableDeclaration> parameter;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,11 +73,11 @@ public class ParamsImpl extends MinimalEObjectImpl.Container implements Params
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ClockedVariableDeclaration> getParameter()
+  public EList<VariableDeclaration> getParameter()
   {
     if (parameter == null)
     {
-      parameter = new EObjectContainmentEList<ClockedVariableDeclaration>(ClockedVariableDeclaration.class, this, LustrePackage.PARAMS__PARAMETER);
+      parameter = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.PARAMS__PARAMETER);
     }
     return parameter;
   }
@@ -126,7 +127,7 @@ public class ParamsImpl extends MinimalEObjectImpl.Container implements Params
     {
       case LustrePackage.PARAMS__PARAMETER:
         getParameter().clear();
-        getParameter().addAll((Collection<? extends ClockedVariableDeclaration>)newValue);
+        getParameter().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

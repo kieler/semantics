@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.lustre.extensions.LustreCreateExtension
 import de.cau.cs.kieler.lustre.lustre.LustreFactory
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
@@ -33,21 +32,20 @@ import de.cau.cs.kieler.sccharts.State
  * @kieler.design 2018-05-28 proposed
  * @kieler.rating 2018-05-28 proposed yellow  
  */
-class SCCToLustre extends Processor<SCCharts, LustreProgram> {
+class SCChartsControlFlowToLustre extends Processor<SCCharts, LustreProgram> {
 
     static extension LustreFactory lustre = LustreFactory.eINSTANCE
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension LustreCreateExtension
 
     override getId() {
-        "de.cau.cs.kieler.lustre.processors.SCCToLustre"
+        "de.cau.cs.kieler.lustre.processors.SCCToLustre.controlFlow"
     }
 
     override getName() {
-        "Lustre"
+        "SCCharts Control-flow to Lustre"
     }
 
     override getType() {
@@ -82,11 +80,11 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
         ]
 
         for (inputVarDecl : state.variableDeclarations.filter[input]) {
-            node.input.parameter += createClockedVariableDeclaration(inputVarDecl)
+            node.input.parameter += createVariableDeclaration(inputVarDecl)
         }
 
         for (outputVarDecl : state.variableDeclarations.filter[output]) {
-            node.output.parameter += createClockedVariableDeclaration(outputVarDecl)
+            node.output.parameter += createVariableDeclaration(outputVarDecl)
         }
 
         val initial = controlFlowRegion.states.filter[initial].head
@@ -117,7 +115,7 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
         val assignmentElseCase = transitionElseCase.effects.head as Assignment
 
         // TODO: check if asgn is the same for both tansitions
-        val asgn = assignemtThenCase.valuedObject
+//        val asgn = assignemtThenCase.valuedObject
         val conditional = createConditionalExpression => [
             subExpressions += transitionThenCase.trigger
             subExpressions += assignemtThenCase.expression

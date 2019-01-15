@@ -3997,9 +3997,9 @@ ruleParams returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0());
+								newCompositeNode(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_0_0());
 							}
-							lv_parameter_2_0=ruleClockedVariableDeclaration
+							lv_parameter_2_0=ruleVariableDeclaration
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getParamsRule());
@@ -4008,7 +4008,7 @@ ruleParams returns [EObject current=null]
 									$current,
 									"parameter",
 									lv_parameter_2_0,
-									"de.cau.cs.kieler.lustre.Lustre.ClockedVariableDeclaration");
+									"de.cau.cs.kieler.lustre.Lustre.VariableDeclaration");
 								afterParserOrEnumRuleCall();
 							}
 						)
@@ -4021,9 +4021,9 @@ ruleParams returns [EObject current=null]
 						(
 							(
 								{
-									newCompositeNode(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0());
+									newCompositeNode(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0());
 								}
-								lv_parameter_4_0=ruleClockedVariableDeclaration
+								lv_parameter_4_0=ruleVariableDeclaration
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getParamsRule());
@@ -4032,7 +4032,7 @@ ruleParams returns [EObject current=null]
 										$current,
 										"parameter",
 										lv_parameter_4_0,
-										"de.cau.cs.kieler.lustre.Lustre.ClockedVariableDeclaration");
+										"de.cau.cs.kieler.lustre.Lustre.VariableDeclaration");
 									afterParserOrEnumRuleCall();
 								}
 							)

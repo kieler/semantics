@@ -54,12 +54,12 @@ class LustreValidator extends AbstractLustreValidator {
         
         // Check the input parameter
         for (parameter : nodeDeclaration.input.parameter) {
-            warnVariableExistsOrAddVariableToSet(variableNames, parameter.vardecl.valuedObjects) 
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects) 
         }
         
         // Check the output parameter
         for (parameter : nodeDeclaration.output.parameter) {
-            warnVariableExistsOrAddVariableToSet(variableNames, parameter.vardecl.valuedObjects)
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
         }
         
         // Check the node constant variables        

@@ -97676,28 +97676,28 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Params__ParameterAssignment_1_0_1_0"
-    // InternalLustre.g:29595:1: rule__Params__ParameterAssignment_1_0_1_0 : ( ruleClockedVariableDeclaration ) ;
+    // InternalLustre.g:29595:1: rule__Params__ParameterAssignment_1_0_1_0 : ( ruleVariableDeclaration ) ;
     public final void rule__Params__ParameterAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:29599:1: ( ( ruleClockedVariableDeclaration ) )
-            // InternalLustre.g:29600:2: ( ruleClockedVariableDeclaration )
+            // InternalLustre.g:29599:1: ( ( ruleVariableDeclaration ) )
+            // InternalLustre.g:29600:2: ( ruleVariableDeclaration )
             {
-            // InternalLustre.g:29600:2: ( ruleClockedVariableDeclaration )
-            // InternalLustre.g:29601:3: ruleClockedVariableDeclaration
+            // InternalLustre.g:29600:2: ( ruleVariableDeclaration )
+            // InternalLustre.g:29601:3: ruleVariableDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0()); 
+               before(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_0_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleClockedVariableDeclaration();
+            ruleVariableDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0()); 
+               after(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_0_0()); 
             }
 
             }
@@ -97721,28 +97721,28 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Params__ParameterAssignment_1_0_1_1_1"
-    // InternalLustre.g:29610:1: rule__Params__ParameterAssignment_1_0_1_1_1 : ( ruleClockedVariableDeclaration ) ;
+    // InternalLustre.g:29610:1: rule__Params__ParameterAssignment_1_0_1_1_1 : ( ruleVariableDeclaration ) ;
     public final void rule__Params__ParameterAssignment_1_0_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:29614:1: ( ( ruleClockedVariableDeclaration ) )
-            // InternalLustre.g:29615:2: ( ruleClockedVariableDeclaration )
+            // InternalLustre.g:29614:1: ( ( ruleVariableDeclaration ) )
+            // InternalLustre.g:29615:2: ( ruleVariableDeclaration )
             {
-            // InternalLustre.g:29615:2: ( ruleClockedVariableDeclaration )
-            // InternalLustre.g:29616:3: ruleClockedVariableDeclaration
+            // InternalLustre.g:29615:2: ( ruleVariableDeclaration )
+            // InternalLustre.g:29616:3: ruleVariableDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0()); 
+               before(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleClockedVariableDeclaration();
+            ruleVariableDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0()); 
+               after(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0()); 
             }
 
             }

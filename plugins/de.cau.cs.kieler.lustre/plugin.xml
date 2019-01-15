@@ -21,16 +21,19 @@
    <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToScc">
+            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCControlFlow">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.lustre.processors.sccToLustre.SCCToLustre">
+            class="de.cau.cs.kieler.lustre.processors.sccToLustre.SCChartsControlFlowToLustre">
       </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.sccharts.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.sccharts.controlflow.kico">
       </TransformationSystem>
    </extension>
 

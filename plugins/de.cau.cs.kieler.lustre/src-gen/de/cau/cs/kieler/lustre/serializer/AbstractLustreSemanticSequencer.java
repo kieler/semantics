@@ -1111,7 +1111,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     Params returns Params
 	 *
 	 * Constraint:
-	 *     (parameter+=ClockedVariableDeclaration parameter+=ClockedVariableDeclaration*)?
+	 *     (parameter+=VariableDeclaration parameter+=VariableDeclaration*)?
 	 */
 	protected void sequence_Params(ISerializationContext context, Params semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

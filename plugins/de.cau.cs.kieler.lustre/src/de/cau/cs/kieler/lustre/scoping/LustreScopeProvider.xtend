@@ -1,18 +1,14 @@
 package de.cau.cs.kieler.lustre.scoping
 
-import de.cau.cs.kieler.lustre.lustre.LustrePackage
-//import de.cau.cs.kieler.lustre.lustre.Package_Provided
-//import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.EReference
-import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.scoping.Scopes
-import org.eclipse.xtext.scoping.IScope
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.lustre.lustre.PackBody
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
-import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.lustre.lustre.PackBody
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
 
 /**
  * This class contains custom scoping description.
@@ -41,8 +37,8 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
             switch(superContext) {
                 PackBody: declarations.addAll(superContext.constants)
                 NodeDeclaration: {
-                    declarations.addAll(superContext.input.parameter.map[vardecl])
-                    declarations.addAll(superContext.output.parameter.map[vardecl])
+                    declarations.addAll(superContext.input.parameter)
+                    declarations.addAll(superContext.output.parameter)
                     declarations.addAll(superContext.constants)
                     declarations.addAll(superContext.variables.map[vardecl])
                 }

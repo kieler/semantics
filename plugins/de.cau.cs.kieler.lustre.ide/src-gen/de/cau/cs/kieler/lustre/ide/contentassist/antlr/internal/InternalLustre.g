@@ -29598,9 +29598,9 @@ rule__Params__ParameterAssignment_1_0_1_0
 	}
 :
 	(
-		{ before(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0()); }
-		ruleClockedVariableDeclaration
-		{ after(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0()); }
+		{ before(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_0_0()); }
+		ruleVariableDeclaration
+		{ after(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_0_0()); }
 	)
 ;
 finally {
@@ -29613,9 +29613,9 @@ rule__Params__ParameterAssignment_1_0_1_1_1
 	}
 :
 	(
-		{ before(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0()); }
-		ruleClockedVariableDeclaration
-		{ after(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0()); }
+		{ before(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0()); }
+		ruleVariableDeclaration
+		{ after(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0()); }
 	)
 ;
 finally {

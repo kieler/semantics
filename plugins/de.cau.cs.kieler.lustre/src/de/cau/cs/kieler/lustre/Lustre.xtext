@@ -403,7 +403,7 @@ enum ConditionalOperator returns kexpressions::OperatorType:
 Params:
     {Params} 
     (
-        ('(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')')
+        ('(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')')
         | '()'
     )
 ;

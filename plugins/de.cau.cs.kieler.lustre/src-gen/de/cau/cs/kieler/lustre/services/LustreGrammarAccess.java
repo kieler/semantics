@@ -2389,11 +2389,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
 		private final Group cGroup_1_0_1 = (Group)cGroup_1_0.eContents().get(1);
 		private final Assignment cParameterAssignment_1_0_1_0 = (Assignment)cGroup_1_0_1.eContents().get(0);
-		private final RuleCall cParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0 = (RuleCall)cParameterAssignment_1_0_1_0.eContents().get(0);
+		private final RuleCall cParameterVariableDeclarationParserRuleCall_1_0_1_0_0 = (RuleCall)cParameterAssignment_1_0_1_0.eContents().get(0);
 		private final Group cGroup_1_0_1_1 = (Group)cGroup_1_0_1.eContents().get(1);
 		private final Keyword cSemicolonKeyword_1_0_1_1_0 = (Keyword)cGroup_1_0_1_1.eContents().get(0);
 		private final Assignment cParameterAssignment_1_0_1_1_1 = (Assignment)cGroup_1_0_1_1.eContents().get(1);
-		private final RuleCall cParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0 = (RuleCall)cParameterAssignment_1_0_1_1_1.eContents().get(0);
+		private final RuleCall cParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0 = (RuleCall)cParameterAssignment_1_0_1_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
 		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		
@@ -2407,44 +2407,44 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		// * -------------------- Variable parameter types.
 		// */ // Used everywhere where there need to be parameter
 		//Params:
-		//	{Params} ('(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')' | '()');
+		//	{Params} ('(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')' | '()');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Params} ('(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')' | '()')
+		//{Params} ('(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')' | '()')
 		public Group getGroup() { return cGroup; }
 		
 		//{Params}
 		public Action getParamsAction_0() { return cParamsAction_0; }
 		
-		//'(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')' | '()'
+		//'(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')' | '()'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//'(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')'
+		//'(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
 		
-		//(parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)?
+		//(parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)?
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//parameter+=ClockedVariableDeclaration
+		//parameter+=VariableDeclaration
 		public Assignment getParameterAssignment_1_0_1_0() { return cParameterAssignment_1_0_1_0; }
 		
-		//ClockedVariableDeclaration
-		public RuleCall getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0() { return cParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0; }
+		//VariableDeclaration
+		public RuleCall getParameterVariableDeclarationParserRuleCall_1_0_1_0_0() { return cParameterVariableDeclarationParserRuleCall_1_0_1_0_0; }
 		
-		//(';' parameter+=ClockedVariableDeclaration)*
+		//(';' parameter+=VariableDeclaration)*
 		public Group getGroup_1_0_1_1() { return cGroup_1_0_1_1; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_1_0_1_1_0() { return cSemicolonKeyword_1_0_1_1_0; }
 		
-		//parameter+=ClockedVariableDeclaration
+		//parameter+=VariableDeclaration
 		public Assignment getParameterAssignment_1_0_1_1_1() { return cParameterAssignment_1_0_1_1_1; }
 		
-		//ClockedVariableDeclaration
-		public RuleCall getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0() { return cParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0; }
+		//VariableDeclaration
+		public RuleCall getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0() { return cParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_1_0_2() { return cRightParenthesisKeyword_1_0_2; }
@@ -4080,7 +4080,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	// * -------------------- Variable parameter types.
 	// */ // Used everywhere where there need to be parameter
 	//Params:
-	//	{Params} ('(' (parameter+=ClockedVariableDeclaration (';' parameter+=ClockedVariableDeclaration)*)? ')' | '()');
+	//	{Params} ('(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')' | '()');
 	public ParamsElements getParamsAccess() {
 		return pParams;
 	}

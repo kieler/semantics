@@ -28,7 +28,7 @@ class LustreCreateExtension {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     
-    def VariableDeclaration createLustreVariableDeclaration(VariableDeclaration variableDeclaration) {
+    def createLustreVariableDeclaration(VariableDeclaration variableDeclaration) {
         var lusVariableDeclaration = createVariableDeclaration
         
         if (variableDeclaration.valuedObjects.length == 1) {
@@ -59,12 +59,35 @@ class LustreCreateExtension {
         return lusVariableDeclaration
     }
     
-    def ClockedVariableDeclaration createClockedVariableDeclaration(VariableDeclaration variableDeclaration) {
+    def createClockedVariableDeclaration(VariableDeclaration variableDeclaration) {
         val lustreVariableDeclaration = createLustreVariableDeclaration(variableDeclaration)
         
         LustreFactory.eINSTANCE.createClockedVariableDeclaration => [
             vardecl = lustreVariableDeclaration
         ]
+    }
+    
+    def createInputDeclaration(VariableDeclaration variableDeclaration) {
+        createVariableDeclaration(variableDeclaration) => [
+            input = true
+        ]
+    }
+    
+    def createOutputDeclaration(VariableDeclaration variableDeclaration) {
+        createVariableDeclaration(variableDeclaration) => [
+            output = true
+        ]
+    }
+    
+    def createConstantDeclaration(VariableDeclaration variableDeclaration) {
+        createVariableDeclaration(variableDeclaration) => [
+            const = true
+        ]
+    }
+    
+    def createVariableDeclarationFromClockedVariableDeclaration(ClockedVariableDeclaration clockedVariableDeclaration) {
+        // TODO: make senseful implementation
+        clockedVariableDeclaration.vardecl    
     }
     
 }

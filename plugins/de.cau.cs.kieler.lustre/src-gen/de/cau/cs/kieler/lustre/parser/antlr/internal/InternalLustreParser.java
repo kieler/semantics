@@ -10609,7 +10609,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParams"
-    // InternalLustre.g:3972:1: ruleParams returns [EObject current=null] : ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) ) ;
+    // InternalLustre.g:3972:1: ruleParams returns [EObject current=null] : ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) ) ;
     public final EObject ruleParams() throws RecognitionException {
         EObject current = null;
 
@@ -10626,11 +10626,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:3978:2: ( ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) ) )
-            // InternalLustre.g:3979:2: ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) )
+            // InternalLustre.g:3978:2: ( ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) ) )
+            // InternalLustre.g:3979:2: ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) )
             {
-            // InternalLustre.g:3979:2: ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) )
-            // InternalLustre.g:3980:3: () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' )
+            // InternalLustre.g:3979:2: ( () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' ) )
+            // InternalLustre.g:3980:3: () ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' )
             {
             // InternalLustre.g:3980:3: ()
             // InternalLustre.g:3981:4: 
@@ -10650,7 +10650,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:3990:3: ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' )
+            // InternalLustre.g:3990:3: ( (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' ) | otherlv_6= '()' )
             int alt78=2;
             int LA78_0 = input.LA(1);
 
@@ -10669,10 +10669,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
             switch (alt78) {
                 case 1 :
-                    // InternalLustre.g:3991:4: (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' )
+                    // InternalLustre.g:3991:4: (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' )
                     {
-                    // InternalLustre.g:3991:4: (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')' )
-                    // InternalLustre.g:3992:5: otherlv_1= '(' ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )? otherlv_5= ')'
+                    // InternalLustre.g:3991:4: (otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')' )
+                    // InternalLustre.g:3992:5: otherlv_1= '(' ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )? otherlv_5= ')'
                     {
                     otherlv_1=(Token)match(input,37,FollowSets000.FOLLOW_69); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -10680,7 +10680,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       					newLeafNode(otherlv_1, grammarAccess.getParamsAccess().getLeftParenthesisKeyword_1_0_0());
                       				
                     }
-                    // InternalLustre.g:3996:5: ( ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )* )?
+                    // InternalLustre.g:3996:5: ( ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )* )?
                     int alt77=2;
                     int LA77_0 = input.LA(1);
 
@@ -10689,21 +10689,21 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt77) {
                         case 1 :
-                            // InternalLustre.g:3997:6: ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )*
+                            // InternalLustre.g:3997:6: ( (lv_parameter_2_0= ruleVariableDeclaration ) ) (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )*
                             {
-                            // InternalLustre.g:3997:6: ( (lv_parameter_2_0= ruleClockedVariableDeclaration ) )
-                            // InternalLustre.g:3998:7: (lv_parameter_2_0= ruleClockedVariableDeclaration )
+                            // InternalLustre.g:3997:6: ( (lv_parameter_2_0= ruleVariableDeclaration ) )
+                            // InternalLustre.g:3998:7: (lv_parameter_2_0= ruleVariableDeclaration )
                             {
-                            // InternalLustre.g:3998:7: (lv_parameter_2_0= ruleClockedVariableDeclaration )
-                            // InternalLustre.g:3999:8: lv_parameter_2_0= ruleClockedVariableDeclaration
+                            // InternalLustre.g:3998:7: (lv_parameter_2_0= ruleVariableDeclaration )
+                            // InternalLustre.g:3999:8: lv_parameter_2_0= ruleVariableDeclaration
                             {
                             if ( state.backtracking==0 ) {
 
-                              								newCompositeNode(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_0_0());
+                              								newCompositeNode(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_0_0());
                               							
                             }
                             pushFollow(FollowSets000.FOLLOW_70);
-                            lv_parameter_2_0=ruleClockedVariableDeclaration();
+                            lv_parameter_2_0=ruleVariableDeclaration();
 
                             state._fsp--;
                             if (state.failed) return current;
@@ -10716,7 +10716,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                               									current,
                               									"parameter",
                               									lv_parameter_2_0,
-                              									"de.cau.cs.kieler.lustre.Lustre.ClockedVariableDeclaration");
+                              									"de.cau.cs.kieler.lustre.Lustre.VariableDeclaration");
                               								afterParserOrEnumRuleCall();
                               							
                             }
@@ -10726,7 +10726,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            // InternalLustre.g:4016:6: (otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) ) )*
+                            // InternalLustre.g:4016:6: (otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) ) )*
                             loop76:
                             do {
                                 int alt76=2;
@@ -10739,7 +10739,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                                 switch (alt76) {
                             	case 1 :
-                            	    // InternalLustre.g:4017:7: otherlv_3= ';' ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) )
+                            	    // InternalLustre.g:4017:7: otherlv_3= ';' ( (lv_parameter_4_0= ruleVariableDeclaration ) )
                             	    {
                             	    otherlv_3=(Token)match(input,21,FollowSets000.FOLLOW_28); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
@@ -10747,19 +10747,19 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      							newLeafNode(otherlv_3, grammarAccess.getParamsAccess().getSemicolonKeyword_1_0_1_1_0());
                             	      						
                             	    }
-                            	    // InternalLustre.g:4021:7: ( (lv_parameter_4_0= ruleClockedVariableDeclaration ) )
-                            	    // InternalLustre.g:4022:8: (lv_parameter_4_0= ruleClockedVariableDeclaration )
+                            	    // InternalLustre.g:4021:7: ( (lv_parameter_4_0= ruleVariableDeclaration ) )
+                            	    // InternalLustre.g:4022:8: (lv_parameter_4_0= ruleVariableDeclaration )
                             	    {
-                            	    // InternalLustre.g:4022:8: (lv_parameter_4_0= ruleClockedVariableDeclaration )
-                            	    // InternalLustre.g:4023:9: lv_parameter_4_0= ruleClockedVariableDeclaration
+                            	    // InternalLustre.g:4022:8: (lv_parameter_4_0= ruleVariableDeclaration )
+                            	    // InternalLustre.g:4023:9: lv_parameter_4_0= ruleVariableDeclaration
                             	    {
                             	    if ( state.backtracking==0 ) {
 
-                            	      									newCompositeNode(grammarAccess.getParamsAccess().getParameterClockedVariableDeclarationParserRuleCall_1_0_1_1_1_0());
+                            	      									newCompositeNode(grammarAccess.getParamsAccess().getParameterVariableDeclarationParserRuleCall_1_0_1_1_1_0());
                             	      								
                             	    }
                             	    pushFollow(FollowSets000.FOLLOW_70);
-                            	    lv_parameter_4_0=ruleClockedVariableDeclaration();
+                            	    lv_parameter_4_0=ruleVariableDeclaration();
 
                             	    state._fsp--;
                             	    if (state.failed) return current;
@@ -10772,7 +10772,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      										current,
                             	      										"parameter",
                             	      										lv_parameter_4_0,
-                            	      										"de.cau.cs.kieler.lustre.Lustre.ClockedVariableDeclaration");
+                            	      										"de.cau.cs.kieler.lustre.Lustre.VariableDeclaration");
                             	      									afterParserOrEnumRuleCall();
                             	      								
                             	    }

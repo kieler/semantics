@@ -1,5 +1,5 @@
 public system de.cau.cs.kieler.lustre.sccharts.netlist.c
 	label "Lustre SCCharts Netlist-based"
 
-de.cau.cs.kieler.lustre.processors.lustre2sccharts
+de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow
 system de.cau.cs.kieler.sccharts.netlist
