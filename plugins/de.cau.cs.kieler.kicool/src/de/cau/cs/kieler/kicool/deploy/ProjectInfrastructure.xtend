@@ -140,10 +140,9 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (modelFile !== null) {
                 name = modelFile.toString
-            } else if (modelFile instanceof Nameable) {
-                name = modelFile.name
             }
-            name = name.replaceAll("/", "-")
+            
+            name = name.replaceAll("/|\\\\", "-")
             name = name.replaceAll(" |\\.", "-")
             
             // Create Folder
