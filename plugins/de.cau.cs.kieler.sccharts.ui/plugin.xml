@@ -66,12 +66,6 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowAnnotationsHook">
       </hook>
       <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook">
-      </hook>
-      <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.HideAnnotationHook">
       </hook>
       <hook
