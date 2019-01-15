@@ -22,7 +22,6 @@ import { CompilerWidget } from './compiler-widget'
 // import { KiCoolViewService } from './kicool-view-service';
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
-    console.log("keith-kicool online 1401")
     // widgets
     bind(TextWidget).toSelf()
     bind(BaseWidget).toDynamicValue(ctx => ctx.container.get(TextWidget))

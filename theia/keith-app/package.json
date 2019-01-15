@@ -54,14 +54,12 @@
         "webpack": "^4.16.1"
     },
     "scripts": {
-        "build-l": "npm link keith-kicool keith-language-semantics keith-language-pragmatics keith-diagram keith-diagram-options keith-sprotty && yarn prepare",
         "build": "yarn cache clean keith-kicool keith-language-semantics keith-language-pragmatics keith-diagram keith-diagram-options keith-sprotty && yarn delete:files && yarn install --pure-lockfile --registry=http://localhost:4873 && yarn prepare",
         "build-v": "yarn verdaccio && yarn build && fuser -k 4873/tcp",
         "verdaccio": "verdaccio &",
         "delete:files": "(rm ./lib -rf || true) && (rm ./node_modules -rf || true) && (rm ./src-gen -rf || true)",
         "prepare": "theia build --mode development",
         "start": "theia start --root-dir=../workspace",
-        "unlinking": "yarn unlink keith-kicool keith-language-semantics keith-language-pragmatics keith-diagram keith-diagram-options keith-sprotty",
         "start:backend:socket": "node ./src-gen/backend/main.js --root-dir=../workspace --LSP_PORT=5007 --port=3000 --loglevel=debug",
         "watch": "theia build --watch"
     },
