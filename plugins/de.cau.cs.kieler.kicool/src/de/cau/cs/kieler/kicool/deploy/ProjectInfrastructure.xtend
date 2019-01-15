@@ -44,6 +44,11 @@ class ProjectInfrastructure {
 
     public static val IProperty<ProjectInfrastructure> PROJECT_INFRASTRUCTURE = 
         new Property<ProjectInfrastructure>("de.cau.cs.kieler.kicool.deploy.project", null)
+
+    public static val IProperty<String> MODEL_SRC_PATH =
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.src.path", null)
+    public static val IProperty<String> MODEL_DST_PATH =
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.dst.path", null)
     
     public static val IProperty<String> MODEL_FILE_PATH = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.file.path", null)
@@ -131,6 +136,9 @@ class ProjectInfrastructure {
             }
         }
         
+        val srcFolderPath = environment.getProperty(MODEL_SRC_PATH)
+        val srcFolder = if (srcFolderPath !== null) new File(srcFolderPath)
+
         if (environment.getProperty(USE_TEMPORARY_PROJECT)) {
             // initialize project
             project = environment.temporaryProject
@@ -153,29 +161,37 @@ class ProjectInfrastructure {
                 folder.create(true, true, null)
             }
             modelFolder = folder.rawLocation.toFile
+        } else if (srcFolder !== null && srcFolder.exists) {
+            modelFolder = srcFolder
         } else if (modelFile !== null && modelFile.exists) {
             modelFolder = modelFile.parentFile
         } else {
             environment.warnings.add("Can not detect model location to create project infrastructure.")
         }
         
+        val dstFolderPath = environment.getProperty(MODEL_DST_PATH)
+        val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath) else modelFolder
+
         // Create kieler-gen folder
         if (modelFolder !== null) {
             if (environment.getProperty(USE_GENERATED_FOLDER)) {
                 if (hasProject) {
-                    val gen = project.getFolder(modelFolder.name).getFolder(environment.getProperty(GENERATED_NAME))
+                    val gen = project.getFolder(dstFolder.name).getFolder(environment.getProperty(GENERATED_NAME))
                     if (!gen.exists) {
                         gen.create(true, true, null)
                     }
                     generatedCodeFolder = gen.rawLocation.toFile
                 } else {
-                    generatedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
+                    generatedCodeFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
                     if (!generatedCodeFolder.exists) {
-                        generatedCodeFolder.mkdir
+                        generatedCodeFolder.mkdirs
                     }
                 }
             } else {
-                generatedCodeFolder = modelFolder
+                generatedCodeFolder = dstFolder
+                if (!generatedCodeFolder.exists) {
+                    generatedCodeFolder.mkdirs
+                }
             }
         }
     }

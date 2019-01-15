@@ -33,6 +33,7 @@ import static com.google.common.base.Preconditions.*
 import java.util.List
 import java.util.Comparator
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * @author als
@@ -88,10 +89,27 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     protected def saveCode(ProjectInfrastructure infra, PrintStream logger) {
         logger.println("== Save Generated Code ==")
         
+        var targetBase = if (infra.modelFile === null) {
+            infra.generatedCodeFolder
+        } else {
+            // Get target directory relative to generatedCodeFolder as the ModelFile is
+            // relative to its source(ModelFolder) folder.
+            new File(
+                infra.generatedCodeFolder,
+                Paths.get(infra.modelFolder.path)
+                    .relativize(Paths.get(infra.modelFile.parent))
+                    .toString
+            )
+        }
+
         for (file : model.files) {
             logger.println("Saving " + file.fileName)
             try {
-                val target = new File(infra.generatedCodeFolder, file.fileName)
+                val target = new File(targetBase, file.fileName)
+                // create directory if it doesn't exist
+                val targetDir = target.parentFile
+                if (!targetDir.exists) targetDir.mkdirs
+
                 val writer = new FileWriter(target)
                 writer.write(file.code)
                 writer.close
