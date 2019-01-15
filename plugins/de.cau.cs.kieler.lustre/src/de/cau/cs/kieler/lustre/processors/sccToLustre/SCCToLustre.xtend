@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.lustre.processors.sccToLustre
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
@@ -21,10 +20,10 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.lustre.extensions.LustreCreateExtension
 import de.cau.cs.kieler.lustre.lustre.LustreFactory
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
-import de.cau.cs.kieler.lustre.lustre.impl.LustreFactoryImpl
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
@@ -36,11 +35,12 @@ import de.cau.cs.kieler.sccharts.State
  */
 class SCCToLustre extends Processor<SCCharts, LustreProgram> {
 
-    static extension LustreFactory lustre = new LustreFactoryImpl
+    static extension LustreFactory lustre = LustreFactory.eINSTANCE
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension LustreCreateExtension
 
     override getId() {
         "de.cau.cs.kieler.lustre.processors.SCCToLustre"
@@ -67,10 +67,12 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
     }
 
     def processSuperState(State state, SCCharts scc, LustreProgram program) {
-        val cfr = state.regions.filter(ControlflowRegion).head
+        val controlFlowRegion = state.regions.filter(ControlflowRegion).head
 
         val node = createNodeDeclaration => [
-//            name = state.name
+            valuedObjects += createNodeValuedObject => [
+                name = state.name
+            ]
             input = createParams => []
             output = createParams => []
         ]
@@ -79,34 +81,15 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
             nodes += node
         ]
 
-        for (input : state.variableDeclarations.filter[ input ]) {
-            val newVar = createClockedVariableDeclaration => [
-                // TODO: extract input set in valuedObject
-//                vardecl = createVariableDeclaration => [
-//                    type = input.type
-//                    valuedObjects = createval
-//                ]
-                clockExpr = KExpressionsFactory.eINSTANCE.createBoolValue => [
-                    value = true
-                ]
-            ]
-
-            node.input.parameter += newVar
+        for (inputVarDecl : state.variableDeclarations.filter[input]) {
+            node.input.parameter += createClockedVariableDeclaration(inputVarDecl)
         }
 
-        for (output : state.variableDeclarations.filter[ output ]) {
-            val newVar = createClockedVariableDeclaration => [
-                vardecl = output
-                clockExpr = KExpressionsFactory.eINSTANCE.createBoolValue => [
-                    value = true
-                ]
-            ]
-
-            node.variables += newVar
-            node.output.parameter += newVar
+        for (outputVarDecl : state.variableDeclarations.filter[output]) {
+            node.output.parameter += createClockedVariableDeclaration(outputVarDecl)
         }
 
-        val initial = cfr.states.filter[initial].head
+        val initial = controlFlowRegion.states.filter[initial].head
 
         if (initial.outgoingTransitions.size == 1) {
             initial.processAssignment(node)
@@ -121,30 +104,28 @@ class SCCToLustre extends Processor<SCCharts, LustreProgram> {
         val t = state.outgoingTransitions.head
         val a = t.effects.head as Assignment
 
-        if (a != null) {
+        if (a !== null) {
             node.equations += a
         }
-
     }
 
     protected def processConditional(State state, NodeDeclaration node) {
-        val tThen = state.outgoingTransitions.head
-        val tElse = state.outgoingTransitions.get(1)
-        val aThen = tThen.effects.head as Assignment
-        val aElse = tElse.effects.head as Assignment
+        val transitionThenCase = state.outgoingTransitions.head
+        val transitionElseCase = state.outgoingTransitions.get(1)
+
+        val assignemtThenCase = transitionThenCase.effects.head as Assignment
+        val assignmentElseCase = transitionElseCase.effects.head as Assignment
 
         // TODO: check if asgn is the same for both tansitions
-        val asgn = aThen.valuedObject
-
+        val asgn = assignemtThenCase.valuedObject
         val conditional = createConditionalExpression => [
-            subExpressions += tThen.trigger
-            subExpressions += aThen.expression
-            subExpressions += aElse.expression
+            subExpressions += transitionThenCase.trigger
+            subExpressions += assignemtThenCase.expression
+            subExpressions += assignmentElseCase.expression
         ]
 
         node.equations += createAssignment => [
-            // TODO: how do I get reference to an valuedObject
-//            reference = asgn.reference
+            reference = assignemtThenCase.reference
             operator = AssignOperator.ASSIGN
             expression = conditional
         ]
