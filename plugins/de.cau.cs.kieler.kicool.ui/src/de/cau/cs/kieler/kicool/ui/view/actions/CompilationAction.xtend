@@ -82,7 +82,7 @@ class CompilationAction {
         if (view.developerToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEVELOPER_MODE, true)
         }
-                
+        cc.stopOnError = !view.developerToggle.checked
         cc.deactiveDisabledProcessors
         
         val updateObserver = new CompilationUpdate(view)
