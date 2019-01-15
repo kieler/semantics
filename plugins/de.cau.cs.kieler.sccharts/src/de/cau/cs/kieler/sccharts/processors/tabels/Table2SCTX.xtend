@@ -22,11 +22,8 @@ import java.util.List
  *
  */
 class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
-    
     @Inject
-    var de.cau.cs.kieler.sccharts.processors.tabels.StateTransitionTableInterpreter stti
-    @Inject
-    var de.cau.cs.kieler.sccharts.processors.tabels.StateEventTableInterpreter seti
+    var de.cau.cs.kieler.sccharts.processors.tabels.TableIdentifier tableid
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.Table2SCTX"
@@ -37,9 +34,16 @@ class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
     }
     
     override process() {
+        val model = getModel
+        getInterpreter(model)
+        
         stti.table = getModel
         // TODO check for empty model
 //        stti.initialize(null, null)
         model = stti.interpret
+    }
+    
+    def TableInterpreter getInterpreter(List<List<String>> table) {        
+        return tableid.identify(table)
     }
 }
