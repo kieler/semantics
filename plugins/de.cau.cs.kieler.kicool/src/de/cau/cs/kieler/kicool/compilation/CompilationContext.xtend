@@ -140,12 +140,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected def Environment compile(Environment environment) {
         val processorEntry = system.processors
         
-        notify(new CompilationStart(this))
+        if (parentContext === null) notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
-        notify(new CompilationFinished(this, EPrime))
+        if (parentContext === null) notify(new CompilationFinished(this, EPrime))
 
-        result = EPrime              
-        EPrime  
+        result = EPrime
+        EPrime
     }
     
     /** Prepares the environments of the given processor reference and invoke the processor's process. */
