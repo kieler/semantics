@@ -30,6 +30,7 @@ import org.eclipse.ui.IEditorPart
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import org.eclipse.ui.editors.text.TextEditor
+import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
 
 /**
  * @author ssm
@@ -61,7 +62,7 @@ class CompilationAction {
     
     def void invokeCompile() {
         val editor = view.editPartSystemManager.activeEditor
-        var Object model = editor.retrieveModel
+        var Object model = ModelReaderUtil.readModelFromEditor(editor)
         if (model === null) {
             model = CompilationActionSimSalabim.SIM_MODEL
         }
@@ -104,19 +105,5 @@ class CompilationAction {
             }
         }
     }
-    
-    static def retrieveModel(IEditorPart editor) {
-        if (editor instanceof XtextEditor) {
-            val doc = editor.getDocument
-            var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
-                override exec(XtextResource state) throws Exception {
-                    if (state !== null && state.contents !== null) state.contents.head else null
-                }
-            });   
-            return m 
-        } else if (editor instanceof TextEditor) {
-            val doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-            return doc.get();
-        }     
-    }
+
 }
