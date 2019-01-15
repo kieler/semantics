@@ -50,7 +50,7 @@ import static extension java.lang.Boolean.parseBoolean
 class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
 
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.kicool.identity"
+    val compilationSystemID = "de.cau.cs.kieler.kicool.identity"
         
     /** Sct Parser Injector */
     static val lustreInjector = LustreStandaloneSetup.doSetup
