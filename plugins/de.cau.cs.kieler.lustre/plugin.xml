@@ -26,6 +26,12 @@
       <Processor
             class="de.cau.cs.kieler.lustre.processors.sccToLustre.SCChartsControlFlowToLustre">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCDataFlow">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCHybrid">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -34,6 +40,12 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.sccharts.controlflow.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.sccharts.hybrid.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.sccharts.dataflow.kico">
       </TransformationSystem>
    </extension>
 

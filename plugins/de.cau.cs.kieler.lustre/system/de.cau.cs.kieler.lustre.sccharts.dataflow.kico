@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.lustre.sccharts.dataflow
+	label "Lustre to SCCharts Data-flow"
+
+de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow
