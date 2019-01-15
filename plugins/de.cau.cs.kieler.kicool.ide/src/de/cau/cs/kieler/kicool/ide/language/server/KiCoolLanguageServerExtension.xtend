@@ -17,6 +17,9 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.environments.Snapshots
+import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
@@ -29,8 +32,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -93,7 +94,7 @@ class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implem
      * Add snapshot to list of snapshots for uri. Add description to be displayed in compiler view
      */
     def convertImpl(Environment environment, String uri, String processorName) {
-        var List<Object> snapshots = environment.getProperty(Environment.SNAPSHOTS)
+        var Snapshots snapshots = environment.getProperty(Environment.SNAPSHOTS)
         var impl = environment.model
         var errors = environment.errors
         var warnings = environment.warnings
@@ -101,7 +102,7 @@ class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implem
         this.objectMap.get(uri).add(impl)
         this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
         for (snapshot : snapshots.indexed) {
-            this.objectMap.get(uri).add(snapshot.value as EObject)
+            this.objectMap.get(uri).add(snapshot.value)
             this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
         }
         
