@@ -32,22 +32,26 @@ class CSVBuilder {
     }
     
     private def build() {
-        val StringBuilder sb = new StringBuilder
-        
-        val lineLength = unifyLineLengths()
-        
-        for (var i = 0; i<table.size; i++) {
-            val line = table.get(i)
+        if(table === null) {
+            csvString = ""
+        } else {
+            val StringBuilder sb = new StringBuilder
             
-            sb.append(escapeDelimAndEscape(line.get(0)))
-        	for (var j = 1 ; j<lineLength; j++) {
-        		sb.append(delim)
-                sb.append(escapeDelimAndEscape(line.get(j)))
-        	}
-        	sb.append("\n")
+            val lineLength = unifyLineLengths()
+            
+            for (var i = 0; i<table.size; i++) {
+                val line = table.get(i)
+                
+                sb.append(escapeDelimAndEscape(line.get(0)))
+            	for (var j = 1 ; j<lineLength; j++) {
+            		sb.append(delim)
+                    sb.append(escapeDelimAndEscape(line.get(j)))
+            	}
+            	sb.append("\n")
+            }
+            
+            csvString = sb.toString
         }
-        
-        csvString = sb.toString
         this.built = true
     }
     

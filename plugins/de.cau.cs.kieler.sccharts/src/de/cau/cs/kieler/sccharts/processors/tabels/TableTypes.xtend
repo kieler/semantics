@@ -12,15 +12,11 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
-import de.cau.cs.kieler.sccharts.Transition
-import java.util.List
-
 /**
  * @author stu114663
  *
  */
-interface ITableBuilder {
-    def List<List<String>> build()
-    def void insertHeader()
-    def void insertTransition(Transition outTrans)
+enum TableTypes {
+    StateTransition,
+    StateEvent
 }

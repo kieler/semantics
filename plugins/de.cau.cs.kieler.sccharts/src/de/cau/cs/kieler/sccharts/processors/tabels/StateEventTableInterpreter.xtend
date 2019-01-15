@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.processors.tabels
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.ArrayList
 import java.util.List
 
 /**
@@ -24,13 +25,31 @@ import java.util.List
 class StateEventTableInterpreter extends TableInterpreter {
     @Inject extension SCChartsTransitionExtensions
     
+    static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
     static final String CELL_DELIMITER = "\\"
     
     int headerLines = 2
-    HeaderNumbers[] headerLine = #[
+    final HeaderNumbers[] HEADER_LINE = #[
         HeaderNumbers.STATE,
         HeaderNumbers.CONDITION
     ]
+    
+    /** Initializes the Interpreter.
+     * When given null a default behaviour is used.
+     */
+    override initialize(HeaderNumbers[] headerLine, List<List<String>> table) {
+        if (headerLine !== null) {
+            this.headerLine = headerLine
+        } else {
+            this.headerLine = HEADER_LINE
+        }
+        if (table !== null) {
+            this.table = table
+        } else {
+            this.table = new ArrayList<List<String>>
+        }
+        this.initialized = true
+    }
     
     /**
      * create a transition for each line
@@ -51,14 +70,14 @@ class StateEventTableInterpreter extends TableInterpreter {
         
         var Transition trans = createTransitionTo(sourceState, targetState)
         
-        trans.trigger = conditions2TriggerExpression(getCondRow.subList(condi, condi), CELL_DELIMITER)
+        trans.trigger = conditions2TriggerExpression(getConditionRow().subList(condi, condi), TRIGGER_EXPRESSION_CONNECTOR)
         
         matchAndMakeValuedObjects(trans.trigger, sourceState)
         
-        trans.effects.addAll(effectStrings2Expression(indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.EFFECT))))
+        trans.effects.addAll(effectStrings2Expression(getEffectString(row.get(condi))))
     }
     
-    def List<String> getCondRow() {table.get(headerLines-1)}
+    def List<String> getConditionRow() {table.get(headerLines-1)}
     
     def List<String> getEffectString(String cell) {
         val effectTargetList = getEffectTargetList(cell)

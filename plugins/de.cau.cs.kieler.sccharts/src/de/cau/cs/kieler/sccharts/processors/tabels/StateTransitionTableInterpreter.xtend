@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.List
+import java.util.ArrayList
 
 /**
  * @author stu114663
@@ -27,12 +28,29 @@ class StateTransitionTableInterpreter extends TableInterpreter {
     static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
     
     int headerLines = 1
-    HeaderNumbers[] headerLine = #[
+    final HeaderNumbers[] HEADER_LINE = #[
         HeaderNumbers.STATE,
         HeaderNumbers.CONDITION,
         HeaderNumbers.EFFECT,
         HeaderNumbers.TARGET_STATE
     ]
+    
+    /** Initializes the Interpreter.
+     * When given null a default behaviour is used.
+     */
+    override initialize(HeaderNumbers[] headerLine, List<List<String>> table) {
+        if (headerLine !== null) {
+            this.headerLine = headerLine
+        } else {
+            this.headerLine = HEADER_LINE
+        }
+        if (table !== null) {
+            this.table = table
+        } else {
+            this.table = new ArrayList<List<String>>
+        }
+        this.initialized = true
+    }
     
     /**
      * create a transition for each line

@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -12,15 +12,14 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
-import de.cau.cs.kieler.sccharts.Transition
-import java.util.List
-
 /**
  * @author stu114663
- *
+ * 
  */
-interface ITableBuilder {
-    def List<List<String>> build()
-    def void insertHeader()
-    def void insertTransition(Transition outTrans)
+enum HeaderNumbers {
+    STATE,
+    TARGET_STATE,
+    EFFECT,
+    DISCARDABLE,
+    CONDITION
 }

@@ -39,6 +39,7 @@ class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
     override process() {
         stti.table = getModel
         // TODO check for empty model
+//        stti.initialize(null, null)
         model = stti.interpret
     }
 }

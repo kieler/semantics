@@ -12,8 +12,10 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.ArrayList
+import java.util.List
 
 /**
  * @author stu114663
@@ -21,8 +23,42 @@ import java.util.ArrayList
  */
 class StateTransitionTableBuilder extends TableBuilder {
     // header line: [ID] State Condition Effect Target Comment
+    HeaderNumbers[] headerLine = #[
+        HeaderNumbers.STATE,
+        HeaderNumbers.CONDITION,
+        HeaderNumbers.EFFECT,
+        HeaderNumbers.TARGET_STATE
+    ]
     
-    override build() {}
+    override build() {
+        if (model !== null) {
+            table = new ArrayList<List<String>>
+            insertHeader()
+        
+        	val region = model.rootStates.get(0).regions.get(0)
+        	if (region instanceof ControlflowRegion) {
+        	    for (state : region.states) {
+        	    	for (transition : state.outgoingTransitions) {
+        	    		insertTransition(transition)
+        	    	}
+        	    }
+        	} else {
+        		
+        	}
+        } else {
+            table = null
+        }
+        
+        return table
+    }
+    
+    override insertHeader() {
+        val line = new ArrayList<String>
+        for (hn : headerLine) {
+        	line.add(hn.name)
+        }
+        table.add(line)
+    }
     
     override insertTransition(Transition outTrans) {
         val ArrayList<String> line = <String> newArrayList
@@ -30,9 +66,8 @@ class StateTransitionTableBuilder extends TableBuilder {
         // fill line list
 //        line.add(ID)
         line.add(outTrans.sourceState.name)
-        line.add(outTrans.trigger.toString)
-//        line.add(outTrans.effects.fold(String str, [Effect eff, String str | str += eff.]))
-        
+        line.add(trigger2String(outTrans.trigger))
+        line.add(effects2String(outTrans.effects))
         line.add(outTrans.targetState.name)
         
         // add line list to table list

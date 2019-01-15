@@ -53,20 +53,11 @@ abstract class TableInterpreter implements ITableInterpreter {
     
     SCCharts scc
     
+    @Accessors
+    boolean initialized = false
     int headerLines = 1
-    enum HeaderNumbers {
-        STATE,
-        TARGET_STATE,
-        EFFECT,
-        DISCARDABLE,
-        CONDITION
-    }
-    HeaderNumbers[] headerLine = #[
-        HeaderNumbers.STATE,
-        HeaderNumbers.CONDITION,
-        HeaderNumbers.EFFECT,
-        HeaderNumbers.TARGET_STATE
-    ]
+    @Accessors
+    HeaderNumbers[] headerLine
     
     @Accessors
     var List<List<String>> table
@@ -74,7 +65,9 @@ abstract class TableInterpreter implements ITableInterpreter {
     var HashMap<String, State> stateMap
     
     override interpret() {
-        // TODO check for empty/null table
+        // TODO check for empty table
+        // TODO check for empty headerLine
+        checkInitialized()
         if (headerLine.length > table.get(0).length) {
             // TODO handle bad case
         }
@@ -85,10 +78,15 @@ abstract class TableInterpreter implements ITableInterpreter {
         
         createStates(rootRegion)
         createTransitions
-
-        println("interpreted")
         
         return scc
+    }
+    
+    /** Checks if table and headerLine have been initialized and initializes them (with defaults) if necessary */
+    def checkInitialized() {
+        if(!initialized) {
+            initialize(null, null)
+        }
     }
     
     /** 
@@ -142,7 +140,9 @@ abstract class TableInterpreter implements ITableInterpreter {
     }
     
     /** returns the list of indices that have the given HeaderNumber */
-    def getAllHeaderColumns(TableInterpreter.HeaderNumbers hn) {
+    def getAllHeaderColumns(HeaderNumbers hn) {
+        checkInitialized()
+        
         var indices = <Integer> newArrayList
         for(var int index = 0; index < headerLine.length; index++) {
             if (headerLine.get(index) == hn) {
