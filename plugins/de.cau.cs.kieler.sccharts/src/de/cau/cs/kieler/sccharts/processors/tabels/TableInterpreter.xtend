@@ -189,7 +189,9 @@ abstract class TableInterpreter implements ITableInterpreter {
     
     /** recursively extract valued object references from an expression */
     def List<ValuedObjectReference> getValuedObjectReferences(Expression expr) {
+        // TODO might be obsolete due to allReferences function (expr.allReferences)
         val valOExpressionList = new ArrayList<ValuedObjectReference>
+        
         if (expr instanceof OperatorExpression) {
             for(sexp : expr.subExpressions) {
                 valOExpressionList += getValuedObjectReferences(sexp)
@@ -237,38 +239,44 @@ abstract class TableInterpreter implements ITableInterpreter {
         }
     }
     
-//    def matchAndMakeValuedObjects(Effect effect, State state) {
-//        var decls = state.allDeclarations
-//        
-//        val valuedObjectsReferences = getValuedObjectReferences(expr)
-//        var declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-//            l += d.getValuedObjects
-//            return l
-//        ])
-//        
-//        for (valOR : valuedObjectsReferences) {
-//            var alreadyDeclared = false
-//            for (dValO : declaredValuedObjects) {
-//                if(valOR.valuedObject.name == dValO.name) {
-//                    alreadyDeclared = true
-//                    valOR.valuedObject = dValO
-//                }
-//            }
-//            
-//            // TODO Debug: declarations are not created properly
-//            if (!alreadyDeclared) {
-//                state.parentRegion.parentState.declarations.add(
-//                    getDeclaration(valOR.valuedObject)
-//                )
-//                
-//                decls = state.allDeclarations
-//                declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-//                    l += d.getValuedObjects
-//                    return l
-//                ])
-//            }
-//        }
-//    }
+    /** recursively extract valued object references from an effect */
+    def List<ValuedObjectReference> getValuedObjectReferences(Effect effect) {
+        // TODO does this work?
+        return effect.allReferenceFromEObject
+    }
+    
+    def matchAndMakeValuedObjects(Effect effect, State state) {
+        var decls = state.allDeclarations
+        
+        val valuedObjectsReferences = getValuedObjectReferences(effect)
+        var declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
+            l += d.getValuedObjects
+            return l
+        ])
+        
+        for (valOR : valuedObjectsReferences) {
+            var alreadyDeclared = false
+            for (dValO : declaredValuedObjects) {
+                if(valOR.valuedObject.name == dValO.name) {
+                    alreadyDeclared = true
+                    valOR.valuedObject = dValO
+                }
+            }
+            
+            // TODO Debug: declarations are not created properly
+            if (!alreadyDeclared) {
+                state.parentRegion.parentState.declarations.add(
+                    getDeclaration(valOR.valuedObject)
+                )
+                
+                decls = state.allDeclarations
+                declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
+                    l += d.getValuedObjects
+                    return l
+                ])
+            }
+        }
+    }
 }
 
 

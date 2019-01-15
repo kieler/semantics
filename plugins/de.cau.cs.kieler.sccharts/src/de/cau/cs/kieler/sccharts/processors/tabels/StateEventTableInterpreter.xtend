@@ -72,9 +72,13 @@ class StateEventTableInterpreter extends TableInterpreter {
         
         trans.trigger = conditions2TriggerExpression(getConditionRow().subList(condi, condi), TRIGGER_EXPRESSION_CONNECTOR)
         
-        matchAndMakeValuedObjects(trans.trigger, sourceState)
+        trans.trigger.matchAndMakeValuedObjects(sourceState)
         
         trans.effects.addAll(effectStrings2Expression(getEffectString(row.get(condi))))
+        
+        for (effect : trans.effects) {
+        	effect.matchAndMakeValuedObjects(sourceState)
+        }
     }
     
     def List<String> getConditionRow() {table.get(headerLines-1)}

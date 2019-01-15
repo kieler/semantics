@@ -71,9 +71,13 @@ class StateTransitionTableInterpreter extends TableInterpreter {
             TRIGGER_EXPRESSION_CONNECTOR
         )
         
-        matchAndMakeValuedObjects(trans.trigger, sourceState)
+        trans.trigger.matchAndMakeValuedObjects(sourceState)
         
         trans.effects.addAll(effectStrings2Expression(indicesToSublist(row, getAllHeaderColumns(HeaderNumbers.EFFECT))))
+        
+        for (effect : trans.effects) {
+        	effect.matchAndMakeValuedObjects(sourceState)
+        }
     }
 }
 
