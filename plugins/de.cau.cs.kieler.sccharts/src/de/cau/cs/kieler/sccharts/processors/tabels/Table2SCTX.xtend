@@ -35,12 +35,13 @@ class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
     
     override process() {
         val model = getModel
-        getInterpreter(model)
-        
-        stti.table = getModel
         // TODO check for empty model
+        val TableInterpreter ti = getInterpreter(model)
+        
+        // TODO should be done by TableIdentifier
+        ti.table = getModel
 //        stti.initialize(null, null)
-        model = stti.interpret
+        model = ti.interpret
     }
     
     def TableInterpreter getInterpreter(List<List<String>> table) {        
