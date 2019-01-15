@@ -37,8 +37,8 @@ class CommonTemplateVariables {
     // Model
     /** The name of the type (i.e. struct or class) providing the tick interface */
     public static val MODEL_DATA_TYPE = "tickdata_type"
-    
-    // -- General Variables --
+    /** The name of the file containing the tick interface */
+    public static val MODEL_DATA_FILE = "tickdata_file"
     /** The name for the tick interface variable  */
     public static val MODEL_DATA_NAME = "tickdata_name"
     

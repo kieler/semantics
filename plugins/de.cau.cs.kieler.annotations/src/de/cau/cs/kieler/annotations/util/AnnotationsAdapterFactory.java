@@ -79,6 +79,10 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
     protected AnnotationsSwitch<Adapter> modelSwitch =
         new AnnotationsSwitch<Adapter>() {
             @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
+            }
+            @Override
             public Adapter caseNamedObject(NamedObject object) {
                 return createNamedObjectAdapter();
             }
@@ -161,6 +165,20 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
         return modelSwitch.doSwitch((EObject)target);
     }
 
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
+        return null;
+    }
 
     /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.

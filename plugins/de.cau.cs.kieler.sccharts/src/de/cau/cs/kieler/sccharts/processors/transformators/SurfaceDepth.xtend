@@ -14,26 +14,23 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts SurfaceDepth Transformation.
@@ -97,13 +94,10 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsFixExtensions
     @Inject extension SCChartsOptimization
-    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "__sd_"
     
-    private val nameCache = new UniqueNameCache
-
     // -------------------------------------------------------------------------
     // --                S U R F A C E  &   D E P T H                         --
     // -------------------------------------------------------------------------
@@ -127,8 +121,6 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
     // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
     // the above transformation.
     def State transform(State rootState) {
-        nameCache.clear
-        
         // Traverse all states
         rootState.allStates.toList.forEach [ targetState |
             targetState.transformSurfaceDepth(rootState)
@@ -245,7 +237,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
         // Modify surfaceState (the original state)
         val surfaceState = state
         var depthState = state
-        surfaceState.uniqueName(nameCache)
+        surfaceState.uniqueName
 
         // For every state create a number of surface nodes
         val orderedTransitionList = state.outgoingTransitions.sortBy[priority];
@@ -265,10 +257,10 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
                 // Make sure the next transition is delayed 
                 pauseInserted = true
 
-                depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName(nameCache)
+                depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
                 previousState.createImmediateTransitionTo(depthState).trace(transition)
                 // System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
-                val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName(nameCache)
+                val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
                 depthState.createTransitionTo(pauseState).trace(transition)
 
                 // Imitate next cycle
@@ -280,7 +272,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
 
             if (currentState == null) {
                 // Create a new state
-                currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName(nameCache)
+                currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
                 // System.out.println("New currentState := " + currentState.id)
                 // Move transition to this state
                 // System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)

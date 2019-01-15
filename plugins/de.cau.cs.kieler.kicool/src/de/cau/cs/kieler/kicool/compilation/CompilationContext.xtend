@@ -110,6 +110,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         val modelCopy = if (originalModel instanceof EObject) {
             TracingIntegration.copy((originalModel as EObject), startEnvironment)
+        } else if (originalModel instanceof IKiCoolCloneable) {
+            originalModel.cloneObject
         } else {
             originalModel
         }
@@ -119,7 +121,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             originalModel.populateNameCache(startEnvironment.getProperty(UNIQUE_NAME_CACHE))
         }
         
-        for(intermediateProcessor : getIntermediateProcessors) {
+        for(intermediateProcessor : getIntermediateProcessors(startEnvironment)) {
             intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
             if (intermediateProcessor.validateInputType) {
                 if (intermediateProcessor instanceof Metric<?,?>) {
@@ -167,7 +169,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         notify(new ProcessorStart(this, processorReference, processorInstance))
         
-        for (intermediateProcessor : getIntermediateProcessors(processorReference)) {
+        for (intermediateProcessor : getIntermediateProcessors(processorReference, environmentPrime)) {
             intermediateProcessor.setEnvironment(environment, environmentPrime)
             if (intermediateProcessor.validateInputType) intermediateProcessor.processBefore
         }
@@ -195,7 +197,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
         environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
         
-        for (intermediateProcessor : getIntermediateProcessors(processorReference)) {
+        for (intermediateProcessor : getIntermediateProcessors(processorReference, environmentPrime)) {
             intermediateProcessor.setEnvironment(environmentPrime, environmentPrime)
             if (intermediateProcessor.validateInputType) intermediateProcessor.process
         }
@@ -258,6 +260,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         return null
     }
     
+    def Environment getResult() {
+        processorInstancesSequence?.last?.environment
+    }
+    
     def Environment getResultForModel(Object model) {
         for (processor : processorInstancesSequence) {
             val p = processor.environment.getProperty(MODEL)
@@ -267,7 +273,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             
             val snapshots = processor.environment.getProperty(SNAPSHOTS)
             for (snapshot : snapshots) {
-                if (snapshot == model) {
+                if (snapshot.object == model) {
                     return processor.environment
                 }
             }
@@ -289,6 +295,26 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             
         }
         return null
+    }
+
+    def hasErrors() {
+        return !startEnvironment.errors.empty || processorInstancesSequence.map[environment?.errors].filterNull.exists[!empty]
+    }
+    
+    def getAllErrors() {
+        val errors = newLinkedHashSet(startEnvironment.errors)
+        errors.addAll(processorInstancesSequence.map[environment?.errors].filterNull)
+        return errors.map[allMessages].flatten.toList
+    }
+    
+    def hasWarings() {
+        return !startEnvironment.warnings.empty || processorInstancesSequence.map[environment?.warnings].filterNull.exists[!empty]
+    }
+
+    def getAllWarnings() {
+        val warnings = newLinkedHashSet(startEnvironment.warnings)
+        warnings.addAll(processorInstancesSequence.map[environment?.warnings].filterNull)
+        return warnings.map[allMessages].flatten.toList
     }
     
     override cloneObject() {
@@ -404,10 +430,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     @Inject TracingIntegration tracingIntegrationInstance
     
-    protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors() {
+    protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors(Environment environment) {
         val processors = system.intermediates.map[ processorMap.get(it) as IntermediateProcessor<?,?> ]
         
-        if (startEnvironment.isTracingActive) {
+        if (environment.isTracingActive) {
             return <IntermediateProcessor<?,?>> newLinkedList => [
                     addAll(processors) 
                     add(tracingIntegrationInstance)
@@ -417,18 +443,22 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         processors
     }
     
-    protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors(ProcessorReference processorReference) {
+    protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors(ProcessorReference processorReference, Environment environment) {
+        val intermediateProcessors = getIntermediateProcessors(environment)
         if (processorReference.metric !== null) {
-            return (system.intermediates.filter[ !(processorMap.get(it) instanceof Metric<?,?>) ].toList => [
-                it += processorReference.metric
-            ]).map[ processorMap.get(it) as IntermediateProcessor<?,?> ]    
-        } 
-        return getIntermediateProcessors        
+            val metricProcessor = processorMap.get(processorReference.metric) as IntermediateProcessor<?,?>
+            if (metricProcessor !== null) {
+                intermediateProcessors.add(metricProcessor)
+            }
+        }
+        return intermediateProcessors
     }
     
     protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences, boolean isPostProcessor) {
         for (processorReference : processorReferences) {
+            processor.environment.processEnvironmentConfig(processorReference.preconfig)
             processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
+            processor.environment.processEnvironmentConfig(processorReference.postconfig)
         }
     }
     

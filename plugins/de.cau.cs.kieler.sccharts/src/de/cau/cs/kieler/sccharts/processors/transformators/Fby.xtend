@@ -87,6 +87,7 @@ class Fby extends SCChartsProcessor implements Traceable {
             if (parent !== null) {
                 val fbyTrigger = createValuedObject => [ name = GENERATED_PREFIX + fby.key + "t" initialValue = FALSE ]
                 parent.declarations += createVariableDeclaration(ValueType.BOOL) => [ valuedObjects += fbyTrigger]
+                voStore.update(fbyTrigger, SCCHARTS_GENERATED)
                 
                 val second = fby.value.subExpressions.get(1)
                 val followingFby = if (second.isFollowedBy) second else second.eAllContents.filter(OperatorExpression).filter[ isFollowedBy ].head
@@ -96,6 +97,7 @@ class Fby extends SCChartsProcessor implements Traceable {
                 
                 val localVariable = createValuedObject => [ name = GENERATED_PREFIX + fby.key ]
                 parent.declarations += createVariableDeclaration(fby.value.inferType) => [ valuedObjects += localVariable ]
+                voStore.update(localVariable, SCCHARTS_GENERATED)
                 
                 val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + fby.key) => [ final = true ]
                 val initialState = fbyRegion.createInitialState("_Init")           

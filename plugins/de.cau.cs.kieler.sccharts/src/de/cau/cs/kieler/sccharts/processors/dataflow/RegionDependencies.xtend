@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
 import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
+import de.cau.cs.kieler.sccharts.Action
 
 /**
  * @author ssm
@@ -140,25 +141,28 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
         
         for (state : cfr.states) {
             for (transition : state.outgoingTransitions) {
-                transition.processTransition(state, forkStack, valuedObjectAccessors)
+                transition.processAction(forkStack, valuedObjectAccessors)
             }    
             
             if (state.isSuperstate) {
                 state.searchDependenciesInSuperstate(forkStack, visited, valuedObjectAccessors)
+                for (act : state.actions) {
+                    act.processAction(forkStack, valuedObjectAccessors)            
+                }
             }           
         }
         
         forkStack.pop
     }
     
-    protected def void processTransition(Transition transition, State state, ForkStack forkStack, 
+    protected def void processAction(Action action, ForkStack forkStack, 
         ValuedObjectAccessors valuedObjectAccessors) {
             
-        if (transition.trigger !== null) {
-            state.parentRegion.processExpressionReader(transition.trigger, forkStack, valuedObjectAccessors)
+        if (action.trigger !== null) {
+            action.processExpressionReader(action.trigger, forkStack, valuedObjectAccessors)
         }
         
-        for (effect : transition.effects) {
+        for (effect : action.effects) {
             if (effect instanceof Assignment) {
                 effect.processAssignment(forkStack, valuedObjectAccessors)
             }

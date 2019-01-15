@@ -50,6 +50,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -173,7 +174,10 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 }
             }
         }
-
+        
+        val voStore = VariableStore.get(environment)
+        basicBlockGuardCache.keySet.forEach[voStore.update(it, "guard")]
+        
         scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float

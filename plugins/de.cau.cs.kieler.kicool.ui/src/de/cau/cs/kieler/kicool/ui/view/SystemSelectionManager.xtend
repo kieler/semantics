@@ -25,7 +25,8 @@ import org.eclipse.swt.widgets.Control
 
 import static extension de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction.retrieveModel
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
-import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import org.eclipse.swt.widgets.Display
+import org.eclipse.jface.dialogs.MessageDialog
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -120,15 +121,7 @@ class SystemSelectionManager implements SelectionListener {
         combo.pack()
         if (updateView) view.updateToolbar() // Prevent infinite invocation loops
     }
-    
-    private def hasInput(System sys, Class<?> modelClass) {
-        val input = sys.findInputClass
-        if (modelClass !== null && input !== null) {
-            return input.isAssignableFrom(modelClass)
-        }
-        return true
-    }
-   
+
     def System getSelectedSystem() {
         if (!combo.isDisposed && combo.selectionIndex != -1) {
             val systemId = getSelectedSystemId
@@ -150,7 +143,8 @@ class SystemSelectionManager implements SelectionListener {
         try {
             KiCoolRegistration.registerTemporarySystem(system)  
         } catch (Exception e) {
-            PromUIPlugin.showError(e)
+            MessageDialog.openError(null, "Cannot register temporary system", e.message);
+            e.printStackTrace
         }
         updateSystemList
         view.updateToolbar

@@ -29,7 +29,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.PeriodAction
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -67,7 +66,6 @@ class Period extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -80,8 +78,9 @@ class Period extends SCChartsProcessor implements Traceable {
     static public final String PERIOD_REGION_NAME = GENERATED_PREFIX + "Period"
     
     // Annotaion switches
-    public static val SOFT_RESET_DEFAULT = false
+    public static val SOFT_RESET_DEFAULT = true
     public static val SOFT_RESET_NAME = "SoftReset"
+    public static val HARD_RESET_NAME = "HardReset"
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
@@ -117,6 +116,7 @@ class Period extends SCChartsProcessor implements Traceable {
                     type = ValueType.CLOCK
                     valuedObjects += clocks
                 ]
+                clocks.forEach[voStore.update(it, SCCHARTS_GENERATED)]
                 
                 // Create tick guards
                 val ticks = newArrayList
@@ -130,6 +130,7 @@ class Period extends SCChartsProcessor implements Traceable {
                 state.declarations += createBoolDeclaration => [
                     valuedObjects += ticks
                 ]
+                ticks.forEach[voStore.update(it, SCCHARTS_GENERATED)]
                 
                 // Guard regions
                 for (tick : ticks) {
@@ -156,7 +157,11 @@ class Period extends SCChartsProcessor implements Traceable {
                     val period = pi.value
                     val clock = clocks.get(pi.key)
                     val tick = ticks.get(pi.key)
-                    val softReset = if (period.hasAnnotation(SOFT_RESET_NAME)) true else SOFT_RESET_DEFAULT
+                    val softReset = if (SOFT_RESET_DEFAULT) {
+                        if (period.hasAnnotation(HARD_RESET_NAME)) false else SOFT_RESET_DEFAULT
+                    } else {
+                        if (period.hasAnnotation(SOFT_RESET_NAME)) true else SOFT_RESET_DEFAULT
+                    }
                     
                     state.createControlflowRegion(if (pi.key > 0) PERIOD_REGION_NAME + pi.key else PERIOD_REGION_NAME) => [
                         val s = it.createInitialState("_s") => [label = ""]

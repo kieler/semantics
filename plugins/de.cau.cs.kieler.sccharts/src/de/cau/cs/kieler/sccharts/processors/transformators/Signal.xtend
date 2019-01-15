@@ -38,7 +38,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -94,7 +93,6 @@ class Signal extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension ValuedObjectRise
     @Inject extension KExpressionsArrayExtensions
 
@@ -119,8 +117,6 @@ class Signal extends SCChartsProcessor implements Traceable {
     // input signal S:integer; --> input boolean S; input integer S_val;
     // Transforming a signal to a variable. 
     def State transform(State rootState) {
-        rootState.transformValuedObjectRise
-        
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformSignal(rootState);
@@ -172,10 +168,13 @@ class Signal extends SCChartsProcessor implements Traceable {
                 
                 // Copy type and input/output attributes from the original signal
                 currentValueVariable.applyAttributes(signal)
-                valueDecl.setInput(signal.isInput);
-                valueDecl.setOutput(signal.isOutput);
+                valueDecl.setInput(signal.isInput)
+                valueDecl.setOutput(signal.isOutput)
                 valueVariable.applyAttributes(signal)
 
+                voStore.update(valueVariable, SCCHARTS_GENERATED, "signal-value", variableValueExtension)
+                voStore.update(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
+                
                 // Add an immediate during action that updates the value (in case of an emission)
                 // to the current value
                 if(arrayIndexIterator === null) {
@@ -252,6 +251,7 @@ class Signal extends SCChartsProcessor implements Traceable {
             val declarationScope = presentVariable.declarationScope
             presentVariable.removeFromContainmentAndCleanup
             declarationScope.addValuedObject(presentVariable, newDecl)
+            voStore.update(presentVariable)
             
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every

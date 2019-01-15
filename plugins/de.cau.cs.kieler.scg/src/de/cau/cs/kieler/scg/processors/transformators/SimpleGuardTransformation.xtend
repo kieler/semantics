@@ -40,7 +40,11 @@ import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.core.model.properties.IProperty;
+import de.cau.cs.kieler.core.model.properties.Property;
+
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -48,7 +52,8 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.ExpressionDependency
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * @author ssm
@@ -60,12 +65,15 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension SCGCacheExtensions
-    @Inject extension SCGDependencyExtensions    
+    @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsDeclarationExtensions       
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
+    
+    public static val IProperty<Boolean> SGT_EXCLUDE_GUARD_ASSIGNMENT_CONTROL_DEPENDENCIES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.excludeGuardAssignmentControlDependencies", true)     
     
     /** Name of the term signal. */
     public static val String TERM_GUARD_NAME = "_TERM"
@@ -135,7 +143,15 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         val mainThreadEntries = <Assignment, String> newHashMap
         val mainThreadExits = <Assignment> newHashSet
         
+        // Fix VO association in VariableStore
+        val voStore = VariableStore.get(environment)
+        valuedObjectMap.entrySet.forEach[ entry |
+            val info = voStore.variables.get(entry.key.name).findFirst[valuedObject == entry.key]
+            if (info !== null) info.valuedObject = entry.value.head
+        ]
+        
         val termVO = newSCG.createTERMSignal
+        voStore.update(termVO, "term")
         val termAssignment = ScgFactory::eINSTANCE.createAssignment => [ valuedObject = termVO ]    
         val termSet = <Assignment> newHashSet    
 
@@ -273,6 +289,20 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     
                     val guardDependency = guardAssignment.createGuardDependency(newAssignment)
                     guardDependency.trace(guardAssignment)                              
+                
+                    // Check if the assignment changes a reference that is needed from the guardAssignment.
+                    // If so, add a control dependency to ensure that the dependency is scheduled beforehand.
+                    // This is particular important when dealing with exclusive branches.
+                    if (!environment.getProperty(SGT_EXCLUDE_GUARD_ASSIGNMENT_CONTROL_DEPENDENCIES)) {
+                        for (guardPredecessor : guardAssignment.incomingLinks.filter(ExpressionDependency).map[ eContainer ].filter(Assignment)) {
+                            if (guardPredecessor.expression.allReferences.exists[ 
+                                it.valuedObject == newAssignment.reference.valuedObject
+                            ]) {
+                                val controlDependency = guardPredecessor.createControlDependency(newAssignment)
+                                controlDependency.trace(guardPredecessor)
+                            }
+                        }
+                    }
                 }
             }       
         }

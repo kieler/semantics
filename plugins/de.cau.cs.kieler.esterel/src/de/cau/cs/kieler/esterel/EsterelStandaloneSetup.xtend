@@ -16,8 +16,6 @@ import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
- * 
- * @author sdo
  */
 class EsterelStandaloneSetup extends EsterelStandaloneSetupGenerated {
     

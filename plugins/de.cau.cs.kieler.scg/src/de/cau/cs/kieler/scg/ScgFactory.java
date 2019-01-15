@@ -204,6 +204,15 @@ public interface ScgFactory extends EFactory {
 	ScheduleDependency createScheduleDependency();
 
 				/**
+     * Returns a new object of class '<em>Tick Boundary Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Tick Boundary Dependency</em>'.
+     * @generated
+     */
+    TickBoundaryDependency createTickBoundaryDependency();
+
+                /**
      * Returns a new object of class '<em>Guard</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

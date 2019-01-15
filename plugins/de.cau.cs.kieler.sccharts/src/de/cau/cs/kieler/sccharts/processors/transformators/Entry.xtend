@@ -31,7 +31,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
@@ -77,14 +76,11 @@ class Entry extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
 
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "__EA_"
     
-    private val nameCache = new UniqueNameCache
-
     //-------------------------------------------------------------------------
     //--                      E N T R Y         A C T I O N                  --
     //-------------------------------------------------------------------------
@@ -94,8 +90,6 @@ class Entry extends SCChartsProcessor implements Traceable {
     // entry actions of a state in between these two states.
     // Transforming Entry Actions.
     def State transform(State rootState) {
-        nameCache.clear
-
         // Traverse all states
         for (targetState : rootState.getAllStates.toList) {
             targetState.transformEntry(rootState);
@@ -113,7 +107,7 @@ class Entry extends SCChartsProcessor implements Traceable {
             state.setDefaultTrace //All following states etc. will be traced to state
             
             if (state.final && !state.initial && !state.incomingTransitions.empty) {
-                val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).setTypeConnector
+                val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
                     transition.setTargetState(connector)
                 }
@@ -126,7 +120,7 @@ class Entry extends SCChartsProcessor implements Traceable {
                 lastState = region.createState(GENERATED_PREFIX + "Done")
                 lastState.final = state.outgoingTransitions.exists[!isTermination]
                 if (!state.outgoingTransitions.empty) {
-                    val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName(nameCache)
+                    val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
                     exitState.final = state.final // propagate final state
                     for (transition : state.outgoingTransitions.immutableCopy) {
                         exitState.outgoingTransitions.add(transition)
@@ -138,9 +132,9 @@ class Entry extends SCChartsProcessor implements Traceable {
                 val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.states.filter[initial].get(0) //every region MUST have an initial state
                 lastState.setNotInitial
-                firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
+                firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
             } else { // state has several regions
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName(nameCache)
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
                 lastState = region.createState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     lastState.regions.add(mainRegion)
@@ -157,7 +151,7 @@ class Entry extends SCChartsProcessor implements Traceable {
                 
                 var connector = lastState
                 if (entryAction != lastEntryAction) {
-                    connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).setTypeConnector
+                    connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
                 for (effect : entryAction.effects) {

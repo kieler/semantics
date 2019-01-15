@@ -38,7 +38,7 @@ interface IKiCoolCloneable {
     /**
      * Determines if the object is lost when preparing prime environments.
      */
-    def isVolatile() { false }
+    def boolean isVolatile() { false }
     
     /**
      * Determines if the objects must be resolved after the environment copy.
@@ -51,4 +51,7 @@ interface IKiCoolCloneable {
      * a convenient way to access the original data object.
      */
     def Object getOriginalObject() { }
+    
+    /** Determines if a copy for intermediate snapshots is created. */
+    def boolean preserveInSnapshot() { false } 
 }

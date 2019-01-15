@@ -6,7 +6,6 @@ package de.cau.cs.kieler.kexpressions.ui.internal;
 import com.google.common.collect.Maps;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Module;
 import de.cau.cs.kieler.kexpressions.kext.KExtRuntimeModule;
 import de.cau.cs.kieler.kexpressions.ui.kext.KExtUiModule;
 import java.util.Collections;
@@ -23,6 +22,7 @@ import org.osgi.framework.BundleContext;
  */
 public class KExtActivator extends AbstractUIPlugin {
 
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.kexpressions.ui";
 	public static final String DE_CAU_CS_KIELER_KEXPRESSIONS_KEXT_KEXT = "de.cau.cs.kieler.kexpressions.kext.KExt";
 	
 	private static final Logger logger = Logger.getLogger(KExtActivator.class);
@@ -60,10 +60,10 @@ public class KExtActivator extends AbstractUIPlugin {
 	
 	protected Injector createInjector(String language) {
 		try {
-			Module runtimeModule = getRuntimeModule(language);
-			Module sharedStateModule = getSharedStateModule();
-			Module uiModule = getUiModule(language);
-			Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
+			com.google.inject.Module runtimeModule = getRuntimeModule(language);
+			com.google.inject.Module sharedStateModule = getSharedStateModule();
+			com.google.inject.Module uiModule = getUiModule(language);
+			com.google.inject.Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
 			return Guice.createInjector(mergedModule);
 		} catch (Exception e) {
 			logger.error("Failed to create injector for " + language);
@@ -72,22 +72,23 @@ public class KExtActivator extends AbstractUIPlugin {
 		}
 	}
 	
-	protected Module getRuntimeModule(String grammar) {
+	protected com.google.inject.Module getRuntimeModule(String grammar) {
 		if (DE_CAU_CS_KIELER_KEXPRESSIONS_KEXT_KEXT.equals(grammar)) {
 			return new KExtRuntimeModule();
 		}
 		throw new IllegalArgumentException(grammar);
 	}
 	
-	protected Module getUiModule(String grammar) {
+	protected com.google.inject.Module getUiModule(String grammar) {
 		if (DE_CAU_CS_KIELER_KEXPRESSIONS_KEXT_KEXT.equals(grammar)) {
 			return new KExtUiModule(this);
 		}
 		throw new IllegalArgumentException(grammar);
 	}
 	
-	protected Module getSharedStateModule() {
+	protected com.google.inject.Module getSharedStateModule() {
 		return new SharedStateModule();
 	}
+	
 	
 }

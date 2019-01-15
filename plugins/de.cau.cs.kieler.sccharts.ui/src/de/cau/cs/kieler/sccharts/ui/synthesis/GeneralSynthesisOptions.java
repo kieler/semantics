@@ -32,35 +32,44 @@ public final class GeneralSynthesisOptions {
      */
     private GeneralSynthesisOptions() {
     }
-    
-    //-- CATEGORIES --
-    
+
+    // -- CATEGORIES --
+
     /** The appearance category */
-    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");    
+    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
     /** The navigation category */
     public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation");
     /** The debugging category */
-    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Analysis / Debugging", false);
+    public static final SynthesisOption DEBUGGING =
+            SynthesisOption.createCategory("Analysis / Debugging", false);
     /** The layout category */
     public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("Layout", false);
     /** Dataflow category */
-    public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory("Dataflow", false).
-            setCategory(APPEARANCE);
-    
-    //-- OPTIONS --
-    
+    public static final SynthesisOption DATAFLOW =
+            SynthesisOption.createCategory("Dataflow", false).setCategory(APPEARANCE);
+
+    // -- OPTIONS --
+
     /** Option for setting the KLayLayered layout */
-    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered",
-            true).setCategory(LAYOUT);
+    public static final SynthesisOption USE_KLAY =
+            SynthesisOption.createCheckOption("KLayLayered", true).setCategory(LAYOUT);
 
     /** Option for enabling adaptive zoom */
-    public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(
-            "Adaptive Zoom", false).setCategory(APPEARANCE);
-    
+    public static final SynthesisOption USE_ADAPTIVEZOOM =
+            SynthesisOption.createCheckOption("Adaptive Zoom", false).setCategory(APPEARANCE);
+
     public static final SynthesisOption SHOW_ALL_SCCHARTS =
             SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE);
-    
+
     public static final SynthesisOption SHOW_COMMENTS =
             SynthesisOption.createCheckOption("Comment Nodes", true).setCategory(APPEARANCE);
+
+    /** Scope call parameters synthesis option */
+    public static final SynthesisOption SHOW_BINDINGS =
+            SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(APPEARANCE);
+    
+    /** inherited declarations and regions synthesis option */
+    public static final SynthesisOption SHOW_INHERITANCE =
+            SynthesisOption.createCheckOption("Inherited Parts", true).setCategory(APPEARANCE);
 
 }

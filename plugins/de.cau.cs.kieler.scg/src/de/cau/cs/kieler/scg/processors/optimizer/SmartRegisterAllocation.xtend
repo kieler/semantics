@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.Set
 import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * Smart Register Allocation
@@ -66,6 +67,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         for (scg : model.scgs) {
             scg.performSmartRegisterAllocation
         }
+        VariableStore.get(environment).removeAllUncontainedVO(model, environment)
     }
     
     def performSmartRegisterAllocation(SCGraph scg) {

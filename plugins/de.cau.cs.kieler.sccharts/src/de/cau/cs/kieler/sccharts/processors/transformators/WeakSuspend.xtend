@@ -31,7 +31,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
@@ -90,10 +89,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     
-    private val nameCache = new UniqueNameCache
-
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
@@ -102,7 +98,6 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all transitions
         for (targetTransition : rootState.getAllStates.toList) {
             targetTransition.transformWeakSuspend(rootState)
@@ -116,8 +111,9 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
         weakSuspends.setDefaultTrace
         
         if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).uniqueName(nameCache)
+            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
+            voStore.update(weakSuspendFlag, SCCHARTS_GENERATED)
  
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
@@ -130,12 +126,14 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
             weakSuspends.setDefaultTrace
             for (region : state.allContainedControlflowRegions.toList) {
                 val subStates = region.states.immutableCopy
-                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName(nameCache)
-                val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.name, createIntDeclaration).uniqueName(nameCache)
+                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
+                val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.name, createIntDeclaration).uniqueName
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
+                voStore.update(stateBookmark, SCCHARTS_GENERATED)
+                
                 var counter = 0
-                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).uniqueName(nameCache)
+                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).uniqueName
 
                 // In each tick reset the lastWish to FALSE
                 val resetLastWishDoneduringAction = state.createDuringAction
@@ -147,7 +145,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 wsStateEntryAction.addAssignment(lastWishDone.createRelativeAssignmentWithOr(TRUE))
                 
                 // Auxiliary initial state for re-entry
-                val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
+                val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName
                 initState.setInitial(true)
                 val initWSTransition = initState.createTransitionTo(wsState).setImmediate
                 initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference)) 

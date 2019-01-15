@@ -23,6 +23,7 @@ import de.cau.cs.kieler.annotations.ContainmentAnnotation;
 import de.cau.cs.kieler.annotations.FloatAnnotation;
 import de.cau.cs.kieler.annotations.ImportAnnotation;
 import de.cau.cs.kieler.annotations.IntAnnotation;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.Pragmatable;
@@ -46,6 +47,13 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * @generated
  */
 public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsPackage {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass nameableEClass = null;
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -217,6 +225,15 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(AnnotationsPackage.eNS_URI, theAnnotationsPackage);
         return theAnnotationsPackage;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getNameable() {
+        return nameableEClass;
     }
 
     /**
@@ -499,6 +516,8 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         isCreated = true;
 
         // Create classes and their features
+        nameableEClass = createEClass(NAMEABLE);
+
         namedObjectEClass = createEClass(NAMED_OBJECT);
         createEAttribute(namedObjectEClass, NAMED_OBJECT__NAME);
 
@@ -572,6 +591,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        namedObjectEClass.getESuperTypes().add(this.getNameable());
         annotationEClass.getESuperTypes().add(this.getNamedObject());
         stringAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         referenceAnnotationEClass.getESuperTypes().add(this.getAnnotation());
@@ -588,6 +608,10 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         tagAnnotationEClass.getESuperTypes().add(this.getAnnotation());
 
         // Initialize classes and features; add operations and parameters
+        initEClass(nameableEClass, Nameable.class, "Nameable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        addEOperation(nameableEClass, ecorePackage.getEString(), "getName", 1, 1, IS_UNIQUE, IS_ORDERED);
+
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNamedObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

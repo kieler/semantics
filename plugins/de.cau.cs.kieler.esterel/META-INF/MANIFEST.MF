@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Esterel Infrastructure
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.13.0.qualifier
+Bundle-Version: 0.14.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.esterel;singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
@@ -14,9 +14,9 @@ Require-Bundle: org.eclipse.xtext.generator;bundle-version="2.1.0",
  org.antlr.runtime,
  de.cau.cs.kieler.scl;visibility:=reexport,
  de.cau.cs.kieler.kexpressions;visibility:=reexport,
- org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  de.cau.cs.kieler.kicool,
- org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
  de.cau.cs.kieler.scg,
  org.eclipse.emf.mwe2.launch,
  org.eclipse.equinox.common

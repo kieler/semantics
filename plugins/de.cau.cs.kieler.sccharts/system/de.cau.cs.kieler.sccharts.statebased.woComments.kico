@@ -1,0 +1,23 @@
+system de.cau.cs.kieler.sccharts.statebased.woComments
+	label "State-based Compilation (C) w/o Comments"
+
+system de.cau.cs.kieler.sccharts.extended 
+de.cau.cs.kieler.sccharts.processors.triggerEffect
+de.cau.cs.kieler.sccharts.processors.surfaceDepth config {
+    "de.cau.cs.kieler.sccharts.processors.surfaceDepth.DTO": false
+}
+de.cau.cs.kieler.sccharts.scg.processors.SCG
+de.cau.cs.kieler.scg.processors.dependency
+de.cau.cs.kieler.scg.processors.priorities
+de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC
+de.cau.cs.kieler.sccharts.processors.deConditionalize
+de.cau.cs.kieler.sccharts.processors.deSurfaceDepth
+post process de.cau.cs.kieler.sccharts.processors.superfluousSuperstateRemover 
+de.cau.cs.kieler.sccharts.processors.deImmediateDelay
+de.cau.cs.kieler.sccharts.processors.deTriggerEffect config {
+    "de.cau.cs.kieler.sccharts.processors.deTriggerEffect.mergeOnSameAnnotationName": "optPrioIDs"
+}
+de.cau.cs.kieler.sccharts.processors.codegen.statebased config {
+    "de.cau.cs.kieler.kicool.codegen.comments.enabled": false,
+    "de.cau.cs.kieler.kicool.codegen.statebased.printDebug" : false
+}

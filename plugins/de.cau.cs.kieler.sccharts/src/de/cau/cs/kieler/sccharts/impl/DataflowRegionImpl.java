@@ -228,7 +228,7 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (once: ");
         result.append(once);
         result.append(')');

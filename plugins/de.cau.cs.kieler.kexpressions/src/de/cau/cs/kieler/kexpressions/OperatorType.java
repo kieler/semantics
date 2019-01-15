@@ -33,6 +33,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>NOT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical Negation operator (unary)
+     * <!-- end-model-doc -->
      * @see #NOT_VALUE
      * @generated
      * @ordered
@@ -41,6 +44,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>EQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Equals operator
+     * <!-- end-model-doc -->
      * @see #EQ_VALUE
      * @generated
      * @ordered
@@ -49,6 +55,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>LT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Less than operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #LT_VALUE
      * @generated
      * @ordered
@@ -57,6 +66,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>LEQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Less or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #LEQ_VALUE
      * @generated
      * @ordered
@@ -67,6 +79,10 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>LOGICAL AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical AND operator.
+     * 
+     * <!-- end-model-doc -->
      * @see #LOGICAL_AND_VALUE
      * @generated
      * @ordered
@@ -75,6 +91,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>LOGICAL OR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical OR operator.
+     * <!-- end-model-doc -->
      * @see #LOGICAL_OR_VALUE
      * @generated
      * @ordered
@@ -83,6 +102,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic addition operator.
+     * <!-- end-model-doc -->
      * @see #ADD_VALUE
      * @generated
      * @ordered
@@ -93,6 +115,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>SUB</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic subtraction operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #SUB_VALUE
      * @generated
      * @ordered
@@ -103,6 +128,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>MULT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic multiplication operator.
+     * <!-- end-model-doc -->
      * @see #MULT_VALUE
      * @generated
      * @ordered
@@ -113,6 +141,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>DIV</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Aithmetic division operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #DIV_VALUE
      * @generated
      * @ordered
@@ -121,6 +152,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>GEQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #GEQ_VALUE
      * @generated
      * @ordered
@@ -129,6 +163,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>PRE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Pre operator, returns the previous state of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
      * @see #PRE_VALUE
      * @generated
      * @ordered
@@ -137,6 +174,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>GT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater than operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #GT_VALUE
      * @generated
      * @ordered
@@ -147,6 +187,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>MOD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic modulo operation. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #MOD_VALUE
      * @generated
      * @ordered
@@ -155,6 +198,10 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>NE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Not Equal operator.
+     * 
+     * <!-- end-model-doc -->
      * @see #NE_VALUE
      * @generated
      * @ordered
@@ -163,6 +210,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>VAL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Value operator. Returns the value of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
      * @see #VAL_VALUE
      * @generated
      * @ordered

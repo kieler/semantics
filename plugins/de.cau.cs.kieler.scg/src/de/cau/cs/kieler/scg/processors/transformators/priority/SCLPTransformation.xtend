@@ -42,6 +42,8 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -51,12 +53,14 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     
     @Inject extension AnnotationsExtensions
-    @Inject extension SCG2CSerializeHRExtensions
+    @Inject extension CCodeSerializeHRExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
      
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
+    
+    static val TICK_DATA = "TickData"
      
     /** Default indentation of a c file */
     private val DEFAULT_INDENTATION = "  "
@@ -138,6 +142,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      */
     public def transform(SCGraph scg, CodeContainer code) {
         
+        val header = new StringBuilder
         val program = new StringBuilder
         val sb = new StringBuilder
         labelNr  = 0
@@ -152,6 +157,9 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         regionNames.clear
         threadPriorities.clear
         
+        valuedObjectPrefix = "d->";
+        
+        program.addLicense
         program.addHeader(scg);
         program.addGlobalHostcodeAnnotations(scg);
         sb.addProgram(scg);
@@ -163,11 +171,17 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
             program.append(joinSbUnderWordsize)
             program.append("#endif\n\n")            
         }
-        program.declareVariables(scg)
         program.append(sb)
         
-
-        code.addCCode(scg.name + ".c", program.toString, null)
+        header.addLicense
+        header.append("#define false 0\n")
+        header.append("#define true 1\n")
+        header.append("typedef int bool;\n\n")
+        header.declareVariables(scg)
+        header.append("void reset(TickData* d);\nint tick(TickData* d);")
+        
+        code.addCHeader(scg.name + ".h", header.toString, TICK_DATA)
+        code.addCCode(scg.name + ".c", program.toString, TICK_DATA)
     }
     
     
@@ -181,10 +195,8 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      * 
      */
     protected def void addProgram(StringBuilder sb, SCGraph scg) {
-        
-        
-        
-        sb.appendInd("int tick() {\n\n")
+        sb.appendInd("void reset("+TICK_DATA+"* d) {}\n\n")
+        sb.appendInd("int tick("+TICK_DATA+"* d) {\n\n")
         currentIndentation += DEFAULT_INDENTATION
        
                  
@@ -206,12 +218,14 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      */
     protected def void declareVariables(StringBuilder sb, SCGraph scg) {
         
+        sb.appendInd("typedef struct {\n")
+        currentIndentation += DEFAULT_INDENTATION
+        
         for(declaration : scg.variableDeclarations) {
-            if(declaration.type.toString == "string" || declaration.type.toString == "STRING") {
-                sb.append("char*")
-            } else {
-                sb.appendInd(declaration.type.toString)
-            }
+            val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                declaration.type.serializeHR
+                else declaration.hostType
+            sb.appendInd(declarationType.toString)
 
             for(variables : declaration.valuedObjects) {
                 if(!(variables.equals(declaration.valuedObjects.head))) {
@@ -225,6 +239,8 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
             }
             sb.append(";\n")
         }
+        currentIndentation = currentIndentation.substring(0, currentIndentation.length - DEFAULT_INDENTATION.length)
+        sb.appendInd("} "+TICK_DATA+";\n")
         sb.append("\n")
     }
 
@@ -249,28 +265,27 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         val maxPID = (scg.getAnnotation("maxPrioID") as IntAnnotation).value
         
         sb.append(
+              "#define _SC_NOTRACE\n"
+            + "#define _SC_NO_SIGNALS2VARS\n"
+            + "#define _SC_ID_MAX " + maxPID + "\n\n"
+            + "#include \""+ scg.name + ".h\"\n"
+            + "#include \"scl.h\"\n"
+            + "#include \"sc.h\"\n"
+            + "#include \"sc-generic.h\"\n\n")
+//            + "#define true 1\n"
+//            + "#define false 0\n\n")
+    }
+    
+    protected def void addLicense(StringBuilder sb) {
+        
+        sb.append(
             "/*\n" 
             + " * Automatically generated C code by\n" 
             + " * KIELER SCCharts - The Key to Efficient Modeling\n" 
             + " *\n" 
             + " * http:// rtsys.informatik.uni-kiel.de/kieler\n" 
             + " */\n"
-            + "\n"
-            + "#define _SC_NOTRACE\n"
-            + "#define _SC_NO_SIGNALS2VARS\n"
-            + "#define _SC_ID_MAX " + maxPID + "\n\n" 
-//            + "#include \"scl.h\"\n"
-//            + "#include \"sc.h\"\n"
-//            + "#include \"sc.c\"\n"
-//            + "#include \"sc-generic.h\"\n\n" 
-            + "#include \"sim/lib/scl.h\"\n"
-            + "#include \"sim/lib/sc.h\"\n"
-            + "#include \"sim/lib/sc.c\"\n"
-            + "#include \"sim/lib/sc-generic.h\"\n\n"
-            + "#define true 1\n"
-            + "#define false 0\n\n"
-            + "void reset() {}"
-            + "\n\n")
+            + "\n")
     }
  
  // ----------------------------------------------------------------------------------------------------------------
@@ -286,7 +301,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      *              The node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Node node) {
-        valuedObjectPrefix = "";
+//        valuedObjectPrefix = "";
         
         // If the node is a Join, we don't want it to be called within the controlFlow. It is supposed to be 
         //   called from the Fork-Node. This guarantees that a Join will not get a label.

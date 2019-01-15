@@ -52,13 +52,12 @@ class DeclarationsHook extends SynthesisHook {
     }
 
     override processState(State state, KNode node) {
-        if (!state.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
-            val container = node.contentContainer;
-            val declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
+        if (!SHOW_DECLARATIONS.booleanValue) {
+            val container = node.contentContainer
+            val declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER)
 
-            if (declarations != null) {
-                val idx = container.children.indexOf(declarations)
-                container.children.remove(declarations);
+            if (declarations !== null) {
+                container.children.remove(declarations)
             }
         }
     }
@@ -66,12 +65,13 @@ class DeclarationsHook extends SynthesisHook {
     override processRegion(Region region, KNode node) {
         if (region instanceof ControlflowRegion && !region.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
             val parent = node.regionExtendedContainer
-            val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);
-            val container = declarations.eContainer as KContainerRendering
-            // Hide declarations
-            if (declarations != null && container != null) {
-                val idx = container.children.indexOf(declarations)
-                container.children.remove(declarations);
+            val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER)
+            if (declarations !== null) {
+                val container = declarations.eContainer as KContainerRendering
+                // Hide declarations
+                if (declarations !== null && container !== null) {
+                    container.children.remove(declarations)
+                }
             }
         }
     }

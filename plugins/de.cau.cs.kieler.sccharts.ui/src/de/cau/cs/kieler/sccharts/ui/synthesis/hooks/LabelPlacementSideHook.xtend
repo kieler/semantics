@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.labels.decoration.DirectionalArrowsDecorator
+import de.cau.cs.kieler.klighd.labels.decoration.LabelDecorationConfigurator
 import de.cau.cs.kieler.klighd.labels.decoration.LinesDecorator
 import de.cau.cs.kieler.klighd.labels.decoration.RectangleDecorator
 import de.cau.cs.kieler.sccharts.Region
@@ -34,7 +35,6 @@ import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
-import de.cau.cs.kieler.klighd.labels.decoration.LabelDecorationConfigurator
 
 /**
  * Allows users to choose a label side. They may also switch to on-edge labels, either with or without

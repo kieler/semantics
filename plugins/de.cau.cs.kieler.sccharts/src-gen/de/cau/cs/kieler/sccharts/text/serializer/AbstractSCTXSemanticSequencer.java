@@ -47,6 +47,7 @@ import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
@@ -907,6 +908,18 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
+			case KExtPackage.STRUCT_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
+					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getStructDeclarationRule()) {
+					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
@@ -1202,14 +1215,20 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         override?='override'? 
 	 *         final?='final'? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
-	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *         schedule+=ScheduleObjectReference* 
 	 *         (
-	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
-	 *             (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *             (reference=ScopeCall (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? schedule+=ScheduleObjectReference*) | 
+	 *             (
+	 *                 (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *                 schedule+=ScheduleObjectReference* 
+	 *                 (
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *                 )
+	 *             )
 	 *         )
 	 *     )
 	 */
@@ -1244,6 +1263,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         override?='override'? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
@@ -1361,6 +1381,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         annotations+=Annotation* 
 	 *         name=ExtendedID 
 	 *         label=STRING? 
+	 *         (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         actions+=LocalAction* 
 	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?
@@ -1376,7 +1397,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SCCharts returns SCCharts
 	 *
 	 * Constraint:
-	 *     ((pragmas+=Pragma+ rootStates+=RootState+) | rootStates+=RootState+)?
+	 *     (((pragmas+=Pragma | imports+=EString)+ rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1388,7 +1409,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ScopeCall returns ScopeCall
 	 *
 	 * Constraint:
-	 *     (scope=[State|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 *     (super?='super.'? scope=[Scope|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
 	 */
 	protected void sequence_ScopeCall(ISerializationContext context, ScopeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1423,6 +1444,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         (
 	 *             (reference=ScopeCall schedule+=ScheduleObjectReference*) | 
 	 *             (
+	 *                 (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *                 schedule+=ScheduleObjectReference* 
 	 *                 declarations+=DeclarationWOSemicolon* 
 	 *                 actions+=LocalAction* 

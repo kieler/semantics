@@ -101,6 +101,12 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             rootStates.addAll(scgs.scgs.map[ transform ])
         ]
         setModel(sccharts)
+        
+        snapshot
+        
+        for(rootState : sccharts.rootStates.immutableCopy) {
+            rootState.optimizeSuperfluousRegion
+        }
     }
         
     protected def State transform(SCGraph scg) {
@@ -283,7 +289,7 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
         val newState = parentRegion.createState(surface.adoptName("state"))
 
         if (environment.getProperty(COPY_ANNOTATIONS)) {
-            surface.copyAnnotations(newState)
+            surface.depth.copyAnnotations(newState)
         }
         
         if (incoming !== null) {
@@ -312,6 +318,39 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
             return defaultPrefix + nameCounter++
         else 
             return namedObject.name
+    }
+    
+    
+    
+    protected def void optimizeSuperfluousRegion(State state) {
+        if (state.regions.size > 1) return;
+        
+        val cfr = state.regions.filter(ControlflowRegion).head
+        
+        val superstate = cfr.states.filter[ isHierarchical ].head
+        
+        if (superstate === null) return
+        
+        val finalState = cfr.states.filter[ isFinal ].head
+        
+        if (finalState !== null && finalState !== superstate && cfr.states.size == 2 && 
+            superstate.outgoingTransitions.exists[ isTermination && targetState == finalState ]
+        ) {
+            for (t : superstate.outgoingTransitions.filter[ isTermination && targetState == finalState ].toList) {
+                t.targetState = null
+                t.remove
+            }
+            
+            finalState.remove
+        } 
+        
+        if (cfr.states.size == 1) {
+            for (r : superstate.regions.immutableCopy) {
+                cfr.parentState.regions += r
+            }
+                        
+            cfr.remove
+        }
     }
     
 }

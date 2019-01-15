@@ -37,6 +37,10 @@ public enum HistoryType implements Enumerator {
      * The '<em><b>RESET</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A WEAKABORT transition allows the
+     * exited State to execute its contents in that tick.
+     * <!-- end-model-doc -->
      * @see #RESET_VALUE
      * @generated
      * @ordered
@@ -47,6 +51,11 @@ public enum HistoryType implements Enumerator {
      * The '<em><b>SHALLOW</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A STRONGABORT will immediately
+     * leave the state and not allow any actions in
+     * the source State in that tick. 
+     * <!-- end-model-doc -->
      * @see #SHALLOW_VALUE
      * @generated
      * @ordered
@@ -57,6 +66,10 @@ public enum HistoryType implements Enumerator {
      * The '<em><b>DEEP</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A NORMALTERMINATION will leave a State whenever all contained
+     * Regions are in final States. A normal termination may not define a guard trigger.
+     * <!-- end-model-doc -->
      * @see #DEEP_VALUE
      * @generated
      * @ordered

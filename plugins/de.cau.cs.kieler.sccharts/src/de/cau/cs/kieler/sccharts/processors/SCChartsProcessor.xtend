@@ -12,10 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * @author ssm
@@ -23,4 +22,15 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
  * @kieler.rating 2017-07-09 proposed yellow  
  */
 abstract class SCChartsProcessor extends InplaceProcessor<SCCharts> {
+    
+    public static val SCCHARTS_GENERATED = "sccharts-generated"
+    
+    var VariableStore voStore = null
+    
+    protected def voStore() {
+        if (voStore === null) {
+            voStore = VariableStore.getVariableStore(environment)
+        }
+        return voStore
+    } 
 }

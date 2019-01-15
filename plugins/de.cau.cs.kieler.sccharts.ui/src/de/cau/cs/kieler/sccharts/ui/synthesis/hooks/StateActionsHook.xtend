@@ -65,39 +65,37 @@ class StateActionsHook extends SynthesisHook {
     }
 
     override processState(State state, KNode node) {
-        if (!state.actions.empty) {
-            val container = node.contentContainer
-            val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
+        val container = node.contentContainer
+        val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
 
-            if (actions != null) {
-                // Break Effect chains
-                if (LINEBREAKS_IN_EFFECTS.booleanValue) {
-                    for (actionContainer : actions.children.filter(KRectangle).map[children.filter(KRectangle).head].filterNull) {
-                        val collumns = (actionContainer.childPlacement as KGridPlacement).numColumns
-                        var kText = actionContainer.children.filter(KText).last
-                        // Split effect lines
-                        val lines = kText.text.split(";")
-                        if (lines.length > 1) {
-                            kText.text = lines.head.trim + ";"
-                            for (var i = 1; i < lines.length; i++) {
-                                // Create invisible placeholders to align lines
-                                for (var j = 0 ; j < (collumns - 1) ; j++) {
-                                    actionContainer.addRectangle => [
-                                        invisible = true
-                                    ]
-                                }
-                                // Add separate line
-                                actionContainer.addText(lines.get(i).trim + if (i < (lines.length - 1)) ";" else "") => [
-                                    horizontalAlignment = H_LEFT
+        if (actions !== null) {
+            // Break Effect chains
+            if (LINEBREAKS_IN_EFFECTS.booleanValue) {
+                for (actionContainer : actions.children.filter(KRectangle).map[children.filter(KRectangle).head].filterNull) {
+                    val collumns = (actionContainer.childPlacement as KGridPlacement).numColumns
+                    var kText = actionContainer.children.filter(KText).last
+                    // Split effect lines
+                    val lines = kText.text.split(";")
+                    if (lines.length > 1) {
+                        kText.text = lines.head.trim + ";"
+                        for (var i = 1; i < lines.length; i++) {
+                            // Create invisible placeholders to align lines
+                            for (var j = 0 ; j < (collumns - 1) ; j++) {
+                                actionContainer.addRectangle => [
+                                    invisible = true
                                 ]
                             }
+                            // Add separate line
+                            actionContainer.addText(lines.get(i).trim + if (i < (lines.length - 1)) ";" else "") => [
+                                horizontalAlignment = H_LEFT
+                            ]
                         }
                     }
                 }
-                // Hide actions
-                if (!SHOW_STATE_ACTIONS.booleanValue) {
-                    container.children.remove(actions)
-                }
+            }
+            // Hide actions
+            if (!SHOW_STATE_ACTIONS.booleanValue) {
+                container.children.remove(actions)
             }
         }
     }

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.esterel.ui.scest;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.esterel.ui.internal.SCEstActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class SCEstExecutableExtensionFactory extends AbstractGuiceAwareExecutabl
 
 	@Override
 	protected Bundle getBundle() {
-		return SCEstActivator.getInstance().getBundle();
+		return Platform.getBundle(SCEstActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return SCEstActivator.getInstance().getInjector(SCEstActivator.DE_CAU_CS_KIELER_ESTEREL_SCEST_SCEST);
+		SCEstActivator activator = SCEstActivator.getInstance();
+		return activator != null ? activator.getInjector(SCEstActivator.DE_CAU_CS_KIELER_ESTEREL_SCEST_SCEST) : null;
 	}
-	
+
 }

@@ -1,0 +1,4 @@
+system de.cau.cs.kieler.sccharts.csv
+	label "CSV TO SCTX Compilation"
+
+de.cau.cs.kieler.sccharts.processors.CSVToSCTX

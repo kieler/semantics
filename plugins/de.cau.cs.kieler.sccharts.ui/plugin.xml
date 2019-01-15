@@ -28,6 +28,10 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction"
+            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.toggleDependencyAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
@@ -90,6 +94,9 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook">
       </hook>
    </extension>
    <extension
@@ -493,6 +500,48 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.sccharts.text.SCTX">
       </editor>
    </extension>
-   
+   <extension
+         id="de.cau.cs.kieler.sccharts.ui.application.SCChartFileRenderingApplication"
+         name="SCCharts File Renderer"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="de.cau.cs.kieler.sccharts.ui.application.SCChartFileRenderingApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="de.cau.cs.kieler.sccharts.ui.wizard.SctxFileWizard"
+            hasPages="true"
+            icon="icons/sccharts_icon16.png"
+            id="de.cau.cs.kieler.sccharts.ui.sctxWizard"
+            name="SCChart"
+            project="false">
+         <description>
+            Create a new SCCharts Text file.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.ui.sctxWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.ui.sctxWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
    
 </plugin>

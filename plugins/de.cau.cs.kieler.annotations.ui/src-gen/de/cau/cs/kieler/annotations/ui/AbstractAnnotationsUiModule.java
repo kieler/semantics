@@ -13,6 +13,7 @@ import de.cau.cs.kieler.annotations.ui.labeling.AnnotationsDescriptionLabelProvi
 import de.cau.cs.kieler.annotations.ui.labeling.AnnotationsLabelProvider;
 import de.cau.cs.kieler.annotations.ui.outline.AnnotationsOutlineTreeProvider;
 import de.cau.cs.kieler.annotations.ui.quickfix.AnnotationsQuickfixProvider;
+import de.cau.cs.kieler.annotations.validation.AnnotationsValidatorConfigurationBlock;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ide.LexerIdeBindings;
@@ -49,6 +50,7 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
+import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link AnnotationsUiModule}.
@@ -106,6 +108,11 @@ public abstract class AbstractAnnotationsUiModule extends DefaultUiModule {
 		binder.bind(InternalAnnotationsLexer.class).toProvider(LexerProvider.create(InternalAnnotationsLexer.class));
 	}
 	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
+		return AnnotationsValidatorConfigurationBlock.class;
+	}
+	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
 	public Class<? extends PrefixMatcher> bindPrefixMatcher() {
 		return FQNPrefixMatcher.class;
@@ -152,6 +159,13 @@ public abstract class AbstractAnnotationsUiModule extends DefaultUiModule {
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public void configureIPreferenceStoreInitializer(Binder binder) {
+		binder.bind(IPreferenceStoreInitializer.class)
+			.annotatedWith(Names.named("RefactoringPreferences"))
+			.to(RefactoringPreferences.Initializer.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameStrategy> bindIRenameStrategy() {
 		return DefaultRenameStrategy.class;
 	}
@@ -159,13 +173,6 @@ public abstract class AbstractAnnotationsUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IReferenceUpdater> bindIReferenceUpdater() {
 		return DefaultReferenceUpdater.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
-	public void configureIPreferenceStoreInitializer(Binder binder) {
-		binder.bind(IPreferenceStoreInitializer.class)
-			.annotatedWith(Names.named("RefactoringPreferences"))
-			.to(RefactoringPreferences.Initializer.class);
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2

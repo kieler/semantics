@@ -45,4 +45,14 @@ class KExpressionsValidator extends AbstractKExpressionsValidator {
     }
     
     
+    @Check
+    def void checkPrivateDeclaration(VariableDeclaration declaration) {
+        if (declaration.private) {
+            if (declaration instanceof VariableDeclaration) {
+                if (declaration.input || declaration.output) {
+                    error("A private declaration cannot be a public input output interface", declaration, null, -1)
+                }
+            }
+        }
+    }
 }

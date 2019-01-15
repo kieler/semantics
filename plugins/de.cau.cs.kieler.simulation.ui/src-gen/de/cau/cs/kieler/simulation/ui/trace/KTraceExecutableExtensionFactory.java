@@ -5,6 +5,7 @@ package de.cau.cs.kieler.simulation.ui.trace;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.simulation.ui.internal.KTraceActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class KTraceExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 
 	@Override
 	protected Bundle getBundle() {
-		return KTraceActivator.getInstance().getBundle();
+		return Platform.getBundle(KTraceActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return KTraceActivator.getInstance().getInjector(KTraceActivator.DE_CAU_CS_KIELER_SIMULATION_TRACE_KTRACE);
+		KTraceActivator activator = KTraceActivator.getInstance();
+		return activator != null ? activator.getInjector(KTraceActivator.DE_CAU_CS_KIELER_SIMULATION_TRACE_KTRACE) : null;
 	}
-	
+
 }

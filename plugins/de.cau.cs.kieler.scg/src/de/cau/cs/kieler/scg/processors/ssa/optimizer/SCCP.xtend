@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -87,6 +88,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     
     override process() {
         model.scgs.forEach[transform]
+        VariableStore.get(environment).removeAllUncontainedVO(model, environment)
         model = model
     }
 

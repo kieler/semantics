@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool Ui
 Bundle-SymbolicName: de.cau.cs.kieler.kicool.ui;singleton:=true
-Bundle-Version: 0.13.0.qualifier
+Bundle-Version: 0.14.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kicool.ui.internal.KiCoolActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -14,24 +14,24 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.annotations.ui,
  de.cau.cs.kieler.klighd.ui.view,
  com.google.guava,
- org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  org.eclipse.xtend.lib;resolution:=optional,
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.krendering.extensions,
  org.eclipse.elk.alg.layered,
  de.cau.cs.kieler.klighd.ui,
- org.eclipse.elk.core,
  org.eclipse.ui.ide,
  org.eclipse.xtext.xbase.ui,
- de.cau.cs.kieler.core.model,
  org.eclipse.emf.ecore.edit,
  de.cau.cs.kieler.kgraph.text,
  de.cau.cs.kieler.kexpressions,
- de.cau.cs.kieler.prom.ui,
  de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kexpressions.ui,
- de.cau.cs.kieler.kexpressions.ide
+ de.cau.cs.kieler.kexpressions.ide,
+ org.eclipse.debug.core;bundle-version="3.11.0",
+ org.eclipse.core.externaltools;bundle-version="1.1.0",
+ org.eclipse.debug.ui;bundle-version="3.12.50"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,

@@ -3,8 +3,11 @@
 package de.cau.cs.kieler.kexpressions.kext.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Link;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
@@ -78,6 +81,7 @@ public class KExtSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(kext);
                 if (result == null) result = caseReferenceable(kext);
                 if (result == null) result = caseNamedObject(kext);
+                if (result == null) result = caseNameable(kext);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -88,6 +92,7 @@ public class KExtSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(kExtScope);
                 if (result == null) result = caseReferenceable(kExtScope);
                 if (result == null) result = caseNamedObject(kExtScope);
+                if (result == null) result = caseNameable(kExtScope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -107,6 +112,18 @@ public class KExtSwitch<T> extends Switch<T> {
             case KExtPackage.DECLARATION_SCOPE: {
                 DeclarationScope declarationScope = (DeclarationScope)theEObject;
                 T result = caseDeclarationScope(declarationScope);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExtPackage.STRUCT_DECLARATION: {
+                StructDeclaration structDeclaration = (StructDeclaration)theEObject;
+                T result = caseStructDeclaration(structDeclaration);
+                if (result == null) result = caseDeclarationScope(structDeclaration);
+                if (result == null) result = caseVariableDeclaration(structDeclaration);
+                if (result == null) result = caseNamedObject(structDeclaration);
+                if (result == null) result = caseDeclaration(structDeclaration);
+                if (result == null) result = caseNameable(structDeclaration);
+                if (result == null) result = caseAnnotatable(structDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -190,6 +207,21 @@ public class KExtSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseStructDeclaration(StructDeclaration object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -220,6 +252,21 @@ public class KExtSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -231,6 +278,36 @@ public class KExtSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseNamedObject(NamedObject object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseVariableDeclaration(VariableDeclaration object) {
         return null;
     }
 

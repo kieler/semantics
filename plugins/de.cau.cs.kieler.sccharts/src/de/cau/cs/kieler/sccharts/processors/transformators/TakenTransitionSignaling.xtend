@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.List
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * @author aas
@@ -86,20 +87,33 @@ class TakenTransitionSignaling extends SCChartsProcessor {
         // Just consider the root state. Otherwise, the taken takenTransition interface will not be bound properly 
         // across reference states.          
         for (rootState : newArrayList(model.rootStates.head)) {
+            // rename existing tt signals
+            val nameCollisions = rootState.allScopes.toIterable.map[declarations].flatten.map[valuedObjects].flatten.filter[transitionArrayName.equals(name)]
+            for (nameCollision : nameCollisions) {
+                nameCollision.uniqueName
+                voStore.update(nameCollision)
+            }
+            
             val transitions = rootState.getTransitions
             if(transitions.size > 0) {
                 environment.setProperty(ARRAY_SIZE, transitions.size)
                 // Create new root state to encapsule the behavior of the original model
-                val newRootState = rootState.encapsuleInSuperstate
-                model.rootStates.add(newRootState)
-                
+                // als: I don't know why this needs to be encapsulated? -> deactivated it
+//                val newRootState = rootState.encapsuleInSuperstate
+//                model.rootStates.add(0, newRootState)
+                                
                 // Create transition array
                 val transitionArrayDecl = createIntDeclaration
-                val transitionArray = newRootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
+//                val transitionArray = newRootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
+                val transitionArray = rootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
                 // Create assignments to taken transition array
                 rootState.createEmitForTakenTransitions(transitions, transitionArray)
                 // Create reset region
-                newRootState.createResetRegion(transitionArray)
+//                newRootState.createResetRegion(transitionArray)
+                rootState.createResetRegion(transitionArray)
+                
+                // Regiser in VO Store
+                voStore.update(transitionArray, SCCHARTS_GENERATED, "simulation")
             }
         }
     }
@@ -153,9 +167,8 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     private def void createResetRegion(State rootState, ValuedObject transitionArray) {
         // Add reset region in root state to set variables to false at start of tick
         val newRegion = rootState.createControlflowRegion("taken_transition_signaling_reset")
-        val initState = newRegion.createFinalState("init")
+        val initState = newRegion.createInitialState("init")
         initState.label = null
-        initState.initial = true
         
         val pauseState = newRegion.createFinalState("pause")
         // Create transition for the effects to reset the variables

@@ -28,7 +28,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.List
@@ -84,13 +83,10 @@ class Deferred extends SCChartsProcessor implements Traceable {
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    private val nameCache = new UniqueNameCache
-
     //-------------------------------------------------------------------------
     //--             D E F E R R E D     T R A N S I T I O N                 --
     //-------------------------------------------------------------------------
@@ -102,7 +98,6 @@ class Deferred extends SCChartsProcessor implements Traceable {
     // transition in case deferVariable is set to TRUE, i.e., the state was entered
     // by a deferred transition.
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all states
         rootState.allStates.forEach [ targetTransition |
             targetTransition.transformDeferredState;
@@ -124,8 +119,8 @@ class Deferred extends SCChartsProcessor implements Traceable {
             }
             // Add a new deferVariable to the outer state, set it initially to FALSE and
             // add a during action in the state to reset it to FALSE
-            val deferVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "deferred", createBoolDeclaration).
-                uniqueName(nameCache)
+            val deferVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "deferred", createBoolDeclaration).uniqueName
+            voStore.update(deferVariable, SCCHARTS_GENERATED)
             deferVariable.setInitialValue(FALSE)
             val resetDeferSignalAction = state.createDuringAction
             resetDeferSignalAction.addEffect(deferVariable.createAssignment(FALSE))

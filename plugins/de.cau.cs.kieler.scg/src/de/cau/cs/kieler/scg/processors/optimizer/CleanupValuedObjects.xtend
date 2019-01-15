@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
@@ -54,6 +55,8 @@ class CleanupValuedObjects extends InplaceProcessor<SCGraphs> {
         for (scg : model.scgs) {
             scg.performCleanupValuedObjects
         }
+        
+        VariableStore.get(environment).removeAllUncontainedVO(model, environment)
     }
     
     def performCleanupValuedObjects(SCGraph scg) {

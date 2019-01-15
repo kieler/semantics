@@ -6,7 +6,7 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 import "http://kieler.cs.cau.de/simulation/ktrace" as ktrace
 
 TraceFile returns ktrace::TraceFile:
-    EsoTraces | KTraces
+    KTraces | EsoTraces
 ;
 
 // -- ESO --
@@ -50,6 +50,6 @@ KTrace returns ktrace::Trace:
 KTick returns ktrace::Tick:
     {ktrace::Tick}
     (inputs+=Assignment)*
-    ('=>' (outputs+=Assignment)*)?
+    ('=>' (outputs+=Assignment)+)?
     'pause'? ';'
 ;    

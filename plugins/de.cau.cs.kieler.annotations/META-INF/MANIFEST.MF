@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Annotations
 Bundle-SymbolicName: de.cau.cs.kieler.annotations;singleton:=true
-Bundle-Version: 0.13.0.qualifier
+Bundle-Version: 0.14.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
@@ -28,7 +28,7 @@ Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.12.0",
  org.apache.commons.logging;bundle-version="1.1.1",
  org.eclipse.xtext.common.types,
  org.eclipse.xtext.xbase.lib;bundle-version="2.12.0",
- org.antlr.runtime,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
  org.eclipse.xtext,
  org.eclipse.core.runtime,

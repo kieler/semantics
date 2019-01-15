@@ -40,7 +40,9 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExten
 import de.cau.cs.kieler.kexpressions.keffects.Linkable
 import de.cau.cs.kieler.kexpressions.keffects.Link
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
-
+import de.cau.cs.kieler.scg.TickBoundaryDependency
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
  * The class is separated in several categories. If a category growths too big, it may be 
@@ -73,6 +75,11 @@ class SCGDependencyExtensions extends KEffectsDependencyExtensions {
 	
 	def Iterable<Dependency> getDependenciesView(Linkable linkable) {
 	    return linkable.outgoingLinks.filter(Dependency)
+	}
+	
+	def removeDependency(Dependency dependency) {
+	    dependency.target = null
+	    dependency.remove
 	}
 	
     def DataDependency createDataDependency(Node source, Node target, DataDependencyType type) {
@@ -108,6 +115,13 @@ class SCGDependencyExtensions extends KEffectsDependencyExtensions {
     		source.dependencies += it
     		it.target = target
     	]
+    }
+    
+    def TickBoundaryDependency createTickBoundaryDependency(Node source, Node target) {
+        ScgFactory::eINSTANCE.createTickBoundaryDependency => [ 
+            source.dependencies += it
+            it.target = target
+        ]
     }
     
     def boolean areOldConfluentSetter(Assignment sourceAssignment, Assignment targetAssignment) {

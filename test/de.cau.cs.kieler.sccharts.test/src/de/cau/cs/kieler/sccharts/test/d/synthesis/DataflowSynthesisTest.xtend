@@ -19,12 +19,13 @@ import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import static org.junit.Assert.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KNode
+
+import static org.junit.Assert.*
+import static org.junit.Assume.*
 
 /**
  * Tests if the new dependency analysis is as good as the old one.
@@ -62,6 +63,8 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     @Test(timeout=10000)
     def void testDataflowSynthesis(SCCharts scc, TestModelData modelData) {
+//        assumeFalse(true)
+        
         for (rootState : scc.rootStates) {
             val kNodesStr = rootState.getStringAnnotationValue(ANNOTATION_KNODES)
             val kEdgesStr = rootState.getStringAnnotationValue(ANNOTATION_KEDGES)
@@ -93,8 +96,7 @@ class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             if (kedges > -1 && edges != kedges) {
                 fail("The synthesized number of kedges is not equal to the expected count of knodes. Synthesized: " 
                     + edges + ", Expected: " + kedges + " (base count: " + KEDGE_BASE_COUNT + ")")
-            } 
-             
+            }
         }
     }
     

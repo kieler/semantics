@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.scl.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -26,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ModuleImpl extends ScopeImpl implements Module {
+public class ModuleImpl extends ScopeImpl implements de.cau.cs.kieler.scl.Module {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -152,6 +153,11 @@ public class ModuleImpl extends ScopeImpl implements Module {
      */
     @Override
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case SCLPackage.MODULE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -168,6 +174,11 @@ public class ModuleImpl extends ScopeImpl implements Module {
      */
     @Override
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return SCLPackage.MODULE__NAME;
@@ -186,7 +197,7 @@ public class ModuleImpl extends ScopeImpl implements Module {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

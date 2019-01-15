@@ -34,13 +34,15 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.processors.transformators.codegen.java.JavaCodeSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
 import java.util.Stack
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -50,7 +52,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     
     @Inject extension AnnotationsExtensions
-    @Inject extension SCG2JavaSerializeHRExtensions
+    @Inject extension JavaCodeSerializeHRExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
@@ -150,7 +152,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         
         program.addImports(programName)
         
-        program.appendInd("public class " + programName + " extends SJLProgramForPriorities<State> {\n")
+        program.appendInd("public class " + programName + " extends SJLProgramForPriorities<" + programName + ".State> {\n")
         
         currentIndentation += DEFAULT_INDENTATION
         
@@ -171,15 +173,15 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         program.appendInd("}\n")
         program.toString
         
-        code.addJavaCode(scg.name + ".java", program.toString)
+        code.addJavaCode(programName + ".java", program.toString)
     }
     
     /** 
      *  Adds the required imports to the file
      */
     protected def void addImports(StringBuilder sb, String programName) {        
-        sb.appendInd("import model." + programName + ".State;\n")
-        sb.appendInd("import static model." + programName + ".State.*;\n\n")
+//        sb.appendInd("import " + programName + ".State;\n")
+//        sb.appendInd("import static " + programName + ".State.*;\n\n")
     }
     
     protected def void addReset(StringBuilder sb, SCGraph scg) {
@@ -193,7 +195,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
      * @param sb the StringBuilder to append the state enumeration to
      */
     protected def void addStates(StringBuilder sb) {
-        sb.appendInd("enum State {\n")
+        sb.appendInd("public static enum State {\n")
         currentIndentation += DEFAULT_INDENTATION
         for(state : states) {
             sb.appendInd(state)
@@ -219,11 +221,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         for(declaration : scg.variableDeclarations) {
             if (declaration.valuedObjects.exists[ cardinalities.empty ]) {
                 sb.appendInd("public ")
-                var type = declaration.type.toString
-                if(type == "bool") {
-                    type = "boolean"
-                }
-                sb.append(type)
+                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    declaration.type.serializeHR
+                    else declaration.hostType
+                sb.append(declarationType)
                 for (variable : declaration.valuedObjects.filter[ cardinalities.empty ].indexed) {
                     if (variable.key !== 0) {
                         sb.append(",")
@@ -235,11 +236,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             }
             if (declaration.valuedObjects.exists[ !cardinalities.empty ]) {
                 sb.appendInd("public ")
-                var type = declaration.type.toString
-                if(type == "bool") {
-                    type = "boolean"
-                }
-                sb.append(type)
+                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    declaration.type.serializeHR
+                    else declaration.hostType
+                sb.append(declarationType)
                 sb.append("[]")
                 for (variable : declaration.valuedObjects.filter[ !cardinalities.empty ].indexed) {
                     if (variable.key !== 0) {
@@ -259,9 +259,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         if (!valuedObject.cardinalities.empty) {
             val declaration = valuedObject.eContainer as VariableDeclaration
             sb.append(" = new ")
-            var type = declaration.type.toString
-            if (type == "bool") { type = "boolean" }
-            sb.append(type)
+            val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                declaration.type.serializeHR
+                else declaration.hostType
+            sb.append(declarationType)
             for (card : valuedObject.cardinalities) {
                 sb.append("[" + card.serializeHR + "]")
             } 
@@ -279,7 +280,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
      */
     protected def void addConstructor(StringBuilder sb, String programName) {
         sb.appendInd("public " + programName + "() {\n")
-        sb.appendInd("  super(" + initialState + ", " + startPriority + ", " + maxPriority + ");\n")
+        sb.appendInd("  super(State." + initialState + ", " + startPriority + ", " + maxPriority + ");\n")
         sb.appendInd("}\n\n\n")
     }
     
@@ -345,7 +346,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             if(!(prev instanceof Fork) && (!(prev instanceof Surface)) && prevPrio.value != prio.value) {
                 var newLabel = "_L_" + labelNr++
-                sb.appendInd("prioB(" + prio.value + ", " + newLabel +  ");\n")
+                sb.appendInd("prioB(" + prio.value + ", State." + newLabel +  ");\n")
                 sb.appendInd("if (true) break;\n\n")
                 sb.addCase(newLabel)
                 val entry = node.threadEntry
@@ -365,7 +366,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
 
         // If the node has already been visited before, add a gotoB, instead of translating it again
         if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
-            sb.appendInd("gotoB(" + labeledNodes.get(node) + ");\n")
+            sb.appendInd("gotoB(State." + labeledNodes.get(node) + ");\n")
             sb.appendInd("if (true) break;\n\n")
             return
             
@@ -450,7 +451,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         if(labeledNodes.containsKey(cond.then.target)) {
 
             // Goto already translated node
-            sb.appendInd("gotoB(" + labeledNodes.get(cond.then.target) + ");\n")
+            sb.appendInd("gotoB(State." + labeledNodes.get(cond.then.target) + ");\n")
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("} ")
             isIfTranslated = false
@@ -458,7 +459,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         } else {
             // Create goto and label
             ifLabel = "_L_" + labelNr++
-            sb.appendInd("gotoB(" + ifLabel + ");\n")
+            sb.appendInd("gotoB(State." + ifLabel + ");\n")
             labeledNodes.put(cond.then.targetNode, ifLabel)  
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("} ")
@@ -475,7 +476,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         if(labeledNodes.containsKey(cond.^else.target)) {
 
             // Goto already translated node
-            sb.appendInd("gotoB(" + labeledNodes.get(cond.^else.target) + ");\n")
+            sb.appendInd("gotoB(State." + labeledNodes.get(cond.^else.target) + ");\n")
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("}\n")
             isElseTranslated = false
@@ -484,7 +485,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             
             // Create goto and label
             elseLabel = "_L_" + labelNr++
-            sb.appendInd("gotoB(" + elseLabel + ");\n")      
+            sb.appendInd("gotoB(State." + elseLabel + ");\n")      
             labeledNodes.put(cond.^else.targetNode, elseLabel)  
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("}\n")
@@ -598,9 +599,9 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         
         // Create the fork
         for(thread : threadInfo) {
-            sb.appendInd("fork(" + thread.key + ", " + thread.value + ");\n")
+            sb.appendInd("fork(State." + thread.key + ", " + thread.value + ");\n")
         }
-        sb.appendInd("gotoB(" + forkLabel + ");\n")
+        sb.appendInd("gotoB(State." + forkLabel + ");\n")
         sb.appendInd("if (true) break;\n\n")
 
         // Append all threads
@@ -630,7 +631,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
             newLabel  = "_L_" + labelNr++            
             
             // Go to the new join-"state"
-            sb.appendInd("gotoB(" + newLabel + ");\n")
+            sb.appendInd("gotoB(State." + newLabel + ");\n")
             sb.appendInd("if (true) break;\n\n")
         }
         val nextLabel = "_L_" + labelNr++
@@ -644,7 +645,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         }
         sb.append(") {\n")
         currentIndentation += DEFAULT_INDENTATION
-        sb.appendInd("pauseB(" + newLabel + ");\n")
+        sb.appendInd("pauseB(State." + newLabel + ");\n")
         sb.appendInd("if (true) break;\n")
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("}\n\n")
@@ -713,7 +714,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
                     labeledNodes.put(exit.next.targetNode, newLabel)                
                 }
                 
-                sb.appendInd("gotoB(" + newLabel + ");\n")
+                sb.appendInd("gotoB(State." + newLabel + ");\n")
                 sb.appendInd("if (true) break;\n\n")
             }
         }
@@ -736,7 +737,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         
         if(prio != depPrio) {
             val newLabel = "_L_" + labelNr++
-            sb.appendInd("prioB(" + depPrio + ", " + newLabel + ");\n")
+            sb.appendInd("prioB(" + depPrio + ", State." + newLabel + ");\n")
             sb.appendInd("if (true) break;\n\n")
             sb.addCase(newLabel)
         }
@@ -747,7 +748,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         }
         
         val newLabel = "_L_" + labelNr++
-        sb.appendInd("pauseB(" + newLabel + ");\n")
+        sb.appendInd("pauseB(State." + newLabel + ");\n")
         labeledNodes.put(sur.depth, newLabel)
         sb.appendInd("if (true) break;\n\n")
         

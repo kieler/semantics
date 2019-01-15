@@ -143,7 +143,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         edge.setSelectionStyle
 
         // Add Label
-        val label = transition.serializeLabel(!SHOW_USER_LABELS.booleanValue)
+        val label = transition.serializeLabel(SHOW_USER_LABELS.booleanValue)
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }

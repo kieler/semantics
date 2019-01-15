@@ -13,32 +13,75 @@
 package de.cau.cs.kieler.esterel.test.simulation
 
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
 
 import static org.junit.Assume.*
 
 /**
- * @author aas
+ * @author als
  * 
  */
-class EsterelSCLSimulationTest extends EsterelSimulationTestBase implements SimulationListener {
+class EsterelSCLSimulationTest extends AbstractSimulationTest<EsterelProgram> {
     
-    override createSimulationBackend() {
-        return super.createCSimulationBackend
+    public static val String NETLIST_C_SYSTEM = null
+    public static val String NETLIST_JAVA_SYSTEM = null
+    public static val String PRIO_C_SYSTEM = null
+    public static val String PRIO_JAVA_SYSTEM = null
+    
+    static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
+    
+    new() {
+        super(esterelInjector)
     }
     
     override filter(TestModelData modelData) {
-        return modelData.isNetlistCompilationTests
-        && modelData.isEsterelTest
-        && !modelData.modelProperties.contains("simulation-fails-esterel-scl")
+        return modelData.hasSimulationTrace
+            && modelData.modelProperties.contains("esterel")
+            && !modelData.modelProperties.contains("known-to-fail")
+            && !modelData.modelProperties.contains("must-fail")
     }
     
-    @Test//(timeout=60000)
-    def void testSimulationEsterelScl(EsterelProgram est, TestModelData modelData) {
-        assumeFalse(true) // Do nothing !!
-        
-        startSimulationTest(#["de.cau.cs.kieler.esterel.scest.scl.netlist"], est, modelData)
+    @Test
+    def void testSimulationNetlistC(EsterelProgram esterel, TestModelData modelData) {
+        assumeTrue("TODO Esterel simulation tests", false)
     }
+
+//    @Test
+//    def void testSimulationNetlistC(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
+//        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
+//        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+//        
+//        startSimulationTest(NETLIST_C_SYSTEM, esterel, modelData, "EsterelSimulationNetlistC")
+//    }
+//    
+//    @Test
+//    def void testSimulationNetlistJava(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-java") || modelData.modelProperties.contains("simulation-fails-java"))
+//        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
+//        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+//        
+//        startSimulationTest(NETLIST_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationNetlistJava")
+//    }
+//
+//    @Test
+//    def void testSimulationPrioC(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
+//        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
+//        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+//        
+//        startSimulationTest(PRIO_C_SYSTEM, esterel, modelData, "EsterelSimulationPrioC")
+//    }
+//    
+//    @Test
+//    def void testSimulationPrioJava(EsterelProgram esterel, TestModelData modelData) {
+//        assumeFalse("Skip this test property", modelData.modelProperties.contains("simulation-fails-prio-java") || modelData.modelProperties.contains("simulation-fails-java"))
+//        assumeFalse("Has not-IASC property", modelData.modelProperties.contains("not-iasc"))
+//        assumeFalse("Has not-SIASC property", modelData.modelProperties.contains("not-siasc"))
+//        
+//        startSimulationTest(PRIO_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationPrioJava")
+//    }
 }

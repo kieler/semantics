@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import org.eclipse.ui.IEditorPart
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import org.eclipse.ui.editors.text.TextEditor
 
 /**
  * @author ssm
@@ -38,7 +39,7 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 class CompilationAction {
 
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+            "de.cau.cs.kieler.kicool.ui", "icons/compile.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
@@ -113,6 +114,9 @@ class CompilationAction {
                 }
             });   
             return m 
-        }    
+        } else if (editor instanceof TextEditor) {
+            val doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+            return doc.get();
+        }     
     }
 }

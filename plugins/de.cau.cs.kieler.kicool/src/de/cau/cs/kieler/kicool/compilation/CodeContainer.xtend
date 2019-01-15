@@ -13,11 +13,12 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import java.io.File
+import java.nio.file.Files
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.Data
 
-import static extension com.google.common.base.Preconditions.*
+import static com.google.common.base.Preconditions.*
 
 /**
  * A CodeContainer contains a map of files. Each file is represented by a string.
@@ -59,6 +60,14 @@ class CodeContainer {
         checkArgument(fileName.endsWith(".java"), "File name has not the correct pattern for java source files")
         files += new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java")))
     }
+    
+    def addProxyCCodeFile(File file) {
+        files += new ProxyCCodeFile(file)
+    }
+    
+    def addProxyJavaFile(File file) {
+        files += new ProxyJavaCodeFile(file)
+    }
 }
 
 @Data
@@ -79,8 +88,53 @@ class CCodeFile extends CodeFile {
     val String dataStructName
 }
 
+class ProxyCCodeFile extends CCodeFile {
+    
+    val File file
+    var String contentCache
+    
+    new(File file) {
+        super(file.name, null, file.name.endsWith(".h"), null)
+        this.file = file
+    }
+    
+    override getFile() {
+        return file
+    }
+    
+    override getCode() {
+        if (contentCache === null) {
+            contentCache = new String(Files.readAllBytes(file.toPath))
+        }
+        return contentCache
+    }    
+}
+
 @Data
 class JavaCodeFile extends CodeFile {
     
     val String className
+}
+
+
+class ProxyJavaCodeFile extends JavaCodeFile {
+    
+    val File file
+    var String contentCache
+    
+    new(File file) {
+        super(file.name, null, file.name)
+        this.file = file
+    }
+    
+    override getFile() {
+        return file
+    }
+    
+    override getCode() {
+        if (contentCache === null) {
+            contentCache = new String(Files.readAllBytes(file.toPath))
+        }
+        return contentCache
+    }    
 }

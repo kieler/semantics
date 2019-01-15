@@ -137,14 +137,14 @@ def setCategoryDesc(category, targetplatform, args):
         pause(args)
 
     for ref in xml.findall('./repository-reference'):
-        print 'Removed references repository: %s' % ref.attrib['location']
+        print 'Removed reference to repository: %s' % ref.attrib['location']
         root.remove(ref)
     for ref in targetplatform:
         refElem = etree.Element('repository-reference')
         refElem.attrib['location'] = ref
         refElem.attrib['enabled'] = 'true'
         root.append(refElem)
-        print 'Added references repository: %s' % ref
+        print 'Added reference to repository: %s' % ref
 
     writeXML(xml, category)
          

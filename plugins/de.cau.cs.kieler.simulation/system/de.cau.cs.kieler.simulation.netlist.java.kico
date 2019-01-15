@@ -1,47 +1,28 @@
-developer simulation system de.cau.cs.kieler.sccharts.^simulation.netlist.java
-    label "Netlist-based Simulation (Java)"
+developer system de.cau.cs.kieler.sccharts.^simulation.netlist.java
+    label "Netlist-based Simulation (Java, No-TTS)"
 
-de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
 system de.cau.cs.kieler.sccharts.netlist.java
 de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
-        "org/json": "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/libs/org/json",
-        "templates/Main.ftl": "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/templates/Main.ftl",
-        "templates/Injection.ftl": "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/Injection.ftl"
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/libs/org/json": "org/json",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/java/templates/java-main.ftl": "templates/java-main.ftl",
+        "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
     }
 }
+post process silent de.cau.cs.kieler.kivis.gen config {
+    "de.cau.cs.kieler.kivis.autosearch": true
+}
+pre process de.cau.cs.kieler.^simulation.java.ticktime
 pre process de.cau.cs.kieler.^simulation.java.template
 de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.kicool.deploy.templates": {
-        "Main.java": "templates/Main.ftl"
+        "templates/java-main.ftl": "Main.java"
     }
 }
 de.cau.cs.kieler.kicool.deploy.compiler.java config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main.java", "org/json"],
-    "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.name": "simulation-main.jar",
+    "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.name": "Simulation.jar",
     "de.cau.cs.kieler.kicool.deploy.compiler.java.jar.entry": "Main"
 }
-//de.cau.cs.kieler.simulation
-
-
-// Compile models to Java code
-//model compiler kico {
-//  outputFolder: kieler-gen
-//  outputFileExtension: java
-//  outputTemplate: assets/OutputTemplate.ftl
-//  compileChain: de.cau.cs.kieler.sccharts.netlist.java
-//  
-//  // Generate simulation from output of compilation
-//  process simulation template {
-//    file: assets/JavaSimulation.ftl
-//  }
-//}
-
-// Compile generated simulation code
-//simulation compiler java {
-//  libFolder: kieler-gen/org/json
-//  sjLibFolder: kieler-gen/de/cau/cs/kieler/scg/processors/transformators/priority
-//  outputFolder: kieler-gen/sim/bin
-//  command: "javac -cp kieler-gen -d bin \"${file_path}\" "
-//  jarCommand: "jar cvfe \"./${outputFolder}/${executable_name}\" sim.code.${file_basename} -C bin . "
-//}
+de.cau.cs.kieler.^simulation.context.build

@@ -32,7 +32,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
@@ -91,12 +90,9 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_CFS"
-    
-    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --              C O M P L E X   F I N A L   S T A T E                  --
@@ -116,7 +112,6 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     // only a single term signal 
     // (TODO)                
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all parent states that contain at least one region that directly contains a complex final state                    
         val parentSatesContainingComplexFinalStates = rootState.allStates.filter [
             isParentContainingComplexFinalState
@@ -161,9 +156,9 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
         // If the parent state is the root state then make an explicit termination transition
         if (parentState.isRootState) {
             rootState.setDefaultTrace
-            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName(nameCache)
-            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName(nameCache)
-            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName(nameCache)
+            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
+            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName
+            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName
             for (mainRegion : parentState.regions.filter(e|e != r).toList.immutableCopy) {
                     i.regions.add(mainRegion)
             }
@@ -180,8 +175,8 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
             finalStates.setDefaultTrace
 
             if (!allStatesFinal) {
-                val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
-                    uniqueName(nameCache)
+                val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
+                voStore.update(termVariable, SCCHARTS_GENERATED)
                 state.createEntryAction.addAssignment(termVariable.createAssignment(FALSE))    
                 //termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
