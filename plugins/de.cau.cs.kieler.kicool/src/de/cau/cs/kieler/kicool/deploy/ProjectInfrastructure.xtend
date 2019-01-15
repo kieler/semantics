@@ -141,7 +141,6 @@ class ProjectInfrastructure {
             } else if (modelFile !== null) {
                 name = modelFile.toString
             }
-            
             name = name.replaceAll("/|\\\\", "-")
             name = name.replaceAll(" |\\.", "-")
             
