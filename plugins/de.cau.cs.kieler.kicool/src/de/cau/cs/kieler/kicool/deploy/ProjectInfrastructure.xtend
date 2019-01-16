@@ -33,6 +33,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
+import java.nio.file.Paths
+import org.eclipse.core.runtime.IPath
 
 /**
  * 
@@ -75,6 +77,8 @@ class ProjectInfrastructure {
     var File modelFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
     var File generatedCodeFolder = null
+    @Accessors(AccessorType.PUBLIC_GETTER)
+    var File generatedCodeRootFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
     var List<File> sourceCodeFiles = newArrayList
     @Accessors
@@ -174,21 +178,37 @@ class ProjectInfrastructure {
 
         // Create kieler-gen folder
         if (modelFolder !== null) {
+            val relativeModelPath = Paths.get(modelFolder.path)
+                        .relativize(Paths.get(modelFile.parent))
+            generatedCodeFolder = null
+
             if (environment.getProperty(USE_GENERATED_FOLDER)) {
                 if (hasProject) {
+                    // root folder
                     val gen = project.getFolder(dstFolder.name).getFolder(environment.getProperty(GENERATED_NAME))
                     if (!gen.exists) {
                         gen.create(true, true, null)
                     }
-                    generatedCodeFolder = gen.rawLocation.toFile
-                } else {
-                    generatedCodeFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
-                    if (!generatedCodeFolder.exists) {
-                        generatedCodeFolder.mkdirs
+                    generatedCodeRootFolder = gen.rawLocation.toFile
+                    
+                    // gen folder
+                    var genSub = gen
+                    for (var i = 0; i<relativeModelPath.getNameCount; i++) {
+                        genSub = genSub.getFolder(relativeModelPath.getName(i).toString)
                     }
+                    if (!genSub.exists) {
+                        genSub.create(true, true, null)
+                    }
+                    generatedCodeFolder = genSub.rawLocation.toFile
+                } else {
+                    generatedCodeRootFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
                 }
             } else {
-                generatedCodeFolder = dstFolder
+                generatedCodeRootFolder = dstFolder
+            }
+
+            if (generatedCodeFolder === null) {
+                generatedCodeFolder = new File(generatedCodeRootFolder, relativeModelPath.toString)
                 if (!generatedCodeFolder.exists) {
                     generatedCodeFolder.mkdirs
                 }
@@ -221,6 +241,7 @@ class ProjectInfrastructure {
         logger.println("== Project Infrastructure ==")
         logger.println("Model file: " + modelFile)
         logger.println("Base folder: " + modelFolder)
+        logger.println("Generated code folder root: " + generatedCodeRootFolder)
         logger.println("Generated code folder: " + generatedCodeFolder)
         logger.println
     }

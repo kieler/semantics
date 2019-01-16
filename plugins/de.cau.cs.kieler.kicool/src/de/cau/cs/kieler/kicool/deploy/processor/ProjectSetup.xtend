@@ -32,8 +32,6 @@ import org.eclipse.emf.common.util.URI
 import static com.google.common.base.Preconditions.*
 import java.util.List
 import java.util.Comparator
-import java.nio.file.Path
-import java.nio.file.Paths
 
 /**
  * @author als
@@ -89,19 +87,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     protected def saveCode(ProjectInfrastructure infra, PrintStream logger) {
         logger.println("== Save Generated Code ==")
         
-        var targetBase = if (infra.modelFile === null) {
-            infra.generatedCodeFolder
-        } else {
-            // Get target directory relative to generatedCodeFolder as the ModelFile is
-            // relative to its source(ModelFolder) folder.
-            new File(
-                infra.generatedCodeFolder,
-                Paths.get(infra.modelFolder.path)
-                    .relativize(Paths.get(infra.modelFile.parent))
-                    .toString
-            )
-        }
-
+        var targetBase = infra.generatedCodeFolder
         for (file : model.files) {
             logger.println("Saving " + file.fileName)
             try {
