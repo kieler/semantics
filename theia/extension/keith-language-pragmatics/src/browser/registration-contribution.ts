@@ -1,3 +1,36 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ *
+ * Copyright 2018 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
+
+import { injectable } from 'inversify';
+import { CommandContribution, CommandRegistry } from '@theia/core';
+
+@injectable()
+export class RegistrationContribution implements CommandContribution {
+
+    registerCommands(commands: CommandRegistry): void {
+        // not needed
+    }
+}
+
+export interface KeithMonarchLanguage extends monaco.languages.IMonarchLanguage {
+    tokenizer: { [name: string]: monaco.languages.IMonarchLanguageRule[]; };    ignoreCase?: boolean | undefined;
+    defaultToken?: string | undefined;
+    brackets?: monaco.languages.IMonarchLanguageBracket[] | undefined;
+    start?: string | undefined;
+    tokenPostfix?: string | undefined;
+    keywords: string[]
+}
+
 export const configuration: monaco.languages.LanguageConfiguration = {
     // the default separators except `@$`
     wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
@@ -14,131 +47,19 @@ export const configuration: monaco.languages.LanguageConfiguration = {
         { open: '(', close: ')', notIn: ['string', 'comment'] }
     ]
 };
-export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
 
-    tokenPostfix: '.kgt',
+export const monarchLanguage = <KeithMonarchLanguage>{
+
+    tokenPostfix: '',
 
     keywords: [
-        'absolutePos',
-        'actions',
-        'anchor',
-        'areaData',
-        'background',
-        'bevel',
-        'bold',
-        'bottom',
-        'bottomRightAnchor',
-        'center',
-        'chord',
-        'clipShape',
-        'columns',
-        'custom',
-        'dash',
-        'dashOffset',
-        'dashPattern',
-        'decoratorData',
-        'dot',
-        'double',
-        'doubleClick',
-        'error',
-        'flat',
-        'flexibleHeight',
-        'flexibleWidth',
-        'fontName',
-        'fontSize',
-        'foreground',
-        'grid',
-        'gridData',
-        'hAlign',
-        'height',
-        'horizontalAlignment',
-        'horizontalMargin',
-        'insets',
-        'invisible',
-        'italic',
-        'junction',
-        'karc',
-        'kchildArea',
-        'kcustomRendering',
-        'kedge',
-        'kellipse',
-        'kgraph',
-        'kimage',
-        'klabel',
-        'knode',
-        'kpolygon',
-        'kpolyline',
-        'kport',
-        'krectangle',
-        'krendering',
-        'krenderingLibrary',
-        'kroundedPolyline',
-        'kroundedRectangle',
-        'kspline',
-        'kstylesTemplate',
-        'ktext',
-        'left',
-        'lineCap',
-        'lineJoin',
-        'lineStyle',
-        'lineWidth',
-        'link',
-        'middleDoubleClick',
-        'middleSingleClick',
-        'middleSingleOrMultiClick',
-        'minCellHeight',
-        'minCellWidth',
-        'minimalHeight',
-        'minimalWidth',
-        'miter',
-        'modifier',
-        'none',
-        'null',
-        'open',
-        'pie',
-        'pointData',
-        'points',
-        'pos',
-        'propagate',
-        'properties',
-        'reference',
-        'referencePoint',
-        'relativePos',
-        'right',
-        'rotateWithLine',
-        'rotation',
-        'round',
-        'scale',
-        'selection',
-        'shadow',
-        'single',
-        'singleClick',
-        'singleOrMultiClick',
-        'size',
-        'solid',
-        'square',
-        'squiggle',
-        'styles',
-        'top',
-        'topLeftAnchor',
-        'underline',
-        'vAlign',
-        'verticalAlignment',
-        'verticalMargin',
-        'width',
-        'x',
-        'xoffset',
-        'y',
-        'yoffset',
-
     ],
     symbols: /[=><!~?:&|+\-*\/\^%]+/,
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
     digits: /\d+(_+\d+)*/,
     octaldigits: /[0-7]+(_+[0-7]+)*/,
     binarydigits: /[0-1]+(_+[0-1]+)*/,
-    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,
-// The main tokenizer for our languages
+    hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/, // The main tokenizer for our languages
     tokenizer: {
         root: [
             // identifiers and keywords
