@@ -9,8 +9,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sed -i '1s/^/-application\nde.cau.cs.kieler.language.server.LanguageServer\n-noSplash\n/' ./language-server/kieler.ini
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
-    sed -i.bu '1s/^/
-    -application\nde.cau.cs.kieler.language.server.LanguageServer\n-noSplash\n/' ./language-server/Eclipse/kieler.ini &&
+    sed -i.bu '1s/^/-application\nde.cau.cs.kieler.language.server.LanguageServer\n-noSplash\n/' ./language-server/Eclipse/kieler.ini &&
     rm ./language-server/Eclipse/kieler.ini.bu
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     echo not supported
