@@ -62,15 +62,11 @@ export class KeithDiagramManager extends DiagramManagerImpl {
         if (widget !== undefined && widget instanceof KeithDiagramWidget) {
             // reconfigure the diagram server to watch the new file by sending a new RequestModelAction with the new uri to the server.
             if (widget.currentModelSource instanceof TheiaDiagramServer && this.diagramConnector) {
-                widget.currentModelSource.handle(new RequestModelAction({
+                widget.actionDispatcher.dispatch(new RequestModelAction({
                     sourceUri: uri.toString(true),
                     diagramType: this.diagramType
                 }))
             }
-
-            // TODO:
-            // clear the widget's content
-            // (dispatch a new RequestDiagramAction)
             return widget
         }
         const newWidget = this.createDiagramWidget(uri)
