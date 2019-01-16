@@ -10,7 +10,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
     sed -i.bu '1s/^/-application\nde.cau.cs.kieler.language.server.LanguageServer\n-noSplash\n/' ./language-server/Contents/Eclipse/kieler.ini &&
-    rm ./language-server/Eclipse/kieler.ini.bu
+    rm ./language-server/Contents/Eclipse/kieler.ini.bu
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     echo not supported
         # POSIX compatibility layer and Linux environment emulation for Windows
