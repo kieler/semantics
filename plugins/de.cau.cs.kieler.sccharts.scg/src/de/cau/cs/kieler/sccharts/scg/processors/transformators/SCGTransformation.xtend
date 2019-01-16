@@ -88,6 +88,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -578,13 +579,15 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                     ]
                 }
             } else if (effect instanceof HostcodeEffect) {
-                assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
-                assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof PrintCallEffect) {
-                assignment.setExpression((effect as PrintCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof RandomizeCallEffect) {
-                assignment.setExpression((effect as RandomizeCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+            } else if (effect instanceof ReferenceCallEffect) {
+                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
