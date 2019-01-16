@@ -36,10 +36,7 @@ mac:
     - 
       from: "../../../language-server"
       to: "app/kieler.app/"
-      filter: ["**/*", "!Contents/Eclipse/kieler.ini"]
-    - 
-      from: "../../plugins/de.cau.cs.kieler.language.server/resources/kieler-mac.ini"
-      to: "app/kieler.app/Contents/Eclipse/kieler.ini"
+      filter: ["**/*"]
   target:
     - dmg
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
