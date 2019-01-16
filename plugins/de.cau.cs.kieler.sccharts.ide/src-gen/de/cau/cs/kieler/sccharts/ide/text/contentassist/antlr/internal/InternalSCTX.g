@@ -5284,33 +5284,27 @@ rule__ValueType__Alternatives
 	)
 	|
 	(
-		{ before(grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2()); }
-		('unsigned')
-		{ after(grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); }
+		{ before(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_2()); }
 		('int')
-		{ after(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); }
+		{ after(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_2()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4()); }
+		{ before(grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_3()); }
 		('float')
-		{ after(grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4()); }
+		{ after(grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_3()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_5()); }
+		{ before(grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_4()); }
 		('string')
-		{ after(grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_5()); }
+		{ after(grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_4()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_6()); }
+		{ before(grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_5()); }
 		('clock')
-		{ after(grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_6()); }
+		{ after(grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_5()); }
 	)
 ;
 finally {
