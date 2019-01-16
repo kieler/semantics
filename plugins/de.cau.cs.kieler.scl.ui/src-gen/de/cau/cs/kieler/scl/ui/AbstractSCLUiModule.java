@@ -13,7 +13,6 @@ import de.cau.cs.kieler.scl.ui.labeling.SCLDescriptionLabelProvider;
 import de.cau.cs.kieler.scl.ui.labeling.SCLLabelProvider;
 import de.cau.cs.kieler.scl.ui.outline.SCLOutlineTreeProvider;
 import de.cau.cs.kieler.scl.ui.quickfix.SCLQuickfixProvider;
-import de.cau.cs.kieler.scl.validation.SCLValidatorConfigurationBlock;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ide.LexerIdeBindings;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link SCLUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractSCLUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalSCLLexer.class).toProvider(LexerProvider.create(InternalSCLLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return SCLValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

@@ -8,7 +8,6 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.KTraceParser;
 import de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.internal.InternalKTraceLexer;
-import de.cau.cs.kieler.simulation.trace.validation.KTraceValidatorConfigurationBlock;
 import de.cau.cs.kieler.simulation.ui.trace.contentassist.KTraceProposalProvider;
 import de.cau.cs.kieler.simulation.ui.trace.labeling.KTraceDescriptionLabelProvider;
 import de.cau.cs.kieler.simulation.ui.trace.labeling.KTraceLabelProvider;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link KTraceUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractKTraceUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalKTraceLexer.class).toProvider(LexerProvider.create(InternalKTraceLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return KTraceValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

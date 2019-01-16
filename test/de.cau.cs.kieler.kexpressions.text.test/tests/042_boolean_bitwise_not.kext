@@ -25,9 +25,11 @@ A = B ^ C ^ ~D
 A = (B ^ C ^ ~D)
 
 @check boolean.bitwise.xor.xor.not.parenthesis#002
+@readable "A = B ^ C ^ ~D"
 A = B ^ (C ^ ~D)
 
 @check boolean.bitwise.xor.xor.not.parenthesis#003
+@readable "A = B ^ C ^ ~D"
 A = (B ^ C) ^ ~D
 
 
@@ -74,16 +76,16 @@ A = (!B ^ ~C)
 
 @check boolean.bitwise.not.xor.not#004
 @expect "A = !B ^ !~C"
-@readable "A = !B ^ !(~C)"
+@readable "A = !B ^ !~C"
 A = !B ^ !~C
 
 @check boolean.bitwise.not.xor.not#005
 @expect "A = !B ^ !~C"
-@readable "A = !B ^ !(~C)"
+@readable "A = !B ^ !~C"
 A = (!B ^ !(~C))
 
 @check boolean.bitwise.not.xor.not#006
 @strict
 @expect "A = !(!B ^ !~C)"
-@readable "A = !(!B ^ !(~C))"
+@readable "A = !(!B ^ !~C)"
 A = !(!B ^ !(~C))

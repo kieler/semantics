@@ -23,9 +23,11 @@ A = B && C && D
 A = (B && C && D)
 
 @check boolean.logical.and.and.parenthesis#002
+@readable "A = B && C && D"
 A = B && (C && D)
 
 @check boolean.logical.and.and.parenthesis#003
+@readable "A = B && C && D"
 A = (B && C) && D
 
 
@@ -45,9 +47,11 @@ A = B || C || D
 A = (B || C || D)
 
 @check boolean.logical.or.or.parenthesis#002
+@readable "A = B || C || D"
 A = B || (C || D)
 
 @check boolean.logical.or.or.parenthesis#003
+@readable "A = B || C || D"
 A = (B || C) || D
 
 
@@ -132,6 +136,7 @@ A = !(!B || !C)
 A = (B || C) && (B || C) && (B || C)
 
 @check boolean.logical.mixed#002
+@readable "A = (B || C) && (B || C) && (B || C)"
 A = (B || C) && ((B || C) && (B || C))
 
 @check boolean.logical.mixed#003

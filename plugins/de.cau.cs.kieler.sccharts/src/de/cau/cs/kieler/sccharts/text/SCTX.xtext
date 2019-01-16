@@ -134,10 +134,10 @@ ControlflowRegion returns sccharts::ControlflowRegion:
     ((
         'is'
         reference = ScopeCall
-        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
         ('schedule' schedule+=ScheduleObjectReference+)?
     )|(
-        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
         ('schedule' schedule+=ScheduleObjectReference+)?
         ((
             ':'
