@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { TheiaDiagramServer } from "theia-sprotty/lib";
-import { Action, ActionHandlerRegistry, ComputedBoundsAction, ActionMessage, SetModelCommand } from "sprotty/lib";
+import { Action, ActionHandlerRegistry, ComputedBoundsAction, ActionMessage, SetModelCommand, FitToScreenAction } from "sprotty/lib";
 import { ComputedTextBoundsAction, RequestTextBoundsCommand } from "keith-sprotty/lib/actions";
 import { Emitter, Event } from "@theia/core";
 
@@ -18,6 +18,7 @@ export class KeithDiagramServer extends TheiaDiagramServer {
         super.messageReceived(message)
         if (message.action.kind === SetModelCommand.KIND) {
             this.onModelUpdatedEmitter.fire(message.clientId)
+            this.actionDispatcher.dispatch(new FitToScreenAction([], undefined, undefined, false))
         }
     }
 
