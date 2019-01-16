@@ -104,16 +104,18 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
         val StringBuffer preview = new StringBuffer(text);
         var start = 0;
         var index = 0;
+        var newIndex = 0;
         var count = 0;
         // Find nth occurrence of newline. With n <= maxPreviewLines or indexOf(nth occurrence) == length
-        while((index = preview.indexOf("\n", start)) != -1 && count < maxPreviewLines){
+        while((newIndex = preview.indexOf("\n", start)) != -1 && count < maxPreviewLines){
+            index = newIndex;
             start = index + 1;
             count += 1;
         }
         // If original is longer than maxPreviewLines
         if(count == maxPreviewLines){
-            preview.setLength(index + 1);
-            preview.append("\n...");
+            preview.setLength(index);
+            preview.append("\n\n...");
         }
         // Replace tabs with spaces
         var nextTab = preview.indexOf("\t")
