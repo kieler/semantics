@@ -1,3 +1,36 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ *
+ * Copyright 2018 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
+
+import { injectable } from 'inversify';
+import { CommandContribution, CommandRegistry } from '@theia/core';
+
+@injectable()
+export class RegistrationContribution implements CommandContribution {
+
+    registerCommands(commands: CommandRegistry): void {
+        // not needed
+    }
+}
+
+export interface KeithMonarchLanguage extends monaco.languages.IMonarchLanguage {
+    tokenizer: { [name: string]: monaco.languages.IMonarchLanguageRule[]; };    ignoreCase?: boolean | undefined;
+    defaultToken?: string | undefined;
+    brackets?: monaco.languages.IMonarchLanguageBracket[] | undefined;
+    start?: string | undefined;
+    tokenPostfix?: string | undefined;
+    keywords: string[]
+}
+
 export const configuration: monaco.languages.LanguageConfiguration = {
     // the default separators except `@$`
     wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
@@ -14,43 +47,12 @@ export const configuration: monaco.languages.LanguageConfiguration = {
         { open: '(', close: ')', notIn: ['string', 'comment'] }
     ]
 };
-export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
 
-    tokenPostfix: '.kext',
+export const monarchLanguage = <KeithMonarchLanguage>{
+
+    tokenPostfix: '',
 
     keywords: [
-        '_',
-        'bool',
-        'call',
-        'combine',
-        'conflict',
-        'confluent',
-        'const',
-        'expression',
-        'extern',
-        'float',
-        'global',
-        'host',
-        'input',
-        'int',
-        'max',
-        'min',
-        'none',
-        'output',
-        'pre',
-        'print',
-        'pure',
-        'random',
-        'randomize',
-        'ref',
-        'schedule',
-        'scope',
-        'signal',
-        'static',
-        'string',
-        'unsigned',
-        'val',
-
     ],
     symbols: /[=><!~?:&|+\-*\/\^%]+/,
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
@@ -82,7 +84,7 @@ export const monarchLanguage = <monaco.languages.IMonarchLanguage>{
 
             [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
 
-      // numbers
+            // numbers
             [/(@digits)[eE]([\-+]?(@digits))?[fFdD]?/, 'number.float'],
             [/(@digits)\.(@digits)([eE][\-+]?(@digits))?[fFdD]?/, 'number.float'],
             [/0[xX](@hexdigits)[Ll]?/, 'number.hex'],

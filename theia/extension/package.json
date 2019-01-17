@@ -61,7 +61,8 @@
     "keith-diagram": "0.1.0",
     "keith-diagram-options": "0.1.0",
     "keith-kicool": "0.1.0",
-    "keith-language": "0.1.0",
+    "keith-language-semantics": "0.1.0",
+    "keith-language-pragmatics": "0.1.0",
     "keith-sprotty": "0.1.0",
     "monaco-editor-core": "^0.14.6",
     "sprotty": "0.4.2",
@@ -94,7 +95,8 @@
     "keith-diagram",
     "keith-diagram-options",
     "keith-app",
-    "keith-language",
+    "keith-language-semantics",
+    "keith-language-pragmatics",
     "keith-sprotty",
     "keith-kicool"
   ]

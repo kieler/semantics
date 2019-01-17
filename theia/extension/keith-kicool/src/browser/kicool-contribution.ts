@@ -24,7 +24,7 @@ import {
     FrontendApplicationContribution,
     CommonMenus
 } from "@theia/core/lib/browser";
-import { KeithLanguageClientContribution } from "keith-language/lib/browser/keith-language-client-contribution";
+import { KeithLanguageClientContribution } from "keith-language-semantics/lib/browser/keith-language-client-contribution";
 import { OutputChannelManager } from "@theia/output/lib/common/output-channel";
 import { CompilerWidget } from "./compiler-widget";
 import { Workspace } from "@theia/languages/lib/browser";

@@ -19,13 +19,9 @@ win:
   # copy ls
   extraResources:
     - 
-      from: "../../language-server/kieler"
+      from: "../../../language-server/kieler"
       to: "app/kieler/"
-      filter: ["**/*", "!kieler.ini"]
-    - 
-      from: "../../plugins/de.cau.cs.kieler.language.server/resources/kieler-win.ini"
-      to: "app/kieler/kieler.ini"
-  
+      filter: ["**/*"]  
   target:
     - nsis
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.ico
@@ -36,10 +32,7 @@ mac:
     - 
       from: "../../../language-server"
       to: "app/kieler.app/"
-      filter: ["**/*", "!Contents/Eclipse/kieler.ini"]
-    - 
-      from: "../../plugins/de.cau.cs.kieler.language.server/resources/kieler-mac.ini"
-      to: "app/kieler.app/Contents/Eclipse/kieler.ini"
+      filter: ["**/*"]
   target:
     - dmg
   icon: ../../plugins/de.cau.cs.kieler.core.product/icons/foerde-logo.icns
