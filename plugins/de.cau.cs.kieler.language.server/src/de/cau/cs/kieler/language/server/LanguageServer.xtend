@@ -35,6 +35,7 @@ import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import io.typefox.sprotty.layout.ElkLayoutEngine
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
+
 /**
  * Entry point for the language server application for KIELER Theia.<br>
  * Expects none or host and port as arguments. If none the language server is started via<br>

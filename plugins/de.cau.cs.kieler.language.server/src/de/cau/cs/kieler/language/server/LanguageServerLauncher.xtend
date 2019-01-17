@@ -36,6 +36,9 @@ import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
+import com.google.inject.Injector
+import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 
 /**
  * Used to start language server via stdin/out connection.
@@ -46,6 +49,7 @@ import org.eclipse.xtext.util.Modules2
 class LanguageServerLauncher extends ServerLauncher {
 
     @Inject LanguageServerImpl languageServer
+    @Inject Injector injector
     
     def static void main(String[] args) {        
         // Launch the server
@@ -60,8 +64,17 @@ class LanguageServerLauncher extends ServerLauncher {
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
-        val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, args.in, args.out, executorService,
-                args.wrapper, configureGson)
+        val regExtension = injector.getBinding(RegistrationLanguageServerExtension)
+        val launcher = new Builder<LanguageClient>()
+                .setLocalServices(#[languageServer, regExtension])
+                .setRemoteInterface(LanguageClient)
+                .setInput(args.in)
+                .setOutput(args.out)
+                .setExecutorService(executorService)
+                .wrapMessages([it])
+                .configureGson(configureGson)
+                .setClassLoader(this.getClass.classLoader)
+                .create();
         val client = launcher.remoteProxy
         languageServer.connect(client)
         // Redirect Log4J output to a file
