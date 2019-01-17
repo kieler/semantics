@@ -129,16 +129,15 @@ class During extends SCChartsProcessor implements Traceable {
                 secondState.createTransitionTo(initialState)
                 if (complexDuring) {
                     secondState.setFinal
-                    if (duringAction.trigger !== null) {
-                         initialState.setFinal
-                    }
                 }
             } else {
+
                 // Self loop in the non-immediate case
                 duringTransition = initialState.createTransitionTo(initialState)
-                if (complexDuring) {
-                     initialState.setFinal
-                }
+            }
+    
+            if (complexDuring) {
+                 initialState.setFinal
             }
 
             duringTransition.setDelay(duringAction.delay);
