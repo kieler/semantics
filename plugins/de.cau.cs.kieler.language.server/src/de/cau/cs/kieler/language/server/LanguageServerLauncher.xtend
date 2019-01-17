@@ -74,7 +74,7 @@ class LanguageServerLauncher extends ServerLauncher {
                 .setExecutorService(executorService)
                 .wrapMessages(args.wrapper)
                 .configureGson(configureGson)
-                .setClassLoader(this.getClass.classLoader)
+                .setClassLoader(LanguageServer.classLoader)
                 .create();
         val client = launcher.remoteProxy
         languageServer.connect(client)
