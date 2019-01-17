@@ -58,7 +58,7 @@ class LanguageRegistration {
         
         new LustreIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule, new RegistrationServerModule))
+                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
         

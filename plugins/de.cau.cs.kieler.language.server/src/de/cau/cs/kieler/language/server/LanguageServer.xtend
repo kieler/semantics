@@ -24,7 +24,6 @@ import org.eclipse.elk.core.util.persistence.ElkGraphResourceFactory
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
-import org.eclipse.lsp4j.jsonrpc.Launcher
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
@@ -34,7 +33,8 @@ import java.util.function.Consumer
 import com.google.gson.GsonBuilder
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import io.typefox.sprotty.layout.ElkLayoutEngine
-
+import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
+import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 /**
  * Entry point for the language server application for KIELER Theia.<br>
  * Expects none or host and port as arguments. If none the language server is started via<br>
@@ -118,7 +118,18 @@ class LanguageServer implements IApplication {
                 KGraphTypeAdapterUtil.configureGson(gsonBuilder)
             ]
             val languageServer = injector.getInstance(LanguageServerImpl)
-            val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it], configureGson)
+            val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
+            val launcher = new Builder<LanguageClient>()
+                .setLocalServices(#[languageServer, regExtension])
+                .setRemoteInterface(LanguageClient)
+                .setInput(in)
+                .setOutput(out)
+                .setExecutorService(threadPool)
+                .wrapMessages([it])
+                .configureGson(configureGson)
+                .setClassLoader(this.getClass.classLoader)
+                .create();
+//            val launcher = Launcher.createIoLauncher(#[languageServer, regExtension], LanguageClient, in, out, threadPool, [it], configureGson)
             languageServer.connect(launcher.remoteProxy)
             launcher.startListening
             LOG.info("Started language server for client " + socketChannel.remoteAddress)

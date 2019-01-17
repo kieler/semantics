@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.language.server.registration
 
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting
 import de.cau.cs.kieler.esterel.ide.highlighting.EsterelHighlighting
 import de.cau.cs.kieler.kexpressions.ide.kext.highlighting.KExtHighlighting
@@ -40,9 +39,6 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
     protected static val LOG = Logger.getLogger(RegistrationLanguageServerExtension)
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
-    
-    @Inject
-    Injector injector
 
     protected extension ILanguageServerAccess languageServerAccess
     
