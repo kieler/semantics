@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
+import com.google.inject.Inject
 import java.util.ArrayList
 import java.util.List
-import com.google.inject.Inject
 
 /**
  * @author stu114663
@@ -22,38 +22,93 @@ import com.google.inject.Inject
  */
 class TableIdentifier {
     @Inject
-    var de.cau.cs.kieler.sccharts.processors.tabels.StateTransitionTableInterpreter stti
+    var StateTransitionTableInterpreter stti
     @Inject
-    var de.cau.cs.kieler.sccharts.processors.tabels.StateEventTableInterpreter seti
-    
+    var StateEventTableInterpreter seti
+
     /** checks the first cell for the TableType */
     def TableInterpreter identify(List<List<String>> table) {
-        if(table.isEmpty) {
+        if (table.isEmpty) {
             return null
-        } else if(table.get(0).isEmpty) {
+        } else if (table.get(0).isEmpty) {
             return null
         } else {
-            return applySettings(switch(table.get(0).get(0)) {
-                case TableTypes.StateEvent.name:
-                    seti
-                case TableTypes.StateTransition.name:
-                    stti
-                default:
-                    null
-            })
+            return applySettings(
+                switch (table.get(0).get(0)) {
+                    case TableType.StateEvent.name:
+                        seti
+                    case TableType.StateTransition.name:
+                        stti
+                    default:
+                        null
+                },
+                table
+            )
         }
     }
-    
+
     /** reads settings from the second cell and applies these to the TableInterpreter */
-    def TableInterpreter applySettings(TableInterpreter ti) {
-        // TODO this is just a dummy for now
-        // TODO identify Header
-//        switch(ti.class) {
-//            case StateEventTableInterpreter:
-//                
-//            case StateTransitionTableInterpreter:
-//            default:
-//        }
+    private def TableInterpreter applySettings(TableInterpreter ti, List<List<String>> table) {
+        if (ti !== null) {
+            val Pair<List<HeaderType>, Integer> bestHeader = identifyLongestHeader(table)
+            switch (ti.class) {
+                case StateTransitionTableInterpreter:
+                    // the length of the header is one line longer than the position of the header line
+                    ti.initialize(bestHeader.key, bestHeader.value+1, table)
+                case StateEventTableInterpreter:
+                    // StateEventTables have an additional line (for conditions) after the header line
+                    ti.initialize(bestHeader.key, bestHeader.value+2, table)
+                default: ti.initialize
+            }
+        }
         return ti
+    }
+    
+    /** Returns a pair of: 
+     * 1. the row of HeaderTypes with the most matches, which were not discardable
+     * 2. the location of the row in the table
+     */
+    private def Pair<List<HeaderType>, Integer> identifyLongestHeader(List<List<String>> table) {
+        var List<HeaderType> headerLine = new ArrayList
+        var lineLength = 0
+        var lineIndex = 0
+        for (var int i = 1; i < table.size; i++) {
+            val row = table.get(i)
+        	val temporLine = identifyHeader(row)
+        	val tmpSize = temporLine.reject[HeaderType hn | hn == HeaderType.DISCARDABLE].size
+        	lineLength = headerLine.reject[HeaderType hn | hn == HeaderType.DISCARDABLE].size
+        	if (tmpSize > lineLength) {
+        		headerLine = temporLine
+        		lineIndex = i
+        	}
+        }
+        
+        var Pair<List<HeaderType>, Integer> ret = null
+        if (lineLength > 0) {
+            ret = new Pair(headerLine, lineIndex)
+        } else {
+            ret = new Pair(null, Integer.MIN_VALUE)
+        }
+        return ret
+    }
+    
+    /** Creates a list of headers */
+    private def List<HeaderType> identifyHeader(List<String> row) {
+        val headerLine = new ArrayList
+        for (headerCell : row) {
+            var identified = false
+            // compare to header types
+        	for (headerNumber : HeaderType.values) {
+        	    if (!identified && headerCell == headerNumber.name) {
+        	        headerLine.add(headerNumber)
+        	        identified = true
+        	    }
+        	}
+        	// mark unidentified header cell as discardable
+        	if (!identified) {
+        	    headerLine.add(HeaderType.DISCARDABLE)
+        	}
+        }
+        return headerLine
     }
 }

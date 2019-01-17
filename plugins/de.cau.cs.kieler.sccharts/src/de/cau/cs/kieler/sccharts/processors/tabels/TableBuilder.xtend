@@ -23,11 +23,11 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
  *
  */
 abstract class TableBuilder implements ITableBuilder {
+    
     @Accessors
     SCCharts model
     @Accessors
     List<List<String>> table
-    
     
     def String trigger2String(Expression trigger) {
         if (trigger !== null) {
