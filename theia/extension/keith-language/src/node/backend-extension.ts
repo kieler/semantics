@@ -50,7 +50,7 @@ class KeithLanguageServerContribution extends BaseLanguageServerContribution {
     start(clientConnection: IConnection): void {
         let socketPort = getPort();
         if (socketPort) {
-            console.log("Starting LS over socket: " + this.id)
+            console.log("Starting LS over socket.")
             const socket = new net.Socket()
             const serverConnection = createSocketConnection(socket, socket, () => {
                 socket.destroy()

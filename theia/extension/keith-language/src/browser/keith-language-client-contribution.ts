@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-import { inject, injectable } from 'inversify';
+import { inject, injectable, named } from 'inversify';
 import { FrontendApplication } from '@theia/core/lib/browser';
 import {
     BaseLanguageClientContribution,
@@ -19,7 +19,11 @@ import {
     Languages,
     Workspace,
 } from '@theia/languages/lib/browser';
-import { languageDescriptions } from '../common';
+import { Disposable } from '@theia/core/lib/common';
+import { DiagramManagerProvider, DiagramManager } from 'theia-sprotty/lib';
+import { ContextMenuCommands } from './dynamic-commands';
+import URI from '@theia/core/lib/common/uri';
+import { languageDescriptions } from './frontend-extension';
 @injectable()
 export class KeithLanguageClientContribution extends BaseLanguageClientContribution {
 
@@ -27,6 +31,8 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
     readonly name = 'Keith'
 
     constructor(
+        @inject(DiagramManagerProvider)@named('keith-diagram') protected keithDiagramManagerProvider: DiagramManagerProvider,
+        @inject(ContextMenuCommands) protected commands: ContextMenuCommands,
         @inject(Workspace) workspace: Workspace,
         @inject(Languages) languages: Languages,
         @inject(LanguageClientFactory) languageClientFactory: LanguageClientFactory
@@ -51,7 +57,23 @@ export class KeithLanguageClientContribution extends BaseLanguageClientContribut
 
     waitForActivation(app: FrontendApplication): Promise<any> {
         return Promise.race([
-            super.waitForActivation(app)
+            super.waitForActivation(app),
+            this.waitForOpenDiagrams(this.keithDiagramManagerProvider())
         ])
+    }
+
+    protected waitForOpenDiagrams(diagramManagerProvider: Promise<DiagramManager>): Promise<any> {
+        return diagramManagerProvider.then(diagramManager => {
+            return new Promise<URI>((resolve) => {
+                const disposable = diagramManager.onDiagramOpened(uri => {
+                    disposable.dispose()
+                    resolve(uri)
+                })
+            })
+        })
+    }
+
+    registerCommand(id: string, callback: (...args: any[]) => any, thisArg?: any): Disposable {
+        return this.commands.registerCommand(id, callback, thisArg)
     }
 }

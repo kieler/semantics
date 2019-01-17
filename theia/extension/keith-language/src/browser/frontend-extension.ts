@@ -17,9 +17,20 @@ import { KeithMonacoEditorProvider } from "./keith-monaco-editor-provider"
 import { ContextMenuCommands } from './dynamic-commands';
 import { KeithLanguageClientContribution } from './keith-language-client-contribution';
 import { LanguageClientContribution } from '@theia/languages/lib/browser';
-import { RegistrationContribution, monarchLanguage, KeithMonarchLanguage, configuration } from './registration-contribution';
+import { RegistrationContribution, LanguageDescription, monarchLanguage, KeithMonarchLanguage, configuration } from './registration-contribution';
 import { CommandContribution } from '@theia/core';
-import { LanguageDescription, languageDescriptions } from "../common"
+
+// Language register, holds all languages that are supported by KEITH
+export const languageDescriptions: LanguageDescription[] = [
+    {id: "sctx", name: "SCCharts"},
+    {id: "scl", name: "SCL"},
+    {id: "kgt", name: "KGraph"},
+    {id: "strl", name: "Estrel"},
+    {id: "lus", name: "Lustre"},
+    {id: "kext", name: "KExt"},
+    {id: "anno", name: "Annotations"},
+    {id: "sctx", name: "SCCharts"},
+]
 
 export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
     // register languages
