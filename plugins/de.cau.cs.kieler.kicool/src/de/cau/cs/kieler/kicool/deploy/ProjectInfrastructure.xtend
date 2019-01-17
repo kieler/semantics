@@ -34,7 +34,6 @@ import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
 import java.nio.file.Paths
-import org.eclipse.core.runtime.IPath
 
 /**
  * 
@@ -66,6 +65,9 @@ class ProjectInfrastructure {
 
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
+
+    public static val IProperty<Boolean> OWN_MODEL_FOLDER =
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.model.ownfolder", false)
 
     public static val Set<IProject> createdTemporaryProjects = newHashSet
 
@@ -158,10 +160,9 @@ class ProjectInfrastructure {
             }
         
         // get relative path, before temporary project reroutes modelFolder
-        val relativeModelPath = if (srcFolder !== null && modelFile !== null)
+        var relativeModelPath = if (srcFolder !== null && modelFile !== null)
                     Paths.get(srcFolder.path)
                     .relativize(Paths.get(modelFile.parent))
-        modelRootRelative = relativeModelPath?.toString ?: ""
         
         if (environment.getProperty(USE_TEMPORARY_PROJECT)) {
             // initialize project
@@ -191,6 +192,12 @@ class ProjectInfrastructure {
             environment.warnings.add("Can not detect model location to create project infrastructure.")
         }
         
+        if (modelFile !== null && environment.getProperty(OWN_MODEL_FOLDER)) {
+            val modelFileName = modelFile.name.replace(".", "-").replace(" ", "_")
+            relativeModelPath = relativeModelPath?.resolve(modelFileName) ?: Paths.get(modelFileName)
+        }
+        modelRootRelative = relativeModelPath?.toString ?: ""
+        
         val dstFolderPath = environment.getProperty(MODEL_DST_PATH)
         val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath) else modelFolder
         
@@ -199,11 +206,14 @@ class ProjectInfrastructure {
             if (hasProject) {
                 // root folder
                 var gen = project.getFolder(dstFolder.name)
-                if (environment.getProperty(USE_GENERATED_FOLDER)) {
-                    gen = gen.getFolder(environment.getProperty(GENERATED_NAME))
-                }
                 if (!gen.exists) {
                     gen.create(true, true, null)
+                }
+                if (environment.getProperty(USE_GENERATED_FOLDER)) {
+                    gen = gen.getFolder(environment.getProperty(GENERATED_NAME))
+                    if (!gen.exists) {
+                        gen.create(true, true, null)
+                    }
                 }
                 generatedCodeRootFolder = gen.rawLocation.toFile
                 
@@ -212,9 +222,9 @@ class ProjectInfrastructure {
                 if (relativeModelPath !== null) {
                     for (var i = 0; i<relativeModelPath.getNameCount; i++) {
                         genSub = genSub.getFolder(relativeModelPath.getName(i).toString)
-                    }
-                    if (!genSub.exists) {
-                        genSub.create(true, true, null)
+                        if (!genSub.exists) {
+                            genSub.create(true, true, null)
+                        }
                     }
                 }
                 generatedCodeFolder = genSub.rawLocation.toFile
