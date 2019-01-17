@@ -2380,6 +2380,61 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//CompareOperation
 		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_2_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_2_1_0; }
 	}
+	public class ValuedExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ValuedExpression");
+		private final RuleCall cAddExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//@Override
+		//ValuedExpression kexpressions::Expression:
+		//	AddExpression;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//AddExpression
+		public RuleCall getAddExpressionParserRuleCall() { return cAddExpressionParserRuleCall; }
+	}
+	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AtomicExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cBoolValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cValuedObjectTestExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cBoolExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//@Override
+		//AtomicExpression kexpressions::Expression:
+		//	BoolValue
+		//	| ValuedObjectTestExpression
+		//	| '(' BoolExpression ')'
+		//	| ReferenceCall;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//BoolValue
+		public RuleCall getBoolValueParserRuleCall_0() { return cBoolValueParserRuleCall_0; }
+		
+		//ValuedObjectTestExpression
+		public RuleCall getValuedObjectTestExpressionParserRuleCall_1() { return cValuedObjectTestExpressionParserRuleCall_1; }
+		
+		//'(' BoolExpression ')'
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		
+		//BoolExpression
+		public RuleCall getBoolExpressionParserRuleCall_2_1() { return cBoolExpressionParserRuleCall_2_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		
+		//ReferenceCall
+		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
+	}
 	public class ParamsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Params");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -3371,6 +3426,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final LogicalXorExpressionElements pLogicalXorExpression;
 	private final LogicalOrExpressionElements pLogicalOrExpression;
 	private final LogicalAndExpressionElements pLogicalAndExpression;
+	private final ValuedExpressionElements pValuedExpression;
+	private final AtomicExpressionElements pAtomicExpression;
 	private final AssignOperatorElements eAssignOperator;
 	private final CompareOperatorElements eCompareOperator;
 	private final LogicalOrOperatorElements eLogicalOrOperator;
@@ -3454,6 +3511,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLogicalXorExpression = new LogicalXorExpressionElements();
 		this.pLogicalOrExpression = new LogicalOrExpressionElements();
 		this.pLogicalAndExpression = new LogicalAndExpressionElements();
+		this.pValuedExpression = new ValuedExpressionElements();
+		this.pAtomicExpression = new AtomicExpressionElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.eCompareOperator = new CompareOperatorElements();
 		this.eLogicalOrOperator = new LogicalOrOperatorElements();
@@ -3920,6 +3979,31 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getLogicalAndExpressionRule() {
 		return getLogicalAndExpressionAccess().getRule();
+	}
+	
+	//@Override
+	//ValuedExpression kexpressions::Expression:
+	//	AddExpression;
+	public ValuedExpressionElements getValuedExpressionAccess() {
+		return pValuedExpression;
+	}
+	
+	public ParserRule getValuedExpressionRule() {
+		return getValuedExpressionAccess().getRule();
+	}
+	
+	//@Override
+	//AtomicExpression kexpressions::Expression:
+	//	BoolValue
+	//	| ValuedObjectTestExpression
+	//	| '(' BoolExpression ')'
+	//	| ReferenceCall;
+	public AtomicExpressionElements getAtomicExpressionAccess() {
+		return pAtomicExpression;
+	}
+	
+	public ParserRule getAtomicExpressionRule() {
+		return getAtomicExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -4687,7 +4771,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	super::BoolExpression | ValuedExpression;
+	//	super::BoolExpression | super::ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -4752,7 +4836,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// 'Not or Valued Expression' Rule
 	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression Expression:
-	//	ValuedExpression
+	//	super::ValuedExpression
 	//	| NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
@@ -4763,7 +4847,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | super::AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
 		return gaKExpressions.getBitwiseNotExpressionAccess();
 	}
@@ -4784,19 +4868,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getNotExpressionRule() {
 		return getNotExpressionAccess().getRule();
-	}
-	
-	//// Valued Expression Rule    
-	//// Everything that evaluates to a primitive number value.
-	//// Similar to the boolean rule this rule is there for overview reasons.
-	//ValuedExpression Expression:
-	//	ShiftLeftExpression;
-	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
-		return gaKExpressions.getValuedExpressionAccess();
-	}
-	
-	public ParserRule getValuedExpressionRule() {
-		return getValuedExpressionAccess().getRule();
 	}
 	
 	//ShiftLeftExpression Expression:
@@ -4892,27 +4963,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getDivExpressionAccess().getRule();
 	}
 	
-	//// Atomic Expression Rule
-	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
-	//// encapsulated in braces, a function call or a text expression.
-	//// Basically, the rule chain may start over again at this point.     
-	//AtomicExpression Expression:
-	//	BoolValue
-	//	| ValuedObjectTestExpression
-	//	| '(' super::BoolExpression ')'
-	//	| ReferenceCall
-	//	| FunctionCall
-	//	| RandomCall
-	//	| RandomizeCall
-	//	| TextExpression;
-	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
-		return gaKExpressions.getAtomicExpressionAccess();
-	}
-	
-	public ParserRule getAtomicExpressionRule() {
-		return getAtomicExpressionAccess().getRule();
-	}
-	
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
@@ -4922,8 +4972,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//	| FloatValue
 	//	| StringValue
 	//	| VectorValue
-	//	| '(' ValuedExpression ')'
-	//	| AtomicExpression;
+	//	| '(' super::ValuedExpression ')'
+	//	| super::AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -5113,7 +5163,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//VectorValueMember Expression:
-	//	super::BoolExpression | ValuedExpression | IgnoreValue;
+	//	super::BoolExpression | super::ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}

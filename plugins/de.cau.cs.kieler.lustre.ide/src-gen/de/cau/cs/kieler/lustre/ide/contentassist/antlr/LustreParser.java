@@ -57,6 +57,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPreExpressionAccess().getAlternatives(), "rule__PreExpression__Alternatives");
 			builder.put(grammarAccess.getInitExpressionAccess().getAlternatives(), "rule__InitExpression__Alternatives");
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
+			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getParamsAccess().getAlternatives_1(), "rule__Params__Alternatives_1");
 			builder.put(grammarAccess.getStaticParamAccess().getAlternatives(), "rule__StaticParam__Alternatives");
 			builder.put(grammarAccess.getStaticParamAccess().getAlternatives_2_1(), "rule__StaticParam__Alternatives_2_1");
@@ -79,7 +80,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 			builder.put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 			builder.put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
-			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
@@ -190,6 +190,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1(), "rule__LogicalAndExpression__Group_1__0");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_1(), "rule__LogicalAndExpression__Group_1_1__0");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_2(), "rule__LogicalAndExpression__Group_1_2__0");
+			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup(), "rule__Params__Group__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup_1_0(), "rule__Params__Group_1_0__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup_1_0_1(), "rule__Params__Group_1_0_1__0");
@@ -323,7 +324,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDivExpressionAccess().getGroup_1(), "rule__DivExpression__Group_1__0");
 			builder.put(grammarAccess.getDivExpressionAccess().getGroup_1_1(), "rule__DivExpression__Group_1_1__0");
 			builder.put(grammarAccess.getDivExpressionAccess().getGroup_1_2(), "rule__DivExpression__Group_1_2__0");
-			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
