@@ -216,10 +216,17 @@ export function renderKSpline(rendering: KSpline, edge: KGraphElement | KEdge, c
     const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (edge as KGraphElement).id + rendering.id)
 
     const firstPoint = edge.routingPoints[0]
-    let minX = firstPoint.x
-    let maxX = firstPoint.x
-    let minY = firstPoint.y
-    let maxY = firstPoint.y
+    let minX, maxX, minY, maxY: number
+    if (!firstPoint) {
+        return <g>
+            {renderChildRenderings(rendering, edge, context)}
+        </g>
+    }
+
+    minX = firstPoint.x
+    maxX = firstPoint.x
+    minY = firstPoint.y
+    maxY = firstPoint.y
     for (let i = 1; i < edge.routingPoints.length - 1; i++) {
         const p = edge.routingPoints[i]
         if (p.x < minX) {
@@ -306,10 +313,17 @@ export function renderKPolyline(rendering: KPolyline, edge: KGraphElement | KEdg
     const foregroundDefinition = styles.kForeground === null ? <g/> : foreground(styles.kForeground, (edge as KGraphElement).id + rendering.id)
 
     const firstPoint = edge.routingPoints[0]
-    let minX = firstPoint.x
-    let maxX = firstPoint.x
-    let minY = firstPoint.y
-    let maxY = firstPoint.y
+    let minX, maxX, minY, maxY: number
+    if (!firstPoint) {
+        return <g>
+            {renderChildRenderings(rendering, edge, context)}
+        </g>
+    }
+
+    minX = firstPoint.x
+    maxX = firstPoint.x
+    minY = firstPoint.y
+    maxY = firstPoint.y
     let path = `M ${firstPoint.x},${firstPoint.y}`
     for (let i = 1; i < edge.routingPoints.length - 1; i++) {
         const p = edge.routingPoints[i]
@@ -380,10 +394,17 @@ export function renderKRoundedBendsPolyline(rendering: KRoundedBendsPolyline, ed
     const bendRadius = rendering.bendRadius
 
     const firstPoint = edge.routingPoints[0]
-    let minX = firstPoint.x
-    let maxX = firstPoint.x
-    let minY = firstPoint.y
-    let maxY = firstPoint.y
+    let minX, maxX, minY, maxY: number
+    if (!firstPoint) {
+        return <g>
+            {renderChildRenderings(rendering, edge, context)}
+        </g>
+    }
+
+    minX = firstPoint.x
+    maxX = firstPoint.x
+    minY = firstPoint.y
+    maxY = firstPoint.y
     let path = `M ${firstPoint.x},${firstPoint.y}`
     for (let i = 1; i < edge.routingPoints.length - 1; i++) {
         const p0 = edge.routingPoints[i - 1]
@@ -521,6 +542,12 @@ export function renderKPolygon(rendering: KPolygon, parent: KGraphElement, conte
     }
 
     const firstPoint = evaluateKPosition(rendering.points[0], bounds, true)
+    if (!firstPoint) {
+        return <g>
+            {renderChildRenderings(rendering, parent, context)}
+        </g>
+    }
+
     let path = `M ${firstPoint.x + bounds.x},${firstPoint.y + bounds.y}`
     for (let i = 1; i < rendering.points.length; i++) {
         const p = evaluateKPosition(rendering.points[i], bounds, true)
