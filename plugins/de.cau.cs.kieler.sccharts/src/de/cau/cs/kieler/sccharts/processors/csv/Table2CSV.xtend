@@ -14,12 +14,13 @@ package de.cau.cs.kieler.sccharts.processors.csv
 
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import java.util.List
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
  * @author stu114663
  *
  */
-class Table2CSV extends ExogenousProcessor<List<List<String>>, String> {
+class Table2CSV extends ExogenousProcessor<List<List<String>>, CodeContainer> {
     
     static final String CSV_DELIMITER_CHARACTER = ","
     static final String CSV_ESCAPE_CHARACTER = "\\\\"
@@ -36,7 +37,10 @@ class Table2CSV extends ExogenousProcessor<List<List<String>>, String> {
         val table = getModel
         // TODO check for empty model
         val CSVBuilder cb = new CSVBuilder(table, CSV_DELIMITER_CHARACTER, CSV_ESCAPE_CHARACTER)
-        model = cb.getCSV()
+        val result = new CodeContainer
+        // TODO get sensible name from existing file
+        result.add("output.csv", cb.getCSV())
+        model = result
     }
     
     

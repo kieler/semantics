@@ -71,6 +71,7 @@ class CSVBuilder {
         return sb1.toString
     }
     
+    /** Unifies the line lengths in the table and returns that length. */
     private def int unifyLineLengths() {
         var longest = 0
         
