@@ -16,10 +16,10 @@ package de.cau.cs.kieler.sccharts.processors.tabels
  * @author stu114663
  * 
  */
-enum HeaderNumbers {
+enum HeaderType {
     STATE,
     TARGET_STATE,
     EFFECT,
-    DISCARDABLE,
-    CONDITION
+    CONDITION,
+    DISCARDABLE
 }

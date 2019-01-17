@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sccharts.processors.tabels
  * @author stu114663
  *
  */
-enum TableTypes {
+enum TableType {
     StateTransition,
     StateEvent
 }
