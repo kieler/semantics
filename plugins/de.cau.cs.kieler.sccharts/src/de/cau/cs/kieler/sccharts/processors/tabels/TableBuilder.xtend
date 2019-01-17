@@ -12,17 +12,26 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 
 /**
  * @author stu114663
  *
  */
 abstract class TableBuilder implements ITableBuilder {
+    @Inject 
+    var de.cau.cs.kieler.sccharts.processors.tabels.ExpressionSerializer exprS
+    @Inject 
+    var de.cau.cs.kieler.sccharts.processors.tabels.EffectSerializer effeS
+    
+    static final String EFFECT_SPLITTER = ";"
     
     @Accessors
     SCCharts model
@@ -32,18 +41,24 @@ abstract class TableBuilder implements ITableBuilder {
     def String trigger2String(Expression trigger) {
         if (trigger !== null) {
             // TODO turn Expression to String
-            return ""
+            return exprS.serialize(trigger).toString
         } else {
             return ""
         }
     }
     
     def String effects2String(List<Effect> effects) {
-        if (effects !== null) {
-        	for (effect : effects) {
-                // TODO turn Effect into String 
+        if (!effects.nullOrEmpty) {
+            val StringBuilder esb = new StringBuilder
+            
+            esb.append(effeS.serialize(effects.get(0)).toString)
+            for (var int i = 1; i < effects.size; i++) {
+                val effect = effects.get(i)
+                esb.append(EFFECT_SPLITTER)
+                esb.append(effeS.serialize(effect).toString)
         	}
-        	return ""
+        	
+        	return esb.toString
         } else {
         	return ""
         }

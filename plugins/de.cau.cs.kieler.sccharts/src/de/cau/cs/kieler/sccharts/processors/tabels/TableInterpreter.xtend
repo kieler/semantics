@@ -48,7 +48,7 @@ abstract class TableInterpreter implements ITableInterpreter {
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     
-    final String EFFECT_SPLITTER = ";"
+    static final String EFFECT_SPLITTER = ";"
     
     SCCharts scc
     
