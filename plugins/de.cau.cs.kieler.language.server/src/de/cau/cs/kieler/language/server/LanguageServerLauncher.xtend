@@ -47,8 +47,6 @@ import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerE
  *
  */
 class LanguageServerLauncher extends ServerLauncher {
-
-    @Inject LanguageServerImpl languageServer
     @Inject Injector injector
     
     def static void main(String[] args) {        
@@ -64,8 +62,8 @@ class LanguageServerLauncher extends ServerLauncher {
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
-        val regExtension = injector.getBinding(RegistrationLanguageServerExtension)
-        println("Here is the regExtension:" + regExtension)
+        val languageServer = injector.getInstance(LanguageServerImpl)
+        val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(#[languageServer, regExtension])
                 .setRemoteInterface(LanguageClient)
