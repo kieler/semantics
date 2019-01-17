@@ -132,6 +132,9 @@ class AnnotationsExtensions {
         ]
     }
     
+    def addTagAnnotation(Annotatable annotatable, String name) {
+        annotatable.annotations += createTagAnnotation(name)
+    }
     
     def boolean hasEqualAnnotationValue(Annotatable source, String name, Annotatable target) {
         if (!source.hasAnnotation(name) || !target.hasAnnotation(name)) return false;
