@@ -16,18 +16,22 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.ArrayList
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author stu114663
  *
  */
 class StateTransitionTableBuilder extends TableBuilder {
+    @Accessors
+    final TableType tableType = TableType.StateTransition
+    
     // header line: [ID] State Condition Effect Target Comment
-    HeaderNumbers[] headerLine = #[
-        HeaderNumbers.STATE,
-        HeaderNumbers.CONDITION,
-        HeaderNumbers.EFFECT,
-        HeaderNumbers.TARGET_STATE
+    final HeaderType[] HEADER_LINE= #[
+        HeaderType.STATE,
+        HeaderType.CONDITION,
+        HeaderType.EFFECT,
+        HeaderType.TARGET_STATE
     ]
     
     override build() {
@@ -53,8 +57,11 @@ class StateTransitionTableBuilder extends TableBuilder {
     }
     
     override insertHeader() {
-        val line = new ArrayList<String>
-        for (hn : headerLine) {
+        var List<String> line = new ArrayList<String>
+        line.add(this.tableType.name)
+        table.add(line)
+        line = new ArrayList<String>
+        for (hn : HEADER_LINE) {
         	line.add(hn.name)
         }
         table.add(line)
