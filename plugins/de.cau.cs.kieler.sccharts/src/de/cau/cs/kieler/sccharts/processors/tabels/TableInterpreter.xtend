@@ -15,9 +15,10 @@ package de.cau.cs.kieler.sccharts.processors.tabels
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
@@ -31,7 +32,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import org.eclipse.emf.common.util.EList
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -39,9 +39,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  */
 abstract class TableInterpreter implements ITableInterpreter {
-//    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-//    @Inject extension KExpressionsCreateExtensions
 //    @Inject extension KEffectsExtensions
 //    @Inject extension KExtDeclarationExtensions
     
@@ -55,9 +54,10 @@ abstract class TableInterpreter implements ITableInterpreter {
     
     @Accessors
     boolean initialized = false
-    int headerLines = 1
     @Accessors
-    HeaderNumbers[] headerLine
+    int headerLines
+    @Accessors
+    HeaderType[] headerLine
     
     @Accessors
     var List<List<String>> table
@@ -68,8 +68,10 @@ abstract class TableInterpreter implements ITableInterpreter {
         // TODO check for empty table
         // TODO check for empty headerLine
         checkInitialized()
+        
         if (headerLine.length > table.get(0).length) {
             // TODO handle bad case
+            // TODO check for needed lines
         }
         
         val rootstate = createState => [name = "root"]
@@ -85,7 +87,7 @@ abstract class TableInterpreter implements ITableInterpreter {
     /** Checks if table and headerLine have been initialized and initializes them (with defaults) if necessary */
     def checkInitialized() {
         if(!initialized) {
-            initialize(null, null)
+            initialize()
         }
     }
     
@@ -96,13 +98,17 @@ abstract class TableInterpreter implements ITableInterpreter {
     override createStates(ControlflowRegion region) {
         this.stateMap = new HashMap<String, State>
         
-        val stateColumn = headerLine.indexOf(HeaderNumbers.STATE)
+        val stateColumn = headerLine.indexOf(HeaderType.STATE)
         
         for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
             val stateName = table.get(rowIndex).get(stateColumn)
             // get the state or create a new one if needed
             if(!this.stateMap.containsKey(stateName)) {
                 val State state = region.createState(stateName)
+                // set first state as the initial state
+                if(rowIndex == headerLines) {
+                    state.setInitial
+                }
                 // add the new state, if it didn't exist (returned default)
                 this.stateMap.putIfAbsent(stateName, state)
             }
@@ -112,17 +118,18 @@ abstract class TableInterpreter implements ITableInterpreter {
     /** 
      * creates a list of declarations by recursively adding parent region/state declarations
      */
-    def EList<Declaration> getAllDeclarations(State state) {
+    def List<Declaration> getAllDeclarations(State state) {
+        val list = new ArrayList
         // reached root state?
         if (state.isRootState) {
-            return state.declarations
+            list += state.declarations
+        } else {
+            list += state.declarations
+            val Region region = state.parentRegion
+            val State sState = region.parentState
+            list += region.declarations
+            list += getAllDeclarations(sState)
         }
-        
-        val list = state.declarations
-        val Region region = state.parentRegion
-        val State sState = region.parentState
-        list += region.declarations
-        list += getAllDeclarations(sState)
         return list
     }
     
@@ -140,7 +147,7 @@ abstract class TableInterpreter implements ITableInterpreter {
     }
     
     /** returns the list of indices that have the given HeaderNumber */
-    def getAllHeaderColumns(HeaderNumbers hn) {
+    def getAllHeaderColumns(HeaderType hn) {
         checkInitialized()
         
         var indices = <Integer> newArrayList
@@ -169,7 +176,7 @@ abstract class TableInterpreter implements ITableInterpreter {
         )
         
         return KExtStandaloneParser.parseExpression(exStr)
-    }
+    }    
     
     def List<Effect> effectStrings2Expression(List<String> rawEffectStrs) {
         val List<String> effectStrs = rawEffectStrs.fold(
@@ -180,26 +187,28 @@ abstract class TableInterpreter implements ITableInterpreter {
         ])
         
         val effects = new ArrayList<Effect>
-        for (eff : effectStrs) {
-            // TODO does this 
-            effects.add(KExtStandaloneParser.parseEffect(eff))
+        for (effStr : effectStrs) {
+            val Effect eff = KExtStandaloneParser.parseEffect(effStr)
+            if (eff !== null) {
+                effects.add(eff)
+            }
         }
         return effects
     }
     
     /** recursively extract valued object references from an expression */
     def List<ValuedObjectReference> getValuedObjectReferences(Expression expr) {
-        // TODO might be obsolete due to allReferences function (expr.allReferences)
-        val valOExpressionList = new ArrayList<ValuedObjectReference>
-        
-        if (expr instanceof OperatorExpression) {
-            for(sexp : expr.subExpressions) {
-                valOExpressionList += getValuedObjectReferences(sexp)
-            }
-        } else if (expr instanceof ValuedObjectReference) {
-            valOExpressionList.add(expr)
-        }
-        return valOExpressionList
+//        val valOExpressionList = new ArrayList<ValuedObjectReference>
+//        
+//        if (expr instanceof OperatorExpression) {
+//            for(sexp : expr.subExpressions) {
+//                valOExpressionList += getValuedObjectReferences(sexp)
+//            }
+//        } else if (expr instanceof ValuedObjectReference) {
+//            valOExpressionList.add(expr)
+//        }
+//        return valOExpressionList
+        expr.allReferences
     }
     
     /** 
@@ -207,54 +216,34 @@ abstract class TableInterpreter implements ITableInterpreter {
      * Add non existing ones to the declarations of the <b>parent state</b>.
      */
     def matchAndMakeValuedObjects(Expression expr, State state) {
-        var decls = state.allDeclarations
-        
-        val valuedObjectsReferences = getValuedObjectReferences(expr)
-        var declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-            l += d.getValuedObjects
-            return l
-        ])
-        
-        for (valOR : valuedObjectsReferences) {
-            var alreadyDeclared = false
-            for (dValO : declaredValuedObjects) {
-                if(valOR.valuedObject.name == dValO.name) {
-                    alreadyDeclared = true
-                    valOR.valuedObject = dValO
-                }
-            }
-            
-            // TODO Debug: declarations are not created properly
-            if (!alreadyDeclared) {
-                state.parentRegion.parentState.declarations.add(
-                    getDeclaration(valOR.valuedObject)
-                )
-                
-                decls = state.allDeclarations
-                declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-                    l += d.getValuedObjects
-                    return l
-                ])
-            }
-        }
+        matchAndMakeValuedObjects(getValuedObjectReferences(expr), state)
     }
     
     /** recursively extract valued object references from an effect */
     def List<ValuedObjectReference> getValuedObjectReferences(Effect effect) {
-        // TODO does this work?
+        // TODO does this work or do I need to implement my own version?
         return effect.allReferenceFromEObject
     }
     
     def matchAndMakeValuedObjects(Effect effect, State state) {
-        var decls = state.allDeclarations
-        
-        val valuedObjectsReferences = getValuedObjectReferences(effect)
-        var declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-            l += d.getValuedObjects
-            return l
-        ])
+        matchAndMakeValuedObjects(getValuedObjectReferences(effect), state)
+    }
+    
+    /** Takes a list of valued object references and a state as a scope and rereferences the valued object references 
+     * to the valued objects already declared in the scope (given state).
+     */
+    def matchAndMakeValuedObjects(List<ValuedObjectReference> valuedObjectsReferences, State state) {
+        // get all declarations in the current scope
+        var declaredValuedObjects = getAllDeclarations(state).fold(new ArrayList<ValuedObject>,
+            [
+                List<ValuedObject> l, Declaration d |
+                    l += d.getValuedObjects
+                    return l
+            ]
+        )
         
         for (valOR : valuedObjectsReferences) {
+            // reference existing valued object instead of newly created one
             var alreadyDeclared = false
             for (dValO : declaredValuedObjects) {
                 if(valOR.valuedObject.name == dValO.name) {
@@ -263,27 +252,43 @@ abstract class TableInterpreter implements ITableInterpreter {
                 }
             }
             
-            // TODO Debug: declarations are not created properly
             if (!alreadyDeclared) {
-                state.parentRegion.parentState.declarations.add(
-                    getDeclaration(valOR.valuedObject)
-                )
+                // create a new declaration for the new valued object
+                val decl = createVariableDeclaration(ValueType.UNKNOWN)
+                decl.attach(valOR.valuedObject)
+                state.parentRegion.parentState.declarations.add(decl)
                 
-                decls = state.allDeclarations
-                declaredValuedObjects = decls.fold(new ArrayList<ValuedObject>, [List<ValuedObject> l, Declaration d |
-                    l += d.getValuedObjects
-                    return l
-                ])
+                // update the declarations
+                declaredValuedObjects += valOR.valuedObject
             }
         }
     }
+    
+    def void initialize() {
+        initialize(null, 0, null)
+    }
+    
+    def void initialize(HeaderType[] headerLine) {
+        initialize(headerLine, 0, null)
+    }
+    
+    def void initialize(int headerlines) {
+        initialize(null, headerlines, null)
+    }
+    
+    def void initialize(List<List<String>> table) {
+        initialize(null, 0, table)
+    }
+    
+    def void initialize(HeaderType[] headerLine, int headerlines) {
+        initialize(headerLine, headerlines, null)
+    }
+    
+    def void initialize(HeaderType[] headerLine, List<List<String>> table) {
+        initialize(headerLine, 0, table)
+    }
+    
+    def void initialize(int headerlines, List<List<String>> table) {
+        initialize(null, headerlines, table)
+    }
 }
-
-
-
-
-
-
-
-
-

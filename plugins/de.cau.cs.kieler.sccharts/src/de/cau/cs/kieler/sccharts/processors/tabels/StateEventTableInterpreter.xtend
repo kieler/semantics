@@ -17,6 +17,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author stu114663
@@ -26,22 +27,30 @@ class StateEventTableInterpreter extends TableInterpreter {
     @Inject extension SCChartsTransitionExtensions
     
     static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
-    static final String CELL_DELIMITER = "\\"
+    static final String CELL_DELIMITER = "DO "
     
-    int headerLines = 2
-    final HeaderNumbers[] HEADER_LINE = #[
-        HeaderNumbers.STATE,
-        HeaderNumbers.CONDITION
+    @Accessors
+    final TableType tableType = TableType.StateTransition
+    
+    final int HEADERLINES = 3
+    final HeaderType[] HEADER_LINE = #[
+        HeaderType.STATE,
+        HeaderType.CONDITION
     ]
     
     /** Initializes the Interpreter.
      * When given null a default behaviour is used.
      */
-    override initialize(HeaderNumbers[] headerLine, List<List<String>> table) {
+    override initialize(HeaderType[] headerLine, int headerlines, List<List<String>> table) {
         if (headerLine !== null) {
             this.headerLine = headerLine
         } else {
             this.headerLine = HEADER_LINE
+        }
+        if (headerlines < HEADERLINES) {
+            this.headerLines = HEADERLINES
+        } else {
+            this.headerLines = headerlines
         }
         if (table !== null) {
             this.table = table
@@ -56,7 +65,7 @@ class StateEventTableInterpreter extends TableInterpreter {
      */
     override createTransitions() {
         for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
-            val condColsIndex = getAllHeaderColumns(HeaderNumbers.CONDITION)
+            val condColsIndex = getAllHeaderColumns(HeaderType.CONDITION)
             for (condi : condColsIndex) {
                 createTransition(this.table.get(rowIndex), condi)
             }
@@ -64,7 +73,7 @@ class StateEventTableInterpreter extends TableInterpreter {
     }
     
     def createTransition(List<String> row, int condi) {
-        val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderNumbers.STATE)))
+        val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderType.STATE)))
         
         var targetState = this.stateMap.get(getTargetName(row.get(condi)))
         

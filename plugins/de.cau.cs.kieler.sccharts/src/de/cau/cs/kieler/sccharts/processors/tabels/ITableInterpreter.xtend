@@ -21,7 +21,7 @@ import java.util.List
  *
  */
 interface ITableInterpreter {
-    def void initialize(HeaderNumbers[] headerLine, List<List<String>> table)
+    def void initialize(HeaderType[] headerLine, int headerlines, List<List<String>> table)
     def SCCharts interpret()
     def void createStates(ControlflowRegion region)
     def void createTransitions()
