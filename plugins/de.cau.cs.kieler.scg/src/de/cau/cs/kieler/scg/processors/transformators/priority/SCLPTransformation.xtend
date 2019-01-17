@@ -795,9 +795,9 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
                 if(i != n - 1) {
                     s1 = s1.concat(", ")
                 }
-                s2 = s2.concat(" \\ \n")
+                s2 = s2.concat(" \\\n")
             }
-            forkSb.append(s1 + ") \\ \n")
+            forkSb.append(s1 + ") \\\n")
             s2 = s2.concat("  dispatch_;\n")
             forkSb.append(s2)
             forkSb.append("\n\n")
@@ -840,19 +840,19 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
                    overWordsizeString  = overWordsizeString.concat(" | ")
                 }
             }
-            joinSbUnderWordsize.append(s1 + ") \\ \n")
+            joinSbUnderWordsize.append(s1 + ") \\\n")
             joinSbUnderWordsize.append("  _case __LABEL__: if (")
             joinSbUnderWordsize.append("isEnabledAnyOf(")
             joinSbUnderWordsize.append(underWordsizeString)
             joinSbUnderWordsize.append(")")
-            joinSbUnderWordsize.append(") {\\ \n")
+            joinSbUnderWordsize.append(") {\\\n")
             joinSbUnderWordsize.append("    PAUSEG_(__LABEL__); }")
             joinSbUnderWordsize.append("\n\n")
             
-            joinSbOverWordsize.append(s1 + ") \\ \n")
+            joinSbOverWordsize.append(s1 + ") \\\n")
             joinSbOverWordsize.append("  _case __LABEL__: if (")
             joinSbOverWordsize.append(overWordsizeString)
-            joinSbOverWordsize.append(") {\\ \n")
+            joinSbOverWordsize.append(") {\\\n")
             joinSbOverWordsize.append("    PAUSEG_(__LABEL__); }")
             joinSbOverWordsize.append("\n\n")
             
