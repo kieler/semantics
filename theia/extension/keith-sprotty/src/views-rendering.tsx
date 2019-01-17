@@ -653,6 +653,12 @@ export function renderKText(rendering: KText, parent: KGraphElement | KLabel, co
 
     let dy: string | undefined = undefined
     lines.forEach((line, index) => {
+        // If the line is just a blank line, add a dummy space character so the size estimation will
+        // include this character without rendering anything further visible to the screen.
+        // Also, the <tspan> attribute dy needs at least one character per text so the offset is correctly applied.
+        if (line === "") {
+            line = " "
+        }
         (textNode.children as (string | VNode)[]).push(
             <tspan
                 style = {{
