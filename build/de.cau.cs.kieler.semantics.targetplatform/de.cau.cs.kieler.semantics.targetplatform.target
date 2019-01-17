@@ -46,7 +46,7 @@
       <repository location="http://www.lejos.org/tools/eclipse/plugin/nxj/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.egit.feature.group" version="5.0.1"/>
+      <unit id="org.eclipse.egit.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/egit/updates"/>
     </location>
   </locations>
