@@ -65,13 +65,14 @@ class LanguageServerLauncher extends ServerLauncher {
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
         val regExtension = injector.getBinding(RegistrationLanguageServerExtension)
+        println("Here is the regExtension:" + regExtension)
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(#[languageServer, regExtension])
                 .setRemoteInterface(LanguageClient)
                 .setInput(args.in)
                 .setOutput(args.out)
                 .setExecutorService(executorService)
-                .wrapMessages([it])
+                .wrapMessages(args.wrapper)
                 .configureGson(configureGson)
                 .setClassLoader(this.getClass.classLoader)
                 .create();
