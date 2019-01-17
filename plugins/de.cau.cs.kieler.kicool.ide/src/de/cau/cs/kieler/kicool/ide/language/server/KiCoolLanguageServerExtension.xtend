@@ -141,7 +141,7 @@ class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implem
         this.objectMap.get(uri).add(impl)
         this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
         for (snapshot : snapshots.indexed) {
-            this.objectMap.get(uri).add(snapshot.value)
+            this.objectMap.get(uri).add(snapshot.value.object)
             this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
         }
         
