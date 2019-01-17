@@ -130,6 +130,8 @@ class ProjectInfrastructure {
             }
         }
 
+        
+        // alternatively get path from original model
         val inputModel = environment.getProperty(ORIGINAL_MODEL)
         if (modelFile === null) {
             if (inputModel instanceof EObject) {
@@ -137,12 +139,30 @@ class ProjectInfrastructure {
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
                 }
+            } else if (inputModel instanceof CodeContainer) {
+                if (inputModel.files.size === 1 && inputModel.files.get(0).proxy) {
+                    modelFile = inputModel.files.get(0).file
+                }
             }
         }
         
+        // determine model src folder
         val srcFolderPath = environment.getProperty(MODEL_SRC_PATH)
-        val srcFolder = if (srcFolderPath !== null) new File(srcFolderPath)
-
+        val srcFolder =
+            if (srcFolderPath !== null) {
+                new File(srcFolderPath)
+            } else {
+                if (modelFile !== null) {
+                    modelFile.parentFile
+                }
+            }
+        
+        // get relative path, before temporary project reroutes modelFolder
+        val relativeModelPath = if (srcFolder !== null && modelFile !== null)
+                    Paths.get(srcFolder.path)
+                    .relativize(Paths.get(modelFile.parent))
+        modelRootRelative = relativeModelPath?.toString ?: ""
+        
         if (environment.getProperty(USE_TEMPORARY_PROJECT)) {
             // initialize project
             project = environment.temporaryProject
@@ -167,48 +187,44 @@ class ProjectInfrastructure {
             modelFolder = folder.rawLocation.toFile
         } else if (srcFolder !== null && srcFolder.exists) {
             modelFolder = srcFolder
-        } else if (modelFile !== null && modelFile.exists) {
-            modelFolder = modelFile.parentFile
         } else {
             environment.warnings.add("Can not detect model location to create project infrastructure.")
         }
         
         val dstFolderPath = environment.getProperty(MODEL_DST_PATH)
         val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath) else modelFolder
-
+        
         // Create kieler-gen folder
         if (modelFolder !== null) {
-            val relativeModelPath = Paths.get(modelFolder.path)
-                        .relativize(Paths.get(modelFile.parent))
-            generatedCodeFolder = null
-
-            if (environment.getProperty(USE_GENERATED_FOLDER)) {
-                if (hasProject) {
-                    // root folder
-                    val gen = project.getFolder(dstFolder.name).getFolder(environment.getProperty(GENERATED_NAME))
-                    if (!gen.exists) {
-                        gen.create(true, true, null)
-                    }
-                    generatedCodeRootFolder = gen.rawLocation.toFile
-                    
-                    // gen folder
-                    var genSub = gen
+            if (hasProject) {
+                // root folder
+                var gen = project.getFolder(dstFolder.name)
+                if (environment.getProperty(USE_GENERATED_FOLDER)) {
+                    gen = gen.getFolder(environment.getProperty(GENERATED_NAME))
+                }
+                if (!gen.exists) {
+                    gen.create(true, true, null)
+                }
+                generatedCodeRootFolder = gen.rawLocation.toFile
+                
+                // gen folder
+                var genSub = gen
+                if (relativeModelPath !== null) {
                     for (var i = 0; i<relativeModelPath.getNameCount; i++) {
                         genSub = genSub.getFolder(relativeModelPath.getName(i).toString)
                     }
                     if (!genSub.exists) {
                         genSub.create(true, true, null)
                     }
-                    generatedCodeFolder = genSub.rawLocation.toFile
-                } else {
-                    generatedCodeRootFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
                 }
+                generatedCodeFolder = genSub.rawLocation.toFile
             } else {
-                generatedCodeRootFolder = dstFolder
-            }
-
-            if (generatedCodeFolder === null) {
-                generatedCodeFolder = new File(generatedCodeRootFolder, relativeModelPath.toString)
+                if (environment.getProperty(USE_GENERATED_FOLDER)) {
+                    generatedCodeRootFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
+                } else {
+                    generatedCodeRootFolder = dstFolder
+                }
+                generatedCodeFolder = new File(generatedCodeRootFolder, modelRootRelative)
                 if (!generatedCodeFolder.exists) {
                     generatedCodeFolder.mkdirs
                 }
