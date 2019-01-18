@@ -26,6 +26,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import javax.inject.Inject
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * @author aas
@@ -64,18 +65,21 @@ class PreFinalVariableValuesOfSSA extends InplaceProcessor<SCGraphs> implements 
     
     private def void transform(Node node) {
         if(node instanceof Conditional) {
-            node.condition.transform(null)
+            node.condition.transform
         } else if(node instanceof Assignment) {
-            node.expression.transform(null)
+            node.expression.transform
         }
     }
     
-    private def void transform(Expression ex, OperatorExpression parentExpression) {
-        if(ex instanceof ValuedObjectReference) {
-            ex.replaceWithFinalValueOfSSA(parentExpression)
-        } else if(ex instanceof OperatorExpression) {
-            for(subEx : ex.subExpressions) {
-                subEx.transform(ex)
+    private def void transform(Expression ex) {
+        if(ex instanceof OperatorExpression) {
+            if(ex.operator == OperatorType.PRE) {
+                val preEx = ex
+                for(subEx : preEx.subExpressions) {
+                    if(subEx instanceof ValuedObjectReference) {
+                        subEx.replaceWithFinalValueOfSSA(preEx)
+                    }
+                }    
             }
         }
     }
