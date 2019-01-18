@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -12,25 +12,20 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.util.List
 import java.util.ArrayList
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author stu114663
- *
+ * 
  */
 class StateTransitionTableInterpreter extends TableInterpreter {
-    @Inject extension SCChartsTransitionExtensions
-    
     static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
-    
+
     @Accessors
     final TableType tableType = TableType.StateTransition
-    
+
     final int HEADERLINES = 2
     final HeaderType[] HEADER_LINE = #[
         HeaderType.STATE,
@@ -38,7 +33,7 @@ class StateTransitionTableInterpreter extends TableInterpreter {
         HeaderType.EFFECT,
         HeaderType.TARGET_STATE
     ]
-    
+
     /** Initializes the Interpreter.
      * When given null a default behaviour is used.
      */
@@ -60,7 +55,7 @@ class StateTransitionTableInterpreter extends TableInterpreter {
         }
         this.initialized = true
     }
-    
+
     /**
      * create a transition for each line
      */
@@ -69,32 +64,21 @@ class StateTransitionTableInterpreter extends TableInterpreter {
             createTransition(this.table.get(rowIndex))
         }
     }
-    
+
     def createTransition(List<String> row) {
-        val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderType.STATE)))
-        val targetState = this.stateMap.get(row.get(headerLine.indexOf(HeaderType.TARGET_STATE)))
-        var Transition trans = createTransitionTo(sourceState, targetState)
+        val sourceStateName = row.get(headerLine.indexOf(HeaderType.STATE))
+        val targetStateName = row.get(headerLine.indexOf(HeaderType.TARGET_STATE))
         
-        trans.trigger = conditions2TriggerExpression(
+        val trigger = conditions2TriggerExpression(
             indicesToSublist(row, getAllHeaderColumns(HeaderType.CONDITION)),
             TRIGGER_EXPRESSION_CONNECTOR
         )
         
-        trans.trigger.matchAndMakeValuedObjects(sourceState)
-        
-        trans.effects.addAll(effectStrings2Expression(indicesToSublist(row, getAllHeaderColumns(HeaderType.EFFECT))))
-        
-        for (effect : trans.effects) {
-        	effect.matchAndMakeValuedObjects(sourceState)
-        }
+        val effects = effectStrings2Expression(indicesToSublist(
+            row,
+            getAllHeaderColumns(HeaderType.EFFECT)
+        ))
+
+        createTransition(sourceStateName, targetStateName, trigger, effects)
     }
 }
-
-
-
-
-
-
-
-
-

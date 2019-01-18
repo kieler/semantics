@@ -26,9 +26,11 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -44,9 +46,10 @@ abstract class TableInterpreter implements ITableInterpreter {
 //    @Inject extension KEffectsExtensions
 //    @Inject extension KExtDeclarationExtensions
     
-    @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     static final String EFFECT_SPLITTER = ";"
     
@@ -112,6 +115,39 @@ abstract class TableInterpreter implements ITableInterpreter {
                 // add the new state, if it didn't exist (returned default)
                 this.stateMap.putIfAbsent(stateName, state)
             }
+        }
+    }
+    
+    def State addSinkState(State neighbour, String stateName){
+        addSinkState(neighbour.parentRegion, stateName)
+    }
+    
+    def State addSinkState(ControlflowRegion region, String stateName) {
+        val State state = region.createState(stateName)
+        this.stateMap.putIfAbsent(stateName, state)
+        return state
+    }
+    
+    def createTransition(String sourceStateName, String targetStateName, Expression trigger, List<Effect> effects) {
+        val sourceState = this.stateMap.get(sourceStateName)
+        var targetState = this.stateMap.get(targetStateName)
+        if (targetState === null) {
+            targetState = addSinkState(sourceState, targetStateName)
+        }
+        
+        createTransition(sourceState, targetState, trigger, effects)
+    }
+    
+    /** Creates a transition with a trigger and a list of effects and handles
+     * the declaration of any valued objects.
+     */
+    def createTransition(State sourceState, State targetState, Expression trigger, List<Effect> effects) {
+        val Transition trans = createTransitionTo(sourceState, targetState)
+        trans.trigger = trigger
+        trans.trigger.matchAndMakeValuedObjects(sourceState)
+        trans.effects.addAll(effects)
+        for (effect : trans.effects) {
+        	effect.matchAndMakeValuedObjects(sourceState)
         }
     }
     

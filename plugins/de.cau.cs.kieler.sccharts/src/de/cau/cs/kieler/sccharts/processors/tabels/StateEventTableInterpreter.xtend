@@ -12,9 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -24,8 +21,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  */
 class StateEventTableInterpreter extends TableInterpreter {
-    @Inject extension SCChartsTransitionExtensions
-    
     static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
     static final String CELL_DELIMITER = "DO "
     
@@ -73,21 +68,17 @@ class StateEventTableInterpreter extends TableInterpreter {
     }
     
     def createTransition(List<String> row, int condi) {
-        val sourceState = this.stateMap.get(row.get(headerLine.indexOf(HeaderType.STATE)))
+        val sourceStateName = row.get(headerLine.indexOf(HeaderType.STATE))
+        val targetStateName = getTargetName(row.get(condi))
         
-        var targetState = this.stateMap.get(getTargetName(row.get(condi)))
+        val trigger = conditions2TriggerExpression(
+            getConditionRow().subList(condi, condi),
+            TRIGGER_EXPRESSION_CONNECTOR
+        )
         
-        var Transition trans = createTransitionTo(sourceState, targetState)
+        val effects = effectStrings2Expression(getEffectString(row.get(condi)))
         
-        trans.trigger = conditions2TriggerExpression(getConditionRow().subList(condi, condi), TRIGGER_EXPRESSION_CONNECTOR)
-        
-        trans.trigger.matchAndMakeValuedObjects(sourceState)
-        
-        trans.effects.addAll(effectStrings2Expression(getEffectString(row.get(condi))))
-        
-        for (effect : trans.effects) {
-        	effect.matchAndMakeValuedObjects(sourceState)
-        }
+        createTransition(sourceStateName, targetStateName, trigger, effects)
     }
     
     def List<String> getConditionRow() {table.get(headerLines-1)}
