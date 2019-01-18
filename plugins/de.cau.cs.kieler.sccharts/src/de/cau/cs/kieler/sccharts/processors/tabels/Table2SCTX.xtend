@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.processors.tabels
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import java.util.List
 
 /**
@@ -22,8 +24,11 @@ import java.util.List
  *
  */
 class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsStateExtensions
+    
     @Inject
-    var de.cau.cs.kieler.sccharts.processors.tabels.TableIdentifier tableid
+    var TableIdentifier tableid
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.Table2SCTX"
@@ -36,14 +41,17 @@ class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
     override process() {
         val model = getModel
         // TODO check for empty model
-        val TableInterpreter ti = getInterpreter(model)
-        // TODO check ti for null
-        // TODO should be done by TableIdentifier
-//        ti.initialize(null, 0, getModel)
-        model = ti.interpret
+        try {
+            val TableInterpreter ti = getInterpreter(model)
+            model = ti.interpret
+        } catch (IllegalArgumentException exception) {
+            environment.errors.add(exception)
+//            val rootstate = createState => [name = "root"]
+//            model = createSCChart => [rootStates += rootstate]
+        }
     }
     
-    def TableInterpreter getInterpreter(List<List<String>> table) {        
+    def TableInterpreter getInterpreter(List<List<String>> table) throws IllegalArgumentException {        
         return tableid.identify(table)
     }
 }
