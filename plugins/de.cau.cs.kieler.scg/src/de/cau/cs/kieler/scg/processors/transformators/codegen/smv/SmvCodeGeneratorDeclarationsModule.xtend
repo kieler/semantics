@@ -46,18 +46,21 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     override generate() {
         incIndentationLevel
         appendIndentedLine("VAR")
-        // Add the decls of the model.
+        // Add inputs of model
         assumptions = processorInstance.compilationContext.startEnvironment
             .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>  
         for (decl : scg.declarations) {
             for (valuedObject : decl.valuedObjects) {
                 if (decl instanceof VariableDeclaration) {
-                    val declType = decl.getSmvType(valuedObject)
-                    appendIndentation
-                    code.append(valuedObject.name).append(" : ").append(declType).append(";\n")
+                    if(decl.isInput) {
+                        val declType = decl.getSmvType(valuedObject)
+                        appendIndentation
+                        code.append(valuedObject.name).append(" : ").append(declType).append(";\n")    
+                    }
                 }
             }
         }
+        appendIndentedLine("_GO : boolean;");
         
         // Add pre guards
         val store = VariableStore.get(processorInstance.environment)
@@ -78,15 +81,14 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     }
     
     private def CharSequence getSmvType(VariableDeclaration decl, ValuedObject valuedObject) {
+        // If this is a variable introduced by SSA, then we use the assumptions for the original variable.
+        val origValuedObject = if(decl.isSSA) decl.ssaOrigVO else valuedObject
+        val rangeAssumption = getRangeAssumption(origValuedObject)
+        if(rangeAssumption !== null) {
+            return rangeAssumption.minValue+".."+rangeAssumption.maxValue
+        }
         if (decl.type == ValueType.HOST && !decl.hostType.isNullOrEmpty) {
             return decl.hostType
-        }
-        if(decl.type == ValueType.INT) {
-            val assumedValuedObject = if(decl.isSSA) decl.ssaOrigVO else valuedObject
-            val rangeAssumption = getRangeAssumption(assumedValuedObject)
-            if(rangeAssumption !== null) {
-                return rangeAssumption.minValue+".."+rangeAssumption.maxValue
-            }
         }
         return decl.type.serializeHR
     }

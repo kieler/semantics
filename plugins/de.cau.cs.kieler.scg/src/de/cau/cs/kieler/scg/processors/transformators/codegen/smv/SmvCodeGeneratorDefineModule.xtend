@@ -15,11 +15,11 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -33,11 +33,13 @@ import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+
 /**
  * @author aas
  * 
  */
-class SmvCodeGeneratorTickModule extends SmvCodeGeneratorModuleBase {
+class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
 
     @Inject extension KEffectsExtensions
     @Inject extension SCGControlFlowExtensions
@@ -148,29 +150,89 @@ class SmvCodeGeneratorTickModule extends SmvCodeGeneratorModuleBase {
     
     override generate() {
         incIndentationLevel
-        appendIndentedLine("ASSIGN")
+        appendIndentedLine("DEFINE")
         
-        // Define _GO
-        appendIndentedLine('''init(«GO_GUARD») := TRUE;''')
-        appendIndentedLine('''next(«GO_GUARD») := FALSE;''')
-        code.append("\n")
-        // Define pre guards
-        val smvCodeGeneratorModule = parent as SmvCodeGeneratorModule
-        val store = VariableStore.get(processorInstance.environment)
-        for(entry : store.variables.entries) {
-            val variableInformation = entry.value
-            if(variableInformation.properties.contains(SmvCodeGeneratorModule.PROPERTY_PREGUARD)) {
-                val predValuedObject = variableInformation.valuedObject
-                val initValue = if(variableInformation.type == ValueType.INT) "0" else "FALSE"
-                val preVariableName = entry.key
-                val origVariableName = smvCodeGeneratorModule.getOriginalVariableName(preVariableName)
-                appendIndentedLine('''init(«preVariableName») := «initValue»;''')
-                appendIndentedLine('''next(«preVariableName») := «origVariableName»;''')
-                code.append("\n")
+        // Define valued objects that are no pre-guard and no input to the model
+        for (declaration : scg.declarations) {
+            if (declaration instanceof VariableDeclaration) {
+                if(!declaration.isInput || declaration.isOutput) {
+                    for (valuedObject : declaration.valuedObjects) {
+                        valuedObject.generateAssignment
+                    }
+                }
             }
         }
     }
 
+    private def void generateAssignment(ValuedObject valuedObject) {
+        val assignments = valuedObjectToAssignments.get(valuedObject)
+        if(assignments !== null) {
+            if(assignments.size == 1) {
+                valuedObject.generateUnconditionalAssignment(assignments.head)
+            } else {
+                valuedObject.generateConditionalAssignments(assignments)
+            }
+        }
+    }
+
+    private def void generateUnconditionalAssignment(ValuedObject valuedObject, Assignment assignment) {
+        val expression = assignment.expression.serializeHR
+            .toSmvExpression
+            .useBooleanInsteadIntegerIfNeeded(valuedObject)
+        appendIndentedLine('''«valuedObject.name» := «expression»;''')    
+    }
+
+    private def void generateConditionalAssignments(ValuedObject valuedObject, List<Assignment> assignments) {
+        appendIndentedLine('''«valuedObject.name» :=''')
+        incIndentationLevel
+        appendIndentedLine('''case''')
+        incIndentationLevel
+        for(assignment : assignments) {
+            val parentConditional = nodeToParentConditional.get(assignment)
+            val fullyQualifiedCondition = getFullyQualifiedCondition(parentConditional)
+            val expression = assignment.expression.serializeHR
+                .toSmvExpression
+                .useBooleanInsteadIntegerIfNeeded(valuedObject)
+            appendIndentedLine('''«fullyQualifiedCondition» : «expression»;''')    
+        }
+        decIndentationLevel
+        appendIndentedLine('''esac;''')
+        decIndentationLevel
+    }
+    
+    private def String getFullyQualifiedCondition(ConditionalTree parentConditional) {
+        if(parentConditional === null) {
+            return "TRUE"
+        }
+        val conditionForTrueBranch = parentConditional.conditional.condition.serializeHR
+            .toSmvExpression
+        val condition = if (parentConditional.branchOfConditional)
+                            conditionForTrueBranch
+                        else
+                            '''!(«conditionForTrueBranch»)'''
+        if(parentConditional.parent === null) {
+            return condition.toString            
+        } else {
+            return getFullyQualifiedCondition(parentConditional.parent) + " & " + condition
+        }
+    }
+    
     override generateDone() {
+    }
+    
+    private def boolean isBoolean(ValuedObject valuedObject) {
+        val declaration = valuedObject.declaration
+        if(declaration instanceof VariableDeclaration) {
+            return declaration.type == ValueType.BOOL
+        }
+        return false
+    }
+    
+    private def String useBooleanInsteadIntegerIfNeeded(String s, ValuedObject valuedObject) {
+        // FIXME: This is a dirty fix for assignment of 1 and 0 instead proper booleans
+        return if(valuedObject.isBoolean)
+                   s.replaceAll("\\b1\\b", "TRUE").replaceAll("\\b0\\b", "FALSE")
+               else
+                   s
     }
 }

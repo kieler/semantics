@@ -17,16 +17,13 @@ import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import java.util.Comparator
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+
 /**
  * @author aas
  * 
  */
 class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
-
-    public static def String toSmvExpression(String kexpression) {
-        return kexpression.replace("==", "=").replace("&&", "&").replace("||", "|")
-                          .replace("false", "FALSE").replace("true", "TRUE")
-    }
     
     override getName() {
         return class.simpleName;

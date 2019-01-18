@@ -64,7 +64,7 @@ class SCChartsVerificationPropertyAnalyzer {
             }
             return assumptions
         } else {
-            throw new Exception("Range assumption can only be used on integer variables")
+            throw new Exception("Range assumption can only be used on variables")
         }
     }
     

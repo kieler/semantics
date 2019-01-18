@@ -45,13 +45,14 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     @Accessors private var List<VerificationProperty> verificationProperties
     
     private var List<SCGCodeGeneratorModule> codeGeneratorModules
-    private val preVariableToOriginalVariable = <String,String>newHashMap
+    private val preVariableToOriginalVariable = <String,String>newHashMap    
     
     override configure() {
         val declarations = createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
         val tick = createAndConfigureModule(SmvCodeGeneratorTickModule)
         val specifications = createAndConfigureModule(SmvCodeGeneratorSpecificationsModule)
-        codeGeneratorModules = #[declarations, tick, specifications]
+        val define = createAndConfigureModule(SmvCodeGeneratorDefineModule)
+        codeGeneratorModules = #[declarations, define, tick, specifications]
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
