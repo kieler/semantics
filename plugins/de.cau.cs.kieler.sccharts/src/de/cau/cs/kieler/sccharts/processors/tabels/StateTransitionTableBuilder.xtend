@@ -47,7 +47,7 @@ class StateTransitionTableBuilder extends TableBuilder {
         	    	}
         	    }
         	} else {
-        		
+        		// TODO Throw exception when the region is not a ControlFlowRegion
         	}
         } else {
             table = null
@@ -57,14 +57,11 @@ class StateTransitionTableBuilder extends TableBuilder {
     }
     
     override insertHeader() {
-        var List<String> line = new ArrayList<String>
-        line.add(this.tableType.name)
-        table.add(line)
-        line = new ArrayList<String>
-        for (hn : HEADER_LINE) {
-        	line.add(hn.name)
-        }
-        table.add(line)
+        // insert table type
+        table.add(#[this.tableType.name])
+        
+        // insert header line
+        table.add(HEADER_LINE.map[HeaderType ht | ht.name])
     }
     
     override insertTransition(Transition outTrans) {

@@ -14,9 +14,7 @@ package de.cau.cs.kieler.sccharts.processors.tabels
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -27,9 +25,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 abstract class TableBuilder implements ITableBuilder {
     @Inject 
-    var de.cau.cs.kieler.sccharts.processors.tabels.ExpressionSerializer exprS
+    var ExpressionSerializer exprS
     @Inject 
-    var de.cau.cs.kieler.sccharts.processors.tabels.EffectSerializer effeS
+    var EffectSerializer effeS
     
     static final String EFFECT_SPLITTER = ";"
     
