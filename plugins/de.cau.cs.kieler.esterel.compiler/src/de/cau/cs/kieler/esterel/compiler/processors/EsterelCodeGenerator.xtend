@@ -129,8 +129,8 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         
         val compiler = new InriaEsterelCompiler(environment)
         if (compiler === null || !compiler.available) {
-            environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
-            logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
+            environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported for this operating system!")
+            logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported for this operating system!")
         }
         
         val options = <String>newArrayList
