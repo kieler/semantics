@@ -347,7 +347,7 @@ class VerificationView extends ViewPart {
                             if(e.operation == SimulationControlEvent.SimulationOperation.START) {
                                 val counterexampleLocation = property.result.counterexample.location.toOSString
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
-                                SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true)
+                                SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 DataPoolView.bringToTopIfOpen
                                 // TODO: Remove simulation listener needed?
                             }    

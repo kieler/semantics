@@ -18,7 +18,13 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 class SmvCodeGeneratorExtensions {
     
     public def static String toSmvExpression(CharSequence kexpression) {
-        return kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|").replace("false", "FALSE").
-            replace("true", "TRUE")
+        return kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|")
+                                   .replace("false", "FALSE").replace("true", "TRUE")
+    }
+    
+    private static def String toKExpression(CharSequence smvExpression) {
+        return smvExpression.toString.replace("=", "==").replace("&","&&").replace("|","||")
+                                     .replace("FALSE","false").replace("TRUE","true")
+                            
     }
 }

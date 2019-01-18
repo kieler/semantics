@@ -123,24 +123,25 @@ class NuxmvOutputInterpreter {
                     val variable = variableMapping.key
                     val expression = variableMapping.value
                     if(variable.isInput(store)) {
-                        inputVariableMapping += '''«variable» = «expression.toKtraceExpression» '''
+                        inputVariableMapping += '''«variable» = «expression.toKExpression» '''
                     }
                     if(variable.isOutput(store)) {
-                        outputVariableMapping += '''«variable» = «expression.toKtraceExpression» '''
+                        outputVariableMapping += '''«variable» = «expression.toKExpression» '''
                     }
                 }
                 sb.append(inputVariableMapping)
                 if(!outputVariableMapping.isNullOrEmpty) {
                     sb.append("=> ").append(outputVariableMapping)
                 }
-                sb.append(";")
+                sb.append(";\n")
             }
             return sb.toString
         }
         
-        private static def String toKtraceExpression(String exp) {
-            return exp.replace("FALSE","false").replace("TRUE","true")
-                      .replace("|","||").replace("&","&&").replace("=", "==")
+        private static def String toKExpression(String smvExpression) {
+            // TODO: duplicate of SmvCodeGeneratorSpecificationModule.toKExpression, but cannot import from there
+            return smvExpression.toString.replace("=", "==").replace("&","&&").replace("|","||")
+                                     .replace("FALSE","false").replace("TRUE","true")
         }
         
         private static def boolean isInput(String variable, VariableStore store) {
