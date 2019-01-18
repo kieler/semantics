@@ -22,7 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class StateEventTableInterpreter extends TableInterpreter {
     static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
-    static final String CELL_DELIMITER = "DO "
+    static final String CELL_DELIMITER = " GO TO "
     
     @Accessors
     final TableType tableType = TableType.StateTransition
