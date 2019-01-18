@@ -22,7 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class StateEventTableInterpreter extends TableInterpreter {
     static final String TRIGGER_EXPRESSION_CONNECTOR = " && "
-    static final String CELL_DELIMITER = " GO TO "
+    static final String CELL_DELIMITER = " ?GO TO +"
     
     @Accessors
     final TableType tableType = TableType.StateTransition
@@ -72,7 +72,7 @@ class StateEventTableInterpreter extends TableInterpreter {
         val targetStateName = getTargetName(row.get(condi))
         
         val trigger = conditions2TriggerExpression(
-            getConditionRow().subList(condi, condi),
+            getConditionRow().subList(condi, condi+1),
             TRIGGER_EXPRESSION_CONNECTOR
         )
         
@@ -85,7 +85,7 @@ class StateEventTableInterpreter extends TableInterpreter {
     
     def List<String> getEffectString(String cell) {
         val effectTargetList = getEffectTargetList(cell)
-        effectTargetList.subList(0, effectTargetList.length-2)
+        effectTargetList.subList(0, effectTargetList.length-1)
     }
     
     def String getTargetName(String cell) {

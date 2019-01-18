@@ -22,9 +22,9 @@ import java.util.List
  */
 class TableIdentifier {
     @Inject
-    var StateTransitionTableInterpreter stti
+    var de.cau.cs.kieler.sccharts.processors.tabels.StateTransitionTableInterpreter stti
     @Inject
-    var StateEventTableInterpreter seti
+    var de.cau.cs.kieler.sccharts.processors.tabels.StateEventTableInterpreter seti
 
     /** checks the first cell for the TableType */
     def TableInterpreter identify(List<List<String>> table) throws IllegalArgumentException {
