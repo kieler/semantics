@@ -55,6 +55,7 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
         assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
         assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
         
         startSimulationTest(NETLIST_C_SYSTEM, scc, modelData, "SCChartsSimulationNetlistC")
     }
@@ -65,6 +66,7 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-netlist-c-with-tts") || modelData.modelProperties.contains("simulation-fails-c"))
         assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
         assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
         
         startSimulationTest(NETLIST_C_TTS_SYSTEM, scc, modelData, "SCChartsSimulationNetlistC_TTS")
     }
@@ -74,6 +76,7 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-java") || modelData.modelProperties.contains("simulation-fails-java"))
         assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
         assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
         
         startSimulationTest(NETLIST_JAVA_SYSTEM, scc, modelData, "SCChartsSimulationNetlistJava")
     }
@@ -83,6 +86,7 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
         assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
         assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
         
         startSimulationTest(PRIO_C_SYSTEM, scc, modelData, "SCChartsSimulationPrioC")
     }
@@ -93,6 +97,7 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-prio-c-with-tts") || modelData.modelProperties.contains("simulation-fails-c"))
         assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
         assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
         
         startSimulationTest(PRIO_C_TTS_SYSTEM, scc, modelData, "SCChartsSimulationPrioCTTS")
     }
@@ -100,8 +105,9 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
     @Test
     def void testSimulationPrioJava(SCCharts scc, TestModelData modelData) {
         assumeFalse("Skip this test property", modelData.modelProperties.contains("simulation-fails-prio-java") || modelData.modelProperties.contains("simulation-fails-java"))
-        assumeFalse("Has not-IASC property", modelData.modelProperties.contains("not-iasc"))
-        assumeFalse("Has not-SIASC property", modelData.modelProperties.contains("not-siasc"))
+        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
+        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
         
         startSimulationTest(PRIO_JAVA_SYSTEM, scc, modelData, "SCChartsSimulationPrioJava")
     }

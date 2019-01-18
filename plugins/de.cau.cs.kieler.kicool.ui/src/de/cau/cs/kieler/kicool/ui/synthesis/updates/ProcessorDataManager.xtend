@@ -179,6 +179,14 @@ class ProcessorDataManager {
         }
         
         if (compilationNotification instanceof CompilationStart) {
+            // Clear all intermediate results and data
+            node.eAllOfType(KNode).forEach[
+                if (getData(KIdentifier) !== null && NODE_INTERMEDIATE.equals(getData(KIdentifier).id)) {
+                    children.clear
+                }
+                setProperty(INTERMEDIATE_DATA, null)
+            ]
+            
             // Set Select Nothing Data
             node.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(null, 
@@ -683,6 +691,10 @@ class ProcessorDataManager {
     
     static def KNode findNode(KNode node, String id) {
         node.eAllContents.filter(KNode).filter[ id.equals(getData(KIdentifier)?.id) ]?.head
+    }
+        
+    static def findAllNodes(KNode node, String id) {
+        node.eAllContents.filter(KNode).filter[ id.equals(getData(KIdentifier)?.id) ].toList
     }
     
     static def getId(KNode node) {

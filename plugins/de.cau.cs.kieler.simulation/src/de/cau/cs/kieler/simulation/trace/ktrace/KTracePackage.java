@@ -4,6 +4,7 @@ package de.cau.cs.kieler.simulation.trace.ktrace;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -159,13 +160,22 @@ public interface KTracePackage extends EPackage {
     int TICK__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TICK__INPUTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int TICK__INPUTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
@@ -174,7 +184,16 @@ public interface KTracePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TICK__OUTPUTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int TICK__OUTPUTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Goto</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK__GOTO = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Tick</em>' class.
@@ -183,7 +202,7 @@ public interface KTracePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TICK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int TICK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 
     /**
@@ -270,6 +289,17 @@ public interface KTracePackage extends EPackage {
      * @generated
      */
     EReference getTick_Outputs();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.simulation.trace.ktrace.Tick#getGoto <em>Goto</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Goto</em>'.
+     * @see de.cau.cs.kieler.simulation.trace.ktrace.Tick#getGoto()
+     * @see #getTick()
+     * @generated
+     */
+    EReference getTick_Goto();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -362,6 +392,14 @@ public interface KTracePackage extends EPackage {
          * @generated
          */
         EReference TICK__OUTPUTS = eINSTANCE.getTick_Outputs();
+
+        /**
+         * The meta object literal for the '<em><b>Goto</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TICK__GOTO = eINSTANCE.getTick_Goto();
 
     }
 
