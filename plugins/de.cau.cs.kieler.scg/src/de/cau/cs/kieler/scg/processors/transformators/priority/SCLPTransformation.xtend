@@ -43,6 +43,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -221,11 +222,10 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         currentIndentation += DEFAULT_INDENTATION
         
         for(declaration : scg.variableDeclarations) {
-            if(declaration.type.toString == "string" || declaration.type.toString == "STRING") {
-                sb.append("char*")
-            } else {
-                sb.appendInd(declaration.type.toString)
-            }
+            val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                declaration.type.serializeHR
+                else declaration.hostType
+            sb.appendInd(declarationType.toString)
 
             for(variables : declaration.valuedObjects) {
                 if(!(variables.equals(declaration.valuedObjects.head))) {
@@ -269,7 +269,6 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
             + "#define _SC_NO_SIGNALS2VARS\n"
             + "#define _SC_ID_MAX " + maxPID + "\n\n"
             + "#include \""+ scg.name + ".h\"\n"
-            + "#include \"scl.h\"\n"
             + "#include \"scl.h\"\n"
             + "#include \"sc.h\"\n"
             + "#include \"sc-generic.h\"\n\n")

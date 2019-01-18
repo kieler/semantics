@@ -79,6 +79,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors(PUBLIC_GETTER) Environment result
     /** Recording of the notifications if enabled. */
     @Accessors(PUBLIC_GETTER) List<AbstractContextNotification> notifications
+    /** Stops compilation if any error occurs */
+    @Accessors boolean stopOnError = false
     
     new() {
         systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
@@ -140,12 +142,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected def Environment compile(Environment environment) {
         val processorEntry = system.processors
         
-        notify(new CompilationStart(this))
+        if (parentContext === null) notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
-        notify(new CompilationFinished(this, EPrime))
+        if (parentContext === null) notify(new CompilationFinished(this, EPrime))
 
-        result = EPrime              
-        EPrime  
+        result = EPrime
+        EPrime
     }
     
     /** Prepares the environments of the given processor reference and invoke the processor's process. */
@@ -157,7 +159,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             notify(new ProcessorError("An instance for processor reference " + processorReference + " was not found!", 
                 this, processorReference, null))
             System.err.println("An instance for processor reference " + processorReference + " was not found!")
-            return environment    
+            return environment
         }
         
         // Set environment information that come from the outside, e.g. the system.
@@ -174,14 +176,13 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             if (intermediateProcessor.validateInputType) intermediateProcessor.processBefore
         }
         
-        
         val startTimestamp = System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         
         processorInstance.executeCoProcessors(processorReference.preprocesses, false)
         
         try {
-            if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
+            if (processorInstance.sourceEnvironment.getProperty(ENABLED) && (!stopOnError || environmentPrime.errors.empty)) { 
                 processorInstance.process
             }
         } catch (Exception e) {
@@ -221,11 +222,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         var idx = 0
         while (idx < processorGroup.processors.size) {
             val processor = processorGroup.processors.get(idx)
-             if (!cancel) {
-                 environmentPrime = processor.compileEntry(environmentPrime)
-                 cancel = environmentPrime.getProperty(CANCEL_COMPILATION)
-             }
-             idx++
+            if (!cancel) {
+                environmentPrime = processor.compileEntry(environmentPrime)
+                cancel = environmentPrime.getProperty(CANCEL_COMPILATION) || (stopOnError && !environmentPrime.errors.empty)
+            }
+            idx++
         }
         environmentPrime
     }
@@ -303,17 +304,17 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     def getAllErrors() {
         val errors = newLinkedHashSet(startEnvironment.errors)
-        errors += processorInstancesSequence.map[environment?.errors].filterNull
+        errors.addAll(processorInstancesSequence.map[environment?.errors].filterNull)
         return errors.map[allMessages].flatten.toList
     }
     
     def hasWarings() {
-        return !startEnvironment.errors.empty || processorInstancesSequence.map[environment?.errors].filterNull.exists[!empty]
+        return !startEnvironment.warnings.empty || processorInstancesSequence.map[environment?.warnings].filterNull.exists[!empty]
     }
 
-    def getWarningsErrors() {
+    def getAllWarnings() {
         val warnings = newLinkedHashSet(startEnvironment.warnings)
-        warnings += processorInstancesSequence.map[environment?.warnings].filterNull
+        warnings.addAll(processorInstancesSequence.map[environment?.warnings].filterNull)
         return warnings.map[allMessages].flatten.toList
     }
     
@@ -435,9 +436,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         if (environment.isTracingActive) {
             return <IntermediateProcessor<?,?>> newLinkedList => [
-                    addAll(processors) 
-                    add(tracingIntegrationInstance)
-                ]
+                addAll(processors) 
+                add(tracingIntegrationInstance)
+            ]
         }
         
         processors
@@ -456,7 +457,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences, boolean isPostProcessor) {
         for (processorReference : processorReferences) {
-            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
+            processor.environment.processEnvironmentConfig(processorReference.preconfig)
+            if (!stopOnError || processor.environment.errors.empty) {
+                processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), !processorReference.silent, isPostProcessor)
+            }
+            processor.environment.processEnvironmentConfig(processorReference.postconfig)
         }
     }
     

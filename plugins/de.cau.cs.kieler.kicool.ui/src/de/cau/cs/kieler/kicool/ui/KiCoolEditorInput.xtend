@@ -44,7 +44,7 @@ class KiCoolEditorInput implements IStorageEditorInput {
     }
     
     override exists() {
-        false
+        true
     }
     
     override getImageDescriptor() {

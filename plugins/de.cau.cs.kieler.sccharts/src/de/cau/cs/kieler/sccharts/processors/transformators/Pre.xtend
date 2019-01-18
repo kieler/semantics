@@ -142,22 +142,15 @@ class Pre extends SCChartsProcessor implements Traceable {
         // This initial value is initialized immediately with the initial value of the register variable
         preVariable.initialValue = null
         
-        // Create a region in which the pre variable is set to the register variable,
+        // Create a during action in which the pre variable is set to the register variable,
         // and afterwards the register variable is set to the original variable.
         // Thus the pre variable has the value of the original variable from the last tick.
-        val preRegion = state.createControlflowRegion(valuedObject.preRegionName, valuedObject.preRegionName)
-        val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init")
-        val preWait = preRegion.createState(GENERATED_PREFIX + "Wait")
-
-        // Immediate transition for assignments
-        val transInitWait = preInit.createImmediateTransitionTo(preWait)
-        // Delayed transition back to init state
-        preWait.createTransitionTo(preInit);
+        val duringAction = state.createImmediateDuringAction
 
         // Create assignments
         if(arrayIndexIterator === null) {
-            transInitWait.addEffectBefore(regVariable.createAssignment(valuedObject.reference))
-            transInitWait.addEffectBefore(preVariable.createAssignment(regVariable.reference))    
+            duringAction.addEffectBefore(regVariable.createAssignment(valuedObject.reference))
+            duringAction.addEffectBefore(preVariable.createAssignment(regVariable.reference))    
         } else {
             for(arrayIndex : arrayIndexIterator) {
                 // Assign register variable to valued object
@@ -165,27 +158,16 @@ class Pre extends SCChartsProcessor implements Traceable {
                 valuedObjectReference.indices.addAll(arrayIndex.convert)
                 val regAssignment = regVariable.createAssignment(valuedObjectReference)
                 regAssignment.indices.addAll(arrayIndex.convert)
-                transInitWait.addEffectBefore(regAssignment)
+                duringAction.addEffectBefore(regAssignment)
                 // Assign pre variable to register variable
                 val regVariableReference = regVariable.reference
                 regVariableReference.indices.addAll(arrayIndex.convert)
                 val preAssignment = preVariable.createAssignment(regVariableReference)
                 preAssignment.indices.addAll(arrayIndex.convert)
-                transInitWait.addEffectBefore(preAssignment)        
+                duringAction.addEffectBefore(preAssignment)        
             }
         }
 
-        // Edge case: make states final.
-        // If the state has outgoing terminations, we need to finalize the during
-        // actions in case we end the states over these transitions
-        val outgoingTerminations = state.outgoingTransitions.filter[ isTermination ]
-        val hasOutgoingTerminations = outgoingTerminations.length > 0
-        val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)
-        if (complexPre) {
-            preWait.setFinal
-            preInit.setFinal
-        }
-        
         // Remember this pre variable for the original valued object
         transformedVariables.put(valuedObject, preVariable)
     }
@@ -197,7 +179,7 @@ class Pre extends SCChartsProcessor implements Traceable {
         v.declaration2.copyAttributes(source.declaration2)
         v.declaration2.input = false
         v.declaration2.output = false
-        voStore.add(v, SCCHARTS_GENERATED, "pre")
+        voStore.update(v, SCCHARTS_GENERATED, "pre")
         return v
     }
     

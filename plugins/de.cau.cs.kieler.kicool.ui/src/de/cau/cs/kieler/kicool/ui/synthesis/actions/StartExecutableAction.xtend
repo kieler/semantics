@@ -56,7 +56,7 @@ class StartExecutableAction implements IAction {
                     if (env !== null) {
                         val pi = env.getProperty(ProjectInfrastructure.PROJECT_INFRASTRUCTURE)
                         if (pi !== null) {
-                            launch.setAttribute(IExternalToolConstants.ATTR_WORKING_DIRECTORY, pi.generadedCodeFolder.absoluteFile.toString)
+                            launch.setAttribute(IExternalToolConstants.ATTR_WORKING_DIRECTORY, pi.generatedCodeFolder.absoluteFile.toString)
                         }
                     }
                 } 

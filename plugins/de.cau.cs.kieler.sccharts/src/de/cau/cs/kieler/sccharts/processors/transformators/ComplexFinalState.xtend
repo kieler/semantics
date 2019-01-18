@@ -13,15 +13,16 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -32,15 +33,11 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.ArrayList
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import static extension de.cau.cs.kieler.sccharts.processors.transformators.Termination.*
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -63,6 +60,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     }
 
     override process() {
+        termTrans.setEnvironment(environments.source, environments.target)
         setModel(model.transform)
     }
 
@@ -86,17 +84,16 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_CFS"
-    
-    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --              C O M P L E X   F I N A L   S T A T E                  --
@@ -116,7 +113,6 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     // only a single term signal 
     // (TODO)                
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all parent states that contain at least one region that directly contains a complex final state                    
         val parentSatesContainingComplexFinalStates = rootState.allStates.filter [
             isParentContainingComplexFinalState
@@ -149,7 +145,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
 
     def void transformComplexFinalState(State parentState, State rootState) {
         parentState.setDefaultTrace
-        var ArrayList<ValuedObject> termVariables = new ArrayList
+        val ArrayList<ValuedObject> termVariables = new ArrayList
         
         var state = parentState
         
@@ -161,9 +157,9 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
         // If the parent state is the root state then make an explicit termination transition
         if (parentState.isRootState) {
             rootState.setDefaultTrace
-            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName(nameCache)
-            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName(nameCache)
-            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName(nameCache)
+            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
+            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName
+            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName
             for (mainRegion : parentState.regions.filter(e|e != r).toList.immutableCopy) {
                     i.regions.add(mainRegion)
             }
@@ -176,19 +172,25 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
             val allStatesFinal = region.states.size == region.states.filter[isFinal].size
 
             // Use this new term variable to track final states of this region
-            val finalStates = region.states.filter[final && (incomingTransitions.size > 0 || initial)]
+            val finalStates = region.states.filter[final && (incomingTransitions.size > 0 || initial)].toList
+            val complexFinalStates = finalStates.filter[complexFinalState].toList
             finalStates.setDefaultTrace
 
             if (!allStatesFinal) {
-                val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
-                    uniqueName(nameCache)
-                voStore.add(termVariable, SCCHARTS_GENERATED)
+                val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
+                voStore.update(termVariable, SCCHARTS_GENERATED)
                 state.createEntryAction.addAssignment(termVariable.createAssignment(FALSE))    
                 //termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
                     termVariable.setInitialValue(TRUE)
                 }
                 termVariables.add(termVariable)
+                
+                if (complexFinalStates.empty) {
+                    // Mark for special treatment in abort:
+                    // This region should not be aborted by this trigger because it will always be in a final state when triggered
+                    region.setRegionTerm(termVariable)
+                } 
 
                 for (finalState : finalStates) {
                     for (transition : finalState.incomingTransitions.filter[!sourceState.isFinal]) {
@@ -200,20 +202,15 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
                 }
             }
 
-            for (finalState : finalStates) {
-                if (finalState.complexFinalState) {
-                    finalState.final = false
-                }
+            for (cfs : complexFinalStates) {
+                cfs.final = false
             }
         }
 
         // Modify all termination transitions by weak aborts
         for (termination : state.outgoingTransitions.filter[ isTermination ].toList) {
             termination.setTypeWeakAbort
-
-            for (termVariable : termVariables) {
-                termination.setTrigger(termination.trigger.and(termVariable.reference))
-            }
+            termination.addTerminationCheck(termVariables)
         }
     }
 

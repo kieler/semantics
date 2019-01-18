@@ -88,7 +88,7 @@ class PrTransitions extends SCChartsProcessor {
         val prRegion = state.createControlflowRegion(statePrefix)
         val prRandomDeclaration = createVariableDeclaration(ValueType.FLOAT) => [ prRegion.declarations += it ]
         val rVar = createValuedObject(prRandomDeclaration, "r")
-        voStore.add(rVar, SCCHARTS_GENERATED)
+        voStore.update(rVar, SCCHARTS_GENERATED)
         
         val initialState = prRegion.createState(statePrefix + "_Init", "Init").uniqueName => [
             initial = true

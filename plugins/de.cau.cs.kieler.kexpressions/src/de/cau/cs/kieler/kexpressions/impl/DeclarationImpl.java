@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl#isPrivate <em>Private</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,6 +47,25 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * @ordered
      */
     protected EList<ValuedObject> valuedObjects;
+
+    /**
+     * The default value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isPrivate()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean PRIVATE_EDEFAULT = false;
+    /**
+     * The cached value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isPrivate()
+     * @generated
+     * @ordered
+     */
+    protected boolean private_ = PRIVATE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -83,6 +103,27 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isPrivate() {
+        return private_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setPrivate(boolean newPrivate) {
+        boolean oldPrivate = private_;
+        private_ = newPrivate;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__PRIVATE, oldPrivate, private_));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -102,6 +143,8 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
         switch (featureID) {
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
                 return getValuedObjects();
+            case KExpressionsPackage.DECLARATION__PRIVATE:
+                return isPrivate();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -119,6 +162,9 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
                 getValuedObjects().clear();
                 getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
+            case KExpressionsPackage.DECLARATION__PRIVATE:
+                setPrivate((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -134,6 +180,9 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
                 getValuedObjects().clear();
                 return;
+            case KExpressionsPackage.DECLARATION__PRIVATE:
+                setPrivate(PRIVATE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -148,8 +197,26 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
         switch (featureID) {
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
                 return valuedObjects != null && !valuedObjects.isEmpty();
+            case KExpressionsPackage.DECLARATION__PRIVATE:
+                return private_ != PRIVATE_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (private: ");
+        result.append(private_);
+        result.append(')');
+        return result.toString();
     }
 
 } //DeclarationImpl

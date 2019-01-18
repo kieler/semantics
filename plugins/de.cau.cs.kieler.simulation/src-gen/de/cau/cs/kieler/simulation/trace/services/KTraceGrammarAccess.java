@@ -13,6 +13,7 @@ import java.util.List;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -345,49 +346,88 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.trace.KTrace.KTick");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cTickAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cInputsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cInputsAssignmentParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cOutputsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cOutputsAssignmentParserRuleCall_2_1_0 = (RuleCall)cOutputsAssignment_2_1.eContents().get(0);
-		private final Keyword cPauseKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_1_0_0 = (RuleCall)cNameAssignment_1_0.eContents().get(0);
+		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cInputsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cInputsAssignmentParserRuleCall_2_0 = (RuleCall)cInputsAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cOutputsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cOutputsAssignmentParserRuleCall_3_1_0 = (RuleCall)cOutputsAssignment_3_1.eContents().get(0);
+		private final Keyword cPauseKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cGotoKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cGotoAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final CrossReference cGotoTickCrossReference_5_1_0 = (CrossReference)cGotoAssignment_5_1.eContents().get(0);
+		private final RuleCall cGotoTickIDTerminalRuleCall_5_1_0_1 = (RuleCall)cGotoTickCrossReference_5_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//KTick ktrace::Tick:
-		//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)?
-		//	'pause'? ';';
+		//	{ktrace::Tick} (name=ID ':')?
+		//	inputs+=Assignment* ('=>' outputs+=Assignment+)?
+		//	'pause'? ('goto' goto=[ktrace::Tick])?
+		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)? 'pause'? ';'
+		//{ktrace::Tick} (name=ID ':')? inputs+=Assignment* ('=>' outputs+=Assignment+)? 'pause'? ('goto' goto=[ktrace::Tick])?
+		//';'
 		public Group getGroup() { return cGroup; }
 		
 		//{ktrace::Tick}
 		public Action getTickAction_0() { return cTickAction_0; }
 		
+		//(name=ID ':')?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1_0() { return cNameAssignment_1_0; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0_0() { return cNameIDTerminalRuleCall_1_0_0; }
+		
+		//':'
+		public Keyword getColonKeyword_1_1() { return cColonKeyword_1_1; }
+		
 		//inputs+=Assignment*
-		public Assignment getInputsAssignment_1() { return cInputsAssignment_1; }
+		public Assignment getInputsAssignment_2() { return cInputsAssignment_2; }
 		
 		//Assignment
-		public RuleCall getInputsAssignmentParserRuleCall_1_0() { return cInputsAssignmentParserRuleCall_1_0; }
+		public RuleCall getInputsAssignmentParserRuleCall_2_0() { return cInputsAssignmentParserRuleCall_2_0; }
 		
 		//('=>' outputs+=Assignment+)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 		
 		//'=>'
-		public Keyword getEqualsSignGreaterThanSignKeyword_2_0() { return cEqualsSignGreaterThanSignKeyword_2_0; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
 		
 		//outputs+=Assignment+
-		public Assignment getOutputsAssignment_2_1() { return cOutputsAssignment_2_1; }
+		public Assignment getOutputsAssignment_3_1() { return cOutputsAssignment_3_1; }
 		
 		//Assignment
-		public RuleCall getOutputsAssignmentParserRuleCall_2_1_0() { return cOutputsAssignmentParserRuleCall_2_1_0; }
+		public RuleCall getOutputsAssignmentParserRuleCall_3_1_0() { return cOutputsAssignmentParserRuleCall_3_1_0; }
 		
 		//'pause'?
-		public Keyword getPauseKeyword_3() { return cPauseKeyword_3; }
+		public Keyword getPauseKeyword_4() { return cPauseKeyword_4; }
+		
+		//('goto' goto=[ktrace::Tick])?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'goto'
+		public Keyword getGotoKeyword_5_0() { return cGotoKeyword_5_0; }
+		
+		//goto=[ktrace::Tick]
+		public Assignment getGotoAssignment_5_1() { return cGotoAssignment_5_1; }
+		
+		//[ktrace::Tick]
+		public CrossReference getGotoTickCrossReference_5_1_0() { return cGotoTickCrossReference_5_1_0; }
+		
+		//ID
+		public RuleCall getGotoTickIDTerminalRuleCall_5_1_0_1() { return cGotoTickIDTerminalRuleCall_5_1_0_1; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 	
 	
@@ -556,8 +596,10 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//KTick ktrace::Tick:
-	//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)?
-	//	'pause'? ';';
+	//	{ktrace::Tick} (name=ID ':')?
+	//	inputs+=Assignment* ('=>' outputs+=Assignment+)?
+	//	'pause'? ('goto' goto=[ktrace::Tick])?
+	//	';';
 	public KTickElements getKTickAccess() {
 		return pKTick;
 	}
@@ -647,7 +689,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -657,7 +699,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
+	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
+	//	StructDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -668,6 +711,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclaration kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
+	//	private?='private'?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -685,6 +729,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
+	//	private?='private'?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -700,6 +745,51 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
 	
+	//StructDeclaration kext::StructDeclaration:
+	//	{kext::StructDeclaration} annotations+=Annotation*
+	//	private?='private'?
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	global?='global'?
+	//	static?='static'?
+	//	type=StructType
+	//	name=ID?
+	//	'{'
+	//	declarations+=Declaration*
+	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	';'
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.StructDeclarationElements getStructDeclarationAccess() {
+		return gaKExt.getStructDeclarationAccess();
+	}
+	
+	public ParserRule getStructDeclarationRule() {
+		return getStructDeclarationAccess().getRule();
+	}
+	
+	//StructDeclarationWOSemicolon kext::StructDeclaration:
+	//	{kext::StructDeclaration} annotations+=Annotation*
+	//	private?='private'?
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	global?='global'?
+	//	static?='static'?
+	//	type=StructType
+	//	name=ID?
+	//	'{'
+	//	declarations+=DeclarationWOSemicolon*
+	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.StructDeclarationWOSemicolonElements getStructDeclarationWOSemicolonAccess() {
+		return gaKExt.getStructDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getStructDeclarationWOSemicolonRule() {
+		return getStructDeclarationWOSemicolonAccess().getRule();
+	}
+	
 	//NamespaceID:
 	//	ExtendedID (':' PrimeID)*;
 	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
@@ -711,7 +801,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	annotations+=Annotation*
+	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -724,7 +815,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	annotations+=Annotation*
+	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -749,6 +841,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
+	//	private?='private'?
 	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -763,6 +856,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
+	//	private?='private'?
 	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
@@ -1829,6 +1923,16 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getHostTypeAccess().getRule();
 	}
 	
+	//enum StructType returns ValueType:
+	//	STRUCT="struct";
+	public KExpressionsGrammarAccess.StructTypeElements getStructTypeAccess() {
+		return gaKExpressions.getStructTypeAccess();
+	}
+	
+	public EnumRule getStructTypeRule() {
+		return getStructTypeAccess().getRule();
+	}
+	
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="|" | AND="&" | HOST="host";
@@ -2208,7 +2312,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	}
 	
-	//@ Override terminal ML_COMMENT:
+	//@Override
+	//terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
@@ -2220,7 +2325,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	}
 	
-	//@ Override terminal SL_COMMENT:
+	//@Override
+	//terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
@@ -2232,7 +2338,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getNUMBERRule();
 	}
 	
-	//@ Override terminal INT returns ecore::EInt:
+	//@Override
+	//terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
@@ -2250,13 +2357,15 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getBOOLEANRule();
 	}
 	
-	//@ Override terminal STRING:
+	//@Override
+	//terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
 	}
 	
-	//@ Override terminal ID:
+	//@Override
+	//terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();

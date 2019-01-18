@@ -87,7 +87,7 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
                     if (voStore.variables.containsKey(oldName)) {
                         voStore.update(valuedObject)
                     } else {
-                        voStore.add(valuedObject)
+                        voStore.update(valuedObject)
                     }
                 }
             }

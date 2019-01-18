@@ -74,7 +74,7 @@ abstract class AbstractGuardExpressions extends InplaceProcessor<SCGraphs> {
         // Don't forget to add it to the SCG.
         createValuedObject(GO_GUARD_NAME) => [
             scg.declarations += createBoolDeclaration.attach(it)    
-            VariableStore.get(environment).add(it, "guard", "goGuard")
+            VariableStore.get(environment).update(it, "guard", "goGuard")
         ]
     }
     

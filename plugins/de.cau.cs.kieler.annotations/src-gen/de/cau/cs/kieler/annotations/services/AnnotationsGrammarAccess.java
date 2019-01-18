@@ -1276,7 +1276,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tCOMMENT_ANNOTATION;
 	}
 	
-	//@ Override terminal ML_COMMENT:
+	//@Override
+	//terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
@@ -1288,7 +1289,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tSL_COMMENT_ANNOTATION;
 	}
 	
-	//@ Override terminal SL_COMMENT:
+	//@Override
+	//terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
@@ -1300,7 +1302,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tNUMBER;
 	}
 	
-	//@ Override terminal INT returns ecore::EInt:
+	//@Override
+	//terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return tINT;
@@ -1318,13 +1321,15 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tBOOLEAN;
 	}
 	
-	//@ Override terminal STRING:
+	//@Override
+	//terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return tSTRING;
 	}
 	
-	//@ Override terminal ID:
+	//@Override
+	//terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return tID;

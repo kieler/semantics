@@ -51,7 +51,7 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -69,7 +69,7 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         }
         
         if (sourceFile === null) {
-            sourceFile = new File(infra.generadedCodeFolder, sourceModel.modules.head.name + InriaEsterelCompiler.ESTEREL_EXTENSION)
+            sourceFile = new File(infra.generatedCodeFolder, sourceModel.modules.head.name + InriaEsterelCompiler.ESTEREL_EXTENSION)
             logger.println("Serializing Esterel program to " + sourceFile.toString)
             
             // Serialize
@@ -89,11 +89,11 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
                 environment.errors.add("Resource containing the input model has not the file extension " + InriaEsterelCompiler.ESTEREL_EXTENSION)
                 logger.println("ERROR: Resource containing the input model has not the file extension " + InriaEsterelCompiler.ESTEREL_EXTENSION)
             }
-            if (sourceFile.parentFile.equals(infra.generadedCodeFolder)) {
+            if (sourceFile.parentFile.equals(infra.generatedCodeFolder)) {
                 logger.println("Esterel source file already located at the right position")
             } else {
                 val src = sourceFile
-                val dest = new File(infra.generadedCodeFolder, sourceFile.name)
+                val dest = new File(infra.generatedCodeFolder, sourceFile.name)
                 logger.println("Copying Esterel source file to " + dest)
                 ProjectSetup.copyFile(src, dest, logger, true)
                 sourceFile = dest
@@ -107,14 +107,14 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         val sources = newArrayList(sourceFile)
         
         for (addSource : environment.getProperty(SOURCES)?:emptyList) {
-            val addSourceFile = new File(infra.generadedCodeFolder, addSource)
+            val addSourceFile = new File(infra.generatedCodeFolder, addSource)
             if (addSourceFile.file) {
-                sources += infra.generadedCodeFolder.toPath.relativize(addSourceFile.toPath).toFile
+                sources += infra.generatedCodeFolder.toPath.relativize(addSourceFile.toPath).toFile
             } else if (addSourceFile.directory) {
                 for (path : Files.find(addSourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
                     return fileAttr.regularFile && filePath.fileName.toString.endsWith(InriaEsterelCompiler.ESTEREL_EXTENSION)
                 ]).iterator.toIterable) {
-                    sources += infra.generadedCodeFolder.toPath.relativize(path).toFile
+                    sources += infra.generatedCodeFolder.toPath.relativize(path).toFile
                 }
             } else {
                 environment.errors.add("Source location does not exist: " + addSourceFile)
@@ -144,7 +144,7 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         }
         
         // Run esterel compiler
-        var success = compiler.generateCodeCommand(sources, options).invoke(infra.generadedCodeFolder)?:-1 == 0
+        var success = compiler.generateCodeCommand(sources, options).invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")
             logger.println("Compilation failed")

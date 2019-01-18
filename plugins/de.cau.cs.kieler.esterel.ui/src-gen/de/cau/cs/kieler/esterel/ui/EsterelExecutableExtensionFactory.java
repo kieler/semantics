@@ -5,6 +5,7 @@ package de.cau.cs.kieler.esterel.ui;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.esterel.ui.internal.EsterelActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class EsterelExecutableExtensionFactory extends AbstractGuiceAwareExecuta
 
 	@Override
 	protected Bundle getBundle() {
-		return EsterelActivator.getInstance().getBundle();
+		return Platform.getBundle(EsterelActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return EsterelActivator.getInstance().getInjector(EsterelActivator.DE_CAU_CS_KIELER_ESTEREL_ESTEREL);
+		EsterelActivator activator = EsterelActivator.getInstance();
+		return activator != null ? activator.getInjector(EsterelActivator.DE_CAU_CS_KIELER_ESTEREL_ESTEREL) : null;
 	}
-	
+
 }

@@ -54,7 +54,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -62,7 +62,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         
         // Bin folder
         val binFolder = infra.createBinFolder
-        val binPath = infra.generadedCodeFolder.toPath.relativize(binFolder.toPath).toString
+        val binPath = infra.generatedCodeFolder.toPath.relativize(binFolder.toPath).toString
         
         // javac
         logger.println
@@ -74,17 +74,17 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             sources.addAll(infra.sourceCode.files.filter(JavaCodeFile).map[fileName])
         }
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
-        val sourceFiles = sources.map[new File(infra.generadedCodeFolder, it)].toList
+        val sourceFiles = sources.map[new File(infra.generatedCodeFolder, it)].toList
         
         logger.println("Files:")
         for (sourceFile : sourceFiles) {
             if (sourceFile.file) {
-                sourcePaths += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
+                sourcePaths += infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
                 for (path : Files.find(sourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
                     return fileAttr.regularFile && filePath.fileName.toString.endsWith(".java")
                 ]).iterator.toIterable) {
-                    sourcePaths += infra.generadedCodeFolder.toPath.relativize(path).toString
+                    sourcePaths += infra.generatedCodeFolder.toPath.relativize(path).toString
                 }
             } else {
                 environment.errors.add("Source location does not exist: " + sourceFile)
@@ -110,7 +110,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         javac += sourcePaths
         
         // Run javac compiler
-        var success = javac.invoke(infra.generadedCodeFolder)?:-1 == 0
+        var success = javac.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")
             logger.println("Aborting compilation")
@@ -132,7 +132,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             jar += targetJarPath
             jar += entryPoint
             for (sourceFile : sourceFiles) {
-                val path = infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
+                val path = infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
                 if (sourceFile.isFile) {
                     jar += path.replace(".java", ".class")
                     // Find anonymous inner classes

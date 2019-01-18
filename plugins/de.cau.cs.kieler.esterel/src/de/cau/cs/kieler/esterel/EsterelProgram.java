@@ -42,7 +42,7 @@ public interface EsterelProgram extends Pragmatable {
      * @model containment="true"
      * @generated
      */
-    EList<Module> getModules();
+    EList<de.cau.cs.kieler.scl.Module> getModules();
 
     /**
      * Returns the value of the '<em><b>Tick</b></em>' containment reference.

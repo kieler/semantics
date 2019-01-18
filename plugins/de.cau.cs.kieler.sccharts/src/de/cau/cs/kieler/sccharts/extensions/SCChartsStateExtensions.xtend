@@ -179,6 +179,10 @@ class SCChartsStateExtensions {
         state.reference !== null
     }  
     
+    def boolean hasBaseStates(State state) {
+        !state.baseStates.nullOrEmpty
+    }
+    
     def State copyState(State state) {
         val newState = state.nontracingCopy
 

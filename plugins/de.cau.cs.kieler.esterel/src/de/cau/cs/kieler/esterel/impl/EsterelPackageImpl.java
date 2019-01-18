@@ -673,7 +673,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link EsterelPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -687,7 +687,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         if (isInited) return (EsterelPackage)EPackage.Registry.INSTANCE.getEPackage(EsterelPackage.eNS_URI);
 
         // Obtain or create and register package
-        EsterelPackageImpl theEsterelPackage = (EsterelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EsterelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new EsterelPackageImpl());
+        Object registeredEsterelPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        EsterelPackageImpl theEsterelPackage = registeredEsterelPackage instanceof EsterelPackageImpl ? (EsterelPackageImpl)registeredEsterelPackage : new EsterelPackageImpl();
 
         isInited = true;
 
@@ -707,7 +708,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         // Mark meta-data to indicate it can't be changed
         theEsterelPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(EsterelPackage.eNS_URI, theEsterelPackage);
         return theEsterelPackage;

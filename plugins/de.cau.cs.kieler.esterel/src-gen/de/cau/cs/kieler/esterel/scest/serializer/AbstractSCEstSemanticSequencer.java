@@ -120,12 +120,12 @@ import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
-import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
@@ -690,6 +690,18 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
+			case KExtPackage.STRUCT_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
+					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getStructDeclarationRule()) {
+					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
@@ -756,11 +768,11 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case SCLPackage.MODULE:
 				if (rule == grammarAccess.getEsterelModuleRule()) {
-					sequence_EsterelModule(context, (Module) semanticObject); 
+					sequence_EsterelModule(context, (de.cau.cs.kieler.scl.Module) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getModuleRule()) {
-					sequence_Module(context, (Module) semanticObject); 
+					sequence_Module(context, (de.cau.cs.kieler.scl.Module) semanticObject); 
 					return; 
 				}
 				else break;
@@ -848,7 +860,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 * Constraint:
 	 *     (annotations+=Annotation* name=ID (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)* statements+=EsterelParallel?)
 	 */
-	protected void sequence_EsterelModule(ISerializationContext context, Module semanticObject) {
+	protected void sequence_EsterelModule(ISerializationContext context, de.cau.cs.kieler.scl.Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

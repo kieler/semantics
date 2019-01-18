@@ -31,7 +31,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
@@ -94,10 +93,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
 
-    private val nameCache = new UniqueNameCache
-    
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_cd"
     
@@ -107,7 +103,6 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        nameCache.clear
         // Traverse all transitions
         for (targetTransition : rootState.getAllContainedTransitions.toList) {
             targetTransition.transformCountDelay(rootState);
@@ -129,27 +124,21 @@ class CountDelay extends SCChartsProcessor implements Traceable {
             transition.setDefaultTrace
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
-            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName(nameCache)
-            voStore.add(counter, SCCHARTS_GENERATED)
+            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
+            voStore.update(counter, SCCHARTS_GENERATED)
 
             //Add entry action
             val entryAction = sourceState.createEntryAction
             entryAction.addEffect(counter.createAssignment(0.createIntValue))
-            
-            if (!transition.implicitlyImmediate) {
-                // Meeting 2016-11-09 Semantics Meetings (ssm)
-                // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
-                
-                // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick", i.e., the tick
-                // when the state is entered 
-                val entryAction2 = sourceState.createEntryAction
-                entryAction2.addEffect(counter.createAssignment((-1).createIntValue))
-                entryAction2.setTrigger(transition.trigger.copy)
-            }
 
             // Pre allows to put the during action in the source state and not in the parent state
             // Add during action
-            val duringAction = sourceState.createImmediateDuringAction
+            val duringAction = sourceState.createDuringAction
+            // Meeting 2016-11-09 Semantics Meetings (ssm)
+            // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
+            // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick".
+            // i.e., the tick when the state is entered 
+            duringAction.immediate = transition.implicitlyImmediate
             duringAction.setTrigger(transition.trigger.copy)
             duringAction.addEffect(counter.createAssignment(counter.reference.add((1.createIntValue))))
 
@@ -214,7 +203,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
             transition.setDefaultTrace
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
-            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName(nameCache)
+            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
 
             //Add entry action
             val entryAction = sourceState.createEntryAction

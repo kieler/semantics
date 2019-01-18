@@ -51,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getCounterVariable <em>Counter Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getForStart <em>For Start</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getForEnd <em>For End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#isOverride <em>Override</em>}</li>
  * </ul>
  *
  * @generated
@@ -111,6 +112,26 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * @ordered
      */
     protected Expression forEnd;
+
+                /**
+     * The default value of the '{@link #isOverride() <em>Override</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isOverride()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean OVERRIDE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isOverride() <em>Override</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isOverride()
+     * @generated
+     * @ordered
+     */
+    protected boolean override = OVERRIDE_EDEFAULT;
 
                 /**
      * <!-- begin-user-doc -->
@@ -330,6 +351,27 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isOverride() {
+        return override;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setOverride(boolean newOverride) {
+        boolean oldOverride = override;
+        override = newOverride;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.REGION__OVERRIDE, oldOverride, override));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -402,6 +444,8 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
                 return getForStart();
             case SCChartsPackage.REGION__FOR_END:
                 return getForEnd();
+            case SCChartsPackage.REGION__OVERRIDE:
+                return isOverride();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -435,6 +479,9 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
             case SCChartsPackage.REGION__FOR_END:
                 setForEnd((Expression)newValue);
                 return;
+            case SCChartsPackage.REGION__OVERRIDE:
+                setOverride((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -465,6 +512,9 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
             case SCChartsPackage.REGION__FOR_END:
                 setForEnd((Expression)null);
                 return;
+            case SCChartsPackage.REGION__OVERRIDE:
+                setOverride(OVERRIDE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -489,6 +539,8 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
                 return forStart != null;
             case SCChartsPackage.REGION__FOR_END:
                 return forEnd != null;
+            case SCChartsPackage.REGION__OVERRIDE:
+                return override != OVERRIDE_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -525,6 +577,22 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (override: ");
+        result.append(override);
+        result.append(')');
+        return result.toString();
     }
 
 } //RegionImpl

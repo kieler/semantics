@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.ui.view.pool
 
 import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
@@ -20,6 +21,7 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.jface.viewers.CheckboxCellEditor
 import org.eclipse.jface.viewers.EditingSupport
+import org.eclipse.jface.viewers.ICellEditorValidator
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.ui.statushandlers.StatusManager
@@ -31,7 +33,7 @@ import org.eclipse.ui.statushandlers.StatusManager
  * @author aas
  *
  */
-class ValueColumnEditingSupport extends EditingSupport {
+class ValueColumnEditingSupport extends EditingSupport implements ICellEditorValidator {
     
     extension JsonParser = new JsonParser
     
@@ -71,7 +73,17 @@ class ValueColumnEditingSupport extends EditingSupport {
             if (element.rawValue.isJsonPrimitive && element.rawValue.asJsonPrimitive.isBoolean) {
                 return new CheckboxCellEditor(viewer.table)
             } else {
-                return new TextCellEditor(viewer.table)
+                val editor = new TextCellEditor(viewer.table) {
+                    
+                    override protected valueChanged(boolean oldValidState, boolean newValidState) {
+                        if (newValidState) {
+                            element.parseAndStoreValue(this.value)
+                        }
+                    }
+                    
+                }
+                editor.validator = this;
+                return editor
             }
         }
         
@@ -112,19 +124,35 @@ class ValueColumnEditingSupport extends EditingSupport {
      */
     override protected setValue(Object element, Object value) {
         if (element instanceof DataPoolEntry) {
-            var JsonElement json 
-            try {
-                json = value.toString.parse
-            } catch (Exception e) {
-                StatusManager.getManager().handle(new Status(IStatus.ERROR,
-                    SimulationUIPlugin.PLUGIN_ID, "Error parsing user value.\nInvalid JSON.", e), StatusManager.SHOW)
-            }
-            if (json !== null) {
-                view.userValues.put(element.name, json)
-            }
+            element.parseAndStoreValue(value)
         }
 
         // Update this element
         viewer.refresh(element)
     }
+    
+    private def parseAndStoreValue(DataPoolEntry entry, Object value) {
+        var JsonElement json
+        try {
+            json = value.toString.parse
+        } catch (Exception e) {
+            StatusManager.getManager().handle(new Status(IStatus.ERROR,
+                SimulationUIPlugin.PLUGIN_ID, "Error parsing user value.\nInvalid JSON.", e), StatusManager.SHOW)
+        }
+        if (json !== null) {
+            view.userValues.put(entry.name, json)
+        }
+    }
+    
+    override isValid(Object value) {
+        if (value !== null) {
+            try {
+                value.toString.parse
+            } catch (JsonParseException e) {
+                return e.message
+            }
+        }
+        return null
+    }
+    
 }

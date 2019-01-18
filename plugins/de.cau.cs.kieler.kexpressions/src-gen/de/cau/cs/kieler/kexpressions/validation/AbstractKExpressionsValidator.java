@@ -18,5 +18,4 @@ public abstract class AbstractKExpressionsValidator extends AnnotationsValidator
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
-	
 }

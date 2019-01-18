@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.SCChartsImpl#getRootStates <em>Root States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.SCChartsImpl#getImports <em>Imports</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,6 +62,16 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
 	protected EList<State> rootStates;
 
 	/**
+     * The cached value of the '{@link #getImports() <em>Imports</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getImports()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> imports;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -92,6 +104,29 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<String> getImports() {
+        if (imports == null) {
+            imports = new EDataTypeUniqueEList<String>(String.class, this, SCChartsPackage.SC_CHARTS__IMPORTS);
+        }
+        return imports;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     */
+    public String getName() {
+        if (rootStates != null && !rootStates.isEmpty()) {
+            return rootStates.get(0).getName();
+        }
+        return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -114,6 +149,8 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
         switch (featureID) {
             case SCChartsPackage.SC_CHARTS__ROOT_STATES:
                 return getRootStates();
+            case SCChartsPackage.SC_CHARTS__IMPORTS:
+                return getImports();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -131,6 +168,10 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
                 getRootStates().clear();
                 getRootStates().addAll((Collection<? extends State>)newValue);
                 return;
+            case SCChartsPackage.SC_CHARTS__IMPORTS:
+                getImports().clear();
+                getImports().addAll((Collection<? extends String>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -146,6 +187,9 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
             case SCChartsPackage.SC_CHARTS__ROOT_STATES:
                 getRootStates().clear();
                 return;
+            case SCChartsPackage.SC_CHARTS__IMPORTS:
+                getImports().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -160,8 +204,26 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
         switch (featureID) {
             case SCChartsPackage.SC_CHARTS__ROOT_STATES:
                 return rootStates != null && !rootStates.isEmpty();
+            case SCChartsPackage.SC_CHARTS__IMPORTS:
+                return imports != null && !imports.isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (imports: ");
+        result.append(imports);
+        result.append(')');
+        return result.toString();
     }
 
 } //SCChartsImpl

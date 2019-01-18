@@ -788,13 +788,22 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DECLARATION__PRIVATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -813,6 +822,15 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
    int VARIABLE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -932,6 +950,15 @@ public interface KExpressionsPackage extends EPackage {
    int REFERENCE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
+     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+
+    /**
      * The feature id for the '<em><b>Reference</b></em>' reference.
      * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -994,6 +1021,15 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
     int SCHEDULE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1726,6 +1762,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getDeclaration_ValuedObjects();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Private</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Declaration#isPrivate()
+     * @see #getDeclaration()
+     * @generated
+     */
+    EAttribute getDeclaration_Private();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration <em>Variable Declaration</em>}'.
@@ -2554,6 +2601,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference DECLARATION__VALUED_OBJECTS = eINSTANCE.getDeclaration_ValuedObjects();
+
+        /**
+         * The meta object literal for the '<em><b>Private</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DECLARATION__PRIVATE = eINSTANCE.getDeclaration_Private();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.

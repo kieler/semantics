@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStates <em>Base States</em>}</li>
  * </ul>
  *
  * @generated
@@ -171,6 +173,16 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * @ordered
      */
     protected EList<Transition> incomingTransitions;
+
+    /**
+     * The cached value of the '{@link #getBaseStates() <em>Base States</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getBaseStates()
+     * @generated
+     * @ordered
+     */
+    protected EList<State> baseStates;
 
     /**
      * <!-- begin-user-doc -->
@@ -357,6 +369,18 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<State> getBaseStates() {
+        if (baseStates == null) {
+            baseStates = new EObjectResolvingEList<State>(State.class, this, SCChartsPackage.STATE__BASE_STATES);
+        }
+        return baseStates;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -433,6 +457,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return getIncomingTransitions();
+            case SCChartsPackage.STATE__BASE_STATES:
+                return getBaseStates();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -473,6 +499,10 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 getIncomingTransitions().clear();
                 getIncomingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
+            case SCChartsPackage.STATE__BASE_STATES:
+                getBaseStates().clear();
+                getBaseStates().addAll((Collection<? extends State>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -509,6 +539,9 @@ protected boolean connector = CONNECTOR_EDEFAULT;
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 return;
+            case SCChartsPackage.STATE__BASE_STATES:
+                getBaseStates().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -537,6 +570,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
+            case SCChartsPackage.STATE__BASE_STATES:
+                return baseStates != null && !baseStates.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -550,7 +585,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (initial: ");
         result.append(initial);
         result.append(", final: ");

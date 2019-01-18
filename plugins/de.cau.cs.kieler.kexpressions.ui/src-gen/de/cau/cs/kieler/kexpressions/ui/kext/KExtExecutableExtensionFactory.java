@@ -5,6 +5,7 @@ package de.cau.cs.kieler.kexpressions.ui.kext;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.kexpressions.ui.internal.KExtActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class KExtExecutableExtensionFactory extends AbstractGuiceAwareExecutable
 
 	@Override
 	protected Bundle getBundle() {
-		return KExtActivator.getInstance().getBundle();
+		return Platform.getBundle(KExtActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return KExtActivator.getInstance().getInjector(KExtActivator.DE_CAU_CS_KIELER_KEXPRESSIONS_KEXT_KEXT);
+		KExtActivator activator = KExtActivator.getInstance();
+		return activator != null ? activator.getInjector(KExtActivator.DE_CAU_CS_KIELER_KEXPRESSIONS_KEXT_KEXT) : null;
 	}
-	
+
 }

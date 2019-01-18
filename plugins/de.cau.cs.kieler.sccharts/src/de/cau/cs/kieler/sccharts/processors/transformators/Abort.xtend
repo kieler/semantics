@@ -14,8 +14,9 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -33,9 +34,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
+
+import static de.cau.cs.kieler.sccharts.processors.transformators.Termination.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -66,6 +68,9 @@ class Abort extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
 
 //    override getExpandsFeatureId() {
 //        return SCChartsFeature::ABORT_ID
@@ -93,13 +98,11 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
     @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_A"
-
-    private val nameCache = new UniqueNameCache => [ it += "_term" ]
+    static val REMOVE_ANNOTATIONS = #[ANNOTATION_TERMINATION, ANNOTATION_FINALSTATE, ANNOTATION_TERMINATION_DELAYED]
 
     // FIXME: Delayed weak aborts need to be treated with a watcher region and a
     // delaying auxiliary signal there.
@@ -109,44 +112,48 @@ class Abort extends SCChartsProcessor implements Traceable {
     // Transforming Aborts.
     def State transform(State rootState) {
         termTrans.setEnvironment(environments.source, environments.target)
-        nameCache.clear
+        val abortMarkings = <Annotation>newHashSet
+        abortMarkings.addAll(rootState.valuedObjectsList.map[annotations].flatten.filter[REMOVE_ANNOTATIONS.contains(name)])
 
         // Traverse all states
         for (targetState : rootState.getAllContainedStatesList) {
-            // !!!CHANGED: optimization added, check if correct for all cases
-            // The termination transformation is only necessary if there are delayed/conditional terminations or if
-            // a termination is mixed with WEAK aborts
-            // if a termination is mixed with strong aborts it does not matter because we do not
-            // have a last wish to consider!
-            val singleTermination = targetState.outgoingTransitions.filter [e|
-                e.isTermination && e.implicitlyImmediate && e.trigger == null
-            ].size == 1 && targetState.outgoingTransitions.filter[e|e.isTermination].size == 1
-            val noWeakAborts = targetState.outgoingTransitions.filter[e|e.isWeakAbort].size == 0
-            
-            // TEST: TerminationImmediateAndAbort
-            val delayedStrongAbortButImmediateTermination =
-            (targetState.outgoingTransitions.filter[e|e.isStrongAbort && !e.implicitlyImmediate].size > 0) 
-            && (targetState.canImmediateTerminate)
-            
-            // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
-            // noStrongMixedAborts
-            if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
-                // optimization: If this termination is the only outgoing then do not transform terminations first
-                targetState.transformTermination(rootState)
-            }
-
+            targetState.handleTermination(rootState)
             targetState.transformAbortNoWTO_NEW(rootState)
+            
+            // Find marker for leater remove
+            abortMarkings.addAll(targetState.outgoingTransitions.map[annotations].flatten.filter[REMOVE_ANNOTATIONS.contains(name)])
+            abortMarkings.addAll(targetState.regions.map[annotations].flatten.filter[REMOVE_ANNOTATIONS.contains(name)])
+            abortMarkings.addAll(targetState.valuedObjectsList.map[annotations].flatten.filter[REMOVE_ANNOTATIONS.contains(name)])
         }
-        rootState
+        
+        abortMarkings.forEach[remove]
+        return rootState
     }
-
-    def Expression getTriggerOrTrue(Transition t) {
-        if (t.trigger == null) {
-            return TRUE
+    
+    def void handleTermination(State targetState, State rootState) {
+        // !!!CHANGED: optimization added, check if correct for all cases
+        // The termination transformation is only necessary if there are delayed/conditional terminations or if
+        // a termination is mixed with WEAK aborts
+        // if a termination is mixed with strong aborts it does not matter because we do not
+        // have a last wish to consider!
+        val singleTermination = targetState.outgoingTransitions.filter [e|
+            e.isTermination && e.implicitlyImmediate && e.trigger == null
+        ].size == 1 && targetState.outgoingTransitions.filter[e|e.isTermination].size == 1
+        val noWeakAborts = targetState.outgoingTransitions.filter[e|e.isWeakAbort].size == 0
+        
+        // TEST: TerminationImmediateAndAbort
+        val delayedStrongAbortButImmediateTermination =
+        (targetState.outgoingTransitions.filter[e|e.isStrongAbort && !e.implicitlyImmediate].size > 0) 
+        && (targetState.canImmediateTerminate)
+        
+        // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
+        // noStrongMixedAborts
+        if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
+            // optimization: If this termination is the only outgoing then do not transform terminations first
+            targetState.transformTermination(rootState)
         }
-        return t.trigger
     }
-
+    
     // Traverse all states 
     def void transformAbortNoWTO_NEW(State state, State targetRootState) {
 
@@ -159,10 +166,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                 trigger == null
             ].size == 1))))
 
-        // if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        // Code before: Entry & Exit actions should be handled correctly afterwards, during actions should be handled before!
-        // if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
-        if ((state.controlflowRegionsContainStates) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.controlflowRegionsContainStates) && stateHasUntransformedTransitions) {
             val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!isTermination].nullOrEmpty))
 
             state.outgoingTransitions.setDefaultTrace;
@@ -222,67 +226,57 @@ class Abort extends SCChartsProcessor implements Traceable {
                     // for (region : state.regions) {
                     // region.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
                     // }
-                    val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").
-                        uniqueName(nameCache)
-                    runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName(nameCache)
-                    doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName(nameCache)
+                    val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName
+                    runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
+                    doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
                 }
 
                 // Build up weak and strong abort triggers
-                var Expression strongAbortTrigger = null;
-                var Expression strongAbortImmediateTrigger = null;
-                // var strongImmediateTrigger = false;
-                var boolean weakAbortImmediateTriggerTermination = false;
-                var boolean weakAbrortDelayOptimizationPossible = true;
-                var Expression weakAbortImmediateTerminationTrigger = null; // !!!CHANGED
-                var Expression weakAbortImmediateTrigger = null;
+                val strongAbortTriggers = <Expression>newArrayList
+                val strongAbortImmediateTriggers = <Expression>newArrayList
+                var weakAbortDelayOptimizationPossible = true;
+//                val weakAbortImmediateTerminationTriggers = <Expression>newArrayList
+                val weakAbortImmediateTriggers = <Expression>newArrayList
+                val terminationTriggers = <Expression, StringAnnotation>newHashMap
                 for (transition : outgoingTransitions) {
                     transition.setDefaultTrace;
                     if (transition.isStrongAbort) {
                         if (transition.implicitlyImmediate) {
-                            strongAbortImmediateTrigger = strongAbortImmediateTrigger.or(
-                                transition.getTriggerOrTrue.copy).trace(transition)
+                            strongAbortImmediateTriggers += transition.getTriggerOrTrue.nontracingCopy
                         } else {
                             if (mixedDelayedStrongAborts) {
                                 // strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                                 val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                    GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
-                                voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
+                                    GENERATED_PREFIX + "trig").setTypeBool.uniqueName
+                                voStore.update(transitionTriggerVariable, SCCHARTS_GENERATED)
                                 state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                                 transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                                strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(
-                                    transition)
+                                strongAbortTriggers += transitionTriggerVariable.reference
                             } else {
-                                strongAbortTrigger = strongAbortTrigger.or(transition.getTriggerOrTrue.copy).trace(
-                                    transition)
+                                strongAbortTriggers += transition.getTriggerOrTrue.nontracingCopy
                             }
                         }
                     } else if (transition.isWeakAbort) {
+                        var Expression trigger = null
                         if (transition.implicitlyImmediate) {
+                            trigger = transition.getTriggerOrTrue.nontracingCopy
                             // OPTIMIZATION
-                            // !!!CHANGED
-                            // TODO: check if optimization is correct in all cases!
-                            if (transition.hasAnnotation(Termination.ANNOTATION_TERMINATIONTRANSITION)) {
-                                weakAbortImmediateTerminationTrigger = weakAbortImmediateTerminationTrigger.or(
-                                    transition.getTriggerOrTrue.copy).trace(transition)
-                                weakAbortImmediateTriggerTermination = true
-                            } else {
-                                // Attention: if there is a typical immediate weak abort, then we cannot make this optimization (weakAbrortDelayOptimizationPossible)
-                                weakAbrortDelayOptimizationPossible = false
-                                weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(
-                                    transition.getTriggerOrTrue.copy).trace(transition)
-                            }
+                            // Attention: if there is a typical immediate weak abort, then we cannot make this optimization (weakAbrortDelayOptimizationPossible)
+                            weakAbortDelayOptimizationPossible = false
+                            weakAbortImmediateTriggers += trigger
                         } else {
                             // In case of a delayed weak abort, we need to take care of the delay in
                             // the watcher region and create an auxiliarv variable
                             // Create a new _transitionTrigger valuedObject
-                            val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
-                            voStore.add(transitionTriggerVariable, SCCHARTS_GENERATED)
+                            val transitionTriggerVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "trig").setTypeBool.uniqueName
+                            voStore.update(transitionTriggerVariable, SCCHARTS_GENERATED)
                             state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                            weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(
-                                transitionTriggerVariable.reference).trace(transition)
+                            trigger = transitionTriggerVariable.reference
+                            weakAbortImmediateTriggers += trigger
+                        }
+                        if (transition.hasAnnotation(ANNOTATION_TERMINATION)) {
+                            terminationTriggers.put(trigger, transition.getAnnotation(ANNOTATION_TERMINATION) as StringAnnotation)
                         }
                     }
                 }
@@ -293,40 +287,50 @@ class Abort extends SCChartsProcessor implements Traceable {
                 for (region : regions) {
 
                     // Inside every region create an _Aborted
-                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").
-                        uniqueName(nameCache)
+                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "aborted").uniqueName
                     for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
-                            if (strongAbortTrigger != null) {
+                            if (!strongAbortTriggers.empty) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
                                 if (innerState.controlflowRegionsContainStates || innerState.containsInnerActions) {
                                     strongAbort.setTypeStrongAbort
                                 }
                                 strongAbort.setHighestPriority
-                                strongAbort.setTrigger(strongAbortTrigger.copy)
+                                strongAbort.setTrigger(strongAbortTriggers.or.copy)
                                 strongAbort.setImmediate(false)
                             }
-                            if (strongAbortImmediateTrigger != null) {
+                            if (!strongAbortImmediateTriggers.empty) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
                                 if (innerState.controlflowRegionsContainStates || innerState.containsInnerActions) {
                                     strongAbort.setTypeStrongAbort
                                 }
                                 strongAbort.setHighestPriority
-                                strongAbort.setTrigger(strongAbortImmediateTrigger.copy)
+                                strongAbort.setTrigger(strongAbortImmediateTriggers.or.copy)
                                 strongAbort.setImmediate(true)
                             }
-                            if (weakAbortImmediateTrigger != null || weakAbortImmediateTerminationTrigger != null) {
+                            if (!weakAbortImmediateTriggers.empty) { //} || !weakAbortImmediateTerminationTriggers.empty) {
                                 // OPTIMIZATION
                                 // !!!CHANGED
                                 // only create a weak abort immediate transition
                                 var Expression trigger;
-                                if ((innerState.hasAnnotation(Termination.ANNOTATION_FINALSTATE))) {
-                                    trigger = null; // weakAbortImmediateTerminationTrigger.copy
+                                if ((innerState.hasAnnotation(ANNOTATION_FINALSTATE))) {
                                     innerState.createTransitionTo(abortedState).setImmediate
-                                } else if (weakAbortImmediateTrigger != null) {
-                                    trigger = trigger.or(weakAbortImmediateTrigger.copy)
+                                } else {
+                                    val triggers = weakAbortImmediateTriggers.filter[
+                                        if (terminationTriggers.containsKey(it) && region.hasAnnotation(ANNOTATION_TERMINATION)) {
+                                            val transitionInfo = terminationTriggers.get(it)
+                                            val regionInfo = region.getAnnotation(ANNOTATION_TERMINATION) as StringAnnotation
+                                            if (!regionInfo.values.empty && transitionInfo.values.contains(regionInfo.values.head)) {
+                                                return false // Ignore this trigger because region (without CFSs) should not self abort via term
+                                            }
+                                        }
+                                        return true
+                                    ].toList
+                                    if (!triggers.empty) {
+                                        trigger = triggers.or.copy
+                                    }
                                 }
-                                if (trigger != null) {
+                                if (trigger !== null) {
                                     val weakAbort = innerState.createTransitionTo(abortedState)
                                     weakAbort.setTrigger(trigger.copy)
                                     weakAbort.setLowestPriority;
@@ -338,12 +342,15 @@ class Abort extends SCChartsProcessor implements Traceable {
                                     // incoming transitions, and the original transition was a weak abort
                                     // then we can delay this specific transition safely which helps
                                     // downstream synthesis
-                                    if (innerState.canBeDelayed && weakAbrortDelayOptimizationPossible) {
+                                    if (innerState.canBeDelayed && weakAbortDelayOptimizationPossible) {
                                         weakAbort.setImmediate(false)
                                     }
                                 }
                             }
                         }
+                    }
+                    if (abortedState.incomingTransitions.empty) {
+                        abortedState.remove
                     }
                 }
 
@@ -385,8 +392,7 @@ class Abort extends SCChartsProcessor implements Traceable {
 
             state.outgoingTransitions.setDefaultTrace;
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").
-                uniqueName(nameCache).setTypeConnector
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             // Be careful to NOT create a trigger for the LAST (lowest priorized) outgoing transition from a connector, this must
@@ -466,17 +472,19 @@ class Abort extends SCChartsProcessor implements Traceable {
 // then this means the termination cannot be taken immediately and it can (but is not necessary) safely be delayed!
 // Omitting the delay and making it immediate makes it harder for down stream compilation  
     def boolean containsDelayedTerm(Expression trigger) {
-        if (trigger == null) {
+        if (trigger === null) {
             return false
         }
         return trigger.eContainer.eAllContents.filter(ValuedObjectReference).exists[
-            valuedObject.name.contains("_termD")
+            // No name matching ;)
+            valuedObject.hasAnnotation(ANNOTATION_TERMINATION_DELAYED)
         ]
     }
 
-
-
-    def SCCharts transform(SCCharts sccharts) {
-        sccharts => [ rootStates.forEach[ transform ] ]
+    def Expression getTriggerOrTrue(Transition t) {
+        if (t.trigger === null) {
+            return TRUE
+        }
+        return t.trigger
     }
 }

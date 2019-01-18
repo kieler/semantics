@@ -12,12 +12,15 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
-import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.io.File
-import java.util.regex.Pattern
+import java.io.PrintStream
+import java.util.List
+import java.util.Set
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -30,10 +33,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
-import java.util.List
-import java.io.PrintStream
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * 
@@ -61,6 +60,7 @@ class ProjectInfrastructure {
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
 
+    public static val Set<IProject> createdTemporaryProjects = newHashSet
 
     @Accessors(AccessorType.PUBLIC_GETTER)
     var IProject project = null
@@ -69,7 +69,7 @@ class ProjectInfrastructure {
     @Accessors(AccessorType.PUBLIC_GETTER)
     var File modelFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
-    var File generadedCodeFolder = null
+    var File generatedCodeFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
     var List<File> sourceCodeFiles = newArrayList
     @Accessors
@@ -104,6 +104,8 @@ class ProjectInfrastructure {
         if(!project.open) {
             project.open(null)
         }
+        // Store project for cleanup
+        createdTemporaryProjects.add(project)
         return project
     }
     
@@ -118,8 +120,9 @@ class ProjectInfrastructure {
                 modelFile = null
             }
         }
+
+        val inputModel = environment.getProperty(ORIGINAL_MODEL)
         if (modelFile === null) {
-            val inputModel = environment.getProperty(ORIGINAL_MODEL)
             if (inputModel instanceof EObject) {
                 resource = inputModel.eResource
                 if (resource !== null) {
@@ -138,10 +141,10 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (modelFile !== null) {
                 name = modelFile.toString
-            } else if (modelFile instanceof Nameable) {
-                name = modelFile.name
+            } else if (inputModel instanceof Nameable) {
+                name = inputModel.name
             }
-            name = name.replaceAll("/", "-")
+            name = name.replaceAll("/|\\\\", "-")
             name = name.replaceAll(" |\\.", "-")
             
             // Create Folder
@@ -164,15 +167,15 @@ class ProjectInfrastructure {
                     if (!gen.exists) {
                         gen.create(true, true, null)
                     }
-                    generadedCodeFolder = gen.rawLocation.toFile
+                    generatedCodeFolder = gen.rawLocation.toFile
                 } else {
-                    generadedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
-                    if (!generadedCodeFolder.exists) {
-                        generadedCodeFolder.mkdir
+                    generatedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
+                    if (!generatedCodeFolder.exists) {
+                        generatedCodeFolder.mkdir
                     }
                 }
             } else {
-                generadedCodeFolder = modelFolder
+                generatedCodeFolder = modelFolder
             }
         }
     }
@@ -202,7 +205,7 @@ class ProjectInfrastructure {
         logger.println("== Project Infrastructure ==")
         logger.println("Model file: " + modelFile)
         logger.println("Base folder: " + modelFolder)
-        logger.println("Generated code folder: " + generadedCodeFolder)
+        logger.println("Generated code folder: " + generatedCodeFolder)
         logger.println
     }
     

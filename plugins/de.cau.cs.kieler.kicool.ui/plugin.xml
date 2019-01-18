@@ -208,7 +208,17 @@
                 </reference>
             </activeWhen>
         </handler>
-    </extension>   
+    </extension> 
+    
+    <extension point="org.eclipse.core.contenttype.contentTypes">
+        <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="kico"
+            id="de.cau.cs.kieler.kicool.KiCool.contenttype"
+            name="KiCool File"
+            priority="normal">
+        </content-type>
+    </extension>  
 
 <!-- adding resource factories -->
 
@@ -316,6 +326,10 @@
       <editor
             controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.kicool.KiCool">
+      </editor>
+      <editor
+            controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
+            editorID="org.eclipse.ui.DefaultTextEditor">
       </editor>          
     </extension>
        <extension
@@ -363,6 +377,10 @@
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainerSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainer">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.GenericCompilationResultSynthesis"
+            id="GenericCompilationResult">
       </diagramSynthesis>
    </extension>
        <extension
@@ -432,5 +450,20 @@
           <controller
                 class="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController">
           </controller>
+       </extension>
+       <extension
+             point="org.eclipse.ui.startup">
+          <startup
+                class="de.cau.cs.kieler.kicool.ui.deploy.DeployProjectCleanup">
+          </startup>
+       </extension>
+       <extension
+             point="org.eclipse.ui.preferencePages">
+          <page
+                category="de.cau.cs.kieler.core.product.preferencePage"
+                class="de.cau.cs.kieler.kicool.ui.preferences.KiCoolPreferencePage"
+                id="de.cau.cs.kieler.kicool.ui.deploy"
+                name="Compiler">
+          </page>
        </extension>
 </plugin>

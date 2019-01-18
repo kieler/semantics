@@ -6,6 +6,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -302,6 +303,11 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
                 default: return -1;
             }
         }
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case KExtPackage.KEXT_SCOPE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -329,6 +335,11 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
                 default: return -1;
             }
         }
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return KExtPackage.KEXT_SCOPE__NAME;
@@ -347,7 +358,7 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

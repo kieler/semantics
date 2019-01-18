@@ -32,6 +32,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.annotations.Annotation
 
 /**
  * @author als
@@ -133,20 +135,13 @@ class VariableStore implements IKiCoolCloneable {
     def initialize(EObject root) {
         for (decl : root.eAllContents.filter(VariableDeclaration).toIterable) {
             for (vo : decl.valuedObjects) {
-                add(vo)
+                update(vo)
             }
         }
     }
 
-    // Convenance for Valued Objects
-    
-    /**
-     * Shoudl only be used for variables that are NOT yet contained in the store.
-     */
-    def VariableInformation add(ValuedObject vo, String... properties) {
-        update(vo, new VariableInformation, properties)
-    }
-    
+    // -- Convenance for Valued Objects --
+        
     def VariableInformation update(ValuedObject vo, String... properties) {
         var info = variables.get(vo.name).findFirst[valuedObject == vo]
         if (info === null) {
@@ -158,7 +153,8 @@ class VariableStore implements IKiCoolCloneable {
             info = entry?.value
         }
         if (info === null) {
-            throw new IllegalArgumentException("ValuedObject with name " + vo.name + " was not previously registered! Use add(..) to register.")
+            // ValuedObject not previously registered
+            info = new VariableInformation
         }
         update(vo, info, properties)
     }
@@ -202,6 +198,11 @@ class VariableStore implements IKiCoolCloneable {
                 info.format = format
             }
         }
+        
+        info.annotations.clear
+        vo.annotations.forEach[
+            info.annotations += it.copy
+        ]
         
         variables.put(vo.name, info)
         return info
@@ -284,8 +285,8 @@ class VariableStore implements IKiCoolCloneable {
         return variables.keySet.size != variables.entries.size
     }
     
-    def getOrderedVariableNames() {
-        return variables.entries.map[new Pair(key, value)].sortWith(VARIABLE_ORDER).map[key]
+    def getOrderedVariables() {
+        return variables.entries.map[new Pair(key, value)].sortWith(VARIABLE_ORDER)
     }
     
 }
@@ -311,11 +312,19 @@ class VariableInformation {
     
     /** The value formatting rule */
     @Accessors
-    var String format    
+    var String format
     
     /** Characteristics of this variable */
     @Accessors
     val Set<String> properties = newHashSet
+    
+    /** Indicates that the variables is not part of the model (i.e. not part of the TickData) */
+    @Accessors
+    var String externalName
+
+    /** List of copied annotations from the original valued object */
+    @Accessors
+    val List<Annotation> annotations = newLinkedList
     
     override VariableInformation clone() {
         val clone = new VariableInformation
@@ -325,6 +334,7 @@ class VariableInformation {
         clone.typeName = typeName
         clone.format = format
         clone.properties.addAll(properties)
+        annotations.forEach[ clone.annotations += it.copy ]
         return clone
     }
     
@@ -354,6 +364,10 @@ class VariableInformation {
     
     def isOutput() {
         return properties.contains(VariableStore.OUTPUT)
+    }
+    
+    def isExternal() {
+        return !externalName.nullOrEmpty
     }
     
 }

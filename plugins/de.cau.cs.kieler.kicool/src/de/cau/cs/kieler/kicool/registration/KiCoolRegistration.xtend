@@ -152,7 +152,7 @@ class KiCoolRegistration {
             val eobject = resource.getContents().get(0)
             return eobject
         }
-        throw new IOException("Could not load resource '" + resourceLocation + "'!");
+        throw new IOException("Could not load resource '" + resourceLocation + "'!" + if (resource !== null && !resource.errors.nullOrEmpty) " Errors: " + resource.errors.map[toString].join(", ") else "");
     }
     
     static def void addProcessor(Processor<?,?> processor) {

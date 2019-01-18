@@ -11,7 +11,6 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -22,46 +21,35 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected KiVisGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p;
-	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
-	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
+	protected AbstractElementAlias match_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q;
+	protected AbstractElementAlias match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q;
+	protected AbstractElementAlias match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q;
+	protected AbstractElementAlias match_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q;
+	protected AbstractElementAlias match_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q;
+	protected AbstractElementAlias match_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q;
+	protected AbstractElementAlias match_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q;
+	protected AbstractElementAlias match_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q;
+	protected AbstractElementAlias match_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (KiVisGrammarAccess) access;
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0())));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
-		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+		match_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q = new TokenAlias(false, true, grammarAccess.getActionInterface1Access().getEqualsSignGreaterThanSignKeyword_1_3());
+		match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getActionInterface1Access().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getActionInterface1Access().getRightParenthesisKeyword_1_2()), new TokenAlias(false, true, grammarAccess.getActionInterface1Access().getEqualsSignGreaterThanSignKeyword_1_3()));
+		match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getActionInterface2Access().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getActionInterface2Access().getRightParenthesisKeyword_1_1()), new TokenAlias(false, true, grammarAccess.getActionInterface2Access().getEqualsSignGreaterThanSignKeyword_1_2()));
+		match_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q = new TokenAlias(false, true, grammarAccess.getBindingInterface1Access().getEqualsSignGreaterThanSignKeyword_5());
+		match_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q = new TokenAlias(false, true, grammarAccess.getBindingInterface2Access().getEqualsSignGreaterThanSignKeyword_4());
+		match_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q = new TokenAlias(false, true, grammarAccess.getCodeInterfaceAccess().getEqualsSignGreaterThanSignKeyword_1_3());
+		match_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getCodeInterfaceAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getCodeInterfaceAccess().getRightParenthesisKeyword_1_2()), new TokenAlias(false, true, grammarAccess.getCodeInterfaceAccess().getEqualsSignGreaterThanSignKeyword_1_3()));
+		match_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q = new TokenAlias(false, true, grammarAccess.getHandlerInterface1Access().getEqualsSignGreaterThanSignKeyword_7());
+		match_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q = new TokenAlias(false, true, grammarAccess.getHandlerInterface2Access().getEqualsSignGreaterThanSignKeyword_5());
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getRangeRule())
-			return getRangeToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
-	/**
-	 * Range:
-	 *     '-' ;
-	 */
-	protected String getRangeToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "-";
-	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
@@ -69,163 +57,130 @@ public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticS
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
-				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
-				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q.equals(syntax))
+				emit_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q.equals(syntax))
+				emit_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q.equals(syntax))
+				emit_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q.equals(syntax))
+				emit_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q.equals(syntax))
+				emit_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q.equals(syntax))
+				emit_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q.equals(syntax))
+				emit_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q.equals(syntax))
+				emit_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q.equals(syntax))
+				emit_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
 	/**
 	 * Ambiguous syntax:
-	 *     ('(' '('*)*
+	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) 'extern' functionName=ID
-	 *     (rule start) (ambiguity) 'random' (rule start)
-	 *     (rule start) (ambiguity) 'randomize' (rule start)
-	 *     (rule start) (ambiguity) annotations+=Annotation
-	 *     (rule start) (ambiguity) operator=PreOperator
-	 *     (rule start) (ambiguity) operator=ValOperator
-	 *     (rule start) (ambiguity) text=HOSTCODE
-	 *     (rule start) (ambiguity) value=BOOLEAN
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
+	 *     pool=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('(' '('*)+
+	 *     ('(' ')' '=>'?)?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
-	 *     (rule start) (ambiguity) operator=SubOperator
-	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) (ambiguity) value=FLOAT
-	 *     (rule start) (ambiguity) value=INT
-	 *     (rule start) (ambiguity) value=STRING
-	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 *     (rule start) (ambiguity) (rule start)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('(' ('('* '(')*)?
+	 *     ('(' ')' '=>'?)?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
-	 *     (rule start) (ambiguity) operator=NotOperator
+	 *     (rule start) (ambiguity) (rule start)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('(' | '(')*
+	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) 'extern' functionName=ID
-	 *     (rule start) (ambiguity) 'random' (rule start)
-	 *     (rule start) (ambiguity) 'randomize' (rule start)
-	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
-	 *     (rule start) (ambiguity) annotations+=Annotation
-	 *     (rule start) (ambiguity) operator=PreOperator
-	 *     (rule start) (ambiguity) operator=SubOperator
-	 *     (rule start) (ambiguity) operator=ValOperator
-	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) (ambiguity) text=HOSTCODE
-	 *     (rule start) (ambiguity) value=BOOLEAN
-	 *     (rule start) (ambiguity) value=FLOAT
-	 *     (rule start) (ambiguity) value=INT
-	 *     (rule start) (ambiguity) value=STRING
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
-	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 *     element=ID ')' (ambiguity) (rule end)
+	 *     pool=ID ')' (ambiguity) (rule end)
+	 *     variable=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('(' | '(')+
+	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=SubOperator
-	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
-	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 *     (rule start) '(' ')' (ambiguity) (rule start)
+	 *     pool=ID ')' (ambiguity) (rule end)
+	 *     variable=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('('* '(')*
+	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) '(' (ambiguity) operator=BitwiseNotOperator
-	 *     (rule start) '(' (ambiguity) operator=NotOperator
-	 *     (rule start) '(' (ambiguity) {OperatorExpression.subExpressions+=}
-	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
-	 *     (rule start) (ambiguity) operator=NotOperator
-	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 *     pool=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('('* '(')+
+	 *     ('(' ')' '=>'?)?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
-	 *     (rule start) (ambiguity) operator=NotOperator
-	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 *     (rule start) (ambiguity) (rule start)
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()'?
+	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'random' (ambiguity) (rule start)
+	 *     pool=ID ')' (ambiguity) (rule end)
+	 *     variable=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()'?
+	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'randomize' (ambiguity) (rule start)
+	 *     pool=ID ')' (ambiguity) (rule end)
+	 *     variable=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

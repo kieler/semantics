@@ -13,6 +13,7 @@ import de.cau.cs.kieler.kexpressions.kext.KExtFactory;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
 import org.eclipse.emf.ecore.EClass;
@@ -64,6 +65,13 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
     private EClass declarationScopeEClass = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass structDeclarationEClass = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -91,7 +99,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link KExtPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -105,7 +113,8 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         if (isInited) return (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
 
         // Obtain or create and register package
-        KExtPackageImpl theKExtPackage = (KExtPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KExtPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KExtPackageImpl());
+        Object registeredKExtPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        KExtPackageImpl theKExtPackage = registeredKExtPackage instanceof KExtPackageImpl ? (KExtPackageImpl)registeredKExtPackage : new KExtPackageImpl();
 
         isInited = true;
 
@@ -123,7 +132,6 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         // Mark meta-data to indicate it can't be changed
         theKExtPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(KExtPackage.eNS_URI, theKExtPackage);
         return theKExtPackage;
@@ -233,6 +241,15 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getStructDeclaration() {
+        return structDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public KExtFactory getKExtFactory() {
         return (KExtFactory)getEFactoryInstance();
     }
@@ -271,6 +288,8 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         declarationScopeEClass = createEClass(DECLARATION_SCOPE);
         createEReference(declarationScopeEClass, DECLARATION_SCOPE__DECLARATIONS);
+
+        structDeclarationEClass = createEClass(STRUCT_DECLARATION);
     }
 
     /**
@@ -312,6 +331,9 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         kExtScopeEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceable());
         kExtScopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        structDeclarationEClass.getESuperTypes().add(this.getDeclarationScope());
+        structDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getVariableDeclaration());
+        structDeclarationEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
 
         // Initialize classes and features; add operations and parameters
         initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -329,6 +351,8 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         initEClass(declarationScopeEClass, DeclarationScope.class, "DeclarationScope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeclarationScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, DeclarationScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(structDeclarationEClass, StructDeclaration.class, "StructDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

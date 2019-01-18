@@ -34,7 +34,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -88,13 +87,10 @@ class Exit extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    private val nameCache = new UniqueNameCache
-
     //-------------------------------------------------------------------------
     //--                      E X I T       A C T I O N S                    --
     //-------------------------------------------------------------------------
@@ -109,8 +105,6 @@ class Exit extends SCChartsProcessor implements Traceable {
             //targetState.prepareExit(targetRootState);
         // ]
         
-        nameCache.clear
-
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformExit(rootState);
@@ -173,7 +167,7 @@ class Exit extends SCChartsProcessor implements Traceable {
                 }
                 
             } else { // state has several regions (or one region without any final state!)
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName(nameCache)
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
                 firstState = region.createInitialState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     firstState.regions.add(mainRegion)
@@ -189,12 +183,11 @@ class Exit extends SCChartsProcessor implements Traceable {
                 val region = firstState.parentRegion
                 var ValuedObject memory
                 if (stateOutgoingTransitions > 1) {
-                    memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).
-                        uniqueName(nameCache)
-                    voStore.add(memory, SCCHARTS_GENERATED)
+                    memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).uniqueName
+                    voStore.update(memory, SCCHARTS_GENERATED)
                 }
                 val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
-                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName(nameCache).
+                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName.
                     setTypeConnector
                 var counter = 1
                 for (transition : state.outgoingTransitions.immutableCopy) {
@@ -225,7 +218,7 @@ class Exit extends SCChartsProcessor implements Traceable {
             for (exitAction : state.exitActions.toList) {
                 var connector = lastState
                 if (exitAction != lastExitAction) {
-                    connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).setTypeConnector
+                    connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
                 

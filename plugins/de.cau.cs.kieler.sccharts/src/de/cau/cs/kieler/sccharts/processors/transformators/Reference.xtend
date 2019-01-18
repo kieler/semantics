@@ -31,8 +31,10 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.Replacements
@@ -65,6 +67,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension PragmaExtensions
     
     protected var Dataflow dataflowProcessor = null
+    protected var Inheritance inheritanceProcessor = null
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -79,17 +82,26 @@ class Reference extends SCChartsProcessor implements Traceable {
     override process() {
         replacedWithLiterals.clear
         dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.dataflow") as Dataflow
-        if (dataflowProcessor !== null) {
-            dataflowProcessor.setEnvironment(sourceEnvironment, environment)
-        }
+        dataflowProcessor?.setEnvironment(sourceEnvironment, environment)
+        inheritanceProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.inheritance") as Inheritance
+        inheritanceProcessor?.setEnvironment(sourceEnvironment, environment)
         
         val model = getModel
         
         // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
         for(rootState : newArrayList(model.rootStates.head)) {
-            val statesWithReferences = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
-            for (state : statesWithReferences.toList) {
-                state.expandReferencedState(new Replacements)
+            // Inherit from base states
+            inheritanceProcessor?.inheritBaseStates(rootState)
+            
+            val statesWithReferences = rootState.allContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+            val regionsWithReferences = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
+            
+            for (state : statesWithReferences) {
+                state.expandReferencedScope(new Replacements)
+            }
+            
+            for (region : regionsWithReferences) {
+                region.expandReferencedScope(new Replacements)
             }
             
             if (dataflowProcessor !== null) {
@@ -97,7 +109,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 dataflowProcessor.processState(rootState)
                 val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
                 for (state : statesWithReferences2.toList) {
-                    state.expandReferencedState(new Replacements)
+                    state.expandReferencedScope(new Replacements)
                 }
             }
             
@@ -105,83 +117,100 @@ class Reference extends SCChartsProcessor implements Traceable {
                 throw new IllegalStateException("References objects are not contained in the resource!")
         }
         
-        for (var i = 1; i < model.rootStates.size; i++) {
-            model.rootStates.remove(1)
-        }
+        val firstRoot = model.rootStates.head
+        model.rootStates.removeIf[it !== firstRoot]
         
-        model.pragmas.removeIf[SCTXResource.PRAGMA_IMPORT.equals(name)]
+        model.imports.clear
     }   
     
     /** Expands one referenced state and keeps track of the replacement stack. */
-    protected def void expandReferencedState(State stateWithReference, Replacements replacements) {
-        // Create the new state via copy. All internal references are ok. However, you must correct the bindings now.
-        val newState = stateWithReference.reference.scope.copy as State => [ 
-            name = stateWithReference.name 
-            label = stateWithReference.label
-            initial = stateWithReference.initial
-            final = stateWithReference.final
-            for (annotation : stateWithReference.annotations) {
+    protected def void expandReferencedScope(Scope scopeWithReference, Replacements replacements) {
+        // Create the new cope via copy. All internal references are ok. However, you must correct the bindings now.
+        val newScope = scopeWithReference.reference.scope.copy as Scope => [ 
+            name = scopeWithReference.name 
+            label = scopeWithReference.label
+            if (scopeWithReference instanceof State) {
+                (it as State).initial = scopeWithReference.initial;
+                (it as State).final = scopeWithReference.final
+            }
+            for (annotation : scopeWithReference.annotations) {
                  annotations += annotation.copy
             }
         ]
         
-        // Push all declarations of the state with the reference onto the replacement stack and search for
-        // similar valued objects in the copy.  
-        for (valuedObject : stateWithReference.declarations.map[ valuedObjects ].flatten) {
-            replacements.push(valuedObject, newState.findValuedObjectByName(valuedObject.name).reference)
+        if (newScope instanceof State) {
+            // Inherit from base states
+            inheritanceProcessor?.inheritBaseStates(newScope)
         }
         
-        // Create the binding structure. The dedicated {@code Binding} class manages the bindings.
-        // CreateBindings also reports binding errors and warnings.
-        val bindings = stateWithReference.createBindings(replacements)
+        // Push all declarations of the state with the reference onto the replacement stack and search for
+        // similar valued objects in the copy.  
+        for (valuedObject : scopeWithReference.declarations.map[ valuedObjects ].flatten) {
+            replacements.push(valuedObject, newScope.findValuedObjectByName(valuedObject.name).reference)
+        }
+        
+        val bindings = scopeWithReference.createBindings(replacements)
         for (binding : bindings) {
             if (binding.errors > 0) {
                 environment.errors.add("There are binding errors in a referenced state!\n" + 
                     binding.errorMessages.join("\n"), 
-                    stateWithReference, true)
+                    scopeWithReference, true)
             } else {
                 // TODO: target indices not supported yet
                 replacements.push(binding.targetValuedObject, binding.sourceExpression)
             }
-        }       
+        }
         
         // If the output declarations have initialization parts, add them as entry actions because
         // the declaration will be removed at the end of the transformation.
-        for (initialization : newState.declarations.filter(VariableDeclaration).filter[ output ].map[ valuedObjects ].
+        for (initialization : newScope.declarations.filter(VariableDeclaration).filter[ output ].map[ valuedObjects ].
             flatten.filter[ initialValue !== null ]) {
-            newState.createEntryAction.effects += initialization.createAssignment(initialization.initialValue)                            
+            newScope.createEntryAction.effects += initialization.createAssignment(initialization.initialValue)                            
         }
         
-        // Correct all valued object references in the new state.
-        newState.replaceValuedObjectReferencesInState(replacements)        
-
-        // Add the new state to the parent region, correct all transitions, and finally remove the original 
-        // referenced state.        
-        val parent = stateWithReference.eContainer as ControlflowRegion
-        parent.states.add(newState)
-        for (transition : stateWithReference.outgoingTransitions.immutableCopy) {
-            transition.sourceState = newState
+        if (newScope instanceof State) {
+            // Correct all valued object references in the new state.
+            newScope.replaceValuedObjectReferencesInState(replacements)        
+    
+            // Add the new state to the parent region, correct all transitions, and finally remove the original 
+            // referenced state.        
+            val parent = scopeWithReference.eContainer as ControlflowRegion
+            parent.states.add(newScope)
+            for (transition : (scopeWithReference as State).outgoingTransitions.immutableCopy) {
+                transition.sourceState = newScope
+            }
+            for (transition : (scopeWithReference as State).incomingTransitions.immutableCopy) {
+                transition.targetState = newScope
+            }
+            scopeWithReference.remove
+        } else if (newScope instanceof Region) {
+            // Correct all valued object references in the new state.
+            newScope.replaceValuedObjectReferences(replacements)        
+    
+            // Add the new state to the parent region, correct all transitions, and finally remove the original 
+            // referenced state.        
+            val parent = scopeWithReference.eContainer as State
+            parent.regions.add(newScope)
+            scopeWithReference.remove
         }
-        for (transition : stateWithReference.incomingTransitions.immutableCopy) {
-            transition.targetState = newState
-        }
-        stateWithReference.remove
+        
         
         // Remove the input/output declarations from the new state. They should be bound by now.
-        newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+        newScope.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
         snapshot
 
         // Transform any dataflow regions via the dataflow co-processors.        
         if (dataflowProcessor !== null) {
+            val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
-            dataflowProcessor.processState(newState)
-            val statesWithReferences = newState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
+            dataflowProcessor.processState(processState)
+            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
             for (state : statesWithReferences.toList) {
-                state.expandReferencedState(new Replacements)
+                state.expandReferencedScope(new Replacements)
             }
         }
-    } 
+    }
     
     /** Replace valued object reference inside the given scope. */
     protected def void replaceValuedObjectReferences(Scope scope, Replacements replacements) {
@@ -194,8 +223,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         // For each type, call the appropriate method.
         // TODO: Resolve name clash
         switch(scope) {
-            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)
-            DataflowRegion: for (equation: scope.equations.immutableCopy) equation.replaceReferences(replacements)   
+            Region: scope.replaceValuedObjectReferencesInRegion(replacements)
             State: scope.replaceValuedObjectReferencesInState(replacements)
         }
         
@@ -210,10 +238,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : state.actions + state.outgoingTransitions) {
-            action.trigger?.replaceReferences(replacements)
-            for (effect : action.effects) {
-                effect.replaceReferences(replacements)
-            }
+            action.replaceValuedObjectReferencesInAction(replacements)
         }
 
         // If the state is also a referenced state, process the parameters and expand this state, too.
@@ -222,12 +247,48 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : state.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            state.expandReferencedState(replacements)
+            state.expandReferencedScope(replacements)
         }
         
         // Delegate the region replacement.
         for (region : state.regions) {
             region.replaceValuedObjectReferences(replacements)
+        }
+    }
+    
+    /** Replaces valued object references inside the given region. */
+    protected def replaceValuedObjectReferencesInRegion(Region region, Replacements replacements) {
+        // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
+        // attribute of the class.
+        for (action : region.actions) {
+            action.replaceValuedObjectReferencesInAction(replacements)
+        }
+
+        // If the state is also a referenced state, process the parameters and expand this state, too.
+        // Do this with the actual replacement stack.        
+        if (region.reference !== null) {
+            for (parameter : region.reference.parameters) {
+                parameter.replaceReferences(replacements)
+            }
+            region.expandReferencedScope(replacements)
+        }
+        
+        if (region instanceof ControlflowRegion) {
+            for (state : region.states.immutableCopy) {
+                state.replaceValuedObjectReferences(replacements)
+            }
+        } else if (region instanceof DataflowRegion) {
+            for (equation: region.equations.immutableCopy) {
+                equation.replaceReferences(replacements)   
+            }
+        }
+    }
+    
+    /** Replaces valued object references inside the given action. */
+    protected def replaceValuedObjectReferencesInAction(Action action, Replacements replacements) {
+        action.trigger?.replaceReferences(replacements)
+        for (effect : action.effects) {
+            effect.replaceReferences(replacements)
         }
     }
     

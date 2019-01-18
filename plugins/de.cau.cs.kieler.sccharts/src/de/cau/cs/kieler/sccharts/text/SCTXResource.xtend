@@ -58,7 +58,7 @@ public class SCTXResource extends LazyLinkingResource {
     public static val FILE_EXTENSION = "sctx"
     private static val FILE_EXTENSION_INTERN = "." + FILE_EXTENSION
 
-    public static val PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
+    public static val DEPRECATED_PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
         "Add resources via import to the resource set.")
 
     /** All resources that were imported */
@@ -164,17 +164,17 @@ public class SCTXResource extends LazyLinkingResource {
             SCTXStandaloneSetup.doSetup.getInstance(XtextResourceSet).resources.add(this)
         }
 
-        // Import pragma delta
-        val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma).map[values].flatten.toSet
-        val addedImports = importPragmas.difference(currentImports.keySet)
-        val removedImports = currentImports.keySet.difference(importPragmas)
+        // Import delta
+        val imports = scc.imports.toSet
+        val addedImports = imports.difference(currentImports.keySet)
+        val removedImports = currentImports.keySet.difference(imports)
 
         val base = uri.segmentsList.take(uri.segmentCount - 1).join(uri.scheme + ":/", "/", "/", [it])
 
         // Update folder imports
         // This might be slow!
         var folderImportChanged = false
-        for (folderImport : importPragmas.filter [
+        for (folderImport : imports.filter [
             it.endsWith("*") && !addedImports.contains(it) && !removedImports.contains(it)
         ]) {
             try {
