@@ -1,6 +1,6 @@
 package de.cau.cs.kieler.sccharts.processors.obfuscator;
 
-public enum ObfuscatorTypes {
+public enum ObfuscatorType {
     COUNTING,
     COUNTING_TYPE,
     RANDOM,

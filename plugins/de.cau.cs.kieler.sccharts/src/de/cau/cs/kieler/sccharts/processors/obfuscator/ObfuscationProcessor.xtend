@@ -34,7 +34,7 @@ import de.cau.cs.kieler.annotations.StringAnnotation
  */
 class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
     
-    val DEFAULT_OBFUSCATOR_TYPE = ObfuscatorTypes.COUNTING_TYPE
+    val DEFAULT_OBFUSCATOR_TYPE = ObfuscatorType.COUNTING_TYPE
 
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.obfuscator"
@@ -57,7 +57,7 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
         }       
     }
     
-    def Obfuscator getObfuscator(ObfuscatorTypes type, Scope scp) throws Exception {
+    def Obfuscator getObfuscator(ObfuscatorType type, Scope scp) throws Exception {
         val ScopeItemCounter sicnt = new ScopeItemCounter(scp)
         sicnt.count
         
@@ -81,14 +81,14 @@ class ObfuscationProcessor extends InplaceProcessor<SCCharts> {
         getObfuscator(evaluateObfuscatorAnnotations(scp), scp)
     }
     
-    def ObfuscatorTypes evaluateObfuscatorAnnotations(Scope scp) {
+    def ObfuscatorType evaluateObfuscatorAnnotations(Scope scp) {
         val annotationList = scp.annotations
-        var ObfuscatorTypes type = DEFAULT_OBFUSCATOR_TYPE
+        var ObfuscatorType type = DEFAULT_OBFUSCATOR_TYPE
         val stringAnnotations = annotationList.filter[v | v instanceof StringAnnotation]
         for (anno : stringAnnotations) {
             val strA = anno as StringAnnotation
             if (strA.name.equals("OBFUSCATOR") && !strA.values.empty) {
-                type = ObfuscatorTypes.valueOf(strA.values.get(0))
+                type = ObfuscatorType.valueOf(strA.values.get(0))
             }
         }
         return type
