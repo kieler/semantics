@@ -27,11 +27,11 @@ class TableIdentifier {
     var StateEventTableInterpreter seti
 
     /** checks the first cell for the TableType */
-    def TableInterpreter identify(List<List<String>> table) {
-        if (table.isEmpty) {
-            return null
+    def TableInterpreter identify(List<List<String>> table) throws IllegalArgumentException {
+        if (table.isNullOrEmpty) {
+            throw new IllegalArgumentException("The given model is empty.")
         } else if (table.get(0).isEmpty) {
-            return null
+            throw new IllegalArgumentException("The first row does not contain the table type.")
         } else {
             return applySettings(
                 switch (table.get(0).get(0)) {
@@ -40,14 +40,16 @@ class TableIdentifier {
                     case TableType.StateTransition.name:
                         stti
                     default:
-                        null
+                        throw new IllegalArgumentException("The first cell does not contain the table type.")
                 },
                 table
             )
         }
     }
 
-    /** reads settings from the second cell and applies these to the TableInterpreter */
+    /** Reads settings from the second cell and applies these to the TableInterpreter.
+     * Also initializes the TableInterpreter with the best header found.
+     */
     private def TableInterpreter applySettings(TableInterpreter ti, List<List<String>> table) {
         if (ti !== null) {
             val Pair<List<HeaderType>, Integer> bestHeader = identifyLongestHeader(table)
