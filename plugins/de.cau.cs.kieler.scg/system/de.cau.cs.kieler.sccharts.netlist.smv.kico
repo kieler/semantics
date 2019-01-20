@@ -19,6 +19,7 @@ de.cau.cs.kieler.scg.processors.guards config {
 }
 de.cau.cs.kieler.scg.processors.scheduler
 de.cau.cs.kieler.scg.processors.sequentializer
+// SCG optimizations
 post process de.cau.cs.kieler.scg.processors.copyPropagation
 post process de.cau.cs.kieler.scg.processors.conditionalMerger
 post process de.cau.cs.kieler.scg.processors.haltStateRemover
@@ -36,5 +37,9 @@ de.cau.cs.kieler.scg.processors.ssa.preOfFinalValues
 post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
 de.cau.cs.kieler.scg.processors.ssa.simpleNames
 de.cau.cs.kieler.scg.processors.ssa.defineUnbound
+// SCG optimizations
+//de.cau.cs.kieler.scg.processors.copyPropagation // copyPropagation messes up pre operands
+//de.cau.cs.kieler.scg.processors.conditionalMerger // has no effect (at least in the traffic-light example)
+//de.cau.cs.kieler.scg.processors.haltStateRemover // has no effect (at least in the traffic-light example)
 // create SMV code
 de.cau.cs.kieler.scg.processors.codegen.smv
