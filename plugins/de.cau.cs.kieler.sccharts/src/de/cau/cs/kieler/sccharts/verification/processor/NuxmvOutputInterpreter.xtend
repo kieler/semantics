@@ -33,9 +33,12 @@ class NuxmvOutputInterpreter {
     NuxmvCounterexampleState currentCounterexampleState
     ParseTarget parseTarget = ParseTarget.SPEC_RESULT
 
-    static val SPECIFICATION_RESULT_PATTERN = Pattern.compile("-- (specification|invariant) (.*) is (true|false)")
-    static val STATE_PATTERN = Pattern.compile("-> State:(.*)<-")
-    static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile("([a-zA-Z_][a-zA-Z_0-9]*)\\s*=\\s*([a-zA-Z_0-9.-]*)")
+    private static val SPECIFICATION_RESULT_PATTERN = Pattern.compile("-- (specification|invariant) (.*) is (true|false)")
+    private static val STATE_PATTERN = Pattern.compile("-> State:(.*)<-")
+    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile("([a-zA-Z_][a-zA-Z_0-9]*)\\s*=\\s*([a-zA-Z_0-9.-]*)")
+    private static val LOOP_START_PATTERN = Pattern.compile("-- Loop starts here")
+    private static val LOOP_START_KTRACE_LABEL_NAME = Pattern.compile("loop_start")
+    private static val ISSUE_PATTERN = Pattern.compile("file (.*): line (\\d+):(.*)")
     
     private enum ParseTarget {
         SPEC_RESULT,
@@ -60,6 +63,11 @@ class NuxmvOutputInterpreter {
     
     private def void parseCurrentLine() {
         val trimmedLine = currentLine.trim
+        
+        val issueMatcher = ISSUE_PATTERN.matcher(trimmedLine)
+        if(issueMatcher.matches()) {
+            throw new Exception(trimmedLine)
+        }
         
         val specificationResultMatcher = SPECIFICATION_RESULT_PATTERN.matcher(trimmedLine)
         if(specificationResultMatcher.matches) {
@@ -93,6 +101,13 @@ class NuxmvOutputInterpreter {
                     val variable = variableAssignmentMatcher.group(1)
                     val expression = variableAssignmentMatcher.group(2)
                     currentCounterexampleState.variableMappings.put(variable, expression)    
+                } else {
+                    val loopStartMatcher = LOOP_START_PATTERN.matcher(trimmedLine)
+                    if(loopStartMatcher.matches) {
+                        // In the nuXmv output, the label is added before the state that starts the counterexample.
+                        // Thus, the next state that will be created has to be prepended with the loop_start label in ktrace. 
+                        currentCounterexample.loopStartStateIndex = currentCounterexample.states.size
+                    }
                 }
             }
         }
@@ -109,14 +124,17 @@ class NuxmvOutputInterpreter {
     public static class NuxmvCounterexample {
         @Accessors(PUBLIC_GETTER) private val String spec
         private val states = <NuxmvCounterexampleState>newArrayList
-         
+        private var int loopStartStateIndex = -1
+        
         new(String spec) {
             this.spec = spec
         }
         
         public def String getKtrace(VariableStore store) {
             val sb = new StringBuilder()
-            for(state : states) {
+            for(stateIndexPair : states.indexed) {
+                val index = stateIndexPair.key
+                val state = stateIndexPair.value
                 var inputVariableMapping = ""
                 var outputVariableMapping = ""
                 for(variableMapping : state.variableMappings.entrySet) {
@@ -129,13 +147,24 @@ class NuxmvOutputInterpreter {
                         outputVariableMapping += '''«variable» = «expression.toKExpression» '''
                     }
                 }
+                
+                if(loopStartStateIndex >= 0 && index == loopStartStateIndex) {
+                    sb.append('''«LOOP_START_KTRACE_LABEL_NAME»:''').append("\n")
+                }
                 sb.append(inputVariableMapping)
                 if(!outputVariableMapping.isNullOrEmpty) {
                     sb.append("=> ").append(outputVariableMapping)
                 }
+                if(loopStartStateIndex >= 0 && index == states.size - 1) {
+                    sb.append('''goto «LOOP_START_KTRACE_LABEL_NAME»''')
+                }
                 sb.append(";\n")
             }
             return sb.toString
+        }
+        
+        public def void loopStartState() {
+            
         }
         
         private static def String toKExpression(String smvExpression) {
