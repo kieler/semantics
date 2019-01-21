@@ -1,5 +1,8 @@
-public system de.cau.cs.kieler.esterel.scest.scl.^struct.incr
+public system de.cau.cs.kieler.esterel.scest.scl.slic
     label "Esterel/SCEst to SCL - SLIC"
+    config {
+        "de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.dynamiccompilation": false
+    }
     
 de.cau.cs.kieler.esterel.processors.initialization
 de.cau.cs.kieler.esterel.processors.run

@@ -123,7 +123,7 @@
            system="system/de.cau.cs.kieler.esterel.kernel.scc.kico">
      </TransformationSystem>
      <TransformationSystem
-           system="system/de.cau.cs.kieler.esterel.scest.scl.struct.incr.kico">
+           system="system/de.cau.cs.kieler.esterel.scest.scl.slic.kico">
      </TransformationSystem>
   </extension>
   <extension
