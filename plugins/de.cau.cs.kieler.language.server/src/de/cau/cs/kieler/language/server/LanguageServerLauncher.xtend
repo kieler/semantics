@@ -47,17 +47,17 @@ import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerE
  *
  */
 class LanguageServerLauncher extends ServerLauncher {
-    @Inject Injector injector
+    
+    extension LanguageRegistration
     
     def static void main(String[] args) {        
         // Launch the server
-        launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [
-            bind(ServerLauncher).to(LanguageServerLauncher)
-            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-        ]))
+        launch(ServerLauncher.name, args, [])
     }
     
     override start(LaunchArgs args) {
+        val parent = bindAndRegisterLanguages()
+        val injector = parent.createChildInjector(new KeithServerModule, [bind(ServerLauncher).to(LanguageServerLauncher)])
         val executorService = Executors.newCachedThreadPool
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
