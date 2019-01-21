@@ -48,16 +48,17 @@ import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerE
  */
 class LanguageServerLauncher extends ServerLauncher {
     
-    extension LanguageRegistration
+    extension LanguageRegistration registration
     
-    def static void main(String[] args) {        
+    def static void main(String[] args) {       
         // Launch the server
-        launch(ServerLauncher.name, args, [])
+        val launcher = new LanguageServerLauncher()
+        val parent = launcher.registration.bindAndRegisterLanguages() 
+        launcher.start(parent)
     }
     
-    override start(LaunchArgs args) {
-        val parent = bindAndRegisterLanguages()
-        val injector = parent.createChildInjector(new ServerModule, [bind(ServerLauncher).to(LanguageServerLauncher)])
+    def start(Injector parent) {
+        val injector = parent.createChildInjector(new KeithServerModule)
         val executorService = Executors.newCachedThreadPool
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
@@ -67,10 +68,10 @@ class LanguageServerLauncher extends ServerLauncher {
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(#[languageServer, regExtension])
                 .setRemoteInterface(LanguageClient)
-                .setInput(args.in)
-                .setOutput(args.out)
+                .setInput(System.in)
+                .setOutput(System.out)
                 .setExecutorService(executorService)
-                .wrapMessages(args.wrapper)
+                .wrapMessages([it])
                 .configureGson(configureGson)
                 .setClassLoader(LanguageServer.classLoader)
                 .create();
