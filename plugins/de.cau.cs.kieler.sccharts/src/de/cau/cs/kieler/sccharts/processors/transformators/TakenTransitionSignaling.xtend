@@ -99,42 +99,31 @@ class TakenTransitionSignaling extends SCChartsProcessor {
                 environment.setProperty(ARRAY_SIZE, transitions.size)
                 // Create new root state to encapsule the behavior of the original model
                 // als: I don't know why this needs to be encapsulated? -> deactivated it
-//                val newRootState = rootState.encapsuleInSuperstate
-//                model.rootStates.add(0, newRootState)
                                 
                 // Create transition array
                 val transitionArrayDecl = createIntDeclaration
-//                val transitionArray = newRootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
                 val transitionArray = rootState.createValuedObject(transitionArrayName, transitionArrayDecl)    
                 // Create assignments to taken transition array
                 rootState.createEmitForTakenTransitions(transitions, transitionArray)
-                // Create reset region
-//                newRootState.createResetRegion(transitionArray)
-                rootState.createResetRegion(transitionArray)
+                // Create reset
+                val reset = rootState.createImmediateDuringAction
+                // Add assignment to false for all variables in the transition array 
+                val cardinalities = transitionArray.cardinalities
+                if(!cardinalities.isNullOrEmpty) {
+                    val card0 = cardinalities.get(0)
+                    if(card0 instanceof IntValue) {
+                        val arraySize = card0.getValue
+                        for(var index = 0; index < arraySize; index++) {
+                            val assignment = reset.createAssignment(transitionArray, createIntValue(0))            
+                            assignment.setIndex(index)
+                        }
+                    }
+                }
                 
                 // Regiser in VO Store
                 voStore.update(transitionArray, SCCHARTS_GENERATED, "simulation")
             }
         }
-    }
-    
-    private def State encapsuleInSuperstate(State state) {
-        val newState = createState(state.name)
-        state.name = state.name+"_Original"
-        val newRegion = newState.createControlflowRegion(state.name+"_encapsuled")
-        newRegion.states.add(state)
-        state.setInitial
-        // Move all declarations to new state
-        // FIXME: It would be sufficient to only move input / output declarations,
-        // but then local variables of the original model cannot be easily communicated in the simulation as their name changes.
-        // Maybe it would be better to augment the final compilation environment with metadata about introduced variables and their purpose (see KISEMA-1297)
-        // Then the simulation can be created from that info. This would also make analyzing the original model obsolete.
-        for(decl : state.declarations.clone) {
-            if(decl instanceof VariableDeclaration) {
-                newState.declarations.add(decl)
-            }
-        }
-        return newState
     }
     
     private def void createEmitForTakenTransitions(State rootState, List<Transition> transitions, ValuedObject transitionArray) {
@@ -162,33 +151,5 @@ class TakenTransitionSignaling extends SCChartsProcessor {
         val intValue = createIntValue(index)
         assignment.indices.clear
         assignment.indices.add(intValue)
-    }
-    
-    private def void createResetRegion(State rootState, ValuedObject transitionArray) {
-        // Add reset region in root state to set variables to false at start of tick
-        val newRegion = rootState.createControlflowRegion("taken_transition_signaling_reset")
-        val initState = newRegion.createInitialState("init")
-        initState.label = null
-        
-        val pauseState = newRegion.createFinalState("pause")
-        // Create transition for the effects to reset the variables
-        val resetTransition = initState.createTransitionTo(pauseState)
-        resetTransition.immediate = true
-        
-        // Add assignment to false for all variables in the transition array 
-        val cardinalities = transitionArray.cardinalities
-        if(!cardinalities.isNullOrEmpty) {
-            val card0 = cardinalities.get(0)
-            if(card0 instanceof IntValue) {
-                val arraySize = card0.getValue
-                for(var index = 0; index < arraySize; index++) {
-                    val assignment = resetTransition.createAssignment(transitionArray, createIntValue(0))            
-                    assignment.setIndex(index)
-                }
-            }
-        }
-        
-        // Create delayed transition back to init state
-        pauseState.createTransitionTo(initState)
     }
 }
