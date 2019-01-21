@@ -244,15 +244,9 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.esterel.compiler" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.esterel.examples" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
    <plugin id="de.cau.cs.kieler.esterel.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.esterel.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.kex" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.kex.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.kexpressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
@@ -279,8 +273,6 @@ litigation.
    <plugin id="de.cau.cs.kieler.lustre.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.sccharts.examples" download-size="0" install-size="0" version="0.0.0"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.legacy" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
