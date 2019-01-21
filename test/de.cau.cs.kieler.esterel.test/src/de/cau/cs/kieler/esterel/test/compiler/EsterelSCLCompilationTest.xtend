@@ -48,6 +48,9 @@ import static extension java.lang.String.format
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.TypeIdentifier
 import java.util.ArrayList
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import java.util.List
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * Tests if all sensible intermediate results of the Esterel to SCL compilation fullfill basic sanity properties.
@@ -61,11 +64,14 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     
     /** Compiler configuration */
     private val compilationSystemID = "de.cau.cs.kieler.esterel.scest.scl"
+    private val compilationSystemID_SLIC = "de.cau.cs.kieler.esterel.scest.scl.slic"
     
     /** Sct Parser Injector */
     static val sclInjector = new SCLStandaloneSetup().createInjectorAndDoEMFRegistration
     static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
     static val scestInjector = new SCEstStandaloneSetup().createInjectorAndDoEMFRegistration
+    
+    static val testIntermediates = false
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -81,29 +87,29 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("esterel")
-        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+        && !modelData.modelProperties.contains("known-to-fail")
+        && !modelData.modelProperties.contains("scest-fails")
         && (!modelData.additionalProperties.containsKey("testSerializability") || modelData.additionalProperties.get("testSerializability").trim.parseBoolean)
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
     @Test(timeout=15000)
     @StopOnFailure
-    def void testValidation(EsterelProgram est, TestModelData modelData) {
-        assumeFalse(true); // Do nothing !!
-
-        assumeTrue(est.hasNoEsterelType) // skip if program includes esterel type
-        
-        // Check all intermediate results
-        val context = est.compile
+    def void testValidationDynamic(EsterelProgram est, TestModelData modelData) {
+        assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
+        checkValidation(est, modelData, est.compile(compilationSystemID))
+    }
+    
+    @Test(timeout=15000)
+    @StopOnFailure
+    def void testValidationSLIC(EsterelProgram est, TestModelData modelData) {
+        assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
+        checkValidation(est, modelData, est.compile(compilationSystemID_SLIC))
+    }
+    
+    def void checkValidation(EsterelProgram est, TestModelData modelData, CompilationContext context) {
+        // Check compiler errors
         for (iResult : context.processorInstancesSequence) {
-            assertNotNull("Intermediate result of transformation " + iResult.id + " is null", iResult.model)
-            if (SCEstTransformation.SCL_ID.equals(iResult.id)) {
-                assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCL Program", iResult.model instanceof SCLProgram)
-            } else {
-                assertTrue("Intermediate result of transformation " + iResult.id + " is not a SCEst Program", iResult.model instanceof EsterelProgram)
-            }
-
-            // Check compiler errors
             if (!iResult.environment.errors.empty) {
                 fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.get(Environment.REPORT_ROOT).map[ err |
                      if (err.exception !== null) {
@@ -112,7 +118,16 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
                         err.message
                      }
                 ].join("\n- "))
-            }     
+            }
+        }
+        // Test intermediate results
+        for (iResult : context.processorInstancesSequence.filterResults) {
+            assertNotNull("Intermediate result of transformation " + iResult.id + " is null", iResult.model)
+            if (SCEstTransformation.SCL_ID.equals(iResult.id)) {
+                assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCL Program", iResult.model instanceof SCLProgram)
+            } else {
+                assertTrue("Intermediate result of transformation " + iResult.id + " is not a SCEst Program", iResult.model instanceof EsterelProgram)
+            }
             
             // Create resource
             val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + if (SCEstTransformation.SCL_ID.equals(iResult.id)) ".scl" else ".scest")
@@ -128,14 +143,19 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     }
     
     @Test(timeout=10000)
-    def void testSerializability(EsterelProgram est, TestModelData modelData) {
-        assumeFalse(true); // Do nothing !!
-        
-        assumeTrue(est.hasNoEsterelType) // skip if program includes esterel type
-        
-        // Check all intermediate results
-        val result = est.compile
-        for (iResult : result.processorInstancesSequence) {
+    def void testSerializabilityDynamic(EsterelProgram est, TestModelData modelData) {
+        assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
+        checkSerializability(est, modelData, est.compile(compilationSystemID))
+    }
+    
+    @Test(timeout=10000)
+    def void testSerializabilitySLIC(EsterelProgram est, TestModelData modelData) {
+        assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
+        checkSerializability(est, modelData, est.compile(compilationSystemID_SLIC))
+    }
+    
+    def void checkSerializability(EsterelProgram est, TestModelData modelData, CompilationContext context) {
+        for (iResult : context.processorInstancesSequence.filterResults) {
             val name = "intermediate result of transformation " + iResult.id
             
             assertNotNull("The %s is null".format(name), iResult.model)
@@ -169,9 +189,17 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     
     //-----------------------------------------------------------------------------------------------------------------
     
-    private def compile(EsterelProgram est) {
-        val context = Compile.createCompilationContext(compilationSystemID, est)
-        context.startEnvironment.setProperty(Environment.INPLACE, false)
+    private def filterResults(List<Processor<?, ?>> iResults) {
+        if (testIntermediates) {
+            iResults
+        } else {
+            newArrayList(iResults.last)
+        }
+    }
+    
+    private def compile(EsterelProgram est, String system) {
+        val context = Compile.createCompilationContext(system, est)
+        context.startEnvironment.setProperty(Environment.INPLACE, !testIntermediates)
 
         context.compile
         
