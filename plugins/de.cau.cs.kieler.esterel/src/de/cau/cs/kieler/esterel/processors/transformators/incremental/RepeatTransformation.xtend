@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject
  * @author mrb
  *
  */
-class RepeatTransformation extends InplaceProcessor<EsterelProgram> {
+class RepeatTransformation extends AbstractSCEstDynamicProcessor<Repeat>  {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -44,31 +44,7 @@ class RepeatTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Repeat) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Repeat).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Repeat repeat) {
+    override transform(Repeat repeat) {
         val variable = createNewUniqueVariable(createIntValue(0))
         val decl = createDeclaration(ValueType.INT, variable)
         val scope = createScopeStatement(decl)
