@@ -57,7 +57,7 @@ class LanguageServerLauncher extends ServerLauncher {
     
     override start(LaunchArgs args) {
         val parent = bindAndRegisterLanguages()
-        val injector = parent.createChildInjector(new KeithServerModule, [bind(ServerLauncher).to(LanguageServerLauncher)])
+        val injector = parent.createChildInjector(new ServerModule, [bind(ServerLauncher).to(LanguageServerLauncher)])
         val executorService = Executors.newCachedThreadPool
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
