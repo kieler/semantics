@@ -29,10 +29,11 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.ide.server.ILanguageServerAccess
+import org.eclipse.xtext.util.CancelIndicator
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -70,6 +71,21 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     var Class<?> modelClassFilter
     
+    /**
+     * The command that was compiled the last time.
+     */
+    protected String lastCommand
+    
+    /**
+     * The index of the snapshot currently shown in the diagram view.
+     */
+     protected int currentIndex
+    
+    /**
+     * The uri for that was compiled the last time.
+     */
+    protected String lastUri
+    
     override compile(String uri, String command, boolean inplace) {
         var fileUri = uri
         
@@ -90,9 +106,32 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         for (iResult : context.processorInstancesSequence) {
             convertImpl(iResult.environment , uri, iResult.name)
         }
-        return requestManager.runRead[ cancelIndicator |
+        val result = requestManager.runRead[ cancelIndicator |
             new CompilationResults(this.snapshotMap.get(uri))
         ]
+        result.thenRun [
+            didCompile(uri, command, null)
+        ].exceptionally [ throwable |
+            LOG.error('Error while running additional compilation effects.', throwable)
+            return null
+        ]
+        return result
+    }
+    
+    /**
+     * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
+     * such as requesting a new diagram for the previously shown snapshot.
+     */
+    protected def didCompile(String uri, String command, CancelIndicator cancelIndicator) {
+        if (command.equals(lastCommand) && uri.equals(lastUri)) {
+            showSnapshot(uri, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
+        } else {
+            val newIndex = this.objectMap.get(uri).size - 1
+            showSnapshot(uri, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
+            currentIndex = newIndex
+        }
+        lastUri = uri
+        lastCommand = command
     }
     
     /**
@@ -107,7 +146,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         this.objectMap.get(uri).add(impl)
         this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
         for (snapshot : snapshots.indexed) {
-            this.objectMap.get(uri).add(snapshot.value)
+            this.objectMap.get(uri).add(snapshot.value.object)
             this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
         }
         
@@ -129,7 +168,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     
     override show(String uri, int index) {
         return requestManager.runRead[ cancelIndicator |
-            showSnapshot(uri, this.objectMap.get(uri).get(index), cancelIndicator)
+            currentIndex = index
+            showSnapshot(uri, this.objectMap.get(uri).get(index), cancelIndicator, false)
         ]
     }
     
