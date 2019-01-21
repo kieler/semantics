@@ -119,10 +119,9 @@ class TransitionStyles {
      */
     def setSelectionStyle(KEdge edge) {
         edge.line => [
-            selectionLineWidth = 2 * TRANSITION_LINE_WIDTH;
-            selectionForeground = TRANSITION_SELECTION.color;
+            selectionLineWidth = 1.5f * TRANSITION_LINE_WIDTH;
+            selectionForeground = SELECTION.color;
         ]
-
     }
 
     /**
@@ -209,8 +208,8 @@ class TransitionStyles {
      */
     def addDefaultDecorator(KEdge edge) {
         edge.line.addHeadArrowDecorator() => [
-            selectionLineWidth = 2 * TRANSITION_LINE_WIDTH;
-            selectionForeground = TRANSITION_SELECTION.color;             
+            selectionLineWidth = 1.5f * TRANSITION_LINE_WIDTH;
+            selectionForeground = SELECTION.color;             
         ];
     }
     
