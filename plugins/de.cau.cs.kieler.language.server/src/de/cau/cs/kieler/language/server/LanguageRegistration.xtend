@@ -19,7 +19,7 @@ import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
 import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
-import de.cau.cs.kieler.kicool.ide.language.server.KiCoolServerModule
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
@@ -30,7 +30,6 @@ import de.cau.cs.kieler.scl.SCLRuntimeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeModule
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.language.server.registration.RegistrationServerModule
 
 /**
  * @author sdo
@@ -46,7 +45,7 @@ class LanguageRegistration {
         }.createInjectorAndDoEMFRegistration()
         new SCTXIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule, new KiCoolServerModule))
+                Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
         
@@ -58,15 +57,15 @@ class LanguageRegistration {
         
         new LustreIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule, new RegistrationServerModule))
+                Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
-        
-        new KGraphIdeSetup {
+        val injector =  new KGraphIdeSetup {
             override createInjector() {
                 Guice.createInjector(Modules2.mixin(
-                    new KGraphRuntimeModule, new KGraphIdeModule))
+                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
             }
         }.createInjectorAndDoEMFRegistration()
+        return injector
     }
 }

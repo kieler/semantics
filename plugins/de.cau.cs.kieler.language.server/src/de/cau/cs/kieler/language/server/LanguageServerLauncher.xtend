@@ -13,9 +13,10 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
-import com.google.inject.Inject
+import com.google.inject.Injector
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
+import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import java.util.function.Function
@@ -26,16 +27,13 @@ import org.apache.log4j.Logger
 import org.apache.log4j.spi.LoggingEvent
 import org.eclipse.lsp4j.MessageParams
 import org.eclipse.lsp4j.MessageType
-import org.eclipse.lsp4j.jsonrpc.Launcher
+import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
-import org.eclipse.xtext.ide.server.ServerModule
-import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.eclipse.xtext.util.Modules2
 
 /**
  * Used to start language server via stdin/out connection.
@@ -44,24 +42,34 @@ import org.eclipse.xtext.util.Modules2
  *
  */
 class LanguageServerLauncher extends ServerLauncher {
-
-    @Inject LanguageServerImpl languageServer
     
-    def static void main(String[] args) {        
+    extension LanguageRegistration registration = new LanguageRegistration
+    
+    def static void main(String[] args) {       
         // Launch the server
-        launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [
-            bind(ServerLauncher).to(LanguageServerLauncher)
-            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-        ]))
+        val launcher = new LanguageServerLauncher()
+        val parent = launcher.registration.bindAndRegisterLanguages() 
+        launcher.start(parent)
     }
     
-    override start(LaunchArgs args) {
+    def start(Injector parent) {
+        val injector = parent.createChildInjector(new KeithServerModule)
         val executorService = Executors.newCachedThreadPool
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
-        val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, args.in, args.out, executorService,
-                args.wrapper, configureGson)
+        val languageServer = injector.getInstance(LanguageServerImpl)
+        val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
+        val launcher = new Builder<LanguageClient>()
+                .setLocalServices(#[languageServer, regExtension])
+                .setRemoteInterface(LanguageClient)
+                .setInput(System.in)
+                .setOutput(System.out)
+                .setExecutorService(executorService)
+                .wrapMessages([it])
+                .configureGson(configureGson)
+                .setClassLoader(LanguageServer.classLoader)
+                .create();
         val client = launcher.remoteProxy
         languageServer.connect(client)
         // Redirect Log4J output to a file

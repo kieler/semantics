@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
@@ -40,7 +41,7 @@ import org.eclipse.xtext.util.CancelIndicator
  * @author sdo
  * 
  */
-class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
     
@@ -49,7 +50,11 @@ class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implem
     @Inject
     Injector injector
     
+    @Inject
+    extension KGraphLanguageServerExtension kgraphLSEx
+    
     extension IdeCompilerView compilerView = new IdeCompilerView
+    protected extension ILanguageServerAccess languageServerAccess
     
     /**
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
@@ -217,5 +222,10 @@ class KiCoolLanguageServerExtension extends KGraphLanguageServerExtension implem
             systemDescription.add(new SystemDescription(system.label, system.id, system.public))	
         }
         return systemDescription
-    }    
+    }
+    
+    override initialize(ILanguageServerAccess access) {
+        this.languageServerAccess = access
+    }
+    
 }
