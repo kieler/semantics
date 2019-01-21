@@ -54,6 +54,7 @@ class LanguageServerLauncher extends ServerLauncher {
     }
     
     def start(Injector parent) {
+        val LaunchArgs args = ServerLauncher.createLaunchArgs(ServerLauncher.name, #[])
         val injector = parent.createChildInjector(new KeithServerModule)
         val executorService = Executors.newCachedThreadPool
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
@@ -65,10 +66,10 @@ class LanguageServerLauncher extends ServerLauncher {
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(#[languageServer, regExtension, kicoolExtension])
                 .setRemoteInterface(LanguageClient)
-                .setInput(System.in)
-                .setOutput(System.out)
+                .setInput(args.in)
+                .setOutput(args.out)
                 .setExecutorService(executorService)
-                .wrapMessages([it])
+                .wrapMessages(args.wrapper)
                 .configureGson(configureGson)
                 .setClassLoader(LanguageServer.classLoader)
                 .create();
