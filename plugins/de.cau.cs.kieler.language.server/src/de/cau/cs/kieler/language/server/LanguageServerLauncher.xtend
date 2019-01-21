@@ -34,6 +34,7 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
+import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 
 /**
  * Used to start language server via stdin/out connection.
@@ -60,8 +61,9 @@ class LanguageServerLauncher extends ServerLauncher {
         ]
         val languageServer = injector.getInstance(LanguageServerImpl)
         val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
+        val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
         val launcher = new Builder<LanguageClient>()
-                .setLocalServices(#[languageServer, regExtension])
+                .setLocalServices(#[languageServer, regExtension, kicoolExtension])
                 .setRemoteInterface(LanguageClient)
                 .setInput(System.in)
                 .setOutput(System.out)
