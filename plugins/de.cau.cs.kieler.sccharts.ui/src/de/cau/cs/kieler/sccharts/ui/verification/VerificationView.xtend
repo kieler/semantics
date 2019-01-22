@@ -23,7 +23,6 @@ import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
-import de.cau.cs.kieler.sccharts.verification.VerificationAssumption
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
@@ -37,6 +36,8 @@ import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 import java.io.File
 import java.util.List
 import java.util.Observable
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.emf.ecore.EObject
@@ -59,6 +60,8 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
+import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.ide.IDE
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -120,6 +123,16 @@ class VerificationView extends ViewPart {
      * Creates the menu.
      */
     private def void createMenu() {
+        val openLog = new Action("Open log") {
+            override run() {
+                val file = selectedProperty?.result?.processOutputFile
+                if(file !== null && file.exists) {
+                    val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                    IDE.openEditor(page, file, true);
+                }
+            }
+        }
+        
         val menuHelp = new Action("Show Controls") {
             override run() {
                 val title = "Controls for the Verification View"
@@ -130,6 +143,7 @@ class VerificationView extends ViewPart {
         }
         
         getViewSite().getActionBars().getMenuManager() => [
+            add(openLog)
             add(menuHelp)
         ]
     }
@@ -335,7 +349,7 @@ class VerificationView extends ViewPart {
         val property = selectedProperty
         if(property !== null
             && property.result.status == VerificationResultStatus.FAILED
-            && property.result.counterexample !== null) {
+            && property.result.counterexampleFile !== null) {
             try {
                 // Start a simulation, and when the simulation is started, load the trace from the counterexample
                 val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
@@ -345,7 +359,7 @@ class VerificationView extends ViewPart {
                     override update(SimulationContext ctx, SimulationEvent e) {
                         if(e instanceof SimulationControlEvent) {
                             if(e.operation == SimulationControlEvent.SimulationOperation.START) {
-                                val counterexampleLocation = property.result.counterexample.location.toOSString
+                                val counterexampleLocation = property.result.counterexampleFile.location.toOSString
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
                                 SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 DataPoolView.bringToTopIfOpen
@@ -394,6 +408,7 @@ class VerificationView extends ViewPart {
         verificationContext = Compile.createCompilationContext(selectedSystemId, model)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, currentPropertyAnalyzer.verificationAssumptions)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, getFile(currentPropertyAnalyzer.model))
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    
@@ -402,6 +417,17 @@ class VerificationView extends ViewPart {
             }
         ]
         verificationContext.compileAsynchronously
+    }
+    
+    private def IFile getFile(EObject model) {
+        val eUri = model.eResource.getURI();
+        if (eUri.isPlatformResource()) {
+            val platformString = eUri.toPlatformString(true);
+            val res = ResourcesPlugin.getWorkspace().getRoot().findMember(platformString)
+            if(res.exists && res instanceof IFile) {
+                return res as IFile
+            }
+        }
     }
     
     private def void toggleVerificationStartStop() {

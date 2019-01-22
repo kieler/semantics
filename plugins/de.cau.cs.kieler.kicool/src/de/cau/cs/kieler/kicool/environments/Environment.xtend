@@ -19,7 +19,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
-import java.util.Map
+import org.eclipse.core.resources.IFile
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -110,6 +110,9 @@ class Environment extends EnvironmentPropertyHolder {
         
     public static val IProperty<Object> VERIFICATION_ASSUMPTIONS = 
         new Property<Object>("de.cau.cs.kieler.kicool.verificationAssumptions")
+    
+    public static val IProperty<IFile> VERIFICATION_MODEL_FILE = 
+        new Property<IFile>("de.cau.cs.kieler.kicool.verificationModelFile")
     
     public static val IProperty<Object> INDEX_MAP_OF_SMV_SPECS =
         new Property<Object>("de.cau.cs.kieler.verification.smv.indexOfProperties")

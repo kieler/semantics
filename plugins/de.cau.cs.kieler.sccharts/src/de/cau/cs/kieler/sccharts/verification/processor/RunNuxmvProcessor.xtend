@@ -73,8 +73,8 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
                 compilationContext.notify(new VerificationPropertyChanged(property))
                 // Calling the model checker is possibly long running
                 val processOutput = runModelChecker(smvFile, property, propertyIndex)
-                saveText(getProcessOutputFilePath(property, propertyIndex), processOutput)
-                updateVerificationResult(processOutput, property, propertyIndex)
+                val processOutputFile = saveText(getProcessOutputFilePath(property, propertyIndex), processOutput)
+                updateVerificationResult(processOutputFile, processOutput, property, propertyIndex)
             } catch (Exception e) {
                 property.failWithException(e)
                 compilationContext.notify(new VerificationPropertyChanged(property))
@@ -90,15 +90,17 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         if(index === null || index < 0) {
             throw new Exception("Could not determine which arguments to send to the model checker")
         }
-        processBuilder.command("nuXmv", "-n", index.toString, smvFile.name)
+        val timeCommand = #["/usr/bin/time", "-f", "\n\nelapsed time: %e seconds, max memory in RAM: %M KB"]
+        val nuXmvCommand = #["nuXmv", "-n", index.toString, smvFile.name]
+        processBuilder.command(timeCommand + nuXmvCommand)
         processBuilder.redirectErrorStream(true)
         val process = processBuilder.runToTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = process.readInputStream
-        return processOutput
+        return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
     
-    private def void updateVerificationResult(String processOutput, VerificationProperty property, int propertyIndex) {
+    private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property, int propertyIndex) {
         val interpreter = new NuxmvOutputInterpreter(processOutput)
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
@@ -112,6 +114,7 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
         } else {
             throw new Exception("Property did not clearly pass or fail")
         }
+        property.result.processOutputFile = processOutputFile
         compilationContext.notify(new VerificationPropertyChanged(property))
     }
     
@@ -152,15 +155,7 @@ class RunNuxmvProcessor extends Processor<CodeContainer, Object> {
     }
     
     private def IFile getModelFile() {
-        val model = (compilationContext.originalModel as EObject)
-        val eUri = model.eResource.getURI();
-        if (eUri.isPlatformResource()) {
-            val platformString = eUri.toPlatformString(true);
-            val res = ResourcesPlugin.getWorkspace().getRoot().findMember(platformString)
-            if(res.exists && res instanceof IFile) {
-                return res as IFile
-            }
-        }
+        return compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_MODEL_FILE) as IFile
     }
     
     private def IPath getOutputFolder() {

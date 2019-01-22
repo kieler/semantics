@@ -20,8 +20,11 @@ class VerificationResult {
     /**
      * Pointer to a ktrace file with the counterexample
      */
-    @Accessors IFile counterexample = null
-    
+    @Accessors IFile counterexampleFile = null
+    /**
+     * Pointer to a file with the output of the process that is executed for verification
+     */
+    @Accessors IFile processOutputFile = null
     /**
      * Exception that caused the corresponding status
      */
@@ -36,8 +39,8 @@ class VerificationResult {
         this.cause = e
     }
     
-    new(IFile counterexample) {
+    new(IFile counterexampleFile) {
         this(VerificationResultStatus.FAILED)
-        this.counterexample = counterexample
+        this.counterexampleFile = counterexampleFile
     }
 }
