@@ -34,6 +34,8 @@ import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
 import java.nio.file.Paths
+import java.util.Map
+import java.nio.file.Path
 
 /**
  * 
@@ -42,6 +44,9 @@ import java.nio.file.Paths
  * @kieler.rating 2018-05-18 proposed yellow  
  */
 class ProjectInfrastructure {
+
+    public static val IProperty<Map<String, String>> PATH_VARIABLES =
+        new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.project.path.variables", null)
 
     public static val IProperty<ProjectInfrastructure> PROJECT_INFRASTRUCTURE = 
         new Property<ProjectInfrastructure>("de.cau.cs.kieler.kicool.deploy.project", null)
@@ -85,7 +90,10 @@ class ProjectInfrastructure {
     var List<File> sourceCodeFiles = newArrayList
     @Accessors
     var CodeContainer sourceCode = null
-
+    
+    @Accessors(AccessorType.PUBLIC_GETTER)
+    var Map<String,String> variables;
+    
     static def getProjectInfrastructure(Environment environment) {
         var projectInfrastructure = environment.getProperty(PROJECT_INFRASTRUCTURE)
         if (projectInfrastructure === null) {
@@ -123,6 +131,8 @@ class ProjectInfrastructure {
     new(Environment environment) {
         var Resource resource = null
         
+        variables = environment.getPropertyComputeIfAbsent(PATH_VARIABLES, [newHashMap])
+        
         // Check if compilation is based on input file
         val inputModelPath = environment.getProperty(MODEL_FILE_PATH)
         if (inputModelPath !== null) {
@@ -147,6 +157,14 @@ class ProjectInfrastructure {
                 }
             }
         }
+        if (modelFile !== null) {
+            variables.put("MODEL_FILE_PATH", modelFile.path)
+            variables.put("MODEL_FILE_NAME", modelFile.name)
+            val nameParts = modelFile.name.split("\\.", 2)
+            variables.put("MODEL_FILE_RAW_NAME", nameParts.get(0))
+            variables.put("MODEL_FILE_EXTENSION", (if (nameParts.length>1) nameParts.get(1) else ""))
+        }
+        
         
         // determine model src folder
         val srcFolderPath = environment.getProperty(MODEL_SRC_PATH)
@@ -160,9 +178,13 @@ class ProjectInfrastructure {
             }
         
         // get relative path, before temporary project reroutes modelFolder
-        var relativeModelPath = if (srcFolder !== null && modelFile !== null)
-                    Paths.get(srcFolder.path)
-                    .relativize(Paths.get(modelFile.parent))
+        var Path relativeModelPath = null
+        if (srcFolder !== null && modelFile !== null){
+            relativeModelPath = Paths
+                .get(srcFolder.path)
+                .relativize(Paths.get(modelFile.parent))
+            variables.put("RELATIVE_PATH", relativeModelPath.toString)
+        }
         
         if (environment.getProperty(USE_TEMPORARY_PROJECT)) {
             // initialize project
@@ -194,12 +216,17 @@ class ProjectInfrastructure {
         
         if (modelFile !== null && environment.getProperty(OWN_MODEL_FOLDER)) {
             val modelFileName = modelFile.name.replace(".", "-").replace(" ", "_")
+            variables.put("OWN_MODEL_FOLDER", modelFileName)
             relativeModelPath = relativeModelPath?.resolve(modelFileName) ?: Paths.get(modelFileName)
         }
         modelRootRelative = relativeModelPath?.toString ?: ""
         
         val dstFolderPath = environment.getProperty(MODEL_DST_PATH)
         val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath) else modelFolder
+        
+        if (environment.getProperty(USE_GENERATED_FOLDER)) {
+            variables.put("GEN_FOLDER", environment.getProperty(GENERATED_NAME))
+        }
         
         // Create kieler-gen folder
         if (modelFolder !== null) {
@@ -209,6 +236,7 @@ class ProjectInfrastructure {
                 if (!gen.exists) {
                     gen.create(true, true, null)
                 }
+                variables.put("ROOT", gen.rawLocation.toFile.path)
                 if (environment.getProperty(USE_GENERATED_FOLDER)) {
                     gen = gen.getFolder(environment.getProperty(GENERATED_NAME))
                     if (!gen.exists) {
@@ -229,6 +257,7 @@ class ProjectInfrastructure {
                 }
                 generatedCodeFolder = genSub.rawLocation.toFile
             } else {
+                variables.put("ROOT", dstFolder.path)
                 if (environment.getProperty(USE_GENERATED_FOLDER)) {
                     generatedCodeRootFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
                 } else {
@@ -276,4 +305,37 @@ class ProjectInfrastructure {
         return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
     }
     
+    static def String variableReplacement(Map<String,String> vars, String input) {
+        val sb = new StringBuilder
+        var lastIndex = 0
+        var index = 0
+        
+        while ((index = input.indexOf("${", lastIndex)) !== -1) {
+            // append text before occurrence of "${"
+            if (index !== lastIndex) {
+                sb.append(input, lastIndex, index)
+            }
+            lastIndex = index+2 // set position after "${"
+            
+            if ((index = input.indexOf("}", lastIndex)) !== -1) {
+                // get value of variable
+                val variableValue = vars.get(input.substring(lastIndex, index))
+                if (variableValue !== null) {
+                    sb.append(variableValue)
+                } // if variable not found: skip entry
+                
+                lastIndex = index+1
+            } else {
+                // broken variable (no end tag "}")
+                throw new IllegalArgumentException("Path contained variable start \"${\" but no end tag \"}\"")
+            }
+        }
+        
+        // append last bit of text before end of input
+        if (input.length !== lastIndex) {
+            sb.append(input, lastIndex, input.length)
+        }
+        
+        return sb.toString
+    }
 }
