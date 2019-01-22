@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.xtext.resource.XtextResourceSet
 import java.io.FileNotFoundException
 import java.util.NoSuchElementException
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 
 /**
  * @author mek
@@ -68,11 +69,11 @@ class SCChartFileRenderingApplication implements IApplication {
         JPEG
     }
 
-    val String SCCHART_FILE_EXTENSION = ".sctx"
-    val String SVG_FILE_EXTENSION = ".svg"
-    val String BMP_FILE_EXTENSION = ".bmp"
-    val String PNG_FILE_EXTENSION = ".png"
-    val String JPEG_FILE_EXTENSION = ".jpeg"
+    val String SCCHART_FILE_EXTENSION = "sctx"
+    val String SVG_FILE_EXTENSION = "svg"
+    val String BMP_FILE_EXTENSION = "bmp"
+    val String PNG_FILE_EXTENSION = "png"
+    val String JPEG_FILE_EXTENSION = "jpeg"
 
     val String DEFAULT_COMPILER_SYSTEM_ID = "de.cau.cs.kieler.sccharts.netlist"
 
@@ -391,17 +392,9 @@ class SCChartFileRenderingApplication implements IApplication {
      * Returns the contents of a File as a String
      */
     def loadText(File file) {
-        var Scanner scanner = null
-        try {
-            scanner = new Scanner(file)
-            return scanner.useDelimiter("\\Z").next // EOF as delimiter
-        } catch (FileNotFoundException e) {
-            System.err.println("Error, cannot load text from file. FileNotFound: " + file.path)
-        } catch (NoSuchElementException ignore) {
-        } finally {
-            if(scanner !== null) scanner.close
-        }
-        return null
+        val container = new CodeContainer
+        container.addProxy(file)
+        return container
     }
 
     /**
@@ -435,6 +428,7 @@ class SCChartFileRenderingApplication implements IApplication {
      * Errors are printed to std-err.
      */
     private def handleFile(File file) {
+        resourceSet = null // reference errors occur if resource set is reused
         println("Handling file: " + file.path)
 
         // get model
@@ -459,6 +453,7 @@ class SCChartFileRenderingApplication implements IApplication {
         if (shouldCompile) {
             try {
                 val cc = Compile.createCompilationContext(system, model)
+                cc.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, file.path)
 
                 // compile and extract result
                 val resultEnv = cc.compile
