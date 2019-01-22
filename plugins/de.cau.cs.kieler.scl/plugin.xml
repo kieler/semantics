@@ -14,10 +14,28 @@
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem
-            system="system/de.cau.cs.kieler.scl.netlist.kico">
+            system="system/de.cau.cs.kieler.scl.netlist.c.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.scl.prio.kico">
+            system="system/de.cau.cs.kieler.scl.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.prio.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.prio.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.simulation.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.simulation.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.simulation.prio.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.simulation.prio.java.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.scl.ssa.seq.kico">

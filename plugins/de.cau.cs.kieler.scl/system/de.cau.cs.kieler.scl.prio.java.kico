@@ -1,0 +1,6 @@
+public system de.cau.cs.kieler.scl.prio.java
+    label "SCL Priority-based (Java)"
+
+de.cau.cs.kieler.scl.processors.transformators.scl2scg
+system de.cau.cs.kieler.scg.priority
+de.cau.cs.kieler.scg.processors.sjlp

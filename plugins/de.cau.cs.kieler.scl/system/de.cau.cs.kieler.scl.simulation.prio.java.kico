@@ -1,0 +1,6 @@
+developer system de.cau.cs.kieler.scl.^simulation.prio.java
+    label "SCL Priority-based Simulation (Java)"
+
+de.cau.cs.kieler.kicool.deploy.variable.store.init
+system de.cau.cs.kieler.scl.priority.java
+system de.cau.cs.kieler.^simulation.prio.java
