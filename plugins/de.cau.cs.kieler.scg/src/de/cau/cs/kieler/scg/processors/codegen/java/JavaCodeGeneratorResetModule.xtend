@@ -50,7 +50,15 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
     
     override generateDone() {
         indent
-        code.append("}\n")
+        code.append("}\n\n")
+        
+        indent
+        code.append('''
+            public void init() {
+                reset();
+                tick();
+              }
+        ''')
     }
     
 }

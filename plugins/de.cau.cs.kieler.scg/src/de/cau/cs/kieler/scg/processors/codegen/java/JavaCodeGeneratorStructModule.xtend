@@ -20,6 +20,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * Java Code Generator Struct Module
@@ -39,6 +40,8 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     @Accessors String className
     
     var hasArrays = false
+    var hasContext = false
+    var hasEvents = false
     
     override configure() {
         className = codeFilename.substring(0, codeFilename.length - 5)
@@ -61,6 +64,31 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override generate(extension CCodeSerializeHRExtensions serializer) {
+
+        // Generate an enum for all boolean inputs annotated as InputEvent
+        val inputEventDecls = scg.declarations.filter(VariableDeclaration).filter[annotations.exists['InputEvent'.equalsIgnoreCase(name)]]
+
+        if (inputEventDecls.size > 0) {
+            hasEvents = true
+            code.append(
+                inputEventDecls.join(
+                    '  public enum InputEvent {\n    ',
+                    ',\n    ',
+                    '\n  }\n\n',
+                    [ decl |
+                        decl.valuedObjects.join(", ", [name])
+                    ]
+                )
+            )
+        }
+        
+        // Add a context element if there are context functions declared
+        if (scg.declarations.filter(ReferenceDeclaration).exists[annotations.exists['Context'.equalsIgnoreCase(name)]]) {
+            hasContext = true
+            indent
+            code.append('private final ').append(scg.name).append('Context context;\n')
+        }
+        
         
         // Add the declarations of the model.
         for (declaration : scg.declarations.filter(VariableDeclaration)) {
@@ -87,12 +115,18 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override generateDone() {
-        if (hasArrays) createConstructor(serializer)
+        if (hasArrays || hasContext) createConstructor(serializer)
+        if (hasEvents) createApply(serializer)
     }
     
     protected def createConstructor(extension CCodeSerializeHRExtensions serializer) {
         code.append("\n" + indentation)
-        code.append("public " + className + "() {\n")
+        code.append('''public «className»(«IF hasContext»«className»Context context«ENDIF») {''').append("\n")
+        
+        if (hasContext) {
+            indent(2)
+            code.append("this.context = context;\n")
+        }
         
         for (declaration : scg.declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects.filter[ isArray ]) {
@@ -145,6 +179,28 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append("}\n")
         }                
     }
+    
+    protected def void createApply(extension CCodeSerializeHRExtensions serializer) {
+    	code.append("\n" + indentation)
+        code.append("public void apply(InputEvent... events) {\n")
+        
+        code.append(
+            scg.declarations.filter(VariableDeclaration).filter[annotations.exists['InputEvent'.equalsIgnoreCase(name)]].join('',
+                [ decl | '''
+                    «FOR vo : decl.valuedObjects»
+                      «indentation»«indentation»«vo.name» = Arrays.stream(events).anyMatch(it -> it == InputEvent.«vo.name»);
+                    «ENDFOR»
+                    '''
+                ]
+            )
+        )
+
+        indent(2)
+        code.append("tick();\n")
+        indent
+        code.append("}\n")
+    }
+    
     
     protected def void globalObjectAdditions(StringBuilder sb, extension CCodeSerializeHRExtensions serializer) {
         val globalObjects = modifications.get(JavaCodeSerializeHRExtensions.GLOBAL_OBJECTS)
