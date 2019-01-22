@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.properties;
 
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Interface for holders of property values.
@@ -44,6 +45,18 @@ public interface IPropertyHolder {
      * @return the current value, or the default value if the property is not set
      */
     <T> T getProperty(IProperty<T> property);
+    
+    /**
+     * Retrieves a property value. If the property is not set or null,
+     * its value shall be computed and set, with the mappingFunction.
+     * 
+     * @param <T> type of property
+     * @param property the property to get
+     * @param mappingFunction the function to call to get a value for this property
+     * @return the current value, or the default value if the property is not set
+     */
+    <T> T getPropertyComputeIfAbsent(IProperty<T> property,
+            Function<? super IProperty<T>, ? extends T> mappingFunction);
     
     /**
      * Copy all properties from another property holder to this one.

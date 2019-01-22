@@ -17,6 +17,7 @@ import java.io.Serializable
 import java.util.HashMap
 import java.util.Map
 import java.util.LinkedHashMap
+import java.util.function.Function
 
 /**
  * An abstract holder class for properties that uses a hash map. 
@@ -27,10 +28,10 @@ import java.util.LinkedHashMap
  * @author msp (original) 
  * @author ssm als
  */
-public class MapPropertyHolder implements IPropertyHolder, Serializable {
+class MapPropertyHolder implements IPropertyHolder, Serializable {
 
     /** the serial version UID. */
-    private static val long serialVersionUID = 4507851447415709893L
+    static val long serialVersionUID = 4507851447415709893L
     
     /** map of property identifiers to their values. */
     protected HashMap<IProperty<?>, Object> propertyMap = new LinkedHashMap<IProperty<?>, Object>()
@@ -39,7 +40,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
      * {@inheritDoc}
      */
     override <T> MapPropertyHolder setProperty(IProperty<? super T> property, T value) {
-        if (value == null) {
+        if (value === null) {
             propertyMap.remove(property);
         } else {
             propertyMap.put(property, value);
@@ -56,9 +57,9 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
      * {@inheritDoc}
      */
     override <T> T getProperty(IProperty<T> property) {
-        if (propertyMap != null) {
+        if (propertyMap !== null) {
             val T value = propertyMap.get(property) as T
-            if (value != null) {
+            if (value !== null) {
                 return value
             }
         }
@@ -79,7 +80,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
      * {@inheritDoc}
      */
     override MapPropertyHolder copyProperties(IPropertyHolder other) {
-        if (other == null) {
+        if (other === null) {
             return this
         }
 
@@ -107,7 +108,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
     def void checkProperties(IProperty<?> ... newProperties) {
         for (IProperty<?> property : newProperties) {
             val Object value = propertyMap.get(property);
-            if (value != null) {
+            if (value !== null) {
                 val lowbo = property.getLowerBound() as Comparable<Object>
                 val uppbo = property.getUpperBound() as Comparable<Object>
                 if (lowbo.compareTo(value) > 0) {
@@ -125,6 +126,27 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
                 }
             }
         }
+    }
+    
+    override <T> getPropertyComputeIfAbsent(IProperty<T> property,
+        Function<? super IProperty<T>, ? extends T> mappingFunction
+    ) {
+        if (propertyMap !== null) {
+            val T value = propertyMap.computeIfAbsent(
+                property,
+                mappingFunction as Function<IProperty<?>, ?>
+            ) as T
+            if (value !== null) {
+                return value
+            }
+        }
+        
+        // Retrieve the default value and memorize it for our property
+        val T defaultValue = property.getDefault()
+        if (defaultValue instanceof Cloneable) {
+            setProperty(property, defaultValue)
+        }
+        return defaultValue
     }
     
 }

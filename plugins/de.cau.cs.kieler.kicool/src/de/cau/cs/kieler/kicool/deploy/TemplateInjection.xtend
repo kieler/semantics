@@ -34,8 +34,7 @@ class TemplateInjection {
         
     // Utility methods
     static def addIncludeInjection(Environment env, String includeFile) {
-        val includes = env.getProperty(INCLUDES)?:newArrayList
-        env.setProperty(INCLUDES, includes)
+        val includes = env.getPropertyComputeIfAbsent(INCLUDES,[newArrayList])
         includes += includeFile
     }
     
@@ -44,10 +43,8 @@ class TemplateInjection {
     }
     
     static def addMacroInjection(Environment env, String position, String macroName) {
-        val macroMap = env.getProperty(MACROS)?:newHashMap
-        env.setProperty(MACROS, macroMap)
-        val macros = macroMap.get(position)?:newArrayList
-        macroMap.put(position, macros)
+        val macroMap = env.getPropertyComputeIfAbsent(MACROS,[newHashMap])
+        val macros = macroMap.computeIfAbsent(position, [newArrayList])
         macros += macroName        
     }
     
