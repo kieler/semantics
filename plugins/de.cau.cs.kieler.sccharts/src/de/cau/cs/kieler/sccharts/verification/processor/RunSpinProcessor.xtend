@@ -14,29 +14,28 @@
 
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.sccharts.verification.VerificationResult
 import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
 import java.io.File
-import java.util.Map
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.sccharts.verification.processor.ProcessExtensions.*
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 
 /**
  * @author aas
  */
-class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
+class RunSpinProcessor extends RunModelCheckerProcessorBase {
     
     override getId() {
-        return "de.cau.cs.kieler.sccharts.verification.runNuxmv"
+        return "de.cau.cs.kieler.sccharts.verification.runSpin"
     }
     
     override getName() {
-        return "Run nuXmv"
+        return "Run SPIN"
     }
     
     override getType() {
@@ -44,39 +43,39 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
+        val verificationProperties = getVerificationProperties
         if(verificationProperties.isNullOrEmpty) {
             return
         }
+        val property = verificationProperties.head
         
         val codeContainer = getSourceModel
         val code = codeContainer.head.code
-        val smvFile = saveText(smvFilePath, code)
-        for(property : verificationProperties) {
-            try {
-                throwIfCanceled
-                property.result = new VerificationResult(VerificationResultStatus.RUNNING)
-                compilationContext.notify(new VerificationPropertyChanged(property))
-                // Calling the model checker is possibly long running
-                val processOutput = runModelChecker(smvFile, property)
-                val processOutputFile = saveText(getProcessOutputFilePath(property), processOutput)
-                updateVerificationResult(processOutputFile, processOutput, property)
-            } catch (Exception e) {
-                property.failWithException(e)
-                compilationContext.notify(new VerificationPropertyChanged(property))
-            }
+        val pmlFile = saveText(getPmlFilePath(property), code)
+        try {
+            throwIfCanceled
+            property.result = new VerificationResult(VerificationResultStatus.RUNNING)
+            compilationContext.notify(new VerificationPropertyChanged(property))
+            // Calling the model checker is possibly long running
+            val processOutput = runModelChecker(pmlFile, property)
+            val processOutputFile = saveText(getProcessOutputFilePath(property), processOutput)
+            updateVerificationResult(processOutputFile, processOutput, property)
+        } catch (Exception e) {
+            property.failWithException(e)
+            compilationContext.notify(new VerificationPropertyChanged(property))
         }
     }
     
-    private def String runModelChecker(IFile smvFile, VerificationProperty property) {
+    private def String runModelChecker(IFile pmlFile, VerificationProperty property) {
         val processBuilder = new ProcessBuilder()
-        processBuilder.directory(new File(smvFile.parent.location.toOSString))
-        val indexMap = sourceEnvironment.getProperty(Environment.INDEX_MAP_OF_SMV_SPECS) as Map<VerificationProperty, Integer>
-        val index = indexMap.get(property)
-        if(index === null || index < 0) {
-            throw new Exception("Could not determine which arguments to send to the model checker")
+        processBuilder.directory(new File(pmlFile.parent.location.toOSString))
+        val spinCommand = newArrayList("spin")
+        if(property.type == VerificationPropertyType.LTL) {
+            spinCommand.addAll("-f", property.formula.toPmlFormula)
         }
-        val nuXmvCommand = #["nuXmv", "-n", index.toString, smvFile.name]
-        processBuilder.command(timeCommand + nuXmvCommand)
+        spinCommand.addAll("-run", pmlFile.name)
+        
+        processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
         val process = processBuilder.runToTermination([ return isCanceled() ])
         throwIfCanceled
@@ -85,9 +84,9 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
-        val interpreter = new NuxmvOutputInterpreter(processOutput)
-        val counterexample = interpreter.counterexamples.head
-        val passedSpec = interpreter.passedSpecs.head
+        val interpreter = new SpinOutputInterpreter(processOutput)
+        val counterexample = interpreter.counterexample
+        val passedSpec = interpreter.passedSpec
         if(counterexample !== null && property.matches(counterexample.spec)) {
             val store = VariableStore.get(compilationContext.startEnvironment)
             val ktrace = counterexample.getKtrace(store)
@@ -102,27 +101,29 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
         compilationContext.notify(new VerificationPropertyChanged(property))
     }
     
-    private def boolean matches(VerificationProperty property, String smvFormula) {
+    private def boolean matches(VerificationProperty property, String pmlFormula) {
         // The following is merely a heuristic to check that the correct property was checked.
         // Spaces and brackets are removed and afterwards the formulas are compared.
-        // This is because nuXmv gives the answer for a minified formula.
-        val propertyFormula = property.formula.toSmvExpression()
+        // This is because SPIN gives the answer for a modified formula (e.g. 0/1 for false/true).
+        val propertyFormula = property.formula.toPmlExpression
         val propertyFormulaSimplified = propertyFormula.replaceAll("\\s","").replace("(","").replace(")", "")
-        val smvFormulaSimplified = smvFormula.replaceAll("\\s","").replace("(","").replace(")", "")
-        return smvFormulaSimplified == propertyFormulaSimplified
+        val pmlFormulaSimplified = pmlFormula.replaceAll("\\s","").replace("(","").replace(")", "")
+        return pmlFormulaSimplified == propertyFormulaSimplified
     }
     
-    private static def String toSmvExpression(String kexpression) {
-        // TODO: duplicate of SmvCodeGeneratorSpecificationModule.toSmvExpression, but cannot import from there
-        return kexpression.replace("==", "=").replace("&&", "&").replace("||", "|")
-                          .replace("false", "FALSE").replace("true", "TRUE")
-    }
-    
-    private def IPath getSmvFilePath() {
-        return getOutputFile(modelFile.nameWithoutExtension+".smv")
+    private def IPath getPmlFilePath(VerificationProperty property) {
+        return getOutputFile(property, ".pml")
     }
   
     private def IPath getProcessOutputFilePath(VerificationProperty property) {
-        return getOutputFile(property, ".smv.log")
+        return getOutputFile(property, ".pml.log")
+    }
+    
+    private def String toPmlExpression(String kexpression) {
+        return kexpression.replace("true", "1").replace("false", "0")
+    }
+    
+    private def String toPmlFormula(String ltlFormula) {
+        return ltlFormula.replace("G", "[]").replace("F", "<>").replace("R", "V")
     }
 }

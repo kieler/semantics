@@ -37,10 +37,9 @@ class NuxmvOutputInterpreter {
     private static val STATE_PATTERN = Pattern.compile("-> State:(.*)<-")
     private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile("([a-zA-Z_][a-zA-Z_0-9]*)\\s*=\\s*([a-zA-Z_0-9.-]*)")
     private static val LOOP_START_PATTERN = Pattern.compile("-- Loop starts here")
-    private static val LOOP_START_KTRACE_LABEL_NAME = Pattern.compile("loop_start")
     private static val ISSUE_IN_FILE_PATTERN = Pattern.compile("(.*)file(.*): line (\\d+):(.*)")
     private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile("nuXmv terminated by a signal")
-    
+        
     private enum ParseTarget {
         SPEC_RESULT,
         COUNTEREXAMPLE
@@ -128,6 +127,8 @@ class NuxmvOutputInterpreter {
         private val states = <NuxmvCounterexampleState>newArrayList
         private var int loopStartStateIndex = -1
         
+        private static val LOOP_START_KTRACE_LABEL_NAME = "loop_start"
+        
         new(String spec) {
             this.spec = spec
         }
@@ -163,10 +164,6 @@ class NuxmvOutputInterpreter {
                 sb.append(";\n")
             }
             return sb.toString
-        }
-        
-        public def void loopStartState() {
-            
         }
         
         private static def String toKExpression(String smvExpression) {

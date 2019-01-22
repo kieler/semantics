@@ -35,14 +35,14 @@ abstract class CodeGeneratorModuleBase extends SCGCodeGeneratorModule {
         code.append("\n")
     }
     
-    protected def void generateSeparatorComment() {
+    protected def void appendSeparatorComment() {
         appendIndentation
         for(i : 1..10) { code.append(lineCommentToken) }
         code.append("\n")
     }
     
-    protected def void generateSeparatorComment(String comment) {
-        generateSeparatorComment
+    protected def void appendSeparatorComment(String comment) {
+        appendSeparatorComment
         appendIndentation
         code.append(lineCommentToken).append(" ").append(comment).append("\n")
     }

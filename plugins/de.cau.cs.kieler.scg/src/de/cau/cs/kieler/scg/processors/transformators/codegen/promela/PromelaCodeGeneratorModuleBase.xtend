@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorModul
  */
 abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
     public static val TICK_LOOP_FUNCTION = "tick_loop"
+    public static val TICK_END_FLAG_NAME = "endoftick"
     public static val GUARD_PREFIX = "_g"
     public static val PRE_GUARD_PREFIX = "_p"
     public static val CONDITIONAL_GUARD_PREFIX = "_cg"

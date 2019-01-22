@@ -60,6 +60,9 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
                 code.append("bool ").append(preGuardName).append(" = 0;\n")
             }
         }
+        
+        // Add end-of-tick flag
+        appendIndentedLine('''bool «TICK_END_FLAG_NAME» = 0;''')
     }
     
     override generateDone() {

@@ -195,6 +195,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.verification.processor.RunNuxmvProcessor">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.verification.processor.RunSpinProcessor">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -238,7 +241,10 @@
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
         </TransformationSystem>
         <TransformationSystem
-              system="system/de.cau.cs.kieler.sccharts.verification.smv.nuxmv.kico">
+              system="system/de.cau.cs.kieler.sccharts.verification.nuxmv.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.verification.spin.kico">
         </TransformationSystem>
      </extension>
 

@@ -123,7 +123,7 @@ class VerificationView extends ViewPart {
      * Creates the menu.
      */
     private def void createMenu() {
-        val openLog = new Action("Open log") {
+        val openLog = new Action("Open Log") {
             override run() {
                 val file = selectedProperty?.result?.processOutputFile
                 if(file !== null && file.exists) {
@@ -165,7 +165,8 @@ class VerificationView extends ViewPart {
                     val selectedSystem = e.structuredSelection.firstElement as System
                     selectedSystemId = selectedSystem.id
                 ]
-                val modelCheckingSystemIds = #["de.cau.cs.kieler.sccharts.verification.smv.nuxmv"]
+                val modelCheckingSystemIds = #["de.cau.cs.kieler.sccharts.verification.nuxmv",
+                                               "de.cau.cs.kieler.sccharts.verification.spin"]
                 val modelCheckingSystems = modelCheckingSystemIds.map[KiCoolRegistration.getSystemById(it)]
                 comboViewer.setContentProvider(ArrayContentProvider.instance);
                 comboViewer.input = modelCheckingSystems
@@ -363,7 +364,6 @@ class VerificationView extends ViewPart {
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
                                 SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 DataPoolView.bringToTopIfOpen
-                                // TODO: Remove simulation listener needed?
                             }    
                         }
                     }

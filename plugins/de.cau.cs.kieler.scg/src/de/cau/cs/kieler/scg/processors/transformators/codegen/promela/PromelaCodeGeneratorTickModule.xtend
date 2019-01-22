@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -24,6 +26,8 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import java.util.List
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 
 /**
  * Adds the code for the tick loop logic.
@@ -59,11 +63,15 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         
         appendIndentedLine("atomic { ")
         incIndentationLevel
+        appendIndentedLine('''«TICK_END_FLAG_NAME» = 0;''')
         generateSettingRandomInputs()
         code.append("\n")
         generateSequentialScgLogic()
         code.append("\n")
         generateAfterTickLogic()
+        generateAssertions()
+        code.append("\n")
+        appendIndentedLine('''«TICK_END_FLAG_NAME» = 1;''')
         decIndentationLevel
         appendIndentedLine("}")
         
@@ -76,8 +84,18 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         
     }
     
+    private def void generateAssertions() {
+        val invariant = getInvariantVerificationProperty
+        if(invariant === null) {
+            return
+        }
+        code.append("\n")
+        appendSeparatorComment("assertion")        
+        appendIndentedLine('''assert(«invariant.formula»);''')
+    }
+    
     private def void generateAfterTickLogic() {
-        generateSeparatorComment("after tick logic")
+        appendSeparatorComment("after tick logic")
         appendIndentedLine('''«GO_GUARD» = 0;''')
         // Set pre guards
         val store = VariableStore.get(processorInstance.environment)
@@ -94,7 +112,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     private def void generateSettingRandomInputs() {
-        generateSeparatorComment("set random inputs")
+        appendSeparatorComment("set random inputs")
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
                 if (declaration instanceof VariableDeclaration) {
@@ -118,6 +136,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     private def void generateSettingRandomInt(ValuedObject valuedObject) {
+        // TODO: Respect RangeAssumption 
         appendIndentedLine('''do''')
         appendIndentedLine(''':: «valuedObject.name»++;''')
         appendIndentedLine(''':: «valuedObject.name»--;''')
@@ -126,7 +145,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     private def void generateSequentialScgLogic() {
-        generateSeparatorComment("tick logic")
+        appendSeparatorComment("tick logic")
         val processedNodes = <Node> newHashSet
         nodeStack.clear
         nodeStack.add(scg.nodes.head)
@@ -189,5 +208,17 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     protected def dispatch void generate(Exit exit) {
+    }
+    
+    protected def VerificationProperty getInvariantVerificationProperty() {
+        val verificationProperties = processorInstance.compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
+        if(verificationProperties.isNullOrEmpty) {
+            return null
+        } else {
+            val property = verificationProperties.head
+            if(property.type == VerificationPropertyType.INVARIANT) {
+                return property
+            }
+        }
     }
 }
