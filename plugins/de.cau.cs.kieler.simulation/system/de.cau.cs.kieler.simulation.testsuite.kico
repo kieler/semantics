@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.^simulation.testsuite
+    label "INTERNAL Simulation Testsuite"
+    
+de.cau.cs.kieler.^simulation.testsuite.deploy

@@ -30,6 +30,18 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.simulation.statebased.c.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.testsuite.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.testsuite.single.prio.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.testsuite.single.netlist.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.testsuite.single.statebased.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">
@@ -59,6 +71,12 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.testsuite.TestsuiteTransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.testsuite.MakefileDependencieAdder">
       </Processor>
    </extension>
 
