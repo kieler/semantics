@@ -399,15 +399,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
      * Adding processor systems is not supported at the moment.
      */
     def void addProcessorEntries(Processor<?,?> position, List<ProcessorEntry> processorEntries) {
-        val processorEntryPoint = system.processors
+        val posProcessor = processorMap.entrySet.findFirst[value == position]?.key
+        if (posProcessor === null) {
+            throw new IllegalArgumentException("Given position processor does not exist.")
+        }
+        val processorEntryPoint = system.eAllContents.filter(ProcessorGroup).findFirst[processors.contains(posProcessor)]
         if (processorEntryPoint instanceof ProcessorGroup) {
             for (newEntry : processorEntries.reverseView) {
-                val posProcessor = processorMap.entrySet.findFirst[value == position]?.key
-                if (posProcessor === null) {
-                    throw new IllegalArgumentException("Given position processor does not exist.")
-                }
                 val idx = processorEntryPoint.processors.indexOf(posProcessor)
-                if (posProcessor === null) {
+                if (idx == -1) {
                     throw new IllegalArgumentException("Given position processor does not exist in the processor group.")
                 }
                 processorEntryPoint.processors.add(idx + 1, newEntry)
