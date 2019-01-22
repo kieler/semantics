@@ -26,7 +26,7 @@ class TableIdentifier {
     @Inject
     var de.cau.cs.kieler.sccharts.processors.tabels.StateEventTableInterpreter seti
 
-    /** checks the first cell for the TableType */
+    /** checks the first cell for the TableType and returns a TableInterpreter accordingly */
     def TableInterpreter identify(List<List<String>> table) throws IllegalArgumentException {
         if (table.isNullOrEmpty) {
             throw new IllegalArgumentException("The given model is empty.")
@@ -54,6 +54,7 @@ class TableIdentifier {
         if (ti !== null) {
             val Pair<List<HeaderType>, Integer> bestHeader = identifyLongestHeader(table)
             switch (ti.class) {
+                // TODO check header for essential lines
                 case StateTransitionTableInterpreter:
                     // the length of the header is one line longer than the position of the header line
                     ti.initialize(bestHeader.key, bestHeader.value+1, table)

@@ -107,6 +107,7 @@ class CSVToSCTX extends ExogenousProcessor<String, SCCharts> {
         setModel(scc)
     }
     
+    @SuppressWarnings("unused")
     private def generateStateContent(CSVTable csv, State state) {
         val cfr = createControlflowRegion(state, "")
         

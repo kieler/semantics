@@ -68,6 +68,7 @@ class StateEventTableInterpreter extends TableInterpreter {
     }
     
     def createTransition(List<String> row, int condi) {
+        // TODO row may be shorter than the shorter than condi or the position of the State column
         val sourceStateName = row.get(headerLine.indexOf(HeaderType.STATE))
         val targetStateName = getTargetName(row.get(condi))
         

@@ -77,7 +77,7 @@ class CSVBuilder {
         
         for (var i = 0; i < table.size; i++) {
             val List<String> line = table.get(i)
-            val lineLength = line.length
+            val lineLength = line.size
         	if (lineLength > longest) {
         	    for (var j = 0; j < i; j++) {
         	        val tmpLine = table.get(j)
@@ -92,6 +92,7 @@ class CSVBuilder {
         return longest
     }
     
+    /** Adds elem cnt times to the end of the given list. */
     private def <T> addElems(List<T> list, T elem, int cnt) {
         for (var i = 0; i < cnt; i++) {
             list.add(elem)
