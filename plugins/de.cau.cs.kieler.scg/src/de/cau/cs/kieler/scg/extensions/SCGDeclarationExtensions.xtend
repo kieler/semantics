@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -51,6 +52,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
  */
 class SCGDeclarationExtensions { 
     
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGCoreExtensions
@@ -122,6 +124,7 @@ class SCGDeclarationExtensions {
     		declaration.valuedObjects.forEach[ 
     			map.put(it, <ValuedObject> newLinkedList(it.copyValuedObject(newDeclaration)))
     		]
+    		declaration.copyAnnotations(newDeclaration)
     		target.declarations += newDeclaration
     	}
     	map
