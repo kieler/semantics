@@ -96,6 +96,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     @Test(timeout=15000)
     @StopOnFailure
     def void testValidationDynamic(EsterelProgram est, TestModelData modelData) {
+        assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
         checkValidation(est, modelData, est.compile(compilationSystemID))
     }
@@ -103,6 +104,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     @Test(timeout=15000)
     @StopOnFailure
     def void testValidationSLIC(EsterelProgram est, TestModelData modelData) {
+        assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
         checkValidation(est, modelData, est.compile(compilationSystemID_SLIC))
     }
@@ -144,12 +146,14 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
     
     @Test(timeout=10000)
     def void testSerializabilityDynamic(EsterelProgram est, TestModelData modelData) {
+        assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
         checkSerializability(est, modelData, est.compile(compilationSystemID))
     }
     
     @Test(timeout=10000)
     def void testSerializabilitySLIC(EsterelProgram est, TestModelData modelData) {
+        assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
         checkSerializability(est, modelData, est.compile(compilationSystemID_SLIC))
     }
