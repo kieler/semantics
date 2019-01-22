@@ -1,7 +1,6 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.prio.c
-    label "Priority-based Simulation (C, No-TTS)"
+developer system de.cau.cs.kieler.^simulation.prio.c
+    label "Priority-based Simulation C Backend"
 
-system de.cau.cs.kieler.sccharts.priority
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {

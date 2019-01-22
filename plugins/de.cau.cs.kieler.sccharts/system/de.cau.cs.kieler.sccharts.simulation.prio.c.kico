@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.sccharts.^simulation.prio.c
+    label "Priority-based Simulation (C, No-TTS)"
+
+system de.cau.cs.kieler.sccharts.priority
+system de.cau.cs.kieler.^simulation.prio.c
