@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.model.properties.IProperty
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
+import static extension com.google.common.base.Preconditions.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
@@ -386,6 +387,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     def void addProcessorEntry(String processorId) {
+        processorId.checkNotNull("Illegal processor ID: null")
         val processorEntry = KiCoolFactory.eINSTANCE.createProcessorReference => [
             it.id = processorId
         ]
