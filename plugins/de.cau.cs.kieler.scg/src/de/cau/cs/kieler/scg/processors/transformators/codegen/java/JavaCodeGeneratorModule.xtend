@@ -18,6 +18,8 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorModule
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 
 /**
  * Root C Code Generator Module
@@ -35,6 +37,8 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     @Inject extension JavaCodeSerializeHRExtensions
     
     @Inject Injector injector
+    
+    protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
     
     public static val JAVA_EXTENSION = ".java"
     
@@ -54,6 +58,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         val cFilename = codeFilename + JAVA_EXTENSION
         val cFile = new StringBuilder
 
+        cFile.packageAdditions
         cFile.addHeader
         cFile.hostcodeAdditions
         
@@ -94,4 +99,10 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         }
     }  
     
+    def void packageAdditions(StringBuilder sb) {
+        val packagePragma = SCGraphs.getStringPragmas(PACKAGE)
+        if (packagePragma.size > 0) {
+            sb.append("package ").append(packagePragma.head.values.head).append(";\n\n")
+        }
+    }
 }
