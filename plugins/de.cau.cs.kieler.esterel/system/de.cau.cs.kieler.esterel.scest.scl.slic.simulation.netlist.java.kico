@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.esterel.scest.scl.slic.^simulation.netlist.java
+    label "SCEst - SLIC - Netlist-based Simulation (Java)"
+
+system de.cau.cs.kieler.esterel.scest.scl.slic
+system de.cau.cs.kieler.scl.^simulation.netlist.java

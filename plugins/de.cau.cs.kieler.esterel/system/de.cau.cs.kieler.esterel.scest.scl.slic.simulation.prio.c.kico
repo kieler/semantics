@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.esterel.scest.scl.slic.^simulation.prio.c
+    label "SCEst - SLIC - Priority-based Simulation (C)"
+
+system de.cau.cs.kieler.esterel.scest.scl.slic
+system de.cau.cs.kieler.scl.^simulation.prio.c
