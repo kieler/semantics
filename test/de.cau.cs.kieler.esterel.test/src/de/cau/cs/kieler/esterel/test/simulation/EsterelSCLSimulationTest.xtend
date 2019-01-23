@@ -20,16 +20,22 @@ import org.junit.Test
 
 import static org.junit.Assume.*
 
+import static extension de.cau.cs.kieler.esterel.test.compiler.EsterelSCLCompilationTest.hasNoEsterelType
+
 /**
  * @author als
  * 
  */
 class EsterelSCLSimulationTest extends AbstractSimulationTest<EsterelProgram> {
     
-    public static val String NETLIST_C_SYSTEM = null
-    public static val String NETLIST_JAVA_SYSTEM = null
-    public static val String PRIO_C_SYSTEM = null
-    public static val String PRIO_JAVA_SYSTEM = null
+    public static val String SLIC_NETLIST_C_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.slic.simulation.netlist.c"
+    public static val String SLIC_NETLIST_JAVA_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.slic.simulation.netlist.java"
+    public static val String SLIC_PRIO_C_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.slic.simulation.priority.c"
+    public static val String SLIC_PRIO_JAVA_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.slic.simulation.priority.java"
+    public static val String DYNAMIC_NETLIST_C_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.simulation.netlist.c"
+    public static val String DYNAMIC_NETLIST_JAVA_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.simulation.netlist.java"
+    public static val String DYNAMIC_PRIO_C_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.simulation.priority.c"
+    public static val String DYNAMIC_PRIO_JAVA_SYSTEM = "de.cau.cs.kieler.esterel.scest.scl.simulation.priority.java"
     
     static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
     
@@ -42,46 +48,69 @@ class EsterelSCLSimulationTest extends AbstractSimulationTest<EsterelProgram> {
             && modelData.modelProperties.contains("esterel")
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
+            && !modelData.modelProperties.contains("scest-fails")
+            && !modelData.modelProperties.contains("hostcode")
+            && !modelData.modelProperties.contains("scest-simulation-fails")
+            && !modelData.modelProperties.contains("bad-sc-trace") // Some traces test even after termination but the the signal reset is not present and the tests fails
     }
     
     @Test
-    def void testSimulationNetlistC(EsterelProgram esterel, TestModelData modelData) {
-        assumeTrue("TODO Esterel simulation tests", false)
+    def void testSimulationSLICNetlistC(EsterelProgram esterel, TestModelData modelData) {
+        assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
+        assumeTrue("Program contains unsupported data types", esterel.hasNoEsterelType) // skip if program includes esterel type
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
+        
+        startSimulationTest(SLIC_NETLIST_C_SYSTEM, esterel, modelData, "EsterelSimulationSLICNetlistC")
+    }
+    
+    @Test
+    def void testSimulationSLICNetlistJava(EsterelProgram esterel, TestModelData modelData) {
+        assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
+        assumeTrue("Program contains unsupported data types", esterel.hasNoEsterelType) // skip if program includes esterel type
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-java") || modelData.modelProperties.contains("simulation-fails-java"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
+        
+        startSimulationTest(SLIC_NETLIST_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationSLICNetlistJava")
     }
 
-//    @Test
-//    def void testSimulationNetlistC(EsterelProgram esterel, TestModelData modelData) {
-//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
-//        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
-//        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
-//        
-//        startSimulationTest(NETLIST_C_SYSTEM, esterel, modelData, "EsterelSimulationNetlistC")
-//    }
-//    
-//    @Test
-//    def void testSimulationNetlistJava(EsterelProgram esterel, TestModelData modelData) {
-//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-java") || modelData.modelProperties.contains("simulation-fails-java"))
-//        assumeFalse("Has 'not-ASC' property", modelData.modelProperties.contains("not-asc"))
-//        assumeFalse("Has 'not-SASC' property", modelData.modelProperties.contains("not-sasc"))
-//        
-//        startSimulationTest(NETLIST_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationNetlistJava")
-//    }
-//
-//    @Test
-//    def void testSimulationPrioC(EsterelProgram esterel, TestModelData modelData) {
-//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
-//        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
-//        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
-//        
-//        startSimulationTest(PRIO_C_SYSTEM, esterel, modelData, "EsterelSimulationPrioC")
-//    }
-//    
-//    @Test
-//    def void testSimulationPrioJava(EsterelProgram esterel, TestModelData modelData) {
-//        assumeFalse("Skip this test property", modelData.modelProperties.contains("simulation-fails-prio-java") || modelData.modelProperties.contains("simulation-fails-java"))
-//        assumeFalse("Has not-IASC property", modelData.modelProperties.contains("not-iasc"))
-//        assumeFalse("Has not-SIASC property", modelData.modelProperties.contains("not-siasc"))
-//        
-//        startSimulationTest(PRIO_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationPrioJava")
-//    }
+    @Test
+    def void testSimulationSLICPrioC(EsterelProgram esterel, TestModelData modelData) {
+        assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
+        assumeTrue("Program contains unsupported data types", esterel.hasNoEsterelType) // skip if program includes esterel type
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
+        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
+        
+        startSimulationTest(SLIC_PRIO_C_SYSTEM, esterel, modelData, "EsterelSimulationSLICPrioC")
+    }
+    
+    @Test
+    def void testSimulationSLICPrioJava(EsterelProgram esterel, TestModelData modelData) {
+        assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
+        assumeTrue("Program contains unsupported data types", esterel.hasNoEsterelType) // skip if program includes esterel type
+        assumeFalse("Skip this test property", modelData.modelProperties.contains("simulation-fails-prio-java") || modelData.modelProperties.contains("simulation-fails-java"))
+        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
+        
+        startSimulationTest(SLIC_PRIO_JAVA_SYSTEM, esterel, modelData, "EsterelSimulationSLICPrioJava")
+    }
+    
+    @Test
+    def void testSimulationDynamicNetlistC(EsterelProgram esterel, TestModelData modelData) {
+        assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
+        assumeTrue("Program contains unsupported data types", esterel.hasNoEsterelType) // skip if program includes esterel type
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
+        
+        startSimulationTest(DYNAMIC_NETLIST_C_SYSTEM, esterel, modelData, "EsterelSimulationDynamicNetlistC")
+    }
+
+    @Test
+    def void testSimulationDynamicPrioC(EsterelProgram esterel, TestModelData modelData) {
+        assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
+        assumeTrue("Program contains unsupported data types", esterel.hasNoEsterelType) // skip if program includes esterel type
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
+        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
+        
+        startSimulationTest(DYNAMIC_PRIO_C_SYSTEM, esterel, modelData, "EsterelSimulationDynamicPrioC")
+    }
 }
