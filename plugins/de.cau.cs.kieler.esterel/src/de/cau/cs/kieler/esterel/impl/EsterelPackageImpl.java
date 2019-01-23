@@ -2633,6 +2633,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
 
         // Add supertypes to classes
         esterelProgramEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
+        esterelProgramEClass.getESuperTypes().add(theAnnotationsPackage.getNameable());
         esterelDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getDeclaration());
         typeDeclarationEClass.getESuperTypes().add(this.getEsterelDeclaration());
         typeDefinitionEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
