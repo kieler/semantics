@@ -69,11 +69,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     private def String runModelChecker(IFile pmlFile, VerificationProperty property) {
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(pmlFile.parent.location.toOSString))
-        val spinCommand = newArrayList("spin")
-        if(property.type == VerificationPropertyType.LTL) {
-            spinCommand.addAll("-f", property.formula.toPmlFormula)
-        }
-        spinCommand.addAll("-run", pmlFile.name)
+        val spinCommand = #["spin", "-run", "-a", pmlFile.name]
         
         processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
@@ -121,9 +117,5 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     
     private def String toPmlExpression(String kexpression) {
         return kexpression.replace("true", "1").replace("false", "0")
-    }
-    
-    private def String toPmlFormula(String ltlFormula) {
-        return ltlFormula.replace("G", "[]").replace("F", "<>").replace("R", "V")
     }
 }

@@ -15,28 +15,17 @@
 import com.google.common.io.Files
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
-import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
-import de.cau.cs.kieler.sccharts.verification.VerificationResult
-import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
-import java.io.File
 import java.util.List
-import java.util.Map
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IWorkspace
-import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.StringInputStream
-
-import static extension de.cau.cs.kieler.sccharts.verification.processor.ProcessExtensions.*
 
 /**
  * @author aas

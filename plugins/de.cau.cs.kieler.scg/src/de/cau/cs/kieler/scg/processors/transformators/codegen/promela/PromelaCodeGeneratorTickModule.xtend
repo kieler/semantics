@@ -18,7 +18,10 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.verification.RangeAssumption
+import de.cau.cs.kieler.sccharts.verification.VerificationAssumption
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -26,8 +29,8 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import java.util.List
-import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 
 /**
  * Adds the code for the tick loop logic.
@@ -39,12 +42,15 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
 
     @Inject extension KEffectsExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SSACoreExtensions
     @Inject extension PromelaCodeSerializeHRExtensions serializer
 
     /** Stack of nodes to be serialized to code */
     protected val nodeStack = <Node> newLinkedList
     /** Conditional Stack that keeps track of the nesting depth of conditionals */
     protected val conditionalStack = <Conditional> newLinkedList
+    
+    var List<VerificationAssumption> assumptions
     
     override getName() {
         return class.simpleName;
@@ -56,12 +62,28 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
 
     override generate() {
-        appendIndentedLine('''proctype «TICK_LOOP_FUNCTION»() {''')
+        assumptions = processorInstance.compilationContext.startEnvironment
+            .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>  
+            
+        code.append("init {\n")
         incIndentationLevel
+        
+        generateTickLoop()
+        
+        decIndentationLevel
+        appendIndentedLine("}")
+    }
+
+    override generateDone() {
+        
+    }
+    
+    private def void generateTickLoop() {
         appendIndentedLine("do")
         appendIndentedLine("::")
         
-        appendIndentedLine("atomic { ")
+        // In Promela, d_step is an atomic step that is also deterministic
+        appendIndentedLine("d_step { ")
         incIndentationLevel
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 0;''')
         generateSettingRandomInputs()
@@ -69,19 +91,13 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         generateSequentialScgLogic()
         code.append("\n")
         generateAfterTickLogic()
-        generateAssertions()
         code.append("\n")
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 1;''')
+        generateAssertions()
         decIndentationLevel
         appendIndentedLine("}")
         
         appendIndentedLine("od")
-        decIndentationLevel
-        appendIndentedLine("}")
-    }
-
-    override generateDone() {
-        
     }
     
     private def void generateAssertions() {
@@ -118,8 +134,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
                 if (declaration instanceof VariableDeclaration) {
                     if (declaration.isInput) {
                         switch(declaration.type) {
-                            case BOOL : generateSettingRandomBool(valuedObject)
-                            case INT : generateSettingRandomInt(valuedObject)
+                            case BOOL : generateSettingRandomBool(declaration, valuedObject)
+                            case INT : generateSettingRandomInt(declaration, valuedObject)
                             default : throw new Exception("Unsupported value type in promela code generation: " + declaration.type) 
                         }
                     }
@@ -128,20 +144,37 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         }
     }
     
-    private def void generateSettingRandomBool(ValuedObject valuedObject) {
+    private def void generateSettingRandomBool(VariableDeclaration decl, ValuedObject valuedObject) {
+        appendIndentedLine('''// «valuedObject.name»''')
         appendIndentedLine('''if''')
         appendIndentedLine(''':: «valuedObject.name» = true;''')
         appendIndentedLine(''':: «valuedObject.name» = false;''')
         appendIndentedLine('''fi''')
     }
     
-    private def void generateSettingRandomInt(ValuedObject valuedObject) {
-        // TODO: Respect RangeAssumption 
-        appendIndentedLine('''do''')
-        appendIndentedLine(''':: «valuedObject.name»++;''')
-        appendIndentedLine(''':: «valuedObject.name»--;''')
-        appendIndentedLine(''':: break;''')
-        appendIndentedLine('''od''')
+    private def void generateSettingRandomInt(VariableDeclaration decl, ValuedObject valuedObject) {
+        appendIndentedLine('''// «valuedObject.name»''')
+        // Use select feature of promela if there is a range assumption. Otherwise use non-deterministic increase / decrease otherwise
+        val origValuedObject = if(decl.isSSA) decl.ssaOrigVO else valuedObject
+        val rangeAssumption = getRangeAssumption(origValuedObject)
+        if(rangeAssumption !== null) {
+            appendIndentedLine('''select(«valuedObject.name» : «rangeAssumption.minValue»..«rangeAssumption.maxValue»);''')
+        } else {
+            appendIndentedLine('''// Warning: The following non-deterministic selection could cause an infinite loop. Better use @AssumeRange annotation.''')
+            appendIndentedLine('''do''')
+            appendIndentedLine(''':: «valuedObject.name»++;''')
+            appendIndentedLine(''':: «valuedObject.name»--;''')
+            appendIndentedLine(''':: break;''')
+            appendIndentedLine('''od''')    
+        }
+    }
+    
+    private def RangeAssumption getRangeAssumption(ValuedObject valuedObject) {
+        if(!assumptions.isNullOrEmpty) {
+            return assumptions.filter(RangeAssumption).findFirst [
+                it.valuedObject.name == valuedObject.name
+            ]
+        }
     }
     
     private def void generateSequentialScgLogic() {

@@ -44,9 +44,8 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
     
     override configure() {
         val declarations = createAndConfigureModule(PromelaCodeGeneratorDeclarationModule)
-        val init = createAndConfigureModule(PromelaCodeGeneratorInitModule)
         val tick = createAndConfigureModule(PromelaCodeGeneratorTickModule)
-        codeGeneratorModules = #[declarations, init, tick]
+        codeGeneratorModules = #[declarations, tick]
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
