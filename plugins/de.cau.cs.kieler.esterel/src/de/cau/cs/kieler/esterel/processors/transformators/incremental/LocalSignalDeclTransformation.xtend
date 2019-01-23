@@ -59,6 +59,7 @@ class LocalSignalDeclTransformation extends AbstractSCEstDynamicProcessor<LocalS
         for (signal : localSignals.valuedObjects.filter(Signal)) {
             val s = createSignalVariable(createFalse, null, null)
             var decl = createDeclaration(ValueType.BOOL, s)
+            voStore.update(s, "signal")
             var decl2 = createDeclaration(null, null)
             if (signal.type !== null) {
                 scope.declarations.add(decl)

@@ -17,6 +17,7 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import org.eclipse.emf.ecore.EObject
 import com.google.common.reflect.TypeToken
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * @author als
@@ -25,6 +26,15 @@ abstract class AbstractSCEstDynamicProcessor<T extends EObject> extends InplaceP
     
     val type = (new TypeToken<T>(this.class) {}).rawType
     protected var EObject lastStatement
+    
+    var VariableStore voStore = null
+    
+    protected def voStore() {
+        if (voStore === null && environments?.target !== null) {
+            voStore = VariableStore.getVariableStore(environment)
+        }
+        return voStore
+    } 
     
     override process() {
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)

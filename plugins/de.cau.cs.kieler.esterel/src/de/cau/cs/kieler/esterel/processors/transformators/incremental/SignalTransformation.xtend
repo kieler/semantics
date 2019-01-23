@@ -69,6 +69,7 @@ class  SignalTransformation extends AbstractSCEstDynamicProcessor<Module> {
                 }
                 signal.name = signal.name.createNewUniqueSignalName
                 val decl = createDeclaration(ValueType.BOOL, s)
+                voStore.update(s, "signal")
                 var decl2 = createDeclaration(null, null)
                 if (signal.type !== null) {
                     module.declarations.add(decl)
