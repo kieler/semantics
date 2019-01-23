@@ -129,7 +129,7 @@ class VerificationView extends ViewPart {
             }
         }
         
-        val openLog = new Action("Open Process Log") {
+        val openLog = new Action("Open Process Output") {
             override run() {
                 val file = selectedProperty?.result?.processOutputFile
                 if(file !== null && file.exists) {

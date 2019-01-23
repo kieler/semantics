@@ -91,7 +91,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         } else if(passedSpec !== null && property.matches(passedSpec)) {
             property.result = new VerificationResult(VerificationResultStatus.PASSED)    
         } else {
-            throw new Exception("Property did not clearly pass or fail")
+            property.result = new VerificationResult(new Exception("Property did not clearly pass or fail"))
         }
         property.result.processOutputFile = processOutputFile
         compilationContext.notify(new VerificationPropertyChanged(property))
