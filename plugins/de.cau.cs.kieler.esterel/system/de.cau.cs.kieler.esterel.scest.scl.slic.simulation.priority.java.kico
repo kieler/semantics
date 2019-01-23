@@ -1,0 +1,5 @@
+developer simulation system de.cau.cs.kieler.esterel.scest.scl.slic.^simulation.priority.java
+    label "SCEst - SLIC - Priority-based Simulation (Java)"
+
+system de.cau.cs.kieler.esterel.scest.scl.slic
+system de.cau.cs.kieler.scl.^simulation.priority.java

@@ -203,7 +203,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                 case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«access»)'''
                 case STRING: '''cJSON_CreateString((${tickdata_name}«access» != NULL) ? ${tickdata_name}«access» : "")'''
                 default: {
-                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
                     ""
                 }
             }
@@ -243,7 +243,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             case FLOAT: "->valuedouble"
             case STRING: "->valuestring"
             default: {
-                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
                 ""
             }
         }

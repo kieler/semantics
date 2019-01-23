@@ -29,7 +29,7 @@ import de.cau.cs.kieler.kexpressions.CombineOperator
  * @author mrb
  *
  */
-class EmitTransformation extends InplaceProcessor<EsterelProgram> {
+class EmitTransformation extends AbstractSCEstDynamicProcessor<Emit> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -48,31 +48,7 @@ class EmitTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
         
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Emit) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Emit).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Emit emit) {
+    override transform(Emit emit) {
         var signal = emit.signal as Signal
         if (emit.expression === null && signal.type != ValueType.PURE) {
             throw new UnsupportedOperationException("The following signal is a valued signal. 
@@ -100,10 +76,8 @@ class EmitTransformation extends InplaceProcessor<EsterelProgram> {
                 }
                 statements.add(pos+1, assign2)
                 lastStatement = assign2
-            }
-            else {
-                throw new UnsupportedOperationException("The following signal is not a valued signal! 
-                                                        Thus a valued emit is invalid! " + signal.toString)
+            } else {
+                throw new UnsupportedOperationException("The following signal is not a valued signal! Thus a valued emit is invalid! " + signal.toString)
             }
         }
         else {

@@ -1,7 +1,6 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.prio.java
-    label "Priority-based Simulation (Java, No-TTS)"
+developer system de.cau.cs.kieler.^simulation.priority.java
+    label "Priority-based Simulation Java Backend"
 
-system de.cau.cs.kieler.sccharts.priority.java
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {

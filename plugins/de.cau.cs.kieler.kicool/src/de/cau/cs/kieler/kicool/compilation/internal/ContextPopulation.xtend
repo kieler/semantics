@@ -37,6 +37,7 @@ class ContextPopulation {
         cc.subContexts.clear
         cc.system.processors.populate(cc)     
         cc.system.intermediates.forEach[ it.populate(cc) ]
+        EnvironmentPropertyHolder.processEnvironmentConfig(cc.startEnvironment, cc.system.config)
     }
     
     static dispatch def void populate(ProcessorReference processorReference, CompilationContext cc) {

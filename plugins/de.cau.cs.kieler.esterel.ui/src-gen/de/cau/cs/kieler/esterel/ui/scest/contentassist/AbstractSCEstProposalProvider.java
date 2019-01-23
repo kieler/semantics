@@ -46,4 +46,7 @@ public abstract class AbstractSCEstProposalProvider extends EsterelProposalProvi
 	public void complete_Set(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
+	public void complete_ValuedObjectOrSignalReference(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+	}
 }

@@ -170,7 +170,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
             case INT: "getInt"
             case STRING: "getString"
             default: {
-                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
                 ""
             }
         }

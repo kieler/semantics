@@ -47,12 +47,6 @@ class Compile {
             it.transformSystem
             it.originalModel = sourceModel
             it.populateContext
-            // configure start environment
-            for (subSystem : subContexts.values.map[originalSystem]) {
-                EnvironmentPropertyHolder.processEnvironmentConfig(it.startEnvironment, subSystem.config)
-            }
-            EnvironmentPropertyHolder.processEnvironmentConfig(it.startEnvironment, system.config)
-//            RuntimeSystems.add(it.getSystem, it)
         ]
     }
     

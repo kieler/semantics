@@ -8,7 +8,6 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr.SCEstParser;
 import de.cau.cs.kieler.esterel.ide.scest.contentassist.antlr.internal.InternalSCEstLexer;
-import de.cau.cs.kieler.esterel.scest.validation.SCEstValidatorConfigurationBlock;
 import de.cau.cs.kieler.esterel.ui.scest.contentassist.SCEstProposalProvider;
 import de.cau.cs.kieler.esterel.ui.scest.labeling.SCEstDescriptionLabelProvider;
 import de.cau.cs.kieler.esterel.ui.scest.labeling.SCEstLabelProvider;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link SCEstUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractSCEstUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalSCEstLexer.class).toProvider(LexerProvider.create(InternalSCEstLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return SCEstValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

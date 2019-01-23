@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject
  * @author mrb
  *
  */
-class SetTransformation extends InplaceProcessor<EsterelProgram> {
+class SetTransformation extends AbstractSCEstDynamicProcessor<Set>  {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -43,31 +43,7 @@ class SetTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Set) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Set).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Set set) {
+    override transform(Set set) {
         val signal = set.signal
         val statements = set.getContainingList
         val pos = statements.indexOf(set)
