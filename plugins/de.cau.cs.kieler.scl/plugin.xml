@@ -20,10 +20,10 @@
             system="system/de.cau.cs.kieler.scl.netlist.java.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.scl.prio.c.kico">
+            system="system/de.cau.cs.kieler.scl.priority.c.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.scl.prio.java.kico">
+            system="system/de.cau.cs.kieler.scl.priority.java.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.scl.simulation.netlist.c.kico">
@@ -32,10 +32,10 @@
             system="system/de.cau.cs.kieler.scl.simulation.netlist.java.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.scl.simulation.prio.c.kico">
+            system="system/de.cau.cs.kieler.scl.simulation.priority.c.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.scl.simulation.prio.java.kico">
+            system="system/de.cau.cs.kieler.scl.simulation.priority.java.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.scl.ssa.seq.kico">

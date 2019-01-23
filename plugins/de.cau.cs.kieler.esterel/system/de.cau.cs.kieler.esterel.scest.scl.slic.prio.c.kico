@@ -1,5 +1,0 @@
-public system de.cau.cs.kieler.esterel.scest.scl.slic.prio.c
-    label "SCEst - SLIC - Priority-based (C)"
-    
-system de.cau.cs.kieler.esterel.scest.scl.slic
-system de.cau.cs.kieler.scl.prio.c

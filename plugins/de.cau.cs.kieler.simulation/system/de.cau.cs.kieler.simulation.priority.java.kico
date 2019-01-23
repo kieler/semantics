@@ -1,4 +1,4 @@
-developer system de.cau.cs.kieler.^simulation.prio.java
+developer system de.cau.cs.kieler.^simulation.priority.java
     label "Priority-based Simulation Java Backend"
 
 de.cau.cs.kieler.kicool.deploy.setup config {

@@ -22,10 +22,10 @@
             system="system/de.cau.cs.kieler.simulation.netlist.java.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.prio.c.kico">
+            system="system/de.cau.cs.kieler.simulation.priority.c.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.prio.java.kico">
+            system="system/de.cau.cs.kieler.simulation.priority.java.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.simulation.statebased.c.kico">

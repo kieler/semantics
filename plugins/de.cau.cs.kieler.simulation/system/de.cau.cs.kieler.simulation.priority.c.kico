@@ -1,4 +1,4 @@
-developer system de.cau.cs.kieler.^simulation.prio.c
+developer system de.cau.cs.kieler.^simulation.priority.c
     label "Priority-based Simulation C Backend"
 
 de.cau.cs.kieler.kicool.deploy.setup config {
