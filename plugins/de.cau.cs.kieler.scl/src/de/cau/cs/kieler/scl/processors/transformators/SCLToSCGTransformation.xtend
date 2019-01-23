@@ -136,6 +136,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             val scg = createSCGraph
             scgs.scgs += scg
             scg.addStringAnnotation(ANNOTATION_NAME, module.name)
+            scg.name = module.name
             module.initialize
             	
             // ... and copy declarations.
