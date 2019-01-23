@@ -157,6 +157,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 addDoubleClickAction(ReferenceExpandAction::ID)
                 addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
+            
+            node.setSelectionStyle
 
             // Add inner states
             for (state : region.states) {
