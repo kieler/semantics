@@ -123,7 +123,13 @@ class VerificationView extends ViewPart {
      * Creates the menu.
      */
     private def void createMenu() {
-        val openLog = new Action("Open Log") {
+        val startVerificationOfModelInDiagramAction = new Action("Start verification of model in diagram") {
+            override run() {
+                startVerificationOfModelInDiagram()
+            }
+        }
+        
+        val openLog = new Action("Open Process Log") {
             override run() {
                 val file = selectedProperty?.result?.processOutputFile
                 if(file !== null && file.exists) {
@@ -144,6 +150,7 @@ class VerificationView extends ViewPart {
         
         getViewSite().getActionBars().getMenuManager() => [
             add(openLog)
+            add(startVerificationOfModelInDiagramAction)
             add(menuHelp)
         ]
     }
@@ -383,18 +390,18 @@ class VerificationView extends ViewPart {
     }
     
     private def void startVerification() {
-        val verificationProperties = selectedProperties
-        if(verificationProperties === null) {
+        if(currentPropertyAnalyzer === null) {
             return
         }
-        val model = currentDiagramModel
-        if(model === null || !(model instanceof EObject)) {
+        startVerification(currentPropertyAnalyzer.model)
+    }
+    
+    private def void startVerificationOfModelInDiagram() {
+        val diagramModel = currentDiagramModel
+        if(diagramModel === null || !(diagramModel instanceof EObject)) {
             return
         }
-        // Stop last verification if not done yet
-        stopVerification()
-        // Start new verification
-        startVerification(model as EObject, verificationProperties)
+        startVerification(diagramModel as EObject)
     }
     
     private def void stopVerification() {
@@ -402,6 +409,20 @@ class VerificationView extends ViewPart {
             verificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
             verificationContext = null
         }
+    }
+    
+    private def void startVerification(EObject model) {
+        val verificationProperties = selectedProperties
+        if(verificationProperties === null) {
+            return
+        }
+        if(model === null) {
+            return
+        }
+        // Stop last verification if not done yet
+        stopVerification()
+        // Start new verification
+        startVerification(model, verificationProperties)
     }
     
     private def void startVerification(EObject model, List<VerificationProperty> verificationProperties) {

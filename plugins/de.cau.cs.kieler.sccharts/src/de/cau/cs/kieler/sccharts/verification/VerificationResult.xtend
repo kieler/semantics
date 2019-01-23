@@ -22,7 +22,7 @@ class VerificationResult {
      */
     @Accessors IFile counterexampleFile = null
     /**
-     * Pointer to a file with the output of the process that is executed for verification
+     * Pointer to a file with the output of the process that was executed for verification
      */
     @Accessors IFile processOutputFile = null
     /**
