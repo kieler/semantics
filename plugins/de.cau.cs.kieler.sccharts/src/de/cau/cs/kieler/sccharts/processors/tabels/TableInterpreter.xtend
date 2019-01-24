@@ -201,20 +201,20 @@ abstract class TableInterpreter implements ITableInterpreter {
      */
     def Expression conditions2TriggerExpression(Iterable<String> conditionStrs, String connector) {
         // connect all transition conditions with the AND Operator
-        var String exStr = conditionStrs.fold(
-            "",
-            [ String r, String t |
+        var StringBuilder exSB = conditionStrs.fold(
+            new StringBuilder(""),
+            [ StringBuilder r, String t |
                 if (!t.isNullOrEmpty) {
-                    if (!r.isEmpty) {
-                        r.concat(connector)
+                    if (r.length != 0) {
+                        r.append(connector)
                     }
-                    r.concat(t)
+                    r.append(t)
                 }
                 return r
             ]
         )
-
-        return KExtStandaloneParser.parseExpression(exStr)
+        
+        return KExtStandaloneParser.parseExpression(exSB.toString)
     }
 
     /** Turns a list of possibly entangled effect strings into a list of effects. */
