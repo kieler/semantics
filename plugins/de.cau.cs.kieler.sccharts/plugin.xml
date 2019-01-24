@@ -207,6 +207,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.csv.Table2CSV">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.tabels.TypeGuesser">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
