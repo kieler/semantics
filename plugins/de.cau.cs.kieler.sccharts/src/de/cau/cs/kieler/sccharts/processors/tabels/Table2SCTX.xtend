@@ -41,12 +41,10 @@ class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
         // TODO check for empty model
         try {
             val TableInterpreter ti = getInterpreter(model)
-            model = ti.interpret
+            model = ti.interpret()
         } catch (IllegalArgumentException exception) {
             // TODO esception is not shown?
             environment.errors.add(exception)
-//            val rootstate = createState => [name = "root"]
-//            model = createSCChart => [rootStates += rootstate]
         }
     }
     

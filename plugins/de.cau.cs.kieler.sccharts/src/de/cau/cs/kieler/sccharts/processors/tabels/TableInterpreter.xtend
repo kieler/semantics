@@ -52,8 +52,6 @@ abstract class TableInterpreter implements ITableInterpreter {
 
     static final String EFFECT_SPLITTER = ";"
 
-    SCCharts scc
-
     @Accessors
     boolean initialized = false
     @Accessors
@@ -63,12 +61,13 @@ abstract class TableInterpreter implements ITableInterpreter {
 
     @Accessors
     var List<List<String>> table
-    @Accessors
-    var HashMap<String, State> stateMap
+//    @Accessors
+    var HashMap<String, StateTransitionPriorityWrapper> stateMap = new HashMap<String, StateTransitionPriorityWrapper>
 
-    override interpret() {
+    override SCCharts interpret() {
         val rootstate = createState => [name = "root"]
-        this.scc = createSCChart => [rootStates += rootstate]
+
+        val SCCharts scc = createSCChart => [rootStates += rootstate]
 
         // check for null and initialize as needed
         checkInitialized()
@@ -84,7 +83,7 @@ abstract class TableInterpreter implements ITableInterpreter {
 
         return scc
     }
-    
+
     /** Checks if table and headerLine have been initialized and initializes them (with defaults) if necessary */
     def checkInitialized() {
         if (!initialized) {
@@ -97,21 +96,19 @@ abstract class TableInterpreter implements ITableInterpreter {
      * and add them to the given region as needed
      */
     override createStates(ControlflowRegion region) {
-        this.stateMap = new HashMap<String, State>
-
         val stateColumn = headerLine.indexOf(HeaderType.STATE)
 
         for (var rowIndex = headerLines; rowIndex < table.size; rowIndex++) {
             val stateName = table.get(rowIndex).get(stateColumn)
             // get the state or create a new one if needed
-            if (!this.stateMap.containsKey(stateName)) {
+            if (!stateName.isNullOrEmpty && !this.stateMap.containsKey(stateName)) {
                 val State state = region.createState(stateName)
                 // set first state as the initial state
                 if (rowIndex == headerLines) {
                     state.setInitial
                 }
                 // add the new state, if it didn't exist (returned default)
-                this.stateMap.putIfAbsent(stateName, state)
+                this.stateMap.putIfAbsent(stateName, new StateTransitionPriorityWrapper(state))
             }
         }
     }
@@ -122,30 +119,54 @@ abstract class TableInterpreter implements ITableInterpreter {
 
     def State addSinkState(ControlflowRegion region, String stateName) {
         val State state = region.createState(stateName)
-        this.stateMap.putIfAbsent(stateName, state)
+        this.stateMap.putIfAbsent(stateName, new StateTransitionPriorityWrapper(state))
         return state
     }
 
-    def createTransition(String sourceStateName, String targetStateName, Expression trigger, List<Effect> effects) {
-        val sourceState = this.stateMap.get(sourceStateName)
-        var targetState = this.stateMap.get(targetStateName)
-        if (targetState === null) {
-            targetState = addSinkState(sourceState, targetStateName)
+    def createTransitionWithPrio(
+        String sourceStateName,
+        String targetStateName,
+        Expression trigger,
+        Iterable<Effect> effects,
+        Integer index
+    ) {
+        if (!targetStateName.isNullOrEmpty && !sourceStateName.isNullOrEmpty) {
+            val sourceWrapper = this.stateMap.get(sourceStateName)
+            // TODO sourceState may be null
+            var targetWrapper = this.stateMap.get(targetStateName)
+            if (targetWrapper === null) {
+                targetWrapper = new StateTransitionPriorityWrapper(addSinkState(sourceWrapper.state, targetStateName))
+            }
+            createTransitionWithPrio(sourceWrapper, targetWrapper, trigger, effects, index)
         }
-
-        createTransition(sourceState, targetState, trigger, effects)
     }
 
-    /** Creates a transition with a trigger and a list of effects and handles
+    /** Creates a transition with a trigger, a list of effects and a priority and handles
      * the declaration of any valued objects.
+     * 
+     * Attention: Created transitions are *NOT* connected to any sourceState.
      */
-    def createTransition(State sourceState, State targetState, Expression trigger, List<Effect> effects) {
-        val Transition trans = createTransitionTo(sourceState, targetState)
+    private def createTransitionWithPrio(
+        StateTransitionPriorityWrapper sourceWrapper,
+        StateTransitionPriorityWrapper targetWrapper,
+        Expression trigger,
+        Iterable<Effect> effects,
+        Integer prio
+    ) throws IllegalArgumentException {
+        var Transition trans = createTransition => [
+            setTargetState(targetWrapper.state)
+        ]
+        if (prio !== null) {
+            sourceWrapper.add(trans, prio)
+        } else {
+            sourceWrapper.add(trans)
+        }
+
         trans.trigger = trigger
-        trans.trigger.matchAndMakeValuedObjects(sourceState)
+        trans.trigger.matchAndMakeValuedObjects(sourceWrapper.state)
         trans.effects.addAll(effects)
         for (effect : trans.effects) {
-            effect.matchAndMakeValuedObjects(sourceState)
+            effect.matchAndMakeValuedObjects(sourceWrapper.state)
         }
     }
 
@@ -178,15 +199,18 @@ abstract class TableInterpreter implements ITableInterpreter {
 
     /** The condition strings are concatenated with a connector and then turned into an expression.
      */
-    def Expression conditions2TriggerExpression(List<String> conditionStrs, String connector) {
+    def Expression conditions2TriggerExpression(Iterable<String> conditionStrs, String connector) {
         // connect all transition conditions with the AND Operator
         var String exStr = conditionStrs.fold(
             "",
-            [ String t, String r |
-                if (!r.isEmpty) {
-                    r.concat(connector)
+            [ String r, String t |
+                if (!t.isNullOrEmpty) {
+                    if (!r.isEmpty) {
+                        r.concat(connector)
+                    }
+                    r.concat(t)
                 }
-                return r.concat(t)
+                return r
             ]
         )
 
@@ -194,9 +218,9 @@ abstract class TableInterpreter implements ITableInterpreter {
     }
 
     /** Turns a list of possibly entangled effect strings into a list of effects. */
-    def List<Effect> effectStrings2Expression(List<String> rawEffectStrs) {
+    def Iterable<Effect> effectStrings2Expression(Iterable<String> rawEffectStrs) {
         // separate all effects
-        val List<String> effectStrs = rawEffectStrs.fold(new ArrayList<String>, [ List<String> l, String raw |
+        val Iterable<String> effectStrs = rawEffectStrs.fold(new ArrayList<String>, [ List<String> l, String raw |
             l.addAll(raw.split(EFFECT_SPLITTER))
             return l
         ])
@@ -229,7 +253,7 @@ abstract class TableInterpreter implements ITableInterpreter {
         }
         return list
     }
-    
+
     /** recursively extract valued object references from an expression */
     def List<ValuedObjectReference> getValuedObjectReferences(Expression expr) {
 //        val valOExpressionList = new ArrayList<ValuedObjectReference>
@@ -242,6 +266,7 @@ abstract class TableInterpreter implements ITableInterpreter {
 //            valOExpressionList.add(expr)
 //        }
 //        return valOExpressionList
+        // TODO [only relevant for hirarchical tables] does this work or do I need to implement my own version?
         expr.allReferences
     }
 
@@ -297,28 +322,28 @@ abstract class TableInterpreter implements ITableInterpreter {
             }
         }
     }
-    
+
     /** Unifies the line lengths in the table and returns that length. */
     private def int unifyLineLengths() {
         var longest = 0
-        
+
         for (var i = 0; i < table.size; i++) {
             val List<String> line = table.get(i)
             val lineLength = line.size()
             if (lineLength > longest) {
                 for (var j = 0; j < i; j++) {
                     val tmpLine = table.get(j)
-                    addElems(tmpLine, "", lineLength-longest)
+                    addElems(tmpLine, "", lineLength - longest)
                 }
                 longest = lineLength
             } else if (lineLength < longest) {
-                addElems(line, "", longest-lineLength)
+                addElems(line, "", longest - lineLength)
             }
         }
-        
+
         return longest
     }
-    
+
     /** Adds elem cnt times to the end of the given list. */
     private def <T> addElems(List<T> list, T elem, int cnt) {
         for (var i = 0; i < cnt; i++) {
