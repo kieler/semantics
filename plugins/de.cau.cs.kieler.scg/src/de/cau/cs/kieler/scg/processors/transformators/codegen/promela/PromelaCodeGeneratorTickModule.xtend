@@ -147,8 +147,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     private def void generateSettingRandomBool(VariableDeclaration decl, ValuedObject valuedObject) {
         appendIndentedLine('''// «valuedObject.name»''')
         appendIndentedLine('''if''')
-        appendIndentedLine(''':: «valuedObject.name» = true;''')
-        appendIndentedLine(''':: «valuedObject.name» = false;''')
+        appendIndentedLine(''':: (1) -> «valuedObject.name» = true;''')
+        appendIndentedLine(''':: (1) -> «valuedObject.name» = false;''')
         appendIndentedLine('''fi''')
     }
     

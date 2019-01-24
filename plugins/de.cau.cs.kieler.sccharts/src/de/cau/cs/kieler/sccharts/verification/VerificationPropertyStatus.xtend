@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.verification
 /** 
  * @author aas
  */
-enum VerificationResultStatus {
+enum VerificationPropertyStatus {
     PENDING,
     COMPILING,
     RUNNING,

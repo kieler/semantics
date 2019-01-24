@@ -17,8 +17,7 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
-import de.cau.cs.kieler.sccharts.verification.VerificationResult
-import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyStatus
 import java.io.File
 import java.util.Map
 import org.eclipse.core.resources.IFile
@@ -54,14 +53,15 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
         for(property : verificationProperties) {
             try {
                 throwIfCanceled
-                property.result = new VerificationResult(VerificationResultStatus.RUNNING)
+                property.status = VerificationPropertyStatus.RUNNING
                 compilationContext.notify(new VerificationPropertyChanged(property))
                 // Calling the model checker is possibly long running
                 val processOutput = runModelChecker(smvFile, property)
                 val processOutputFile = saveText(getProcessOutputFilePath(property), processOutput)
                 updateVerificationResult(processOutputFile, processOutput, property)
             } catch (Exception e) {
-                property.failWithException(e)
+                e.printStackTrace
+                property.fail(e)
                 compilationContext.notify(new VerificationPropertyChanged(property))
             }
         }
@@ -85,6 +85,7 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
+        property.processOutputFile = processOutputFile
         val interpreter = new NuxmvOutputInterpreter(processOutput)
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
@@ -92,13 +93,12 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
             val store = VariableStore.get(compilationContext.startEnvironment)
             val ktrace = counterexample.getKtrace(store)
             val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
-            property.result = new VerificationResult(ktraceFile)    
+            property.fail(ktraceFile)    
         } else if(passedSpec !== null && property.matches(passedSpec)) {
-            property.result = new VerificationResult(VerificationResultStatus.PASSED)    
+            property.status = VerificationPropertyStatus.PASSED    
         } else {
-            property.result = new VerificationResult(new Exception("Property did not clearly pass or fail"))
+            property.fail(new Exception("Property did not clearly pass or fail"))
         }
-        property.result.processOutputFile = processOutputFile
         compilationContext.notify(new VerificationPropertyChanged(property))
     }
     

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.verification.SCChartsVerificationPropertyAnalyzer
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
-import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyStatus
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
@@ -123,15 +123,9 @@ class VerificationView extends ViewPart {
      * Creates the menu.
      */
     private def void createMenu() {
-        val startVerificationOfModelInDiagramAction = new Action("Start verification of model in diagram") {
+        val openCounterexampleAction = new Action("Open Counterexample") {
             override run() {
-                startVerificationOfModelInDiagram()
-            }
-        }
-        
-        val openLog = new Action("Open Process Output") {
-            override run() {
-                val file = selectedProperty?.result?.processOutputFile
+                val file = selectedProperty?.counterexampleFile
                 if(file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                     IDE.openEditor(page, file, true);
@@ -139,7 +133,23 @@ class VerificationView extends ViewPart {
             }
         }
         
-        val menuHelp = new Action("Show Controls") {
+        val openLogAction = new Action("Open Process Output") {
+            override run() {
+                val file = selectedProperty?.processOutputFile
+                if(file !== null && file.exists) {
+                    val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                    IDE.openEditor(page, file, true);
+                }
+            }
+        }
+        
+        val startVerificationOfModelInDiagramAction = new Action("Start verification of model in diagram") {
+            override run() {
+                startVerificationOfModelInDiagram()
+            }
+        }
+        
+        val menuHelpAction = new Action("Show Controls") {
             override run() {
                 val title = "Controls for the Verification View"
                 val message = "Space : Toggle verification start/stop\n"
@@ -149,9 +159,10 @@ class VerificationView extends ViewPart {
         }
         
         getViewSite().getActionBars().getMenuManager() => [
-            add(openLog)
+            add(openCounterexampleAction)
+            add(openLogAction)
             add(startVerificationOfModelInDiagramAction)
-            add(menuHelp)
+            add(menuHelpAction)
         ]
     }
     
@@ -249,8 +260,8 @@ class VerificationView extends ViewPart {
         resultColumn = viewer.createTableColumn("Result", 256, true)
         resultColumn.labelProvider = new AbstractVerificationViewColumnLabelProvider(this) {
             override String getText(Object element) {
-                val result = element.asVerificationProperty.result
-                switch(result.status) {
+                val property = element.asVerificationProperty
+                switch(property.status) {
                     case null,
                     case PENDING : return ""
                     case COMPILING : return "Compiling..."
@@ -258,13 +269,13 @@ class VerificationView extends ViewPart {
                     case FAILED : return "FAILED"
                     case PASSED : return "PASSED"
                     case EXCEPTION : {
-                        if(result.cause !== null) {
-                            return result.cause.class.simpleName + ": " + result.cause.message
+                        if(property.cause !== null) {
+                            return property.cause.class.simpleName + ": " + property.cause.message
                         } else {
                             return "EXCEPTION (of unkown cause)"
                         }    
                     }
-                    default : return result.status.toString
+                    default : return property.status.toString
                 }
             }
         };
@@ -356,8 +367,8 @@ class VerificationView extends ViewPart {
     private def void runCounterexample() {
         val property = selectedProperty
         if(property !== null
-            && property.result.status == VerificationResultStatus.FAILED
-            && property.result.counterexampleFile !== null) {
+            && property.status == VerificationPropertyStatus.FAILED
+            && property.counterexampleFile !== null) {
             try {
                 // Start a simulation, and when the simulation is started, load the trace from the counterexample
                 val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
@@ -367,7 +378,7 @@ class VerificationView extends ViewPart {
                     override update(SimulationContext ctx, SimulationEvent e) {
                         if(e instanceof SimulationControlEvent) {
                             if(e.operation == SimulationControlEvent.SimulationOperation.START) {
-                                val counterexampleLocation = property.result.counterexampleFile.location.toOSString
+                                val counterexampleLocation = property.counterexampleFile.location.toOSString
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
                                 SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 DataPoolView.bringToTopIfOpen

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.verification
 
+import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
@@ -21,7 +22,22 @@ class VerificationProperty {
     @Accessors private String name = ""
     @Accessors private String formula = ""
     @Accessors private VerificationPropertyType type = VerificationPropertyType.INVARIANT
-    @Accessors private VerificationResult result = new VerificationResult(VerificationResultStatus.PENDING)
+    @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
+    
+    /**
+     * Pointer to a ktrace file with the counterexample.
+     * This is only relevant if the property has the status FAILED.
+     */
+    @Accessors(PUBLIC_GETTER) IFile counterexampleFile = null
+    /**
+     * Pointer to a file with the output of the process that was executed for verification.
+     */
+    @Accessors IFile processOutputFile = null
+    /**
+     * Exception that caused the corresponding status.
+     * This is only relevant if the property has the status EXPECTION.
+     */
+    @Accessors(PUBLIC_GETTER) Exception cause = null
     
     new(String name, String formula, VerificationPropertyType type) {
         this.name = name
@@ -30,10 +46,16 @@ class VerificationProperty {
     }
     
     override toString() {
-        return '''VerificationProperty(name:«name», formula:«formula», type:«type», result:«result.status»)'''
+        return '''VerificationProperty@«hashCode»(name:«name», formula:«formula», status:«status»)'''
     }
     
-    public def void failWithException(Exception e) {
-        result = new VerificationResult(e)
+    public def void fail(IFile counterexampleFile) {
+        this.status = VerificationPropertyStatus.FAILED
+        this.counterexampleFile = counterexampleFile
+    }
+    
+    public def void fail(Exception e) {
+        this.cause = e
+        this.status = VerificationPropertyStatus.EXCEPTION
     }
 }

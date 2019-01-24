@@ -5,4 +5,6 @@ system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 system de.cau.cs.kieler.scg.netlist
+// Store information about variable declarations (needed to create counterexample)
+de.cau.cs.kieler.scg.processors.storeVariableDeclarations
 de.cau.cs.kieler.scg.processors.codegen.promela

@@ -22,23 +22,21 @@ import org.eclipse.xtend.lib.annotations.Accessors
 /**
  * @author aas
  */
-class NuxmvOutputInterpreter {
+class NuxmvOutputInterpreter extends LineBasedParser {
     
-    @Accessors(PUBLIC_GETTER) private List<NuxmvCounterexample> counterexamples = newArrayList
-    @Accessors(PUBLIC_GETTER) private List<String> passedSpecs = newArrayList
+    @Accessors(PUBLIC_GETTER) private val List<NuxmvCounterexample> counterexamples = newArrayList
+    @Accessors(PUBLIC_GETTER) private val List<String> passedSpecs = newArrayList
     
-    BufferedReader reader
-    String currentLine
-    NuxmvCounterexample currentCounterexample
-    NuxmvCounterexampleState currentCounterexampleState
-    ParseTarget parseTarget = ParseTarget.SPEC_RESULT
+    private NuxmvCounterexample currentCounterexample
+    private NuxmvCounterexampleState currentCounterexampleState
+    private ParseTarget parseTarget = ParseTarget.SPEC_RESULT
 
-    private static val SPECIFICATION_RESULT_PATTERN = Pattern.compile("-- (specification|invariant) (.*) is (true|false)")
-    private static val STATE_PATTERN = Pattern.compile("-> State:(.*)<-")
-    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile("([a-zA-Z_][a-zA-Z_0-9]*)\\s*=\\s*([a-zA-Z_0-9.-]*)")
-    private static val LOOP_START_PATTERN = Pattern.compile("-- Loop starts here")
-    private static val ISSUE_IN_FILE_PATTERN = Pattern.compile("(.*)file(.*): line (\\d+):(.*)")
-    private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile("nuXmv terminated by a signal")
+    private static val SPECIFICATION_RESULT_PATTERN = Pattern.compile('''-- (specification|invariant) (.*) is (true|false)''')
+    private static val STATE_PATTERN = Pattern.compile('''-> State:(.*)<-''')
+    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)''')
+    private static val LOOP_START_PATTERN = Pattern.compile('''-- Loop starts here''')
+    private static val ISSUE_IN_FILE_PATTERN = Pattern.compile('''(.*)file(.*): line (\d+):(.*)''')
+    private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile('''nuXmv terminated by a signal''')
         
     private enum ParseTarget {
         SPEC_RESULT,
@@ -47,22 +45,13 @@ class NuxmvOutputInterpreter {
     
     new(String processOutput) {
         if(processOutput.isNullOrEmpty) {
-            throw new Exception("nuXmv process returned nothing")
+            throw new Exception("nuXmv output is empty")
         }
         parse(processOutput)
     }
     
-    private def void parse(String text) {
-        reader = new BufferedReader(new StringReader(text))
-        readNextLine()
-        while(currentLine !== null) {
-            parseCurrentLine()
-            readNextLine()
-        } 
-    }
-    
-    private def void parseCurrentLine() {
-        val trimmedLine = currentLine.trim
+    override parseLine(String line) {
+        val trimmedLine = line.trim
         
         val issueInFileMatcher = ISSUE_IN_FILE_PATTERN.matcher(trimmedLine)
         val terminatedBySignalMatcher = TERMINATED_BY_SIGNAL_PATTERN.matcher(trimmedLine)
@@ -77,7 +66,7 @@ class NuxmvOutputInterpreter {
             currentCounterexample = null
             currentCounterexampleState = null
             
-            val formula =  specificationResultMatcher.group(2)
+            val formula = specificationResultMatcher.group(2)
             val trueOrFalse = specificationResultMatcher.group(3)
             if(trueOrFalse == "true") {
                 passedSpecs.add(formula)
@@ -87,7 +76,7 @@ class NuxmvOutputInterpreter {
                 parseTarget = ParseTarget.COUNTEREXAMPLE
             } else {
                 // This should never happen
-                throw new Exception("Inconsistent specification result state")
+                throw new Exception('''Inconsistent specification result state (line: «line»)''')
             }
         } else if (parseTarget == ParseTarget.COUNTEREXAMPLE) {
             // Find the start of the next state
@@ -101,7 +90,7 @@ class NuxmvOutputInterpreter {
                     // Add this variable assignment to the current counterexample state
                     val variable = variableAssignmentMatcher.group(1)
                     val expression = variableAssignmentMatcher.group(2)
-                    currentCounterexampleState.variableMappings.put(variable, expression)    
+                    currentCounterexampleState.variableMappings.put(variable, expression)
                 } else {
                     val loopStartMatcher = LOOP_START_PATTERN.matcher(trimmedLine)
                     if(loopStartMatcher.matches) {
@@ -112,10 +101,6 @@ class NuxmvOutputInterpreter {
                 }
             }
         }
-    }
-    
-    private def void readNextLine() {
-        currentLine = reader.readLine()
     }
     
     public def List<String> getFailedSpecs() {

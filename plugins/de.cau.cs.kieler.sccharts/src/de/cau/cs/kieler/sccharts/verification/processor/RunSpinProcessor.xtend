@@ -16,14 +16,12 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.sccharts.verification.VerificationProperty
 import de.cau.cs.kieler.sccharts.verification.VerificationPropertyChanged
-import de.cau.cs.kieler.sccharts.verification.VerificationResult
-import de.cau.cs.kieler.sccharts.verification.VerificationResultStatus
+import de.cau.cs.kieler.sccharts.verification.VerificationPropertyStatus
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.sccharts.verification.processor.ProcessExtensions.*
-import de.cau.cs.kieler.sccharts.verification.VerificationPropertyType
 
 /**
  * @author aas
@@ -54,14 +52,15 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val pmlFile = saveText(getPmlFilePath(property), code)
         try {
             throwIfCanceled
-            property.result = new VerificationResult(VerificationResultStatus.RUNNING)
+            property.status  = VerificationPropertyStatus.RUNNING
             compilationContext.notify(new VerificationPropertyChanged(property))
             // Calling the model checker is possibly long running
             val processOutput = runModelChecker(pmlFile, property)
             val processOutputFile = saveText(getProcessOutputFilePath(property), processOutput)
-            updateVerificationResult(processOutputFile, processOutput, property)
+            updateVerificationResult(pmlFile, processOutputFile, processOutput, property)
         } catch (Exception e) {
-            property.failWithException(e)
+            e.printStackTrace
+            property.fail(e)
             compilationContext.notify(new VerificationPropertyChanged(property))
         }
     }
@@ -70,7 +69,6 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(pmlFile.parent.location.toOSString))
         val spinCommand = #["spin", "-run", "-a", pmlFile.name]
-        
         processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
         val process = processBuilder.runToTermination([ return isCanceled() ])
@@ -79,32 +77,39 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
     
-    private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
-        val interpreter = new SpinOutputInterpreter(processOutput)
-        val counterexample = interpreter.counterexample
-        val passedSpec = interpreter.passedSpec
-        if(counterexample !== null && property.matches(counterexample.spec)) {
-            val store = VariableStore.get(compilationContext.startEnvironment)
-            val ktrace = counterexample.getKtrace(store)
-            val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
-            property.result = new VerificationResult(ktraceFile)    
-        } else if(passedSpec !== null && property.matches(passedSpec)) {
-            property.result = new VerificationResult(VerificationResultStatus.PASSED)    
-        } else {
-            property.result = new VerificationResult(new Exception("Property did not clearly pass or fail"))
-        }
-        property.result.processOutputFile = processOutputFile
-        compilationContext.notify(new VerificationPropertyChanged(property))
+    private def String runSpinTrailCommand(IFile pmlFile, VerificationProperty property) {
+        val processBuilder = new ProcessBuilder()
+        processBuilder.directory(new File(pmlFile.parent.location.toOSString))
+        val trailCommand = #["spin", "-t", "-p", pmlFile.name]
+        processBuilder.command(trailCommand)
+        processBuilder.redirectErrorStream(true)
+        val process = processBuilder.runToTermination([ return isCanceled() ])
+        throwIfCanceled
+        val processOutput = process.readInputStream
+        return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
     
-    private def boolean matches(VerificationProperty property, String pmlFormula) {
-        // The following is merely a heuristic to check that the correct property was checked.
-        // Spaces and brackets are removed and afterwards the formulas are compared.
-        // This is because SPIN gives the answer for a modified formula (e.g. 0/1 for false/true).
-        val propertyFormula = property.formula.toPmlExpression
-        val propertyFormulaSimplified = propertyFormula.replaceAll("\\s","").replace("(","").replace(")", "")
-        val pmlFormulaSimplified = pmlFormula.replaceAll("\\s","").replace("(","").replace(")", "")
-        return pmlFormulaSimplified == propertyFormulaSimplified
+    private def void updateVerificationResult(IFile pmlFile, IFile processOutputFile, String processOutput, VerificationProperty property) {
+        property.processOutputFile = processOutputFile
+        val spinOutputInterpreter = new SpinOutputInterpreter(processOutput)
+        if(spinOutputInterpreter.wroteTrail) {
+            val trailOutput = runSpinTrailCommand(pmlFile, property)
+            val trailFile = saveText(getTrailFilePath(property), trailOutput)
+            property.processOutputFile = trailFile
+            val trailInterpreter = new SpinTrailInterpreter(trailOutput)
+            val counterexample = trailInterpreter.counterexample
+            if(counterexample !== null) {
+                val store = VariableStore.get(compilationContext.startEnvironment)
+                val ktrace = counterexample.getKtrace(store)
+                val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
+                property.fail(ktraceFile)
+            } else {
+                property.fail(new Exception("Could not create counterexample from spin trail"))
+            }
+        } else {
+            property.status = VerificationPropertyStatus.PASSED
+        }
+        compilationContext.notify(new VerificationPropertyChanged(property))
     }
     
     private def IPath getPmlFilePath(VerificationProperty property) {
@@ -113,6 +118,10 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
   
     private def IPath getProcessOutputFilePath(VerificationProperty property) {
         return getOutputFile(property, ".pml.log")
+    }
+    
+    private def IPath getTrailFilePath(VerificationProperty property) {
+        return getOutputFile(property, ".pml.trail.log")
     }
     
     private def String toPmlExpression(String kexpression) {
