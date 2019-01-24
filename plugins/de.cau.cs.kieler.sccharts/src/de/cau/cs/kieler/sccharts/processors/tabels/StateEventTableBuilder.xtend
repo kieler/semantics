@@ -25,7 +25,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  */
 class StateEventTableBuilder extends TableBuilder {
-    static final String CELL_DELIMITER = " GO TO "
+//    static final String CELL_DELIMITER_DO = "DO"
+    static final String CELL_DELIMITER_TARGET = " GO TO "
+    static final String CELL_DELIMITER_PRIO = ": "
     
     @Accessors
     final TableType tableType = TableType.StateEvent
@@ -75,6 +77,7 @@ class StateEventTableBuilder extends TableBuilder {
         val State sourceState = outTrans.sourceState
         val String sourceStateName = sourceState.name
         val String trigger = trigger2String(outTrans.trigger)
+        val String prio = sourceState.outgoingTransitions.indexOf(outTrans).toString
         val String effect = effects2String(outTrans.effects)
         val String targetStateName = outTrans.targetState.name
         
@@ -97,6 +100,6 @@ class StateEventTableBuilder extends TableBuilder {
             conditionRow.size
         }
         
-        line.add(condi, effect + CELL_DELIMITER + targetStateName)
+        line.set(condi, prio + CELL_DELIMITER_PRIO + effect + CELL_DELIMITER_TARGET + targetStateName)
     }
 }
