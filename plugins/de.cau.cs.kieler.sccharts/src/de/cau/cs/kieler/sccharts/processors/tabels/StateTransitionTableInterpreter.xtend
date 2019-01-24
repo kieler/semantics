@@ -65,20 +65,20 @@ class StateTransitionTableInterpreter extends TableInterpreter {
         }
     }
 
-    def createTransition(List<String> row) {
+    private def createTransition(List<String> row) {
         val sourceStateName = row.get(headerLine.indexOf(HeaderType.STATE))
         val targetStateName = row.get(headerLine.indexOf(HeaderType.TARGET_STATE))
-        
+
         val trigger = conditions2TriggerExpression(
             indicesToSublist(row, getAllHeaderColumns(HeaderType.CONDITION)),
             TRIGGER_EXPRESSION_CONNECTOR
         )
-        
+
         val effects = effectStrings2Expression(indicesToSublist(
             row,
             getAllHeaderColumns(HeaderType.EFFECT)
         ))
-        
+
         // TODO add priorities
         createTransitionWithPrio(sourceStateName, targetStateName, trigger, effects, null)
     }

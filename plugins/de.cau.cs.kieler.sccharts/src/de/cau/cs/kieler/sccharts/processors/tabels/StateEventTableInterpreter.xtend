@@ -28,7 +28,7 @@ class StateEventTableInterpreter extends TableInterpreter {
     static final String CELL_DELIMITER_TARGET = "GO TO"
     static final String CELL_DELIMITER_TARGET_PATTERN = " ?" + CELL_DELIMITER_TARGET + " +"
     static final String CELL_DELIMITER_PRIO = ":"
-    static final String CELL_DELIMITER_PRIO_PATTERN = " ?" + CELL_DELIMITER_PRIO + " +"
+    static final String CELL_DELIMITER_PRIO_PATTERN = " ?" + CELL_DELIMITER_PRIO + " *"
 
     static val map_condition = "condition"
     static val map_effect = "effect"
@@ -122,7 +122,7 @@ class StateEventTableInterpreter extends TableInterpreter {
         val tmp = new ArrayList<String>
         val map = splitCellString(cell)
         if (map !== null) {
-            tmp.add(map.get(item))
+            tmp.add(map.getOrDefault(item,""))
         }
         return tmp
     }
