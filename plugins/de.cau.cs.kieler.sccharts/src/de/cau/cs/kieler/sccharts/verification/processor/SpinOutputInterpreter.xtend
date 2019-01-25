@@ -23,7 +23,7 @@ class SpinOutputInterpreter extends LineBasedParser {
     @Accessors(PUBLIC_GETTER) private boolean wroteTrail
     
     private static val WROTE_TRAIL_PATTERN = Pattern.compile('''.*wrote (.*)\.pml\.trail*''')
-    private static val ERROR_PATTERN = Pattern.compile('''.*error.*''')
+    private static val ERROR_PATTERN = Pattern.compile('''.*error:.*''')
     
     new(String processOutput) {
         if(processOutput.isNullOrEmpty) {
@@ -34,6 +34,8 @@ class SpinOutputInterpreter extends LineBasedParser {
     
     override parseLine(String line) {
         val trimmedLine = line.trim
+        
+        // TODO: check that "never claim" has + when checking ltl formula
         
         if(!wroteTrail) {
             val wroteTrailMatcher = WROTE_TRAIL_PATTERN.matcher(trimmedLine)

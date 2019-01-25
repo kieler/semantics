@@ -47,6 +47,15 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         }
         val property = verificationProperties.head
         
+        // Check that the code generation finished without errors
+        val sourceEnvironment = environments.source
+        val errors = sourceEnvironment.errors.getAllMessages
+        if(!errors.isNullOrEmpty) {
+            property.fail(new Exception(errors.head.message))
+            compilationContext.notify(new VerificationPropertyChanged(property))
+            return
+        }
+        
         val codeContainer = getSourceModel
         val code = codeContainer.head.code
         val pmlFile = saveText(getPmlFilePath(property), code)

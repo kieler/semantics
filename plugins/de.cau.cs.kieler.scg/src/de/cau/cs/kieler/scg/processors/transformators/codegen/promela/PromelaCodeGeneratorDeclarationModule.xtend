@@ -47,6 +47,9 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
                 val pmlFormula = property.formula.toPmlLtlFormula
                 appendIndentedLine('''ltl «property.name.replace(" ", "_")» { «pmlFormula» }''')
                 code.append("\n")
+            } else if(property.type == VerificationPropertyType.CTL) {
+                val exception = new Exception("Promela does not support specification of CTL properties")
+                processorInstance.environment.errors.add(exception)
             }
         }
         
