@@ -12,40 +12,39 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import java.util.List
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import de.cau.cs.kieler.sccharts.SCCharts
-import java.util.List
 
 /**
  * @author stu114663
  * 
  */
-class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
+class TableIdentifierProcessor extends InplaceProcessor<List<List<String>>> {
+    @Inject
+    var TableIdentifier tableid
+
     public static val IProperty<TableInterpreter> TABLE_INTERPRETER = new Property<TableInterpreter>(
         "de.cau.cs.kieler.sccharts.processors.tabels.interpreter", null)
 
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.Table2SCTX"
+        "de.cau.cs.kieler.sccharts.processors.TableIdentifier"
     }
 
     override getName() {
-        "Table2SCTX"
+        "TableIdentifier"
     }
 
     override process() {
-        // TODO check for empty model
         try {
-            var ti = environment.getProperty(TABLE_INTERPRETER)
-            if (ti === null) {
-                model = null
-                // TODO better exception
-                throw new Exception("Could not get Property: " + TABLE_INTERPRETER.id)
-            } else {
-                model = ti.interpret()
-            }
-        } catch (Exception exception) {
+            // TODO check for empty model
+            environment.setProperty(
+                de.cau.cs.kieler.sccharts.processors.tabels.TableIdentifierProcessor.TABLE_INTERPRETER,
+                tableid.identify(getModel())
+            )
+        } catch (IllegalArgumentException exception) {
             // TODO exception is not shown?
             environment.errors.add(exception)
         }

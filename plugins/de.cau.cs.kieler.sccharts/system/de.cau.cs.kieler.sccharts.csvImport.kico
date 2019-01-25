@@ -2,5 +2,6 @@ public system de.cau.cs.kieler.sccharts.csvImport
 	label "CSV Importer"
 	
 de.cau.cs.kieler.sccharts.processors.CSV2Table
+de.cau.cs.kieler.sccharts.processors.TableIdentifier
 de.cau.cs.kieler.sccharts.processors.Table2SCTX
 de.cau.cs.kieler.sccharts.processors.TypeGuesser

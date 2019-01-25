@@ -210,6 +210,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.tabels.TypeGuesser">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.tabels.TableIdentifierProcessor">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
