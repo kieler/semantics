@@ -3,14 +3,14 @@
 
 <!--
  KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- 
+
  http://www.informatik.uni-kiel.de/rtsys/kieler/
- 
+
  Copyright 2009 by
  + Kiel University
    + Department of Computer Science
      + Real-Time and Embedded Systems Group
- 
+
  This code is provided under the terms of the Eclipse Public License (EPL).
  See the file epl-v10.html for the license text.
 -->
@@ -23,9 +23,9 @@
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
-   
-   <extension-point id="text.generator.extension" 
-        name="SCT Generator Extension" 
+
+   <extension-point id="text.generator.extension"
+        name="SCT Generator Extension"
         schema="schema/de.cau.cs.kieler.sccharts.text.generator.extension.exsd"/>
    <extension
          point="de.cau.cs.kieler.sccharts.text.generator.extension">
@@ -37,8 +37,8 @@
       </SCTGeneratorExtension>
       <SCTGeneratorExtension
             class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.EsoExtension">
-      </SCTGeneratorExtension>      
-   </extension>   
+      </SCTGeneratorExtension>
+   </extension>
 
      <extension
            point="de.cau.cs.kieler.kicool.resource.extension">
@@ -257,6 +257,36 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.netlist.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.netlist.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.netlist.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.netlist.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.priority.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.priority.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.priority.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.priority.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.statebased.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.c.kico">
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.csvImport.kico">

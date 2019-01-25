@@ -1,7 +1,6 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.statebased.c
-    label "State-based Simulation (C, No-TTS)"
+developer system de.cau.cs.kieler.^simulation.statebased.c
+    label "State-based Simulation C Backend"
 
-system de.cau.cs.kieler.sccharts.statebased
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
  * @author mrb
  *
  */
-class DoTransformation extends InplaceProcessor<EsterelProgram> {
+class DoTransformation extends AbstractSCEstDynamicProcessor<Do> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -44,32 +44,7 @@ class DoTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Do) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-            environment.setProperty(SCEstIntermediateProcessor.TRANSFORM_THIS_STATEMENT, true)
-        }
-        else {
-            model.eAllContents.filter(Do).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Do doo) {
+    override transform(Do doo) {
         val abort = createAbort
         abort.statements.addAll(doo.statements)
         // do upto
@@ -84,6 +59,7 @@ class DoTransformation extends InplaceProcessor<EsterelProgram> {
         }
         doo.replace(abort)
         lastStatement = abort
+        environment.setProperty(SCEstIntermediateProcessor.TRANSFORM_THIS_STATEMENT, true)
     }
 
 }

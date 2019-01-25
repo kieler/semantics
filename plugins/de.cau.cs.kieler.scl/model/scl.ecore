@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scl" nsURI="http://kieler.cs.cau.de/scl/0.2.0" nsPrefix="scl">
-  <eClassifiers xsi:type="ecore:EClass" name="SCLProgram" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragmatable">
+  <eClassifiers xsi:type="ecore:EClass" name="SCLProgram" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragmatable ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Nameable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" lowerBound="1"
         upperBound="-1" eType="#//Module" containment="true"/>
   </eClassifiers>

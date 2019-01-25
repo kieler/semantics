@@ -60,6 +60,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * SCL to SCG Transformation 
@@ -126,6 +127,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
      * Transformation method
      */
     def SCGraphs transformSCLToSCG(SCLProgram program) {
+        val voStore = if (environments !== null) VariableStore.get(environment)
         // Create new SCG...
         val scgs = createSCGraphs
         creationalTransformation(program, scgs)
@@ -134,6 +136,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             val scg = createSCGraph
             scgs.scgs += scg
             scg.addStringAnnotation(ANNOTATION_NAME, module.name)
+            scg.name = module.name
             module.initialize
             	
             // ... and copy declarations.
@@ -144,6 +147,12 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                     val newValuedObject = createValuedObject(valuedObject.name).trace(valuedObject)
                     newDeclaration.valuedObjects += newValuedObject
                     valuedObjectMapping.put(valuedObject, newValuedObject)
+                
+                    // Fix VO association in VariableStore
+                    if (voStore !== null) {
+                        val info = voStore.variables.get(valuedObject.name).findFirst[it.valuedObject == valuedObject]
+                        if (info !== null) info.valuedObject = newValuedObject
+                    }
                 }
                 scg.declarations += newDeclaration
             }

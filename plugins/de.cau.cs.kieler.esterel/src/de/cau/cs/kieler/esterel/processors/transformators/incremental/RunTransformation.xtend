@@ -64,6 +64,7 @@ import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.esterel.Sustain
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.esterel.ProcedureCall
 
 /**
  * @author mrb
@@ -344,6 +345,8 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
         // FUNCTIONS
         moduleRenaming = transformFunctions(moduleRenaming, parentModule)
         
+        parentModule.addProcedureDeclarations(moduleRenaming.module)
+
         scope.statements.addAll(moduleRenaming.module.statements)
         statementList.set(pos, scope)        
         moduleRenaming.module.remove
@@ -653,9 +656,11 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
      * @param parentModule The parent Module where the constants will be copied to
      */
     def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, Module parentModule) {
-        for (decl : moduleRenaming.module.constantDeclarations) {
-                for (var i=0; i<decl.constants.length; i++) {
-                    val constant = decl.constants.get(i)
+        val decls = moduleRenaming.module.constantDeclarations.toList
+        for (decl : decls) {
+            var constants = decl.constants.toList
+                for (var i=0; i<constants.length; i++) {
+                    val constant = constants.get(i)
                     var updateReferences = true
                     var ConstantRenaming relatedConstantRenaming
                     if (constantRenamings.containsKey(constant)) {
@@ -673,15 +678,19 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                     }
                     if (updateReferences) {
                         for (expr : constantExpressions) {
-                            if (expr.constant == constant) {
+                            if (expr.constant === constant) {
                                 expr.constant = relatedConstantRenaming.newName
+                            }
+                        }
+                        for (ref : valuedObjectReferences) {
+                            if (ref.valuedObject === constant) {
+                                ref.valuedObject = relatedConstantRenaming.newName
                             }
                         }
                     }
                     else {
                         constant.name = createNewUniqueConstantName(constant.name)
                         parentModule.declarations.add(createConstantDecl(constant, constant.type))
-                        i-- // because the old constant of "decl.sensors"
                     }
                     
                 }
@@ -835,6 +844,42 @@ class RunTransformation extends InplaceProcessor<EsterelProgram> {
                     if (same) {
                         return f
                     }
+                }
+            }
+        }
+        return null
+    }
+    
+    /**
+     * Add uesed procedure declarations of the sub module to the parent module
+     * 
+     * @param parentModule The parent module
+     * @param m The sub module
+     */
+    def addProcedureDeclarations(Module parentModule, Module m) {
+        val procCalls = m.eAllContents.filter(ProcedureCall).toList
+        for (pc : procCalls) {
+            val newProc = existsProc(parentModule, pc.procedure)
+            if (newProc === null) {
+                parentModule.declarations.add(pc.procedure.createProcedureDeclaration)
+            }
+            else {
+                pc.procedure = newProc as Procedure
+            }
+        }
+    }
+    
+    /**
+     * Check the procedure declarations for a procedure with the same name as the given procedure
+     * 
+     * @param m The module
+     * @param proc The procedure
+     */
+    def existsProc(Module m, Procedure proc) {
+        for (pd : m.procedureDeclarations) {
+            for (p : pd.valuedObjects) {
+                if (p.name.equals(proc.name)){
+                    return p
                 }
             }
         }

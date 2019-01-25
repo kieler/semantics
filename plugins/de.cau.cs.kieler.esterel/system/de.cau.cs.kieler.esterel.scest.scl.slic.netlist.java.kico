@@ -1,0 +1,5 @@
+public system de.cau.cs.kieler.esterel.scest.scl.slic.netlist.java
+    label "SCEst - SLIC - Netlist-based (Java)"
+    
+system de.cau.cs.kieler.esterel.scest.scl.slic
+system de.cau.cs.kieler.scl.netlist.java

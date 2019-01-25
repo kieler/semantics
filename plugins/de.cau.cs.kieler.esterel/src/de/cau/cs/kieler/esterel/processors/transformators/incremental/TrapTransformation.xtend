@@ -44,7 +44,7 @@ import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
  * @author mrb
  *
  */
-class TrapTransformation extends InplaceProcessor<EsterelProgram> {
+class TrapTransformation extends AbstractSCEstDynamicProcessor<Trap>  {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -63,31 +63,7 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Trap) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Trap).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Trap trap) {
+    override transform(Trap trap) {
         val signalDecl = createDeclaration(ValueType.BOOL, null)
         val scope = createScopeStatement(signalDecl)
         val HashMap<Signal, Pair<ValuedObject, ValuedObject>> exitVariables = new HashMap<Signal, Pair<ValuedObject, ValuedObject>>()
