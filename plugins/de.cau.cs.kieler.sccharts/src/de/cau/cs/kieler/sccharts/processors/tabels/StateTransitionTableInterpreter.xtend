@@ -79,7 +79,7 @@ class StateTransitionTableInterpreter extends TableInterpreter {
             getAllHeaderColumns(HeaderType.EFFECT)
         ))
 
-        // TODO add priorities
+        // TODO add priorities to StateTransitionTables?
         createTransitionWithPrio(sourceStateName, targetStateName, trigger, effects, null)
     }
 }

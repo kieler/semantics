@@ -42,7 +42,6 @@ class SCTX2Table extends ExogenousProcessor<SCCharts, List<List<String>>> {
     override process() {
         try {
             val SCCharts scc = getModel
-            // TODO catch exception from annotation evaluation
             val TableBuilder tb = getBuilder(evaluateTableTypeAnnotations(scc))
             tb.model = scc
             // TODO check for empty model
@@ -61,13 +60,13 @@ class SCTX2Table extends ExogenousProcessor<SCCharts, List<List<String>>> {
         }
     }
 
-    def TableType evaluateTableTypeAnnotations(SCCharts scc) throws IllegalArgumentException {
+    def TableType evaluateTableTypeAnnotations(SCCharts scc) {
         for (rootstate : scc.rootStates) {
             return rootstate.evaluateTableTypeAnnotations
         }
     }
 
-    def TableType evaluateTableTypeAnnotations(Scope scp) throws IllegalArgumentException {
+    def TableType evaluateTableTypeAnnotations(Scope scp) {
         val annotationList = scp.annotations
         var TableType type = DEFAULT_TABLE_TYPE
         val stringAnnotations = annotationList.filter[v|v instanceof StringAnnotation]
