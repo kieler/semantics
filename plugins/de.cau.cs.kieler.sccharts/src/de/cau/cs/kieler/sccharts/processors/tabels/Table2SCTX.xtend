@@ -37,7 +37,7 @@ class Table2SCTX extends ExogenousProcessor<List<List<String>>, SCCharts> {
     override process() {
         // TODO check for empty model
         try {
-            var ti = environment.getProperty(TABLE_INTERPRETER)
+            var TableInterpreter ti = environment.getProperty(TABLE_INTERPRETER)
             if (ti === null) {
                 model = null
                 // TODO better exception

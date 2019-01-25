@@ -15,7 +15,9 @@ package de.cau.cs.kieler.sccharts.processors.tabels
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -36,9 +38,33 @@ abstract class TableBuilder implements ITableBuilder {
     @Accessors
     List<List<String>> table
     
+    override build() {
+        if (model !== null) {
+            table = new ArrayList<List<String>>
+        
+            // TODO model may not have a rootstate or region
+            val region = model.rootStates.get(0).regions.get(0)
+            if (region instanceof ControlflowRegion) {
+                for (state : region.states) {
+                    for (transition : state.outgoingTransitions) {
+                        insertTransition(transition)
+                    }
+                }
+                
+                insertHeader()
+            } else {
+                throw new Exception("Can only process ControlflowRegion.")
+            }
+        } else {
+            table = null
+            throw new Exception("The model could not be found.")
+        }
+        
+        return table
+    }
+    
     def String trigger2String(Expression trigger) {
         if (trigger !== null) {
-            // TODO turn Expression to String
             return exprS.serialize(trigger).toString
         } else {
             return ""

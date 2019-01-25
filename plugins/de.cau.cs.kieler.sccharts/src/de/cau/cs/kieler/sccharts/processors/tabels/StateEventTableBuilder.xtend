@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.processors.tabels
 
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.ArrayList
@@ -36,41 +35,16 @@ class StateEventTableBuilder extends TableBuilder {
     val List<String> conditionRow = new ArrayList<String>
     val HashMap<String,List<String>> statename2row = new HashMap<String,List<String>>
     
-    override build() {
-        if (model !== null) {
-            table = new ArrayList<List<String>>
-        
-            // TODO model may not have a rootstate or region
-        	val region = model.rootStates.get(0).regions.get(0)
-        	if (region instanceof ControlflowRegion) {
-        	    for (state : region.states) {
-        	    	for (transition : state.outgoingTransitions) {
-        	    		insertTransition(transition)
-        	    	}
-        	    }
-        	    
-        	    insertHeader()
-        	} else {
-        		// TODO Throw exception when the region is not a ControlFlowRegion
-        	}
-        } else {
-            // TODO throw exception
-            table = null
-        }
-        
-        return table
-    }
-    
     override insertHeader() {
         // add condition row
         conditionRow.add(0, "")
         table.add(0,conditionRow)
         
         // add header line
-        table.add(headerLine.map[HeaderType ht | ht.name])
+        table.add(0, headerLine.map[HeaderType ht | ht.name])
         
         // add table type
-        table.add(#[this.tableType.name])
+        table.add(0, new ArrayList => [it.add(this.tableType.name)])
     }
     
     override insertTransition(Transition outTrans) {

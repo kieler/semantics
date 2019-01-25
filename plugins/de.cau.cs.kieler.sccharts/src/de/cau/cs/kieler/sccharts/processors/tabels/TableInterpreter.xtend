@@ -73,6 +73,7 @@ abstract class TableInterpreter implements ITableInterpreter {
         checkInitialized()
         // check for empty table and empty headerLine
         if (table.empty || headerLine.reject[HeaderType ht|ht == HeaderType.DISCARDABLE].empty) {
+            // TODO throw exception when table or header are empty
         } else {
             unifyLineLengths()
             val ControlflowRegion rootRegion = createControlflowRegionWithoutLabel(rootstate, "rootRegion")
