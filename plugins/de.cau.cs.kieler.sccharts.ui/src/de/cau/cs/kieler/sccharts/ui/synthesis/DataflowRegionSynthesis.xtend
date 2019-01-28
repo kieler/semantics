@@ -114,7 +114,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsExpandedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
-                addStatesArea(label.nullOrEmpty);
+                addStatesArea(!label.nullOrEmpty);
             } else {
                 addStatesAndDeclarationsAndActionsArea(false, false);
                 // Add declarations
