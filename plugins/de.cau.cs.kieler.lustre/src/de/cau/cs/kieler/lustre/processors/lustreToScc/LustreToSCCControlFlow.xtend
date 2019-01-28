@@ -57,6 +57,7 @@ class LustreToSCCControlFlow extends AbstractLustreToSCC {
     }
     
     override processEquation(Assignment equation, State state) {
+        // Each equation is own concurrent region
          //TODO: For simple equations, add an immediateDuringAction?
         val region = createControlflowRegion => [
             name = "_r" + regionNameIdx++
@@ -70,7 +71,7 @@ class LustreToSCCControlFlow extends AbstractLustreToSCC {
         ]
 
         region.states += initialState
-        val stateList = transformExpression(equation.expression)
+        val stateList = createExpressionStates(equation.expression)
         for (State s : stateList) {
             createTransition => [
                 targetState = initialState
@@ -122,7 +123,7 @@ class LustreToSCCControlFlow extends AbstractLustreToSCC {
 
                 r.states += initialState
                 
-                val sList = transformExpression(eq.expression)
+                val sList = createExpressionStates(eq.expression)
                 for (State s : sList) {
                     createTransition => [
                         targetState = initialState
@@ -155,7 +156,7 @@ class LustreToSCCControlFlow extends AbstractLustreToSCC {
     }
 
 
-    private def transformExpression(Expression expression) {
+    def createExpressionStates(Expression expression) {
         // TODO: Implement
         var arrayList = new ArrayList<State>
         arrayList += createState => [
