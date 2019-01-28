@@ -186,7 +186,7 @@ AState:
         assertions+=Assertion |
         automatons+=Automaton
     )*
-    transitions+=ATransition+
+    transitions+=ATransition*
 ;
 
 ATransition:

@@ -12,35 +12,95 @@
  */
 package de.cau.cs.kieler.lustre.processors.lustreToScc
 
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ATransition
+import de.cau.cs.kieler.lustre.lustre.Automaton
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.State
 
 /**
- * @author Lena
+ * @author lgr
  *
  */
-class LustreToSCCHybrid extends Processor<LustreProgram, SCCharts> {
+class LustreToSCCHybrid extends LustreToSCCDataFlow {
+
+    extension SCChartsFactory = SCChartsFactory.eINSTANCE
     
     override getId() {
         return "de.cau.cs.kieler.lustre.processors.lustreToSCC.hybrid"
     }
 
     override getName() {
-        return "Lustre to SCCharts Hybrid"
+        return "Lustre to SCCharts"
     }
 
     override ProcessorType getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
 
-    override process() {
-        model = model.transform
+    override processAutomaton(Automaton automaton, State state) {
+        var controlflowRegion = createControlflowRegion => [
+        ]
+        state.regions += controlflowRegion
+        var initialState = true;
+        for (AState lusState : automaton.states) {
+            var newState = createState => [
+                name = lusState.name
+            ]
+            if (initialState) {
+                newState.initial = true
+                initialState = false
+            }
+            controlflowRegion.states += newState
+            lustreStateToScchartsStateMap.put(lusState, newState)
+        }
+        
+        for (AState lusState : automaton.states) {
+            processState(lusState, lustreStateToScchartsStateMap.get(lusState))
+        }
     }
     
-    def SCCharts transform(LustreProgram p) {
-        // TODO: transformation
+    protected def processState(AState lusState, State state) {
+        
+        for (Assignment equation : lusState.equations) {
+            processEquation(equation, state)
+        }
+        
+        for (Expression assertion : lusState.assertions) {
+            processAssertion(assertion, state)
+        }
+        
+        for (Automaton automaton : lusState.automatons) {
+            processAutomaton(automaton, state)
+        }
+        
+        for (ATransition transition : lusState.transitions) {
+            processTransition(transition, state)
+        }
+    }    
+    
+    protected def processTransition(ATransition transition, State source) {
+        var newTransition = createTransition => [
+            sourceState = source
+            targetState = lustreStateToScchartsStateMap.get(transition.nextState)
+        ]
+        
+        var trigger = transformExpression(transition.condition, source)
+        if (trigger !== null) {
+            newTransition.trigger = trigger
+        }
+        if (transition.strong) {
+            newTransition.preemption = PreemptionType.STRONGABORT
+        }
+        if (transition.history) {
+            newTransition.history = HistoryType.DEEP
+        }
+        
     }
     
 }

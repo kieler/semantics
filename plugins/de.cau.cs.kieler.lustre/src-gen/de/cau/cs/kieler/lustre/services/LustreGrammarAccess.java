@@ -1546,10 +1546,10 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AState:
 		//	name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
-		//	transitions+=ATransition+;
+		//	transitions+=ATransition*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition+
+		//name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition*
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -1582,7 +1582,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//Automaton
 		public RuleCall getAutomatonsAutomatonParserRuleCall_2_2_0() { return cAutomatonsAutomatonParserRuleCall_2_2_0; }
 		
-		//transitions+=ATransition+
+		//transitions+=ATransition*
 		public Assignment getTransitionsAssignment_3() { return cTransitionsAssignment_3; }
 		
 		//ATransition
@@ -3804,7 +3804,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//AState:
 	//	name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
-	//	transitions+=ATransition+;
+	//	transitions+=ATransition*;
 	public AStateElements getAStateAccess() {
 		return pAState;
 	}

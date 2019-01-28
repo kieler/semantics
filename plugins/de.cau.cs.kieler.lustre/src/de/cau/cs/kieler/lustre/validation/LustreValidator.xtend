@@ -1,9 +1,17 @@
 package de.cau.cs.kieler.lustre.validation
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.lustre.lustre.Assertion
+import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
 import de.cau.cs.kieler.lustre.lustre.ModelDeclaration
@@ -15,10 +23,14 @@ import de.cau.cs.kieler.lustre.lustre.PackageDeclaration
 import de.cau.cs.kieler.lustre.lustre.PackageEquation
 import de.cau.cs.kieler.lustre.lustre.StaticParam
 import de.cau.cs.kieler.lustre.lustre.TypeDeclaration
+import java.util.HashSet
 import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.Automaton
+import java.util.LinkedList
 
 /**
  * This class contains custom validation rules. 
@@ -29,9 +41,13 @@ import org.eclipse.xtext.validation.Check
  */
 class LustreValidator extends AbstractLustreValidator {    
     
+    @Inject extension KExpressionsValuedObjectExtensions
+    
     static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this body."
     static val String NOT_SUPPORTED_FEATURE = "The feature is not supported."
     static val String EQUATION_LIST_PARAM_NUM_MISMATCH = "Left side of equation does not match number of return values of the ReferenceCall."
+    static val String CLOCK_MISMATCH = "The clock of this variable declaration does not correspond to the one used in equations."
+    static val String OUTPUT_NOT_DEFINED = "The output is not defined through equations."
     
     @Check
     override void checkPureSignal(VariableDeclaration declaration) {
@@ -85,6 +101,35 @@ class LustreValidator extends AbstractLustreValidator {
     }
     
     @Check
+    def checkWhenExpressionVariableClockDefinition(OperatorExpression expression) {
+        if (expression.operator == OperatorType.WHEN) {
+            if (expression.subExpressions.get(1) instanceof ValuedObjectReference) {
+                var clock = (expression.subExpressions.get(1) as ValuedObjectReference).valuedObject
+
+                // Find corresponding assignment
+                var containedElement = expression.eContainer
+                while (containedElement instanceof Expression) {
+                    containedElement = containedElement.eContainer
+                }
+
+                if (containedElement instanceof Assignment) {
+                    var varDeclaration = containedElement.reference.valuedObject.declaration.eContainer
+                    if (varDeclaration instanceof ClockedVariableDeclaration) {
+                        if (varDeclaration.clockExpr instanceof ValuedObjectReference) {
+                            var clockExpr = (varDeclaration.clockExpr as ValuedObjectReference).valuedObject
+                            if (clockExpr !== clock) {
+                                error(CLOCK_MISMATCH, varDeclaration, null)
+                            }
+                        }
+                    } else {
+                        error(CLOCK_MISMATCH, varDeclaration, null)
+                    }
+                }
+            }
+        }
+    }
+    
+    @Check
     def checkCallReferenceReturnCardinalities(Equation equation) {
 
         val rightExpression = equation.expression
@@ -112,7 +157,33 @@ class LustreValidator extends AbstractLustreValidator {
         }
     }
        
-    
+    @Check 
+    def checkOutputDefined(NodeDeclaration node) {
+        var HashSet<ValuedObject> valuedObjectSet = new HashSet
+        for (Assignment equation : node.equations) {
+            valuedObjectSet.add(equation.reference.valuedObject)
+        }
+        
+        var currAutomatons = new LinkedList(node.automatons)
+        do {
+            var automaton = currAutomatons.head
+            for (AState state : automaton.states) {
+                for (Assignment equation : state.equations) {
+                    valuedObjectSet.add(equation.reference.valuedObject)
+                    currAutomatons.addAll(state.automatons)
+                }
+                currAutomatons.remove(automaton)
+            }
+        } while (!currAutomatons.isEmpty)
+        
+        for (VariableDeclaration varDecl : node.output.parameter) {
+            for (ValuedObject valObj : varDecl.valuedObjects) {
+                if (!valuedObjectSet.contains(valObj)) {
+                    warning(OUTPUT_NOT_DEFINED, valObj, null)
+                }
+            }
+        }
+    }
     
     
     

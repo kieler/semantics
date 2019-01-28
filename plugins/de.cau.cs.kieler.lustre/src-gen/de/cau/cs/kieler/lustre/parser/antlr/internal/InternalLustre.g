@@ -2517,7 +2517,7 @@ ruleAState returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 	)
 ;
 

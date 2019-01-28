@@ -10576,16 +10576,9 @@ rule__AState__Group__3__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getAStateAccess().getTransitionsAssignment_3()); }
-		(rule__AState__TransitionsAssignment_3)
-		{ after(grammarAccess.getAStateAccess().getTransitionsAssignment_3()); }
-	)
-	(
-		{ before(grammarAccess.getAStateAccess().getTransitionsAssignment_3()); }
-		(rule__AState__TransitionsAssignment_3)*
-		{ after(grammarAccess.getAStateAccess().getTransitionsAssignment_3()); }
-	)
+	{ before(grammarAccess.getAStateAccess().getTransitionsAssignment_3()); }
+	(rule__AState__TransitionsAssignment_3)*
+	{ after(grammarAccess.getAStateAccess().getTransitionsAssignment_3()); }
 )
 ;
 finally {

@@ -23,13 +23,12 @@ import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 /**
  * @author lgr
  *
  */
-class LustreToSCCDataFlow extends AbstractLustreToSCC {
+class LustreToSCCDataFlow extends LustreBasicToSCC {
 
     static final String DATAFLOW_REGION_PREFIX = "dataflow_region_for_"
 
@@ -42,7 +41,7 @@ class LustreToSCCDataFlow extends AbstractLustreToSCC {
     }
 
     override getName() {
-        return "Lustre to SCCharts Data-flow"
+        return "Lustre to SC DF"
     }
 
     override ProcessorType getType() {
@@ -50,7 +49,7 @@ class LustreToSCCDataFlow extends AbstractLustreToSCC {
     }
     
     override processAutomaton(Automaton automaton, State state) {
-        // Do nothing, not handles in this processor
+        throw new UnsupportedOperationException("Automatons are not part of the supported Lustre language features.")
     }
     
     override processAssertion(Expression assertion, State state) {

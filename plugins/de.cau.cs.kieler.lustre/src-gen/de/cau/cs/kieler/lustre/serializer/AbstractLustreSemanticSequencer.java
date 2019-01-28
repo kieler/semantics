@@ -493,7 +493,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     AState returns AState
 	 *
 	 * Constraint:
-	 *     (name=ID (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition+)
+	 *     (name=ID (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition*)
 	 */
 	protected void sequence_AState(ISerializationContext context, AState semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
