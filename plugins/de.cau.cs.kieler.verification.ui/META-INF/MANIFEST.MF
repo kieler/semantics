@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Verification Ui
+Bundle-SymbolicName: de.cau.cs.kieler.verification.ui;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.verification.ui.VerificationUiPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.verification,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.simulation,
+ de.cau.cs.kieler.simulation.ui,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.ui,
+ de.cau.cs.kieler.klighd.ui.view
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: de.cau.cs.kieler.verification.ui
+Bundle-ActivationPolicy: lazy

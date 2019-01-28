@@ -31,9 +31,7 @@ Export-Package: de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.text.serializer,
  de.cau.cs.kieler.sccharts.text.services,
  de.cau.cs.kieler.sccharts.text.validation,
- de.cau.cs.kieler.sccharts.util,
- de.cau.cs.kieler.sccharts.verification,
- de.cau.cs.kieler.sccharts.verification.processor
+ de.cau.cs.kieler.sccharts.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.annotations;visibility:=reexport,

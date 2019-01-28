@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.verification.nuxmv.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.verification.spin.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.promela.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.smv.kico">
+      </TransformationSystem>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SimplifyNamesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.DefineUnboundVariablesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.PreFinalVariableValuesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.RunNuxmvProcessor">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.RunSpinProcessor">
+      </Processor>
+   </extension>
+
+</plugin>
