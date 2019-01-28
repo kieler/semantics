@@ -34,7 +34,6 @@ class ContextPopulation {
     static def void populateContext(CompilationContext cc) {
         cc.processorMap.clear
         cc.processorInstancesSequence.clear
-        cc.subContexts.clear
         cc.system.processors.populate(cc)     
         cc.system.intermediates.forEach[ it.populate(cc) ]
         EnvironmentPropertyHolder.processEnvironmentConfig(cc.startEnvironment, cc.system.config)
@@ -83,12 +82,7 @@ class ContextPopulation {
     }
     
     static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, CompilationContext cc) {
-        val subContext = Compile.createCompilationContext(processorSystem.id, cc.originalModel) => [
-            parentContext = cc
-        ]
-        
-        cc.subContexts.put(processorSystem, subContext)
-        cc.processorInstancesSequence.addAll(subContext.processorInstancesSequence)
+        throw new IllegalArgumentException("A context should not contain ProcessorSystem entries. See SystemTransformation.")
     }
     
     

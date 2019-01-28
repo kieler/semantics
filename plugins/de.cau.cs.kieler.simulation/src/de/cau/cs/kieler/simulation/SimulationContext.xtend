@@ -81,9 +81,6 @@ class SimulationContext extends CompilationContext implements SimulationControls
         transformSystem()
         originalModel = dataPool
         
-        for (subSystem : subContexts.values.map[originalSystem]) {
-            EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, subSystem.config)
-        }
         EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, system.config)
     }
     

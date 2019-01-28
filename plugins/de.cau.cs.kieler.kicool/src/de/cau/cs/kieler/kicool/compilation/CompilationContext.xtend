@@ -72,8 +72,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors(PUBLIC_GETTER) Map<ProcessorReference, Processor<?,?>> processorMap
     /** The ordered list of all processor instances of this context */
     @Accessors(PUBLIC_GETTER) List<Processor<?,?>> processorInstancesSequence 
-    @Accessors Map<ProcessorSystem, CompilationContext> subContexts
-    @Accessors CompilationContext parentContext = null
     /** The environment that will be prepared at startup before compilation. */
     @Accessors(PUBLIC_GETTER) Environment startEnvironment
     /** A reference to the target environment of the last processor to enable quick access. */
@@ -87,7 +85,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
         processorMap = <ProcessorReference, Processor<?,?>> newLinkedHashMap
         processorInstancesSequence = <Processor<?,?>> newArrayList
-        subContexts = <ProcessorSystem, CompilationContext> newLinkedHashMap
         notifications = <AbstractContextNotification> newLinkedList
         
         // This is the default start configuration.
@@ -143,9 +140,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected def Environment compile(Environment environment) {
         val processorEntry = system.processors
         
-        if (parentContext === null) notify(new CompilationStart(this))
+        notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
-        if (parentContext === null) notify(new CompilationFinished(this, EPrime))
+        notify(new CompilationFinished(this, EPrime))
 
         result = EPrime
         EPrime
@@ -250,8 +247,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     protected dispatch def Environment compileEntry(ProcessorSystem processorSystem, Environment environment) {
-        val subContext = subContexts.get(processorSystem)
-        subContext.compile(environment)
+        throw new IllegalArgumentException("A context should not contain ProcessorSystem entries. See SystemTransformation.")
     }
     
     def Processor<?,?> getProcessorFor(IProperty<?> property, Object object) {
@@ -351,21 +347,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             notifications += arg as AbstractContextNotification
         }
     }   
-    
-    override synchronized void addObserver(Observer o) {
-        super.addObserver(o)
-        for (sc : subContexts.values) sc.addObserver(o)
-    }
-
-    override synchronized void deleteObserver(Observer o) {
-        super.deleteObserver(o)
-        for (sc : subContexts.values) sc.deleteObserver(o)
-    }    
-    
-    def CompilationContext getRootContext() {
-        if (parentContext === null) return this
-        else return parentContext.getRootContext
-    }
     
     def ProcessorEntry getOriginalProcessorEntry(ProcessorEntry processorEntry) {
         return systemMap.get(processorEntry)
