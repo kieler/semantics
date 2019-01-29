@@ -54,6 +54,7 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
         for(property : verificationProperties) {
             try {
                 throwIfCanceled
+                property.modelCheckerModelFile = smvFile
                 property.status = VerificationPropertyStatus.RUNNING
                 compilationContext.notify(new VerificationPropertyChanged(property))
                 // Calling the model checker is possibly long running

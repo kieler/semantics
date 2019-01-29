@@ -34,6 +34,10 @@ class VerificationProperty {
      */
     @Accessors IFile processOutputFile = null
     /**
+     * Pointer to a file with the model in the model checker input language (e.g. SMV or Promela).
+     */
+    @Accessors IFile modelCheckerModelFile = null
+    /**
      * Exception that caused the corresponding status.
      * This is only relevant if the property has the status EXPECTION.
      */

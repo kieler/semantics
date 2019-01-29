@@ -142,7 +142,17 @@ class VerificationView extends ViewPart {
             }
         }
         
-        val startVerificationOfModelInDiagramAction = new Action("Start verification of model in diagram") {
+        val openModelCheckerFileAction = new Action("Open Model Checker Code") {
+            override run() {
+                val file = selectedProperty?.modelCheckerModelFile
+                if(file !== null && file.exists) {
+                    val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                    IDE.openEditor(page, file, true);
+                }
+            }
+        }
+        
+        val startVerificationOfModelInDiagramAction = new Action("Start Verification of Model in Diagram") {
             override run() {
                 startVerificationOfModelInDiagram()
             }
@@ -160,6 +170,7 @@ class VerificationView extends ViewPart {
         getViewSite().getActionBars().getMenuManager() => [
             add(openCounterexampleAction)
             add(openLogAction)
+            add(openModelCheckerFileAction)
             add(startVerificationOfModelInDiagramAction)
             add(menuHelpAction)
         ]
