@@ -41,9 +41,7 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     protected static val PROPERTY_GUARD= "guard"
     protected static val PROPERTY_PREGUARD= "preGuard"
     protected static val SMV_EXTENSION = ".smv"
-    
-    @Accessors private var List<VerificationProperty> verificationProperties
-    
+        
     private var List<SCGCodeGeneratorModule> codeGeneratorModules
     private val preVariableToOriginalVariable = <String,String>newHashMap    
     

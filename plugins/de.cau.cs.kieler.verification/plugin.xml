@@ -42,6 +42,9 @@
       <Processor
             class="de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer">
+      </Processor>
    </extension>
 
 </plugin>

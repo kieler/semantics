@@ -1,5 +1,8 @@
 public system de.cau.cs.kieler.sccharts.netlist.promela
 	label "SCCharts to Promela"
+
+// Get verification properties from model, if none yet
+de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer
 	
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG

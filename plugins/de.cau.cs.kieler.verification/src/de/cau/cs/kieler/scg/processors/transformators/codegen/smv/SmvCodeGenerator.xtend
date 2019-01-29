@@ -64,10 +64,6 @@ class SmvCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
     override createCodeGenetatorModule() {
         val module = injector.getInstance(SmvCodeGeneratorModule)
-        val props = environment.getProperty(Environment.VERIFICATION_PROPERTIES)
-        if(props !== null && props instanceof List<?>) {
-            module.verificationProperties = props as List<VerificationProperty>
-        }
         return module
     }
 

@@ -18,6 +18,7 @@ import java.util.Comparator
 import de.cau.cs.kieler.verification.VerificationPropertyType
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+import java.util.List
 
 /**
  * @author aas
@@ -33,7 +34,7 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
     }
     
     override generate() {
-        val verificationProperties = (parent as SmvCodeGeneratorModule).verificationProperties
+        val verificationProperties = getVerificationProperties()
         if(verificationProperties.isNullOrEmpty) {
             return
         }
@@ -54,6 +55,10 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
     }
     
     override generateDone() {
+    }
+        
+    private def List<VerificationProperty> getVerificationProperties() {
+        return processorInstance.compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
     }
     
     private def String getSmvSpecName(VerificationProperty property) {

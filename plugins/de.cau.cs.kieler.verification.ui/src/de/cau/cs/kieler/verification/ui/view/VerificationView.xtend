@@ -15,6 +15,7 @@ package de.cau.cs.kieler.verification.ui.view
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
@@ -66,6 +67,8 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
+import de.cau.cs.kieler.kicool.compilation.CompilationSystem
+import de.cau.cs.kieler.verification.VerificationAssumption
 
 /** 
  * @author aas
@@ -77,14 +80,16 @@ class VerificationView extends ViewPart {
      */
     public static var VerificationView instance
     
+    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) -> "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer"}
+    
     private static val PLAY_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/runIcon.png")
     private static val STOP_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/stopIcon.png")
     private static val REFRESH_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/refresh.png")
     private static val RUN_COUNTEREXAMPLE_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/rerunFailed.png")
     
-    private var CompilationContext verificationContext = null
+    private var CompilationContext propertyAnalyzerContext
+    private var CompilationContext verificationContext
     private var String selectedSystemId
-    private var SCChartsVerificationPropertyAnalyzer currentPropertyAnalyzer
     
     // == UI ELEMENTS ==
     /**
@@ -353,25 +358,49 @@ class VerificationView extends ViewPart {
             return
         }
         if(currentModel instanceof SCCharts) {
-            val lastSelection = selectedProperties
-            currentPropertyAnalyzer = new SCChartsVerificationPropertyAnalyzer(currentModel)
-            val properties = currentPropertyAnalyzer.verificationProperties
-            viewer.input = properties
-            if(!properties.isNullOrEmpty) {
-                // Restore selection
-                var newSelection = <VerificationProperty>newArrayList
-                if(lastSelection !== null) {
-                    val namesOfLastSelection = lastSelection.map[it.name]
-                    val propertiesOfLastSelection = properties.filter[namesOfLastSelection.contains(it.name)]
-                    newSelection.addAll(propertiesOfLastSelection)
-                }
-                // Select first element if no last selection that can be transfered
-                if(newSelection.isEmpty) {
-                    newSelection.add(properties.head)
-                }
-                viewer.selection = new StructuredSelection(newSelection)
-            }
+            val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
+            runPropertyAnalyzer(processorId, currentModel)
+            val properties = propertyAnalyzerContext.getVerificationProperties
+            setVerificationPropertiesInUi(properties)
         }
+    }
+    
+    private def void runPropertyAnalyzer(String processorId, EObject model) {
+        val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
+        propertyAnalyzerContext = Compile.createCompilationContext(compilationSystem, model)
+        propertyAnalyzerContext.compile        
+    }
+    
+    private def void setVerificationPropertiesInUi(List<VerificationProperty> properties) {
+        // Put the properties in the UI table
+        viewer.input = properties
+        if(!properties.isNullOrEmpty) {
+            // Restore selection
+            val lastSelection = selectedProperties
+            var newSelection = <VerificationProperty>newArrayList
+            if(lastSelection !== null) {
+                val namesOfLastSelection = lastSelection.map[it.name]
+                val propertiesOfLastSelection = properties.filter[namesOfLastSelection.contains(it.name)]
+                newSelection.addAll(propertiesOfLastSelection)
+            }
+            // Select first element if no last selection that can be transfered
+            if(newSelection.isEmpty) {
+                newSelection.add(properties.head)
+            }
+            viewer.selection = new StructuredSelection(newSelection)
+        }
+    }
+    
+    private def List<VerificationProperty> getVerificationProperties(CompilationContext context) {
+        return context?.startEnvironment?.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
+    }
+    
+    private def List<VerificationAssumption> getVerificationAssumptions(CompilationContext context) {
+        return context?.startEnvironment?.getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
+    }
+    
+    private def EObject getModel(CompilationContext context) {
+        return context?.originalModel as EObject
     }
     
     private def void runCounterexample() {
@@ -411,10 +440,10 @@ class VerificationView extends ViewPart {
     }
     
     private def void startVerification() {
-        if(currentPropertyAnalyzer === null) {
+        if(propertyAnalyzerContext === null) {
             return
         }
-        startVerification(currentPropertyAnalyzer.model)
+        startVerification(propertyAnalyzerContext.originalModel)
     }
     
     private def void startVerificationOfModelInDiagram() {
@@ -432,7 +461,7 @@ class VerificationView extends ViewPart {
         }
     }
     
-    private def void startVerification(EObject model) {
+    private def void startVerification(Object model) {
         val verificationProperties = selectedProperties
         if(verificationProperties === null) {
             return
@@ -440,17 +469,24 @@ class VerificationView extends ViewPart {
         if(model === null) {
             return
         }
-        // Stop last verification if not done yet
-        stopVerification()
+        val verificationAssumptions = propertyAnalyzerContext.getVerificationAssumptions
+        val modelWithVerificationProperties = propertyAnalyzerContext.getModel
+        val modelFile = getFile(modelWithVerificationProperties)
+
         // Start new verification
-        startVerification(model, verificationProperties)
+        startVerification(model, modelFile, verificationProperties, verificationAssumptions)
     }
     
-    private def void startVerification(EObject model, List<VerificationProperty> verificationProperties) {
+    private def void startVerification(Object model, IFile modelFile,
+            List<VerificationProperty> verificationProperties, List<VerificationAssumption> verificationAssumptions) {
+        // Stop last verification if not done yet
+        stopVerification()
+       
+        // Create new context for verification and compile
         verificationContext = Compile.createCompilationContext(selectedSystemId, model)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, currentPropertyAnalyzer.verificationAssumptions)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, getFile(currentPropertyAnalyzer.model))
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, modelFile)
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    

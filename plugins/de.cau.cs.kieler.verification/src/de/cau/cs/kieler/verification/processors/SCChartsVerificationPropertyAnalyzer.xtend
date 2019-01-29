@@ -10,10 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.verification.ui.view
+package de.cau.cs.kieler.verification.processors
 
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationAssumption
@@ -26,18 +28,38 @@ import org.eclipse.xtend.lib.annotations.Accessors
 /** 
  * @author aas
  */
-class SCChartsVerificationPropertyAnalyzer {
+class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     public static val INVARIANT_ANNOTATION_NAME = "Invariant"
     public static val CTL_ANNOTATION_NAME = "CTL"
     public static val LTL_ANNOTATION_NAME = "LTL"
     public static val RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRange"
     
-    @Accessors(PUBLIC_GETTER) private val SCCharts model
     @Accessors(PUBLIC_GETTER) private val verificationProperties = <VerificationProperty>newArrayList
     @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
     
-    new(SCCharts model) {
-        this.model = model
+    override getId() {
+        return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer"
+    }
+    
+    override getName() {
+        return "Property Analyzer"
+    }
+    
+    override process() {
+        // Only set the properties in the environment if they are not set yet,
+        // because they could have been set from the UI already.
+        val envVerificationProperties = compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
+        if(!envVerificationProperties.isNullOrEmpty) {
+            return
+        }
+        
+        val model = getModel() as SCCharts
+        analyze(model)
+        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
+        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
+    }
+    
+    private def void analyze(SCCharts model) {
         model.eAllContents.filter(StringAnnotation).forEach [ anno |
             getVerificationProperty(anno).ifPresent [ property | 
                 verificationProperties.add(property)
@@ -95,4 +117,5 @@ class SCChartsVerificationPropertyAnalyzer {
             return list.get(index)    
         } 
     }
+    
 }
