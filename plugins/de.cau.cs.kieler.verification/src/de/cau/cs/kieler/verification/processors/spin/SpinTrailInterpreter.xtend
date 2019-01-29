@@ -10,12 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
- package de.cau.cs.kieler.verification.processors
+ package de.cau.cs.kieler.verification.processors.spin
 
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.verification.processors.SpinTrailInterpreter.SpinCounterexample
 
 /**
  * @author aas

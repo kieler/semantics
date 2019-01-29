@@ -37,10 +37,10 @@
             class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.verification.processors.RunNuxmvProcessor">
+            class="de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.verification.processors.RunSpinProcessor">
+            class="de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor">
       </Processor>
    </extension>
 

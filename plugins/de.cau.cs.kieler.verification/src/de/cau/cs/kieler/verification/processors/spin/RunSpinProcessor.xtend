@@ -10,13 +10,14 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
- package de.cau.cs.kieler.verification.processors
+ package de.cau.cs.kieler.verification.processors.spin
 
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
