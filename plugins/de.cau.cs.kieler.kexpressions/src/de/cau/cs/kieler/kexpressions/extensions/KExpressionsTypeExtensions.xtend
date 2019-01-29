@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * @author ssm
@@ -51,8 +52,13 @@ class KExpressionsTypeExtensions {
     }
     
     def dispatch boolean isFloat(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
         for (subExpression : operatorExpression.subExpressions) {
-            if (!subExpression.isFloat) return false;
+            if (!skipFirst) {
+                if (!subExpression.isFloat) return false;
+            } else {
+                skipFirst = false
+            }
         }
         return true;
     }
@@ -70,8 +76,13 @@ class KExpressionsTypeExtensions {
     }
     
     def dispatch boolean isInt(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
         for (subExpression : operatorExpression.subExpressions) {
-            if (!subExpression.isInt) return false;
+            if (!skipFirst) {
+                if (!subExpression.isInt) return false;
+            } else {
+                skipFirst = false
+            }
         }
         return true;
     }
@@ -89,8 +100,13 @@ class KExpressionsTypeExtensions {
     }
     
     def dispatch boolean isBool(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
         for (subExpression : operatorExpression.subExpressions) {
-            if (!subExpression.isBool) return false;
+            if (!skipFirst) {
+                if (!subExpression.isBool) return false;
+            } else {
+                skipFirst = false
+            }
         }
         return true
     }
@@ -108,8 +124,13 @@ class KExpressionsTypeExtensions {
     }
     
     def dispatch boolean isString(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
         for (subExpression : operatorExpression.subExpressions) {
-            if (subExpression.isString) return true;
+            if (!skipFirst) {
+                if (subExpression.isString) return true;
+            } else {
+                skipFirst = false
+            }
         }
         return false;
     }
