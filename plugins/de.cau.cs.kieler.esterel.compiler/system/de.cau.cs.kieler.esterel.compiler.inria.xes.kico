@@ -1,4 +1,4 @@
-system de.cau.cs.kieler.esterel.compiler.inria.xes
+public simulation system de.cau.cs.kieler.esterel.compiler.inria.xes
 	label "Inria Esterel XES Simulation"
 
 de.cau.cs.kieler.esterel.compiler.inria.c config {
@@ -7,5 +7,7 @@ de.cau.cs.kieler.esterel.compiler.inria.c config {
 de.cau.cs.kieler.kicool.deploy.compiler.c config {
     "de.cau.cs.kieler.kicool.deploy.compiler.c.result": "simulation.o",
     "de.cau.cs.kieler.kicool.deploy.compiler.options": "-c"
+} post {
+    "de.cau.cs.kieler.kicool.deploy.compiler.folder.bin.clean": false
 }
 de.cau.cs.kieler.esterel.compiler.xes

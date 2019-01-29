@@ -35,7 +35,7 @@ class InriaEsterelCompiler extends EsterelCompiler {
     public static val IProperty<String> VERSION = 
         new Property<String>("de.cau.cs.kieler.esterel.compiler.inria.version", null)
 
-    public static val VERSIONS = #["iec_v5_100", "iec_v5_92"]
+    public static val VERSIONS = #["iec_v5_100"]
         
     val Environment environment
     var String version = null
