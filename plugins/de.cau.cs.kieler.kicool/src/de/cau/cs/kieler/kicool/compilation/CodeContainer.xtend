@@ -45,36 +45,36 @@ class CodeContainer {
     }
     
     def add(String fileName, String code) {
-        files += new CodeFile(fileName, code)
+        return new CodeFile(fileName, code) => [files += it]
     }
     
     def addProxy(File file) {
-        files += new CodeFile(file, null)
+        return new CodeFile(file, null) => [files += it]
     }
         
     def addProxy(File file, String code) {
-        files += new CodeFile(file, code)
+        return new CodeFile(file, code) => [files += it]
     }
     
     def addCHeader(String fileName, String code, String dataStructName) {
-        files += new CCodeFile(fileName, code, true, dataStructName)
+        return new CCodeFile(fileName, code, true, dataStructName) => [files += it]
     }
     
     def addCCode(String fileName, String code, String dataStructName) {
-        files += new CCodeFile(fileName, code, false, dataStructName)
+        return new CCodeFile(fileName, code, false, dataStructName) => [files += it]
     }
     
     def addJavaCode(String fileName, String code) {
         checkArgument(fileName.endsWith(".java"), "File name has not the correct pattern for java source files")
-        files += new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java")))
+        return new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java"))) => [files += it]
     }
     
     def addProxyCCodeFile(File file) {
-        files += new CCodeFile(file)
+        return new CCodeFile(file) => [files += it]
     }
     
     def addProxyJavaFile(File file) {
-        files += new JavaCodeFile(file)
+        return new JavaCodeFile(file) => [files += it]
     }
 }
 
@@ -117,11 +117,10 @@ class CodeFile {
     }
 }
 
-@FinalFieldsConstructor
 class CCodeFile extends CodeFile {
     
-    @Accessors val boolean header
-    @Accessors val String dataStructName
+    @Accessors var boolean header
+    @Accessors var String dataStructName
     
     new(File underlyingFile) {
         this(underlyingFile, null)
@@ -141,7 +140,7 @@ class CCodeFile extends CodeFile {
 
 class JavaCodeFile extends CodeFile {
     
-    @Accessors val String className
+    @Accessors var String className
     
     new(File underlyingFile) {
         this(underlyingFile, null)
