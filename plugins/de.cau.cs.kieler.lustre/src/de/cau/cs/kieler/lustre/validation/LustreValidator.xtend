@@ -165,7 +165,7 @@ class LustreValidator extends AbstractLustreValidator {
         }
         
         var currAutomatons = new LinkedList(node.automatons)
-        do {
+        while (!currAutomatons.isEmpty) {
             var automaton = currAutomatons.head
             for (AState state : automaton.states) {
                 for (Assignment equation : state.equations) {
@@ -174,7 +174,7 @@ class LustreValidator extends AbstractLustreValidator {
                 }
                 currAutomatons.remove(automaton)
             }
-        } while (!currAutomatons.isEmpty)
+        }
         
         for (VariableDeclaration varDecl : node.output.parameter) {
             for (ValuedObject valObj : varDecl.valuedObjects) {

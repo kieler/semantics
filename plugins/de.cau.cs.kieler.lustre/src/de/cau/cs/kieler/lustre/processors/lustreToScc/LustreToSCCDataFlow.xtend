@@ -15,14 +15,13 @@ package de.cau.cs.kieler.lustre.processors.lustreToScc
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.lustre.lustre.Automaton
+import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 
 /**
  * @author lgr
@@ -30,11 +29,11 @@ import de.cau.cs.kieler.sccharts.State
  */
 class LustreToSCCDataFlow extends LustreBasicToSCC {
 
-    static final String DATAFLOW_REGION_PREFIX = "dataflow_region_for_"
+    static final String DATAFLOW_REGION_PREFIX = "df"
 
-    extension SCChartsFactory = SCChartsFactory.eINSTANCE
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
     
     override getId() {
         return "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow"
@@ -56,33 +55,33 @@ class LustreToSCCDataFlow extends LustreBasicToSCC {
         throw new UnsupportedOperationException("Assertions are not part of the supported Lustre language features.")
     }
 
-    override processEquation(Assignment equation, State state) {
+    override processEquation(Equation equation, State state) {
         // Search for a dataflow region within the state
-        val dataFlowRegionsList = state.regions.filter[it instanceof DataflowRegion].toList;
+        val dataFlowRegionsList = getDataflowRegions(state)
 
         // If there is no dataflow region, create one
         if (dataFlowRegionsList.length == 0) {
-            var dfRegion = createDataflowRegion => [
-                name = DATAFLOW_REGION_PREFIX + state.name
-                label = DATAFLOW_REGION_PREFIX + state.name
-            ]
+            var dfRegion = createDataflowRegion(DATAFLOW_REGION_PREFIX + state.name, DATAFLOW_REGION_PREFIX + state.name)
             state.regions += dfRegion
-            dataFlowRegionsList += dfRegion
         }
         
         // Take the first dataflow region for creating the equation
         var dataflowRegion = dataFlowRegionsList.head as DataflowRegion
         
-        if (lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject)) {
-            val kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
-            var dataflowAssignment = createAssignment => [
-                reference = kExpressionValuedObject.reference
-                operator = AssignOperator.ASSIGN
-                expression = equation.expression.transformExpression(state)
-            ]
-            if (dataflowAssignment.expression !== null) {
-                dataflowRegion.equations += dataflowAssignment
-            }
+        // The left side of the equation should be a known valued object (either simple like 'x = ...' or complex like '(x,y) = ...'
+        if ((equation.reference !== null && lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject))
+            || lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])) {
+                
+                var dataflowAssignment = createAssignment
+                if (equation.reference !== null) {
+                    var kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
+                    dataflowAssignment.reference = kExpressionValuedObject.reference
+                }
+                dataflowAssignment.expression = equation.expression.transformExpression(state)
+    
+                if (dataflowAssignment.expression !== null) {
+                    dataflowRegion.equations += dataflowAssignment
+                }
         }
     }
         

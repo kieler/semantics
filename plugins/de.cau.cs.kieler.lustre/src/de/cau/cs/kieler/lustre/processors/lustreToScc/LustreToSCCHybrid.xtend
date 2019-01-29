@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.lustre.lustre.Equation
 
 /**
  * @author lgr
@@ -67,8 +68,8 @@ class LustreToSCCHybrid extends LustreToSCCDataFlow {
     
     protected def processState(AState lusState, State state) {
         
-        for (Assignment equation : lusState.equations) {
-            processEquation(equation, state)
+        for (Assignment equation: lusState.equations) {
+            processEquation(equation as Equation, state)
         }
         
         for (Expression assertion : lusState.assertions) {
