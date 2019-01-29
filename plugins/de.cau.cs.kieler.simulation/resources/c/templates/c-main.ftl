@@ -38,4 +38,5 @@ int main(int argc, const char* argv[]) {
         
         <@inject position="end-loop" /><#nt>
     }
+    <@inject position="end-main" /><#nt>
 }
