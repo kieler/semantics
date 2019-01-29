@@ -138,6 +138,17 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     */
+    public String getName() {
+        if (!getModules().isEmpty()) {
+            return getModules().get(0).getName();
+        }
+        return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override

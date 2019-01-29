@@ -13,7 +13,6 @@ import de.cau.cs.kieler.esterel.ui.labeling.EsterelDescriptionLabelProvider;
 import de.cau.cs.kieler.esterel.ui.labeling.EsterelLabelProvider;
 import de.cau.cs.kieler.esterel.ui.outline.EsterelOutlineTreeProvider;
 import de.cau.cs.kieler.esterel.ui.quickfix.EsterelQuickfixProvider;
-import de.cau.cs.kieler.esterel.validation.EsterelValidatorConfigurationBlock;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ide.LexerIdeBindings;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link EsterelUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractEsterelUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalEsterelLexer.class).toProvider(LexerProvider.create(InternalEsterelLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return EsterelValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

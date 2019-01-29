@@ -36,6 +36,7 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 
 /**
@@ -84,21 +85,30 @@ class ControlflowRegionStyles {
     }
     
     /**
+     * Sets the selection style of the region.
+     */
+    def setSelectionStyle(KNode node) {
+        node.data.filter(KRendering).forEach[
+            selectionLineWidth = 1.8f;
+            selectionForeground = SELECTION.color;
+        ]
+    }
+    
+    /**
      * Adds a button with text.
      */
     private def KRendering addButton(KContainerRendering container, String text, String label) {
         val button =container.addPolygon => [
             lineWidth = 0
             background = REGION_BUTTON_BACKGROUND.color
-//            selectionBackground = REGION_BUTTON_FOREGROUND.color
+            selectionBackground = SELECTION.color
             addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
             addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
             addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
         ]
         container.addText(text) => [
-            setProperty(KlighdProperties.NOT_SELECTABLE, true)
+            //suppressSelectability
             foreground = REGION_BUTTON_FOREGROUND.color
-//            selectionForeground = REGION_BUTTON_BACKGROUND.color
             fontSize = 8;
             fontBold = true
             val size = estimateTextSize;
@@ -106,7 +116,7 @@ class ControlflowRegionStyles {
         ]
         if (!label.nullOrEmpty) {
             container.addText(label) => [
-                setProperty(KlighdProperties.NOT_SELECTABLE, true)
+                //suppressSelectability
                 foreground = REGION_LABEL.color;
                 fontSize = 10;
                 val size = estimateTextSize;

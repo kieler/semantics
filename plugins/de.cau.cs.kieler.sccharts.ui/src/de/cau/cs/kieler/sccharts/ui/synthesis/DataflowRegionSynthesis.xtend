@@ -141,6 +141,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
         
+        node.setSelectionStyle
+        
         if (SHOW_COMMENTS.booleanValue) {
             region.getCommentAnnotations.forEach[
                 node.children += it.transform                

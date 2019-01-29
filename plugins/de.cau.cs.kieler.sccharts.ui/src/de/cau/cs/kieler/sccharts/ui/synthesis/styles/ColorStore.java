@@ -50,7 +50,6 @@ public class ColorStore {
         TRANSITION_DEFERRED_DECORATOR(Colors.RED),
         TRANSITION_ABORT_DECORATOR(Colors.RED),
         TRANSITION_TERMINATION_DECORATOR(Colors.GREEN),
-        TRANSITION_SELECTION(Colors.BLUE),
         TRANSITION_PROBABILITY(Colors.STEEL_BLUE_2),
         TRANSITION_NONDETERMINISTIC(234, 154, 86),          // darker SANDY_BROWN
         
@@ -88,6 +87,8 @@ public class ColorStore {
         DEPENDENCY_ABSWRITEREAD(0, 192, 0),
         DEPENDENCY_ABSWRITERELWRITE(0, 0, 255),
         DEPENDENCY_ABSWRITEABSWRITE(255, 0, 0),
+        
+        SELECTION(74, 144, 217),
         
         KEYWORD(115, 0, 65);
 

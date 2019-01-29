@@ -110,20 +110,65 @@
   </extension>
   <extension
         point="de.cau.cs.kieler.kicool.system">
-     <TransformationSystem
-           system="system/de.cau.cs.kieler.esterel.scest.scl.kico">
-     </TransformationSystem>
-     <TransformationSystem
-           system="system/de.cau.cs.kieler.esterel.scest.scl.netlist.kico">
-     </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.priority.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.priority.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.simulation.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.simulation.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.simulation.priority.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.simulation.priority.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.priority.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.priority.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.simulation.netlist.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.simulation.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.simulation.priority.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.scest.scl.slic.simulation.priority.java.kico">
+      </TransformationSystem>
      <TransformationSystem
            system="system/de.cau.cs.kieler.esterel.scc.kico">
      </TransformationSystem>
      <TransformationSystem
            system="system/de.cau.cs.kieler.esterel.kernel.scc.kico">
-     </TransformationSystem>
-     <TransformationSystem
-           system="system/de.cau.cs.kieler.esterel.scest.scl.struct.incr.kico">
      </TransformationSystem>
   </extension>
   <extension

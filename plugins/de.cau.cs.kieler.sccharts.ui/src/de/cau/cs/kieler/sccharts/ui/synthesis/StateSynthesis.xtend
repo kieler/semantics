@@ -159,6 +159,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || !state.outgoingTransitions.exists[ targetState != state ]
             node.setViolationStyle(isHaltState)
         }
+        
+        node.setSelectionStyle
 
         // Shadow
         if (!isConnector) {
