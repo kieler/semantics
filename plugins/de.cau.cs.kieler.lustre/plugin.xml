@@ -47,6 +47,15 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.sccharts.dataflow.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.c.controlflow.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.c.dataflow.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.c.hybrid.kico">
+      </TransformationSystem>
    </extension>
 
 </plugin>
