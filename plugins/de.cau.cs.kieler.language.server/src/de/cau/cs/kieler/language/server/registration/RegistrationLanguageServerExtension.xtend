@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.language.server.registration
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting
 import de.cau.cs.kieler.esterel.ide.highlighting.EsterelHighlighting
 import de.cau.cs.kieler.kexpressions.ide.kext.highlighting.KExtHighlighting
@@ -34,6 +35,7 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
  * @author sdo
  * 
  */
+ @Singleton
 class RegistrationLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
     protected static val LOG = Logger.getLogger(RegistrationLanguageServerExtension)

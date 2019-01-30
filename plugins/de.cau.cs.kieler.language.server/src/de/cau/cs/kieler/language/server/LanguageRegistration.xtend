@@ -13,13 +13,20 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.annotations.AnnotationsRuntimeModule
+import de.cau.cs.kieler.annotations.ide.AnnotationsIdeModule
+import de.cau.cs.kieler.annotations.ide.AnnotationsIdeSetup
 import de.cau.cs.kieler.esterel.EsterelRuntimeModule
 import de.cau.cs.kieler.esterel.ide.EsterelIdeModule
 import de.cau.cs.kieler.esterel.ide.EsterelIdeSetup
+import de.cau.cs.kieler.kexpressions.ide.kext.KExtIdeModule
+import de.cau.cs.kieler.kexpressions.ide.kext.KExtIdeSetup
+import de.cau.cs.kieler.kexpressions.kext.KExtRuntimeModule
 import de.cau.cs.kieler.kgraph.text.KGraphRuntimeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeModule
 import de.cau.cs.kieler.kgraph.text.ide.KGraphIdeSetup
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeModule
 import de.cau.cs.kieler.lustre.ide.LustreIdeSetup
@@ -38,9 +45,10 @@ import org.eclipse.xtext.util.Modules2
 class LanguageRegistration {
     
     def bindAndRegisterLanguages() {
-        new SCLIdeSetup {
+        // Since Esterel depends on scl, scl has to be registered after strl
+        new EsterelIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
+                Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
         new SCTXIdeSetup {
@@ -48,24 +56,31 @@ class LanguageRegistration {
                 Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
-        
-        new EsterelIdeSetup {
+        new SCLIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
+                Guice.createInjector(Modules2.mixin(new SCLRuntimeModule, new SCLIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
-        
+        var injector = new KGraphIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
         new LustreIdeSetup {
             override createInjector() {
                 Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
-        val injector =  new KGraphIdeSetup {
+        new KExtIdeSetup {
             override createInjector() {
-                Guice.createInjector(Modules2.mixin(
-                    new KGraphRuntimeModule, new KGraphIdeModule, new KGraphDiagramModule))
+                Guice.createInjector(Modules2.mixin(new KExtRuntimeModule, new KExtIdeModule))
             }
         }.createInjectorAndDoEMFRegistration()
-        return injector
+        new AnnotationsIdeSetup {
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new AnnotationsRuntimeModule, new AnnotationsIdeModule))
+            }
+        }.createInjectorAndDoEMFRegistration()
+        return injector.getInstance(KGraphLanguageServerExtension)
     }
 }

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
+import com.google.inject.Guice
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
@@ -32,6 +33,16 @@ import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.LanguageServerImpl
+import org.eclipse.xtext.ide.server.ServerModule
+import org.eclipse.xtext.util.Modules2
+import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.eclipse.xtext.ide.server.contentassist.ContentAssistService
+import org.eclipse.xtext.resource.impl.ResourceServiceProviderRegistryImpl.InternalData
+import org.eclipse.xtext.resource.ResourceServiceProviderServiceLoader
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
+import org.eclipse.xtext.ide.server.ProjectManager
+import org.eclipse.lsp4j.jsonrpc.Launcher
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -80,13 +91,16 @@ class LanguageServer implements IApplication {
 //            // Initialize ELK
             ElkLayoutEngine.initialize(new LayeredMetaDataProvider)
             Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put('elkg', new ElkGraphResourceFactory)
+            
 //        
             // Register all languages
             println("Starting language server socket")
-            val parent = bindAndRegisterLanguages()
+            val kgraphExt = bindAndRegisterLanguages()
             
-            val injector = parent.createChildInjector(new KeithServerModule)
-            this.run(injector, host, port)
+            val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
+                bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+            ]))
+            this.run(injector, host, port, kgraphExt)
             return EXIT_OK 
         } else {
             LanguageServerLauncher.main(#[])
@@ -101,7 +115,7 @@ class LanguageServer implements IApplication {
     /**
      * Starts the language server (has to be separate method, since start method must have a "reachable" return
      */
-    def run(Injector injector, String host,  int port) {
+    def run(Injector injector, String host,  int port, KGraphLanguageServerExtension kgraphExt) {
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
@@ -114,6 +128,7 @@ class LanguageServer implements IApplication {
             val languageServer = injector.getInstance(LanguageServerImpl)
             val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
             val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
+            kicoolExtension.kgraphLSEx = kgraphExt
             val launcher = new Builder<LanguageClient>()
                 .setLocalServices(#[languageServer, regExtension, kicoolExtension])
                 .setRemoteInterface(LanguageClient)
@@ -124,6 +139,7 @@ class LanguageServer implements IApplication {
                 .configureGson(configureGson)
                 .setClassLoader(this.getClass.classLoader)
                 .create();
+//            val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it], configureGson)
             languageServer.connect(launcher.remoteProxy)
             launcher.startListening
             LOG.info("Started language server for client " + socketChannel.remoteAddress)
