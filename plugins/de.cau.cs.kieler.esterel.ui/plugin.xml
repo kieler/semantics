@@ -14,7 +14,7 @@
             name="Esterel Editor">
         </editor>
         <editor
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
               contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
               default="true"
               extensions="scest"
@@ -54,7 +54,7 @@
          </activeWhen>
       </handler>
         <handler
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
               commandId="de.cau.cs.kieler.esterel.scest.SCEst.validate">
            <activeWhen>
               <reference
@@ -63,7 +63,7 @@
            </activeWhen>
         </handler>
         <handler
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
               commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
            <activeWhen>
               <reference
@@ -125,29 +125,29 @@
         </page>
         <page
               category="de.cau.cs.kieler.core.product.preferencePage"
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.esterel.scest.SCEst"
               name="SCEst">
            <keywordReference
-                 id="de.cau.cs.kieler.esterel.scest.ui.keyword_SCEst">
+                 id="de.cau.cs.kieler.esterel.ui.scest.keyword_SCEst">
            </keywordReference>
         </page>
         <page
               category="de.cau.cs.kieler.esterel.scest.SCEst"
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
               id="de.cau.cs.kieler.esterel.scest.SCEst.coloring"
               name="Syntax Coloring">
            <keywordReference
-                 id="de.cau.cs.kieler.esterel.scest.ui.keyword_SCEst">
+                 id="de.cau.cs.kieler.esterel.ui.scest.keyword_SCEst">
            </keywordReference>
         </page>
         <page
               category="de.cau.cs.kieler.esterel.scest.SCEst"
-              class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+              class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
               id="de.cau.cs.kieler.esterel.scest.SCEst.templates"
               name="Templates">
            <keywordReference
-                 id="de.cau.cs.kieler.esterel.scest.ui.keyword_SCEst">
+                 id="de.cau.cs.kieler.esterel.ui.scest.keyword_SCEst">
            </keywordReference>
         </page>
     </extension>
@@ -157,7 +157,7 @@
             id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"
             label="Esterel"/>
         <keyword
-              id="de.cau.cs.kieler.esterel.scest.ui.keyword_SCEst"
+              id="de.cau.cs.kieler.esterel.ui.scest.keyword_SCEst"
               label="SCEst">
         </keyword>
     </extension>
@@ -237,7 +237,7 @@
             </activeWhen>
         </handler>
      <handler
-           class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+           class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
            commandId="org.eclipse.xtext.ui.editor.FindReferences">
         <activeWhen>
            <reference
@@ -256,7 +256,7 @@
             type="strl">
         </parser>
   <parser
-        class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+        class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
         type="scest">
   </parser>
     </extension>
@@ -287,7 +287,7 @@
             </activeWhen>
         </handler>
   <handler
-        class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+        class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
         commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
      <activeWhen>
         <reference
@@ -337,7 +337,7 @@
             class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
       <markerResolutionGenerator
-            class="de.cau.cs.kieler.esterel.scest.ui.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+            class="de.cau.cs.kieler.esterel.ui.scest.SCEstExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
 
