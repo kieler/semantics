@@ -20,6 +20,8 @@ import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kicool.compilation.VariableInformation
 
 /**
  * @author als
@@ -27,6 +29,9 @@ import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
  * @kieler.rating proposed yellow
  */
 class InriaSimulationPreparation extends InplaceProcessor<EsterelProgram> {
+    
+    public static val ESTEREL_ORIG = "esterel-orig"
+    public static val ESTEREL_VIRTUAL = "esterel-virtual"
     
     @Inject
     extension EsterelExtensions
@@ -48,11 +53,22 @@ class InriaSimulationPreparation extends InplaceProcessor<EsterelProgram> {
 
         // Init store
         val store = VariableStore.getVariableStore(environment)
-        model.modules.head.signalDeclarations.forEach [
-            val props = newArrayList(SIGNAL)
-            if(isInput) props += INPUT
-            if(isOutput) props += OUTPUT
-            signals.forEach[store.update(it, props).type = it.type]
+        model.modules.head.signalDeclarations.forEach [ decl |
+            decl.signals.forEach[
+                var props = newArrayList(SIGNAL, ESTEREL_ORIG)
+                if(decl.isInput) props += INPUT
+                if(decl.isOutput) props += OUTPUT
+                store.update(it, props).type = type
+                if (type != ValueType.PURE) {
+                    val virtual = new VariableInformation
+                    virtual.valuedObject = null
+                    virtual.type = type
+                    virtual.properties += ESTEREL_VIRTUAL
+                    if(decl.isInput) virtual.properties += INPUT
+                    if(decl.isOutput) virtual.properties += OUTPUT
+                    store.variables.put(it.name + "_val", virtual)
+                }
+            ]
         ]
 
     }

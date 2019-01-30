@@ -91,7 +91,7 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
             
             <#macro simulation_output_decl position>
             // Output variable declaration
-            «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT)]»
+            «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(InriaSimulationPreparation.ESTEREL_ORIG)]»
             char «SIM_SIG_PREFIX + v.key»;
                 «IF v.value.type != ValueType.PURE»
                  «v.value.cType» «SIM_VAL_PREFIX + v.key»;
@@ -102,17 +102,17 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
             <#macro simulation_output position>
             // Reset function for output signals
             void «SIM_SIG_RESET_FUNC»() {
-                «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT)]»
+                «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(InriaSimulationPreparation.ESTEREL_ORIG)]»
                 «SIM_SIG_PREFIX + v.key» = 0;
                 «ENDFOR» 
             }
             
             // Esterel output callbacks
-            «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT)]»
+            «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(InriaSimulationPreparation.ESTEREL_ORIG)]»
             void ${tickdata_name}_O_«v.key»(«if (v.value.type != ValueType.PURE) v.value.cType + " value" else ""») {
                 «SIM_SIG_PREFIX + v.key» = 1;
                 «IF v.value.type != ValueType.PURE»
-                «v.value.cType» «SIM_VAL_PREFIX + v.key» = value;
+                «SIM_VAL_PREFIX + v.key» = value;
                 «ENDIF»
             }
             «ENDFOR»
@@ -120,6 +120,10 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
             
             <#macro simulation_output_reset position>
             «SIM_SIG_RESET_FUNC»();
+            </#macro>
+            
+            <#macro simulation_init position>
+            notifyInterfaceVariables();
             </#macro>
             
             <#macro simulation_in position>
@@ -145,7 +149,7 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.orderedVariables.filter[value.isExternal || value.properties.contains(VariableStore.INPUT)]»
+                    «FOR v : store.orderedVariables.filter[value.isExternal || value.properties.contains(VariableStore.INPUT) && value.properties.contains(InriaSimulationPreparation.ESTEREL_ORIG)]»
                         // Receive «v.key»
                         item = cJSON_GetObjectItemCaseSensitive(root, "«v.key»");
                         if(item != NULL) {
@@ -156,14 +160,29 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
               
                 cJSON_Delete(root);
             }
+            
             void sendVariables() {
                 cJSON* root = cJSON_CreateObject();
-                «IF store.variables.values.exists[array]»
-                    cJSON* array;
-                «ENDIF»
-                «FOR v : store.orderedVariables.filter[value.isExternal || value.properties.contains(VariableStore.OUTPUT)]»
+                «FOR v : store.orderedVariables.filter[value.isExternal || value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(InriaSimulationPreparation.ESTEREL_ORIG)]»
                     // Send «v.key»
-                    «v.serialize("root", "array")»
+                    «v.serialize("root", false)»
+                «ENDFOR»
+            
+                // Get JSON object as string
+                char* outString = cJSON_Print(root);
+                cJSON_Minify(outString);
+                // Flush to stdout
+                printf("%s\n", outString);
+                fflush(stdout);
+            
+                cJSON_Delete(root);
+            }
+            
+            void notifyInterfaceVariables() {
+                cJSON* root = cJSON_CreateObject();
+                «FOR v : store.orderedVariables.filter[value.isExternal || value.properties.contains(InriaSimulationPreparation.ESTEREL_ORIG)]»
+                    // Notify about «v.key»
+                    «v.serialize("root", true)»
                 «ENDFOR»
             
                 // Get JSON object as string
@@ -190,7 +209,7 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
         environment.addMacroInjection(BODY, "simulation_output")
         environment.addMacroInjection(END_LOOP, "simulation_output_reset")
         environment.addMacroInjection(BODY, "simulation_communication")
-        environment.addMacroInjection(INIT, "simulation_out")
+        environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
         environment.addMacroInjection(END_MAIN, "simulation_loop")
@@ -198,7 +217,7 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
         return cc
     }
     
-    def serialize(Pair<String, VariableInformation> variable, String json, String array) {
+    def serialize(Pair<String, VariableInformation> variable, String json, boolean notify) {
         val varName = variable.key
         val info = variable.value
         if (info.array) {
@@ -206,13 +225,13 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
         } else {
             val type = info.type
             if (info.isExternal) {
-                return '''cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(info.externalName)»);'''
+                return '''cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(if (notify) "0" else info.externalName)»);'''
             } else if (type == ValueType.PURE) {
-                return '''cJSON_AddItemToObject(«json», "«varName»", cJSON_CreateBool(«SIM_SIG_PREFIX + varName»));'''
+                return '''cJSON_AddItemToObject(«json», "«varName»", cJSON_CreateBool(«if (notify) "0" else SIM_SIG_PREFIX + varName»));'''
             } else {
                 return '''
-                cJSON_AddItemToObject(«json», "«varName»", cJSON_CreateBool(«SIM_SIG_PREFIX + varName»));
-                cJSON_AddItemToObject(«json», "«varName»_val", «type.getCreator(SIM_VAL_PREFIX + varName)»);
+                cJSON_AddItemToObject(«json», "«varName»", cJSON_CreateBool(«if (notify) "0" else SIM_SIG_PREFIX + varName»));
+                cJSON_AddItemToObject(«json», "«varName»_val", «type.getCreator(if (notify) "0" else SIM_VAL_PREFIX + varName)»);
                 '''
             }
         }
