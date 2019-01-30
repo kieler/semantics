@@ -197,7 +197,10 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
             </#macro>
             
             <#macro simulation_loop position>
-            while(1) { sendVariables(); }
+            while (1) {
+                while(getchar() != '\n');
+                sendVariables();
+            }
             </#macro>
         '''
         
