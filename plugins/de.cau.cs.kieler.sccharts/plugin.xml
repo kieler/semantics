@@ -246,6 +246,36 @@
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
         </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.netlist.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.netlist.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.netlist.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.netlist.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.priority.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.priority.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.priority.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.priority.java.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.statebased.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.c.kico">
+        </TransformationSystem>
      </extension>
 
 

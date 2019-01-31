@@ -130,21 +130,15 @@ class CountDelay extends SCChartsProcessor implements Traceable {
             //Add entry action
             val entryAction = sourceState.createEntryAction
             entryAction.addEffect(counter.createAssignment(0.createIntValue))
-            
-            if (!transition.implicitlyImmediate) {
-                // Meeting 2016-11-09 Semantics Meetings (ssm)
-                // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
-                
-                // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick", i.e., the tick
-                // when the state is entered 
-                val entryAction2 = sourceState.createEntryAction
-                entryAction2.addEffect(counter.createAssignment((-1).createIntValue))
-                entryAction2.setTrigger(transition.trigger.copy)
-            }
 
             // Pre allows to put the during action in the source state and not in the parent state
             // Add during action
-            val duringAction = sourceState.createImmediateDuringAction
+            val duringAction = sourceState.createDuringAction
+            // Meeting 2016-11-09 Semantics Meetings (ssm)
+            // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
+            // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick".
+            // i.e., the tick when the state is entered 
+            duringAction.immediate = transition.implicitlyImmediate
             duringAction.setTrigger(transition.trigger.copy)
             duringAction.addEffect(counter.createAssignment(counter.reference.add((1.createIntValue))))
 

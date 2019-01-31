@@ -77,6 +77,17 @@ public class SCLProgramImpl extends PragmatableImpl implements SCLProgram {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     */
+    public String getName() {
+        if (!getModules().isEmpty()) {
+            return getModules().get(0).getName();
+        }
+        return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override

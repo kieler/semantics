@@ -1,0 +1,30 @@
+public system de.cau.cs.kieler.esterel.compiler.inria.^simulation
+	label "Inria Esterel Simulation"
+	
+pre process de.cau.cs.kieler.esterel.compiler.inria.^simulation.preparation
+de.cau.cs.kieler.esterel.compiler.inria.c
+de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.setup.save.input": false,
+    "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
+    "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/json": "lib",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/ticktime.h": "lib/ticktime.h",
+        "platform:/plugin/de.cau.cs.kieler.esterel.compiler/resources/templates/c-main.ftl": "templates/c-main.ftl",
+        "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
+    }
+}
+post process silent de.cau.cs.kieler.kivis.gen config {
+    "de.cau.cs.kieler.kivis.autosearch": true
+}
+pre process de.cau.cs.kieler.^simulation.c.ticktime
+pre process de.cau.cs.kieler.esterel.compiler.inria.^simulation.template
+de.cau.cs.kieler.kicool.deploy.templates config {
+    "de.cau.cs.kieler.kicool.deploy.templates": {
+        "templates/c-main.ftl": "main.c"
+    }
+}
+de.cau.cs.kieler.kicool.deploy.compiler.c config {
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["main.c", "lib"],
+    "de.cau.cs.kieler.kicool.deploy.compiler.c.result": "simulation.exe"
+}
+de.cau.cs.kieler.^simulation.context.build

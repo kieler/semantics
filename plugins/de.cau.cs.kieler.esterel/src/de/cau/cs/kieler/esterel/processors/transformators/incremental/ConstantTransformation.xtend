@@ -31,7 +31,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @author mrb
  *
  */
-class ConstantTransformation extends InplaceProcessor<EsterelProgram> {
+class ConstantTransformation extends AbstractSCEstDynamicProcessor<Module> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -50,28 +50,7 @@ class ConstantTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Module) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-        }
-        else {
-            model.eAllContents.filter(Module).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Module module) {
+    override transform(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
         val HashMap<Constant, ValuedObject> newVariables = new HashMap<Constant, ValuedObject>()
         val constantDeclarations = module.declarations.filter(ConstantDeclaration).toList

@@ -1,0 +1,5 @@
+public system de.cau.cs.kieler.esterel.scest.scl.slic.priority.java
+    label "SCEst - SLIC - Priority-based (Java)"
+    
+system de.cau.cs.kieler.esterel.scest.scl.slic
+system de.cau.cs.kieler.scl.priority.java

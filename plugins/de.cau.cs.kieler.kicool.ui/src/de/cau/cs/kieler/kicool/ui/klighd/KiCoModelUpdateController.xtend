@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd
 
-import de.cau.cs.kieler.core.model.util.ModelUtil
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
@@ -21,7 +20,9 @@ import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
-import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController
+import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
+import de.cau.cs.kieler.klighd.ui.view.controllers.EditorUtil
+import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.IOException
@@ -39,12 +40,14 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
+import org.eclipse.emf.edit.domain.IEditingDomainProvider
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.resource.ImageDescriptor
+import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
@@ -61,6 +64,7 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
 import java.util.List
@@ -73,11 +77,7 @@ import java.util.List
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
-
-//    ssm: Workaround for the SBE with SDs
-//    override selectionChanged(SelectionChangedEvent event) {
-//    }
+class KiCoModelUpdateController extends AbstractViewUpdateController implements EditorSaveAdapter.EditorSafeListener {
 
     /**
      * Events that can cause an update of displayed model.
@@ -173,6 +173,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** Container for displaying waring messages. */
     private Composite warningMessageContainer = null
+    
+    /** The save adapter for the editor. */
+    protected final EditorSaveAdapter saveAdapter;
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -182,6 +185,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     new() {
         KiCoModelViewNotifier.register(this)
+        saveAdapter = new EditorSaveAdapter(this);
 
         // Save Button
         saveAction = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
@@ -313,6 +317,19 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         saveAdapter.deactivate()
     }
     
+    // -- Diagram Selection Change Event
+    // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    override selectionChanged(SelectionChangedEvent event) {
+        if (getEditor() instanceof XtextEditor) {
+            // ssm: Deactivate for workaround for the SBE with SDs
+            XtextSelectionHighlighter.highlightSelection(getEditor as XtextEditor, event.getSelection());
+        }
+    }
+    
     // -- Save Listener
     // -------------------------------------------------------------------------
     
@@ -378,7 +395,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onDiagramUpdate(Object model, KlighdSynthesisProperties properties) {
         // dispose warning message composite if necessary
-        if (warningMessageContainer != null) {
+        if (warningMessageContainer !== null) {
             if (!warningMessageContainer.isDisposed()) {
                 warningMessageContainer.dispose()
             }
@@ -399,9 +416,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         }
         if (warnings.length() > 0) {
-            warnings.setLength(warnings.length() - 1)
-// ssm: There is an issue with the warnings reporting. You can comment the following line as a work around, 
-// but of course this should be resolved soon.            
+            warnings.setLength(warnings.length() - 1)           
             addWarningComposite(getDiagramView().getViewer(), warnings.toString())
         }
     }
@@ -520,7 +535,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * Saves the current model into a file with saveAs dialog.
      */
     private def void saveModel() {
-        if (getModel() != null && isActive()) {
+        if (getModel() !== null && isActive()) {
             val model = getModel()
             // Get workspace
             val workspace = ResourcesPlugin.getWorkspace()
@@ -532,7 +547,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             val saveAsDialog = new SaveAsDialog(getDiagramView().getSite().getShell())
 
             // Configure dialog
-            if (lastSaveDirectory != null) {
+            if (lastSaveDirectory !== null) {
                 var path = lastSaveDirectory
                 // add new filename
                 path = path.append(filename)
@@ -554,7 +569,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             val path = saveAsDialog.getResult()
 
             // save
-            if (path != null && !path.isEmpty()) {
+            if (path !== null && !path.isEmpty()) {
                 val file = root.getFile(path)
                 val uri = URI.createPlatformResourceURI(path.toString(), false)
 
@@ -580,7 +595,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
                     // save
                     if (saveModel instanceof EObject) {
-                        ModelUtil.saveModel(saveModel, uri)
+                        saveModel(saveModel, uri)
                     } else {
                         // save to text file (create it if necessary)
                         if (!file.exists()) {
@@ -628,14 +643,14 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @return file extension or empty string if non exists.
      */
     public def String getResourceName(IEditorPart editor, Object model) {
-        if (editor != null && model != null) {
+        if (editor !== null && model !== null) {
             var filename = editor.getTitle()
             if (filename.contains(".")) {
                 filename = filename.substring(0, filename.lastIndexOf('.'))
             }
             // Adding correct file extension if available
             val ext = ResourceExtension.getResourceExtension(model)
-            if (ext != null) {
+            if (ext !== null) {
                 filename += "." + ext.getFileExtension()
             }
             return filename
@@ -661,7 +676,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     }
     
     /**
-     * Updates the compiler model and compilation context.
+     * Updates the compiler model and compilation context with multiple models at once.
      * 
      * @param model
      * @param context
@@ -685,29 +700,30 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (diagramView.viewContext !== null) {
                 diagramView.viewContext.setProperty(TracingVisualizationUpdateStrategy.ALWAYS_FALLBACK_TO_SIMPLE_UPDATE_STRATEGY, simpleUpdateToggleAction.isChecked())
             }
-            var EObject sModel
             // Read the model if necessary
             if (change == ChangeEvent.EDITOR) {
-                sModel = readModel(getEditor()) 
-                if (sModel != null && sModel.eResource() != null) {
-                    val eResource = sModel.eResource()
-                    sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty()
-                    
-                    // Check for model specific errors (e.g. Xtext validator rules) 
-                    val diagnostic = Diagnostician.INSTANCE.validate(sModel)
-                    if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
-                        sourceModelHasErrorMarkers = true
-                    }
-
-                    try {
-                        val underlyingFile = ResourceUtil.getUnderlyingFile(eResource)
-                        if (underlyingFile != null) {
-                            sourceModelHasErrorMarkers = sourceModelHasErrorMarkers ||
-                                    underlyingFile.findMarkers(IMarker.PROBLEM, false,
-                                            IResource.DEPTH_INFINITE).length > 0
+                sourceModel = ModelReaderUtil.readModelFromEditor(getEditor()) 
+                if (sourceModel instanceof EObject) {
+                    if (sourceModel.eResource() !== null) {
+                        val eResource = sourceModel.eResource()
+                        sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty()
+                        
+                        // Check for model specific errors (e.g. Xtext validator rules) 
+                        val diagnostic = Diagnostician.INSTANCE.validate(sourceModel)
+                        if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+                            sourceModelHasErrorMarkers = true
                         }
-                    } catch (Exception e) {
-                        // do nothing
+    
+                        try {
+                            val underlyingFile = ResourceUtil.getUnderlyingFile(eResource)
+                            if (underlyingFile !== null) {
+                                sourceModelHasErrorMarkers = sourceModelHasErrorMarkers ||
+                                        underlyingFile.findMarkers(IMarker.PROBLEM, false,
+                                                IResource.DEPTH_INFINITE).length > 0
+                            }
+                        } catch (Exception e) {
+                            // do nothing
+                        }
                     }
                 }
             }
@@ -725,14 +741,6 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
             // Create model to passed to update
             var Object model = null
-            if (sModel === null) {
-                // Try to load a generic object.
-                // IF this also fails, the sourceModel will be null.              
-                sourceModel = readModel(getEditor())    // Use readObject if not using an EMF/Xtext editor
-            } else {
-                sourceModel = sModel
-            }
-
             if (sourceModel !== null) {
                 if (diagramPlaceholderToggleAction.isChecked()) {
                     model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + getEditor().getTitle(), MODEL_PLACEHOLDER_MESSGAE)

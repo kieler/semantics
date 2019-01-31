@@ -99,7 +99,9 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKTracesAccess().getGroup_4(), "rule__KTraces__Group_4__0");
 			builder.put(grammarAccess.getKTraceAccess().getGroup(), "rule__KTrace__Group__0");
 			builder.put(grammarAccess.getKTickAccess().getGroup(), "rule__KTick__Group__0");
-			builder.put(grammarAccess.getKTickAccess().getGroup_2(), "rule__KTick__Group_2__0");
+			builder.put(grammarAccess.getKTickAccess().getGroup_1(), "rule__KTick__Group_1__0");
+			builder.put(grammarAccess.getKTickAccess().getGroup_3(), "rule__KTick__Group_3__0");
+			builder.put(grammarAccess.getKTickAccess().getGroup_5(), "rule__KTick__Group_5__0");
 			builder.put(grammarAccess.getRootScopeAccess().getGroup(), "rule__RootScope__Group__0");
 			builder.put(grammarAccess.getRootScopeAccess().getGroup_3(), "rule__RootScope__Group_3__0");
 			builder.put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
@@ -362,8 +364,10 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKTracesAccess().getTracesAssignment_3_2(), "rule__KTraces__TracesAssignment_3_2");
 			builder.put(grammarAccess.getKTraceAccess().getPragmasAssignment_0(), "rule__KTrace__PragmasAssignment_0");
 			builder.put(grammarAccess.getKTraceAccess().getTicksAssignment_1(), "rule__KTrace__TicksAssignment_1");
-			builder.put(grammarAccess.getKTickAccess().getInputsAssignment_1(), "rule__KTick__InputsAssignment_1");
-			builder.put(grammarAccess.getKTickAccess().getOutputsAssignment_2_1(), "rule__KTick__OutputsAssignment_2_1");
+			builder.put(grammarAccess.getKTickAccess().getNameAssignment_1_0(), "rule__KTick__NameAssignment_1_0");
+			builder.put(grammarAccess.getKTickAccess().getInputsAssignment_2(), "rule__KTick__InputsAssignment_2");
+			builder.put(grammarAccess.getKTickAccess().getOutputsAssignment_3_1(), "rule__KTick__OutputsAssignment_3_1");
+			builder.put(grammarAccess.getKTickAccess().getGotoAssignment_5_1(), "rule__KTick__GotoAssignment_5_1");
 			builder.put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
 			builder.put(grammarAccess.getRootScopeAccess().getDeclarationsAssignment_1(), "rule__RootScope__DeclarationsAssignment_1");
 			builder.put(grammarAccess.getRootScopeAccess().getEntitiesAssignment_2(), "rule__RootScope__EntitiesAssignment_2");

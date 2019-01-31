@@ -32,7 +32,8 @@ public enum TemplatePosition {
     PRE_TICK("pre-tick"), // Only for time measuring
     POST_TICK("post-tick"), // Only for time measuring
     START_LOOP("start-loop"),
-    END_LOOP("end-loop") 
+    END_LOOP("end-loop"),
+    END_MAIN("end-main") 
     ;
     
     final String position;

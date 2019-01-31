@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
@@ -27,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface EsterelProgram extends Pragmatable {
+public interface EsterelProgram extends Pragmatable, Nameable {
     /**
      * Returns the value of the '<em><b>Modules</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.scl.Module}.

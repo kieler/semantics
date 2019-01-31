@@ -46,6 +46,9 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     
     public static val IProperty<Map<String, String>> COPY = 
         new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.setup.copy", null)
+        
+    public static val IProperty<Boolean> SAVE = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.setup.save.input", true)
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.setup"
@@ -65,7 +68,9 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         }
         
         // Tasks
-        infra.saveCode(logger)      
+        if (environment.getProperty(SAVE)) {
+            infra.saveCode(logger)
+        }
         infra.clearTask(logger)    
         infra.copyTask(logger)
         

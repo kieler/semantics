@@ -39,6 +39,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getVariableOrSignalReferenceAccess().getAlternatives(), "rule__VariableOrSignalReference__Alternatives");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getAlternatives(), "rule__ValuedObjectPreExpression__Alternatives");
+			builder.put(grammarAccess.getValuedObjectOrSignalReferenceAccess().getAlternatives(), "rule__ValuedObjectOrSignalReference__Alternatives");
 			builder.put(grammarAccess.getEsterelDeclarationAccess().getAlternatives(), "rule__EsterelDeclaration__Alternatives");
 			builder.put(grammarAccess.getTypeIdentifierAccess().getAlternatives(), "rule__TypeIdentifier__Alternatives");
 			builder.put(grammarAccess.getTypeIdentifierAccess().getAlternatives_1_1(), "rule__TypeIdentifier__Alternatives_1_1");
@@ -99,7 +101,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 			builder.put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 			builder.put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getAlternatives(), "rule__ValuedObjectPreExpression__Alternatives");
 			builder.put(grammarAccess.getConditionalAccess().getAlternatives_7(), "rule__Conditional__Alternatives_7");
 			builder.put(grammarAccess.getLegacyConditionalAccess().getAlternatives_5(), "rule__LegacyConditional__Alternatives_5");
 			builder.put(grammarAccess.getThreadAccess().getAlternatives_1(), "rule__Thread__Alternatives_1");
@@ -167,6 +168,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSetAccess().getGroup_3(), "rule__Set__Group_3__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_5(), "rule__AtomicExpression__Group_5__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_2(), "rule__AtomicValuedExpression__Group_2__0");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getGroup_0(), "rule__ValuedObjectPreExpression__Group_0__0");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getGroup_1(), "rule__ValuedObjectPreExpression__Group_1__0");
 			builder.put(grammarAccess.getTypeIdentifierAccess().getGroup_1(), "rule__TypeIdentifier__Group_1__0");
 			builder.put(grammarAccess.getTypeDeclarationAccess().getGroup(), "rule__TypeDeclaration__Group__0");
 			builder.put(grammarAccess.getTypeDeclarationAccess().getGroup_3(), "rule__TypeDeclaration__Group_3__0");
@@ -393,8 +396,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getGroup(), "rule__ModExpression__Group__0");
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1(), "rule__ModExpression__Group_1__0");
 			builder.put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getGroup_0(), "rule__ValuedObjectPreExpression__Group_0__0");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getGroup_1(), "rule__ValuedObjectPreExpression__Group_1__0");
 			builder.put(grammarAccess.getSCLProgramAccess().getGroup(), "rule__SCLProgram__Group__0");
 			builder.put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 			builder.put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
@@ -656,6 +657,10 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSetAccess().getAnnotationsAssignment_0(), "rule__Set__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getSetAccess().getSignalAssignment_2(), "rule__Set__SignalAssignment_2");
 			builder.put(grammarAccess.getSetAccess().getExpressionAssignment_3_1(), "rule__Set__ExpressionAssignment_3_1");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectPreExpression__OperatorAssignment_0_1");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectPreExpression__SubExpressionsAssignment_0_3");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorAssignment_1_1(), "rule__ValuedObjectPreExpression__OperatorAssignment_1_1");
+			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__ValuedObjectPreExpression__SubExpressionsAssignment_1_2");
 			builder.put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_0(), "rule__TypeIdentifier__TypeAssignment_0");
 			builder.put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_1_1_0(), "rule__TypeIdentifier__TypeAssignment_1_1_0");
 			builder.put(grammarAccess.getTypeIdentifierAccess().getIdTypeAssignment_1_1_1(), "rule__TypeIdentifier__IdTypeAssignment_1_1_1");
@@ -952,10 +957,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__ModExpression__SubExpressionsAssignment_1_2");
 			builder.put(grammarAccess.getNegExpressionAccess().getOperatorAssignment_0_1(), "rule__NegExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getNegExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__NegExpression__SubExpressionsAssignment_0_2");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectPreExpression__OperatorAssignment_0_1");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectPreExpression__SubExpressionsAssignment_0_3");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getOperatorAssignment_1_1(), "rule__ValuedObjectPreExpression__OperatorAssignment_1_1");
-			builder.put(grammarAccess.getValuedObjectPreExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__ValuedObjectPreExpression__SubExpressionsAssignment_1_2");
 			builder.put(grammarAccess.getSCLProgramAccess().getPragmasAssignment_0(), "rule__SCLProgram__PragmasAssignment_0");
 			builder.put(grammarAccess.getSCLProgramAccess().getModulesAssignment_1(), "rule__SCLProgram__ModulesAssignment_1");
 			builder.put(grammarAccess.getModuleAccess().getAnnotationsAssignment_0(), "rule__Module__AnnotationsAssignment_0");

@@ -33,7 +33,7 @@ class ReadTrace extends TraceProcessor {
         val context = simulationContext
 
         val traceProvider = traceDataProvider
-        if (traceProvider !== null) {
+        if (traceProvider !== null && traceProvider.isNextInputTick(context.stepNumber)) {
             traceProvider.applyTraceInputs(context.stepNumber)
             traceProvider.passInputs(dataPool)
         }

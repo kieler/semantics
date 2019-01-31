@@ -1,7 +1,6 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.netlist.c
-    label "Netlist-based Simulation (C, No-TTS)"
+developer system de.cau.cs.kieler.^simulation.netlist.c
+    label "Netlist-based Simulation C Backend"
 
-system de.cau.cs.kieler.sccharts.netlist
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {

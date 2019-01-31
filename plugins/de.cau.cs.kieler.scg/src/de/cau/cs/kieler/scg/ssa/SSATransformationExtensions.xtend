@@ -15,16 +15,21 @@ package de.cau.cs.kieler.scg.ssa
 import com.google.common.base.Function
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.Assignment
@@ -35,6 +40,7 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
@@ -42,6 +48,8 @@ import java.util.Collection
 import java.util.Deque
 import java.util.LinkedList
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static com.google.common.collect.Lists.*
@@ -49,14 +57,6 @@ import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import com.google.common.collect.Multimap
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.Surface
 
 /**
  * @author als
@@ -351,7 +351,12 @@ class SSATransformationExtensions {
         for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
             val bb = node.basicBlock
             val parameter = node.expression.eContents.filter(Parameter).toList
-            for (entry : (bb.firstNode.incomingLinks.groupBy[(it.eContainer as Node).basicBlock] => [entrySet.removeIf[!parameterMapping.containsValue(key)]]).entrySet) {
+            val incomingBBs = bb.firstNode.incomingLinks.groupBy[(it.eContainer as Node).basicBlock]
+            incomingBBs.entrySet.removeIf[!parameterMapping.containsValue(key)] // Remove those not represented in phi function
+            if (parameter.size !== incomingBBs.size) {
+                throw new IllegalArgumentException("Parameter mapping is incomplete")
+            }
+            for (entry : incomingBBs.entrySet) {
                 val link = entry.value.head
                 val linkBB = entry.key
                 val linkNode = (link.eContainer as Node)
@@ -367,9 +372,10 @@ class SSATransformationExtensions {
                     }
                     
                     // Fix CF
+                    val oldTarget = link.target
                     link.target = it
                     next = createControlFlow => [
-                        target = node.next.target
+                        target = oldTarget
                     ]
                     
                     placed.put(node, it)
