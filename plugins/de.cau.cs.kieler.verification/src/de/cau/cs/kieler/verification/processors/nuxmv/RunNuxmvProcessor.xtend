@@ -12,27 +12,15 @@
  */
  package de.cau.cs.kieler.verification.processors.nuxmv
 
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.VerificationProperty
-import de.cau.cs.kieler.verification.VerificationPropertyChanged
-import de.cau.cs.kieler.verification.VerificationPropertyStatus
-import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
-import java.io.File
-import java.util.Map
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.IPath
 
-import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
-
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
-
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvIdentifier
 
 /**
  * @author aas
  */
-class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
+class RunNuxmvProcessor extends RunSmvProcessor {
     
     override getId() {
         return "de.cau.cs.kieler.sccharts.verification.runNuxmv"
@@ -42,86 +30,11 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
         return "Run nuXmv"
     }
     
-    override getType() {
-        return ProcessorType.DEVELOPER
+    override protected getProcessBuilderCommandList(IFile smvFile, VerificationProperty property) {
+        return #["nuXmv", "-int", smvFile.name]
     }
     
-    override process() {
-        if(verificationProperties.isNullOrEmpty) {
-            return
-        }
-        
-        val codeContainer = getSourceModel
-        val code = codeContainer.head.code
-        val smvFile = saveText(smvFilePath, code)
-        for(property : verificationProperties) {
-            try {
-                throwIfCanceled
-                property.modelCheckerModelFile = smvFile
-                property.status = VerificationPropertyStatus.RUNNING
-                compilationContext.notify(new VerificationPropertyChanged(property))
-                // Calling the model checker is possibly long running
-                val processOutput = runModelChecker(smvFile, property)
-                val processOutputFile = saveText(getProcessOutputFilePath(property), processOutput)
-                updateVerificationResult(processOutputFile, processOutput, property)
-            } catch (Exception e) {
-                e.printStackTrace
-                property.fail(e)
-                compilationContext.notify(new VerificationPropertyChanged(property))
-            }
-        }
-    }
-    
-    private def String runModelChecker(IFile smvFile, VerificationProperty property) {
-        val processBuilder = new ProcessBuilder()
-        processBuilder.directory(new File(smvFile.parent.location.toOSString))
-        val indexMap = sourceEnvironment.getProperty(Environment.INDEX_MAP_OF_SMV_SPECS) as Map<VerificationProperty, Integer>
-        val index = indexMap.get(property)
-        if(index === null || index < 0) {
-            throw new Exception("Could not determine which arguments to send to the model checker")
-        }
-        val nuXmvCommand = #["nuXmv", "-n", index.toString, smvFile.name]
-        processBuilder.command(timeCommand + nuXmvCommand)
-        processBuilder.redirectErrorStream(true)
-        val process = processBuilder.runToTermination([ return isCanceled() ])
-        throwIfCanceled
-        val processOutput = process.readInputStream
-        return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
-    }
-    
-    private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
-        property.processOutputFile = processOutputFile
-        val interpreter = new NuxmvOutputInterpreter(processOutput)
-        val counterexample = interpreter.counterexamples.head
-        val passedSpec = interpreter.passedSpecs.head
-        if(counterexample !== null && property.matches(counterexample.spec)) {
-            val store = VariableStore.get(compilationContext.startEnvironment)
-            val ktrace = counterexample.getKtrace(store)
-            val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
-            property.fail(ktraceFile)    
-        } else if(passedSpec !== null && property.matches(passedSpec)) {
-            property.status = VerificationPropertyStatus.PASSED    
-        } else {
-            property.fail(new Exception("Property did not clearly pass or fail"))
-        }
-        compilationContext.notify(new VerificationPropertyChanged(property))
-    }
-    
-    private def boolean matches(VerificationProperty property, String smvFormula) {
-        // The following is merely a heuristic to check that the correct property was checked.
-        // Spaces and brackets are removed and afterwards the formulas are compared.
-        // This is because nuXmv gives the answer for a minified formula.
-        val propertyFormula = property.formula.toSmvExpression()
-        val propertyFormulaSimplified = propertyFormula.replaceAll('''\s|\(|\)''',"")
-        val smvFormulaSimplified = smvFormula.replaceAll('''\s|\(|\)''',"")
-        return smvFormulaSimplified == propertyFormulaSimplified
-    }
-    
-    private def IPath getSmvFilePath() {
-        return getOutputFile(modelFile.nameWithoutExtension+".smv")
-    }
-  
-    private def IPath getProcessOutputFilePath(VerificationProperty property) {
-        return getOutputFile(property, ".smv.log")
+    override protected getInteractiveCommands(IFile smvFile, VerificationProperty property) {
+        #['''go''', '''check_property -P «property.name.toSmvIdentifier»''', '''quit''']
     }
 }

@@ -13,8 +13,6 @@
  */
  package de.cau.cs.kieler.verification.processors
 
-import com.google.common.io.CharStreams
-import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 import java.util.function.Function
 
@@ -23,10 +21,25 @@ import java.util.function.Function
  */
 class ProcessExtensions {
     
-    public static def Process runToTermination(ProcessBuilder processBuilder, Function<Void, Boolean> processCanceled) {
-        val proc = processBuilder.start()
-        var boolean finished = false
-        var boolean canceled = false
+    public static def void waitForOutput(Process proc, Function<Void, Boolean> processCanceled) {
+        var boolean finished = !proc.isAlive
+        var boolean outputAvailable = (proc.inputStream.available > 0)
+        var boolean done = (finished || outputAvailable)
+        var boolean canceled = processCanceled.apply(null)
+        while(!canceled && !done && proc.isAlive) {
+            canceled = processCanceled.apply(null)
+            finished = proc.waitFor(1, TimeUnit.MILLISECONDS)
+            outputAvailable = (proc.inputStream.available > 0) 
+            done = (finished || outputAvailable)
+        }
+        if(canceled) {
+            proc.destroyForcibly
+        }
+    }
+    
+    public static def void waitForTermination(Process proc, Function<Void, Boolean> processCanceled) {
+        var boolean finished = !proc.isAlive
+        var boolean canceled = processCanceled.apply(null)
         while(!canceled && !finished && proc.isAlive) {
             canceled = processCanceled.apply(null)
             finished = proc.waitFor(500, TimeUnit.MILLISECONDS)
@@ -34,20 +47,15 @@ class ProcessExtensions {
         if(canceled) {
             proc.destroyForcibly
         }
-        return proc
     }
     
     public static def String readInputStream(Process process) {
-        var String streamOutput = null
-        var InputStreamReader inStreamReader
-        try {
-            inStreamReader = new InputStreamReader(process.getInputStream())
-            streamOutput = CharStreams.toString(inStreamReader)
-        } finally {
-            if(inStreamReader !== null) {
-                inStreamReader.close()
-            }
+        val stringBuffer = new StringBuffer
+        val inputStream = process.inputStream
+        while(inputStream.available > 0 ) {
+            val b = inputStream.read
+            stringBuffer.append( b as char )
         }
-        return streamOutput
+        return stringBuffer.toString
     }
 }

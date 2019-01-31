@@ -41,7 +41,6 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
         }
         // In SMV the internal specifications are numbered CTL first then LTL, then invariants
         verificationProperties.sort(new SmvPropertyComparator())
-        val indexMap = <VerificationProperty, Integer>newHashMap()
         var index = 0
         for(property : verificationProperties) {
             val specName = property.getSmvSpecName
@@ -49,10 +48,8 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
             incIndentationLevel
             appendIndentedLine('''«property.name.toSmvIdentifier» := «property.formula.toSmvExpression»;''')
             decIndentationLevel
-            indexMap.put(property, index)
             index++
         }
-        processorInstance.environment.setProperty(Environment.INDEX_MAP_OF_SMV_SPECS, indexMap)
     }
     
     override generateDone() {

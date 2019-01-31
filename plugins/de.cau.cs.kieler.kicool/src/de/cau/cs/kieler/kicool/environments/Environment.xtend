@@ -114,9 +114,6 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<IFile> VERIFICATION_MODEL_FILE = 
         new Property<IFile>("de.cau.cs.kieler.kicool.verificationModelFile")
     
-    public static val IProperty<Object> INDEX_MAP_OF_SMV_SPECS =
-        new Property<Object>("de.cau.cs.kieler.verification.smv.indexOfProperties")
-    
     
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
              

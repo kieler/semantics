@@ -82,7 +82,8 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val spinCommand = #["spin", "-run", "-a", pmlFile.name]
         processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
-        val process = processBuilder.runToTermination([ return isCanceled() ])
+        val process = processBuilder.start
+        process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = process.readInputStream
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
@@ -94,7 +95,8 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val trailCommand = #["spin", "-t", "-p", pmlFile.name]
         processBuilder.command(trailCommand)
         processBuilder.redirectErrorStream(true)
-        val process = processBuilder.runToTermination([ return isCanceled() ])
+        val process = processBuilder.start
+        process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = process.readInputStream
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
