@@ -40,7 +40,7 @@ class SelectIntermediateAction implements IAction {
         
         val intermediateData = kNode.getProperty(INTERMEDIATE_DATA)
         val compilationContext = intermediateData.compilationContext
-        val editor = compilationContext.getRootContext.inputEditor
+        val editor = compilationContext.inputEditor
         val view = intermediateData.view
         var model = intermediateData.model
         if (model instanceof String) {
