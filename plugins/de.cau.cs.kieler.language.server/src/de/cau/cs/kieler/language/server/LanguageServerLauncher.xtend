@@ -13,7 +13,10 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
+import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
@@ -34,7 +37,9 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
-import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import org.eclipse.xtext.ide.server.ServerModule
+import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.eclipse.xtext.util.Modules2
 
 /**
  * Used to start language server via stdin/out connection.
@@ -44,18 +49,22 @@ import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
  */
 class LanguageServerLauncher extends ServerLauncher {
     
-    extension LanguageRegistration registration = new LanguageRegistration
+    static extension LanguageRegistration registration = new LanguageRegistration
+    
+    @Inject Injector injector
+    
+    static KGraphLanguageServerExtension kgtExt = null
     
     def static void main(String[] args) {       
         // Launch the server
-        val launcher = new LanguageServerLauncher()
-        val parent = launcher.registration.bindAndRegisterLanguages() 
-        launcher.start(parent)
+        kgtExt = registration.bindAndRegisterLanguages()        
+        launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [
+            bind(ServerLauncher).to(LanguageServerLauncher)
+            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+        ]))
     }
     
-    def start(Injector parent) {
-        val LaunchArgs args = ServerLauncher.createLaunchArgs(ServerLauncher.name, #[])
-        val injector = parent.createChildInjector(new KeithServerModule)
+    override start(LaunchArgs args) {
         val executorService = Executors.newCachedThreadPool
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
@@ -63,6 +72,7 @@ class LanguageServerLauncher extends ServerLauncher {
         val languageServer = injector.getInstance(LanguageServerImpl)
         val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
         val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
+        kicoolExtension.kgraphLSEx = kgtExt
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(#[languageServer, regExtension, kicoolExtension])
                 .setRemoteInterface(LanguageClient)

@@ -16,33 +16,23 @@ import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
-import io.typefox.sprotty.layout.ElkLayoutEngine
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import org.apache.log4j.Logger
-import org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider
-import org.eclipse.elk.core.util.persistence.ElkGraphResourceFactory
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
-import org.eclipse.xtext.util.Modules2
 import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.eclipse.xtext.ide.server.contentassist.ContentAssistService
-import org.eclipse.xtext.resource.impl.ResourceServiceProviderRegistryImpl.InternalData
-import org.eclipse.xtext.resource.ResourceServiceProviderServiceLoader
-import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import org.eclipse.xtext.ide.server.ProjectManager
-import org.eclipse.lsp4j.jsonrpc.Launcher
+import org.eclipse.xtext.util.Modules2
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -86,13 +76,6 @@ class LanguageServer implements IApplication {
                 return 1
             }
             println("Connection to: " + host + ":" + port)
-               
-               
-//            // Initialize ELK
-            ElkLayoutEngine.initialize(new LayeredMetaDataProvider)
-            Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put('elkg', new ElkGraphResourceFactory)
-            
-//        
             // Register all languages
             println("Starting language server socket")
             val kgraphExt = bindAndRegisterLanguages()
