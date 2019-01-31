@@ -114,12 +114,19 @@ class InriaEsterelCompiler extends EsterelCompiler {
     }
     
     protected def checkExecutableFlags() {
+        var succeeded = true
         if (isAvailable) {
             val bin = new File(root, "bin")
             for (exe : bin.listFiles) {
-                if (!exe.canExecute) {
-                    exe.executable = true
+                if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
+                    if (!exe.canExecute) {
+                        val success = exe.executable = true
+                        succeeded = succeeded && success
+                    }
                 }
+            }
+            if (!succeeded) {
+                environment.warnings.add("Failed to set executable flag of the esterel compiler")
             }
         }
     }
