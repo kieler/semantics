@@ -37,4 +37,5 @@ public class ${target_basename} {
            <@inject position="end-loop" /><#nt>
         }
     }
+    <@inject position="end-main" /><#nt>
 }

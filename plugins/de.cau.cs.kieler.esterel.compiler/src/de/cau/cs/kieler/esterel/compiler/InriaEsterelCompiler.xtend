@@ -19,6 +19,7 @@ import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import static extension java.nio.file.Files.*
 
 /**
  * @author als
@@ -35,7 +36,7 @@ class InriaEsterelCompiler extends EsterelCompiler {
     public static val IProperty<String> VERSION = 
         new Property<String>("de.cau.cs.kieler.esterel.compiler.inria.version", null)
 
-    public static val VERSIONS = #["iec_v5_100", "iec_v5_92"]
+    public static val VERSIONS = #["iec_v5_100"]
         
     val Environment environment
     var String version = null
@@ -58,6 +59,7 @@ class InriaEsterelCompiler extends EsterelCompiler {
         } else {
             version.resolveRoot
         }
+        checkExecutableFlags()
     }
     
     override getName() {
@@ -109,6 +111,24 @@ class InriaEsterelCompiler extends EsterelCompiler {
     
     def getXESPath() {
         return new File(new File(root, "bin"), "xes")
+    }
+    
+    protected def checkExecutableFlags() {
+        var succeeded = true
+        if (isAvailable) {
+            val bin = new File(root, "bin")
+            for (exe : bin.listFiles) {
+                if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
+                    if (!exe.canExecute) {
+                        val success = exe.executable = true
+                        succeeded = succeeded && success
+                    }
+                }
+            }
+            if (!succeeded) {
+                environment.warnings.add("Failed to set executable flag of the esterel compiler")
+            }
+        }
     }
         
        

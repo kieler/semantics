@@ -32,7 +32,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgram, CodeContainer> {
+class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgram, CodeContainer> {
     
     public static val ID = "de.cau.cs.kieler.esterel.compiler.inria.c"
 
@@ -62,6 +62,7 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         logger.println("== Setting up Esterel source file ==")
         
         var resource = sourceModel.eResource
+        val modelName = sourceModel.modules.head.name
         var File sourceFile
         
         if (resource !== null) {
@@ -69,7 +70,7 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         }
         
         if (sourceFile === null) {
-            sourceFile = new File(infra.generatedCodeFolder, sourceModel.modules.head.name + InriaEsterelCompiler.ESTEREL_EXTENSION)
+            sourceFile = new File(infra.generatedCodeFolder, modelName + InriaEsterelCompiler.ESTEREL_EXTENSION)
             logger.println("Serializing Esterel program to " + sourceFile.toString)
             
             // Serialize
@@ -129,8 +130,8 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         
         val compiler = new InriaEsterelCompiler(environment)
         if (compiler === null || !compiler.available) {
-            environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
-            logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
+            environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported on this operating system!")
+            logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported on this operating system!")
         }
         
         val options = <String>newArrayList
@@ -162,7 +163,9 @@ class EsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgra
         // Create model
         model = new CodeContainer
         for (targetCode : targetCodes) {
-            targetModel.addProxyCCodeFile(targetCode)
+            targetModel.addProxyCCodeFile(targetCode) => [
+                dataStructName = modelName
+            ]
             infra.sourceCodeFiles += targetCode
         }
         infra.sourceCode = targetModel

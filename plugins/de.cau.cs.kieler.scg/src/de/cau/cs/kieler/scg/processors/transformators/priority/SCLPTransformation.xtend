@@ -27,7 +27,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
@@ -63,53 +62,53 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     static val TICK_DATA = "TickData"
      
     /** Default indentation of a c file */
-    private val DEFAULT_INDENTATION = "  "
+	val DEFAULT_INDENTATION = "  "
     
     /** Keeps track of the current indentation level */
-    private var currentIndentation = ""
+	var currentIndentation = ""
     
     /** Maps nodes to their corresponding labels, if there are any */
-    private var labeledNodes = <Node, String> newHashMap
+	var labeledNodes = <Node, String>newHashMap
     
     /** Keeps track of the current label number for newly created labels */
-    private var labelNr = 0
+	var labelNr = 0
     
     /** Keeps track of region numbers for regions without a name. They will then recieve a 
      *  unique region number. */
-    private var regionNr = 0
+    var regionNr = 0
     
     /** Keeps track of previously used region names */
-    private var regionNames = new ArrayList<String>
+    var regionNames = new ArrayList<String>
     
     /** StringBuilder to keep track of forks with more than 4 elements. 
      *  There exists no macro for these forks, therefore new macros are created if this happens. 
      *  This StringBuilder collects the macros for programs with under WORD_SIZE priorities. */
-    private var forkSb = new StringBuilder
+    var forkSb = new StringBuilder
     
     /** StringBuilder to keep track of joins with more than 4 elements. 
      *  There exists no macro for these joins, therefore new macros are created if this happens. 
      *  This StringBuilder collects the macros for programs with under WORD_SIZE priorities. */
-    private var joinSbUnderWordsize = new StringBuilder
+    var joinSbUnderWordsize = new StringBuilder
     
     /** StringBuilder to keep track of joins with more than 4 elements. 
      *  There exists no macro for these joins, therefore new macros are created if this happens. 
      *  This StringBuilder collects the macros for programs with over WORD_SIZE priorities. */
-    private var joinSbOverWordsize = new StringBuilder
+    var joinSbOverWordsize = new StringBuilder
     
     /** Keeps track of newly generated fork macros and prevents a fork macro to be generated multiple times */
-    private var generatedForks = new ArrayList<Integer>
+    var generatedForks = new ArrayList<Integer>
 
     /** Keeps track of newly generated join macros and prevents a join macro to be generated multiple times */
-    private var generatedJoins = new ArrayList<Integer>
+    var generatedJoins = new ArrayList<Integer>
     
     /** Keeps track of the previous node to allow prio()-statements to be made if necessary */
-    private var previousNode = new Stack<Node>
+    var previousNode = new Stack<Node>
     
     /** Keeps track of already visited nodes */
-    private var visited = new HashMap<Node, Boolean>
+    var visited = new HashMap<Node, Boolean>
     
     /** Saves all prioIDs of nodes inside a thread (as represented by its Entry node) */
-    private var threadPriorities = new HashMap<Node, ArrayList<Integer>>
+    var threadPriorities = new HashMap<Node, ArrayList<Integer>>
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.sclp"
@@ -119,7 +118,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         "SCL_P"
     }
     
-   override getType() {
+    override getType() {
         ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
@@ -140,7 +139,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
      * @return
      *          The program in the form of a String
      */
-    public def transform(SCGraph scg, CodeContainer code) {
+    def transform(SCGraph scg, CodeContainer code) {
         
         val header = new StringBuilder
         val program = new StringBuilder
@@ -795,9 +794,9 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
                 if(i != n - 1) {
                     s1 = s1.concat(", ")
                 }
-                s2 = s2.concat(" \\ \n")
+                s2 = s2.concat(" \\\n")
             }
-            forkSb.append(s1 + ") \\ \n")
+            forkSb.append(s1 + ") \\\n")
             s2 = s2.concat("  dispatch_;\n")
             forkSb.append(s2)
             forkSb.append("\n\n")
@@ -840,19 +839,19 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
                    overWordsizeString  = overWordsizeString.concat(" | ")
                 }
             }
-            joinSbUnderWordsize.append(s1 + ") \\ \n")
+            joinSbUnderWordsize.append(s1 + ") \\\n")
             joinSbUnderWordsize.append("  _case __LABEL__: if (")
             joinSbUnderWordsize.append("isEnabledAnyOf(")
             joinSbUnderWordsize.append(underWordsizeString)
             joinSbUnderWordsize.append(")")
-            joinSbUnderWordsize.append(") {\\ \n")
+            joinSbUnderWordsize.append(") {\\\n")
             joinSbUnderWordsize.append("    PAUSEG_(__LABEL__); }")
             joinSbUnderWordsize.append("\n\n")
             
-            joinSbOverWordsize.append(s1 + ") \\ \n")
+            joinSbOverWordsize.append(s1 + ") \\\n")
             joinSbOverWordsize.append("  _case __LABEL__: if (")
             joinSbOverWordsize.append(overWordsizeString)
-            joinSbOverWordsize.append(") {\\ \n")
+            joinSbOverWordsize.append(") {\\\n")
             joinSbOverWordsize.append("    PAUSEG_(__LABEL__); }")
             joinSbOverWordsize.append("\n\n")
             
