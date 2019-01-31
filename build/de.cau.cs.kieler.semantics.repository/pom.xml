@@ -36,7 +36,6 @@
                 <copy file="${update.site.dir}/content.xml" tofile="${update.site.dir}/content.copy.xml" overwrite="true"/>
                 <xslt style="contentfix.xsl" in="${update.site.dir}/content.copy.xml" out="${update.site.dir}/content.xml"/>
                 <zip destfile="${update.site.dir}/content.jar" basedir="${update.site.dir}" includes="content.xml"/>
-                <xz destfile="${update.site.dir}/content.xml.xz" src="${update.site.dir}/category.xml"/>
                 <delete file="${update.site.dir}/category.xml"/>
                 <delete file="${update.site.dir}/content.xml"/>
                 <delete file="${update.site.dir}/content.copy.xml"/>
