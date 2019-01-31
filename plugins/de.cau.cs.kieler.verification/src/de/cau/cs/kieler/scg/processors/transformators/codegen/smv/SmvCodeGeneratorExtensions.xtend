@@ -12,19 +12,28 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
+import java.util.regex.Pattern
+
 /** 
  * @author aas
  */
 class SmvCodeGeneratorExtensions {
+    
+    private static val NO_IDENTIFIER_CHARACTER_PATTERN = Pattern.compile('''[^a-zA-z0-9_]''')
     
     public def static String toSmvExpression(CharSequence kexpression) {
         return kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|")
                                    .replace("false", "FALSE").replace("true", "TRUE")
     }
     
-    private static def String toKExpression(CharSequence smvExpression) {
+    public static def String toKExpression(CharSequence smvExpression) {
         return smvExpression.toString.replace("=", "==").replace("&","&&").replace("|","||")
                                      .replace("FALSE","false").replace("TRUE","true")
                             
+    }
+    
+    public static def String toSmvIdentifier(String name) {
+        val noIdentifierCharacterMatcher = NO_IDENTIFIER_CHARACTER_PATTERN.matcher(name)
+        return noIdentifierCharacterMatcher.replaceAll("_")
     }
 }

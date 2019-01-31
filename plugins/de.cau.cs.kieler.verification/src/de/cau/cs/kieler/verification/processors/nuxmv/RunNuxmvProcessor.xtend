@@ -26,6 +26,9 @@ import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+
+
 /**
  * @author aas
  */
@@ -109,15 +112,9 @@ class RunNuxmvProcessor extends RunModelCheckerProcessorBase {
         // Spaces and brackets are removed and afterwards the formulas are compared.
         // This is because nuXmv gives the answer for a minified formula.
         val propertyFormula = property.formula.toSmvExpression()
-        val propertyFormulaSimplified = propertyFormula.replaceAll("\\s","").replace("(","").replace(")", "")
-        val smvFormulaSimplified = smvFormula.replaceAll("\\s","").replace("(","").replace(")", "")
+        val propertyFormulaSimplified = propertyFormula.replaceAll('''\s|\(|\)''',"")
+        val smvFormulaSimplified = smvFormula.replaceAll('''\s|\(|\)''',"")
         return smvFormulaSimplified == propertyFormulaSimplified
-    }
-    
-    private static def String toSmvExpression(String kexpression) {
-        // TODO: duplicate of SmvCodeGeneratorSpecificationModule.toSmvExpression, but cannot import from there
-        return kexpression.replace("==", "=").replace("&&", "&").replace("||", "|")
-                          .replace("false", "FALSE").replace("true", "TRUE")
     }
     
     private def IPath getSmvFilePath() {

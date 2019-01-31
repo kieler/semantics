@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGeneratorModuleBase
 
 /**
  * @author aas
@@ -29,13 +30,10 @@ class SpinTrailInterpreter extends LineBasedParser {
     
     private SpinCounterexampleState currentCounterexampleState
     
-    // TODO: duplicate of PromelaCodeGeneratorModuleBase but cannot import from there 
-    private static val TICK_END_FLAG_NAME = "tickend"
-    
     private static val LTL_SPEC_PATTERN = Pattern.compile('''ltl (.*): (.*)''')
     private static val FAILED_ASSERTION_PATTERN = Pattern.compile('''.*text of failed assertion: assert\((.*)\)''')
-    private static val TICK_START_PATTERN = Pattern.compile('''.*\[«TICK_END_FLAG_NAME» = 0\]''')
-    private static val TICK_END_PATTERN = Pattern.compile('''.*\[«TICK_END_FLAG_NAME» = 1\]''')
+    private static val TICK_START_PATTERN = Pattern.compile('''.*\[«PromelaCodeGeneratorModuleBase.TICK_END_FLAG_NAME» = 0\]''')
+    private static val TICK_END_PATTERN = Pattern.compile('''.*\[«PromelaCodeGeneratorModuleBase.TICK_END_FLAG_NAME» = 1\]''')
     private static val LOOP_START_PATTERN = Pattern.compile('''<<<<<START OF CYCLE>>>>>''')
     private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''.*\[([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)\]''')
     

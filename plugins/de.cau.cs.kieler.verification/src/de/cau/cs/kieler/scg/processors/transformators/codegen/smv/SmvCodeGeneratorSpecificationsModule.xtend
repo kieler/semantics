@@ -18,6 +18,7 @@ import java.util.Comparator
 import de.cau.cs.kieler.verification.VerificationPropertyType
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvIdentifier
 import java.util.List
 
 /**
@@ -46,7 +47,7 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
             val specName = property.getSmvSpecName
             appendIndentedLine('''«specName»''')
             incIndentationLevel
-            appendIndentedLine('''«property.formula.toSmvExpression»;''')
+            appendIndentedLine('''«property.name.toSmvIdentifier» := «property.formula.toSmvExpression»;''')
             decIndentationLevel
             indexMap.put(property, index)
             index++
@@ -56,16 +57,16 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
     
     override generateDone() {
     }
-        
+
     private def List<VerificationProperty> getVerificationProperties() {
         return processorInstance.compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
     }
     
     private def String getSmvSpecName(VerificationProperty property) {
         switch(property.type) {
-            case INVARIANT : return "INVARSPEC"
-            case LTL : return "LTLSPEC"
-            case CTL : return "CTLSPEC"
+            case INVARIANT : return "INVARSPEC NAME"
+            case LTL : return "LTLSPEC NAME"
+            case CTL : return "CTLSPEC NAME"
             default : throw new Exception("Cannot translate VerificationProperty '"+property+"' to SMV code")
         }
     }
@@ -82,7 +83,8 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
         }
         
         private def int getWeight(VerificationProperty o) {
-            // In NuSMV and nuXmv CTL specs come first, then LTL specs, and then invariants
+            // The option use_coi_size_sorting determines the order of specifications in NuSMV / nuXmv.
+            // It seems per default CTL specs come first, then LTL specs, and then invariants.
             switch(o.type) {
                 case VerificationPropertyType.CTL : return 0
                 case VerificationPropertyType.LTL : return 1

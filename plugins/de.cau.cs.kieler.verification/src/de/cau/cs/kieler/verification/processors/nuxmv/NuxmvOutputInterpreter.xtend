@@ -18,6 +18,8 @@ import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toKExpression
+
 /**
  * @author aas
  */
@@ -148,12 +150,6 @@ class NuxmvOutputInterpreter extends LineBasedParser {
                 sb.append(";\n")
             }
             return sb.toString
-        }
-        
-        private static def String toKExpression(String smvExpression) {
-            // TODO: duplicate of SmvCodeGeneratorSpecificationModule.toKExpression, but cannot import from there
-            return smvExpression.toString.replace("=", "==").replace("&","&&").replace("|","||")
-                                     .replace("FALSE","false").replace("TRUE","true")
         }
         
         private static def boolean isInput(String variable, VariableStore store) {
