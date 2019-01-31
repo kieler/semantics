@@ -19,6 +19,7 @@ import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import static extension java.nio.file.Files.*
 
 /**
  * @author als
@@ -58,6 +59,7 @@ class InriaEsterelCompiler extends EsterelCompiler {
         } else {
             version.resolveRoot
         }
+        checkExecutableFlags()
     }
     
     override getName() {
@@ -109,6 +111,17 @@ class InriaEsterelCompiler extends EsterelCompiler {
     
     def getXESPath() {
         return new File(new File(root, "bin"), "xes")
+    }
+    
+    protected def checkExecutableFlags() {
+        if (isAvailable) {
+            val bin = new File(root, "bin")
+            for (exe : bin.listFiles) {
+                if (!exe.canExecute) {
+                    exe.executable = true
+                }
+            }
+        }
     }
         
        
