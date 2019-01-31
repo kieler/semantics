@@ -55,7 +55,7 @@ z = x - x + y
 
 
 @check arithmetics.mixed.paranthesis#006
-@expect "z = ((1 + 2) - (3 + (w * v))"
+@expect "z = (1 + 2) - (3 + (w * v))"
 @readable "z = 1 + 2 - 3 + w * v"
 z = (1 + 2) - 3 + (w * v)
 
