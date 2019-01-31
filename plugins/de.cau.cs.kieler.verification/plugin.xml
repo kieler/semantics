@@ -7,6 +7,9 @@
             system="system/de.cau.cs.kieler.sccharts.verification.nuxmv.kico">
       </TransformationSystem>
       <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.verification.nusmv.kico">
+      </TransformationSystem>
+      <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.verification.spin.kico">
       </TransformationSystem>
       <TransformationSystem
@@ -38,6 +41,9 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor">

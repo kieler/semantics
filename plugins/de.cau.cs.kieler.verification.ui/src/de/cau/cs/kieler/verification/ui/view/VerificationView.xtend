@@ -81,7 +81,9 @@ class VerificationView extends ViewPart {
     public static var VerificationView instance
     
     private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) -> "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer"}
-    
+    private static val MODEL_CHECKER_SYSTEM_IDS = #["de.cau.cs.kieler.sccharts.verification.nuxmv",
+                                                    "de.cau.cs.kieler.sccharts.verification.nusmv",
+                                                    "de.cau.cs.kieler.sccharts.verification.spin"]
     private static val PLAY_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/runIcon.png")
     private static val STOP_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/stopIcon.png")
     private static val REFRESH_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/refresh.png")
@@ -198,9 +200,7 @@ class VerificationView extends ViewPart {
                     val selectedSystem = e.structuredSelection.firstElement as System
                     selectedSystemId = selectedSystem.id
                 ]
-                val modelCheckingSystemIds = #["de.cau.cs.kieler.sccharts.verification.nuxmv",
-                                               "de.cau.cs.kieler.sccharts.verification.spin"]
-                val modelCheckingSystems = modelCheckingSystemIds.map[KiCoolRegistration.getSystemById(it)]
+                val modelCheckingSystems = MODEL_CHECKER_SYSTEM_IDS.map[KiCoolRegistration.getSystemById(it)]
                 comboViewer.setContentProvider(ArrayContentProvider.instance);
                 comboViewer.input = modelCheckingSystems
                 comboViewer.selection = new StructuredSelection(modelCheckingSystems.head)
