@@ -27,8 +27,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.sccharts.commands.SCGTransformation";
 
     // Create an injector to load the transformation via guice.
-    private static Injector injector = new SCTXStandaloneSetup()
-            .createInjectorAndDoEMFRegistration();
+    private static Injector injector = SCTXStandaloneSetup.doSetup();
     
     // -------------------------------------------------------------------------
 

@@ -38,7 +38,7 @@ import static org.junit.Assume.*
 class DataflowSynthesisTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = SCTXStandaloneSetup.doSetup()
     
     extension AnnotationsExtensions annotationsExtensions= new AnnotationsExtensions
     

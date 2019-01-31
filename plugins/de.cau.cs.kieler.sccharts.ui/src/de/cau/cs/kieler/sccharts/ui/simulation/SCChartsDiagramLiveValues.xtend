@@ -47,7 +47,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     extension SCChartsScopeExtensions sccScopeExtensions = new SCChartsScopeExtensions
     extension KExpressionsValuedObjectExtensions kexpressionsValuedObjectRExtensions = new KExpressionsValuedObjectExtensions
     extension SCChartsSerializeHRExtensions serializeHRExtension = new SCChartsSerializeHRExtensions
-    public static val SCTXInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    public static val SCTXInjector = SCTXStandaloneSetup.doSetup()
     
     private static var SCChartsDiagramLiveValues instance
     

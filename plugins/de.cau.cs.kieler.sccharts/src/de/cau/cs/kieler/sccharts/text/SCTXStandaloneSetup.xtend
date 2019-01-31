@@ -21,7 +21,7 @@ import com.google.inject.Injector
  */
 class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated {
     
-    static var Injector injector
+    protected static var Injector injector
 
 	def static doSetup() {
 	    if (injector === null) {

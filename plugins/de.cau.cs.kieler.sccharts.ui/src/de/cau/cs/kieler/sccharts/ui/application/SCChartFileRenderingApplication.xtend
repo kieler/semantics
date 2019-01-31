@@ -358,7 +358,7 @@ class SCChartFileRenderingApplication implements IApplication {
      * This method initializes the resource set and Display for rendering.
      */
     private def void initResourceSet() {
-        val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+        val scchartsInjector = SCTXStandaloneSetup.doSetup()
         resourceSet = scchartsInjector.getInstance(XtextResourceSet);
         // initialize some display for rendering
         Display.^default

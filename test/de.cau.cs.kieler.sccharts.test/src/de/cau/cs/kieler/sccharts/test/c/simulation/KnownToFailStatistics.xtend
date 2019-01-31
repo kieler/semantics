@@ -37,7 +37,7 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
                                           "simulation-fails-prio-java",
                                           "simulation-fails-prio-java-with-tts"]
     
-    protected static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    protected static val scchartsInjector = SCTXStandaloneSetup.doSetup()
     
     new() {
         super(scchartsInjector)
