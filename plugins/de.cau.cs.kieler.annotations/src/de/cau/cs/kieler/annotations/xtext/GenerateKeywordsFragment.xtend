@@ -22,32 +22,52 @@ import java.util.regex.Pattern
 import org.eclipse.xtext.Grammar
 import org.eclipse.xtext.GrammarUtil
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment
+import org.eclipse.xtext.xtext.generator.AbstractInheritingFragment
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
+import org.eclipse.xtext.xtext.generator.model.GuiceModuleAccess
 import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.xtext.xtext.generator.AbstractStubGeneratingFragment
+import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
+import org.eclipse.xtext.xtext.generator.util.GeneratorOption
 
 /** 
  * @author sdo
+ * TODO add name and id
  */
-class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
-
-    @Inject FileAccessFactory fileAccessFactory
+class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
 
     @Inject
-    extension private XtextGeneratorNaming
+    extension XtextGeneratorNaming
+    @Inject extension GrammarAccessExtensions
+    
+    @Inject
+    FileAccessFactory fileAccessFactory
+    
     package String keywordsFilter = "\\w+"
 
     /** 
      * {@inheritDoc}
      */
     override void generate() {
+        new GuiceModuleAccess.BindingFactory()
+            .addTypeToType(new TypeReference('de.cau.cs.kieler.annotations.xtext.IHighlighting'),
+                    getHighlightingClass(grammar))
+            .contributeTo(language.ideGenModule)        
+        
+        if (projectConfig.genericIde.manifest !== null) {
+            projectConfig.genericIde.manifest.exportedPackages += grammar.genericIdeBasePackage + '.highlighting'
+        }
         var xtendFile = doGetXtendStubFile(GrammarUtil.getSimpleName(grammar) + "Highlighting")
-        xtendFile.writeTo(this.getProjectConfig().genericIde.srcGen);
+        xtendFile?.writeTo(this.getProjectConfig().genericIde.srcGen);
     }
 
-    protected def TypeReference getFormatter2Stub(Grammar grammar, String className) {
-        new TypeReference(grammar.genericIdeBasePackage + '.highlighting.' + className)
+    protected def TypeReference getHighlightingClass(Grammar grammar) {
+        return new TypeReference(
+            grammar.genericIdeBasePackage + ".highlighting." + GrammarUtil.getSimpleName(grammar) + "Highlighting"
+        )
     }
 
     private def getKeywords() {
@@ -74,15 +94,23 @@ class GenerateKeywordsFragment extends AbstractXtextGeneratorFragment {
     }
 
     protected def doGetXtendStubFile(String className) {
-        var xtendFile = this.fileAccessFactory.createXtendFile(this.getFormatter2Stub(this.grammar, className));
+        var xtendFile = this.fileAccessFactory.createXtendFile(this.getHighlightingClass(this.grammar));
         xtendFile.resourceSet = language.resourceSet
         val List<String> keywords = getKeywords()
         xtendFile.content = '''
     import java.util.List
+    import de.cau.cs.kieler.annotations.xtext.IHighlighting
     
-    class «className» {
-    
-        public static val List<String> keywords = «prettyPrintKeywords(keywords)»
+    class «className» implements IHighlighting {
+        override String getId() {
+            return "«language.fileExtensions.head»" // assume that only one extension is present
+        }
+        override String getName() {
+            return "«GrammarUtil.getSimpleName(grammar)»"
+        }
+        override List<String> getKeywords() {
+            return «prettyPrintKeywords(keywords)»
+        }
     }
         '''
         return xtendFile
