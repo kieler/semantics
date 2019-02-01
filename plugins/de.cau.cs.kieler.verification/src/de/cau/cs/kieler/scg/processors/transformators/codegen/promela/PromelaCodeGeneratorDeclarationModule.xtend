@@ -94,7 +94,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     private def String toPmlLtlFormula(String ltlFormula) {
-        val pmlLtlFormula = ltlFormula.replace("G", "[]").replace("F", "<>").replace("R", "V")
+        val pmlLtlFormula = ltlFormula.replaceAll('''\bG\b''', "[]").replaceAll('''\bF\b''', "<>").replaceAll('''\bR\b''', "\bV\b")
         // Promela needs one step for entering the tick loop. Thus an initial X has to be prepended to the formula.
         val pmlLtlFormulaAfterSetupDone = '''X( «pmlLtlFormula» )'''
         return pmlLtlFormulaAfterSetupDone
