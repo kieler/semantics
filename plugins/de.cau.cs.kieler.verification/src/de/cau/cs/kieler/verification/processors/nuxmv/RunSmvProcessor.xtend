@@ -14,6 +14,7 @@
 
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -24,6 +25,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvIdentifier
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
 
 /**
@@ -32,6 +34,9 @@ import static extension de.cau.cs.kieler.verification.processors.ProcessExtensio
  * @author aas
  */
 abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
+
+    public static val PROPERTY_NAME_PLACEHOLDER = "${PROPERTY_NAME}"    
+    public static val DEFAULT_INTERACTIVE_COMMANDS = #['''go''', '''check_property -P «PROPERTY_NAME_PLACEHOLDER»''', '''quit''']
     
     /**
      * The command list for the process builder to start a new process.
@@ -39,13 +44,6 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
      * @param property The property to be checked
      */
     abstract protected def List<String> getProcessBuilderCommandList(IFile smvFile, VerificationProperty property)
-    
-    /**
-     * List of commands that are sent sequentially to the running process.
-     * @param smvFile File containing the smv code
-     * @param property The property to be checked
-     */
-    abstract protected def List<String> getInteractiveCommands(IFile smvFile, VerificationProperty property)
     
     override getType() {
         return ProcessorType.DEVELOPER
@@ -75,6 +73,21 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
                 compilationContext.notify(new VerificationPropertyChanged(property))
             }
         }
+    }
+    
+    /**
+     * Returns the list of commands that are sent sequentially to the running process.
+     * 
+     * @param smvFile File containing the smv code
+     * @param property The property to be checked
+     */
+    protected def getInteractiveCommands(IFile smvFile, VerificationProperty property) {
+        val List<String> customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_COMMANDS)
+        val interactiveCommands = if (customInteractiveCommands.isNullOrEmpty)
+                                      DEFAULT_INTERACTIVE_COMMANDS 
+                                  else
+                                      customInteractiveCommands
+        return interactiveCommands.resolvePlaceholders(property)
     }
     
     private def String runModelChecker(IFile smvFile, VerificationProperty property) {
@@ -148,5 +161,12 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
   
     private def IPath getProcessOutputFilePath(VerificationProperty property) {
         return getOutputFile(property, ".smv.log")
+    }
+    
+    protected def List<String> resolvePlaceholders(List<String> interactiveCommands, VerificationProperty property) {
+        return interactiveCommands.map[
+            it.replace(PROPERTY_NAME_PLACEHOLDER, property.name.toSmvIdentifier)
+              .trim
+        ]
     }
 }

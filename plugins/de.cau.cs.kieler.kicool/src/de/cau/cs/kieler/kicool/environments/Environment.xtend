@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import java.util.List
 import org.eclipse.core.resources.IFile
 
 /**
@@ -114,6 +115,8 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<IFile> VERIFICATION_MODEL_FILE = 
         new Property<IFile>("de.cau.cs.kieler.kicool.verificationModelFile")
     
+    public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_COMMANDS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvCommands")
     
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
              

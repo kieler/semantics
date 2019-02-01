@@ -15,8 +15,6 @@
 import de.cau.cs.kieler.verification.VerificationProperty
 import org.eclipse.core.resources.IFile
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvIdentifier
-
 /**
  * @author aas
  */
@@ -32,9 +30,5 @@ class RunNusmvProcessor extends RunSmvProcessor {
     
     override protected getProcessBuilderCommandList(IFile smvFile, VerificationProperty property) {
         return #["NuSMV", "-int", smvFile.name]
-    }
-    
-    override protected getInteractiveCommands(IFile smvFile, VerificationProperty property) {
-        #['''go''', '''check_property -P «property.name.toSmvIdentifier»''', '''quit''']
-    }
+    }    
 }

@@ -14,8 +14,8 @@ package de.cau.cs.kieler.verification.ui.view
 
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
@@ -29,9 +29,11 @@ import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
+import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor
 import de.cau.cs.kieler.verification.ui.VerificationUiPlugin
 import java.io.File
 import java.util.List
@@ -53,6 +55,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
+import org.eclipse.jface.window.Window
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
@@ -67,8 +70,7 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import de.cau.cs.kieler.kicool.compilation.CompilationSystem
-import de.cau.cs.kieler.verification.VerificationAssumption
+import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
 
 /** 
  * @author aas
@@ -88,6 +90,8 @@ class VerificationView extends ViewPart {
     private static val STOP_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/stopIcon.png")
     private static val REFRESH_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/refresh.png")
     private static val RUN_COUNTEREXAMPLE_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/rerunFailed.png")
+    
+    private static val CUSTOM_SMV_COMMANDS_PREF_STORE_ID = "customSmvCommands"
     
     private var CompilationContext propertyAnalyzerContext
     private var CompilationContext verificationContext
@@ -165,6 +169,26 @@ class VerificationView extends ViewPart {
             }
         }
         
+        val openEditSmvCommandsDialogAction = new Action("Edit SMV Commands...") {
+            override run() {
+                val title = "Controls for the Verification View"
+                val message =
+'''Set custom commands for model checking with NuSMV / nuXmv.
+Commands are separated by newline. The last command must be 'quit'.
+Use «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER» as placeholder for the property to be checked.
+Default commands:
+go
+check_property -P «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER»
+quit'''
+                val initialValue = getCustomSmvCommands
+                val dialog = new EditSmvCommandsDialog(viewer.control.shell, title, message, initialValue, null)
+                val result = dialog.open()
+                if (result == Window.OK) {
+                    storeCustomSmvCommands(dialog.getValue())
+                }
+            }
+        }
+        
         val menuHelpAction = new Action("Show Controls") {
             override run() {
                 val title = "Controls for the Verification View"
@@ -179,6 +203,7 @@ class VerificationView extends ViewPart {
             add(openLogAction)
             add(openModelCheckerFileAction)
             add(startVerificationOfModelInDiagramAction)
+            add(openEditSmvCommandsDialogAction)
             add(menuHelpAction)
         ]
     }
@@ -487,6 +512,8 @@ class VerificationView extends ViewPart {
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, modelFile)
+        val customSmvCommandsList = customSmvCommands.split("\n").toList
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_COMMANDS, customSmvCommandsList)
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    
@@ -514,5 +541,17 @@ class VerificationView extends ViewPart {
         } else {
             startVerification()
         }
+    }
+    
+    private def String getCustomSmvCommands() {
+        val store = VerificationUiPlugin.instance.preferenceStore
+        val defaultCommands = RunNusmvProcessor.DEFAULT_INTERACTIVE_COMMANDS.join("\n")
+        store.setDefault(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, defaultCommands)
+        return store.getString(CUSTOM_SMV_COMMANDS_PREF_STORE_ID)
+    }
+    
+    private def void storeCustomSmvCommands(String customSmvCommands) {
+        val store = VerificationUiPlugin.instance.preferenceStore
+        store.putValue(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, customSmvCommands)
     }
 }

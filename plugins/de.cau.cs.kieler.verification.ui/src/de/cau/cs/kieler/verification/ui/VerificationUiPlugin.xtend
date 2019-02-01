@@ -45,7 +45,7 @@ class VerificationUiPlugin extends AbstractUIPlugin {
      * Returns the shared instance
      * @return the shared instance
      */
-    def static VerificationUiPlugin getDefault() {
+    def static VerificationUiPlugin getInstance() {
         return plugin
     }
 }
