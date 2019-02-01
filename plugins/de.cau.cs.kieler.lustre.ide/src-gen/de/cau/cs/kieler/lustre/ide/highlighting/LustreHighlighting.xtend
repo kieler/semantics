@@ -5,37 +5,45 @@ package de.cau.cs.kieler.lustre.ide.highlighting
 
 
 import java.util.List
+import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
-class LustreHighlighting {
-
-    public static val List<String> keywords = #["and",
-    "assert",
-    "automaton",
-    "body",
-    "const",
-    "continue",
-    "current",
-    "else",
-    "end",
-    "fby",
-    "if",
-    "let",
-    "mod",
-    "node",
-    "not",
-    "or",
-    "package",
-    "pre",
-    "provides",
-    "returns",
-    "struct",
-    "tel",
-    "then",
-    "type",
-    "unless",
-    "until",
-    "uses",
-    "var",
-    "when"
-    ]
+class LustreHighlighting implements IHighlighting {
+    override String getId() {
+        return "lus" // assume that only one extension is present
+    }
+    override String getName() {
+        return "Lustre"
+    }
+    override List<String> getKeywords() {
+        return #["and",
+        "assert",
+        "automaton",
+        "body",
+        "const",
+        "continue",
+        "current",
+        "else",
+        "end",
+        "fby",
+        "if",
+        "let",
+        "mod",
+        "node",
+        "not",
+        "or",
+        "package",
+        "pre",
+        "provides",
+        "returns",
+        "struct",
+        "tel",
+        "then",
+        "type",
+        "unless",
+        "until",
+        "uses",
+        "var",
+        "when"
+        ]
+    }
 }

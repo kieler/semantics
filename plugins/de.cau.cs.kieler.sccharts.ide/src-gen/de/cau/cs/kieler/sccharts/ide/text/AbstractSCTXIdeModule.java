@@ -5,8 +5,10 @@ package de.cau.cs.kieler.sccharts.ide.text;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
+import de.cau.cs.kieler.annotations.xtext.IHighlighting;
 import de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.SCTXParser;
 import de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal.InternalSCTXLexer;
+import de.cau.cs.kieler.sccharts.ide.text.highlighting.SCTXHighlighting;
 import org.eclipse.xtext.ide.DefaultIdeModule;
 import org.eclipse.xtext.ide.LexerIdeBindings;
 import org.eclipse.xtext.ide.editor.contentassist.FQNPrefixMatcher;
@@ -55,6 +57,11 @@ public abstract class AbstractSCTXIdeModule extends DefaultIdeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameStrategy2> bindIRenameStrategy2() {
 		return IRenameStrategy2.DefaultImpl.class;
+	}
+	
+	// contributed by de.cau.cs.kieler.annotations.xtext.GenerateKeywordsFragment
+	public Class<? extends IHighlighting> bindIHighlighting() {
+		return SCTXHighlighting.class;
 	}
 	
 }

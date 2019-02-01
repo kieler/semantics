@@ -5,8 +5,10 @@ package de.cau.cs.kieler.lustre.ide;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
+import de.cau.cs.kieler.annotations.xtext.IHighlighting;
 import de.cau.cs.kieler.lustre.ide.contentassist.antlr.LustreParser;
 import de.cau.cs.kieler.lustre.ide.contentassist.antlr.internal.InternalLustreLexer;
+import de.cau.cs.kieler.lustre.ide.highlighting.LustreHighlighting;
 import org.eclipse.xtext.ide.DefaultIdeModule;
 import org.eclipse.xtext.ide.LexerIdeBindings;
 import org.eclipse.xtext.ide.editor.contentassist.FQNPrefixMatcher;
@@ -15,6 +17,9 @@ import org.eclipse.xtext.ide.editor.contentassist.IProposalConflictHelper;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.AntlrProposalConflictHelper;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.internal.Lexer;
+import org.eclipse.xtext.ide.refactoring.IRenameStrategy2;
+import org.eclipse.xtext.ide.server.rename.IRenameService;
+import org.eclipse.xtext.ide.server.rename.RenameService;
 
 /**
  * Manual modifications go to {@link LustreIdeModule}.
@@ -42,6 +47,21 @@ public abstract class AbstractLustreIdeModule extends DefaultIdeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
 	public Class<? extends IPrefixMatcher> bindIPrefixMatcher() {
 		return FQNPrefixMatcher.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public Class<? extends IRenameService> bindIRenameService() {
+		return RenameService.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public Class<? extends IRenameStrategy2> bindIRenameStrategy2() {
+		return IRenameStrategy2.DefaultImpl.class;
+	}
+	
+	// contributed by de.cau.cs.kieler.annotations.xtext.GenerateKeywordsFragment
+	public Class<? extends IHighlighting> bindIHighlighting() {
+		return LustreHighlighting.class;
 	}
 	
 }

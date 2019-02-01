@@ -5,8 +5,16 @@ package de.cau.cs.kieler.annotations.ide.highlighting
 
 
 import java.util.List
+import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
-class AnnotationsHighlighting {
-
-    public static val List<String> keywords = #[]
+class AnnotationsHighlighting implements IHighlighting {
+    override String getId() {
+        return "anno" // assume that only one extension is present
+    }
+    override String getName() {
+        return "Annotations"
+    }
+    override List<String> getKeywords() {
+        return #[]
+    }
 }

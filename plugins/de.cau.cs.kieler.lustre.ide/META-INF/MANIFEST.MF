@@ -6,15 +6,15 @@ Bundle-Version: 0.14.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.lustre.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.antlr.runtime,
+Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.lustre,
  org.eclipse.xtext.ide;bundle-version="2.12.0",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.annotations;bundle-version="0.14.0"
 Export-Package: de.cau.cs.kieler.lustre.ide,
  de.cau.cs.kieler.lustre.ide.contentassist.antlr,
  de.cau.cs.kieler.lustre.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.lustre.ide.highlighting
-

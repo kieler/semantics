@@ -28,6 +28,10 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
+import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.xtext.IHighlighting
+import com.google.inject.TypeLiteral
+import de.cau.cs.kieler.language.server.LanguageRegistration
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -41,6 +45,8 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
     protected static val LOG = Logger.getLogger(RegistrationLanguageServerExtension)
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
+    
+    @Inject Injector injector
 
     protected extension ILanguageServerAccess languageServerAccess
     
@@ -65,14 +71,13 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         'selection','shadow','single','singleClick','singleOrMultiClick','size','solid','square','squiggle','styles',
         'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
         'yoffset']
+        val iHighlightings = LanguageRegistration.iHighlightings
+        
         val list = new ArrayList()
-        list.add(new Language("scl", "SCL", SCLHighlighting.keywords))
-        list.add(new Language("anno", "Annotations", AnnotationsHighlighting.keywords))
-        list.add(new Language("kext", "Kext", KExtHighlighting.keywords))
-        list.add(new Language("strl", "Esterel", EsterelHighlighting.keywords))
-        list.add(new Language("lus", "Lustre", LustreHighlighting.keywords))
+        for (iHighlighting : iHighlightings) {
+        	list.add(new Language(iHighlighting.getId, iHighlighting.name, iHighlighting.keywords))
+        }
         list.add(new Language("kgt", "KGraph", kgtKeywords))
-        list.add(new Language("sctx", "SCCharts", SCTXHighlighting.keywords))
         return requestManager.runRead[ cancelIndicator |
             list
         ]

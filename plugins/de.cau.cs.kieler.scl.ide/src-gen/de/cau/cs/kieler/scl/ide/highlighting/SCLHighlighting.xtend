@@ -5,52 +5,62 @@ package de.cau.cs.kieler.scl.ide.highlighting
 
 
 import java.util.List
+import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
-class SCLHighlighting {
-
-    public static val List<String> keywords = #["_",
-    "bool",
-    "call",
-    "combine",
-    "conflict",
-    "confluent",
-    "const",
-    "else",
-    "end",
-    "expression",
-    "extern",
-    "float",
-    "fork",
-    "global",
-    "goto",
-    "host",
-    "if",
-    "input",
-    "int",
-    "join",
-    "max",
-    "min",
-    "module",
-    "none",
-    "null",
-    "output",
-    "par",
-    "pause",
-    "pre",
-    "print",
-    "pure",
-    "random",
-    "randomize",
-    "ref",
-    "run",
-    "schedule",
-    "scope",
-    "signal",
-    "static",
-    "string",
-    "then",
-    "to",
-    "unsigned",
-    "val"
-    ]
+class SCLHighlighting implements IHighlighting {
+    override String getId() {
+        return "scl" // assume that only one extension is present
+    }
+    override String getName() {
+        return "SCL"
+    }
+    override List<String> getKeywords() {
+        return #["_",
+        "bool",
+        "call",
+        "combine",
+        "conflict",
+        "confluent",
+        "const",
+        "else",
+        "end",
+        "expression",
+        "extern",
+        "float",
+        "fork",
+        "global",
+        "goto",
+        "host",
+        "if",
+        "input",
+        "int",
+        "join",
+        "max",
+        "min",
+        "module",
+        "none",
+        "null",
+        "output",
+        "par",
+        "pause",
+        "pre",
+        "print",
+        "private",
+        "pure",
+        "random",
+        "randomize",
+        "ref",
+        "run",
+        "schedule",
+        "scope",
+        "signal",
+        "static",
+        "string",
+        "struct",
+        "then",
+        "to",
+        "unsigned",
+        "val"
+        ]
+    }
 }

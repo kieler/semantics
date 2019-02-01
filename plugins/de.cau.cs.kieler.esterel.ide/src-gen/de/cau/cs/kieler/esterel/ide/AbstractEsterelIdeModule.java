@@ -5,8 +5,10 @@ package de.cau.cs.kieler.esterel.ide;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
+import de.cau.cs.kieler.annotations.xtext.IHighlighting;
 import de.cau.cs.kieler.esterel.ide.contentassist.antlr.EsterelParser;
 import de.cau.cs.kieler.esterel.ide.contentassist.antlr.internal.InternalEsterelLexer;
+import de.cau.cs.kieler.esterel.ide.highlighting.EsterelHighlighting;
 import org.eclipse.xtext.ide.DefaultIdeModule;
 import org.eclipse.xtext.ide.LexerIdeBindings;
 import org.eclipse.xtext.ide.editor.contentassist.FQNPrefixMatcher;
@@ -55,6 +57,11 @@ public abstract class AbstractEsterelIdeModule extends DefaultIdeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameStrategy2> bindIRenameStrategy2() {
 		return IRenameStrategy2.DefaultImpl.class;
+	}
+	
+	// contributed by de.cau.cs.kieler.annotations.xtext.GenerateKeywordsFragment
+	public Class<? extends IHighlighting> bindIHighlighting() {
+		return EsterelHighlighting.class;
 	}
 	
 }
