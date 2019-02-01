@@ -91,8 +91,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         appendIndentedLine("do")
         appendIndentedLine("::")
                 
-        // In Promela, d_step is an atomic step that is also deterministic
-        appendIndentedLine("d_step { ")
+        appendIndentedLine("atomic { ")
         incIndentationLevel
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 0;''')
         generateSettingRandomInputs()
