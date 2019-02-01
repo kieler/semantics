@@ -95,9 +95,16 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         nodeToStateMap.clear 
         
         var scchartsProgram = createSCChart
+
+//        if (p.includes !== null) {
+//        } 
+//        
+//        if (p.packList !== null) {
+//        }
         
-        // TODO: Includes and PackList
-        p.packBody.processPackBody(scchartsProgram)
+        if (p.packBody !== null) {
+            p.packBody.processPackBody(scchartsProgram)
+        }
         
         scchartsProgram
     }

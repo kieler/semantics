@@ -88,7 +88,6 @@ class LustreToSCCharts extends CoreLustreToSCC {
     }
     
     override processAssertion(Expression assertion, State state) {
-        throw new UnsupportedOperationException("Assertions are not part of the supported Lustre language features.")
     }
 
     override processEquation(Equation equation, State state) {

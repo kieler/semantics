@@ -38,6 +38,8 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension java.lang.Boolean.parseBoolean
+import java.io.StringWriter
+import java.io.PrintWriter
 
 /**
  * Tests if all can be parsed and serialized.
@@ -50,7 +52,7 @@ import static extension java.lang.Boolean.parseBoolean
 class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
 
     /** Compiler configuration */
-    val compilationSystemID = "de.cau.cs.kieler.kicool.identity"
+    val compilationSystemID = "de.cau.cs.kieler.lustre.sccharts.dataflow"
         
     /** Sct Parser Injector */
     static val lustreInjector = LustreStandaloneSetup.doSetup
@@ -69,9 +71,10 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("lustre")
-        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
-        && (!modelData.additionalProperties.containsKey("testSerializability") || modelData.additionalProperties.get("testSerializability").trim.parseBoolean)
-        && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
+        && !modelData.modelProperties.contains("known-to-fail")
+        && (!modelData.modelProperties.contains("must-fail") 
+            || modelData.modelProperties.contains("must-fail-validation")
+        )
     }
     
     @Test
@@ -80,9 +83,20 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
         
         // Validate input model
         val validator = lustreInjector.getInstance(IResourceValidator)
-        var validatorResults = validator.validate(lus.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
+        var validatorResults = validator.validate(lus.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR || severity === Severity.WARNING].toList
         if (modelData.modelProperties.contains("must-fail-validation")) {
-            assertTrue("Input model does not contain the expected validation error markers", !validatorResults.empty)
+            if (modelData.modelProperties.contains("error")) {
+                // Validation should fail because of error
+                val validationErrors = validatorResults.filter[severity.equals(Severity.ERROR)]
+                assertTrue("Input model does not contain the expected validation error markers", !validationErrors.empty)
+            } else if (modelData.modelProperties.contains("warning")) {
+                // Validation should fail because of warning
+                val validationWarnings = validatorResults.filter[severity.equals(Severity.WARNING)]
+                assertTrue("Input model does not contain the expected validation warning markers", !validationWarnings.empty)
+            } else {
+                // Not specified, so check as usual
+                assertTrue("Input model does not contain the expected validation error markers", !validatorResults.empty)
+            }
             return
         } else {
             assertTrue("Input model contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)
@@ -91,43 +105,46 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
     
     @Test(timeout=60000)
     def void testSerializability(LustreProgram lus, TestModelData modelData) {
-        val result = lus.compile
-        
-        // Check all intermediate results
-        var List<Resource> movedResources = null
-        val iResult = result.processorInstancesSequence.head
-        
-        assertNotNull("The model is null", iResult.model)
-        assertTrue("The model is not an Lustre program", iResult.model instanceof LustreProgram)
+        if (!modelData.modelProperties.contains("must-fail-validation")) {
+            val context = lus.compile
 
-        try {
-            // Serialize
-            val outputStream = new ByteArrayOutputStream(25000);
-            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
-            val resourceSet = lustreInjector.getInstance(XtextResourceSet)
-            
-            // create model resource
-            val resource = resourceSet.createResource(uri) as XtextResource
-            resource.getContents().add(iResult.model as EObject)
-            
-            if (!modelData.resourceSetID.nullOrEmpty) {
-                // copy possibly referenced models
-                movedResources = lus.eResource.resourceSet.resources.filter[it !== lus.eResource].toList
-                resourceSet.resources.addAll(movedResources)
+            // Check all intermediate results
+            var List<Resource> movedResources = null
+            val iResult = context.processorInstancesSequence.head
+
+            assertNotNull("The model is null", iResult.model)
+            assertTrue("The model is not an Lustre program", iResult.model instanceof LustreProgram)
+
+            try {
+                // Serialize
+                val outputStream = new ByteArrayOutputStream(25000);
+                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
+                val resourceSet = lustreInjector.getInstance(XtextResourceSet)
+
+                // create model resource
+                val resource = resourceSet.createResource(uri) as XtextResource
+                resource.getContents().add(iResult.model as EObject)
+
+                if (!modelData.resourceSetID.nullOrEmpty) {
+                    // copy possibly referenced models
+                    movedResources = lus.eResource.resourceSet.resources.filter[it !== lus.eResource].toList
+                    resourceSet.resources.addAll(movedResources)
+                }
+
+                // save
+                resource.save(outputStream, saveOptions)
+
+                assertTrue("Serialized result is empty", outputStream.size > 0)
+            } catch (AssertionError ae) {
+                throw ae
+            } catch (Exception e) {
+                throw new Exception("Error while serializing model, caused by: " + e.message, e)
+            } finally {
+                if (movedResources !== null) {
+                    lus.eResource.resourceSet.resources.addAll(movedResources)
+                }
             }
 
-            // save
-            resource.save(outputStream, saveOptions)
-            
-            assertTrue("Serialized result is empty", outputStream.size > 0)
-        } catch (AssertionError ae) {
-            throw ae
-        } catch (Exception e) {
-            throw new Exception("Error while serializing model, caused by: " + e.message, e)
-        } finally {
-            if (movedResources !== null) {
-                lus.eResource.resourceSet.resources.addAll(movedResources)
-            }
         }
     }
     
