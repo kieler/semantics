@@ -82,9 +82,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         // Add _GO signal
         appendIndentedLine('''bool _GO = 1;''')
         
-        // Add flags only used inside the promela model
+        // Set end-of-tick flag
         appendIndentedLine('''bool «TICK_END_FLAG_NAME» = 0;''')
-        appendIndentedLine('''bool «SETUP_DONE_FLAG_NAME» = 0;''')
     }
     
     override generateDone() {
@@ -96,7 +95,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     
     private def String toPmlLtlFormula(String ltlFormula) {
         val pmlLtlFormula = ltlFormula.replace("G", "[]").replace("F", "<>").replace("R", "V")
-        val pmlLtlFormulaAfterSetupDone = '''«SETUP_DONE_FLAG_NAME» -> ( «pmlLtlFormula» )'''
+        // Promela needs one step for entering the tick loop. Thus an initial X has to be prepended to the formula.
+        val pmlLtlFormulaAfterSetupDone = '''X( «pmlLtlFormula» )'''
         return pmlLtlFormulaAfterSetupDone
     }
 }

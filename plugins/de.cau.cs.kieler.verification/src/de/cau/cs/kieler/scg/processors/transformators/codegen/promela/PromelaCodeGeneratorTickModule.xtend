@@ -79,18 +79,10 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     private def void generateTickLoop() {
-        // Mark the beginning of the orginal model's tick. 
-        // This is also the end of the Promela model statements for initialization.
-        appendIndentedLine('''«SETUP_DONE_FLAG_NAME» = 1;''')
-
-        appendIndentedComment("From here on, a step in the promela model corresponds to a step in the original model.")
-        appendIndentedComment("This is because the following statements are wrapped in an atomic (or d_step) statement.")
-        appendIndentedComment("Thus, from here on LTL formulas hold in the Promela model if they hold in the original model.")
-
         // Start of tick loop
         appendIndentedLine("do")
         appendIndentedLine("::")
-                
+         
         appendIndentedLine("atomic { ")
         incIndentationLevel
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 0;''')
