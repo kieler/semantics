@@ -89,7 +89,7 @@ class SelectIntermediateAction implements IAction {
         new(KNode kNode) {
             intermediateData = kNode.getProperty(INTERMEDIATE_DATA)
             compilationContext = intermediateData.compilationContext
-            editor = compilationContext.getRootContext.inputEditor
+            editor = compilationContext.inputEditor
             view = intermediateData.view
             model = intermediateData.model
             if (model instanceof String) {
