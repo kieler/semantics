@@ -111,7 +111,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             val commandWithNewline = command+"\n"
             process.outputStream.write(commandWithNewline.bytes)
             process.outputStream.flush
-            // Add the sent command to the output, so one can understand what happened when viewing the log 
+            // Add the sent command to the outputBuffer, so one can understand what happened when viewing the log 
             outputBuffer.append(commandWithNewline)
             // Wait for new output from the process
             process.waitForOutput([ return isCanceled() ])

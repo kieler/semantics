@@ -44,9 +44,14 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
         }
     }
     
-    protected def IFile saveText(IPath fullPath, String text) {
+    protected def IFile getFileInTemporaryProject(IPath path) {
         val tmpProject = ProjectInfrastructure.getTemporaryProject()
-        val file = tmpProject.getFile(fullPath)
+        val file = tmpProject.getFile(path)
+        return file
+    }
+    
+    protected def IFile saveText(IPath path, String text) {
+        val file = getFileInTemporaryProject(path)
         file.saveText(text)
         return file
     }

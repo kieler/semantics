@@ -23,6 +23,9 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
+import com.google.common.io.Files
+import java.nio.charset.Charset
+import com.google.common.base.Charsets
 
 /**
  * @author aas
@@ -89,16 +92,18 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
     
-    private def String runSpinTrailCommand(IFile pmlFile, VerificationProperty property) {
+    private def String runSpinTrailCommand(IFile pmlFile, VerificationProperty property, IFile processOutputFile) {
+        val javaioProcessOutputFile = processOutputFile.location.toFile
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(pmlFile.parent.location.toOSString))
         val trailCommand = #["spin", "-t", "-p", pmlFile.name]
         processBuilder.command(trailCommand)
         processBuilder.redirectErrorStream(true)
+        processBuilder.redirectOutput(javaioProcessOutputFile)
         val process = processBuilder.start
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
-        val processOutput = process.readInputStream
+        val processOutput = Files.toString(javaioProcessOutputFile, Charsets.UTF_8)
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
     
@@ -106,8 +111,8 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         property.processOutputFile = processOutputFile
         val spinOutputInterpreter = new SpinOutputInterpreter(processOutput)
         if(spinOutputInterpreter.wroteTrail) {
-            val trailOutput = runSpinTrailCommand(pmlFile, property)
-            val trailFile = saveText(getTrailFilePath(property), trailOutput)
+            val trailFile = getFileInTemporaryProject(getTrailFilePath(property))
+            val trailOutput = runSpinTrailCommand(pmlFile, property, trailFile)
             property.processOutputFile = trailFile
             val trailInterpreter = new SpinTrailInterpreter(trailOutput)
             val counterexample = trailInterpreter.counterexample
@@ -135,9 +140,5 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     
     private def IPath getTrailFilePath(VerificationProperty property) {
         return getOutputFile(property, ".pml.trail.log")
-    }
-    
-    private def String toPmlExpression(String kexpression) {
-        return kexpression.replace("true", "1").replace("false", "0")
     }
 }
