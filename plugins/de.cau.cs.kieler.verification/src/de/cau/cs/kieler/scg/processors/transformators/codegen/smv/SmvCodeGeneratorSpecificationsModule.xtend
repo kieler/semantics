@@ -39,16 +39,12 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
         if(verificationProperties.isNullOrEmpty) {
             return
         }
-        // In SMV the internal specifications are numbered CTL first then LTL, then invariants
-        verificationProperties.sort(new SmvPropertyComparator())
-        var index = 0
         for(property : verificationProperties) {
             val specName = property.getSmvSpecName
             appendIndentedLine('''«specName»''')
             incIndentationLevel
             appendIndentedLine('''«property.name.toIdentifier» := «property.formula.toSmvExpression»;''')
             decIndentationLevel
-            index++
         }
     }
     
@@ -65,28 +61,6 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
             case LTL : return "LTLSPEC NAME"
             case CTL : return "CTLSPEC NAME"
             default : throw new Exception("Cannot translate VerificationProperty '"+property+"' to SMV code")
-        }
-    }
-    
-    private static class SmvPropertyComparator implements Comparator<VerificationProperty> {
-        override compare(VerificationProperty o1, VerificationProperty o2) {
-            if(o1.weight < o2.weight) {
-                return -1
-            } else if(o1.weight > o2.weight) {
-                return 1
-            } else {
-                return 0    
-            } 
-        }
-        
-        private def int getWeight(VerificationProperty o) {
-            // The option use_coi_size_sorting determines the order of specifications in NuSMV / nuXmv.
-            // It seems per default CTL specs come first, then LTL specs, and then invariants.
-            switch(o.type) {
-                case VerificationPropertyType.CTL : return 0
-                case VerificationPropertyType.LTL : return 1
-                case VerificationPropertyType.INVARIANT : return 2
-            }
         }
     }
 }
