@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ide.language.server
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import com.google.inject.Singleton
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -33,7 +34,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
-import com.google.inject.Singleton
+import org.eclipse.xtext.util.CancelIndicator
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -109,30 +110,30 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         val result = requestManager.runRead[ cancelIndicator |
             new CompilationResults(this.snapshotMap.get(uri))
         ]
-//        result.thenRun [
-//            didCompile(uri, command, null)
-//        ].exceptionally [ throwable |
-//            LOG.error('Error while running additional compilation effects.', throwable)
-//            return null
-//        ]
+        result.thenRun [
+            didCompile(uri, command, null)
+        ].exceptionally [ throwable |
+            LOG.error('Error while running additional compilation effects.', throwable)
+            return null
+        ]
         return result
     }
     
-//    /**
-//     * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
-//     * such as requesting a new diagram for the previously shown snapshot.
-//     */
-//    protected def didCompile(String uri, String command, CancelIndicator cancelIndicator) {
-//        if (command.equals(lastCommand) && uri.equals(lastUri)) {
-//            showSnapshot(uri, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
-//        } else {
-//            val newIndex = this.objectMap.get(uri).size - 1
-//            showSnapshot(uri, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
-//            currentIndex = newIndex
-//        }
-//        lastUri = uri
-//        lastCommand = command
-//    }
+    /**
+     * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
+     * such as requesting a new diagram for the previously shown snapshot.
+     */
+    protected def didCompile(String uri, String command, CancelIndicator cancelIndicator) {
+        if (command.equals(lastCommand) && uri.equals(lastUri)) {
+            showSnapshot(uri, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
+        } else {
+            val newIndex = this.objectMap.get(uri).size - 1
+            showSnapshot(uri, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
+            currentIndex = newIndex
+        }
+        lastUri = uri
+        lastCommand = command
+    }
     
     /**
      * Add snapshot to list of snapshots for uri. Add description to be displayed in compiler view
