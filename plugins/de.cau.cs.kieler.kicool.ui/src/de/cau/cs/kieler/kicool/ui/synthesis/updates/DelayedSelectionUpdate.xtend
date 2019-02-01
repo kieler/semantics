@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.retrieveIntermediateModel
+import org.eclipse.ui.IEditorPart
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
 
 /**
  * Class that runs a selection setting in the UI thread after a short delay. 
@@ -39,19 +41,28 @@ class DelayedSelectionUpdate implements Runnable {
     var CompilerView view
     var Object model
     var IntermediateSelection intermediateSelection
+    var IEditorPart editor
     
-    new(KNode node, CompilerView view, Object model, IntermediateSelection selection) {
+    new(KNode node, CompilerView view, Object model, IntermediateSelection selection, IEditorPart editor) {
         this.node = node
         this.view = view
         this.model = model
         this.intermediateSelection = selection
+        this.editor = editor
     }
     
     override run() {
         Thread.sleep(UPDATE_DELAY)
         new UIJob("Updating selection...") {
             override IStatus runInUIThread(IProgressMonitor monitor) {
-                retrieveIntermediateModel(node, view, model, intermediateSelection, false)
+                val modelList = retrieveIntermediateModel(node, view, model, intermediateSelection, editor, false)
+                if (!modelList.nullOrEmpty) {
+                    if (modelList.size == 1) {
+                        KiCoModelViewNotifier.notifyCompilationChanged(editor, modelList.head)
+                    } else {
+                        KiCoModelViewNotifier.notifyCompilationChangedList(editor, modelList)
+                    }
+                }
                 return Status.OK_STATUS;
             }
         }.schedule

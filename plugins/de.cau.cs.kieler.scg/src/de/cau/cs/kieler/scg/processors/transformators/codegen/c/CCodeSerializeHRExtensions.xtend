@@ -69,6 +69,8 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             return "char"
         } else if (valueType == ValueType.STRING) {
             return "char*"
+        } else if (valueType == ValueType.FLOAT) {
+            return "double"
         } else {
             return valueType.literal
         }

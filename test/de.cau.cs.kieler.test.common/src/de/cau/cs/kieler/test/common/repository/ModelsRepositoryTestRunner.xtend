@@ -37,6 +37,8 @@ import static org.junit.Assert.*
 
 import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
 import static extension java.lang.Integer.*
+import com.google.inject.Guice
+import com.google.inject.Injector
 
 /**
  * The {@link Runner} for {@link IModelsRepositoryTest}.
@@ -66,6 +68,8 @@ class ModelsRepositoryTestRunner extends Suite {
     annotation StopOnFailure {}
     
     // -----------------------------------------------------------------------------------------------------------------
+    
+    public val Injector injector = Guice.createInjector
     
     private val IModelsRepositoryTest<?> test;
     
@@ -105,15 +109,14 @@ class ModelsRepositoryTestRunner extends Suite {
             throw new IllegalArgumentException("Test classes used with this runner must implement the IModelsRepositoryTest interface!")
         }
         try {
-            test = testClass.onlyConstructor.newInstance as IModelsRepositoryTest<?>
+            test = injector.getInstance(clazz) as IModelsRepositoryTest<?>
         } catch (Exception e) {
-            throw new Exception("Constructor of test class " + getTestClass().getName()
-                        + " must not have any parameters", e)
+            throw new IllegalArgumentException("Cannot inject test class: " + getTestClass().getName(), e)
         }
         
         // Filter models and create tests
         for (testModelData : ModelsRepository.models.filter[test.filter(it)].sortWith(test)) {
-            modifiableRunners.add(new SingleModelTestRunner(test, testModelData))
+            modifiableRunners.add(new SingleModelTestRunner(this, test, testModelData))
         }
     }
     
@@ -130,6 +133,7 @@ class ModelsRepositoryTestRunner extends Suite {
         val methodDescriptions = new ConcurrentHashMap<FrameworkMethod, Description>()
         val IModelsRepositoryTest<?> test
         val TestModelData modelData
+        val ModelsRepositoryTestRunner runner
         
         /**
          * Constructor.
@@ -143,25 +147,14 @@ class ModelsRepositoryTestRunner extends Suite {
          * @throws InitializationError
          *             if the super implementation throws such an error
          */
-        new(IModelsRepositoryTest<?> test, TestModelData modelData) throws InitializationError {
+        new(ModelsRepositoryTestRunner runner, IModelsRepositoryTest<?> test, TestModelData modelData) throws InitializationError {
             super(test.class)
             this.test = test
             this.modelData = modelData
-        }
-
-        // --------------------------------------------------------------------
-
-        /**
-         * Adds to {@code errors} for each method annotated with {@code @Test}that
-         * is not a public, void instance method with zero arguments or one
-         * Object/(a sub type of) EObject argument.
-         * 
-         * @param errors the error collecting list
-         */
-        override validateTestMethods(List<Throwable> errors) {
+            this.runner = runner
+            
+            val errors = newArrayList
             val methods = getTestClass().getAnnotatedMethods(Test)
-            val test = testClass.onlyConstructor.newInstance as IModelsRepositoryTest<?>
-
             for (testMethod : methods) {
                 testMethod.validatePublicVoid(false, errors)
                 val method = testMethod.getMethod()
@@ -177,8 +170,16 @@ class ModelsRepositoryTestRunner extends Suite {
                             + " or two parameter (the test model instance and the TestModelData)"))
                 }
             }
+            if (!errors.empty) {
+                throw new InitializationError(errors)
+            }
         }
-
+        
+        // --------------------------------------------------------------------
+        
+        override protected validateInstanceMethods(List<Throwable> errors) {
+            // Checked in constructor
+        }
         
         // --------------------------------------------------------------------
         
@@ -229,6 +230,13 @@ class ModelsRepositoryTestRunner extends Suite {
         }
 
         // --------------------------------------------------------------------
+
+        /**
+         * Returns a new fixture for running a test.
+         */
+        override protected createTest() throws Exception {
+            return runner.injector.getInstance(test.class)
+        }
 
         /**
          * Returns a {@link Statement} that invokes {@code method} on {@code test} with parameter

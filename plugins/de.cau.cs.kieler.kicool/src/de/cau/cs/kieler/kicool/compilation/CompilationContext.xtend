@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.model.properties.IProperty
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
+import static extension com.google.common.base.Preconditions.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
@@ -71,8 +72,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors(PUBLIC_GETTER) Map<ProcessorReference, Processor<?,?>> processorMap
     /** The ordered list of all processor instances of this context */
     @Accessors(PUBLIC_GETTER) List<Processor<?,?>> processorInstancesSequence 
-    @Accessors Map<ProcessorSystem, CompilationContext> subContexts
-    @Accessors CompilationContext parentContext = null
     /** The environment that will be prepared at startup before compilation. */
     @Accessors(PUBLIC_GETTER) Environment startEnvironment
     /** A reference to the target environment of the last processor to enable quick access. */
@@ -82,11 +81,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     /** Stops compilation if any error occurs */
     @Accessors boolean stopOnError = false
     
+    private var Processor<?,?> actualProcessor = null
+    
     new() {
         systemMap = <ProcessorEntry, ProcessorEntry> newHashMap
         processorMap = <ProcessorReference, Processor<?,?>> newLinkedHashMap
         processorInstancesSequence = <Processor<?,?>> newArrayList
-        subContexts = <ProcessorSystem, CompilationContext> newLinkedHashMap
         notifications = <AbstractContextNotification> newLinkedList
         
         // This is the default start configuration.
@@ -142,9 +142,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected def Environment compile(Environment environment) {
         val processorEntry = system.processors
         
-        if (parentContext === null) notify(new CompilationStart(this))
+        notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
-        if (parentContext === null) notify(new CompilationFinished(this, EPrime))
+        notify(new CompilationFinished(this, EPrime))
 
         result = EPrime
         EPrime
@@ -161,6 +161,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             System.err.println("An instance for processor reference " + processorReference + " was not found!")
             return environment
         }
+        actualProcessor = processorInstance;
         
         // Set environment information that come from the outside, e.g. the system.
         environment.processEnvironmentConfig(processorReference.preconfig)
@@ -249,8 +250,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     protected dispatch def Environment compileEntry(ProcessorSystem processorSystem, Environment environment) {
-        val subContext = subContexts.get(processorSystem)
-        subContext.compile(environment)
+        throw new IllegalArgumentException("A context should not contain ProcessorSystem entries. See SystemTransformation.")
     }
     
     def Processor<?,?> getProcessorFor(IProperty<?> property, Object object) {
@@ -351,21 +351,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
     }   
     
-    override synchronized void addObserver(Observer o) {
-        super.addObserver(o)
-        for (sc : subContexts.values) sc.addObserver(o)
-    }
-
-    override synchronized void deleteObserver(Observer o) {
-        super.deleteObserver(o)
-        for (sc : subContexts.values) sc.deleteObserver(o)
-    }    
-    
-    def CompilationContext getRootContext() {
-        if (parentContext === null) return this
-        else return parentContext.getRootContext
-    }
-    
     def ProcessorEntry getOriginalProcessorEntry(ProcessorEntry processorEntry) {
         return systemMap.get(processorEntry)
     }
@@ -386,6 +371,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     def void addProcessorEntry(String processorId) {
+        processorId.checkNotNull("Illegal processor ID: null")
         val processorEntry = KiCoolFactory.eINSTANCE.createProcessorReference => [
             it.id = processorId
         ]
@@ -397,15 +383,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
      * Adding processor systems is not supported at the moment.
      */
     def void addProcessorEntries(Processor<?,?> position, List<ProcessorEntry> processorEntries) {
-        val processorEntryPoint = system.processors
+        val posProcessor = processorMap.entrySet.findFirst[value == position]?.key
+        if (posProcessor === null) {
+            throw new IllegalArgumentException("Given position processor does not exist.")
+        }
+        val processorEntryPoint = system.eAllContents.filter(ProcessorGroup).findFirst[processors.contains(posProcessor)]
         if (processorEntryPoint instanceof ProcessorGroup) {
             for (newEntry : processorEntries.reverseView) {
-                val posProcessor = processorMap.entrySet.findFirst[value == position]?.key
-                if (posProcessor === null) {
-                    throw new IllegalArgumentException("Given position processor does not exist.")
-                }
                 val idx = processorEntryPoint.processors.indexOf(posProcessor)
-                if (posProcessor === null) {
+                if (idx == -1) {
                     throw new IllegalArgumentException("Given position processor does not exist in the processor group.")
                 }
                 processorEntryPoint.processors.add(idx + 1, newEntry)
@@ -463,6 +449,53 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             }
             processor.environment.processEnvironmentConfig(processorReference.postconfig)
         }
+    }
+    
+    
+    def Processor<?,?> getLastProcessorForResultType(Class<?> clazz) {
+        for(p : processorInstancesSequence.reverse) {
+            val result = p.environment.model
+            if (clazz.isInstance(result)) return p
+        }
+        return null
+    } 
+    
+    /** 
+     * Convenient toString method mainly for debugging purposes.
+     */
+    override toString() {
+        val text = new StringBuilder
+        text.append("CompilationContext@")
+        text.append(hashCode)
+        if (actualProcessor !== null) {
+            text.append(": ")
+            text.append(actualProcessor.toString)
+        }
+        return text.toString
+    }
+    
+    /** 
+     * Convenient toString method printing the complete processor list mainly for debugging purposes.
+     */
+    def String toStringComplete() {
+        val text = new StringBuilder
+        text.append("CompilationContext@")
+        text.append(hashCode)
+        if (actualProcessor !== null) {
+            text.append(": ")
+            text.append(actualProcessor.toString)
+        }
+        if (!processorInstancesSequence.empty) {
+            text.append("\n[")
+            for (p : processorInstancesSequence.indexed) {
+                if (p.key != 0) {
+                    text.append(", ")
+                }
+                text.append(p.value.toString)
+            }
+            text.append("]")
+        }
+        return text.toString
     }
     
        

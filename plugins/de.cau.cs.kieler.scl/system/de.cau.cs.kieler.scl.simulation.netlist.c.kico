@@ -1,0 +1,6 @@
+developer system de.cau.cs.kieler.scl.^simulation.netlist.c
+    label "SCL Netlist-based Simulation (C)"
+
+de.cau.cs.kieler.kicool.deploy.variable.store.init
+system de.cau.cs.kieler.scl.netlist.c
+system de.cau.cs.kieler.^simulation.netlist.c

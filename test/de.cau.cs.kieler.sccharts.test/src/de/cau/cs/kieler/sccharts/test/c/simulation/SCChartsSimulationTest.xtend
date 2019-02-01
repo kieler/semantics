@@ -32,10 +32,10 @@ class SCChartsSimulationTest extends AbstractSimulationTest<SCCharts> {
     public static val String NETLIST_C_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
     public static val String NETLIST_JAVA_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.netlist.java"
     public static val String NETLIST_JAVA_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.java"
-    public static val String PRIO_C_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.prio.c"
-    public static val String PRIO_C_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.prio.c"
-    public static val String PRIO_JAVA_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.prio.java"
-    public static val String PRIO_JAVA_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.prio.java"
+    public static val String PRIO_C_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.priority.c"
+    public static val String PRIO_C_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.priority.c"
+    public static val String PRIO_JAVA_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.priority.java"
+    public static val String PRIO_JAVA_TTS_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.tts.priority.java"
         
     public static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     

@@ -99,6 +99,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 SCLProgram sclProgram = (SCLProgram)theEObject;
                 T result = caseSCLProgram(sclProgram);
                 if (result == null) result = casePragmatable(sclProgram);
+                if (result == null) result = caseNameable(sclProgram);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

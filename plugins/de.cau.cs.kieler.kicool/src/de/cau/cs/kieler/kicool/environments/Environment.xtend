@@ -161,5 +161,27 @@ class Environment extends EnvironmentPropertyHolder {
     def isInDeveloperMode() {
         getProperty(DEVELOPER_MODE)
     }
+    
+    /** 
+     * Convenient toString method mainly for debugging purposes.
+     */
+    override toString() {
+        val text = new StringBuilder
+        text.append("Environment@")
+        text.append(hashCode)
+        if (propertyMap.size > 0) {
+            text.append("\n")
+            for (k : propertyMap.keySet) {
+                text.append("  ")
+                text.append(k.id)
+                text.append(" = ")
+                text.append(propertyMap.get(k).toString)
+                text.append("\n")                
+            }
+            text.append("\n")
+        }
+        
+        return text.toString
+    }    
   
 }

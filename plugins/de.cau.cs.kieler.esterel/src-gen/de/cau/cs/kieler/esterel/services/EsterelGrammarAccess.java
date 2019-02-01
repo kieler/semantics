@@ -1258,8 +1258,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//name=ID ((":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType |
 		//idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":="
-		//initialValue=Expression ":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
-		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
+		//initialValue=Expression ":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
+		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -1269,9 +1269,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
 		//((":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
-		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":=" initialValue=Expression ":")?
-		//(type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-		//combineOperator=EsterelCombineOperator)) ")")?
+		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":=" initialValue=Expression
+		//":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
+		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//(":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
@@ -1763,8 +1763,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		// * ###               7.5 Statements                ###
 		// * ###################################################
 		// */ InstructionStatement scl::Statement:
-		//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-		//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
+		//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain
+		//	| Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
 		//	Block | LegacyDo;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -2302,8 +2302,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//annotations+=Annotation* "call" procedure=[Procedure] ("(" (referenceArguments+=[Variable] (","
-		//referenceArguments+=[Variable])*)? ")" | '()') ("(" (valueArguments+=Expression ("," valueArguments+=Expression)*)? ")"
-		//| '()')
+		//referenceArguments+=[Variable])*)? ")" | '()') ("(" (valueArguments+=Expression ("," valueArguments+=Expression)*)?
+		//")" | '()')
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -3420,9 +3420,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{TrapSignal} name=ID (":=" initialValue=Expression ":" (type=EsterelValueType | idType=ID | "combine"
-		//(type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | ":"
-		//(type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-		//combineOperator=EsterelCombineOperator)))?
+		//(type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) |
+		//":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
+		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)))?
 		public Group getGroup() { return cGroup; }
 		
 		//{TrapSignal}
@@ -4575,8 +4575,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
 		//"type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)* | "constant" renamings+=ConstantRenaming (","
-		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* | "procedure"
-		//renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
+		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* |
+		//"procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
 		//renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
@@ -7634,8 +7634,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// * ###               7.5 Statements                ###
 	// * ###################################################
 	// */ InstructionStatement scl::Statement:
-	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-	//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
+	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain
+	//	| Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
 	//	Block | LegacyDo;
 	public InstructionStatementElements getInstructionStatementAccess() {
 		return pInstructionStatement;
@@ -9602,8 +9602,62 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseNotExpressionAccess().getRule();
 	}
 	
+	//ShiftExpressions Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftExpressionsElements getShiftExpressionsAccess() {
+		return gaKExpressions.getShiftExpressionsAccess();
+	}
+	
+	public ParserRule getShiftExpressionsRule() {
+		return getShiftExpressionsAccess().getRule();
+	}
+	
+	//ShiftLeftRightExpression Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftLeftRightExpressionElements getShiftLeftRightExpressionAccess() {
+		return gaKExpressions.getShiftLeftRightExpressionAccess();
+	}
+	
+	public ParserRule getShiftLeftRightExpressionRule() {
+		return getShiftLeftRightExpressionAccess().getRule();
+	}
+	
+	//ShiftLeftRightUnsignedExpression Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftLeftRightUnsignedExpressionElements getShiftLeftRightUnsignedExpressionAccess() {
+		return gaKExpressions.getShiftLeftRightUnsignedExpressionAccess();
+	}
+	
+	public ParserRule getShiftLeftRightUnsignedExpressionRule() {
+		return getShiftLeftRightUnsignedExpressionAccess().getRule();
+	}
+	
+	//ShiftRightRightUnsignedExpression Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftRightRightUnsignedExpressionElements getShiftRightRightUnsignedExpressionAccess() {
+		return gaKExpressions.getShiftRightRightUnsignedExpressionAccess();
+	}
+	
+	public ParserRule getShiftRightRightUnsignedExpressionRule() {
+		return getShiftRightRightUnsignedExpressionAccess().getRule();
+	}
+	
 	//ShiftLeftExpression Expression:
-	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
 	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return gaKExpressions.getShiftLeftExpressionAccess();
@@ -9614,7 +9668,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ShiftRightExpression Expression:
-	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
 	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return gaKExpressions.getShiftRightExpressionAccess();
@@ -9625,14 +9679,81 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ShiftRightUnsignedExpression Expression:
-	//	super::AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=super::AddExpression) ('>>>' subExpressions+=super::AddExpression)*)?;
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
 	}
 	
 	public ParserRule getShiftRightUnsignedExpressionRule() {
 		return getShiftRightUnsignedExpressionAccess().getRule();
+	}
+	
+	//SumExpression Expression:
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator
+	//	subExpressions+=super::SubExpression) ('+' subExpressions+=super::SubExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=super::AddExpression) ('-'
+	//	subExpressions+=super::AddExpression)*)?;
+	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
+		return gaKExpressions.getSumExpressionAccess();
+	}
+	
+	public ParserRule getSumExpressionRule() {
+		return getSumExpressionAccess().getRule();
+	}
+	
+	//ProductExpression Expression:
+	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator
+	//	subExpressions+=DivModExpression) ('*' subExpressions+=DivModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
+	//	subExpressions+=MultModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
+	//	subExpressions+=MultDivExpression)*)?;
+	public KExpressionsGrammarAccess.ProductExpressionElements getProductExpressionAccess() {
+		return gaKExpressions.getProductExpressionAccess();
+	}
+	
+	public ParserRule getProductExpressionRule() {
+		return getProductExpressionAccess().getRule();
+	}
+	
+	//MultDivExpression Expression:
+	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator
+	//	subExpressions+=DivModExpression) ('*' subExpressions+=DivModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
+	//	subExpressions+=MultModExpression)*)?;
+	public KExpressionsGrammarAccess.MultDivExpressionElements getMultDivExpressionAccess() {
+		return gaKExpressions.getMultDivExpressionAccess();
+	}
+	
+	public ParserRule getMultDivExpressionRule() {
+		return getMultDivExpressionAccess().getRule();
+	}
+	
+	//MultModExpression Expression:
+	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator
+	//	subExpressions+=DivModExpression) ('*' subExpressions+=DivModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
+	//	subExpressions+=MultDivExpression)*)?;
+	public KExpressionsGrammarAccess.MultModExpressionElements getMultModExpressionAccess() {
+		return gaKExpressions.getMultModExpressionAccess();
+	}
+	
+	public ParserRule getMultModExpressionRule() {
+		return getMultModExpressionAccess().getRule();
+	}
+	
+	//DivModExpression Expression:
+	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator
+	//	subExpressions+=MultModExpression) ('/' subExpressions+=MultModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
+	//	subExpressions+=MultDivExpression)*)?;
+	public KExpressionsGrammarAccess.DivModExpressionElements getDivModExpressionAccess() {
+		return gaKExpressions.getDivModExpressionAccess();
+	}
+	
+	public ParserRule getDivModExpressionRule() {
+		return getDivModExpressionAccess().getRule();
 	}
 	
 	//TernaryOperation Expression:
@@ -10088,7 +10209,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
+	//	PURE="pure" | BOOL="bool" |
 	//	INT="int" | FLOAT="float" |
 	//	STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {

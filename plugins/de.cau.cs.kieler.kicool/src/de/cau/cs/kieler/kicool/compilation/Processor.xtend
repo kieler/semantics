@@ -257,6 +257,18 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         return new AnnotationModel(c.first, c.second, this)
     }
     
+    /** 
+     * Convenient toString method for debugging purposes.
+     */
+    override toString() {
+        val name = getName
+        if (name !== null) {
+            return "Processor@" + hashCode + ": " + name
+        } else {
+            return "Processor@" + hashCode
+        }
+    }
+    
     
     /**
      * ID of the processor.

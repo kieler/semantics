@@ -90,6 +90,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 EsterelProgram esterelProgram = (EsterelProgram)theEObject;
                 T result = caseEsterelProgram(esterelProgram);
                 if (result == null) result = casePragmatable(esterelProgram);
+                if (result == null) result = caseNameable(esterelProgram);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

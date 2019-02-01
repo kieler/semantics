@@ -14,7 +14,6 @@ import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider;
 import de.cau.cs.kieler.sccharts.text.serializer.SCTXSemanticSequencer;
 import de.cau.cs.kieler.sccharts.text.serializer.SCTXSyntacticSequencer;
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess;
-import de.cau.cs.kieler.sccharts.text.validation.SCTXConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.sccharts.text.validation.SCTXValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -46,7 +45,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
-import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link SCTXRuntimeModule}.
@@ -137,11 +135,6 @@ public abstract class AbstractSCTXRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends SCTXValidator> bindSCTXValidator() {
 		return SCTXValidator.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
-		return SCTXConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

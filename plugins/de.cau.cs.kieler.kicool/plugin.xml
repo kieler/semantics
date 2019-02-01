@@ -68,6 +68,9 @@
             class="de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.ModelIncludes">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.kicool.processors.Snapshot">
       </Processor>
    </extension>

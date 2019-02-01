@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject
  * @author mrb
  *
  */
-class PresentTransformation extends InplaceProcessor<EsterelProgram> {
+class PresentTransformation extends AbstractSCEstDynamicProcessor<Present>  {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -45,31 +45,7 @@ class PresentTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Present) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Present).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Present present) {
+    override transform(Present present) {
         var Conditional conditional
         if (!present.cases.empty) {
             conditional = createConditional(present.cases.get(0).expression)

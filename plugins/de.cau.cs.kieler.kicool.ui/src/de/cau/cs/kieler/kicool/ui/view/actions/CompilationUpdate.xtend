@@ -77,10 +77,18 @@ class CompilationUpdate extends KiCoolUIObserver {
                         }
                         
                         if (view.editPartSystemManager.intermediateSelection !== null) {
-                            model = retrieveIntermediateModel(view.viewContext.viewModel, view, model, view.editPartSystemManager.intermediateSelection)
-                        } 
-                        
-                        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+                            val modelList = retrieveIntermediateModel(view.viewContext.viewModel, view, model, view.editPartSystemManager.intermediateSelection, editor)
+                            if (modelList.nullOrEmpty) {
+                                println("Selection model list returned nothing. Falling back to default.")
+                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+                            } else if (modelList.size == 1) {
+//                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+                            } else {
+//                                KiCoModelViewNotifier.notifyCompilationChangedList(editor, modelList)
+                            }
+                        } else {
+                            KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+                        }
                     }
                     
                     if (view.visualLayoutFeedbackToggle.checked) {

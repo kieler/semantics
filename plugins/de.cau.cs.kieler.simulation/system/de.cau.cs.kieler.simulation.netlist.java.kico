@@ -1,7 +1,6 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.netlist.java
-    label "Netlist-based Simulation (Java, No-TTS)"
+developer system de.cau.cs.kieler.^simulation.netlist.java
+    label "Netlist-based Simulation Java Backend"
 
-system de.cau.cs.kieler.sccharts.netlist.java
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {

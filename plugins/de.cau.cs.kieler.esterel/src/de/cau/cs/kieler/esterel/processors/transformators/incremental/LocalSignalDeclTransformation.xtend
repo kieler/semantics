@@ -33,7 +33,7 @@ import de.cau.cs.kieler.scl.Thread
  * @author mrb
  *
  */
-class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
+class LocalSignalDeclTransformation extends AbstractSCEstDynamicProcessor<LocalSignalDeclaration> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -52,37 +52,14 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof LocalSignalDeclaration) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(LocalSignalDeclaration).toList.forEach[transform]
-        }
-    }    
-    
-    def transform(LocalSignalDeclaration localSignals) {
+    override transform(LocalSignalDeclaration localSignals) {
         // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
         val HashMap<Signal, NewSignals> signalsMap = new HashMap<Signal, NewSignals>()
         var scope = localSignals.statements.createScopeStatement
         for (signal : localSignals.valuedObjects.filter(Signal)) {
             val s = createSignalVariable(createFalse, null, null)
             var decl = createDeclaration(ValueType.BOOL, s)
+            voStore.update(s, "signal")
             var decl2 = createDeclaration(null, null)
             if (signal.type !== null) {
                 scope.declarations.add(decl)

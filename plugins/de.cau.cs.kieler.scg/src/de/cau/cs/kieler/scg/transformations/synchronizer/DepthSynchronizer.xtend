@@ -405,12 +405,19 @@ class DepthSynchronizer extends AbstractSynchronizer {
     
     override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
+        var delay = false
         
         for(tpt : threadPathTypes) {
-            if (tpt != ThreadPathType::DELAYED) synchronizable = false
+            if (tpt != ThreadPathType::DELAYED) {
+                if (tpt != ThreadPathType::INSTANTANEOUS) {
+                    synchronizable = false
+                }
+            } else {
+                delay = true
+            }
         } 
         
-        synchronizable
+        return synchronizable && delay
     }
     
     protected def boolean guardExists(SCGraph scg, String name) {

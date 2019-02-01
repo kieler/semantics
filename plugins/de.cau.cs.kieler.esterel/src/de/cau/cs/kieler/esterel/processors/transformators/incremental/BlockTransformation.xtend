@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject
  * @author mrb
  *
  */
-class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
+class  BlockTransformation extends AbstractSCEstDynamicProcessor<Block> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -45,31 +45,7 @@ class  BlockTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Block) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Block).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Block block) {
+    override transform(Block block) {
         val ScopeStatement scope = block.statements.createScopeStatement
         block.replace(scope)
         lastStatement = scope

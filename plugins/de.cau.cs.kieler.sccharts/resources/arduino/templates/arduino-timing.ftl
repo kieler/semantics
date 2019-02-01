@@ -63,9 +63,26 @@ if((millis() - clock_${parameters.voName}) > ${parameters.parameter1}){
     
 <#macro Time position>
 <#if position=="input">
-<#list parameters["Clock"] as parameters>
+<#list parameters["Time"] as parameters>
 // Time
-${tickdata_name}${parameter.varName} = millis();
+${tickdata_name}${parameters.varName} = millis();
+</#list>
+</#if>
+</#macro>
+
+
+<#-- TimeMicros -->
+<#-- The input variable contains the elapsed time since program start in milliseconds.
+
+    Example:
+    input int 
+    @macro "TimeMicros" time; -->
+    
+<#macro TimeMicros position>
+<#if position=="input">
+<#list parameters["TimeMicros"] as parameters>
+// Time
+${tickdata_name}${parameters.varName} = micros();
 </#list>
 </#if>
 </#macro>

@@ -134,10 +134,10 @@ ControlflowRegion returns sccharts::ControlflowRegion:
     ((
         'is'
         reference = ScopeCall
-        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
         ('schedule' schedule+=ScheduleObjectReference+)?
     )|(
-        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
         ('schedule' schedule+=ScheduleObjectReference+)?
         ((
             ':'
@@ -235,7 +235,7 @@ enum HistoryType returns sccharts::HistoryType:
 
 @Override  
 enum ValueType returns kexpressions::ValueType:
-    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
+    PURE="pure" | BOOL="bool" | 
     INT="int" | FLOAT="float" |
     STRING="string" |
     CLOCK="clock"; // als: added clock for timed automata
