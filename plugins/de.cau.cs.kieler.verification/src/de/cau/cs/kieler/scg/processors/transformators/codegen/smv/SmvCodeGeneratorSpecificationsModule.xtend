@@ -18,7 +18,7 @@ import java.util.Comparator
 import de.cau.cs.kieler.verification.VerificationPropertyType
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvIdentifier
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
 import java.util.List
 
 /**
@@ -46,7 +46,7 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
             val specName = property.getSmvSpecName
             appendIndentedLine('''«specName»''')
             incIndentationLevel
-            appendIndentedLine('''«property.name.toSmvIdentifier» := «property.formula.toSmvExpression»;''')
+            appendIndentedLine('''«property.name.toIdentifier» := «property.formula.toSmvExpression»;''')
             decIndentationLevel
             index++
         }

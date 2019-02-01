@@ -25,7 +25,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvIdentifier
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
 
 /**
@@ -165,7 +165,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     
     protected def List<String> resolvePlaceholders(List<String> interactiveCommands, VerificationProperty property) {
         return interactiveCommands.map[
-            it.replace(PROPERTY_NAME_PLACEHOLDER, property.name.toSmvIdentifier)
+            it.replace(PROPERTY_NAME_PLACEHOLDER, property.name.toIdentifier)
               .trim
         ]
     }

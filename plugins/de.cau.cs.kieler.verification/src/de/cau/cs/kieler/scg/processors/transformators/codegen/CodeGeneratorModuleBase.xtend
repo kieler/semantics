@@ -22,29 +22,18 @@ public abstract class CodeGeneratorModuleBase extends SCGCodeGeneratorModule {
     abstract def String getLineCommentToken()
     
     protected def void appendIndentation() {
-        indent(0) // The indentationModifier is always added
-    }
-    
-    protected def void appendIndented(String s) {
-        appendIndentation()
-        code.append(s)
+        // Add the indentation once.
+        // The 0 is for adding no additional indentation to the current indentation level.
+        indent(0)
     }
     
     protected def void appendIndentedLine(String s) {
-        appendIndented(s)
-        code.append("\n")
+        appendIndentation()
+        code.append(s).append("\n")
     }
     
-    protected def void appendSeparatorComment() {
-        appendIndentation
-        for(i : 1..10) { code.append(lineCommentToken) }
-        code.append("\n")
-    }
-    
-    protected def void appendSeparatorComment(String comment) {
-        appendSeparatorComment
-        appendIndentation
-        code.append(lineCommentToken).append(" ").append(comment).append("\n")
+    protected def void appendIndentedComment(String comment) {
+        appendIndentedLine(lineCommentToken + " " + comment)
     }
     
     protected def void incIndentationLevel() {

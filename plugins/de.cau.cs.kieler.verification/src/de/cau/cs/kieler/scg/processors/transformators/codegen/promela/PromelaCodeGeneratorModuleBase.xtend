@@ -19,7 +19,8 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorModul
  * @author aas
  */
 abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
-    public static val TICK_END_FLAG_NAME = "tickend"
+    public static val TICK_END_FLAG_NAME = "pmltickend"
+    public static val SETUP_DONE_FLAG_NAME = "pmlsetupdone"
     public static val GUARD_PREFIX = "_g"
     public static val PRE_GUARD_PREFIX = "_p"
     public static val CONDITIONAL_GUARD_PREFIX = "_cg"

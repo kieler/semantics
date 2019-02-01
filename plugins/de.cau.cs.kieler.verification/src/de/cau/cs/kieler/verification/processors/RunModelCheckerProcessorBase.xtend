@@ -27,6 +27,8 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtext.util.StringInputStream
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
+
 /**
  * @author aas
  */
@@ -82,7 +84,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     protected def IPath getOutputFile(VerificationProperty property, String fileExtension) {
         var String name = modelFile.nameWithoutExtension
         if(!property.name.isNullOrEmpty) {
-            name += ("-" + property.name.replace(' ', '_') + "")
+            name += ("-" + property.name.toIdentifier + "")
         }
         name += fileExtension
         return getOutputFile(name)

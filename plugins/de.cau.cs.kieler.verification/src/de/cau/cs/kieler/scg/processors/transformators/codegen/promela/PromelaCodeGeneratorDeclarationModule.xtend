@@ -21,6 +21,8 @@ import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
+
 /**
  * Handles the declaration of variables.
  * 
@@ -45,7 +47,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
             val property = verificationProperties.head
             if(property.type == VerificationPropertyType.LTL) {
                 val pmlFormula = property.formula.toPmlLtlFormula
-                appendIndentedLine('''ltl «property.name.replace(" ", "_")» { «pmlFormula» }''')
+                appendIndentedLine('''ltl «property.name.toIdentifier» { «pmlFormula» }''')
                 code.append("\n")
             } else if(property.type == VerificationPropertyType.CTL) {
                 val exception = new Exception("Promela does not support specification of CTL properties")
@@ -80,8 +82,9 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         // Add _GO signal
         appendIndentedLine('''bool _GO = 1;''')
         
-        // Add end-of-tick flag
+        // Add flags only used inside the promela model
         appendIndentedLine('''bool «TICK_END_FLAG_NAME» = 0;''')
+        appendIndentedLine('''bool «SETUP_DONE_FLAG_NAME» = 0;''')
     }
     
     override generateDone() {
@@ -92,12 +95,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     private def String toPmlLtlFormula(String ltlFormula) {
-        val ltlFormulaForEndOfTick = ltlFormula.toLtlFormulaForEndOfTick
-        return ltlFormulaForEndOfTick.replace("G", "[]").replace("F", "<>").replace("R", "V")
-    }
-    
-    private def String toLtlFormulaForEndOfTick(String ltl) {
-        // TODO: implement
-        return ltl
+        val pmlLtlFormula = ltlFormula.replace("G", "[]").replace("F", "<>").replace("R", "V")
+        val pmlLtlFormulaAfterSetupDone = '''«SETUP_DONE_FLAG_NAME» -> ( «pmlLtlFormula» )'''
+        return pmlLtlFormulaAfterSetupDone
     }
 }

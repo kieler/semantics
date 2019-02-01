@@ -50,6 +50,7 @@ abstract class AbstractCodeGeneratorModule {
      * Indent adds the indentation to the builder.
      */
     protected def indent() {
+        // TODO: it is weird that the indentationModifier is ignored here, in contrast to indent(int n) 
         code.append(indentation)
     }
     
