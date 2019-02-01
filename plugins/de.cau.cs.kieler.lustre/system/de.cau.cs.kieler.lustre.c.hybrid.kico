@@ -1,5 +1,0 @@
-public system de.cau.cs.kieler.lustre.c.hybrid
-	label "Lustre to C Hybrid"
-
-de.cau.cs.kieler.lustre.processors.lustreToSCC.hybrid
-system de.cau.cs.kieler.sccharts.^simulation.netlist.c

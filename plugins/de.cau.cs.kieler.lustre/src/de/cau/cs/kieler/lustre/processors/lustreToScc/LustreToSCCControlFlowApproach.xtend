@@ -19,14 +19,14 @@ import de.cau.cs.kieler.sccharts.SCCharts
 /**
  * @author cpa
  */
-class LustreToSCCControlFlow extends LustreToSCCDataFlow {
+class LustreToSCCControlFlowApproach extends LustreToSCCharts {
 
     override getId() {
         return "de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow"
     }
 
     override getName() {
-        return "Lustre to SC CF"
+        return "Lustre to SCC (control-flow approach)"
     }
 
     override ProcessorType getType() {

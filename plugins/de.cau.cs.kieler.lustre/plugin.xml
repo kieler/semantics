@@ -21,16 +21,13 @@
    <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCControlFlow">
+            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCControlFlowApproach">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.lustre.processors.sccToLustre.SCChartsControlFlowToLustre">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCDataFlow">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCHybrid">
+            class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts">
       </Processor>
    </extension>
    <extension
@@ -42,19 +39,13 @@
             system="system/de.cau.cs.kieler.lustre.sccharts.controlflow.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.sccharts.hybrid.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.sccharts.dataflow.kico">
+            system="system/de.cau.cs.kieler.lustre.sccharts.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.c.controlflow.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.c.dataflow.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.c.hybrid.kico">
+            system="system/de.cau.cs.kieler.lustre.c.kico">
       </TransformationSystem>
    </extension>
 

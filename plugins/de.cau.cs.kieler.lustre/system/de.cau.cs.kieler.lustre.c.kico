@@ -1,5 +1,5 @@
 public system de.cau.cs.kieler.lustre.c.dataflow
-	label "Lustre to C Data-flow"
+	label "Lustre to C"
 
 de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow
 system de.cau.cs.kieler.sccharts.^simulation.netlist.c

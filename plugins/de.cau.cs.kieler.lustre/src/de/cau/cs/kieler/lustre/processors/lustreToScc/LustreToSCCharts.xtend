@@ -15,25 +15,39 @@ package de.cau.cs.kieler.lustre.processors.lustreToScc
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ATransition
 import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * @author lgr
  *
  */
-class LustreToSCCDataFlow extends LustreBasicToSCC {
+class LustreToSCCharts extends CoreLustreToSCC {
 
     static final String DATAFLOW_REGION_PREFIX = "df"
+    static final String CONTROLFLOW_REGION_PREFIX = "cf"
 
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsDataflowRegionExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
+    
+    int controlflowRegionCounter
     
     override getId() {
         return "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow"
@@ -47,8 +61,30 @@ class LustreToSCCDataFlow extends LustreBasicToSCC {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
+    override protected reset() {
+        controlflowRegionCounter = 0
+    }
+    
     override processAutomaton(Automaton automaton, State state) {
-        throw new UnsupportedOperationException("Automatons are not part of the supported Lustre language features.")
+        var controlflowRegion = createControlflowRegion(CONTROLFLOW_REGION_PREFIX + controlflowRegionCounter)
+        state.regions += controlflowRegion
+        
+        var initialState = true;
+        for (AState lusState : automaton.states) {
+            var newState = createState => [
+                name = lusState.name
+            ]
+            if (initialState) {
+                newState.initial = true
+                initialState = false
+            }
+            controlflowRegion.states += newState
+            lustreStateToScchartsStateMap.put(lusState, newState)
+        }
+        
+        for (AState lusState : automaton.states) {
+            processState(lusState, lustreStateToScchartsStateMap.get(lusState))
+        }
     }
     
     override processAssertion(Expression assertion, State state) {
@@ -83,6 +119,43 @@ class LustreToSCCDataFlow extends LustreBasicToSCC {
                     dataflowRegion.equations += dataflowAssignment
                 }
         }
+    }
+    
+    protected def processState(AState lusState, State state) {
+        
+        for (Assignment equation: lusState.equations) {
+            processEquation(equation as Equation, state)
+        }
+        
+        for (Expression assertion : lusState.assertions) {
+            processAssertion(assertion, state)
+        }
+        
+        for (Automaton automaton : lusState.automatons) {
+            processAutomaton(automaton, state)
+        }
+        
+        for (ATransition transition : lusState.transitions) {
+            processTransition(transition, state)
+        }
+    }    
+    
+    protected def processTransition(ATransition transition, State source) {
+        var newTransition = createTransition => [
+            sourceState = source
+            targetState = lustreStateToScchartsStateMap.get(transition.nextState)
+        ]
+        
+        var trigger = transformExpression(transition.condition, source)
+        if (trigger !== null) {
+            newTransition.trigger = trigger
+        }
+        if (transition.strong) {
+            newTransition.preemption = PreemptionType.STRONGABORT
+        }
+        if (transition.history) {
+            newTransition.history = HistoryType.DEEP
+        }        
     }
         
         

@@ -7,6 +7,11 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
+/*
+ * This implementation of the grammar (except for the automatons) is based on 
+ * the Lustre V6 Reference manual. 
+ */
+
 LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
     ('include' (includes+=STRING | includes+=STRING))*
     (packBody=PackBody | packList=PackList)

@@ -1,5 +1,5 @@
 public system de.cau.cs.kieler.lustre.c.controlflow
-	label "Lustre to C Control-flow"
+	label "Lustre to C (controlflow approach)"
 
 de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow
 system de.cau.cs.kieler.sccharts.^simulation.netlist.c

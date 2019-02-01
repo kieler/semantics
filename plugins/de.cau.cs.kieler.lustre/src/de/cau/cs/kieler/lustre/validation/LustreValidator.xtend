@@ -10,6 +10,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.lustre.lustre.AState
 import de.cau.cs.kieler.lustre.lustre.Assertion
 import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
@@ -24,13 +25,11 @@ import de.cau.cs.kieler.lustre.lustre.PackageEquation
 import de.cau.cs.kieler.lustre.lustre.StaticParam
 import de.cau.cs.kieler.lustre.lustre.TypeDeclaration
 import java.util.HashSet
+import java.util.LinkedList
 import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.lustre.lustre.AState
-import de.cau.cs.kieler.lustre.lustre.Automaton
-import java.util.LinkedList
 
 /**
  * This class contains custom validation rules. 
@@ -172,8 +171,9 @@ class LustreValidator extends AbstractLustreValidator {
                     valuedObjectSet.add(equation.reference.valuedObject)
                     currAutomatons.addAll(state.automatons)
                 }
-                currAutomatons.remove(automaton)
+                currAutomatons.addAll(state.automatons)
             }
+            currAutomatons.remove(automaton)
         }
         
         for (VariableDeclaration varDecl : node.output.parameter) {

@@ -62,7 +62,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
  * @author lgr
  *
  */
-abstract class LustreBasicToSCC extends Processor<LustreProgram, SCCharts> {
+abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     // TODO: This should be configurable for the user.    
     public static boolean USE_SIGNALS_FOR_CLOCKED_VARIABLES = true
@@ -80,13 +80,13 @@ abstract class LustreBasicToSCC extends Processor<LustreProgram, SCCharts> {
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
     protected HashMap<AState, State> lustreStateToScchartsStateMap = new HashMap
     
-    int uniqueNameCounter = 0
-    
     override process() {
         USE_SIGNALS_FOR_CLOCKED_VARIABLES = false
+        reset()
         model = model.transform
     }
     
+    protected def void reset();
     abstract protected def void processEquation(Equation equation, State state);
     abstract protected def void processAutomaton(Automaton automaton, State state);
     abstract protected def void processAssertion(Expression assertion, State state);
@@ -431,7 +431,7 @@ abstract class LustreBasicToSCC extends Processor<LustreProgram, SCCharts> {
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         if (!lustreStateToScchartsStateMap.containsKey(kExpression.valuedObject)) {
             val calledValuedObject = createValuedObject => [
-                name = "_ref_" + kExpression.valuedObject.name + getUniqueNameCounter
+                name = "_ref_" + kExpression.valuedObject.name + uniqueName
                 calledState.name
             ]            
             lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
@@ -531,9 +531,4 @@ abstract class LustreBasicToSCC extends Processor<LustreProgram, SCCharts> {
             }
         }
     }
-    
-    private def getUniqueNameCounter() {
-        return uniqueNameCounter++
-    }
-    
 }

@@ -1,4 +1,0 @@
-public system de.cau.cs.kieler.lustre.sccharts.hybrid
-	label "Lustre to SCCharts Hybrid"
-
-de.cau.cs.kieler.lustre.processors.lustreToSCC.hybrid
