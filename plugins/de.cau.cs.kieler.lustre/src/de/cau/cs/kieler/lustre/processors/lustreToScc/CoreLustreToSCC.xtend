@@ -86,11 +86,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         model = model.transform
     }
     
-    protected def void reset();
-    abstract protected def void processEquation(Equation equation, State state);
-    abstract protected def void processAutomaton(Automaton automaton, State state);
-    abstract protected def void processAssertion(Expression assertion, State state);
-    
     def SCCharts transform(LustreProgram p) {
         nodeToStateMap.clear 
         
@@ -108,6 +103,11 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         
         scchartsProgram
     }
+    
+    protected def void reset();
+    abstract protected def void processEquation(Equation equation, State state);
+    abstract protected def void processAutomaton(Automaton automaton, State state);
+    abstract protected def void processAssertion(Expression assertion, State state);
     
     protected def processPackBody(PackBody packBody, SCCharts scchartsProgram) {
         
@@ -438,9 +438,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         if (!lustreStateToScchartsStateMap.containsKey(kExpression.valuedObject)) {
             val calledValuedObject = createValuedObject => [
-                name = "_ref_" + kExpression.valuedObject.name + uniqueName
-                calledState.name
-            ]            
+                name = "_ref_" + calledState.name
+                uniqueName
+            ]
             lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
             val referenceDeclaration = createReferenceDeclaration => [
                 reference = calledState
