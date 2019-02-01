@@ -153,7 +153,7 @@ class VerificationView extends ViewPart {
             }
         }
         
-        val openModelCheckerFileAction = new Action("Open Model Checker Code") {
+        val openModelCheckerFileAction = new Action("Open Model Checker Model") {
             override run() {
                 val file = selectedProperty?.modelCheckerModelFile
                 if(file !== null && file.exists) {
@@ -192,15 +192,15 @@ quit'''
         val menuHelpAction = new Action("Show Controls") {
             override run() {
                 val title = "Controls for the Verification View"
-                val message = "Space : Toggle verification start/stop\n"
+                val message = "Space : Start/stop verification\n"
                 val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
         }
-        
+         
         getViewSite().getActionBars().getMenuManager() => [
-            add(openCounterexampleAction)
             add(openLogAction)
+            add(openCounterexampleAction)
             add(openModelCheckerFileAction)
             add(startVerificationOfModelInDiagramAction)
             add(openEditSmvCommandsDialogAction)
@@ -383,17 +383,25 @@ quit'''
             return
         }
         if(currentModel instanceof SCCharts) {
-            val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
-            runPropertyAnalyzer(processorId, currentModel)
-            val properties = propertyAnalyzerContext.getVerificationProperties
-            setVerificationPropertiesInUi(properties)
+            try {
+                val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
+                runPropertyAnalyzer(processorId, currentModel)
+                val properties = propertyAnalyzerContext.getVerificationProperties
+                setVerificationPropertiesInUi(properties)
+            } catch (Exception e) {
+                e.showInDialog
+            }
         }
     }
     
     private def void runPropertyAnalyzer(String processorId, EObject model) {
         val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
         propertyAnalyzerContext = Compile.createCompilationContext(compilationSystem, model)
-        propertyAnalyzerContext.compile        
+        propertyAnalyzerContext.compile
+        if(propertyAnalyzerContext.hasErrors) {
+            val exception = propertyAnalyzerContext.allErrors.get(0).exception
+            throw exception
+        }
     }
     
     private def void setVerificationPropertiesInUi(List<VerificationProperty> properties) {
@@ -457,9 +465,7 @@ quit'''
                 })
 
             } catch (Exception e) {
-                e.printStackTrace
-                StatusManager.getManager().handle(new Status(IStatus.ERROR,
-                    VerificationUiPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
+                e.showInDialog
             }
         }
     }
@@ -553,5 +559,11 @@ quit'''
     private def void storeCustomSmvCommands(String customSmvCommands) {
         val store = VerificationUiPlugin.instance.preferenceStore
         store.putValue(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, customSmvCommands)
+    }
+    
+    private def void showInDialog(Exception e) {
+        e.printStackTrace
+        StatusManager.getManager().handle(new Status(IStatus.ERROR,
+            VerificationUiPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
     }
 }

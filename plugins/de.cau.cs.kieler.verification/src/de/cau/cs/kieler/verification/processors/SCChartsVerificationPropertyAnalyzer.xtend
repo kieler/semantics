@@ -102,12 +102,19 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
                 case INVARIANT_ANNOTATION_NAME : VerificationPropertyType.INVARIANT
                 case CTL_ANNOTATION_NAME : VerificationPropertyType.CTL
                 case LTL_ANNOTATION_NAME : VerificationPropertyType.LTL
+                default : null
             }
-        if(propertyFormula !== null && propertyType !== null) {
-            return Optional.of(new VerificationProperty(propertyName, propertyFormula, propertyType))
-        } else {
+        if (propertyType === null) {
             return Optional.empty
         }
+        
+        if(propertyFormula.isNullOrEmpty) {
+            throw new Exception("Property formula missing ("+propertyType+" property)")
+        }
+        if(propertyName.isNullOrEmpty) {
+            throw new Exception("Property is missing a unique name ("+propertyType+" '"+propertyFormula+"')")
+        }
+        return Optional.of(new VerificationProperty(propertyName, propertyFormula, propertyType))
     }
     
     private def <T> getIfExists(List<T> list, int index) {
