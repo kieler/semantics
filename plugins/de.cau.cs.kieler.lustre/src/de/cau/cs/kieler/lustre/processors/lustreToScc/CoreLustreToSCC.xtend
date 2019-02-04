@@ -438,7 +438,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         if (!lustreStateToScchartsStateMap.containsKey(kExpression.valuedObject)) {
             val calledValuedObject = createValuedObject => [
-                name = "_ref_" + calledState.name
+                name = "_ref" + calledState.name
                 uniqueName
             ]
             lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
