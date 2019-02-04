@@ -170,7 +170,11 @@
       </eAnnotations>
     </eLiterals>
     <eLiterals name="BOOL" value="1" literal="bool"/>
-    <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
+    <eLiterals name="UNSIGNED" value="2" literal="unsigned">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@deprecated No longer used in grammars"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="INT" value="3" literal="int"/>
     <eLiterals name="FLOAT" value="4" literal="float"/>
     <eLiterals name="HOST" value="7" literal="host">
@@ -178,7 +182,11 @@
         <details key="documentation" value="HOST means that no actual type is given but the&#xA;type in the hostType attribute should be used &#xA;instead."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="DOUBLE" value="5" literal="double"/>
+    <eLiterals name="DOUBLE" value="5" literal="double">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@deprecated No longer used in grammars"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="STRING" value="6" literal="string"/>
     <eLiterals name="REFERENCE" value="8" literal="reference"/>
     <eLiterals name="SCHEDULE" value="9"/>

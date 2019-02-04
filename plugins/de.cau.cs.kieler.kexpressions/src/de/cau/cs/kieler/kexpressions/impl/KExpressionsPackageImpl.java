@@ -1260,6 +1260,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("deprecation")
     public void initializePackageContents() {
         if (isInitialized) return;
         isInitialized = true;
