@@ -88,6 +88,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected String lastUri
     
     override compile(String uri, String command, boolean inplace) {
+        println("Compiling" + uri)
         var fileUri = uri
         
         this.snapshotMap.put(uri, new LinkedList)
@@ -124,6 +125,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * such as requesting a new diagram for the previously shown snapshot.
      */
     protected def didCompile(String uri, String command, CancelIndicator cancelIndicator) {
+        println("Did compile" + uri)
         if (command.equals(lastCommand) && uri.equals(lastUri)) {
             showSnapshot(uri, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
@@ -176,12 +178,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override getSystems(String uri, boolean filter) {
+        println("Compiling" + uri)
         var fileUri = uri
         if (fileUri.startsWith("file://")) {
             fileUri = fileUri.substring(7) 
         }
         var uriObject = URI.createFileURI(fileUri)
-        
+        println("Uri is: " + uriObject.toFileString())
         var resourceSet = uriObject.xtextResourceSet 
         val resource = resourceSet.getResource(uriObject, true)
         
