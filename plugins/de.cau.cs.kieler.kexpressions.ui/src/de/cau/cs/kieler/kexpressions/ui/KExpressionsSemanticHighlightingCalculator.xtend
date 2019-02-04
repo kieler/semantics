@@ -23,12 +23,12 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.CrossReference
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.converter.KEffectsEmissionReferenceCallConverter
+import de.cau.cs.kieler.annotations.ui.AnnotationsHighlightingConfiguration
 
 /** 
  * @author ssm
@@ -37,6 +37,9 @@ class KExpressionsSemanticHighlightingCalculator extends AnnotationsSemanticHigh
 
     @Inject
     extension AnnotationsExtensions
+    
+    @Inject
+    var KExpressionsGrammarAccess g
 
     override void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
         CancelIndicator cancelIndicator) {
@@ -78,4 +81,21 @@ class KExpressionsSemanticHighlightingCalculator extends AnnotationsSemanticHigh
         }
         super.provideHighlightingFor(resource, acceptor, cancelIndicator)
     }
+    
+    override provideHighlightingFor(INode node, IHighlightedPositionAcceptor acceptor) {
+        super.provideHighlightingFor(node, acceptor)
+        
+        val grammarElement = node.getGrammarElement();
+        if (grammarElement == g.jsonPragmaAccess.numberSignKeyword_0 ||
+            grammarElement == g.jsonPragmaAccess.nameExtendedIDParserRuleCall_1_0) {
+            acceptor.addPosition(node.getOffset(), node.getLength(),
+                    AnnotationsHighlightingConfiguration.PRAGMA_KEY);
+        }
+        if (grammarElement == g.jsonAnnotationAccess.commercialAtKeyword_0 ||
+            grammarElement == g.jsonAnnotationAccess.nameExtendedIDParserRuleCall_1_0) {
+            acceptor.addPosition(node.getOffset(), node.getLength(),
+                    AnnotationsHighlightingConfiguration.ANNOTATION_KEY);
+        }
+    }
+    
 }

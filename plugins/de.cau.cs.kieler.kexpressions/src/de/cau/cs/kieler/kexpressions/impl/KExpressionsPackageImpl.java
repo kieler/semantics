@@ -18,9 +18,11 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonAnnotation;
 import de.cau.cs.kieler.kexpressions.JsonArrayValue;
 import de.cau.cs.kieler.kexpressions.JsonObjectMember;
 import de.cau.cs.kieler.kexpressions.JsonObjectValue;
+import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.NullValue;
@@ -239,6 +241,20 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass ignoreValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonPragmaEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonAnnotationEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -973,6 +989,42 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getJsonPragma() {
+        return jsonPragmaEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getJsonPragma_Value() {
+        return (EReference)jsonPragmaEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getJsonAnnotation() {
+        return jsonAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getJsonAnnotation_Value() {
+        return (EReference)jsonAnnotationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getJsonObjectValue() {
         return jsonObjectValueEClass;
     }
@@ -1162,6 +1214,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         ignoreValueEClass = createEClass(IGNORE_VALUE);
 
+        jsonPragmaEClass = createEClass(JSON_PRAGMA);
+        createEReference(jsonPragmaEClass, JSON_PRAGMA__VALUE);
+
+        jsonAnnotationEClass = createEClass(JSON_ANNOTATION);
+        createEReference(jsonAnnotationEClass, JSON_ANNOTATION__VALUE);
+
         jsonObjectValueEClass = createEClass(JSON_OBJECT_VALUE);
         createEReference(jsonObjectValueEClass, JSON_OBJECT_VALUE__MEMBERS);
 
@@ -1290,6 +1348,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         stringValueEClass.getESuperTypes().add(this.getValue());
         vectorValueEClass.getESuperTypes().add(this.getValue());
         ignoreValueEClass.getESuperTypes().add(this.getValue());
+        jsonPragmaEClass.getESuperTypes().add(theAnnotationsPackage.getPragma());
+        jsonAnnotationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotation());
         jsonObjectValueEClass.getESuperTypes().add(this.getValue());
         jsonArrayValueEClass.getESuperTypes().add(this.getValue());
         nullValueEClass.getESuperTypes().add(this.getValue());
@@ -1341,6 +1401,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getVectorValue_Values(), this.getExpression(), null, "values", null, 1, -1, VectorValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(ignoreValueEClass, IgnoreValue.class, "IgnoreValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(jsonPragmaEClass, JsonPragma.class, "JsonPragma", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getJsonPragma_Value(), this.getJsonObjectValue(), null, "value", null, 0, 1, JsonPragma.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(jsonAnnotationEClass, JsonAnnotation.class, "JsonAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getJsonAnnotation_Value(), this.getJsonObjectValue(), null, "value", null, 0, 1, JsonAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(jsonObjectValueEClass, JsonObjectValue.class, "JsonObjectValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getJsonObjectValue_Members(), this.getJsonObjectMember(), null, "members", null, 0, -1, JsonObjectValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

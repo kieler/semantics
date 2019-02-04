@@ -241,6 +241,14 @@
         upperBound="-1" eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IgnoreValue" eSuperTypes="#//Value"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonPragma" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragma">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonObjectValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonAnnotation" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonObjectValue"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JsonObjectValue" eSuperTypes="#//Value">
     <eOperations name="getMembersMap" lowerBound="1">
       <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">

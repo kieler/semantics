@@ -131,11 +131,15 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 			builder.put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
 			builder.put(grammarAccess.getJsonValueAccess().getAlternatives(), "rule__JsonValue__Alternatives");
-			builder.put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 			builder.put(grammarAccess.getPragmaAccess().getAlternatives(), "rule__Pragma__Alternatives");
+			builder.put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 			builder.put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
-			builder.put(grammarAccess.getRestrictedTypeAnnotationAccess().getAlternatives(), "rule__RestrictedTypeAnnotation__Alternatives");
 			builder.put(grammarAccess.getQuotedStringAnnotationAccess().getAlternatives(), "rule__QuotedStringAnnotation__Alternatives");
+			builder.put(grammarAccess.getAnnotationsAnnotationAccess().getAlternatives(), "superAnnotation__Alternatives");
+			builder.put(grammarAccess.getAnnotationsPragmaAccess().getAlternatives(), "superPragma__Alternatives");
+			builder.put(grammarAccess.getAnnotationsValuedAnnotationAccess().getAlternatives(), "superValuedAnnotation__Alternatives");
+			builder.put(grammarAccess.getRestrictedTypeAnnotationAccess().getAlternatives(), "rule__RestrictedTypeAnnotation__Alternatives");
+			builder.put(grammarAccess.getAnnotationsQuotedStringAnnotationAccess().getAlternatives(), "superQuotedStringAnnotation__Alternatives");
 			builder.put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 			builder.put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 			builder.put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
@@ -606,6 +610,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getJsonArrayValueAccess().getGroup_2(), "rule__JsonArrayValue__Group_2__0");
 			builder.put(grammarAccess.getJsonArrayValueAccess().getGroup_2_1(), "rule__JsonArrayValue__Group_2_1__0");
 			builder.put(grammarAccess.getNullValueAccess().getGroup(), "rule__NullValue__Group__0");
+			builder.put(grammarAccess.getJsonPragmaAccess().getGroup(), "rule__JsonPragma__Group__0");
+			builder.put(grammarAccess.getJsonAnnotationAccess().getGroup(), "rule__JsonAnnotation__Group__0");
 			builder.put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
 			builder.put(grammarAccess.getPragmaTagAccess().getGroup(), "rule__PragmaTag__Group__0");
 			builder.put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
@@ -1250,6 +1256,10 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getJsonObjectMemberAccess().getValueAssignment_2(), "rule__JsonObjectMember__ValueAssignment_2");
 			builder.put(grammarAccess.getJsonArrayValueAccess().getElementsAssignment_2_0(), "rule__JsonArrayValue__ElementsAssignment_2_0");
 			builder.put(grammarAccess.getJsonArrayValueAccess().getElementsAssignment_2_1_1(), "rule__JsonArrayValue__ElementsAssignment_2_1_1");
+			builder.put(grammarAccess.getJsonPragmaAccess().getNameAssignment_1(), "rule__JsonPragma__NameAssignment_1");
+			builder.put(grammarAccess.getJsonPragmaAccess().getValueAssignment_2(), "rule__JsonPragma__ValueAssignment_2");
+			builder.put(grammarAccess.getJsonAnnotationAccess().getNameAssignment_1(), "rule__JsonAnnotation__NameAssignment_1");
+			builder.put(grammarAccess.getJsonAnnotationAccess().getValueAssignment_2(), "rule__JsonAnnotation__ValueAssignment_2");
 			builder.put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 			builder.put(grammarAccess.getCommentAnnotatonSLAccess().getValuesAssignment(), "rule__CommentAnnotatonSL__ValuesAssignment");
 			builder.put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");

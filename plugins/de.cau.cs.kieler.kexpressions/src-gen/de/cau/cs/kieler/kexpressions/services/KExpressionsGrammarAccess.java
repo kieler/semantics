@@ -3381,6 +3381,149 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'null'
 		public Keyword getNullKeyword_1() { return cNullKeyword_1; }
 	}
+	public class JsonPragmaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.JsonPragma");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cNumberSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueJsonObjectValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//// New Json Annotations
+		//JsonPragma:
+		//	'#' name=ExtendedID value=JsonObjectValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'#' name=ExtendedID value=JsonObjectValue
+		public Group getGroup() { return cGroup; }
+		
+		//'#'
+		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
+		
+		//name=ExtendedID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ExtendedID
+		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
+		
+		//value=JsonObjectValue
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		
+		//JsonObjectValue
+		public RuleCall getValueJsonObjectValueParserRuleCall_2_0() { return cValueJsonObjectValueParserRuleCall_2_0; }
+	}
+	public class JsonAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.JsonAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueJsonObjectValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//JsonAnnotation:
+		//	'@' name=ExtendedID value=JsonObjectValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'@' name=ExtendedID value=JsonObjectValue
+		public Group getGroup() { return cGroup; }
+		
+		//'@'
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+		
+		//name=ExtendedID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ExtendedID
+		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
+		
+		//value=JsonObjectValue
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		
+		//JsonObjectValue
+		public RuleCall getValueJsonObjectValueParserRuleCall_2_0() { return cValueJsonObjectValueParserRuleCall_2_0; }
+	}
+	public class PragmaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Pragma");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPragmaParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cJsonPragmaParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//Pragma annotations::Pragma:
+		//	super | JsonPragma;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//super | JsonPragma
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//super
+		public RuleCall getPragmaParserRuleCall_0() { return cPragmaParserRuleCall_0; }
+		
+		//JsonPragma
+		public RuleCall getJsonPragmaParserRuleCall_1() { return cJsonPragmaParserRuleCall_1; }
+	}
+	public class AnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cJsonAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//Annotation annotations::Annotation:
+		//	super | JsonAnnotation;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//super | JsonAnnotation
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//super
+		public RuleCall getAnnotationParserRuleCall_0() { return cAnnotationParserRuleCall_0; }
+		
+		//JsonAnnotation
+		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
+	}
+	public class ValuedAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValuedAnnotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cValuedAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cJsonAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//ValuedAnnotation annotations::Annotation:
+		//	super | JsonAnnotation;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//super | JsonAnnotation
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//super
+		public RuleCall getValuedAnnotationParserRuleCall_0() { return cValuedAnnotationParserRuleCall_0; }
+		
+		//JsonAnnotation
+		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
+	}
+	public class QuotedStringAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cQuotedStringAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cJsonAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//QuotedStringAnnotation annotations::Annotation:
+		//	super | JsonAnnotation;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//super | JsonAnnotation
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//super
+		public RuleCall getQuotedStringAnnotationParserRuleCall_0() { return cQuotedStringAnnotationParserRuleCall_0; }
+		
+		//JsonAnnotation
+		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
+	}
 	
 	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.CompareOperator");
@@ -4001,6 +4144,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final JsonArrayValueElements pJsonArrayValue;
 	private final JsonValueElements pJsonValue;
 	private final NullValueElements pNullValue;
+	private final JsonPragmaElements pJsonPragma;
+	private final JsonAnnotationElements pJsonAnnotation;
+	private final PragmaElements pPragma;
+	private final AnnotationElements pAnnotation;
+	private final ValuedAnnotationElements pValuedAnnotation;
+	private final QuotedStringAnnotationElements pQuotedStringAnnotation;
 	private final TerminalRule tHOSTCODE;
 	
 	private final Grammar grammar;
@@ -4101,6 +4250,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pJsonArrayValue = new JsonArrayValueElements();
 		this.pJsonValue = new JsonValueElements();
 		this.pNullValue = new NullValueElements();
+		this.pJsonPragma = new JsonPragmaElements();
+		this.pJsonAnnotation = new JsonAnnotationElements();
+		this.pPragma = new PragmaElements();
+		this.pAnnotation = new AnnotationElements();
+		this.pValuedAnnotation = new ValuedAnnotationElements();
+		this.pQuotedStringAnnotation = new QuotedStringAnnotationElements();
 		this.tHOSTCODE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
 	}
 	
@@ -5192,6 +5347,71 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNullValueAccess().getRule();
 	}
 	
+	//// New Json Annotations
+	//JsonPragma:
+	//	'#' name=ExtendedID value=JsonObjectValue;
+	public JsonPragmaElements getJsonPragmaAccess() {
+		return pJsonPragma;
+	}
+	
+	public ParserRule getJsonPragmaRule() {
+		return getJsonPragmaAccess().getRule();
+	}
+	
+	//JsonAnnotation:
+	//	'@' name=ExtendedID value=JsonObjectValue;
+	public JsonAnnotationElements getJsonAnnotationAccess() {
+		return pJsonAnnotation;
+	}
+	
+	public ParserRule getJsonAnnotationRule() {
+		return getJsonAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//Pragma annotations::Pragma:
+	//	super | JsonPragma;
+	public PragmaElements getPragmaAccess() {
+		return pPragma;
+	}
+	
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
+	}
+	
+	//@Override
+	//Annotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public AnnotationElements getAnnotationAccess() {
+		return pAnnotation;
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//ValuedAnnotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public ValuedAnnotationElements getValuedAnnotationAccess() {
+		return pValuedAnnotation;
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//QuotedStringAnnotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return pQuotedStringAnnotation;
+	}
+	
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
+	}
+	
 	//terminal HOSTCODE:
 	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
@@ -5209,24 +5429,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
+	public AnnotationsGrammarAccess.AnnotationElements getAnnotationsAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
 	
-	public ParserRule getAnnotationRule() {
-		return getAnnotationAccess().getRule();
+	public ParserRule getAnnotationsAnnotationRule() {
+		return getAnnotationsAnnotationAccess().getRule();
 	}
 	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
 	//	StringPragma | PragmaTag;
-	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+	public AnnotationsGrammarAccess.PragmaElements getAnnotationsPragmaAccess() {
 		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaRule() {
-		return getPragmaAccess().getRule();
+	public ParserRule getAnnotationsPragmaRule() {
+		return getAnnotationsPragmaAccess().getRule();
 	}
 	
 	//// Valued Annotation Rule
@@ -5235,12 +5455,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
-	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getAnnotationsValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
 	
-	public ParserRule getValuedAnnotationRule() {
-		return getValuedAnnotationAccess().getRule();
+	public ParserRule getAnnotationsValuedAnnotationRule() {
+		return getAnnotationsValuedAnnotationAccess().getRule();
 	}
 	
 	//// Restricted Type Annotation Rule
@@ -5263,12 +5483,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// rule and to avoid grammar ambiguities.)  
 	//QuotedStringAnnotation Annotation:
 	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getAnnotationsQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getQuotedStringAnnotationRule() {
-		return getQuotedStringAnnotationAccess().getRule();
+	public ParserRule getAnnotationsQuotedStringAnnotationRule() {
+		return getAnnotationsQuotedStringAnnotationAccess().getRule();
 	}
 	
 	//// CommentAnnotation
