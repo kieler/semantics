@@ -1197,7 +1197,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
                 node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
             // Draw an ellipse figure for exit nodes...
-            val figure = node.addEllipse()
+            val figure = node.addEllipse().background = "white".color;
             figure => [
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if (SHOW_CAPTION.booleanValue)
@@ -1273,7 +1273,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
                 node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
             // Draw an ellipse for an exit node...
-            val figure = node.addEllipse()
+            val figure = node.addEllipse().background = "white".color;
             figure => [
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if (SHOW_CAPTION.booleanValue)
