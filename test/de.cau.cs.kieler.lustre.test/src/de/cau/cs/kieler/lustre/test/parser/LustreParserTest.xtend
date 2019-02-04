@@ -37,10 +37,6 @@ import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
 
-import static extension java.lang.Boolean.parseBoolean
-import java.io.StringWriter
-import java.io.PrintWriter
-
 /**
  * Tests if all can be parsed and serialized.
  * 
@@ -52,7 +48,7 @@ import java.io.PrintWriter
 class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
 
     /** Compiler configuration */
-    val compilationSystemID = "de.cau.cs.kieler.lustre.sccharts.dataflow"
+    val compilationSystemID = "de.cau.cs.kieler.kicool.identity"
         
     /** Sct Parser Injector */
     static val lustreInjector = LustreStandaloneSetup.doSetup
@@ -105,46 +101,43 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
     
     @Test(timeout=60000)
     def void testSerializability(LustreProgram lus, TestModelData modelData) {
-        if (!modelData.modelProperties.contains("must-fail-validation")) {
-            val context = lus.compile
+        val result = lus.compile
+        
+        // Check all intermediate results
+        var List<Resource> movedResources = null
+        val iResult = result.processorInstancesSequence.head
+        
+        assertNotNull("The model is null", iResult.model)
+        assertTrue("The model is not a Lustre program", iResult.model instanceof LustreProgram)
 
-            // Check all intermediate results
-            var List<Resource> movedResources = null
-            val iResult = context.processorInstancesSequence.head
-
-            assertNotNull("The model is null", iResult.model)
-            assertTrue("The model is not an Lustre program", iResult.model instanceof LustreProgram)
-
-            try {
-                // Serialize
-                val outputStream = new ByteArrayOutputStream(25000);
-                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
-                val resourceSet = lustreInjector.getInstance(XtextResourceSet)
-
-                // create model resource
-                val resource = resourceSet.createResource(uri) as XtextResource
-                resource.getContents().add(iResult.model as EObject)
-
-                if (!modelData.resourceSetID.nullOrEmpty) {
-                    // copy possibly referenced models
-                    movedResources = lus.eResource.resourceSet.resources.filter[it !== lus.eResource].toList
-                    resourceSet.resources.addAll(movedResources)
-                }
-
-                // save
-                resource.save(outputStream, saveOptions)
-
-                assertTrue("Serialized result is empty", outputStream.size > 0)
-            } catch (AssertionError ae) {
-                throw ae
-            } catch (Exception e) {
-                throw new Exception("Error while serializing model, caused by: " + e.message, e)
-            } finally {
-                if (movedResources !== null) {
-                    lus.eResource.resourceSet.resources.addAll(movedResources)
-                }
+        try {
+            // Serialize
+            val outputStream = new ByteArrayOutputStream(25000);
+            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
+            val resourceSet = lustreInjector.getInstance(XtextResourceSet)
+            
+            // create model resource
+            val resource = resourceSet.createResource(uri) as XtextResource
+            resource.getContents().add(iResult.model as EObject)
+            
+            if (!modelData.resourceSetID.nullOrEmpty) {
+                // copy possibly referenced models
+                movedResources = lus.eResource.resourceSet.resources.filter[it !== lus.eResource].toList
+                resourceSet.resources.addAll(movedResources)
             }
 
+            // save
+            resource.save(outputStream, saveOptions)
+            
+            assertTrue("Serialized result is empty", outputStream.size > 0)
+        } catch (AssertionError ae) {
+            throw ae
+        } catch (Exception e) {
+            throw new Exception("Error while serializing model, caused by: " + e.message, e)
+        } finally {
+            if (movedResources !== null) {
+                lus.eResource.resourceSet.resources.addAll(movedResources)
+            }
         }
     }
     
