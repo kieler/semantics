@@ -114,6 +114,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getAlternatives_2(), "rule__ReferenceDeclaration__Alternatives_2");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__ReferenceDeclarationWOSemicolon__Alternatives_2");
 			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
+			builder.put(grammarAccess.getPureOrValuedEmissionAccess().getAlternatives(), "rule__PureOrValuedEmission__Alternatives");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_2(), "rule__ReferenceCallEffect__Alternatives_2");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
 			builder.put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
@@ -470,8 +471,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_4(), "rule__ValuedObject__Group_4__0");
-			builder.put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
-			builder.put(grammarAccess.getEmissionAccess().getGroup_2(), "rule__Emission__Group_2__0");
+			builder.put(grammarAccess.getPureEmissionAccess().getGroup(), "rule__PureEmission__Group__0");
+			builder.put(grammarAccess.getPureEmissionAccess().getGroup_2(), "rule__PureEmission__Group_2__0");
 			builder.put(grammarAccess.getValuedEmissionAccess().getGroup(), "rule__ValuedEmission__Group__0");
 			builder.put(grammarAccess.getValuedEmissionAccess().getGroup_5(), "rule__ValuedEmission__Group_5__0");
 			builder.put(grammarAccess.getPostfixEffectAccess().getGroup(), "rule__PostfixEffect__Group__0");
@@ -1129,9 +1130,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectAccess().getCardinalitiesAssignment_2_1(), "rule__ValuedObject__CardinalitiesAssignment_2_1");
 			builder.put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_3_1(), "rule__ValuedObject__InitialValueAssignment_3_1");
 			builder.put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_4_1(), "rule__ValuedObject__CombineOperatorAssignment_4_1");
-			builder.put(grammarAccess.getEmissionAccess().getAnnotationsAssignment_0(), "rule__Emission__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getEmissionAccess().getReferenceAssignment_1(), "rule__Emission__ReferenceAssignment_1");
-			builder.put(grammarAccess.getEmissionAccess().getScheduleAssignment_2_1(), "rule__Emission__ScheduleAssignment_2_1");
+			builder.put(grammarAccess.getPureEmissionAccess().getAnnotationsAssignment_0(), "rule__PureEmission__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getPureEmissionAccess().getReferenceAssignment_1(), "rule__PureEmission__ReferenceAssignment_1");
+			builder.put(grammarAccess.getPureEmissionAccess().getScheduleAssignment_2_1(), "rule__PureEmission__ScheduleAssignment_2_1");
 			builder.put(grammarAccess.getValuedEmissionAccess().getAnnotationsAssignment_0(), "rule__ValuedEmission__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getValuedEmissionAccess().getReferenceAssignment_1(), "rule__ValuedEmission__ReferenceAssignment_1");
 			builder.put(grammarAccess.getValuedEmissionAccess().getNewValueAssignment_3(), "rule__ValuedEmission__NewValueAssignment_3");

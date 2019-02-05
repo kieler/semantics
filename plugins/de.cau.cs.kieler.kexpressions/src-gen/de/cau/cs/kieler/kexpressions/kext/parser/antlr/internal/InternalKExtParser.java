@@ -7560,7 +7560,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEffect"
-    // InternalKExt.g:2723:1: ruleEffect returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission ) ;
+    // InternalKExt.g:2723:1: ruleEffect returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) ;
     public final EObject ruleEffect() throws RecognitionException {
         EObject current = null;
 
@@ -7580,17 +7580,17 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
 
         EObject this_RandomizeCallEffect_7 = null;
 
-        EObject this_Emission_8 = null;
+        EObject this_PureEmission_8 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalKExt.g:2729:2: ( (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission ) )
-            // InternalKExt.g:2730:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission )
+            // InternalKExt.g:2729:2: ( (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) )
+            // InternalKExt.g:2730:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
             {
-            // InternalKExt.g:2730:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission )
+            // InternalKExt.g:2730:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
             int alt92=9;
             alt92 = dfa92.predict(input);
             switch (alt92) {
@@ -7811,7 +7811,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalKExt.g:2827:3: this_Emission_8= ruleEmission
+                    // InternalKExt.g:2827:3: this_PureEmission_8= rulePureEmission
                     {
                     if ( state.backtracking==0 ) {
 
@@ -7820,17 +7820,17 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getEffectAccess().getEmissionParserRuleCall_8());
+                      			newCompositeNode(grammarAccess.getEffectAccess().getPureEmissionParserRuleCall_8());
                       		
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_Emission_8=ruleEmission();
+                    this_PureEmission_8=rulePureEmission();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_Emission_8;
+                      			current = this_PureEmission_8;
                       			afterParserOrEnumRuleCall();
                       		
                     }
@@ -7861,28 +7861,28 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleEffect"
 
 
-    // $ANTLR start "entryRuleEmission"
-    // InternalKExt.g:2842:1: entryRuleEmission returns [EObject current=null] : iv_ruleEmission= ruleEmission EOF ;
-    public final EObject entryRuleEmission() throws RecognitionException {
+    // $ANTLR start "entryRulePureEmission"
+    // InternalKExt.g:2842:1: entryRulePureEmission returns [EObject current=null] : iv_rulePureEmission= rulePureEmission EOF ;
+    public final EObject entryRulePureEmission() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleEmission = null;
+        EObject iv_rulePureEmission = null;
 
 
         try {
-            // InternalKExt.g:2842:49: (iv_ruleEmission= ruleEmission EOF )
-            // InternalKExt.g:2843:2: iv_ruleEmission= ruleEmission EOF
+            // InternalKExt.g:2842:53: (iv_rulePureEmission= rulePureEmission EOF )
+            // InternalKExt.g:2843:2: iv_rulePureEmission= rulePureEmission EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getEmissionRule()); 
+               newCompositeNode(grammarAccess.getPureEmissionRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleEmission=ruleEmission();
+            iv_rulePureEmission=rulePureEmission();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleEmission; 
+               current =iv_rulePureEmission; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -7898,12 +7898,12 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleEmission"
+    // $ANTLR end "entryRulePureEmission"
 
 
-    // $ANTLR start "ruleEmission"
-    // InternalKExt.g:2849:1: ruleEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) ;
-    public final EObject ruleEmission() throws RecognitionException {
+    // $ANTLR start "rulePureEmission"
+    // InternalKExt.g:2849:1: rulePureEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) ;
+    public final EObject rulePureEmission() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
@@ -7944,7 +7944,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      					newCompositeNode(grammarAccess.getEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
+            	      					newCompositeNode(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
             	    pushFollow(FollowSets000.FOLLOW_15);
@@ -7955,7 +7955,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      					if (current==null) {
-            	      						current = createModelElementForParent(grammarAccess.getEmissionRule());
+            	      						current = createModelElementForParent(grammarAccess.getPureEmissionRule());
             	      					}
             	      					add(
             	      						current,
@@ -7985,7 +7985,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
+              					newCompositeNode(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
               				
             }
             pushFollow(FollowSets000.FOLLOW_41);
@@ -7996,7 +7996,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getEmissionRule());
+              						current = createModelElementForParent(grammarAccess.getPureEmissionRule());
               					}
               					set(
               						current,
@@ -8026,7 +8026,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                     otherlv_2=(Token)match(input,33,FollowSets000.FOLLOW_15); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      				newLeafNode(otherlv_2, grammarAccess.getEmissionAccess().getScheduleKeyword_2_0());
+                      				newLeafNode(otherlv_2, grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0());
                       			
                     }
                     // InternalKExt.g:2900:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
@@ -8044,7 +8044,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                     	    {
                     	    if ( state.backtracking==0 ) {
 
-                    	      						newCompositeNode(grammarAccess.getEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
+                    	      						newCompositeNode(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
                     	      					
                     	    }
                     	    pushFollow(FollowSets000.FOLLOW_42);
@@ -8055,7 +8055,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                     	    if ( state.backtracking==0 ) {
 
                     	      						if (current==null) {
-                    	      							current = createModelElementForParent(grammarAccess.getEmissionRule());
+                    	      							current = createModelElementForParent(grammarAccess.getPureEmissionRule());
                     	      						}
                     	      						add(
                     	      							current,
@@ -8109,7 +8109,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleEmission"
+    // $ANTLR end "rulePureEmission"
 
 
     // $ANTLR start "entryRuleValuedEmission"
@@ -35259,7 +35259,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             this.transition = dfa_27;
         }
         public String getDescription() {
-            return "2730:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission )";
+            return "2730:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;

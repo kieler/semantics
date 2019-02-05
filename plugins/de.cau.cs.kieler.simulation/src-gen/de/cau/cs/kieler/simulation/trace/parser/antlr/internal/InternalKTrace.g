@@ -224,9 +224,9 @@ ruleEsoTick returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getEsoTickAccess().getInputsEmissionParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getEsoTickAccess().getInputsPureOrValuedEmissionParserRuleCall_1_0());
 				}
-				lv_inputs_1_0=ruleEmission
+				lv_inputs_1_0=rulePureOrValuedEmission
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getEsoTickRule());
@@ -235,7 +235,7 @@ ruleEsoTick returns [EObject current=null]
 						$current,
 						"inputs",
 						lv_inputs_1_0,
-						"de.cau.cs.kieler.kexpressions.keffects.KEffects.Emission");
+						"de.cau.cs.kieler.kexpressions.keffects.KEffects.PureOrValuedEmission");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -265,9 +265,9 @@ ruleEsoTick returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getEsoTickAccess().getOutputsEmissionParserRuleCall_2_2_0());
+						newCompositeNode(grammarAccess.getEsoTickAccess().getOutputsPureOrValuedEmissionParserRuleCall_2_2_0());
 					}
-					lv_outputs_6_0=ruleEmission
+					lv_outputs_6_0=rulePureOrValuedEmission
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getEsoTickRule());
@@ -276,7 +276,7 @@ ruleEsoTick returns [EObject current=null]
 							$current,
 							"outputs",
 							lv_outputs_6_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Emission");
+							"de.cau.cs.kieler.kexpressions.keffects.KEffects.PureOrValuedEmission");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -3431,25 +3431,25 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getEmissionParserRuleCall_8());
+			newCompositeNode(grammarAccess.getEffectAccess().getPureEmissionParserRuleCall_8());
 		}
-		this_Emission_8=ruleEmission
+		this_PureEmission_8=rulePureEmission
 		{
-			$current = $this_Emission_8.current;
+			$current = $this_PureEmission_8.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleEmission
-entryRuleEmission returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getEmissionRule()); }
-	iv_ruleEmission=ruleEmission
-	{ $current=$iv_ruleEmission.current; }
+// Entry rule entryRulePureEmission
+entryRulePureEmission returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPureEmissionRule()); }
+	iv_rulePureEmission=rulePureEmission
+	{ $current=$iv_rulePureEmission.current; }
 	EOF;
 
-// Rule Emission
-ruleEmission returns [EObject current=null]
+// Rule PureEmission
+rulePureEmission returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -3460,12 +3460,12 @@ ruleEmission returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
+					newCompositeNode(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
 				}
 				lv_annotations_0_0=ruleQuotedStringAnnotation
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getEmissionRule());
+						$current = createModelElementForParent(grammarAccess.getPureEmissionRule());
 					}
 					add(
 						$current,
@@ -3479,12 +3479,12 @@ ruleEmission returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
 				}
 				lv_reference_1_0=ruleValuedObjectReference
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getEmissionRule());
+						$current = createModelElementForParent(grammarAccess.getPureEmissionRule());
 					}
 					set(
 						$current,
@@ -3498,17 +3498,17 @@ ruleEmission returns [EObject current=null]
 		(
 			otherlv_2='schedule'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getEmissionAccess().getScheduleKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
 					}
 					lv_schedule_3_0=ruleScheduleObjectReference
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getEmissionRule());
+							$current = createModelElementForParent(grammarAccess.getPureEmissionRule());
 						}
 						add(
 							$current,
@@ -3629,6 +3629,48 @@ ruleValuedEmission returns [EObject current=null]
 				)
 			)+
 		)?
+	)
+;
+
+// Entry rule entryRulePureOrValuedEmission
+entryRulePureOrValuedEmission returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPureOrValuedEmissionRule()); }
+	iv_rulePureOrValuedEmission=rulePureOrValuedEmission
+	{ $current=$iv_rulePureOrValuedEmission.current; }
+	EOF;
+
+// Rule PureOrValuedEmission
+rulePureOrValuedEmission returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getPureOrValuedEmissionAccess().getValuedEmissionParserRuleCall_0());
+		}
+		this_ValuedEmission_0=ruleValuedEmission
+		{
+			$current = $this_ValuedEmission_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getPureOrValuedEmissionAccess().getPureEmissionParserRuleCall_1());
+		}
+		this_PureEmission_1=rulePureEmission
+		{
+			$current = $this_PureEmission_1.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 

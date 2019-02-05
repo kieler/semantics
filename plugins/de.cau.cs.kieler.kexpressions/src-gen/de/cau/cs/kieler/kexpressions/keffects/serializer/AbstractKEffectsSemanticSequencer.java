@@ -150,12 +150,13 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				}
 				else break;
 			case KEffectsPackage.EMISSION:
-				if (rule == grammarAccess.getEmissionRule()) {
-					sequence_Emission(context, (Emission) semanticObject); 
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getEffectRule()) {
-					sequence_Emission_ValuedEmission(context, (Emission) semanticObject); 
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedEmissionRule()) {
@@ -396,33 +397,6 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	/**
 	 * Contexts:
-	 *     Emission returns Emission
-	 *
-	 * Constraint:
-	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*)
-	 */
-	protected void sequence_Emission(ISerializationContext context, Emission semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Effect returns Emission
-	 *
-	 * Constraint:
-	 *     (
-	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*) | 
-	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression schedule+=ScheduleObjectReference*)
-	 *     )
-	 */
-	protected void sequence_Emission_ValuedEmission(ISerializationContext context, Emission semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Effect returns FunctionCallEffect
 	 *     FunctionCallEffect returns FunctionCallEffect
 	 *
@@ -468,6 +442,34 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (annotations+=Annotation* parameters+=Parameter parameters+=Parameter*)
 	 */
 	protected void sequence_PrintCallEffect(ISerializationContext context, PrintCallEffect semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PureEmission returns Emission
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*)
+	 */
+	protected void sequence_PureEmission(ISerializationContext context, Emission semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Effect returns Emission
+	 *     PureOrValuedEmission returns Emission
+	 *
+	 * Constraint:
+	 *     (
+	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*) | 
+	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression schedule+=ScheduleObjectReference*)
+	 *     )
+	 */
+	protected void sequence_PureEmission_ValuedEmission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

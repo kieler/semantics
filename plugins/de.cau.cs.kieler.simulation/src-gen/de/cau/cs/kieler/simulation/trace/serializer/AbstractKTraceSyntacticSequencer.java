@@ -229,8 +229,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *     'Output:' | ('Output' ':')
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) '%' (ambiguity) outputs+=Emission
-	 *     inputs+=Emission '%' (ambiguity) outputs+=Emission
+	 *     (rule start) '%' (ambiguity) outputs+=PureOrValuedEmission
+	 *     inputs+=PureOrValuedEmission '%' (ambiguity) outputs+=PureOrValuedEmission
 	 */
 	protected void emit_EsoTick_OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -243,8 +243,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) ('%' ('Output:' | ('Output' ':')))? '%%' (ambiguity) annotations+=KVPair
 	 *     annotations+=KVPair '%%' (ambiguity) annotations+=KVPair
-	 *     inputs+=Emission ('%' ('Output:' | ('Output' ':')))? '%%' (ambiguity) annotations+=KVPair
-	 *     outputs+=Emission '%%' (ambiguity) annotations+=KVPair
+	 *     inputs+=PureOrValuedEmission ('%' ('Output:' | ('Output' ':')))? '%%' (ambiguity) annotations+=KVPair
+	 *     outputs+=PureOrValuedEmission '%%' (ambiguity) annotations+=KVPair
 	 */
 	protected void emit_EsoTick_OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -258,9 +258,9 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) '%%' ('Output:' | ('Output' ':')) annotations+=KVPair
 	 *     (rule start) (ambiguity) ('%%' ('Output:' | ('Output' ':')))? ';' (rule start)
 	 *     (rule start) (ambiguity) annotations+=KVPair
-	 *     inputs+=Emission (ambiguity) '%%' ('Output:' | ('Output' ':')) annotations+=KVPair
-	 *     inputs+=Emission (ambiguity) ('%%' ('Output:' | ('Output' ':')))? ';' (rule end)
-	 *     inputs+=Emission (ambiguity) annotations+=KVPair
+	 *     inputs+=PureOrValuedEmission (ambiguity) '%%' ('Output:' | ('Output' ':')) annotations+=KVPair
+	 *     inputs+=PureOrValuedEmission (ambiguity) ('%%' ('Output:' | ('Output' ':')))? ';' (rule end)
+	 *     inputs+=PureOrValuedEmission (ambiguity) annotations+=KVPair
 	 */
 	protected void emit_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -273,8 +273,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) ('%' ('Output:' | ('Output' ':')))? (ambiguity) ';' (rule start)
 	 *     annotations+=KVPair (ambiguity) ';' (rule end)
-	 *     inputs+=Emission ('%' ('Output:' | ('Output' ':')))? (ambiguity) ';' (rule end)
-	 *     outputs+=Emission (ambiguity) ';' (rule end)
+	 *     inputs+=PureOrValuedEmission ('%' ('Output:' | ('Output' ':')))? (ambiguity) ';' (rule end)
+	 *     outputs+=PureOrValuedEmission (ambiguity) ';' (rule end)
 	 */
 	protected void emit_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

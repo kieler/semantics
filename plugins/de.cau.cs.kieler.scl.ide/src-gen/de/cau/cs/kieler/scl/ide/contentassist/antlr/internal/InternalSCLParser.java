@@ -3062,23 +3062,23 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleEffect"
 
 
-    // $ANTLR start "entryRuleEmission"
-    // InternalSCL.g:904:1: entryRuleEmission : ruleEmission EOF ;
-    public final void entryRuleEmission() throws RecognitionException {
+    // $ANTLR start "entryRulePureEmission"
+    // InternalSCL.g:904:1: entryRulePureEmission : rulePureEmission EOF ;
+    public final void entryRulePureEmission() throws RecognitionException {
         try {
-            // InternalSCL.g:905:1: ( ruleEmission EOF )
-            // InternalSCL.g:906:1: ruleEmission EOF
+            // InternalSCL.g:905:1: ( rulePureEmission EOF )
+            // InternalSCL.g:906:1: rulePureEmission EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionRule()); 
+               before(grammarAccess.getPureEmissionRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            ruleEmission();
+            rulePureEmission();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionRule()); 
+               after(grammarAccess.getPureEmissionRule()); 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -3093,30 +3093,30 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleEmission"
+    // $ANTLR end "entryRulePureEmission"
 
 
-    // $ANTLR start "ruleEmission"
-    // InternalSCL.g:913:1: ruleEmission : ( ( rule__Emission__Group__0 ) ) ;
-    public final void ruleEmission() throws RecognitionException {
+    // $ANTLR start "rulePureEmission"
+    // InternalSCL.g:913:1: rulePureEmission : ( ( rule__PureEmission__Group__0 ) ) ;
+    public final void rulePureEmission() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:917:2: ( ( ( rule__Emission__Group__0 ) ) )
-            // InternalSCL.g:918:2: ( ( rule__Emission__Group__0 ) )
+            // InternalSCL.g:917:2: ( ( ( rule__PureEmission__Group__0 ) ) )
+            // InternalSCL.g:918:2: ( ( rule__PureEmission__Group__0 ) )
             {
-            // InternalSCL.g:918:2: ( ( rule__Emission__Group__0 ) )
-            // InternalSCL.g:919:3: ( rule__Emission__Group__0 )
+            // InternalSCL.g:918:2: ( ( rule__PureEmission__Group__0 ) )
+            // InternalSCL.g:919:3: ( rule__PureEmission__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getGroup()); 
+               before(grammarAccess.getPureEmissionAccess().getGroup()); 
             }
-            // InternalSCL.g:920:3: ( rule__Emission__Group__0 )
-            // InternalSCL.g:920:4: rule__Emission__Group__0
+            // InternalSCL.g:920:3: ( rule__PureEmission__Group__0 )
+            // InternalSCL.g:920:4: rule__PureEmission__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__Group__0();
+            rule__PureEmission__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -3124,7 +3124,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getGroup()); 
+               after(grammarAccess.getPureEmissionAccess().getGroup()); 
             }
 
             }
@@ -3144,7 +3144,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleEmission"
+    // $ANTLR end "rulePureEmission"
 
 
     // $ANTLR start "entryRuleValuedEmission"
@@ -13096,13 +13096,13 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Effect__Alternatives"
-    // InternalSCL.g:3790:1: rule__Effect__Alternatives : ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleValuedEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) | ( ruleEmission ) );
+    // InternalSCL.g:3790:1: rule__Effect__Alternatives : ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleValuedEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) | ( rulePureEmission ) );
     public final void rule__Effect__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:3794:1: ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleValuedEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) | ( ruleEmission ) )
+            // InternalSCL.g:3794:1: ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleValuedEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) | ( rulePureEmission ) )
             int alt14=9;
             alt14 = dfa14.predict(input);
             switch (alt14) {
@@ -13291,21 +13291,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 9 :
-                    // InternalSCL.g:3843:2: ( ruleEmission )
+                    // InternalSCL.g:3843:2: ( rulePureEmission )
                     {
-                    // InternalSCL.g:3843:2: ( ruleEmission )
-                    // InternalSCL.g:3844:3: ruleEmission
+                    // InternalSCL.g:3843:2: ( rulePureEmission )
+                    // InternalSCL.g:3844:3: rulePureEmission
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getEffectAccess().getEmissionParserRuleCall_8()); 
+                       before(grammarAccess.getEffectAccess().getPureEmissionParserRuleCall_8()); 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleEmission();
+                    rulePureEmission();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getEffectAccess().getEmissionParserRuleCall_8()); 
+                       after(grammarAccess.getEffectAccess().getPureEmissionParserRuleCall_8()); 
                     }
 
                     }
@@ -44211,23 +44211,23 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ValuedObject__Group_4__1__Impl"
 
 
-    // $ANTLR start "rule__Emission__Group__0"
-    // InternalSCL.g:12650:1: rule__Emission__Group__0 : rule__Emission__Group__0__Impl rule__Emission__Group__1 ;
-    public final void rule__Emission__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group__0"
+    // InternalSCL.g:12650:1: rule__PureEmission__Group__0 : rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1 ;
+    public final void rule__PureEmission__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12654:1: ( rule__Emission__Group__0__Impl rule__Emission__Group__1 )
-            // InternalSCL.g:12655:2: rule__Emission__Group__0__Impl rule__Emission__Group__1
+            // InternalSCL.g:12654:1: ( rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1 )
+            // InternalSCL.g:12655:2: rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_69);
-            rule__Emission__Group__0__Impl();
+            rule__PureEmission__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__Group__1();
+            rule__PureEmission__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44246,26 +44246,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group__0"
+    // $ANTLR end "rule__PureEmission__Group__0"
 
 
-    // $ANTLR start "rule__Emission__Group__0__Impl"
-    // InternalSCL.g:12662:1: rule__Emission__Group__0__Impl : ( ( rule__Emission__AnnotationsAssignment_0 )* ) ;
-    public final void rule__Emission__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group__0__Impl"
+    // InternalSCL.g:12662:1: rule__PureEmission__Group__0__Impl : ( ( rule__PureEmission__AnnotationsAssignment_0 )* ) ;
+    public final void rule__PureEmission__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12666:1: ( ( ( rule__Emission__AnnotationsAssignment_0 )* ) )
-            // InternalSCL.g:12667:1: ( ( rule__Emission__AnnotationsAssignment_0 )* )
+            // InternalSCL.g:12666:1: ( ( ( rule__PureEmission__AnnotationsAssignment_0 )* ) )
+            // InternalSCL.g:12667:1: ( ( rule__PureEmission__AnnotationsAssignment_0 )* )
             {
-            // InternalSCL.g:12667:1: ( ( rule__Emission__AnnotationsAssignment_0 )* )
-            // InternalSCL.g:12668:2: ( rule__Emission__AnnotationsAssignment_0 )*
+            // InternalSCL.g:12667:1: ( ( rule__PureEmission__AnnotationsAssignment_0 )* )
+            // InternalSCL.g:12668:2: ( rule__PureEmission__AnnotationsAssignment_0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getAnnotationsAssignment_0()); 
+               before(grammarAccess.getPureEmissionAccess().getAnnotationsAssignment_0()); 
             }
-            // InternalSCL.g:12669:2: ( rule__Emission__AnnotationsAssignment_0 )*
+            // InternalSCL.g:12669:2: ( rule__PureEmission__AnnotationsAssignment_0 )*
             loop188:
             do {
                 int alt188=2;
@@ -44278,10 +44278,10 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt188) {
             	case 1 :
-            	    // InternalSCL.g:12669:3: rule__Emission__AnnotationsAssignment_0
+            	    // InternalSCL.g:12669:3: rule__PureEmission__AnnotationsAssignment_0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_7);
-            	    rule__Emission__AnnotationsAssignment_0();
+            	    rule__PureEmission__AnnotationsAssignment_0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -44295,7 +44295,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getAnnotationsAssignment_0()); 
+               after(grammarAccess.getPureEmissionAccess().getAnnotationsAssignment_0()); 
             }
 
             }
@@ -44315,26 +44315,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group__0__Impl"
+    // $ANTLR end "rule__PureEmission__Group__0__Impl"
 
 
-    // $ANTLR start "rule__Emission__Group__1"
-    // InternalSCL.g:12677:1: rule__Emission__Group__1 : rule__Emission__Group__1__Impl rule__Emission__Group__2 ;
-    public final void rule__Emission__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group__1"
+    // InternalSCL.g:12677:1: rule__PureEmission__Group__1 : rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2 ;
+    public final void rule__PureEmission__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12681:1: ( rule__Emission__Group__1__Impl rule__Emission__Group__2 )
-            // InternalSCL.g:12682:2: rule__Emission__Group__1__Impl rule__Emission__Group__2
+            // InternalSCL.g:12681:1: ( rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2 )
+            // InternalSCL.g:12682:2: rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_70);
-            rule__Emission__Group__1__Impl();
+            rule__PureEmission__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__Group__2();
+            rule__PureEmission__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44353,30 +44353,30 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group__1"
+    // $ANTLR end "rule__PureEmission__Group__1"
 
 
-    // $ANTLR start "rule__Emission__Group__1__Impl"
-    // InternalSCL.g:12689:1: rule__Emission__Group__1__Impl : ( ( rule__Emission__ReferenceAssignment_1 ) ) ;
-    public final void rule__Emission__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group__1__Impl"
+    // InternalSCL.g:12689:1: rule__PureEmission__Group__1__Impl : ( ( rule__PureEmission__ReferenceAssignment_1 ) ) ;
+    public final void rule__PureEmission__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12693:1: ( ( ( rule__Emission__ReferenceAssignment_1 ) ) )
-            // InternalSCL.g:12694:1: ( ( rule__Emission__ReferenceAssignment_1 ) )
+            // InternalSCL.g:12693:1: ( ( ( rule__PureEmission__ReferenceAssignment_1 ) ) )
+            // InternalSCL.g:12694:1: ( ( rule__PureEmission__ReferenceAssignment_1 ) )
             {
-            // InternalSCL.g:12694:1: ( ( rule__Emission__ReferenceAssignment_1 ) )
-            // InternalSCL.g:12695:2: ( rule__Emission__ReferenceAssignment_1 )
+            // InternalSCL.g:12694:1: ( ( rule__PureEmission__ReferenceAssignment_1 ) )
+            // InternalSCL.g:12695:2: ( rule__PureEmission__ReferenceAssignment_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getReferenceAssignment_1()); 
+               before(grammarAccess.getPureEmissionAccess().getReferenceAssignment_1()); 
             }
-            // InternalSCL.g:12696:2: ( rule__Emission__ReferenceAssignment_1 )
-            // InternalSCL.g:12696:3: rule__Emission__ReferenceAssignment_1
+            // InternalSCL.g:12696:2: ( rule__PureEmission__ReferenceAssignment_1 )
+            // InternalSCL.g:12696:3: rule__PureEmission__ReferenceAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__ReferenceAssignment_1();
+            rule__PureEmission__ReferenceAssignment_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44384,7 +44384,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getReferenceAssignment_1()); 
+               after(grammarAccess.getPureEmissionAccess().getReferenceAssignment_1()); 
             }
 
             }
@@ -44404,21 +44404,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group__1__Impl"
+    // $ANTLR end "rule__PureEmission__Group__1__Impl"
 
 
-    // $ANTLR start "rule__Emission__Group__2"
-    // InternalSCL.g:12704:1: rule__Emission__Group__2 : rule__Emission__Group__2__Impl ;
-    public final void rule__Emission__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group__2"
+    // InternalSCL.g:12704:1: rule__PureEmission__Group__2 : rule__PureEmission__Group__2__Impl ;
+    public final void rule__PureEmission__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12708:1: ( rule__Emission__Group__2__Impl )
-            // InternalSCL.g:12709:2: rule__Emission__Group__2__Impl
+            // InternalSCL.g:12708:1: ( rule__PureEmission__Group__2__Impl )
+            // InternalSCL.g:12709:2: rule__PureEmission__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__Group__2__Impl();
+            rule__PureEmission__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44437,26 +44437,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group__2"
+    // $ANTLR end "rule__PureEmission__Group__2"
 
 
-    // $ANTLR start "rule__Emission__Group__2__Impl"
-    // InternalSCL.g:12715:1: rule__Emission__Group__2__Impl : ( ( rule__Emission__Group_2__0 )? ) ;
-    public final void rule__Emission__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group__2__Impl"
+    // InternalSCL.g:12715:1: rule__PureEmission__Group__2__Impl : ( ( rule__PureEmission__Group_2__0 )? ) ;
+    public final void rule__PureEmission__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12719:1: ( ( ( rule__Emission__Group_2__0 )? ) )
-            // InternalSCL.g:12720:1: ( ( rule__Emission__Group_2__0 )? )
+            // InternalSCL.g:12719:1: ( ( ( rule__PureEmission__Group_2__0 )? ) )
+            // InternalSCL.g:12720:1: ( ( rule__PureEmission__Group_2__0 )? )
             {
-            // InternalSCL.g:12720:1: ( ( rule__Emission__Group_2__0 )? )
-            // InternalSCL.g:12721:2: ( rule__Emission__Group_2__0 )?
+            // InternalSCL.g:12720:1: ( ( rule__PureEmission__Group_2__0 )? )
+            // InternalSCL.g:12721:2: ( rule__PureEmission__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getGroup_2()); 
+               before(grammarAccess.getPureEmissionAccess().getGroup_2()); 
             }
-            // InternalSCL.g:12722:2: ( rule__Emission__Group_2__0 )?
+            // InternalSCL.g:12722:2: ( rule__PureEmission__Group_2__0 )?
             int alt189=2;
             int LA189_0 = input.LA(1);
 
@@ -44465,10 +44465,10 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt189) {
                 case 1 :
-                    // InternalSCL.g:12722:3: rule__Emission__Group_2__0
+                    // InternalSCL.g:12722:3: rule__PureEmission__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__Emission__Group_2__0();
+                    rule__PureEmission__Group_2__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -44479,7 +44479,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getGroup_2()); 
+               after(grammarAccess.getPureEmissionAccess().getGroup_2()); 
             }
 
             }
@@ -44499,26 +44499,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group__2__Impl"
+    // $ANTLR end "rule__PureEmission__Group__2__Impl"
 
 
-    // $ANTLR start "rule__Emission__Group_2__0"
-    // InternalSCL.g:12731:1: rule__Emission__Group_2__0 : rule__Emission__Group_2__0__Impl rule__Emission__Group_2__1 ;
-    public final void rule__Emission__Group_2__0() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group_2__0"
+    // InternalSCL.g:12731:1: rule__PureEmission__Group_2__0 : rule__PureEmission__Group_2__0__Impl rule__PureEmission__Group_2__1 ;
+    public final void rule__PureEmission__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12735:1: ( rule__Emission__Group_2__0__Impl rule__Emission__Group_2__1 )
-            // InternalSCL.g:12736:2: rule__Emission__Group_2__0__Impl rule__Emission__Group_2__1
+            // InternalSCL.g:12735:1: ( rule__PureEmission__Group_2__0__Impl rule__PureEmission__Group_2__1 )
+            // InternalSCL.g:12736:2: rule__PureEmission__Group_2__0__Impl rule__PureEmission__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_13);
-            rule__Emission__Group_2__0__Impl();
+            rule__PureEmission__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__Group_2__1();
+            rule__PureEmission__Group_2__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44537,12 +44537,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group_2__0"
+    // $ANTLR end "rule__PureEmission__Group_2__0"
 
 
-    // $ANTLR start "rule__Emission__Group_2__0__Impl"
-    // InternalSCL.g:12743:1: rule__Emission__Group_2__0__Impl : ( 'schedule' ) ;
-    public final void rule__Emission__Group_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group_2__0__Impl"
+    // InternalSCL.g:12743:1: rule__PureEmission__Group_2__0__Impl : ( 'schedule' ) ;
+    public final void rule__PureEmission__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -44554,11 +44554,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:12749:2: 'schedule'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getScheduleKeyword_2_0()); 
+               before(grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0()); 
             }
             match(input,76,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getScheduleKeyword_2_0()); 
+               after(grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0()); 
             }
 
             }
@@ -44578,21 +44578,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group_2__0__Impl"
+    // $ANTLR end "rule__PureEmission__Group_2__0__Impl"
 
 
-    // $ANTLR start "rule__Emission__Group_2__1"
-    // InternalSCL.g:12758:1: rule__Emission__Group_2__1 : rule__Emission__Group_2__1__Impl ;
-    public final void rule__Emission__Group_2__1() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group_2__1"
+    // InternalSCL.g:12758:1: rule__PureEmission__Group_2__1 : rule__PureEmission__Group_2__1__Impl ;
+    public final void rule__PureEmission__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12762:1: ( rule__Emission__Group_2__1__Impl )
-            // InternalSCL.g:12763:2: rule__Emission__Group_2__1__Impl
+            // InternalSCL.g:12762:1: ( rule__PureEmission__Group_2__1__Impl )
+            // InternalSCL.g:12763:2: rule__PureEmission__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__Emission__Group_2__1__Impl();
+            rule__PureEmission__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44611,33 +44611,33 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group_2__1"
+    // $ANTLR end "rule__PureEmission__Group_2__1"
 
 
-    // $ANTLR start "rule__Emission__Group_2__1__Impl"
-    // InternalSCL.g:12769:1: rule__Emission__Group_2__1__Impl : ( ( ( rule__Emission__ScheduleAssignment_2_1 ) ) ( ( rule__Emission__ScheduleAssignment_2_1 )* ) ) ;
-    public final void rule__Emission__Group_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__Group_2__1__Impl"
+    // InternalSCL.g:12769:1: rule__PureEmission__Group_2__1__Impl : ( ( ( rule__PureEmission__ScheduleAssignment_2_1 ) ) ( ( rule__PureEmission__ScheduleAssignment_2_1 )* ) ) ;
+    public final void rule__PureEmission__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:12773:1: ( ( ( ( rule__Emission__ScheduleAssignment_2_1 ) ) ( ( rule__Emission__ScheduleAssignment_2_1 )* ) ) )
-            // InternalSCL.g:12774:1: ( ( ( rule__Emission__ScheduleAssignment_2_1 ) ) ( ( rule__Emission__ScheduleAssignment_2_1 )* ) )
+            // InternalSCL.g:12773:1: ( ( ( ( rule__PureEmission__ScheduleAssignment_2_1 ) ) ( ( rule__PureEmission__ScheduleAssignment_2_1 )* ) ) )
+            // InternalSCL.g:12774:1: ( ( ( rule__PureEmission__ScheduleAssignment_2_1 ) ) ( ( rule__PureEmission__ScheduleAssignment_2_1 )* ) )
             {
-            // InternalSCL.g:12774:1: ( ( ( rule__Emission__ScheduleAssignment_2_1 ) ) ( ( rule__Emission__ScheduleAssignment_2_1 )* ) )
-            // InternalSCL.g:12775:2: ( ( rule__Emission__ScheduleAssignment_2_1 ) ) ( ( rule__Emission__ScheduleAssignment_2_1 )* )
+            // InternalSCL.g:12774:1: ( ( ( rule__PureEmission__ScheduleAssignment_2_1 ) ) ( ( rule__PureEmission__ScheduleAssignment_2_1 )* ) )
+            // InternalSCL.g:12775:2: ( ( rule__PureEmission__ScheduleAssignment_2_1 ) ) ( ( rule__PureEmission__ScheduleAssignment_2_1 )* )
             {
-            // InternalSCL.g:12775:2: ( ( rule__Emission__ScheduleAssignment_2_1 ) )
-            // InternalSCL.g:12776:3: ( rule__Emission__ScheduleAssignment_2_1 )
+            // InternalSCL.g:12775:2: ( ( rule__PureEmission__ScheduleAssignment_2_1 ) )
+            // InternalSCL.g:12776:3: ( rule__PureEmission__ScheduleAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getScheduleAssignment_2_1()); 
+               before(grammarAccess.getPureEmissionAccess().getScheduleAssignment_2_1()); 
             }
-            // InternalSCL.g:12777:3: ( rule__Emission__ScheduleAssignment_2_1 )
-            // InternalSCL.g:12777:4: rule__Emission__ScheduleAssignment_2_1
+            // InternalSCL.g:12777:3: ( rule__PureEmission__ScheduleAssignment_2_1 )
+            // InternalSCL.g:12777:4: rule__PureEmission__ScheduleAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_19);
-            rule__Emission__ScheduleAssignment_2_1();
+            rule__PureEmission__ScheduleAssignment_2_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44645,28 +44645,28 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getScheduleAssignment_2_1()); 
+               after(grammarAccess.getPureEmissionAccess().getScheduleAssignment_2_1()); 
             }
 
             }
 
-            // InternalSCL.g:12780:2: ( ( rule__Emission__ScheduleAssignment_2_1 )* )
-            // InternalSCL.g:12781:3: ( rule__Emission__ScheduleAssignment_2_1 )*
+            // InternalSCL.g:12780:2: ( ( rule__PureEmission__ScheduleAssignment_2_1 )* )
+            // InternalSCL.g:12781:3: ( rule__PureEmission__ScheduleAssignment_2_1 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getScheduleAssignment_2_1()); 
+               before(grammarAccess.getPureEmissionAccess().getScheduleAssignment_2_1()); 
             }
-            // InternalSCL.g:12782:3: ( rule__Emission__ScheduleAssignment_2_1 )*
+            // InternalSCL.g:12782:3: ( rule__PureEmission__ScheduleAssignment_2_1 )*
             loop190:
             do {
                 int alt190=2;
                 alt190 = dfa190.predict(input);
                 switch (alt190) {
             	case 1 :
-            	    // InternalSCL.g:12782:4: rule__Emission__ScheduleAssignment_2_1
+            	    // InternalSCL.g:12782:4: rule__PureEmission__ScheduleAssignment_2_1
             	    {
             	    pushFollow(FollowSets000.FOLLOW_19);
-            	    rule__Emission__ScheduleAssignment_2_1();
+            	    rule__PureEmission__ScheduleAssignment_2_1();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -44680,7 +44680,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getScheduleAssignment_2_1()); 
+               after(grammarAccess.getPureEmissionAccess().getScheduleAssignment_2_1()); 
             }
 
             }
@@ -44703,7 +44703,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__Group_2__1__Impl"
+    // $ANTLR end "rule__PureEmission__Group_2__1__Impl"
 
 
     // $ANTLR start "rule__ValuedEmission__Group__0"
@@ -92935,9 +92935,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ValuedObject__CombineOperatorAssignment_4_1"
 
 
-    // $ANTLR start "rule__Emission__AnnotationsAssignment_0"
-    // InternalSCL.g:28082:1: rule__Emission__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
-    public final void rule__Emission__AnnotationsAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__AnnotationsAssignment_0"
+    // InternalSCL.g:28082:1: rule__PureEmission__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
+    public final void rule__PureEmission__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -92949,7 +92949,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:28088:3: ruleQuotedStringAnnotation
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
+               before(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleQuotedStringAnnotation();
@@ -92957,7 +92957,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
+               after(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
             }
 
             }
@@ -92977,12 +92977,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__AnnotationsAssignment_0"
+    // $ANTLR end "rule__PureEmission__AnnotationsAssignment_0"
 
 
-    // $ANTLR start "rule__Emission__ReferenceAssignment_1"
-    // InternalSCL.g:28097:1: rule__Emission__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
-    public final void rule__Emission__ReferenceAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__ReferenceAssignment_1"
+    // InternalSCL.g:28097:1: rule__PureEmission__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
+    public final void rule__PureEmission__ReferenceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -92994,7 +92994,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:28103:3: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
+               before(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleValuedObjectReference();
@@ -93002,7 +93002,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
+               after(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
             }
 
             }
@@ -93022,12 +93022,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__ReferenceAssignment_1"
+    // $ANTLR end "rule__PureEmission__ReferenceAssignment_1"
 
 
-    // $ANTLR start "rule__Emission__ScheduleAssignment_2_1"
-    // InternalSCL.g:28112:1: rule__Emission__ScheduleAssignment_2_1 : ( ruleScheduleObjectReference ) ;
-    public final void rule__Emission__ScheduleAssignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__PureEmission__ScheduleAssignment_2_1"
+    // InternalSCL.g:28112:1: rule__PureEmission__ScheduleAssignment_2_1 : ( ruleScheduleObjectReference ) ;
+    public final void rule__PureEmission__ScheduleAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -93039,7 +93039,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:28118:3: ruleScheduleObjectReference
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0()); 
+               before(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleScheduleObjectReference();
@@ -93047,7 +93047,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0()); 
+               after(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0()); 
             }
 
             }
@@ -93067,7 +93067,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Emission__ScheduleAssignment_2_1"
+    // $ANTLR end "rule__PureEmission__ScheduleAssignment_2_1"
 
 
     // $ANTLR start "rule__ValuedEmission__AnnotationsAssignment_0"
@@ -104155,7 +104155,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.transition = dfa_24;
         }
         public String getDescription() {
-            return "3790:1: rule__Effect__Alternatives : ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleValuedEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) | ( ruleEmission ) );";
+            return "3790:1: rule__Effect__Alternatives : ( ( ruleAssignment ) | ( rulePostfixEffect ) | ( ruleValuedEmission ) | ( ruleHostcodeEffect ) | ( ruleReferenceCallEffect ) | ( ruleFunctionCallEffect ) | ( rulePrintCallEffect ) | ( ruleRandomizeCallEffect ) | ( rulePureEmission ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -107112,7 +107112,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.transition = dfa_146;
         }
         public String getDescription() {
-            return "()* loopback of 12782:3: ( rule__Emission__ScheduleAssignment_2_1 )*";
+            return "()* loopback of 12782:3: ( rule__PureEmission__ScheduleAssignment_2_1 )*";
         }
     }
 
