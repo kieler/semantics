@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.esterel.scest.scl.priority.java
+system de.cau.cs.kieler.esterel.scest.scl.priority.java
     label "SCEst Priority-based (Java)"
     
 de.cau.cs.kieler.esterel.processors.scestintermediateprocessor config {
