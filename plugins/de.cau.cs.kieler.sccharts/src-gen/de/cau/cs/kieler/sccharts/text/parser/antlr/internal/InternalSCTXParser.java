@@ -17646,7 +17646,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEffect"
-    // InternalSCTX.g:6367:1: ruleEffect returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission ) ;
+    // InternalSCTX.g:6367:1: ruleEffect returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) ;
     public final EObject ruleEffect() throws RecognitionException {
         EObject current = null;
 
@@ -17666,17 +17666,17 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
         EObject this_RandomizeCallEffect_7 = null;
 
-        EObject this_Emission_8 = null;
+        EObject this_PureEmission_8 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalSCTX.g:6373:2: ( (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission ) )
-            // InternalSCTX.g:6374:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission )
+            // InternalSCTX.g:6373:2: ( (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) )
+            // InternalSCTX.g:6374:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
             {
-            // InternalSCTX.g:6374:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission )
+            // InternalSCTX.g:6374:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
             int alt225=9;
             alt225 = dfa225.predict(input);
             switch (alt225) {
@@ -17897,7 +17897,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalSCTX.g:6471:3: this_Emission_8= ruleEmission
+                    // InternalSCTX.g:6471:3: this_PureEmission_8= rulePureEmission
                     {
                     if ( state.backtracking==0 ) {
 
@@ -17906,17 +17906,17 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getEffectAccess().getEmissionParserRuleCall_8());
+                      			newCompositeNode(grammarAccess.getEffectAccess().getPureEmissionParserRuleCall_8());
                       		
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_Emission_8=ruleEmission();
+                    this_PureEmission_8=rulePureEmission();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_Emission_8;
+                      			current = this_PureEmission_8;
                       			afterParserOrEnumRuleCall();
                       		
                     }
@@ -17947,28 +17947,28 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleEffect"
 
 
-    // $ANTLR start "entryRuleEmission"
-    // InternalSCTX.g:6486:1: entryRuleEmission returns [EObject current=null] : iv_ruleEmission= ruleEmission EOF ;
-    public final EObject entryRuleEmission() throws RecognitionException {
+    // $ANTLR start "entryRulePureEmission"
+    // InternalSCTX.g:6486:1: entryRulePureEmission returns [EObject current=null] : iv_rulePureEmission= rulePureEmission EOF ;
+    public final EObject entryRulePureEmission() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleEmission = null;
+        EObject iv_rulePureEmission = null;
 
 
         try {
-            // InternalSCTX.g:6486:49: (iv_ruleEmission= ruleEmission EOF )
-            // InternalSCTX.g:6487:2: iv_ruleEmission= ruleEmission EOF
+            // InternalSCTX.g:6486:53: (iv_rulePureEmission= rulePureEmission EOF )
+            // InternalSCTX.g:6487:2: iv_rulePureEmission= rulePureEmission EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getEmissionRule()); 
+               newCompositeNode(grammarAccess.getPureEmissionRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleEmission=ruleEmission();
+            iv_rulePureEmission=rulePureEmission();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleEmission; 
+               current =iv_rulePureEmission; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -17984,12 +17984,12 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleEmission"
+    // $ANTLR end "entryRulePureEmission"
 
 
-    // $ANTLR start "ruleEmission"
-    // InternalSCTX.g:6493:1: ruleEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) ;
-    public final EObject ruleEmission() throws RecognitionException {
+    // $ANTLR start "rulePureEmission"
+    // InternalSCTX.g:6493:1: rulePureEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) ;
+    public final EObject rulePureEmission() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
@@ -18030,7 +18030,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      					newCompositeNode(grammarAccess.getEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
+            	      					newCompositeNode(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
             	    pushFollow(FollowSets000.FOLLOW_132);
@@ -18041,7 +18041,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      					if (current==null) {
-            	      						current = createModelElementForParent(grammarAccess.getEmissionRule());
+            	      						current = createModelElementForParent(grammarAccess.getPureEmissionRule());
             	      					}
             	      					add(
             	      						current,
@@ -18071,7 +18071,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
+              					newCompositeNode(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
               				
             }
             pushFollow(FollowSets000.FOLLOW_37);
@@ -18082,7 +18082,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getEmissionRule());
+              						current = createModelElementForParent(grammarAccess.getPureEmissionRule());
               					}
               					set(
               						current,
@@ -18112,7 +18112,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     otherlv_2=(Token)match(input,29,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      				newLeafNode(otherlv_2, grammarAccess.getEmissionAccess().getScheduleKeyword_2_0());
+                      				newLeafNode(otherlv_2, grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0());
                       			
                     }
                     // InternalSCTX.g:6544:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
@@ -18130,7 +18130,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     	    {
                     	    if ( state.backtracking==0 ) {
 
-                    	      						newCompositeNode(grammarAccess.getEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
+                    	      						newCompositeNode(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
                     	      					
                     	    }
                     	    pushFollow(FollowSets000.FOLLOW_70);
@@ -18141,7 +18141,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     	    if ( state.backtracking==0 ) {
 
                     	      						if (current==null) {
-                    	      							current = createModelElementForParent(grammarAccess.getEmissionRule());
+                    	      							current = createModelElementForParent(grammarAccess.getPureEmissionRule());
                     	      						}
                     	      						add(
                     	      							current,
@@ -18195,7 +18195,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleEmission"
+    // $ANTLR end "rulePureEmission"
 
 
     // $ANTLR start "entryRuleValuedEmission"
@@ -50034,7 +50034,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_116;
         }
         public String getDescription() {
-            return "6374:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_Emission_8= ruleEmission )";
+            return "6374:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;

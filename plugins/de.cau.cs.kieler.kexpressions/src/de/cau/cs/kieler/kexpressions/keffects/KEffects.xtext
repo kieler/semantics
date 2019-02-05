@@ -49,7 +49,7 @@ Effect returns keffects::Effect:
 	FunctionCallEffect |
 	PrintCallEffect |
 	RandomizeCallEffect |
-	Emission;
+	PureEmission;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -58,7 +58,7 @@ Effect returns keffects::Effect:
 // Example: A, B(2)
 // Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 // annotations defined in the annotations grammar.		
-Emission returns keffects::Emission:
+PureEmission returns keffects::Emission:
     (annotations+=QuotedStringAnnotation)*    
 	reference=ValuedObjectReference
 	('schedule' schedule+=ScheduleObjectReference+)?;
@@ -70,6 +70,9 @@ ValuedEmission returns keffects::Emission:
     reference=ValuedObjectReference
     "(" newValue = Expression ")"
     ('schedule' schedule+=ScheduleObjectReference+)?;
+    
+PureOrValuedEmission returns keffects::Emission:
+    ValuedEmission | PureEmission;
 
 // Assignment Rule
 // An assignment may start with a list of arbitrary annotatations.

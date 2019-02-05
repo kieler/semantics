@@ -177,12 +177,13 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				}
 				else break;
 			case KEffectsPackage.EMISSION:
-				if (rule == grammarAccess.getEmissionRule()) {
-					sequence_Emission(context, (Emission) semanticObject); 
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getEffectRule()) {
-					sequence_Emission_ValuedEmission(context, (Emission) semanticObject); 
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedEmissionRule()) {

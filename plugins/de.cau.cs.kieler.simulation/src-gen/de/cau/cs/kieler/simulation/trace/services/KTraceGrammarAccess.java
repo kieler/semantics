@@ -101,7 +101,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cTickAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cInputsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cInputsEmissionParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
+		private final RuleCall cInputsPureOrValuedEmissionParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cPercentSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
@@ -110,7 +110,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOutputKeyword_2_1_1_0 = (Keyword)cGroup_2_1_1.eContents().get(0);
 		private final Keyword cColonKeyword_2_1_1_1 = (Keyword)cGroup_2_1_1.eContents().get(1);
 		private final Assignment cOutputsAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cOutputsEmissionParserRuleCall_2_2_0 = (RuleCall)cOutputsAssignment_2_2.eContents().get(0);
+		private final RuleCall cOutputsPureOrValuedEmissionParserRuleCall_2_2_0 = (RuleCall)cOutputsAssignment_2_2.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cAnnotationsKVPairParserRuleCall_3_0 = (RuleCall)cAnnotationsAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
@@ -125,25 +125,25 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//EsoTick ktrace::Tick:
-		//	{ktrace::Tick} inputs+=Emission* ('%' ('Output:' | 'Output' ':') outputs+=Emission*)?
+		//	{ktrace::Tick} inputs+=PureOrValuedEmission* ('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
 		//	annotations+=KVPair* ('%%' ('Output:' | 'Output' ':') annotations+=KVPair*)?
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ktrace::Tick} inputs+=Emission* ('%' ('Output:' | 'Output' ':') outputs+=Emission*)? annotations+=KVPair* ('%%'
-		//('Output:' | 'Output' ':') annotations+=KVPair*)? ';'
+		//{ktrace::Tick} inputs+=PureOrValuedEmission* ('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
+		//annotations+=KVPair* ('%%' ('Output:' | 'Output' ':') annotations+=KVPair*)? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//{ktrace::Tick}
 		public Action getTickAction_0() { return cTickAction_0; }
 		
-		//inputs+=Emission*
+		//inputs+=PureOrValuedEmission*
 		public Assignment getInputsAssignment_1() { return cInputsAssignment_1; }
 		
-		//Emission
-		public RuleCall getInputsEmissionParserRuleCall_1_0() { return cInputsEmissionParserRuleCall_1_0; }
+		//PureOrValuedEmission
+		public RuleCall getInputsPureOrValuedEmissionParserRuleCall_1_0() { return cInputsPureOrValuedEmissionParserRuleCall_1_0; }
 		
-		//('%' ('Output:' | 'Output' ':') outputs+=Emission*)?
+		//('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'%'
@@ -164,11 +164,11 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_2_1_1_1() { return cColonKeyword_2_1_1_1; }
 		
-		//outputs+=Emission*
+		//outputs+=PureOrValuedEmission*
 		public Assignment getOutputsAssignment_2_2() { return cOutputsAssignment_2_2; }
 		
-		//Emission
-		public RuleCall getOutputsEmissionParserRuleCall_2_2_0() { return cOutputsEmissionParserRuleCall_2_2_0; }
+		//PureOrValuedEmission
+		public RuleCall getOutputsPureOrValuedEmissionParserRuleCall_2_2_0() { return cOutputsPureOrValuedEmissionParserRuleCall_2_2_0; }
 		
 		//annotations+=KVPair*
 		public Assignment getAnnotationsAssignment_3() { return cAnnotationsAssignment_3; }
@@ -551,7 +551,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//EsoTick ktrace::Tick:
-	//	{ktrace::Tick} inputs+=Emission* ('%' ('Output:' | 'Output' ':') outputs+=Emission*)?
+	//	{ktrace::Tick} inputs+=PureOrValuedEmission* ('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
 	//	annotations+=KVPair* ('%%' ('Output:' | 'Output' ':') annotations+=KVPair*)?
 	//	';';
 	public EsoTickElements getEsoTickAccess() {
@@ -914,7 +914,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// If precedence is changed the converter has to be adapted too.
 	//Effect keffects::Effect:
 	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
-	//	PrintCallEffect | RandomizeCallEffect | Emission;
+	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -930,15 +930,15 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: A, B(2)
 	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 	//// annotations defined in the annotations grammar.		
-	//Emission keffects::Emission:
+	//PureEmission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
 	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
-	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
-		return gaKEffects.getEmissionAccess();
+	public KEffectsGrammarAccess.PureEmissionElements getPureEmissionAccess() {
+		return gaKEffects.getPureEmissionAccess();
 	}
 	
-	public ParserRule getEmissionRule() {
-		return getEmissionAccess().getRule();
+	public ParserRule getPureEmissionRule() {
+		return getPureEmissionAccess().getRule();
 	}
 	
 	//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
@@ -953,6 +953,16 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedEmissionRule() {
 		return getValuedEmissionAccess().getRule();
+	}
+	
+	//PureOrValuedEmission keffects::Emission:
+	//	ValuedEmission | PureEmission;
+	public KEffectsGrammarAccess.PureOrValuedEmissionElements getPureOrValuedEmissionAccess() {
+		return gaKEffects.getPureOrValuedEmissionAccess();
+	}
+	
+	public ParserRule getPureOrValuedEmissionRule() {
+		return getPureOrValuedEmissionAccess().getRule();
 	}
 	
 	//// Assignment Rule

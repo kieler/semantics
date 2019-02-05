@@ -40,7 +40,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFunctionCallEffectParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cPrintCallEffectParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cRandomizeCallEffectParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cEmissionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cPureEmissionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		///**
 		// * @author ssm
@@ -61,11 +61,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// If precedence is changed the converter has to be adapted too.
 		//Effect keffects::Effect:
 		//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
-		//	PrintCallEffect | RandomizeCallEffect | Emission;
+		//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
-		//PrintCallEffect | RandomizeCallEffect | Emission
+		//PrintCallEffect | RandomizeCallEffect | PureEmission
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Assignment
@@ -93,11 +93,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//RandomizeCallEffect
 		public RuleCall getRandomizeCallEffectParserRuleCall_7() { return cRandomizeCallEffectParserRuleCall_7; }
 		
-		//Emission
-		public RuleCall getEmissionParserRuleCall_8() { return cEmissionParserRuleCall_8; }
+		//PureEmission
+		public RuleCall getPureEmissionParserRuleCall_8() { return cPureEmissionParserRuleCall_8; }
 	}
-	public class EmissionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.Emission");
+	public class PureEmissionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.PureEmission");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsQuotedStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
@@ -115,7 +115,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Example: A, B(2)
 		//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 		//// annotations defined in the annotations grammar.		
-		//Emission keffects::Emission:
+		//PureEmission keffects::Emission:
 		//	annotations+=QuotedStringAnnotation*
 		//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
@@ -163,8 +163,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
 		
-		//// Valued emission must be separated form normal emission to allow correct parsing in combination with referece calls
-		//// Problematic case: f()
+		//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+		//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
 		//ValuedEmission keffects::Emission:
 		//	annotations+=QuotedStringAnnotation*
 		//	reference=ValuedObjectReference
@@ -210,6 +210,25 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
+	}
+	public class PureOrValuedEmissionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.PureOrValuedEmission");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cValuedEmissionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cPureEmissionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//PureOrValuedEmission keffects::Emission:
+		//	ValuedEmission | PureEmission;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ValuedEmission | PureEmission
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//ValuedEmission
+		public RuleCall getValuedEmissionParserRuleCall_0() { return cValuedEmissionParserRuleCall_0; }
+		
+		//PureEmission
+		public RuleCall getPureEmissionParserRuleCall_1() { return cPureEmissionParserRuleCall_1; }
 	}
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
@@ -828,8 +847,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	private final EffectElements pEffect;
-	private final EmissionElements pEmission;
+	private final PureEmissionElements pPureEmission;
 	private final ValuedEmissionElements pValuedEmission;
+	private final PureOrValuedEmissionElements pPureOrValuedEmission;
 	private final AssignmentElements pAssignment;
 	private final PostfixEffectElements pPostfixEffect;
 	private final HostcodeEffectElements pHostcodeEffect;
@@ -858,8 +878,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
 		this.pEffect = new EffectElements();
-		this.pEmission = new EmissionElements();
+		this.pPureEmission = new PureEmissionElements();
 		this.pValuedEmission = new ValuedEmissionElements();
+		this.pPureOrValuedEmission = new PureOrValuedEmissionElements();
 		this.pAssignment = new AssignmentElements();
 		this.pPostfixEffect = new PostfixEffectElements();
 		this.pHostcodeEffect = new HostcodeEffectElements();
@@ -925,7 +946,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// If precedence is changed the converter has to be adapted too.
 	//Effect keffects::Effect:
 	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
-	//	PrintCallEffect | RandomizeCallEffect | Emission;
+	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -941,19 +962,19 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: A, B(2)
 	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 	//// annotations defined in the annotations grammar.		
-	//Emission keffects::Emission:
+	//PureEmission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
 	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
-	public EmissionElements getEmissionAccess() {
-		return pEmission;
+	public PureEmissionElements getPureEmissionAccess() {
+		return pPureEmission;
 	}
 	
-	public ParserRule getEmissionRule() {
-		return getEmissionAccess().getRule();
+	public ParserRule getPureEmissionRule() {
+		return getPureEmissionAccess().getRule();
 	}
 	
-	//// Valued emission must be separated form normal emission to allow correct parsing in combination with referece calls
-	//// Problematic case: f()
+	//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+	//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
 	//ValuedEmission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
 	//	reference=ValuedObjectReference
@@ -964,6 +985,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedEmissionRule() {
 		return getValuedEmissionAccess().getRule();
+	}
+	
+	//PureOrValuedEmission keffects::Emission:
+	//	ValuedEmission | PureEmission;
+	public PureOrValuedEmissionElements getPureOrValuedEmissionAccess() {
+		return pPureOrValuedEmission;
+	}
+	
+	public ParserRule getPureOrValuedEmissionRule() {
+		return getPureOrValuedEmissionAccess().getRule();
 	}
 	
 	//// Assignment Rule

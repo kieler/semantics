@@ -22,8 +22,8 @@ EsoTrace returns ktrace::Trace:
 
 EsoTick returns ktrace::Tick:
     {ktrace::Tick}
-    (inputs+=Emission)*
-    ('%' (('Output:')|('Output' ':')) (outputs+=Emission)*)?
+    (inputs+=PureOrValuedEmission)*
+    ('%' (('Output:')|('Output' ':')) (outputs+=PureOrValuedEmission)*)?
     (annotations+=KVPair)*
     ('%%' (('Output:')|('Output' ':')) (annotations+=KVPair)*)?
     ';'
