@@ -101,6 +101,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 			builder.put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 			builder.put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
+			builder.put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 			builder.put(grammarAccess.getConditionalAccess().getAlternatives_7(), "rule__Conditional__Alternatives_7");
 			builder.put(grammarAccess.getLegacyConditionalAccess().getAlternatives_5(), "rule__LegacyConditional__Alternatives_5");
 			builder.put(grammarAccess.getThreadAccess().getAlternatives_1(), "rule__Thread__Alternatives_1");
@@ -137,10 +138,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
 			builder.put(grammarAccess.getJsonValueAccess().getAlternatives(), "rule__JsonValue__Alternatives");
 			builder.put(grammarAccess.getPragmaAccess().getAlternatives(), "rule__Pragma__Alternatives");
-			builder.put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 			builder.put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 			builder.put(grammarAccess.getQuotedStringAnnotationAccess().getAlternatives(), "rule__QuotedStringAnnotation__Alternatives");
-			builder.put(grammarAccess.getAnnotationsAnnotationAccess().getAlternatives(), "superAnnotation__Alternatives");
 			builder.put(grammarAccess.getAnnotationsPragmaAccess().getAlternatives(), "superPragma__Alternatives");
 			builder.put(grammarAccess.getAnnotationsValuedAnnotationAccess().getAlternatives(), "superValuedAnnotation__Alternatives");
 			builder.put(grammarAccess.getRestrictedTypeAnnotationAccess().getAlternatives(), "rule__RestrictedTypeAnnotation__Alternatives");

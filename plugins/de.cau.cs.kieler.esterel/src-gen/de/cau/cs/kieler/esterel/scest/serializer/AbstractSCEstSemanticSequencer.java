@@ -160,7 +160,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
 						|| rule == grammarAccess.getQuotedStringAnnotationRule()
-						|| rule == grammarAccess.getAnnotationsAnnotationRule()
 						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
 						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
 						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
@@ -179,7 +178,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
-						|| rule == grammarAccess.getAnnotationsAnnotationRule()
 						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
 						|| rule == grammarAccess.getKeyStringValueAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
@@ -217,7 +215,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				}
 				else if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
-						|| rule == grammarAccess.getAnnotationsAnnotationRule()
 						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
 						|| rule == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
