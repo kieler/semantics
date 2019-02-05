@@ -1116,39 +1116,21 @@ ruleTransition returns [EObject current=null]
 			(
 				(
 					(
-						(
-							{
-								newCompositeNode(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0());
+						{
+							newCompositeNode(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0());
+						}
+						lv_preemption_2_0=rulePreemptionType
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getTransitionRule());
 							}
-							lv_preemption_2_1=rulePreemptionType
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getTransitionRule());
-								}
-								set(
-									$current,
-									"preemption",
-									lv_preemption_2_1,
-									"de.cau.cs.kieler.sccharts.text.SCTX.PreemptionType");
-								afterParserOrEnumRuleCall();
-							}
-							    |
-							{
-								newCompositeNode(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1());
-							}
-							lv_preemption_2_2=rulePreemptionTypeLegacy
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getTransitionRule());
-								}
-								set(
-									$current,
-									"preemption",
-									lv_preemption_2_2,
-									"de.cau.cs.kieler.sccharts.text.SCTX.PreemptionTypeLegacy");
-								afterParserOrEnumRuleCall();
-							}
-						)
+							set(
+								$current,
+								"preemption",
+								lv_preemption_2_0,
+								"de.cau.cs.kieler.sccharts.text.SCTX.PreemptionType");
+							afterParserOrEnumRuleCall();
+						}
 					)
 				)
 				(
@@ -1551,39 +1533,21 @@ ruleTransition returns [EObject current=null]
 				)?
 				(
 					(
-						(
-							{
-								newCompositeNode(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0());
+						{
+							newCompositeNode(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0());
+						}
+						lv_preemption_30_0=rulePreemptionType
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getTransitionRule());
 							}
-							lv_preemption_30_1=rulePreemptionType
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getTransitionRule());
-								}
-								set(
-									$current,
-									"preemption",
-									lv_preemption_30_1,
-									"de.cau.cs.kieler.sccharts.text.SCTX.PreemptionType");
-								afterParserOrEnumRuleCall();
-							}
-							    |
-							{
-								newCompositeNode(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1());
-							}
-							lv_preemption_30_2=rulePreemptionTypeLegacy
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getTransitionRule());
-								}
-								set(
-									$current,
-									"preemption",
-									lv_preemption_30_2,
-									"de.cau.cs.kieler.sccharts.text.SCTX.PreemptionTypeLegacy");
-								afterParserOrEnumRuleCall();
-							}
-						)
+							set(
+								$current,
+								"preemption",
+								lv_preemption_30_0,
+								"de.cau.cs.kieler.sccharts.text.SCTX.PreemptionType");
+							afterParserOrEnumRuleCall();
+						}
 					)
 				)
 				(
@@ -14142,41 +14106,6 @@ rulePreemptionType returns [Enumerator current=null]
 			{
 				$current = grammarAccess.getPreemptionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
 				newLeafNode(enumLiteral_2, grammarAccess.getPreemptionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2());
-			}
-		)
-	)
-;
-
-// Rule PreemptionTypeLegacy
-rulePreemptionTypeLegacy returns [Enumerator current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			enumLiteral_0='-->'
-			{
-				$current = grammarAccess.getPreemptionTypeLegacyAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getPreemptionTypeLegacyAccess().getWEAKABORTEnumLiteralDeclaration_0());
-			}
-		)
-		    |
-		(
-			enumLiteral_1='o->'
-			{
-				$current = grammarAccess.getPreemptionTypeLegacyAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getPreemptionTypeLegacyAccess().getSTRONGABORTEnumLiteralDeclaration_1());
-			}
-		)
-		    |
-		(
-			enumLiteral_2='>->'
-			{
-				$current = grammarAccess.getPreemptionTypeLegacyAccess().getTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getPreemptionTypeLegacyAccess().getTERMINATIONEnumLiteralDeclaration_2());
 			}
 		)
 	)

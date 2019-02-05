@@ -37,10 +37,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8_1_5(), "rule__State__Alternatives_8_1_5");
 			builder.put(grammarAccess.getScopeCallAccess().getAlternatives_2(), "rule__ScopeCall__Alternatives_2");
 			builder.put(grammarAccess.getTransitionAccess().getAlternatives_2(), "rule__Transition__Alternatives_2");
-			builder.put(grammarAccess.getTransitionAccess().getPreemptionAlternatives_2_0_0_0(), "rule__Transition__PreemptionAlternatives_2_0_0_0");
 			builder.put(grammarAccess.getTransitionAccess().getAlternatives_2_0_5_2(), "rule__Transition__Alternatives_2_0_5_2");
 			builder.put(grammarAccess.getTransitionAccess().getAlternatives_2_1_1_2(), "rule__Transition__Alternatives_2_1_1_2");
-			builder.put(grammarAccess.getTransitionAccess().getPreemptionAlternatives_2_1_3_0(), "rule__Transition__PreemptionAlternatives_2_1_3_0");
 			builder.put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7(), "rule__ControlflowRegion__Alternatives_7");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2(), "rule__ControlflowRegion__Alternatives_7_1_2");
@@ -99,7 +97,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
 			builder.put(grammarAccess.getExtendedIDAccess().getAlternatives_1_0(), "rule__ExtendedID__Alternatives_1_0");
 			builder.put(grammarAccess.getPreemptionTypeAccess().getAlternatives(), "rule__PreemptionType__Alternatives");
-			builder.put(grammarAccess.getPreemptionTypeLegacyAccess().getAlternatives(), "rule__PreemptionTypeLegacy__Alternatives");
 			builder.put(grammarAccess.getDelayTypeAccess().getAlternatives(), "rule__DelayType__Alternatives");
 			builder.put(grammarAccess.getHistoryTypeAccess().getAlternatives(), "rule__HistoryType__Alternatives");
 			builder.put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");

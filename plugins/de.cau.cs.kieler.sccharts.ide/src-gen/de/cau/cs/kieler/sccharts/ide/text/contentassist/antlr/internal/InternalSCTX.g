@@ -3291,22 +3291,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Rule PreemptionTypeLegacy
-rulePreemptionTypeLegacy
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getPreemptionTypeLegacyAccess().getAlternatives()); }
-		(rule__PreemptionTypeLegacy__Alternatives)
-		{ after(grammarAccess.getPreemptionTypeLegacyAccess().getAlternatives()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 // Rule DelayType
 ruleDelayType
 	@init {
@@ -3897,27 +3881,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Transition__PreemptionAlternatives_2_0_0_0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0()); }
-		rulePreemptionType
-		{ after(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1()); }
-		rulePreemptionTypeLegacy
-		{ after(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 rule__Transition__Alternatives_2_0_5_2
 	@init {
 		int stackSize = keepStackSize();
@@ -3954,27 +3917,6 @@ rule__Transition__Alternatives_2_1_1_2
 		{ before(grammarAccess.getTransitionAccess().getTriggerAssignment_2_1_1_2_1()); }
 		(rule__Transition__TriggerAssignment_2_1_1_2_1)
 		{ after(grammarAccess.getTransitionAccess().getTriggerAssignment_2_1_1_2_1()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Transition__PreemptionAlternatives_2_1_3_0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0()); }
-		rulePreemptionType
-		{ after(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1()); }
-		rulePreemptionTypeLegacy
-		{ after(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1()); }
 	)
 ;
 finally {
@@ -5413,33 +5355,6 @@ rule__PreemptionType__Alternatives
 		{ before(grammarAccess.getPreemptionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2()); }
 		('join to')
 		{ after(grammarAccess.getPreemptionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__PreemptionTypeLegacy__Alternatives
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getPreemptionTypeLegacyAccess().getWEAKABORTEnumLiteralDeclaration_0()); }
-		('-->')
-		{ after(grammarAccess.getPreemptionTypeLegacyAccess().getWEAKABORTEnumLiteralDeclaration_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getPreemptionTypeLegacyAccess().getSTRONGABORTEnumLiteralDeclaration_1()); }
-		('o->')
-		{ after(grammarAccess.getPreemptionTypeLegacyAccess().getSTRONGABORTEnumLiteralDeclaration_1()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getPreemptionTypeLegacyAccess().getTERMINATIONEnumLiteralDeclaration_2()); }
-		('>->')
-		{ after(grammarAccess.getPreemptionTypeLegacyAccess().getTERMINATIONEnumLiteralDeclaration_2()); }
 	)
 ;
 finally {
@@ -32262,9 +32177,9 @@ rule__Transition__PreemptionAssignment_2_0_0
 	}
 :
 	(
-		{ before(grammarAccess.getTransitionAccess().getPreemptionAlternatives_2_0_0_0()); }
-		(rule__Transition__PreemptionAlternatives_2_0_0_0)
-		{ after(grammarAccess.getTransitionAccess().getPreemptionAlternatives_2_0_0_0()); }
+		{ before(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0()); }
+		rulePreemptionType
+		{ after(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0()); }
 	)
 ;
 finally {
@@ -32578,9 +32493,9 @@ rule__Transition__PreemptionAssignment_2_1_3
 	}
 :
 	(
-		{ before(grammarAccess.getTransitionAccess().getPreemptionAlternatives_2_1_3_0()); }
-		(rule__Transition__PreemptionAlternatives_2_1_3_0)
-		{ after(grammarAccess.getTransitionAccess().getPreemptionAlternatives_2_1_3_0()); }
+		{ before(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0()); }
+		rulePreemptionType
+		{ after(grammarAccess.getTransitionAccess().getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0()); }
 	)
 ;
 finally {

@@ -692,9 +692,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
 		private final Assignment cPreemptionAssignment_2_0_0 = (Assignment)cGroup_2_0.eContents().get(0);
-		private final Alternatives cPreemptionAlternatives_2_0_0_0 = (Alternatives)cPreemptionAssignment_2_0_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0 = (RuleCall)cPreemptionAlternatives_2_0_0_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1 = (RuleCall)cPreemptionAlternatives_2_0_0_0.eContents().get(1);
+		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_2_0_0_0 = (RuleCall)cPreemptionAssignment_2_0_0.eContents().get(0);
 		private final Assignment cTargetStateAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
 		private final CrossReference cTargetStateStateCrossReference_2_0_1_0 = (CrossReference)cTargetStateAssignment_2_0_1.eContents().get(0);
 		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_0_1_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0_1_0.eContents().get(1);
@@ -754,9 +752,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEffectsAssignment_2_1_2_2_1 = (Assignment)cGroup_2_1_2_2.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_2_1_2_2_1_0 = (RuleCall)cEffectsAssignment_2_1_2_2_1.eContents().get(0);
 		private final Assignment cPreemptionAssignment_2_1_3 = (Assignment)cGroup_2_1.eContents().get(3);
-		private final Alternatives cPreemptionAlternatives_2_1_3_0 = (Alternatives)cPreemptionAssignment_2_1_3.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0 = (RuleCall)cPreemptionAlternatives_2_1_3_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1 = (RuleCall)cPreemptionAlternatives_2_1_3_0.eContents().get(1);
+		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_2_1_3_0 = (RuleCall)cPreemptionAssignment_2_1_3.eContents().get(0);
 		private final Assignment cTargetStateAssignment_2_1_4 = (Assignment)cGroup_2_1.eContents().get(4);
 		private final CrossReference cTargetStateStateCrossReference_2_1_4_0 = (CrossReference)cTargetStateAssignment_2_1_4.eContents().get(0);
 		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_1_4_0_1 = (RuleCall)cTargetStateStateCrossReference_2_1_4_0.eContents().get(1);
@@ -770,24 +766,25 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cLabelAssignment_3_1.eContents().get(0);
 		
 		//Transition sccharts::Transition:
-		//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+		//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=PreemptionType
 		//	targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
 		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//	preemption=PreemptionType
+		//	targetState=[sccharts::State] deferred?='deferred'?
 		//	history=HistoryType?) ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
-		//targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT?
-		//(trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
-		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
-		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
-		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
-		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label' label=STRING)?
+		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=PreemptionType targetState=[sccharts::State]
+		//delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression |
+		//trigger=AtomicExpression) ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do'
+		//effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression |
+		//trigger=AtomicExpression) ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do'
+		//effects+=Effect (';' effects+=Effect)*)? preemption=PreemptionType targetState=[sccharts::State] deferred?='deferred'?
+		//history=HistoryType?) ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
 		//{sccharts::Transition}
@@ -799,31 +796,24 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//RestrictedTypeAnnotation
 		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
 		
-		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
-		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? |
-		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
-		//history=HistoryType?
+		//preemption=PreemptionType targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType?
+		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
+		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=PreemptionType
+		//targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
-		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
-		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//preemption=PreemptionType targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType?
+		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_2_0() { return cGroup_2_0; }
 		
-		//preemption=(PreemptionType | PreemptionTypeLegacy)
+		//preemption=PreemptionType
 		public Assignment getPreemptionAssignment_2_0_0() { return cPreemptionAssignment_2_0_0; }
 		
-		//(PreemptionType | PreemptionTypeLegacy)
-		public Alternatives getPreemptionAlternatives_2_0_0_0() { return cPreemptionAlternatives_2_0_0_0; }
-		
 		//PreemptionType
-		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_2_0_0_0_0; }
-		
-		//PreemptionTypeLegacy
-		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1; }
+		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_2_0_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_2_0_0_0; }
 		
 		//targetState=[sccharts::State]
 		public Assignment getTargetStateAssignment_2_0_1() { return cTargetStateAssignment_2_0_1; }
@@ -924,8 +914,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
-		//history=HistoryType?
+		//preemption=PreemptionType targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
 		public Group getGroup_2_1() { return cGroup_2_1; }
 		
 		//delay=DelayType?
@@ -1004,17 +993,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_2_1_2_2_1_0() { return cEffectsEffectParserRuleCall_2_1_2_2_1_0; }
 		
-		//preemption=(PreemptionType | PreemptionTypeLegacy)
+		//preemption=PreemptionType
 		public Assignment getPreemptionAssignment_2_1_3() { return cPreemptionAssignment_2_1_3; }
 		
-		//(PreemptionType | PreemptionTypeLegacy)
-		public Alternatives getPreemptionAlternatives_2_1_3_0() { return cPreemptionAlternatives_2_1_3_0; }
-		
 		//PreemptionType
-		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_2_1_3_0_0; }
-		
-		//PreemptionTypeLegacy
-		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_2_1_3_0_1; }
+		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_2_1_3_0() { return cPreemptionPreemptionTypeEnumRuleCall_2_1_3_0; }
 		
 		//targetState=[sccharts::State]
 		public Assignment getTargetStateAssignment_2_1_4() { return cTargetStateAssignment_2_1_4; }
@@ -2380,41 +2363,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'join to'
 		public Keyword getTERMINATIONJoinToKeyword_2_0() { return cTERMINATIONJoinToKeyword_2_0; }
 	}
-	public class PreemptionTypeLegacyElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.PreemptionTypeLegacy");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cWEAKABORTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cSTRONGABORTOKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
-		
-		//enum PreemptionTypeLegacy returns sccharts::PreemptionType:
-		//	WEAKABORT='-->' | STRONGABORT='o->' | TERMINATION='>->';
-		public EnumRule getRule() { return rule; }
-		
-		//WEAKABORT='-->' | STRONGABORT='o->' | TERMINATION='>->'
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//WEAKABORT='-->'
-		public EnumLiteralDeclaration getWEAKABORTEnumLiteralDeclaration_0() { return cWEAKABORTEnumLiteralDeclaration_0; }
-		
-		//'-->'
-		public Keyword getWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0() { return cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0; }
-		
-		//STRONGABORT='o->'
-		public EnumLiteralDeclaration getSTRONGABORTEnumLiteralDeclaration_1() { return cSTRONGABORTEnumLiteralDeclaration_1; }
-		
-		//'o->'
-		public Keyword getSTRONGABORTOKeyword_1_0() { return cSTRONGABORTOKeyword_1_0; }
-		
-		//TERMINATION='>->'
-		public EnumLiteralDeclaration getTERMINATIONEnumLiteralDeclaration_2() { return cTERMINATIONEnumLiteralDeclaration_2; }
-		
-		//'>->'
-		public Keyword getTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
-	}
 	public class DelayTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.DelayType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -2580,7 +2528,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final SucceedingActionElements pSucceedingAction;
 	private final PeriodActionElements pPeriodAction;
 	private final PreemptionTypeElements ePreemptionType;
-	private final PreemptionTypeLegacyElements ePreemptionTypeLegacy;
 	private final DelayTypeElements eDelayType;
 	private final HistoryTypeElements eHistoryType;
 	private final ValueTypeElements eValueType;
@@ -2634,7 +2581,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pSucceedingAction = new SucceedingActionElements();
 		this.pPeriodAction = new PeriodActionElements();
 		this.ePreemptionType = new PreemptionTypeElements();
-		this.ePreemptionTypeLegacy = new PreemptionTypeLegacyElements();
 		this.eDelayType = new DelayTypeElements();
 		this.eHistoryType = new HistoryTypeElements();
 		this.eValueType = new ValueTypeElements();
@@ -2789,14 +2735,15 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Transition sccharts::Transition:
-	//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+	//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=PreemptionType
 	//	targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
 	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+	//	preemption=PreemptionType
+	//	targetState=[sccharts::State] deferred?='deferred'?
 	//	history=HistoryType?) ('label' label=STRING)?;
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
@@ -2993,16 +2940,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPreemptionTypeRule() {
 		return getPreemptionTypeAccess().getRule();
-	}
-	
-	//enum PreemptionTypeLegacy returns sccharts::PreemptionType:
-	//	WEAKABORT='-->' | STRONGABORT='o->' | TERMINATION='>->';
-	public PreemptionTypeLegacyElements getPreemptionTypeLegacyAccess() {
-		return ePreemptionTypeLegacy;
-	}
-	
-	public EnumRule getPreemptionTypeLegacyRule() {
-		return getPreemptionTypeLegacyAccess().getRule();
 	}
 	
 	//enum DelayType returns sccharts::DelayType:

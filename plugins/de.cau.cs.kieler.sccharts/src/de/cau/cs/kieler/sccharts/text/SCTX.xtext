@@ -88,7 +88,7 @@ Transition returns sccharts::Transition:
 	annotations+=RestrictedTypeAnnotation*
 	
 	((
-    	preemption=(PreemptionType | PreemptionTypeLegacy) 
+    	preemption=PreemptionType
         targetState=[sccharts::State|ID]
         delay=DelayType?
         deferred?='deferred'?
@@ -106,7 +106,7 @@ Transition returns sccharts::Transition:
             ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
         )?
         ('do' effects+=Effect (';' effects+=Effect)*)?
-        preemption=(PreemptionType | PreemptionTypeLegacy) 
+        preemption=PreemptionType 
         targetState=[sccharts::State|ID]
         deferred?='deferred'?
         history=HistoryType?
@@ -223,9 +223,6 @@ PeriodAction returns sccharts::PeriodAction:
 
 enum PreemptionType returns sccharts::PreemptionType:
 	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
-
-enum PreemptionTypeLegacy returns sccharts::PreemptionType:
-    WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
     
 enum DelayType returns sccharts::DelayType:
     UNDEFINED = 'undefined' | DELAYED = 'delayed' | IMMEDIATE = 'immediate' | AUTOMATIC = 'auto';    
