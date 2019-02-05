@@ -1911,7 +1911,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         annotations+=RestrictedTypeAnnotation* 
 	 *         (
 	 *             (
-	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
+	 *                 preemption=PreemptionType 
 	 *                 targetState=[State|ID] 
 	 *                 delay=DelayType? 
 	 *                 deferred?='deferred'? 
@@ -1923,7 +1923,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 delay=DelayType? 
 	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=Double? nondeterministic?='nondeterministic'?)? 
 	 *                 (effects+=Effect effects+=Effect*)? 
-	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
+	 *                 preemption=PreemptionType 
 	 *                 targetState=[State|ID] 
 	 *                 deferred?='deferred'? 
 	 *                 history=HistoryType?

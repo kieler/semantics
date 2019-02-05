@@ -24,24 +24,8 @@ import static de.cau.cs.kieler.kexpressions.OperatorType.*
  */
 class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
     
-    /** Legacy transitions pragma keyword */
-    static val LEGACY_TRANSITIONS_PRAGMA = PragmaRegistry.register("syntax", StringPragma, "Syntax switch for sctx language.")
-    
-    /** Legacy transitions keyword */
-    static val LEGACY_TRANSITIONS_KEYWORD = "arrows"
-    
-    /** Flag for switching to legacy syntax */
-    var boolean legacyTransitionSyntax = false
-    
     @Inject
     private SCTXGrammarAccess grammarAccess;
-    
-    override sequence_StringPragma(ISerializationContext context, StringPragma pragma) {
-        if (pragma.name.equals(LEGACY_TRANSITIONS_PRAGMA)) {
-            legacyTransitionSyntax = pragma.values.contains(LEGACY_TRANSITIONS_KEYWORD)
-        }
-        super.sequence_StringPragma(context, pragma)
-    }
 
     override sequence_Transition(ISerializationContext context, Transition transition) {
         val feeder = createSequencerFeeder(transition, createNodeProvider(transition))
@@ -51,12 +35,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             feeder.accept(tg.annotationsRestrictedTypeAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
         }
         
-        // support legacy transitions
-        if (legacyTransitionSyntax) {
-            feeder.accept(tg.preemptionPreemptionTypeLegacyEnumRuleCall_2_0_0_0_1, transition.preemption)
-        } else {
-            feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_2_0_0_0_0, transition.preemption)
-        }
+        feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_2_0_0_0, transition.preemption)
         
         feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_0_1_0_1 , transition.targetState)
         
