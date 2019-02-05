@@ -43,12 +43,13 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 Effect returns keffects::Effect: 
     Assignment | 
 	PostfixEffect | 
-	Emission | // Will consume some ReferenceCallEffects
+	ValuedEmission | // Will consume some ReferenceCallEffects
 	HostcodeEffect | 
 	ReferenceCallEffect |
 	FunctionCallEffect |
 	PrintCallEffect |
-	RandomizeCallEffect;
+	RandomizeCallEffect |
+	Emission;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -59,8 +60,16 @@ Effect returns keffects::Effect:
 // annotations defined in the annotations grammar.		
 Emission returns keffects::Emission:
     (annotations+=QuotedStringAnnotation)*    
-	reference=ValuedObjectReference ( "(" newValue = Expression ")" )?
+	reference=ValuedObjectReference
 	('schedule' schedule+=ScheduleObjectReference+)?;
+
+// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
+ValuedEmission returns keffects::Emission:
+    (annotations+=QuotedStringAnnotation)*    
+    reference=ValuedObjectReference
+    "(" newValue = Expression ")"
+    ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Assignment Rule
 // An assignment may start with a list of arbitrary annotatations.

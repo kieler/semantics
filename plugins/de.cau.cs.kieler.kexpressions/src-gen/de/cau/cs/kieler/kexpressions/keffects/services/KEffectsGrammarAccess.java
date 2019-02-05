@@ -34,12 +34,13 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cPostfixEffectParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cEmissionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cValuedEmissionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cHostcodeEffectParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cReferenceCallEffectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cFunctionCallEffectParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cPrintCallEffectParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cRandomizeCallEffectParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cEmissionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		///**
 		// * @author ssm
@@ -59,12 +60,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
 		//// If precedence is changed the converter has to be adapted too.
 		//Effect keffects::Effect:
-		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
-		//	RandomizeCallEffect;
+		//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+		//	PrintCallEffect | RandomizeCallEffect | Emission;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
-		//RandomizeCallEffect
+		//Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+		//PrintCallEffect | RandomizeCallEffect | Emission
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Assignment
@@ -73,8 +74,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//PostfixEffect
 		public RuleCall getPostfixEffectParserRuleCall_1() { return cPostfixEffectParserRuleCall_1; }
 		
-		//Emission
-		public RuleCall getEmissionParserRuleCall_2() { return cEmissionParserRuleCall_2; }
+		//ValuedEmission
+		public RuleCall getValuedEmissionParserRuleCall_2() { return cValuedEmissionParserRuleCall_2; }
 		
 		//// Will consume some ReferenceCallEffects
 		//HostcodeEffect
@@ -91,6 +92,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//RandomizeCallEffect
 		public RuleCall getRandomizeCallEffectParserRuleCall_7() { return cRandomizeCallEffectParserRuleCall_7; }
+		
+		//Emission
+		public RuleCall getEmissionParserRuleCall_8() { return cEmissionParserRuleCall_8; }
 	}
 	public class EmissionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.Emission");
@@ -100,14 +104,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cReferenceAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cReferenceValuedObjectReferenceParserRuleCall_1_0 = (RuleCall)cReferenceAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cNewValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cNewValueExpressionParserRuleCall_2_1_0 = (RuleCall)cNewValueAssignment_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cScheduleKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cScheduleAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_3_1_0 = (RuleCall)cScheduleAssignment_3_1.eContents().get(0);
+		private final Keyword cScheduleKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cScheduleAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_2_1_0 = (RuleCall)cScheduleAssignment_2_1.eContents().get(0);
 		
 		//// Emission Rule
 		//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -118,10 +117,61 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// annotations defined in the annotations grammar.		
 		//Emission keffects::Emission:
 		//	annotations+=QuotedStringAnnotation*
-		//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
+		//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=QuotedStringAnnotation* reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule'
+		//annotations+=QuotedStringAnnotation* reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=QuotedStringAnnotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//QuotedStringAnnotation
+		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_0_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_0_0; }
+		
+		//reference=ValuedObjectReference
+		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
+		
+		//ValuedObjectReference
+		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
+		
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'schedule'
+		public Keyword getScheduleKeyword_2_0() { return cScheduleKeyword_2_0; }
+		
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_2_1() { return cScheduleAssignment_2_1; }
+		
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_2_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_2_1_0; }
+	}
+	public class ValuedEmissionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.ValuedEmission");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsQuotedStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cReferenceAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cReferenceValuedObjectReferenceParserRuleCall_1_0 = (RuleCall)cReferenceAssignment_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cNewValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNewValueExpressionParserRuleCall_3_0 = (RuleCall)cNewValueAssignment_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cScheduleKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
+		
+		//// Valued emission must be separated form normal emission to allow correct parsing in combination with referece calls
+		//// Problematic case: f()
+		//ValuedEmission keffects::Emission:
+		//	annotations+=QuotedStringAnnotation*
+		//	reference=ValuedObjectReference
+		//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=QuotedStringAnnotation* reference=ValuedObjectReference "(" newValue=Expression ")" ('schedule'
 		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
@@ -137,32 +187,29 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
 		
-		//("(" newValue=Expression ")")?
-		public Group getGroup_2() { return cGroup_2; }
-		
 		//"("
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 		
 		//newValue=Expression
-		public Assignment getNewValueAssignment_2_1() { return cNewValueAssignment_2_1; }
+		public Assignment getNewValueAssignment_3() { return cNewValueAssignment_3; }
 		
 		//Expression
-		public RuleCall getNewValueExpressionParserRuleCall_2_1_0() { return cNewValueExpressionParserRuleCall_2_1_0; }
+		public RuleCall getNewValueExpressionParserRuleCall_3_0() { return cNewValueExpressionParserRuleCall_3_0; }
 		
 		//")"
-		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 		
 		//('schedule' schedule+=ScheduleObjectReference+)?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_5() { return cGroup_5; }
 		
 		//'schedule'
-		public Keyword getScheduleKeyword_3_0() { return cScheduleKeyword_3_0; }
+		public Keyword getScheduleKeyword_5_0() { return cScheduleKeyword_5_0; }
 		
 		//schedule+=ScheduleObjectReference+
-		public Assignment getScheduleAssignment_3_1() { return cScheduleAssignment_3_1; }
+		public Assignment getScheduleAssignment_5_1() { return cScheduleAssignment_5_1; }
 		
 		//ScheduleObjectReference
-		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_3_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_3_1_0; }
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
@@ -782,6 +829,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final EffectElements pEffect;
 	private final EmissionElements pEmission;
+	private final ValuedEmissionElements pValuedEmission;
 	private final AssignmentElements pAssignment;
 	private final PostfixEffectElements pPostfixEffect;
 	private final HostcodeEffectElements pHostcodeEffect;
@@ -811,6 +859,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pEffect = new EffectElements();
 		this.pEmission = new EmissionElements();
+		this.pValuedEmission = new ValuedEmissionElements();
 		this.pAssignment = new AssignmentElements();
 		this.pPostfixEffect = new PostfixEffectElements();
 		this.pHostcodeEffect = new HostcodeEffectElements();
@@ -875,8 +924,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
 	//// If precedence is changed the converter has to be adapted too.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
-	//	RandomizeCallEffect;
+	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+	//	PrintCallEffect | RandomizeCallEffect | Emission;
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -894,13 +943,27 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
 	public EmissionElements getEmissionAccess() {
 		return pEmission;
 	}
 	
 	public ParserRule getEmissionRule() {
 		return getEmissionAccess().getRule();
+	}
+	
+	//// Valued emission must be separated form normal emission to allow correct parsing in combination with referece calls
+	//// Problematic case: f()
+	//ValuedEmission keffects::Emission:
+	//	annotations+=QuotedStringAnnotation*
+	//	reference=ValuedObjectReference
+	//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
+	public ValuedEmissionElements getValuedEmissionAccess() {
+		return pValuedEmission;
+	}
+	
+	public ParserRule getValuedEmissionRule() {
+		return getValuedEmissionAccess().getRule();
 	}
 	
 	//// Assignment Rule
