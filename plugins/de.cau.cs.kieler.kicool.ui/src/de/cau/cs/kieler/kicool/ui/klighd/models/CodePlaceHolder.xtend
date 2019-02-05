@@ -26,7 +26,7 @@ class CodePlaceHolder {
     /** 
      * The default editor. 
      */
-    static final String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor"
+    public static final String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor"
     /** 
      * Content. 
      */

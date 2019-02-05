@@ -7,8 +7,10 @@
 package de.cau.cs.kieler.kexpressions.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.kexpressions.*;
 
 import java.util.List;
@@ -159,6 +161,24 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseValue(ignoreValue);
                 if (result == null) result = caseExpression(ignoreValue);
                 if (result == null) result = caseSchedulable(ignoreValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.JSON_PRAGMA: {
+                JsonPragma jsonPragma = (JsonPragma)theEObject;
+                T result = caseJsonPragma(jsonPragma);
+                if (result == null) result = casePragma(jsonPragma);
+                if (result == null) result = caseNamedObject(jsonPragma);
+                if (result == null) result = caseNameable(jsonPragma);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.JSON_ANNOTATION: {
+                JsonAnnotation jsonAnnotation = (JsonAnnotation)theEObject;
+                T result = caseJsonAnnotation(jsonAnnotation);
+                if (result == null) result = caseAnnotation(jsonAnnotation);
+                if (result == null) result = caseNamedObject(jsonAnnotation);
+                if (result == null) result = caseNameable(jsonAnnotation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -741,6 +761,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Json Pragma</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Json Pragma</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseJsonPragma(JsonPragma object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Json Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Json Annotation</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseJsonAnnotation(JsonAnnotation object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Json Object Value</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -842,6 +892,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Pragma</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Pragma</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePragma(Pragma object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAnnotation(Annotation object) {
         return null;
     }
 

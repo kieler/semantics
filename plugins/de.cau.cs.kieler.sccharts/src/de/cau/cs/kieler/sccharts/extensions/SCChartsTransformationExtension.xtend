@@ -411,12 +411,6 @@ class SCChartsTransformationExtension {
         valuedObject
     }
 
-    // Set the ValuedObject to be of type DOUBLE.
-    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
-        valuedObject.setType(ValueType::DOUBLE)
-        valuedObject
-    }
-
     // Set the ValuedObject to be of type FLOAT.
     def ValuedObject setTypeFloat(ValuedObject valuedObject) {
         valuedObject.setType(ValueType::FLOAT)

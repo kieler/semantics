@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.esterel.scest.scl.netlist.c
+system de.cau.cs.kieler.esterel.scest.scl.netlist.c
     label "SCEst Netlist-based (C)"
     
 de.cau.cs.kieler.esterel.processors.scestintermediateprocessor config {

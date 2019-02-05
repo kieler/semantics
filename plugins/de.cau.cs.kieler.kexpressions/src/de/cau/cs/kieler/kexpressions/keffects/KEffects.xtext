@@ -37,10 +37,13 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 // Effect Rule
 // An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 // function call effect.
+// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
+// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
+// If precedence is changed the converter has to be adapted too.
 Effect returns keffects::Effect: 
     Assignment | 
 	PostfixEffect | 
-	Emission |
+	Emission | // Will consume some ReferenceCallEffects
 	HostcodeEffect | 
 	ReferenceCallEffect |
 	FunctionCallEffect |
@@ -97,7 +100,7 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // preceded by a list of annotations.
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
-    'call' valuedObject=[kexpressions::ValuedObject|PrimeID]
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
         (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
     
 // Function Call Effect Rule
@@ -109,7 +112,7 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    );    
+    );
 
 // Print Call Effect Rule
 // A print functions that enables target-independent prints in the model.    
