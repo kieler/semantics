@@ -353,7 +353,23 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    IMPLIES(31, "IMPLIES", "IMPLIES");
+    IMPLIES(31, "IMPLIES", "IMPLIES"), /**
+     * The '<em><b>NONEOF</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NONEOF_VALUE
+     * @generated
+     * @ordered
+     */
+    NONEOF(32, "NONEOF", "NONEOF"), /**
+     * The '<em><b>NOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NOR_VALUE
+     * @generated
+     * @ordered
+     */
+    NOR(33, "NOR", "NOR");
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -836,6 +852,36 @@ public enum OperatorType implements Enumerator {
     public static final int IMPLIES_VALUE = 31;
 
     /**
+     * The '<em><b>NONEOF</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>NONEOF</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #NONEOF
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int NONEOF_VALUE = 32;
+
+    /**
+     * The '<em><b>NOR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>NOR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #NOR
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int NOR_VALUE = 33;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -876,6 +922,8 @@ public enum OperatorType implements Enumerator {
             INTDIV,
             LOGICAL_XOR,
             IMPLIES,
+            NONEOF,
+            NOR,
         };
 
     /**
@@ -964,6 +1012,8 @@ public enum OperatorType implements Enumerator {
             case INTDIV_VALUE: return INTDIV;
             case LOGICAL_XOR_VALUE: return LOGICAL_XOR;
             case IMPLIES_VALUE: return IMPLIES;
+            case NONEOF_VALUE: return NONEOF;
+            case NOR_VALUE: return NOR;
         }
         return null;
     }

@@ -154,6 +154,8 @@
     <eLiterals name="INTDIV" value="29" literal="INTDIV"/>
     <eLiterals name="LOGICAL_XOR" value="30" literal="LOGICAL_XOR"/>
     <eLiterals name="IMPLIES" value="31" literal="IMPLIES"/>
+    <eLiterals name="NONEOF" value="32" literal="NONEOF"/>
+    <eLiterals name="NOR" value="33" literal="NOR"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

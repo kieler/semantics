@@ -165,9 +165,13 @@ NodeValuedObject returns kexpressions::ValuedObject:
 // Node Declaration - Body Part 1: Equations
 Equation returns keffects::Assignment:
     {Equation}
-    (reference=ValuedObjectReference |         
+    (
         ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference 
-        (',' references+=ValuedObjectReference)* ')'))
+        (',' references+=ValuedObjectReference)* ')') |
+        (references+=ValuedObjectReference ',' references+=ValuedObjectReference 
+        (',' references+=ValuedObjectReference)*) |
+        reference=ValuedObjectReference
+    )
     operator=AssignOperator 
     expression=Expression   
     ';' 
@@ -221,6 +225,8 @@ ATransition:
  *                         + ValuedObjectReference
  *                       + FunctionCall
  *                       + TextExpression
+ *                       + NoneOfExpression
+ *                       + NorExpression
  * + ValuedExpression
  *   + ShiftLeftExpression
  *     + ShiftRightExpression
@@ -271,8 +277,12 @@ NegExpression returns kexpressions::Expression:
 // Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
 @Override 
 FBYExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} subExpressions += AtomicValuedExpression operator=FBYOperator subExpressions += AtomicValuedExpression
-    | WhenExpression;
+    WhenExpression
+    (
+        {kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=FBYOperator subExpressions+=AtomicValuedExpression)
+        ('fby' subExpressions+=AtomicValuedExpression)*
+    )?;
 
 WhenExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} subExpressions += AtomicValuedExpression operator=WhenOperator subExpressions += AtomicValuedExpression
@@ -348,7 +358,17 @@ AtomicExpression returns kexpressions::Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
-    | ReferenceCall;
+    | ReferenceCall
+    | NorExpression
+    ;
+
+NorExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression}
+    (operator=NoneOfOperator | operator=NorOperator)
+    '('
+    subExpressions+=Expression (',' subExpressions+=Expression)*
+    ')'
+;
 
 /**
  * -------------------- Operator Adjustments
@@ -404,14 +424,14 @@ enum IntDivOperator returns kexpressions::OperatorType:
 
 @Override 
 enum ConditionalOperator returns kexpressions::OperatorType:
-    CONDITIONAL = "if";        
+    CONDITIONAL = "if";
 
-// TODO: Cast operators?
-//enum IntOperator returns kexpressions::OperatorType:  
-//    INT="int";
-//
-//enum RealOperator returns kexpressions::OperatorType:  
-//    REAL="real";
+enum NoneOfOperator returns kexpressions::OperatorType:  
+    NONEOF="#";
+
+enum NorOperator returns kexpressions::OperatorType:  
+    NOR="nor";
+
  
 /**
  * -------------------- Variable parameter types.

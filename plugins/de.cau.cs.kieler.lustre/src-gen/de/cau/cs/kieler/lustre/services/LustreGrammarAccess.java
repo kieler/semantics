@@ -47,7 +47,10 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPackListAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cPackListPackListParserRuleCall_1_1_0 = (RuleCall)cPackListAssignment_1_1.eContents().get(0);
 		
-		//LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
+		///*
+		// * This implementation of the grammar (except for the automatons) is based on 
+		// * the Lustre V6 Reference manual. 
+		// */ LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
 		//	('include' (includes+=STRING | includes+=STRING))* (packBody=PackBody | packList=PackList);
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -1350,20 +1353,30 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cEquationAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cReferenceAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cReferenceValuedObjectReferenceParserRuleCall_1_0_0 = (RuleCall)cReferenceAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cReferencesAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_0_1_0 = (RuleCall)cReferencesAssignment_1_0_1.eContents().get(0);
+		private final Keyword cCommaKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
+		private final Assignment cReferencesAssignment_1_0_3 = (Assignment)cGroup_1_0.eContents().get(3);
+		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_0_3_0 = (RuleCall)cReferencesAssignment_1_0_3.eContents().get(0);
+		private final Group cGroup_1_0_4 = (Group)cGroup_1_0.eContents().get(4);
+		private final Keyword cCommaKeyword_1_0_4_0 = (Keyword)cGroup_1_0_4.eContents().get(0);
+		private final Assignment cReferencesAssignment_1_0_4_1 = (Assignment)cGroup_1_0_4.eContents().get(1);
+		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_0_4_1_0 = (RuleCall)cReferencesAssignment_1_0_4_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_0_5 = (Keyword)cGroup_1_0.eContents().get(5);
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
-		private final Assignment cReferencesAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_1_1_0 = (RuleCall)cReferencesAssignment_1_1_1.eContents().get(0);
-		private final Keyword cCommaKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
-		private final Assignment cReferencesAssignment_1_1_3 = (Assignment)cGroup_1_1.eContents().get(3);
-		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_1_3_0 = (RuleCall)cReferencesAssignment_1_1_3.eContents().get(0);
-		private final Group cGroup_1_1_4 = (Group)cGroup_1_1.eContents().get(4);
-		private final Keyword cCommaKeyword_1_1_4_0 = (Keyword)cGroup_1_1_4.eContents().get(0);
-		private final Assignment cReferencesAssignment_1_1_4_1 = (Assignment)cGroup_1_1_4.eContents().get(1);
-		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_1_4_1_0 = (RuleCall)cReferencesAssignment_1_1_4_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_1_5 = (Keyword)cGroup_1_1.eContents().get(5);
+		private final Assignment cReferencesAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_1_0_0 = (RuleCall)cReferencesAssignment_1_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_1_1_1 = (Keyword)cGroup_1_1.eContents().get(1);
+		private final Assignment cReferencesAssignment_1_1_2 = (Assignment)cGroup_1_1.eContents().get(2);
+		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_1_2_0 = (RuleCall)cReferencesAssignment_1_1_2.eContents().get(0);
+		private final Group cGroup_1_1_3 = (Group)cGroup_1_1.eContents().get(3);
+		private final Keyword cCommaKeyword_1_1_3_0 = (Keyword)cGroup_1_1_3.eContents().get(0);
+		private final Assignment cReferencesAssignment_1_1_3_1 = (Assignment)cGroup_1_1_3.eContents().get(1);
+		private final RuleCall cReferencesValuedObjectReferenceParserRuleCall_1_1_3_1_0 = (RuleCall)cReferencesAssignment_1_1_3_1.eContents().get(0);
+		private final Assignment cReferenceAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
+		private final RuleCall cReferenceValuedObjectReferenceParserRuleCall_1_2_0 = (RuleCall)cReferenceAssignment_1_2.eContents().get(0);
 		private final Assignment cOperatorAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cOperatorAssignOperatorEnumRuleCall_2_0 = (RuleCall)cOperatorAssignment_2.eContents().get(0);
 		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -1372,65 +1385,98 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Node Declaration - Body Part 1: Equations
 		//Equation keffects::Assignment:
-		//	{Equation} (reference=ValuedObjectReference | '(' references+=ValuedObjectReference ','
-		//	references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')') operator=AssignOperator
+		//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+		//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 		//	expression=Expression
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Equation} (reference=ValuedObjectReference | '(' references+=ValuedObjectReference ','
-		//references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')') operator=AssignOperator
-		//expression=Expression ';'
+		//{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+		//references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+		//references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator expression=Expression
+		//';'
 		public Group getGroup() { return cGroup; }
 		
 		//{Equation}
 		public Action getEquationAction_0() { return cEquationAction_0; }
 		
-		//reference=ValuedObjectReference | '(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//references+=ValuedObjectReference)* ')'
+		//'(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')'
+		//| references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* |
+		//reference=ValuedObjectReference
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//reference=ValuedObjectReference
-		public Assignment getReferenceAssignment_1_0() { return cReferenceAssignment_1_0; }
-		
-		//ValuedObjectReference
-		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0_0; }
-		
 		//'(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')'
-		public Group getGroup_1_1() { return cGroup_1_1; }
+		public Group getGroup_1_0() { return cGroup_1_0; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_1_1_0() { return cLeftParenthesisKeyword_1_1_0; }
+		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
 		
 		//references+=ValuedObjectReference
-		public Assignment getReferencesAssignment_1_1_1() { return cReferencesAssignment_1_1_1; }
+		public Assignment getReferencesAssignment_1_0_1() { return cReferencesAssignment_1_0_1; }
 		
 		//ValuedObjectReference
-		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_1_1_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_1_1_0; }
+		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_0_1_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_0_1_0; }
 		
 		//','
-		public Keyword getCommaKeyword_1_1_2() { return cCommaKeyword_1_1_2; }
+		public Keyword getCommaKeyword_1_0_2() { return cCommaKeyword_1_0_2; }
 		
 		//references+=ValuedObjectReference
-		public Assignment getReferencesAssignment_1_1_3() { return cReferencesAssignment_1_1_3; }
+		public Assignment getReferencesAssignment_1_0_3() { return cReferencesAssignment_1_0_3; }
 		
 		//ValuedObjectReference
-		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_1_3_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_1_3_0; }
+		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_0_3_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_0_3_0; }
 		
 		//(',' references+=ValuedObjectReference)*
-		public Group getGroup_1_1_4() { return cGroup_1_1_4; }
+		public Group getGroup_1_0_4() { return cGroup_1_0_4; }
 		
 		//','
-		public Keyword getCommaKeyword_1_1_4_0() { return cCommaKeyword_1_1_4_0; }
+		public Keyword getCommaKeyword_1_0_4_0() { return cCommaKeyword_1_0_4_0; }
 		
 		//references+=ValuedObjectReference
-		public Assignment getReferencesAssignment_1_1_4_1() { return cReferencesAssignment_1_1_4_1; }
+		public Assignment getReferencesAssignment_1_0_4_1() { return cReferencesAssignment_1_0_4_1; }
 		
 		//ValuedObjectReference
-		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_1_4_1_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_1_4_1_0; }
+		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_0_4_1_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_0_4_1_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_1_1_5() { return cRightParenthesisKeyword_1_1_5; }
+		public Keyword getRightParenthesisKeyword_1_0_5() { return cRightParenthesisKeyword_1_0_5; }
+		
+		//references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)*
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//references+=ValuedObjectReference
+		public Assignment getReferencesAssignment_1_1_0() { return cReferencesAssignment_1_1_0; }
+		
+		//ValuedObjectReference
+		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_1_0_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_1_0_0; }
+		
+		//','
+		public Keyword getCommaKeyword_1_1_1() { return cCommaKeyword_1_1_1; }
+		
+		//references+=ValuedObjectReference
+		public Assignment getReferencesAssignment_1_1_2() { return cReferencesAssignment_1_1_2; }
+		
+		//ValuedObjectReference
+		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_1_2_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_1_2_0; }
+		
+		//(',' references+=ValuedObjectReference)*
+		public Group getGroup_1_1_3() { return cGroup_1_1_3; }
+		
+		//','
+		public Keyword getCommaKeyword_1_1_3_0() { return cCommaKeyword_1_1_3_0; }
+		
+		//references+=ValuedObjectReference
+		public Assignment getReferencesAssignment_1_1_3_1() { return cReferencesAssignment_1_1_3_1; }
+		
+		//ValuedObjectReference
+		public RuleCall getReferencesValuedObjectReferenceParserRuleCall_1_1_3_1_0() { return cReferencesValuedObjectReferenceParserRuleCall_1_1_3_1_0; }
+		
+		//reference=ValuedObjectReference
+		public Assignment getReferenceAssignment_1_2() { return cReferenceAssignment_1_2; }
+		
+		//ValuedObjectReference
+		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_2_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_2_0; }
 		
 		//operator=AssignOperator
 		public Assignment getOperatorAssignment_2() { return cOperatorAssignment_2; }
@@ -1822,55 +1868,66 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class FBYExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.FBYExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0 = (RuleCall)cSubExpressionsAssignment_0_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cOperatorFBYOperatorEnumRuleCall_0_2_0 = (RuleCall)cOperatorAssignment_0_2.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
-		private final RuleCall cWhenExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cWhenExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorFBYOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cFbyKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//@Override
 		//FBYExpression kexpressions::Expression:
-		//	{kexpressions::OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
-		//	subExpressions+=AtomicValuedExpression
-		//	| WhenExpression;
+		//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
+		//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{kexpressions::OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
-		//subExpressions+=AtomicValuedExpression | WhenExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//{kexpressions::OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
-		//subExpressions+=AtomicValuedExpression
-		public Group getGroup_0() { return cGroup_0; }
-		
-		//{kexpressions::OperatorExpression}
-		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
-		
-		//subExpressions+=AtomicValuedExpression
-		public Assignment getSubExpressionsAssignment_0_1() { return cSubExpressionsAssignment_0_1; }
-		
-		//AtomicValuedExpression
-		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0; }
-		
-		//operator=FBYOperator
-		public Assignment getOperatorAssignment_0_2() { return cOperatorAssignment_0_2; }
-		
-		//FBYOperator
-		public RuleCall getOperatorFBYOperatorEnumRuleCall_0_2_0() { return cOperatorFBYOperatorEnumRuleCall_0_2_0; }
-		
-		//subExpressions+=AtomicValuedExpression
-		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
-		
-		//AtomicValuedExpression
-		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0; }
+		//WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
+		//subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?
+		public Group getGroup() { return cGroup; }
 		
 		//WhenExpression
-		public RuleCall getWhenExpressionParserRuleCall_1() { return cWhenExpressionParserRuleCall_1; }
+		public RuleCall getWhenExpressionParserRuleCall_0() { return cWhenExpressionParserRuleCall_0; }
+		
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
+		//subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{kexpressions::OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+		
+		//operator=FBYOperator subExpressions+=AtomicValuedExpression
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//operator=FBYOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+		
+		//FBYOperator
+		public RuleCall getOperatorFBYOperatorEnumRuleCall_1_1_0_0() { return cOperatorFBYOperatorEnumRuleCall_1_1_0_0; }
+		
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+		
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0; }
+		
+		//('fby' subExpressions+=AtomicValuedExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+		
+		//'fby'
+		public Keyword getFbyKeyword_1_2_0() { return cFbyKeyword_1_2_0; }
+		
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+		
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class WhenExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.WhenExpression");
@@ -2406,16 +2463,18 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBoolExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cNorExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//@Override
 		//AtomicExpression kexpressions::Expression:
 		//	BoolValue
 		//	| ValuedObjectTestExpression
 		//	| '(' BoolExpression ')'
-		//	| ReferenceCall;
+		//	| ReferenceCall
+		//	| NorExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall
+		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | NorExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//BoolValue
@@ -2438,6 +2497,80 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ReferenceCall
 		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
+		
+		//NorExpression
+		public RuleCall getNorExpressionParserRuleCall_4() { return cNorExpressionParserRuleCall_4; }
+	}
+	public class NorExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NorExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cOperatorExpressionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cOperatorNoneOfOperatorEnumRuleCall_1_0_0 = (RuleCall)cOperatorAssignment_1_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cOperatorNorOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cSubExpressionsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cSubExpressionsExpressionParserRuleCall_3_0 = (RuleCall)cSubExpressionsAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cSubExpressionsExpressionParserRuleCall_4_1_0 = (RuleCall)cSubExpressionsAssignment_4_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//NorExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} (operator=NoneOfOperator | operator=NorOperator)
+		//	'('
+		//	subExpressions+=Expression (',' subExpressions+=Expression)*
+		//	')';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{kexpressions::OperatorExpression} (operator=NoneOfOperator | operator=NorOperator) '(' subExpressions+=Expression (','
+		//subExpressions+=Expression)* ')'
+		public Group getGroup() { return cGroup; }
+		
+		//{kexpressions::OperatorExpression}
+		public Action getOperatorExpressionAction_0() { return cOperatorExpressionAction_0; }
+		
+		//operator=NoneOfOperator | operator=NorOperator
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//operator=NoneOfOperator
+		public Assignment getOperatorAssignment_1_0() { return cOperatorAssignment_1_0; }
+		
+		//NoneOfOperator
+		public RuleCall getOperatorNoneOfOperatorEnumRuleCall_1_0_0() { return cOperatorNoneOfOperatorEnumRuleCall_1_0_0; }
+		
+		//operator=NorOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		
+		//NorOperator
+		public RuleCall getOperatorNorOperatorEnumRuleCall_1_1_0() { return cOperatorNorOperatorEnumRuleCall_1_1_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		
+		//subExpressions+=Expression
+		public Assignment getSubExpressionsAssignment_3() { return cSubExpressionsAssignment_3; }
+		
+		//Expression
+		public RuleCall getSubExpressionsExpressionParserRuleCall_3_0() { return cSubExpressionsExpressionParserRuleCall_3_0; }
+		
+		//(',' subExpressions+=Expression)*
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//','
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		
+		//subExpressions+=Expression
+		public Assignment getSubExpressionsAssignment_4_1() { return cSubExpressionsAssignment_4_1; }
+		
+		//Expression
+		public RuleCall getSubExpressionsExpressionParserRuleCall_4_1_0() { return cSubExpressionsExpressionParserRuleCall_4_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
 	}
 	public class ParamsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Params");
@@ -2456,12 +2589,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
 		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		
-		//// TODO: Cast operators?
-		////enum IntOperator returns kexpressions::OperatorType:  
-		////    INT="int";
-		////
-		////enum RealOperator returns kexpressions::OperatorType:  
-		////    REAL="real";
 		///**
 		// * -------------------- Variable parameter types.
 		// */ // Used everywhere where there need to be parameter
@@ -3397,6 +3524,36 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"if"
 		public Keyword getCONDITIONALIfKeyword_0() { return cCONDITIONALIfKeyword_0; }
 	}
+	public class NoneOfOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NoneOfOperator");
+		private final EnumLiteralDeclaration cNONEOFEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cNONEOFNumberSignKeyword_0 = (Keyword)cNONEOFEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum NoneOfOperator returns kexpressions::OperatorType:
+		//	NONEOF="#";
+		public EnumRule getRule() { return rule; }
+		
+		//NONEOF="#"
+		public EnumLiteralDeclaration getNONEOFEnumLiteralDeclaration() { return cNONEOFEnumLiteralDeclaration; }
+		
+		//"#"
+		public Keyword getNONEOFNumberSignKeyword_0() { return cNONEOFNumberSignKeyword_0; }
+	}
+	public class NorOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NorOperator");
+		private final EnumLiteralDeclaration cNOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cNORNorKeyword_0 = (Keyword)cNOREnumLiteralDeclaration.eContents().get(0);
+		
+		//enum NorOperator returns kexpressions::OperatorType:
+		//	NOR="nor";
+		public EnumRule getRule() { return rule; }
+		
+		//NOR="nor"
+		public EnumLiteralDeclaration getNOREnumLiteralDeclaration() { return cNOREnumLiteralDeclaration; }
+		
+		//"nor"
+		public Keyword getNORNorKeyword_0() { return cNORNorKeyword_0; }
+	}
 	
 	private final LustreProgramElements pLustreProgram;
 	private final PackListElements pPackList;
@@ -3432,6 +3589,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final LogicalAndExpressionElements pLogicalAndExpression;
 	private final ValuedExpressionElements pValuedExpression;
 	private final AtomicExpressionElements pAtomicExpression;
+	private final NorExpressionElements pNorExpression;
 	private final AssignOperatorElements eAssignOperator;
 	private final CompareOperatorElements eCompareOperator;
 	private final LogicalOrOperatorElements eLogicalOrOperator;
@@ -3446,6 +3604,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImpliesOperatorElements eImpliesOperator;
 	private final IntDivOperatorElements eIntDivOperator;
 	private final ConditionalOperatorElements eConditionalOperator;
+	private final NoneOfOperatorElements eNoneOfOperator;
+	private final NorOperatorElements eNorOperator;
 	private final ParamsElements pParams;
 	private final StaticParamElements pStaticParam;
 	private final StaticArgElements pStaticArg;
@@ -3517,6 +3677,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLogicalAndExpression = new LogicalAndExpressionElements();
 		this.pValuedExpression = new ValuedExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
+		this.pNorExpression = new NorExpressionElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.eCompareOperator = new CompareOperatorElements();
 		this.eLogicalOrOperator = new LogicalOrOperatorElements();
@@ -3531,6 +3692,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.eImpliesOperator = new ImpliesOperatorElements();
 		this.eIntDivOperator = new IntDivOperatorElements();
 		this.eConditionalOperator = new ConditionalOperatorElements();
+		this.eNoneOfOperator = new NoneOfOperatorElements();
+		this.eNorOperator = new NorOperatorElements();
 		this.pParams = new ParamsElements();
 		this.pStaticParam = new StaticParamElements();
 		this.pStaticArg = new StaticArgElements();
@@ -3587,7 +3750,10 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
+	///*
+	// * This implementation of the grammar (except for the automatons) is based on 
+	// * the Lustre V6 Reference manual. 
+	// */ LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
 	//	('include' (includes+=STRING | includes+=STRING))* (packBody=PackBody | packList=PackList);
 	public LustreProgramElements getLustreProgramAccess() {
 		return pLustreProgram;
@@ -3767,8 +3933,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// Node Declaration - Body Part 1: Equations
 	//Equation keffects::Assignment:
-	//	{Equation} (reference=ValuedObjectReference | '(' references+=ValuedObjectReference ','
-	//	references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')') operator=AssignOperator
+	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public EquationElements getEquationAccess() {
@@ -3859,9 +4026,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//FBYExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
-	//	subExpressions+=AtomicValuedExpression
-	//	| WhenExpression;
+	//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
+	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
 	public FBYExpressionElements getFBYExpressionAccess() {
 		return pFBYExpression;
 	}
@@ -4002,13 +4168,27 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//	BoolValue
 	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
-	//	| ReferenceCall;
+	//	| ReferenceCall
+	//	| NorExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;
 	}
 	
 	public ParserRule getAtomicExpressionRule() {
 		return getAtomicExpressionAccess().getRule();
+	}
+	
+	//NorExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} (operator=NoneOfOperator | operator=NorOperator)
+	//	'('
+	//	subExpressions+=Expression (',' subExpressions+=Expression)*
+	//	')';
+	public NorExpressionElements getNorExpressionAccess() {
+		return pNorExpression;
+	}
+	
+	public ParserRule getNorExpressionRule() {
+		return getNorExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -4159,12 +4339,26 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 	
-	//// TODO: Cast operators?
-	////enum IntOperator returns kexpressions::OperatorType:  
-	////    INT="int";
-	////
-	////enum RealOperator returns kexpressions::OperatorType:  
-	////    REAL="real";
+	//enum NoneOfOperator returns kexpressions::OperatorType:
+	//	NONEOF="#";
+	public NoneOfOperatorElements getNoneOfOperatorAccess() {
+		return eNoneOfOperator;
+	}
+	
+	public EnumRule getNoneOfOperatorRule() {
+		return getNoneOfOperatorAccess().getRule();
+	}
+	
+	//enum NorOperator returns kexpressions::OperatorType:
+	//	NOR="nor";
+	public NorOperatorElements getNorOperatorAccess() {
+		return eNorOperator;
+	}
+	
+	public EnumRule getNorOperatorRule() {
+		return getNorOperatorAccess().getRule();
+	}
+	
 	///**
 	// * -------------------- Variable parameter types.
 	// */ // Used everywhere where there need to be parameter
