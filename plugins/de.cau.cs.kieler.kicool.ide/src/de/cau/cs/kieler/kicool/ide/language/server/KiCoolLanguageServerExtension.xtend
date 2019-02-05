@@ -88,8 +88,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected String lastUri
     
     override compile(String uri, String command, boolean inplace) {
-        println("Compiling" + uri)
-        var fileUri = uri
+        var fileUri = uri.replaceAll("%3A", ":") // workaround for windows not sending a correct path
         
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
@@ -178,8 +177,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override getSystems(String uri, boolean filter) {
-        println("Compiling" + uri)
-        var fileUri = uri
+        var fileUri = uri.replaceAll("%3A", ":") // workaround for windows not sending a correct path
         if (fileUri.startsWith("file://")) {
             fileUri = fileUri.substring(7) 
         }
