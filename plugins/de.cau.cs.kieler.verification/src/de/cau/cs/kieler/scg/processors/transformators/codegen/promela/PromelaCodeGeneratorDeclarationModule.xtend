@@ -47,6 +47,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
             val property = verificationProperties.head
             if(property.type == VerificationPropertyType.LTL) {
                 val pmlFormula = property.formula.toPmlLtlFormula
+                appendIndentedComment('''The property is prepended by an additional next (X in ltl)''')
+                appendIndentedComment('''because spin needs one reaction for setup and entering the tick loop.''')
                 appendIndentedLine('''ltl «property.name.toIdentifier» { «pmlFormula» }''')
                 code.append("\n")
             } else if(property.type == VerificationPropertyType.CTL) {
