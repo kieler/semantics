@@ -230,9 +230,15 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
     
     private def String useBooleanInsteadIntegerIfNeeded(String s, ValuedObject valuedObject) {
         // FIXME: This is a dirty fix for assignment of 1 and 0 instead proper booleans
-        return if(valuedObject.isBoolean && !(s.contains("+") || s.contains("-") || s.contains("<") || s.contains(">")))
-                   s.replaceAll('''\b1\b''', "TRUE").replaceAll('''\b0\b''', "FALSE")
-               else
-                   s
+        if(valuedObject.isBoolean) {
+            if(s == "0") {
+                return "FALSE"
+            } else if (s == "1") {
+                return "TRUE"
+            }
+//                return s.replaceAll('''\b1\b''', "TRUE").replaceAll('''\b0\b''', "FALSE")
+//            }
+        }
+        return s
     }
 }
