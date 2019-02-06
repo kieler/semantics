@@ -1,5 +1,5 @@
 public system de.cau.cs.kieler.sccharts.netlist.smv
-	label "SCCharts to SMV (netlist)"
+	label "SCCharts to SMV (netlist ssa)"
 
 // Get verification properties from model, if none yet
 de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer

@@ -236,8 +236,6 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
             } else if (s == "1") {
                 return "TRUE"
             }
-//                return s.replaceAll('''\b1\b''', "TRUE").replaceAll('''\b0\b''', "FALSE")
-//            }
         }
         return s
     }
