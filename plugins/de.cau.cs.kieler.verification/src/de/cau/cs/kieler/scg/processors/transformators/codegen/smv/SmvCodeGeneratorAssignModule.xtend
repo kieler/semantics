@@ -37,7 +37,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  * 
  */
-class SmvCodeGeneratorTickModule extends SmvCodeGeneratorModuleBase {
+class SmvCodeGeneratorAssignModule extends SmvCodeGeneratorModuleBase {
 
     @Inject extension KEffectsExtensions
     @Inject extension SCGControlFlowExtensions

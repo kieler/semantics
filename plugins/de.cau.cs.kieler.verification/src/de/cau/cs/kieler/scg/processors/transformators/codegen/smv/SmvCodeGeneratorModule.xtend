@@ -47,7 +47,7 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     
     override configure() {
         val declarations = createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
-        val tick = createAndConfigureModule(SmvCodeGeneratorTickModule)
+        val tick = createAndConfigureModule(SmvCodeGeneratorAssignModule)
         val specifications = createAndConfigureModule(SmvCodeGeneratorSpecificationsModule)
         val define = createAndConfigureModule(SmvCodeGeneratorDefineModule)
         codeGeneratorModules = #[declarations, define, tick, specifications]
