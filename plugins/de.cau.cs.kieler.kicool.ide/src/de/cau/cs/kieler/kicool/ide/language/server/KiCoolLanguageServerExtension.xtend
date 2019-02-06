@@ -35,6 +35,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import java.net.URLDecoder
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -88,7 +89,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected String lastUri
     
     override compile(String uri, String command, boolean inplace) {
-        var fileUri = uri.replaceAll("%3A", ":") // workaround for windows not sending a correct path
+        var fileUri = URLDecoder.decode( uri, "UTF-8" );
         
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
@@ -177,7 +178,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override getSystems(String uri, boolean filter) {
-        var fileUri = uri.replaceAll("%3A", ":") // workaround for windows not sending a correct path
+        var fileUri = URLDecoder.decode( uri, "UTF-8" );
         if (fileUri.startsWith("file://")) {
             fileUri = fileUri.substring(7) 
         }
