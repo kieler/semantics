@@ -13,6 +13,12 @@
       </description>
   </category-def>
   <!-- KIELER SEMANTICS -->
+  <feature url="features/de.cau.cs.kieler.framework.feature_0.14.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature" version="0.14.0.qualifier">
+    <category name="kieler-sem"/>
+  </feature>
+  <feature url="features/de.cau.cs.kieler.framework.feature.source_0.14.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature.source" version="0.14.0.qualifier">
+    <category name="kieler-sources"/>
+  </feature>
   <feature url="features/de.cau.cs.kieler.esterel.feature_0.14.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.14.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
@@ -28,10 +34,10 @@
   <!-- Repository references to associated sites -->
   <repository-reference location="http://download.eclipse.org/releases/photon" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.14.0/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.4.1/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.16.0/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.6.0/" enabled="true"/>
   <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2018-06.U2/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.4.0/" enabled="true"/>
   <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
 </site>

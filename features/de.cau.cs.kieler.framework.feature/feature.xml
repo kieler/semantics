@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature
-      id="de.cau.cs.kieler.sim.examples"
-      label="KIELER Simulation Examples"
-      version="0.1.0.qualifier"
-      provider-name="Kiel University">
+<feature id="de.cau.cs.kieler.framework.feature" label="KIELER Semantics Framework" version="0.14.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.framework">
 
-   <description url="http://rtsys.informatik.uni-kiel.de/confluence/">
-      [Insert description here]
+   <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
+      KIELER Semantics Framework feature contains the KIELER Compiler and various tools and grammars for the KIELER SCCharts.
    </description>
 
    <copyright>
-      Copyright 2015 by Real-Time and Embedded Systems Group, Department of Computer Science, Kiel University
+      Copyright 2013 by Real-Time and Embedded Systems Group, Department
+of Computer Science, Kiel University
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -212,17 +209,56 @@ Each party waives its rights to a jury trial in any resulting
 litigation.
    </license>
 
+   <url>
+      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/"/>
+   </url>
+
    <requires>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="de.cau.cs.kieler.sim.kiem" version="0.1.0" match="greaterOrEqual"/>
-      <import plugin="org.json" version="0.1.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.kgraph.feature"/>
+      <import feature="de.cau.cs.kieler.klighd.feature"/>
+      <import feature="de.cau.cs.kieler.klighd.freehep.feature"/>
+      <import feature="de.cau.cs.kieler.klighd.view.feature"/>
+      <import feature="org.eclipse.elk.feature"/>
+      <import feature="org.eclipse.elk.graphviz.feature"/>
+      <import feature="org.eclipse.elk.ui.feature"/>
+      <import feature="org.eclipse.elk.sdk.feature"/>
+      <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
    </requires>
+   
+   <plugin id="de.cau.cs.kieler.language.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin
-         id="de.cau.cs.kieler.sim.modelrailway"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="de.cau.cs.kieler.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
+   <plugin id="de.cau.cs.kieler.annotations.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.annotations.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.core.model" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.core.perspectives" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kexpressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kexpressions.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kexpressions.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kicool" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kicool.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kicool.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kivis" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.kivis.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kivis.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.simulation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.simulation.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
 </feature>
