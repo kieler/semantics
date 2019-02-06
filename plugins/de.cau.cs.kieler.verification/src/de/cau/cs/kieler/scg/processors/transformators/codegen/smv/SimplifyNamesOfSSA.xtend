@@ -52,7 +52,7 @@ class SimplifyNamesOfSSA extends InplaceProcessor<SCGraphs> implements Traceable
     def SCGraph transform(SCGraph scg) {
         // Rename last version of variables to original variables (before ssa was applied)
         for (decl : scg.variableDeclarations.filter[isSSA]) {
-            if (!decl.input || decl.valuedObjects.size > 1) {
+            if (!decl.input && !decl.valuedObjects.isEmpty) {
                 val lastValuedObjectVersion = decl.valuedObjects.filter[!isRegister && !isTerm].last
                 val origValuedObject = decl.ssaOrigVO
                 lastValuedObjectVersion.name = origValuedObject.name
