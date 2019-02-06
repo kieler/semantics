@@ -19,12 +19,14 @@ class SmvCodeGeneratorExtensions {
     
     public def static String toSmvExpression(CharSequence kexpression) {
         return kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|")
-                                   .replace("false", "FALSE").replace("true", "TRUE")
+                                   .replaceAll('''\bfalse\b''', " FALSE ").replaceAll('''\btrue\b''', " TRUE ")
+                                   .replaceAll('''%''', " mod ")
     }
     
     public static def String toKExpression(CharSequence smvExpression) {
         return smvExpression.toString.replace("=", "==").replace("&","&&").replace("|","||")
-                                     .replace("FALSE","false").replace("TRUE","true")
+                                     .replaceAll('''\bFALSE\b'''," false ").replaceAll('''\bTRUE\b'''," true ")
+                                     .replaceAll('''\bmod\b''', " % ")
                             
     }
 }
