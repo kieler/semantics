@@ -1548,7 +1548,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.sourcePort = depth.surface?.node.getPort(SCGPORTID_OUTGOING)
             edge.targetPort = depth.node.getPort(SCGPORTID_INCOMING)
             edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::DOT;
             ]
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
@@ -1630,7 +1630,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
           		}
             }
             // Finally, draw the solid edge and add a decorator.
-            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::SOLID
                 it.addArrowDecorator
 //                if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched && SHOW_SCHEDULINGPATH.booleanValue)
@@ -1694,7 +1694,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.target = targetNode
             edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             edge.sourcePort = sourceNode.getPort(outgoingPortId)
-            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::SOLID
 //                it.addArrowDecorator
                 it.foreground = SCHIZO_COLOR.copy
@@ -1971,7 +1971,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             newEdge.targetPort = kContainer.getPort(portName)
             newEdge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             if (USE_ADAPTIVEZOOM.booleanValue) newEdge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
-            newEdge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+            newEdge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = ne.KRendering.lineStyleValue
                 it.foreground = ne.KRendering.foreground
             ]
