@@ -85,8 +85,9 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
         
         val entry = scg.nodes.head as Entry
         val forkStack = new ForkStack
-        val nodes = <Node> newLinkedList(entry.next.targetNode)
+        val nodes = <Node> newLinkedList()
         val visited = <Node> newHashSet
+        entry.next.targetNode.addAndMark(nodes, visited)
         
         while(!nodes.empty && nodes.peek !== null) {
             val node = nodes.pop
