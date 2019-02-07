@@ -58,6 +58,7 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
     }
     
     override getLanguages() {
+        println("Getting languages")
         val kgtKeywords = #['absolutePos','actions','anchor','areaData','background','bevel','bold','bottom',
         'bottomRightAnchor','center','chord','clipShape','columns','custom','dash','dashOffset','dashPattern',
         'decoratorData','dot','double','doubleClick','error','flat','flexibleHeight','flexibleWidth','fontName',

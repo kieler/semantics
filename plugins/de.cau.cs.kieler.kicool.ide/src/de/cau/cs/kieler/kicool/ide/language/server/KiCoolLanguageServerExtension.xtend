@@ -35,6 +35,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import java.net.URLDecoder
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -88,7 +89,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected String lastUri
     
     override compile(String uri, String command, boolean inplace) {
-        var fileUri = uri
+        var fileUri = URLDecoder.decode( uri, "UTF-8" );
         
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
@@ -124,6 +125,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * such as requesting a new diagram for the previously shown snapshot.
      */
     protected def didCompile(String uri, String command, CancelIndicator cancelIndicator) {
+        println("Did compile" + uri)
         if (command.equals(lastCommand) && uri.equals(lastUri)) {
             showSnapshot(uri, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
@@ -176,12 +178,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override getSystems(String uri, boolean filter) {
-        var fileUri = uri
+        var fileUri = URLDecoder.decode( uri, "UTF-8" );
         if (fileUri.startsWith("file://")) {
             fileUri = fileUri.substring(7) 
         }
         var uriObject = URI.createFileURI(fileUri)
-        
+        println("Uri is: " + uriObject.toFileString())
         var resourceSet = uriObject.xtextResourceSet 
         val resource = resourceSet.getResource(uriObject, true)
         
