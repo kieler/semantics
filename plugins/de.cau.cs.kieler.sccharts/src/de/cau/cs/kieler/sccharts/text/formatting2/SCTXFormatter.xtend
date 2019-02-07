@@ -223,7 +223,7 @@ class SCTXFormatter extends KExtFormatter {
     
         dataflowregion.regionFor.keyword(dataflowRegionAccess.colonKeyword_6_2).prepend[ noSpace ]
         
-        dataflowregion.regionFor.keyword(dataflowRegionAccess.colonKeyword_9_0_0).prepend[ noSpace ].append[ newLine ]
+        dataflowregion.regionFor.keyword(dataflowRegionAccess.colonKeyword_9_1_0).prepend[ noSpace ].append[ newLine ]
         dataflowregion.regionFor.keyword("{")?.prepend[ oneSpace ]?.append[ newLine ]
         dataflowregion.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         dataflowregion.regionFor.keyword("}")?.prepend[ newLine ]

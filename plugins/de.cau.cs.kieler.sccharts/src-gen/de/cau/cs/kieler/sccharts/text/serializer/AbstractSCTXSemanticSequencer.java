@@ -1654,8 +1654,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *                 schedule+=ScheduleObjectReference* 
 	 *                 (
-	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
-	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+)) | 
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*)
 	 *                 )
 	 *             )
 	 *         )

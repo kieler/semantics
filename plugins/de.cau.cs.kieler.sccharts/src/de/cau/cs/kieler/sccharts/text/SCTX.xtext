@@ -87,20 +87,18 @@ Transition returns sccharts::Transition:
     {sccharts::Transition}
 	annotations+=RestrictedTypeAnnotation*
 	
-	((
-    	preemption=PreemptionType
+    ((
+        preemption=PreemptionType
         targetState=[sccharts::State|ID]
         delay=DelayType?
         deferred?='deferred'?
         history=HistoryType?
         //                      -> This alternative is only for the serializer to enable forcing of brackets
-	   ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
-	       ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
-	   )? 
-	   ('do' effects+=Effect (';' effects+=Effect)*)?
-	)
-	|
-	(
+        ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
+            ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
+        )? 
+        ('do' effects+=Effect (';' effects+=Effect)*)?
+    )|(
         delay=DelayType?
         ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
             ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
@@ -110,7 +108,7 @@ Transition returns sccharts::Transition:
         targetState=[sccharts::State|ID]
         deferred?='deferred'?
         history=HistoryType?
-	))
+    ))
 	
 	('label' label=STRING)?;
 	
@@ -140,16 +138,16 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
         ('schedule' schedule+=ScheduleObjectReference+)?
         ((
-            ':'
-            declarations+=DeclarationWOSemicolon*
-            actions+=LocalAction*
-            states+=State*
-        )|(
             '{'
             declarations+=DeclarationWOSemicolon*
             actions+=LocalAction*
             (states+=ImplicitState | states+=State+)
             '}'
+        )|(
+            ':'
+            declarations+=DeclarationWOSemicolon*
+            actions+=LocalAction*
+            states+=State*
         ))
     ));
 
@@ -163,14 +161,14 @@ DataflowRegion returns sccharts::DataflowRegion:
     ('schedule' schedule+=ScheduleObjectReference+)?
     once?='once'?
     ((
-        ':'
-        declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
-    )|(
         '{'
         declarations+=DeclarationWOSemicolon*
         equations+=Assignment*
         '}'
+    )|(
+        ':'
+        declarations+=DeclarationWOSemicolon*
+        equations+=Assignment*
     ));
     
 IntOrReference returns kexpressions::Expression:

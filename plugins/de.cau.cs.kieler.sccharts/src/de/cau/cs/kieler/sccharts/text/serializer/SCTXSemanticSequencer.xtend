@@ -8,9 +8,9 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.parser.InternalSCTXParser
@@ -27,87 +27,102 @@ import static de.cau.cs.kieler.kexpressions.OperatorType.*
 class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
     
     @Inject
-    private SCTXGrammarAccess grammarAccess;
+    extension SCTXGrammarAccess;
+    val SCChartsPackage pkg = SCChartsPackage.eINSTANCE
+    
 
     override sequence_Transition(ISerializationContext context, Transition transition) {
         val feeder = createSequencerFeeder(transition, createNodeProvider(transition))
-        val tg = grammarAccess.transitionAccess
+        val nodes = nodeProvider.getNodesForSemanticObject(transition, null)
+        val tg = transitionAccess
         
         for (idxAnnotation : transition.annotations.indexed) {
             feeder.accept(tg.annotationsRestrictedTypeAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
         }
         
-        // immediate / delayed ?
-        if (transition.delay != DelayType.UNDEFINED) {
-            feeder.accept(tg.delayDelayTypeEnumRuleCall_2_1_0_0, transition.delay)
-        }
+        // Decide wich order to use
+        val node = nodes.getNodeForSingelValue(pkg.transition_Preemption, transition.preemption)
+        // Prefer goto last version when model does not already has a textuel preference
+        val prefersGotoFirst = node !== null && node.grammarElement === tg.preemptionPreemptionTypeEnumRuleCall_2_0_0_0
         
-        // if?
-        if (transition.trigger !== null) {
-            if (transition.triggerDelay > 1) {
-                feeder.accept(tg.triggerDelayINTTerminalRuleCall_2_1_1_1_0, transition.triggerDelay)
+        if (prefersGotoFirst) {
+            // go to / abort to / join to
+            feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_2_0_0_0, transition.preemption)
+            // <state>
+            feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_0_1_0_1 , transition.targetState)
+            // immediate / delayed ?
+            if (transition.delay != DelayType.UNDEFINED) {
+                feeder.accept(tg.delayDelayTypeEnumRuleCall_2_0_2_0, transition.delay)
             }
-            
-            // This handles separation of count delay together with expressions starting with an integer
-            if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
-                feeder.accept(tg.triggerAtomicExpressionParserRuleCall_2_1_1_2_1_0, transition.trigger)
-            } else {
-                feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_1_1_2_0_0, transition.trigger)
+            // deferred?
+            if (transition.deferred) {
+                feeder.accept(tg.deferredDeferredKeyword_2_0_3_0)
+            }
+            // history?
+            if (transition.history != HistoryType.RESET) {
+                feeder.accept(tg.historyHistoryTypeEnumRuleCall_2_0_4_0, transition.history)
+            }
+            // if?
+            if (transition.trigger !== null) {
+                if (transition.triggerDelay > 1) {
+                    feeder.accept(tg.triggerDelayINTTerminalRuleCall_2_0_5_1_0, transition.triggerDelay)
+                }
+                
+                // This handles separation of count delay together with expressions starting with an integer
+                if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
+                    feeder.accept(tg.triggerAtomicExpressionParserRuleCall_2_0_5_2_1_0, transition.trigger)
+                } else {
+                    feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_0_5_2_0_0, transition.trigger)
+                }
+            }
+            // do?
+            for (idxEffect : transition.effects.indexed) {
+                if (idxEffect.key == 0) {
+                    feeder.accept(tg.effectsEffectParserRuleCall_2_0_6_1_0, idxEffect.value, idxEffect.key)
+                } else {
+                    feeder.accept(tg.effectsEffectParserRuleCall_2_0_6_2_1_0, idxEffect.value, idxEffect.key)
+                }
+            }
+        } else {
+            // immediate / delayed ?
+            if (transition.delay != DelayType.UNDEFINED) {
+                feeder.accept(tg.delayDelayTypeEnumRuleCall_2_1_0_0, transition.delay)
+            }
+            // if?
+            if (transition.trigger !== null) {
+                if (transition.triggerDelay > 1) {
+                    feeder.accept(tg.triggerDelayINTTerminalRuleCall_2_1_1_1_0, transition.triggerDelay)
+                }
+                
+                // This handles separation of count delay together with expressions starting with an integer
+                if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
+                    feeder.accept(tg.triggerAtomicExpressionParserRuleCall_2_1_1_2_1_0, transition.trigger)
+                } else {
+                    feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_1_1_2_0_0, transition.trigger)
+                }
+            }
+            // do?
+            for (idxEffect : transition.effects.indexed) {
+                if (idxEffect.key == 0) {
+                    feeder.accept(tg.effectsEffectParserRuleCall_2_1_2_1_0, idxEffect.value, idxEffect.key)
+                } else {
+                    feeder.accept(tg.effectsEffectParserRuleCall_2_1_2_2_1_0, idxEffect.value, idxEffect.key)
+                }
+            }
+            // go to / abort to / join to
+            feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_2_1_3_0, transition.preemption)
+            // <state>
+            feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_1_4_0_1 , transition.targetState) 
+            // deferred?
+            if (transition.deferred) {
+                feeder.accept(tg.deferredDeferredKeyword_2_1_5_0)
+            }
+            // history?
+            if (transition.history != HistoryType.RESET) {
+                feeder.accept(tg.historyHistoryTypeEnumRuleCall_2_1_6_0, transition.history)
             }
         }
-        // do?
-        for (idxEffect : transition.effects.indexed) {
-            if (idxEffect.key == 0) {
-                feeder.accept(tg.effectsEffectParserRuleCall_2_1_2_1_0, idxEffect.value, idxEffect.key)
-            } else {
-                feeder.accept(tg.effectsEffectParserRuleCall_2_1_2_2_1_0, idxEffect.value, idxEffect.key)
-            }
-        }
-        // go to / abort to / join to
-        feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_2_1_3_0, transition.preemption)
-        // <state>
-        feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_1_4_0_1 , transition.targetState) 
-        // deferred?
-        if (transition.deferred) {
-            feeder.accept(tg.deferredDeferredKeyword_2_1_5_0)
-        }
-        // history?
-        if (transition.history != HistoryType.RESET) {
-            feeder.accept(tg.historyHistoryTypeEnumRuleCall_2_1_6_0, transition.history)
-        }
-        
-// OLD order with go to first    
-//        feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_2_0_0_0, transition.preemption)
-//        feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_0_1_0_1 , transition.targetState)
-//        if (transition.delay != DelayType.UNDEFINED) {
-//            feeder.accept(tg.delayDelayTypeEnumRuleCall_2_0_2_0, transition.delay)
-//        }
-//        if (transition.deferred) {
-//            feeder.accept(tg.deferredDeferredKeyword_2_0_3_0)
-//        }
-//        if (transition.history != HistoryType.RESET) {
-//            feeder.accept(tg.historyHistoryTypeEnumRuleCall_2_0_4_0, transition.history)
-//        }
-//        if (transition.trigger !== null) {
-//            if (transition.triggerDelay > 1) {
-//                feeder.accept(tg.triggerDelayINTTerminalRuleCall_2_0_5_1_0, transition.triggerDelay)
-//            }
-//            
-//            // This handles separation of count delay together with expressions starting with an integer
-//            if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
-//                feeder.accept(tg.triggerAtomicExpressionParserRuleCall_2_0_5_2_1_0, transition.trigger)
-//            } else {
-//                feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_0_5_2_0_0, transition.trigger)
-//            }
-//        }
-//        for (idxEffect : transition.effects.indexed) {
-//            if (idxEffect.key == 0) {
-//                feeder.accept(tg.effectsEffectParserRuleCall_2_0_6_1_0, idxEffect.value, idxEffect.key)
-//            } else {
-//                feeder.accept(tg.effectsEffectParserRuleCall_2_0_6_2_1_0, idxEffect.value, idxEffect.key)
-//            }
-//        }
-        
+
         if (!transition.label.nullOrEmpty) {
             feeder.accept(tg.labelSTRINGTerminalRuleCall_3_1_0, transition.label)
         } 
@@ -117,7 +132,8 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
     
     override protected sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion region) {
         val feeder = createSequencerFeeder(region, createNodeProvider(region))
-        val rg = grammarAccess.controlflowRegionAccess
+        val nodes = nodeProvider.getNodesForSemanticObject(region, null)
+        val rg = controlflowRegionAccess
         
         // annotations
         for (idxAnnotation : region.annotations.indexed) {
@@ -167,17 +183,8 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             for (idxSchedule : region.schedule.indexed) {
                 feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_1_1_1_0, idxSchedule.value, idxSchedule.key)
             }
-            // Never use the colon variant for serialization
-            // declarations
-            for (idxDecl : region.declarations.indexed) {
-                feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_7_1_2_1_1_0, idxDecl.value, idxDecl.key)
-            }
-            // actions
-            for (idxAction : region.actions.indexed) {
-                feeder.accept(rg.actionsLocalActionParserRuleCall_7_1_2_1_2_0, idxAction.value, idxAction.key)
-            }
-            // states
-            if (!region.states.nullOrEmpty
+            // Decide wich variant schould be used
+            val isImplicit = !region.states.nullOrEmpty
                 && region.states.size == 1
                 && InternalSCTXParser.IMPLICIT_STATE_NAME.equals(region.states.head.name)
                 && region.states.head.initial
@@ -186,12 +193,39 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 && region.states.head.actions.nullOrEmpty
                 && region.states.head.outgoingTransitions.nullOrEmpty
                 && !region.states.head.regions.nullOrEmpty
-            ) {
-                // special implicit state
-                feeder.accept(rg.statesImplicitStateParserRuleCall_7_1_2_1_3_0_0, region.states.head, 0)
-            } else {
+            val node = if (!region.states.nullOrEmpty) nodes.getNodeForMultiValue(pkg.controlflowRegion_States, 0, 0, region.states.head)
+            // Prefer curly bracket version when model does not already has a textuel preference (user typed region:)
+            val prefersColon = node !== null && node.grammarElement === rg.statesStateParserRuleCall_7_1_2_1_3_0
+
+            if (isImplicit || !prefersColon) { // region {}
+                // declarations
+                for (idxDecl : region.declarations.indexed) {
+                    feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_7_1_2_0_1_0, idxDecl.value, idxDecl.key)
+                }
+                // actions
+                for (idxAction : region.actions.indexed) {
+                    feeder.accept(rg.actionsLocalActionParserRuleCall_7_1_2_0_2_0, idxAction.value, idxAction.key)
+                }
+                // states
+                if (isImplicit) {
+                    feeder.accept(rg.statesImplicitStateParserRuleCall_7_1_2_0_3_0_0, region.states.head, 0)
+                } else {
+                    for (idxState : region.states.indexed) {
+                        feeder.accept(rg.statesStateParserRuleCall_7_1_2_0_3_1_0, idxState.value, idxState.key)
+                    }
+                }
+            } else { // region:
+                // declarations
+                for (idxDecl : region.declarations.indexed) {
+                    feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_7_1_2_1_1_0, idxDecl.value, idxDecl.key)
+                }
+                // actions
+                for (idxAction : region.actions.indexed) {
+                    feeder.accept(rg.actionsLocalActionParserRuleCall_7_1_2_1_2_0, idxAction.value, idxAction.key)
+                }
+                // states
                 for (idxState : region.states.indexed) {
-                    feeder.accept(rg.statesStateParserRuleCall_7_1_2_1_3_1_0, idxState.value, idxState.key)
+                    feeder.accept(rg.statesStateParserRuleCall_7_1_2_1_3_0, idxState.value, idxState.key)
                 }
             }
         }
@@ -199,57 +233,9 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         feeder.finish
     }
     
-    override protected sequence_DataflowRegion(ISerializationContext context, DataflowRegion region) {
-        val feeder = createSequencerFeeder(region, createNodeProvider(region))
-        val rg = grammarAccess.dataflowRegionAccess
-        // annotations
-        for (idxAnnotation : region.annotations.indexed) {
-            feeder.accept(rg.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        // override
-        if (region.override) {
-            feeder.accept(rg.overrideOverrideKeyword_2_0)
-        }
-        // name
-        if (!region.name.nullOrEmpty) {
-            feeder.accept(rg.nameExtendedIDParserRuleCall_4_0, region.name)
-        }
-        // label
-        if (!region.label.nullOrEmpty && !region.label.equals(region.name)) {
-            feeder.accept(rg.labelSTRINGTerminalRuleCall_5_0, region.label)
-        }
-        // for
-        if (region.counterVariable !== null) {
-            feeder.accept(rg.counterVariableCounterVariableParserRuleCall_6_1_0, region.counterVariable)
-            feeder.accept(rg.forStartIntOrReferenceParserRuleCall_6_3_0, region.forStart)
-            if (region.forEnd !== null) {
-                feeder.accept(rg.forEndIntOrReferenceParserRuleCall_6_4_1_0, region.forStart)
-            }
-        }
-        // schedule
-        for (idxSchedule : region.schedule.indexed) {
-            feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_1_0, idxSchedule.value, idxSchedule.key)
-        }
-        // once
-        if (region.once) {
-            feeder.accept(rg.onceOnceKeyword_8_0)
-        }
-        // Never use the colon variant for serialization
-        // declarations
-        for (idxDecl : region.declarations.indexed) {
-            feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_9_1_1_0, idxDecl.value, idxDecl.key)
-        }
-        // equations
-        for (idxEquation : region.equations.indexed) {
-            feeder.accept(rg.equationsAssignmentParserRuleCall_9_1_2_0, idxEquation.value, idxEquation.key)
-        }
-
-        feeder.finish
-    }
-    
     override protected sequence_ImplicitState(ISerializationContext context, State state) {
         val feeder = createSequencerFeeder(state, createNodeProvider(state))
-        val g = grammarAccess.implicitStateAccess
+        val g = implicitStateAccess
         
         for (idxRegion : state.regions.indexed) {
             feeder.accept(g.regionsRegionParserRuleCall_1_0, idxRegion.value, idxRegion.key)
