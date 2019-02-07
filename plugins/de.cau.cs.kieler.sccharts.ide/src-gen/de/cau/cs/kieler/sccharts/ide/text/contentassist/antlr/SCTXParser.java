@@ -42,7 +42,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7(), "rule__ControlflowRegion__Alternatives_7");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2(), "rule__ControlflowRegion__Alternatives_7_1_2");
-			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2_1_3(), "rule__ControlflowRegion__Alternatives_7_1_2_1_3");
+			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2_0_3(), "rule__ControlflowRegion__Alternatives_7_1_2_0_3");
 			builder.put(grammarAccess.getDataflowRegionAccess().getAlternatives_9(), "rule__DataflowRegion__Alternatives_9");
 			builder.put(grammarAccess.getIntOrReferenceAccess().getAlternatives(), "rule__IntOrReference__Alternatives");
 			builder.put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
@@ -531,11 +531,11 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getControlflowRegionAccess().getScheduleAssignment_7_1_1_1(), "rule__ControlflowRegion__ScheduleAssignment_7_1_1_1");
 			builder.put(grammarAccess.getControlflowRegionAccess().getDeclarationsAssignment_7_1_2_0_1(), "rule__ControlflowRegion__DeclarationsAssignment_7_1_2_0_1");
 			builder.put(grammarAccess.getControlflowRegionAccess().getActionsAssignment_7_1_2_0_2(), "rule__ControlflowRegion__ActionsAssignment_7_1_2_0_2");
-			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_0_3(), "rule__ControlflowRegion__StatesAssignment_7_1_2_0_3");
+			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_0_3_0(), "rule__ControlflowRegion__StatesAssignment_7_1_2_0_3_0");
+			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_0_3_1(), "rule__ControlflowRegion__StatesAssignment_7_1_2_0_3_1");
 			builder.put(grammarAccess.getControlflowRegionAccess().getDeclarationsAssignment_7_1_2_1_1(), "rule__ControlflowRegion__DeclarationsAssignment_7_1_2_1_1");
 			builder.put(grammarAccess.getControlflowRegionAccess().getActionsAssignment_7_1_2_1_2(), "rule__ControlflowRegion__ActionsAssignment_7_1_2_1_2");
-			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_1_3_0(), "rule__ControlflowRegion__StatesAssignment_7_1_2_1_3_0");
-			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_1_3_1(), "rule__ControlflowRegion__StatesAssignment_7_1_2_1_3_1");
+			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_1_3(), "rule__ControlflowRegion__StatesAssignment_7_1_2_1_3");
 			builder.put(grammarAccess.getDataflowRegionAccess().getAnnotationsAssignment_1(), "rule__DataflowRegion__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getDataflowRegionAccess().getOverrideAssignment_2(), "rule__DataflowRegion__OverrideAssignment_2");
 			builder.put(grammarAccess.getDataflowRegionAccess().getNameAssignment_4(), "rule__DataflowRegion__NameAssignment_4");
