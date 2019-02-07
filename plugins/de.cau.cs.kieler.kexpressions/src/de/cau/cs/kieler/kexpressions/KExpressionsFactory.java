@@ -206,6 +206,24 @@ public interface KExpressionsFactory extends EFactory {
     IgnoreValue createIgnoreValue();
 
     /**
+     * Returns a new object of class '<em>Json Pragma</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Pragma</em>'.
+     * @generated
+     */
+    JsonPragma createJsonPragma();
+
+    /**
+     * Returns a new object of class '<em>Json Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Annotation</em>'.
+     * @generated
+     */
+    JsonAnnotation createJsonAnnotation();
+
+    /**
      * Returns a new object of class '<em>Json Object Value</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

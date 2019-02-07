@@ -294,8 +294,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//annotations+=Annotation* initial?='initial'? final?='final'? violation?='violation'? connector?='connector'? => 'state'
 		//name=ID label=STRING? ('is' reference=ScopeCall ('schedule' schedule+=ScheduleObjectReference+)? | ('extends'
 		//baseStates+=[sccharts::State] (',' baseStates+=[sccharts::State])*)? ('schedule' schedule+=ScheduleObjectReference+)?
-		//'{' declarations+=DeclarationWOSemicolon* actions+=LocalAction* (regions+=ImplicitControlflowRegion |
-		//regions+=Region*) '}')? outgoingTransitions+=Transition*
+		//'{' declarations+=DeclarationWOSemicolon* actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region*)
+		//'}')? outgoingTransitions+=Transition*
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -787,8 +787,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
 		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
-		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label'
-		//label=STRING)?
+		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
 		//{sccharts::Transition}
@@ -1173,8 +1172,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	override?='override'?
 		//	final?='final'?
 		//	'region' name=ExtendedID? label=STRING? ('is'
-		//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
+		//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+		//	('schedule' schedule+=ScheduleObjectReference+)?
 		//	| ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
 		//	schedule+=ScheduleObjectReference+)? (':'
 		//	declarations+=DeclarationWOSemicolon*
@@ -1189,8 +1188,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//{sccharts::ControlflowRegion} annotations+=Annotation* override?='override'? final?='final'? 'region' name=ExtendedID?
 		//label=STRING? ('is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable
-		//':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? (':'
+		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable ':'
+		//forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? (':'
 		//declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State* | '{' declarations+=DeclarationWOSemicolon*
 		//actions+=LocalAction* (states+=ImplicitState | states+=State+) '}'))
 		public Group getGroup() { return cGroup; }
@@ -1232,8 +1231,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_6_0() { return cLabelSTRINGTerminalRuleCall_6_0; }
 		
 		//'is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable
-		//':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? (':'
+		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable ':'
+		//forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? (':'
 		//declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State* | '{' declarations+=DeclarationWOSemicolon*
 		//actions+=LocalAction* (states+=ImplicitState | states+=State+) '}')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
@@ -2835,8 +2834,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	override?='override'?
 	//	final?='final'?
 	//	'region' name=ExtendedID? label=STRING? ('is'
-	//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-	//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+	//	('schedule' schedule+=ScheduleObjectReference+)?
 	//	| ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
 	//	schedule+=ScheduleObjectReference+)? (':'
 	//	declarations+=DeclarationWOSemicolon*
@@ -3356,6 +3355,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Effect Rule
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
+	//// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
+	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
+	//// If precedence is changed the converter has to be adapted too.
 	//Effect keffects::Effect:
 	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
 	//	RandomizeCallEffect;
@@ -3441,8 +3443,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -3909,8 +3910,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-	//	('*' subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -4558,6 +4559,71 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getNullValueAccess().getRule();
 	}
 	
+	//// New Json Annotations
+	//JsonPragma:
+	//	'#' name=ExtendedID value=JsonObjectValue;
+	public KExpressionsGrammarAccess.JsonPragmaElements getJsonPragmaAccess() {
+		return gaKExpressions.getJsonPragmaAccess();
+	}
+	
+	public ParserRule getJsonPragmaRule() {
+		return getJsonPragmaAccess().getRule();
+	}
+	
+	//JsonAnnotation:
+	//	'@' name=ExtendedID value=JsonObjectValue;
+	public KExpressionsGrammarAccess.JsonAnnotationElements getJsonAnnotationAccess() {
+		return gaKExpressions.getJsonAnnotationAccess();
+	}
+	
+	public ParserRule getJsonAnnotationRule() {
+		return getJsonAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//Pragma annotations::Pragma:
+	//	super | JsonPragma;
+	public KExpressionsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaKExpressions.getPragmaAccess();
+	}
+	
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
+	}
+	
+	//@Override
+	//Annotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public KExpressionsGrammarAccess.AnnotationElements getAnnotationAccess() {
+		return gaKExpressions.getAnnotationAccess();
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//ValuedAnnotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public KExpressionsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+		return gaKExpressions.getValuedAnnotationAccess();
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//QuotedStringAnnotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public KExpressionsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaKExpressions.getQuotedStringAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
+	}
+	
 	//terminal HOSTCODE:
 	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
@@ -4575,24 +4641,24 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
+	public AnnotationsGrammarAccess.AnnotationElements getAnnotationsAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
 	
-	public ParserRule getAnnotationRule() {
-		return getAnnotationAccess().getRule();
+	public ParserRule getAnnotationsAnnotationRule() {
+		return getAnnotationsAnnotationAccess().getRule();
 	}
 	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
 	//	StringPragma | PragmaTag;
-	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+	public AnnotationsGrammarAccess.PragmaElements getAnnotationsPragmaAccess() {
 		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaRule() {
-		return getPragmaAccess().getRule();
+	public ParserRule getAnnotationsPragmaRule() {
+		return getAnnotationsPragmaAccess().getRule();
 	}
 	
 	//// Valued Annotation Rule
@@ -4601,12 +4667,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
-	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getAnnotationsValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
 	
-	public ParserRule getValuedAnnotationRule() {
-		return getValuedAnnotationAccess().getRule();
+	public ParserRule getAnnotationsValuedAnnotationRule() {
+		return getAnnotationsValuedAnnotationAccess().getRule();
 	}
 	
 	//// Restricted Type Annotation Rule
@@ -4629,12 +4695,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// rule and to avoid grammar ambiguities.)  
 	//QuotedStringAnnotation Annotation:
 	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getAnnotationsQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getQuotedStringAnnotationRule() {
-		return getQuotedStringAnnotationAccess().getRule();
+	public ParserRule getAnnotationsQuotedStringAnnotationRule() {
+		return getAnnotationsQuotedStringAnnotationAccess().getRule();
 	}
 	
 	//// CommentAnnotation

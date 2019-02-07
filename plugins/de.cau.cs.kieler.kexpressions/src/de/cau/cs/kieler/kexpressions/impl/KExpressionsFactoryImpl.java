@@ -69,6 +69,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.VECTOR_VALUE: return createVectorValue();
             case KExpressionsPackage.IGNORE_VALUE: return createIgnoreValue();
+            case KExpressionsPackage.JSON_PRAGMA: return createJsonPragma();
+            case KExpressionsPackage.JSON_ANNOTATION: return createJsonAnnotation();
             case KExpressionsPackage.JSON_OBJECT_VALUE: return createJsonObjectValue();
             case KExpressionsPackage.JSON_OBJECT_MEMBER: return createJsonObjectMember();
             case KExpressionsPackage.JSON_ARRAY_VALUE: return createJsonArrayValue();
@@ -331,6 +333,26 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public IgnoreValue createIgnoreValue() {
         IgnoreValueImpl ignoreValue = new IgnoreValueImpl();
         return ignoreValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public JsonPragma createJsonPragma() {
+        JsonPragmaImpl jsonPragma = new JsonPragmaImpl();
+        return jsonPragma;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public JsonAnnotation createJsonAnnotation() {
+        JsonAnnotationImpl jsonAnnotation = new JsonAnnotationImpl();
+        return jsonAnnotation;
     }
 
     /**

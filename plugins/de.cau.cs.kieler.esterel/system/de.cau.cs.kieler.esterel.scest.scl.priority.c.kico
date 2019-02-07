@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.esterel.scest.scl.priority.c
+system de.cau.cs.kieler.esterel.scest.scl.priority.c
     label "SCEst Priority-based (C)"
     
 de.cau.cs.kieler.esterel.processors.scestintermediateprocessor config {
