@@ -7,9 +7,13 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.text.parser.InternalSCTXParser
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
 
@@ -108,6 +112,149 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             feeder.accept(tg.labelSTRINGTerminalRuleCall_3_1_0, transition.label)
         } 
                 
+        feeder.finish
+    }
+    
+    override protected sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion region) {
+        val feeder = createSequencerFeeder(region, createNodeProvider(region))
+        val rg = grammarAccess.controlflowRegionAccess
+        
+        // annotations
+        for (idxAnnotation : region.annotations.indexed) {
+            feeder.accept(rg.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
+        }
+        // override
+        if (region.override) {
+            feeder.accept(rg.overrideOverrideKeyword_2_0)
+        }
+        // final
+        if (region.final) {
+            feeder.accept(rg.finalFinalKeyword_3_0)
+        }
+        // name
+        if (!region.name.nullOrEmpty) {
+            feeder.accept(rg.nameExtendedIDParserRuleCall_5_0, region.name)
+        }
+        // label
+        if (!region.label.nullOrEmpty && !region.label.equals(region.name)) {
+            feeder.accept(rg.labelSTRINGTerminalRuleCall_6_0, region.label)
+        }
+        // is
+        if (region.reference !== null) {
+            feeder.accept(rg.referenceScopeCallParserRuleCall_7_0_1_0, region.reference)
+            //for
+            if (region.counterVariable !== null) {
+                feeder.accept(rg.counterVariableCounterVariableParserRuleCall_7_0_2_1_0, region.counterVariable)
+                feeder.accept(rg.forStartIntOrReferenceParserRuleCall_7_0_2_3_0, region.forStart)
+                if (region.forEnd !== null) {
+                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_0_2_4_1_0, region.forStart)
+                }
+            }
+            // schedule
+            for (idxSchedule : region.schedule.indexed) {
+                feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_0_3_1_0, idxSchedule.value, idxSchedule.key)
+            }
+        } else { // normal region
+            // for
+            if (region.counterVariable !== null) {
+                feeder.accept(rg.counterVariableCounterVariableParserRuleCall_7_1_0_1_0, region.counterVariable)
+                feeder.accept(rg.forStartIntOrReferenceParserRuleCall_7_1_0_3_0, region.forStart)
+                if (region.forEnd !== null) {
+                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_1_0_4_1_0, region.forStart)
+                }
+            }
+            // schedule
+            for (idxSchedule : region.schedule.indexed) {
+                feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_1_1_1_0, idxSchedule.value, idxSchedule.key)
+            }
+            // Never use the colon variant for serialization
+            // declarations
+            for (idxDecl : region.declarations.indexed) {
+                feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_7_1_2_1_1_0, idxDecl.value, idxDecl.key)
+            }
+            // actions
+            for (idxAction : region.actions.indexed) {
+                feeder.accept(rg.actionsLocalActionParserRuleCall_7_1_2_1_2_0, idxAction.value, idxAction.key)
+            }
+            // states
+            if (!region.states.nullOrEmpty
+                && region.states.size == 1
+                && InternalSCTXParser.IMPLICIT_STATE_NAME.equals(region.states.head.name)
+                && region.states.head.initial
+                && !region.states.head.final
+                && region.states.head.declarations.nullOrEmpty
+                && region.states.head.actions.nullOrEmpty
+                && region.states.head.outgoingTransitions.nullOrEmpty
+                && !region.states.head.regions.nullOrEmpty
+            ) {
+                // special implicit state
+                feeder.accept(rg.statesImplicitStateParserRuleCall_7_1_2_1_3_0_0, region.states.head, 0)
+            } else {
+                for (idxState : region.states.indexed) {
+                    feeder.accept(rg.statesStateParserRuleCall_7_1_2_1_3_1_0, idxState.value, idxState.key)
+                }
+            }
+        }
+                
+        feeder.finish
+    }
+    
+    override protected sequence_DataflowRegion(ISerializationContext context, DataflowRegion region) {
+        val feeder = createSequencerFeeder(region, createNodeProvider(region))
+        val rg = grammarAccess.dataflowRegionAccess
+        // annotations
+        for (idxAnnotation : region.annotations.indexed) {
+            feeder.accept(rg.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
+        }
+        // override
+        if (region.override) {
+            feeder.accept(rg.overrideOverrideKeyword_2_0)
+        }
+        // name
+        if (!region.name.nullOrEmpty) {
+            feeder.accept(rg.nameExtendedIDParserRuleCall_4_0, region.name)
+        }
+        // label
+        if (!region.label.nullOrEmpty && !region.label.equals(region.name)) {
+            feeder.accept(rg.labelSTRINGTerminalRuleCall_5_0, region.label)
+        }
+        // for
+        if (region.counterVariable !== null) {
+            feeder.accept(rg.counterVariableCounterVariableParserRuleCall_6_1_0, region.counterVariable)
+            feeder.accept(rg.forStartIntOrReferenceParserRuleCall_6_3_0, region.forStart)
+            if (region.forEnd !== null) {
+                feeder.accept(rg.forEndIntOrReferenceParserRuleCall_6_4_1_0, region.forStart)
+            }
+        }
+        // schedule
+        for (idxSchedule : region.schedule.indexed) {
+            feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_1_0, idxSchedule.value, idxSchedule.key)
+        }
+        // once
+        if (region.once) {
+            feeder.accept(rg.onceOnceKeyword_8_0)
+        }
+        // Never use the colon variant for serialization
+        // declarations
+        for (idxDecl : region.declarations.indexed) {
+            feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_9_1_1_0, idxDecl.value, idxDecl.key)
+        }
+        // equations
+        for (idxEquation : region.equations.indexed) {
+            feeder.accept(rg.equationsAssignmentParserRuleCall_9_1_2_0, idxEquation.value, idxEquation.key)
+        }
+
+        feeder.finish
+    }
+    
+    override protected sequence_ImplicitState(ISerializationContext context, State state) {
+        val feeder = createSequencerFeeder(state, createNodeProvider(state))
+        val g = grammarAccess.implicitStateAccess
+        
+        for (idxRegion : state.regions.indexed) {
+            feeder.accept(g.regionsRegionParserRuleCall_1_0, idxRegion.value, idxRegion.key)
+        }
+        
         feeder.finish
     }
     
