@@ -108,7 +108,7 @@ class LanguageServer implements IApplication {
             val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
                 KGraphTypeAdapterUtil.configureGson(gsonBuilder)
             ]
-            val languageServer = injector.getInstance(LanguageServerImpl)
+            val languageServer = injector.getInstance(MyLanguageServerImpl)
             val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
             val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
             kicoolExtension.kgraphLSEx = kgraphExt
