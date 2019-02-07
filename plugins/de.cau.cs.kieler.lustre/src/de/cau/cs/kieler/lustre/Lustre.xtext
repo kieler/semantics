@@ -228,14 +228,8 @@ ATransition:
  *                       + NoneOfExpression
  *                       + NorExpression
  * + ValuedExpression
- *   + ShiftLeftExpression
- *     + ShiftRightExpression
- *    + ShiftRightUnsignedExpression
- *      + AddExpression
- *          + SubExpression
- *            + MultExpression
- *              + DivExpression
- *                + ModExpression
+ *   + SumExpression
+ *      + ProductExpression
  *                  + IntDivExpression
  *                    + NegExpression *
  *                      + FBYExpression
@@ -249,16 +243,68 @@ ATransition:
  *                                + AtomicExpression
  * 
  */
- 
-// Force IntDivExpression inbetween ModExpression and NegExpression
+// Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
 @Override 
-ModExpression returns kexpressions::Expression:
+ProductExpression returns kexpressions::Expression:
     IntDivExpression 
-    ({kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=ModOperator subExpressions+=AtomicValuedExpression)
-        ('mod' subExpressions+=AtomicValuedExpression)*
+    (
+    (  {kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=MultOperator subExpressions+=DivModExpression)
+        ('*' subExpressions+=DivModExpression)*
+    )|({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=DivOperator subExpressions+=MultModExpression)
+        ('/' subExpressions+=MultModExpression)*
+    )|({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=ModOperator subExpressions+=MultDivExpression)
+        ('mod' subExpressions+=MultDivExpression)*
+    )
+    )?
+;   
+
+// Needs override because IntDivExpressin comes next
+@Override 
+MultDivExpression returns kexpressions::Expression:
+    IntDivExpression 
+    (
+    (  {kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=MultOperator subExpressions+=DivModExpression)
+        ('*' subExpressions+=DivModExpression)*
+    )|({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=DivOperator subExpressions+=MultModExpression)
+        ('/' subExpressions+=MultModExpression)*
+    )
     )?
 ;
+    
+// Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
+@Override 
+MultModExpression returns kexpressions::Expression:
+    IntDivExpression 
+    (
+    (  {kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=MultOperator subExpressions+=DivModExpression)
+        ('*' subExpressions+=DivModExpression)*
+    )|({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=ModOperator subExpressions+=MultDivExpression)
+        ('mod' subExpressions+=MultDivExpression)*
+    )
+    )?
+;
+    
+// Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
+@Override 
+DivModExpression returns kexpressions::Expression:
+    IntDivExpression 
+    (
+    (  {kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=DivOperator subExpressions+=MultModExpression)
+        ('/' subExpressions+=MultModExpression)*
+    )|({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=ModOperator subExpressions+=MultDivExpression)
+        ('mod' subExpressions+=MultDivExpression)*
+    )
+    )?
+;     
 
 IntDivExpression returns kexpressions::Expression:
     NegExpression 
@@ -347,11 +393,11 @@ LogicalAndExpression returns kexpressions::Expression:
         ('and' subExpressions+=CompareOperation)*
     )?;
 
-// Directly redirect to AddExpression to exclude shift operations
+// Directly redirect to SumExpression to exclude shift operations
 @Override
 ValuedExpression returns kexpressions::Expression:
-    AddExpression;
-    
+    SumExpression;
+
 // Exclude FunctionCall, RandomCall, RandomizeCall and TextExpression
 @Override
 AtomicExpression returns kexpressions::Expression:

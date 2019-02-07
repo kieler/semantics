@@ -8,7 +8,6 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.SCTXParser;
 import de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal.InternalSCTXLexer;
-import de.cau.cs.kieler.sccharts.text.validation.SCTXValidatorConfigurationBlock;
 import de.cau.cs.kieler.sccharts.ui.text.contentassist.SCTXProposalProvider;
 import de.cau.cs.kieler.sccharts.ui.text.labeling.SCTXDescriptionLabelProvider;
 import de.cau.cs.kieler.sccharts.ui.text.labeling.SCTXLabelProvider;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link SCTXUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractSCTXUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalSCTXLexer.class).toProvider(LexerProvider.create(InternalSCTXLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return SCTXValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

@@ -76,7 +76,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
         if (!modifications.containsEntry(INCLUDES, "java.util.Random;"))
             modifications.put(INCLUDES, "java.util.Random;")
             
-        return "random.setSeet(System.currentTimeMillis())"
+        return "random.setSeed(System.currentTimeMillis())"
     }
     
 }

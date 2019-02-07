@@ -24,9 +24,11 @@ A = B & C & D
 A = (B & C & D)
 
 @check boolean.bitwis040_boolean_bitwise.kexte.and.and.parenthesis#002
+@readable "A = B & C & D"
 A = B & (C & D)
 
 @check boolean.bitwise.and.and.parenthesis#003
+@readable "A = B & C & D"
 A = (B & C) & D
 
 
@@ -47,9 +49,11 @@ A = B | C | D
 A = (B | C | D)
 
 @check boolean.bitwise.or.or.parenthesis#002
+@readable "A = B | C | D"
 A = B | (C | D)
 
 @check boolean.bitwise.or.or.parenthesis#003
+@readable "A = B | C | D"
 A = (B | C) | D
 
 
@@ -136,6 +140,7 @@ A = !(!B | !C)
 A = (B | C) & (B | C) & (B | C)
 
 @check boolean.bitwise.mixed#002
+@readable "A = (B | C) & (B | C) & (B | C)"
 A = (B | C) & ((B | C) & (B | C))
 
 @check boolean.bitwise.mixed#003

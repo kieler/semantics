@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kicool.ui.klighd;
 
 import java.util.HashSet;
+import java.util.List;
 
 import org.eclipse.ui.IEditorPart;
 
@@ -71,4 +72,21 @@ public class KiCoModelViewNotifier {
             }
         }
     }
+    
+    /**
+     * Notifies all ModelViews linked to the Compiler and listening on the given Editor about a new compilation results.
+     * 
+     * @param editor the related editor
+     * @param model the new compilation result
+     * @param context the used compilation context
+     */
+    public static void notifyCompilationChangedList(final IEditorPart editor, final List<Object> models) {
+        for (KiCoModelUpdateController controller : CONTROLLERS) {
+            if (controller.isActive() &&
+                controller.getEditor() != null &&
+                controller.getEditor() == editor) {
+                controller.updateCompilerModels(models);
+            }
+        }
+    }    
 }

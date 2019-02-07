@@ -249,15 +249,6 @@
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
-	<extension point="org.eclipse.ui.preferencePages">
-		<page
-			category="de.cau.cs.kieler.kicool.KiCool"
-			class="de.cau.cs.kieler.kicool.ui.KiCoolExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
-			id="de.cau.cs.kieler.kicool.KiCool.validator.preferencePage"
-			name="Errors/Warnings">
-			<keywordReference id="de.cau.cs.kieler.kicool.ui.keyword_KiCool"/>
-		</page>
-	</extension>
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">

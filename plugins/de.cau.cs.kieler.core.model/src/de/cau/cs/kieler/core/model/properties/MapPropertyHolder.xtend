@@ -24,7 +24,8 @@ import java.util.LinkedHashMap
  *
  * @kieler.design 2011-01-17 reviewed by haf, cmot, soh
  * @kieler.rating proposed yellow 2012-07-10 msp
- * @author msp
+ * @author msp (original) 
+ * @author ssm als
  */
 public class MapPropertyHolder implements IPropertyHolder, Serializable {
 

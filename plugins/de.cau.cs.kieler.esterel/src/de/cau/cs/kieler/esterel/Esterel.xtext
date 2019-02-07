@@ -1007,3 +1007,11 @@ ValuedObjectPreExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=ValuedObjectPreExpression')'
     | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
     | ValuedObjectReference;
+
+// For some reason Esterel fails to parse the optional semicolon in threads if the Annotation rule includes JsonAnnotations
+@Override
+Annotation returns annotations::Annotation:
+    CommentAnnotation | 
+    KeyStringValueAnnotation |
+    TypedKeyStringValueAnnotation |
+    TagAnnotation;

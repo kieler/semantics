@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.esterel.scc
+system de.cau.cs.kieler.esterel.scc
     label "Extended Esterel SCC"
     config {
         "de.cau.cs.kieler.kicool.kitt.tracingActive": true,

@@ -102,6 +102,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//VectorValue/values"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//IgnoreValue"/>
+    <genClasses ecoreClass="kexpressions.ecore#//JsonPragma">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//JsonPragma/value"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//JsonAnnotation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//JsonAnnotation/value"/>
+    </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//JsonObjectValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//JsonObjectValue/members"/>
       <genOperations ecoreOperation="kexpressions.ecore#//JsonObjectValue/getMembersMap"/>

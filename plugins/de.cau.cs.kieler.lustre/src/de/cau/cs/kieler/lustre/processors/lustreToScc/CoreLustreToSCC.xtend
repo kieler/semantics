@@ -438,7 +438,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected def createInitExpression(Stack<Expression> subExpressionList) {
         // x -> y <=> x fby y (in sccharts)
         var convertedExpression = createOperatorExpression(OperatorType.FBY)
-        convertedExpression.subExpressions += new ArrayList(subExpressionList)
+        convertedExpression.subExpressions += subExpressionList
 
         return convertedExpression
     }

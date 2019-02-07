@@ -1,0 +1,44 @@
+global ESTEREL
+set XesDef(libraries:coresim) libcoresim.a
+
+#========
+# Unix 
+#========
+set XesDef(linker:unix)         $CC
+set XesDef(linker:out:unix)     "-o " ; # space is mandatory
+set XesDef(linker:options:unix) ""
+set XesDef(object:unix) .o
+set XesDef(tcltk:unix) "-l tcl -l tk"
+
+# Machine specific librairies
+set XesDef(libraries:SunOS) [list -L/usr/X11/lib -lX11 -R/usr/X11/lib \
+				 -ldl -lm -lsocket -lintl -lnsl -lw]
+set XesDef(libraries:OSF1)  [list -lX11 -lm]
+set XesDef(libraries:Linux) [list -L/usr/X11R6/lib -lX11 -ldl -lm]
+set XesDef(libraries:Darwin) [list -L/usr/X11R6/lib -lX11 -ldl -lm]
+set XesDef(libraries:AIX)   [list -L/usr/lib -lX11 -lm -ldl]
+set XesDef(libraries:AIX)   [list -L/usr/lib -lX11 -lm -ldl]
+
+# Special case of RedHat6.0 vs RedHat5.2
+if [ file exist /lib/libNoVersion-2.1.1.so ] {
+   lappend XesDef(libraries:Linux) -lNoVersion-2.1.1
+}
+
+#=========
+# Windows
+#=========
+set XesDef(linker:windows)         link.exe
+set XesDef(linker:out:windows)     "-out:" ; # no space after ':'
+set XesDef(linker:options:windows) [list \
+    /nodefaultlib -nologo \
+    /subsystem:windows -entry:WinMainCRTStartup \
+    /machine:IX86 /align:0x1000 /debug /pdb:.pdb]
+set XesDef(libraries:windows) [list \
+    msvcrt.lib oldnames.lib \
+    kernel32.lib advapi32.lib user32.lib \
+    gdi32.lib comdlg32.lib winspool.lib ]
+set XesDef(object:windows) .obj
+set XesDef(tcltk:windows)  [list \
+    [file native $ESTEREL/tcltk/lib/strltcl82.lib] \
+    [file native $ESTEREL/tcltk/lib/strltk82.lib ]]
+

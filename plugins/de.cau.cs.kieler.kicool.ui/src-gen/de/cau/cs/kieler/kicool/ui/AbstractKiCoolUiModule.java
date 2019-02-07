@@ -13,7 +13,6 @@ import de.cau.cs.kieler.kicool.ui.labeling.KiCoolDescriptionLabelProvider;
 import de.cau.cs.kieler.kicool.ui.labeling.KiCoolLabelProvider;
 import de.cau.cs.kieler.kicool.ui.outline.KiCoolOutlineTreeProvider;
 import de.cau.cs.kieler.kicool.ui.quickfix.KiCoolQuickfixProvider;
-import de.cau.cs.kieler.kicool.validation.KiCoolValidatorConfigurationBlock;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ide.LexerIdeBindings;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link KiCoolUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractKiCoolUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalKiCoolLexer.class).toProvider(LexerProvider.create(InternalKiCoolLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return KiCoolValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

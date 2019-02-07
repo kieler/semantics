@@ -1,0 +1,6 @@
+system de.cau.cs.kieler.sccharts.statebased.lean.template
+	label "State-based Compilation (C) lean-mode (Template)"
+
+system de.cau.cs.kieler.sccharts.extended
+pre process de.cau.cs.kieler.sccharts.processors.voRise
+de.cau.cs.kieler.sccharts.processors.codegen.statebased.lean

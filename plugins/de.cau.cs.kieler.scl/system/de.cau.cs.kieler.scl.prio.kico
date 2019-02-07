@@ -1,7 +1,0 @@
-public system de.cau.cs.kieler.scl.prio
-	label "SCL Priority-based"
-
-de.cau.cs.kieler.scl.processors.transformators.scl2scg
-de.cau.cs.kieler.scg.processors.dependency
-de.cau.cs.kieler.scg.processors.priorities
-de.cau.cs.kieler.scg.processors.sclp

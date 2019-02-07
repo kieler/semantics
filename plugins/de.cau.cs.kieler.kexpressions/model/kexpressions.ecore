@@ -178,7 +178,11 @@
       </eAnnotations>
     </eLiterals>
     <eLiterals name="BOOL" value="1" literal="bool"/>
-    <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
+    <eLiterals name="UNSIGNED" value="2" literal="unsigned">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@deprecated No longer used in grammars"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="INT" value="3" literal="int"/>
     <eLiterals name="FLOAT" value="4" literal="float"/>
     <eLiterals name="HOST" value="7" literal="host">
@@ -186,7 +190,11 @@
         <details key="documentation" value="HOST means that no actual type is given but the&#xA;type in the hostType attribute should be used &#xA;instead."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="DOUBLE" value="5" literal="double"/>
+    <eLiterals name="DOUBLE" value="5" literal="double">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@deprecated No longer used in grammars"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="STRING" value="6" literal="string"/>
     <eLiterals name="REFERENCE" value="8" literal="reference"/>
     <eLiterals name="SCHEDULE" value="9"/>
@@ -242,6 +250,14 @@
         upperBound="-1" eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IgnoreValue" eSuperTypes="#//Value"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonPragma" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragma">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonObjectValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonAnnotation" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonObjectValue"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JsonObjectValue" eSuperTypes="#//Value">
     <eOperations name="getMembersMap" lowerBound="1">
       <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
