@@ -43,6 +43,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7(), "rule__ControlflowRegion__Alternatives_7");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2(), "rule__ControlflowRegion__Alternatives_7_1_2");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2_1_3(), "rule__ControlflowRegion__Alternatives_7_1_2_1_3");
+			builder.put(grammarAccess.getDataflowRegionAccess().getAlternatives_9(), "rule__DataflowRegion__Alternatives_9");
 			builder.put(grammarAccess.getIntOrReferenceAccess().getAlternatives(), "rule__IntOrReference__Alternatives");
 			builder.put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 			builder.put(grammarAccess.getHiddenKeywordsAccess().getAlternatives(), "rule__HiddenKeywords__Alternatives");
@@ -157,6 +158,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_6(), "rule__DataflowRegion__Group_6__0");
 			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_6_4(), "rule__DataflowRegion__Group_6_4__0");
 			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_7(), "rule__DataflowRegion__Group_7__0");
+			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_9_0(), "rule__DataflowRegion__Group_9_0__0");
+			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_9_1(), "rule__DataflowRegion__Group_9_1__0");
 			builder.put(grammarAccess.getEntryActionAccess().getGroup(), "rule__EntryAction__Group__0");
 			builder.put(grammarAccess.getEntryActionAccess().getGroup_2(), "rule__EntryAction__Group_2__0");
 			builder.put(grammarAccess.getEntryActionAccess().getGroup_2_2(), "rule__EntryAction__Group_2_2__0");
@@ -542,8 +545,10 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataflowRegionAccess().getForEndAssignment_6_4_1(), "rule__DataflowRegion__ForEndAssignment_6_4_1");
 			builder.put(grammarAccess.getDataflowRegionAccess().getScheduleAssignment_7_1(), "rule__DataflowRegion__ScheduleAssignment_7_1");
 			builder.put(grammarAccess.getDataflowRegionAccess().getOnceAssignment_8(), "rule__DataflowRegion__OnceAssignment_8");
-			builder.put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_10(), "rule__DataflowRegion__DeclarationsAssignment_10");
-			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_11(), "rule__DataflowRegion__EquationsAssignment_11");
+			builder.put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_9_0_1(), "rule__DataflowRegion__DeclarationsAssignment_9_0_1");
+			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9_0_2(), "rule__DataflowRegion__EquationsAssignment_9_0_2");
+			builder.put(grammarAccess.getDataflowRegionAccess().getDeclarationsAssignment_9_1_1(), "rule__DataflowRegion__DeclarationsAssignment_9_1_1");
+			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9_1_2(), "rule__DataflowRegion__EquationsAssignment_9_1_2");
 			builder.put(grammarAccess.getCounterVariableAccess().getNameAssignment(), "rule__CounterVariable__NameAssignment");
 			builder.put(grammarAccess.getEntryActionAccess().getTriggerAssignment_2_1(), "rule__EntryAction__TriggerAssignment_2_1");
 			builder.put(grammarAccess.getEntryActionAccess().getTriggerProbabilityAssignment_2_2_1(), "rule__EntryAction__TriggerProbabilityAssignment_2_2_1");

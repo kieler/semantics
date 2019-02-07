@@ -2364,9 +2364,9 @@ ruleDataflowRegion returns [EObject current=null]
 				)
 			)
 			(
-				otherlv_10='..'
+				otherlv_10='to'
 				{
-					newLeafNode(otherlv_10, grammarAccess.getDataflowRegionAccess().getFullStopFullStopKeyword_6_4_0());
+					newLeafNode(otherlv_10, grammarAccess.getDataflowRegionAccess().getToKeyword_6_4_0());
 				}
 				(
 					(
@@ -2428,48 +2428,101 @@ ruleDataflowRegion returns [EObject current=null]
 				}
 			)
 		)?
-		otherlv_15=':'
-		{
-			newLeafNode(otherlv_15, grammarAccess.getDataflowRegionAccess().getColonKeyword_9());
-		}
 		(
 			(
+				otherlv_15=':'
 				{
-					newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_10_0());
+					newLeafNode(otherlv_15, grammarAccess.getDataflowRegionAccess().getColonKeyword_9_0_0());
 				}
-				lv_declarations_16_0=ruleDeclarationWOSemicolon
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
-					}
-					add(
-						$current,
-						"declarations",
-						lv_declarations_16_0,
-						"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
-					afterParserOrEnumRuleCall();
-				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_9_0_1_0());
+						}
+						lv_declarations_16_0=ruleDeclarationWOSemicolon
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
+							}
+							add(
+								$current,
+								"declarations",
+								lv_declarations_16_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)*
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0());
+						}
+						lv_equations_17_0=ruleAssignment
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
+							}
+							add(
+								$current,
+								"equations",
+								lv_equations_17_0,
+								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)*
 			)
-		)*
-		(
+			    |
 			(
+				otherlv_18='{'
 				{
-					newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_11_0());
+					newLeafNode(otherlv_18, grammarAccess.getDataflowRegionAccess().getLeftCurlyBracketKeyword_9_1_0());
 				}
-				lv_equations_17_0=ruleAssignment
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_9_1_1_0());
+						}
+						lv_declarations_19_0=ruleDeclarationWOSemicolon
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
+							}
+							add(
+								$current,
+								"declarations",
+								lv_declarations_19_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)*
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0());
+						}
+						lv_equations_20_0=ruleAssignment
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
+							}
+							add(
+								$current,
+								"equations",
+								lv_equations_20_0,
+								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)*
+				otherlv_21='}'
 				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
-					}
-					add(
-						$current,
-						"equations",
-						lv_equations_17_0,
-						"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
-					afterParserOrEnumRuleCall();
+					newLeafNode(otherlv_21, grammarAccess.getDataflowRegionAccess().getRightCurlyBracketKeyword_9_1_3());
 				}
 			)
-		)*
+		)
 	)
 ;
 

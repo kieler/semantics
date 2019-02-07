@@ -1698,8 +1698,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         once?='once'? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         equations+=Assignment*
+	 *         ((declarations+=DeclarationWOSemicolon* equations+=Assignment*) | (declarations+=DeclarationWOSemicolon* equations+=Assignment*))
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {

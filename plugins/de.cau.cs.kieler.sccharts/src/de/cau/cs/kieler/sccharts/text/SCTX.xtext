@@ -159,13 +159,19 @@ DataflowRegion returns sccharts::DataflowRegion:
     annotations+=Annotation*
     override?='override'?
     'dataflow' name=ExtendedID? label=STRING?
-    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
+    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? 
     ('schedule' schedule+=ScheduleObjectReference+)?
     once?='once'?
-    ':'
-    declarations+=DeclarationWOSemicolon*
-    equations+=Assignment*;
-    
+    ((
+        ':'
+        declarations+=DeclarationWOSemicolon*
+        equations+=Assignment*
+    )|(
+        '{'
+        declarations+=DeclarationWOSemicolon*
+        equations+=Assignment*
+        '}'
+    ));
     
 IntOrReference returns kexpressions::Expression:
     IntValue | ValuedObjectReference;
