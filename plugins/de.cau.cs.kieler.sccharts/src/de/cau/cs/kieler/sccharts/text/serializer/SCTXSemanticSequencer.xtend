@@ -163,7 +163,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 feeder.accept(rg.counterVariableCounterVariableParserRuleCall_7_0_2_1_0, region.counterVariable)
                 feeder.accept(rg.forStartIntOrReferenceParserRuleCall_7_0_2_3_0, region.forStart)
                 if (region.forEnd !== null) {
-                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_0_2_4_1_0, region.forStart)
+                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_0_2_4_1_0, region.forEnd)
                 }
             }
             // schedule
@@ -176,7 +176,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 feeder.accept(rg.counterVariableCounterVariableParserRuleCall_7_1_0_1_0, region.counterVariable)
                 feeder.accept(rg.forStartIntOrReferenceParserRuleCall_7_1_0_3_0, region.forStart)
                 if (region.forEnd !== null) {
-                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_1_0_4_1_0, region.forStart)
+                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_1_0_4_1_0, region.forEnd)
                 }
             }
             // schedule
