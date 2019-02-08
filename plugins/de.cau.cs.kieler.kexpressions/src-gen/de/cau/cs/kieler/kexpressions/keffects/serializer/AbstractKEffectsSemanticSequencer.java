@@ -16,9 +16,11 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonAnnotation;
 import de.cau.cs.kieler.kexpressions.JsonArrayValue;
 import de.cau.cs.kieler.kexpressions.JsonObjectMember;
 import de.cau.cs.kieler.kexpressions.JsonObjectValue;
+import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
@@ -65,8 +67,11 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
-						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
 						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getCommentAnnotationRule()) {
 					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 					return; 
@@ -82,11 +87,14 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
 						|| rule == grammarAccess.getKeyStringValueAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
@@ -105,6 +113,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
@@ -116,6 +125,8 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				}
 				else if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
 						|| rule == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
@@ -139,8 +150,20 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				}
 				else break;
 			case KEffectsPackage.EMISSION:
-				sequence_Emission(context, (Emission) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedEmissionRule()) {
+					sequence_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
 			case KEffectsPackage.FUNCTION_CALL_EFFECT:
 				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
 				return; 
@@ -174,6 +197,9 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
 				return; 
+			case KExpressionsPackage.JSON_ANNOTATION:
+				sequence_JsonAnnotation(context, (JsonAnnotation) semanticObject); 
+				return; 
 			case KExpressionsPackage.JSON_ARRAY_VALUE:
 				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
 				return; 
@@ -182,6 +208,9 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				return; 
 			case KExpressionsPackage.JSON_OBJECT_VALUE:
 				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_PRAGMA:
+				sequence_JsonPragma(context, (JsonPragma) semanticObject); 
 				return; 
 			case KExpressionsPackage.NULL_VALUE:
 				sequence_NullValue(context, (NullValue) semanticObject); 
@@ -368,19 +397,6 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	/**
 	 * Contexts:
-	 *     Effect returns Emission
-	 *     Emission returns Emission
-	 *
-	 * Constraint:
-	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression? schedule+=ScheduleObjectReference*)
-	 */
-	protected void sequence_Emission(ISerializationContext context, Emission semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Effect returns FunctionCallEffect
 	 *     FunctionCallEffect returns FunctionCallEffect
 	 *
@@ -432,6 +448,34 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	/**
 	 * Contexts:
+	 *     PureEmission returns Emission
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*)
+	 */
+	protected void sequence_PureEmission(ISerializationContext context, Emission semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Effect returns Emission
+	 *     PureOrValuedEmission returns Emission
+	 *
+	 * Constraint:
+	 *     (
+	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*) | 
+	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression schedule+=ScheduleObjectReference*)
+	 *     )
+	 */
+	protected void sequence_PureEmission_ValuedEmission(ISerializationContext context, Emission semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Effect returns RandomizeCallEffect
 	 *     RandomizeCallEffect returns RandomizeCallEffect
 	 *
@@ -452,6 +496,18 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ValuedEmission returns Emission
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression schedule+=ScheduleObjectReference*)
+	 */
+	protected void sequence_ValuedEmission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

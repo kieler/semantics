@@ -79,7 +79,7 @@ class OpenCodeInEditorAction implements IAction {
                 // open editor
                 if (page !== null) {
                     try {
-                        page.openEditor(input, codeModel.getEditorID())
+                        page.openEditor(input, CodePlaceHolder.DEFAULT_EDITOR)
                     } catch (PartInitException e) {
                         e.printStackTrace()
                     }

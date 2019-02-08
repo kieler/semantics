@@ -399,6 +399,7 @@ class SCChartsLegacyConverter {
             
             valuedObjects.addAll(decl.valuedObjects.map[convert as de.cau.cs.kieler.kexpressions.ValuedObject])
             type = ValueType.getByName(decl.type.getName)
+            if (type === ValueType.DOUBLE) type = ValueType.FLOAT
             input = decl.input
             output = decl.output
             static = decl.static

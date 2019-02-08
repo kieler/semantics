@@ -54,7 +54,7 @@ class CTickTimeTemplateGenerator extends AbstractTemplateGeneratorProcessor<Obje
         val store = VariableStore.getVariableStore(environment)
         store.add("#ticktime", "ticktime") => [
             externalName = "_ticktime"
-            type = ValueType.DOUBLE
+            type = ValueType.FLOAT
         ]
         
         val cc = new CodeContainer

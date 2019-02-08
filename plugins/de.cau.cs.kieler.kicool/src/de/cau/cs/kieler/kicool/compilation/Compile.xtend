@@ -24,6 +24,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.kexpressions.JsonPragma
 
 /**
  * Class for preparing compilations programmatically through creating compilation contexts. 
@@ -34,6 +36,8 @@ import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
  * @kieler.rating 2017-02-19 proposed yellow  
  */
 class Compile {
+    
+    public static val ENV_PRAGMA = "KiCoEnv".toLowerCase
     
     /**
      * Easily create a standard compilation context from a compilation system and a source model.
@@ -47,6 +51,14 @@ class Compile {
             it.transformSystem
             it.originalModel = sourceModel
             it.populateContext
+            // Read compiler config from model
+            if (sourceModel instanceof Pragmatable) {
+                for (pragma : sourceModel.pragmas.filter[ENV_PRAGMA.equals(name.toLowerCase)]) {
+                    if (pragma instanceof JsonPragma) {
+                        EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, pragma.value)
+                    }
+                }
+            }
         ]
     }
     

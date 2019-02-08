@@ -27,6 +27,8 @@ import org.eclipse.xtext.Action
  */
 class InternalSCTXParser extends de.cau.cs.kieler.sccharts.text.parser.antlr.internal.InternalSCTXParser {
     
+    public static val IMPLICIT_STATE_NAME = "_implicit"
+    
     var SCTXGrammarAccess grammarAccess = null
     
     new(TokenStream input) {
@@ -48,7 +50,7 @@ class InternalSCTXParser extends de.cau.cs.kieler.sccharts.text.parser.antlr.int
         
         if (action == grammarAccess.implicitStateAccess.stateAction_0) { // magic
             if (result instanceof State) { // cast
-                result.name = "_implicit"
+                result.name = IMPLICIT_STATE_NAME
                 result.label = ""
                 result.initial = true                
             }
