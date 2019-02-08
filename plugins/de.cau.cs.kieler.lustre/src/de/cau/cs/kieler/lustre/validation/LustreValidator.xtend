@@ -30,7 +30,6 @@ import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.kexpressions.Parameter
 
 /**
  * This class contains custom validation rules. 

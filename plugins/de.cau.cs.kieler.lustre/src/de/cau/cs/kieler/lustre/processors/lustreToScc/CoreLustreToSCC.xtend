@@ -13,23 +13,26 @@
 package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.lustre.extensions.LustreTransformationExtension
 import de.cau.cs.kieler.lustre.lustre.AState
 import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
@@ -50,9 +53,6 @@ import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -74,6 +74,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsTypeExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension LustreTransformationExtension
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsStateExtensions
@@ -94,11 +95,14 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         var scchartsProgram = createSCChart
 
-//        if (p.includes !== null) {
-//        } 
-//        
-//        if (p.packList !== null) {
-//        }
+        if (p.includes !== null) {
+            // TODO: Handle inputs
+        } 
+        
+        if (p.packList !== null) {
+            // TODO: Handle module an package elements
+        }
+        
         if (p.packBody !== null) {
             p.packBody.processPackBody(scchartsProgram)
         }
@@ -263,7 +267,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         ClockedVariableDeclaration lustreClockedVariableDeclaration, State state) {
         var varDeclaration = lustreClockedVariableDeclaration.vardecl.createVariableDeclaration(state)
         if (lustreClockedVariableDeclaration.clockExpr !== null) {
-            makeSignalFromVariableDeclaration(varDeclaration)
+            makeSignalFromVariableDeclaration(varDeclaration, USE_SIGNALS_FOR_CLOCKED_VARIABLES)
         }
 
         return varDeclaration
@@ -317,16 +321,16 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 }
                 return convertedExpression
 
-            } else if (kExpression instanceof ValuedObjectReference) {
+            } else if (kExpression instanceof ReferenceCall) {
                 // A different lustre node is called here
-                if (kExpression instanceof ReferenceCall) {
-                    return processReferenceCall(kExpression, state)
-                } else {
-                    // Simple reference: Search for the equivalend sccharts reference
-                    if (lustreToScchartsValuedObjectMap.containsKey(kExpression.valuedObject)) {
-                        return lustreToScchartsValuedObjectMap.get(kExpression.valuedObject).reference
-                    }
+                return processReferenceCall(kExpression, state)
+                
+            } else if (kExpression instanceof ValuedObjectReference) {
+                // Simple reference: Search for the equivalent sccharts reference
+                if (lustreToScchartsValuedObjectMap.containsKey(kExpression.valuedObject)) {
+                    return lustreToScchartsValuedObjectMap.get(kExpression.valuedObject).reference
                 }
+                
             } else if (kExpression instanceof Value) {
                 return kExpression.copy
             }
@@ -355,7 +359,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             if (USE_SIGNALS_FOR_CLOCKED_VARIABLES) {
 
                 // Create a signal emission if this variant is used
-                makeSignalFromVariableDeclaration(scchartsAssignmentValuedObject.declaration as VariableDeclaration)
+                makeSignalFromVariableDeclaration(scchartsAssignmentValuedObject.declaration as VariableDeclaration, USE_SIGNALS_FOR_CLOCKED_VARIABLES)
                 duringAction.effects += createEmission => [
                     reference = scchartsAssignmentValuedObject.reference
                     newValue = realExpression
@@ -402,127 +406,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 return realExpression
             }
         }
-    }
-
-    protected def createFollowedByExpression(Stack<Expression> subExpressionList) {
-        // x fby y <=> x -> pre(y)
-        var bExpression = subExpressionList.pop
-        while(!subExpressionList.isEmpty) {
-            bExpression = createPreCascadedExpression(bExpression)
-            var aExpression = createOperatorExpression(OperatorType.FBY)
-            aExpression.subExpressions += subExpressionList.pop
-            aExpression.subExpressions += bExpression
-            bExpression = aExpression
-        }
-
-        return bExpression as OperatorExpression
-    }
-
-    protected def createImpliesExpression(Stack<Expression> subExpressionList) {
-        // A => B  <=>  !A or B
-        var rightExpression = subExpressionList.pop
-        var leftExpression = subExpressionList.pop
-
-        leftExpression = leftExpression.createNotExpression
-        var convertedExpression = createLogicalOrExpression(leftExpression, rightExpression)
-
-        while (subExpressionList.length > 0) {
-            rightExpression = convertedExpression
-            leftExpression = subExpressionList.pop.createNotExpression
-            convertedExpression = createLogicalOrExpression(leftExpression, rightExpression)
-        }
-
-        return convertedExpression
-    }
-
-    protected def createInitExpression(Stack<Expression> subExpressionList) {
-        // x -> y <=> x fby y (in sccharts)
-        var convertedExpression = createOperatorExpression(OperatorType.FBY)
-        convertedExpression.subExpressions += subExpressionList
-
-        return convertedExpression
-    }
-
-    protected def createIntDivExpression(Stack<Expression> subExpressionList) {
-        // Division depends on type in sccharts
-        var convertedExpression = createOperatorExpression(OperatorType.DIV)
-        convertedExpression.subExpressions += subExpressionList
-
-        return convertedExpression
-    }
-
-    protected def createXorExpression(Stack<Expression> subExpressionList) {
-        // A xor B <=> A && !B || !A && B
-        var Expression bExpression
-        var Expression aExpression
-        var Expression notBExpression
-        var Expression notAExpression
-        var Expression leftOrExpression
-        var Expression rightOrExpression
-
-        var tempExpression = subExpressionList.pop
-
-        do {
-            bExpression = tempExpression
-            aExpression = subExpressionList.pop
-
-            notBExpression = createNotExpression(bExpression.copy)
-            notAExpression = createNotExpression(aExpression.copy)
-
-            leftOrExpression = createLogicalAndExpression(aExpression, notBExpression)
-            rightOrExpression = createLogicalAndExpression(notAExpression, bExpression)
-
-            tempExpression = createLogicalOrExpression(leftOrExpression, rightOrExpression)
-        } while (subExpressionList.length > 0);
-
-        var convertedExpression = tempExpression as OperatorExpression
-
-        return convertedExpression
-    }
-
-    protected def createPreCascadedExpression(Expression subExpression) {
-        var kExpression = subExpression
-
-        kExpression = cascadePre(kExpression)
-
-        return kExpression as OperatorExpression
-    }
-
-    private def Expression cascadePre(Expression kExpression) {
-        if (kExpression instanceof OperatorExpression) {
-
-            val subExpressionList = new ArrayList<Expression>
-            for (var i = 0; i < kExpression.subExpressions.length; i++) {
-                var kSubExpression = kExpression.subExpressions.get(i)
-                var convertedKSubExpression = kSubExpression.cascadePre
-                subExpressionList.add(convertedKSubExpression)
-            }
-
-            return createOperatorExpression => [
-                operator = kExpression.operator
-                subExpressions.addAll(subExpressionList)
-            ]
-
-        } else if (kExpression instanceof ValuedObjectReference) {
-            var preExpression = createPreExpression
-            var valObj = kExpression.valuedObject
-            preExpression.subExpressions += valObj.reference
-            return preExpression
-        } else {
-            return kExpression
-        }
-    }
-
-    protected def createNorExpression(Stack<Expression> subExpressionList) {
-        // nor(A, B, C) <=> !and(A, B, C)
-        var aExpression = subExpressionList.pop
-
-        while (!subExpressionList.isEmpty) {
-            var bExpression = subExpressionList.pop
-            aExpression = createLogicalAndExpression(aExpression, bExpression)
-        }
-
-        return createNotExpression(aExpression)
     }
 
     protected def processReferenceCall(ReferenceCall kExpression, State state) {
@@ -619,29 +502,5 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             }
         }
         return null
-    }
-
-    // Only needed for signal approach
-    private def makeSignalFromVariableDeclaration(VariableDeclaration variableDeclaration) {
-        if (USE_SIGNALS_FOR_CLOCKED_VARIABLES) {
-            if (variableDeclaration.valuedObjects.length != 1) {
-                throw new UnsupportedOperationException(
-                    "Cannot transform clock expressions with multiple valued objects.")
-            }
-            variableDeclaration.signal = true;
-            switch (variableDeclaration.type) {
-                case BOOL: {
-                    variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.OR
-                }
-                case DOUBLE: {
-                    variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.ADD
-                }
-                case INT: {
-                    variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.ADD
-                }
-                default: {
-                }
-            }
-        }
     }
 }
