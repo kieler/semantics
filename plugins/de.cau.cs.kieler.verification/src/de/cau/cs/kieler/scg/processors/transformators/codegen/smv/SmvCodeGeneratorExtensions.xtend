@@ -20,13 +20,13 @@ class SmvCodeGeneratorExtensions {
     public def static String toSmvExpression(CharSequence kexpression) {
         return kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|")
                                    .replaceAll('''\bfalse\b''', " FALSE ").replaceAll('''\btrue\b''', " TRUE ")
-                                   .replaceAll('''%''', " mod ")
+                                   .replaceAll('''%''', " mod ").replaceAll("  ", " ").trim
     }
     
     public static def String toKExpression(CharSequence smvExpression) {
         return smvExpression.toString.replace("=", "==").replace("&","&&").replace("|","||")
                                      .replaceAll('''\bFALSE\b'''," false ").replaceAll('''\bTRUE\b'''," true ")
-                                     .replaceAll('''\bmod\b''', " % ")
+                                     .replaceAll('''\bmod\b''', " % ").replaceAll("  ", " ").trim
                             
     }
 }

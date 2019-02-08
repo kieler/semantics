@@ -235,6 +235,10 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
                 return "FALSE"
             } else if (s == "1") {
                 return "TRUE"
+            } else {
+                val sNo1 = s.replace("| 1","| TRUE").replace("& 1","& TRUE")
+                val sNo1No0 = sNo1.replace("| 0","| FALSE").replace("& 0","& FALSE")
+                return sNo1No0
             }
         }
         return s
