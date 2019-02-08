@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.sccharts.test.a.structure
 
+import de.cau.cs.kieler.annotations.CommentAnnotation
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
@@ -25,6 +27,7 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
 import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl
 import org.eclipse.emf.compare.scope.FilterComparisonScope
 import org.eclipse.emf.compare.utils.UseIdentifiers
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.junit.Test
@@ -110,6 +113,12 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
             val comparator = builder.build
 
             val scope = new FilterComparisonScope(scc, parsed, null)
+            scope.EObjectContentFilter = [ EObject o |
+                if (o instanceof CommentAnnotation || o instanceof TextExpression) {
+                    return false
+                }
+                return true
+            ]
             val comparison = comparator.compare(scope)
             
             assertTrue("Serialized and ReParsed model differs from original model:\n" + comparison.differences, comparison.differences.empty)
