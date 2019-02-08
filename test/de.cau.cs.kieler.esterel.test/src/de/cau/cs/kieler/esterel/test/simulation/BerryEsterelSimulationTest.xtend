@@ -17,7 +17,9 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.compiler.InriaEsterelCompiler
 import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
@@ -37,6 +39,8 @@ class BerryEsterelSimulationTest extends AbstractSimulationTest<EsterelProgram> 
     @Inject
     extension EsterelExtensions
     
+    val available = (new InriaEsterelCompiler(new Environment)).available
+    
     new() {
         super(esterelInjector)
     }
@@ -54,6 +58,7 @@ class BerryEsterelSimulationTest extends AbstractSimulationTest<EsterelProgram> 
     
     @Test
     def void testSimulationInriaEsterel(EsterelProgram esterel, TestModelData modelData) {
+        assumeTrue("Inria Esterel Compiler not available", available)
         assumeTrue("Program contains unsupported data types", esterel.hasUnsupportedType) // skip if program includes esterel type
         
         startSimulationTest(INRIA_ESTEREL_SYSTEM, esterel, modelData, "EsterelSimulationSLICNetlistC")
