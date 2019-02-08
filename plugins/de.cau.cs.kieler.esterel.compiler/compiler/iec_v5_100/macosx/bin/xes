@@ -1,0 +1,61 @@
+#! /bin/sh
+# Shell wrapper for XES
+case "$OSTYPE" in
+
+    cygwin32)
+	# Cygwin 32 NT
+	if [ -z "$ESTEREL" ] 
+	then
+	    echo "*** ESTEREL environment variable is unset"
+	    exit 1
+	fi
+	# Cygwin bash requires UNC path, else path drive: is
+	# considered as relative. But, tclsh requires drive and slashes.
+	ESTEREL=`echo $ESTEREL | sed -e 's![\\]!/!g' `
+	TCLSH=`echo $ESTEREL/tcltk/bin/tclsh82.exe | sed -e 's!^\([a-zA-Z]\):!//\1!'`
+	PATH=`echo $ESTEREL/tcltk/bin | sed -e 's!^\([a-zA-Z]\):!//\1!'`:$PATH
+	export PATH
+	;;
+
+    *)
+	# Other Unixes
+	if [ -z "$ESTEREL" ]
+	then
+	    ESTEREL=/Users/gerard.berry/Esterel/esterelv5_100/esterelv5_100.macos10_10
+	fi
+	TCLSH=tclsh
+	;;
+esac
+
+export ESTEREL
+
+TCL_LIBRARY=$ESTEREL/tcltk/lib/tcl8.6
+export TCL_LIBRARY
+
+TK_LIBRARY=$ESTEREL/tcltk/lib/tk8.6
+export TK_LIBRARY
+
+# Looking for xes.tcl
+if [ -z "$XES_LIBRARY_PATH" ]
+then
+   XES_TCL=$ESTEREL/lib/xes/xes.tcl
+else
+   XES_TCL=$XES_LIBRARY_PATH/xes.tcl
+   if [ ! -f "$XES_TCL" ]
+   then
+      XES_TCL=$ESTEREL/lib/xes/xes.tcl
+   fi
+fi
+
+if [ ! -f "$XES_TCL" ]
+then
+    XES_TCL=`dirname $0`/xes.tcl
+    if [ ! -f "$XES_TCL" ]
+    then
+        echo "*** Cannot find xes.tcl"
+        exit 1
+    fi
+fi
+
+
+exec "$TCLSH" "$XES_TCL" $*
