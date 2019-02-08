@@ -88,7 +88,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     protected String lastUri
     
-    override compile(String uri, String command, boolean inplace) {
+    override compile(String uri, String clientId, String command, boolean inplace) {
         var fileUri = URLDecoder.decode( uri, "UTF-8" );
         
         this.snapshotMap.put(uri, new LinkedList)
@@ -112,7 +112,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             new CompilationResults(this.snapshotMap.get(uri))
         ]
         result.thenRun [
-            didCompile(uri, command, null)
+            didCompile(uri, clientId, command, null)
         ].exceptionally [ throwable |
             LOG.error('Error while running additional compilation effects.', throwable)
             return null
@@ -124,13 +124,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
      * such as requesting a new diagram for the previously shown snapshot.
      */
-    protected def didCompile(String uri, String command, CancelIndicator cancelIndicator) {
+    protected def didCompile(String uri, String clientId, String command, CancelIndicator cancelIndicator) {
         println("Did compile" + uri)
         if (command.equals(lastCommand) && uri.equals(lastUri)) {
-            showSnapshot(uri, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
+            showSnapshot(uri, clientId, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
             val newIndex = this.objectMap.get(uri).size - 1
-            showSnapshot(uri, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
+            showSnapshot(uri, clientId, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
             currentIndex = newIndex
         }
         lastUri = uri
@@ -169,10 +169,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         return context
     }
     
-    override show(String uri, int index) {
+    override show(String uri, String clientId, int index) {
         return requestManager.runRead[ cancelIndicator |
             currentIndex = index
-            showSnapshot(uri, this.objectMap.get(uri).get(index), cancelIndicator, false)
+            showSnapshot(uri, clientId, this.objectMap.get(uri).get(index), cancelIndicator, false)
 //            null
         ]
     }
