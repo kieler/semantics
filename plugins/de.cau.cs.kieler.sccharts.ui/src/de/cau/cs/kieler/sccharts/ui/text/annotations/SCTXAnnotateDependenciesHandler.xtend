@@ -15,8 +15,6 @@ package de.cau.cs.kieler.sccharts.ui.text.annotations
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
-import com.google.inject.Injector
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import org.eclipse.xtext.ui.editor.utils.EditorUtils
 import org.eclipse.xtext.ui.editor.XtextEditor
 import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
@@ -24,7 +22,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import org.eclipse.xtext.resource.XtextResource
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.compilation.CompilationSystem
@@ -35,8 +32,6 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import com.google.common.collect.HashMultimap
 
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
-import de.cau.cs.kieler.annotations.registry.PragmaRegistry
-import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -50,21 +45,16 @@ import de.cau.cs.kieler.annotations.registry.AnnotationsType
  */
 class SCTXAnnotateDependenciesHandler extends AbstractHandler {
     
-    extension PragmaExtensions pragmaExt = new PragmaExtensions
     extension AnnotationsExtensions annotationExt = new AnnotationsExtensions
     
     /** ID of the annotate command */
     public static final String SCTX_ANNOTATE_DEPENDENCIES =
             "de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies";
             
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
-    private val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.SCG"
-    private val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.dependency"            
+    static val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
+    static val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.SCG"
+    static val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.dependency"            
 
-    /** The SCTX injector */
-    private static Injector injector =
-            new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration();
-            
             
     public static val DEPENDENCY_TEST_ANNOTATION = AnnotationsRegistry.register("dependencies", AnnotationsType.SYSTEM, StringAnnotation, SCCharts, 
         "Annotates dependencies inside the model for testing purposes.")
