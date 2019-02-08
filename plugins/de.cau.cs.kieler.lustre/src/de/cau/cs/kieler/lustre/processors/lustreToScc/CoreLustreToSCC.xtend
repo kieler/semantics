@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.lustre.extensions.LustreTransformationExtension
 import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ATransition
 import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
@@ -43,28 +44,37 @@ import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 import de.cau.cs.kieler.lustre.lustre.PackBody
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 
 /**
  * Basic class for Lustre to ScCharts transformations.
  * 
  * The following steps are taken here: 
  *  - create root state for each node
- *  - extend state with another state containing constant declarations
+ *      - for automatons within node: interpret like ScCharts automatons
+ *  - extend state with another state containing constant declarations (if existent)
  * 
  * @author lgr
  * 
  */
 abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
+
+    public static final String DATAFLOW_REGION_PREFIX = "df"
+    public static final String CONTROLFLOW_REGION_PREFIX = "cf"
 
     // TODO: This should be configurable for the user.    
     public static boolean USE_SIGNALS_FOR_CLOCKED_VARIABLES = true
@@ -77,12 +87,16 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     @Inject extension LustreTransformationExtension
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsTransitionExtensions
 
     // M2M mappings
     protected HashMap<ValuedObject, ValuedObject> lustreToScchartsValuedObjectMap = new HashMap
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
     protected HashMap<AState, State> lustreStateToScchartsStateMap = new HashMap
+    protected int controlflowRegionCounter
 
     override process() {
         USE_SIGNALS_FOR_CLOCKED_VARIABLES = false
@@ -90,9 +104,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         model = model.transform
     }
 
-    def SCCharts transform(LustreProgram p) {
-        nodeToStateMap.clear
+    abstract protected def void processEquation(Equation equation, State state);
 
+    def SCCharts transform(LustreProgram p) {
         var scchartsProgram = createSCChart
 
         if (p.includes !== null) {
@@ -109,14 +123,76 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         scchartsProgram
     }
+    
+    protected def reset() {
+        lustreToScchartsValuedObjectMap.clear
+        nodeToStateMap.clear
+        lustreStateToScchartsStateMap.clear
+        controlflowRegionCounter = 0
+    }
+    
+    protected def processAssertion(Expression assertion, State state) {
+        // TODO: Add assertion as model checker property
+    }
 
-    protected def void reset();
-
-    abstract protected def void processEquation(Equation equation, State state);
-
-    abstract protected def void processAutomaton(Automaton automaton, State state);
-
-    abstract protected def void processAssertion(Expression assertion, State state);
+    protected def void processAutomaton(Automaton automaton, State state) {
+        var controlflowRegion = createControlflowRegion(CONTROLFLOW_REGION_PREFIX + controlflowRegionCounter)
+        state.regions += controlflowRegion
+        
+        var initialState = true;
+        for (AState lusState : automaton.states) {
+            var newState = createState => [
+                name = lusState.name
+            ]
+            if (initialState) {
+                newState.initial = true
+                initialState = false
+            }
+            controlflowRegion.states += newState
+            lustreStateToScchartsStateMap.put(lusState, newState)
+        }
+        
+        for (AState lusState : automaton.states) {
+            processState(lusState, lustreStateToScchartsStateMap.get(lusState))
+        }
+    }
+    
+    protected def processState(AState lusState, State state) {
+        
+        for (Assignment equation: lusState.equations) {
+            processEquation(equation as Equation, state)
+        }
+        
+        for (Expression assertion : lusState.assertions) {
+            processAssertion(assertion, state)
+        }
+        
+        for (Automaton automaton : lusState.automatons) {
+            processAutomaton(automaton, state)
+        }
+        
+        for (ATransition transition : lusState.transitions) {
+            processTransition(transition, state)
+        }
+    }    
+    
+    protected def processTransition(ATransition transition, State source) {
+        var newTransition = createTransition => [
+            sourceState = source
+            targetState = lustreStateToScchartsStateMap.get(transition.nextState)
+        ]
+        
+        var trigger = transformExpression(transition.condition, source)
+        if (trigger !== null) {
+            newTransition.trigger = trigger
+        }
+        if (transition.strong) {
+            newTransition.preemption = PreemptionType.STRONGABORT
+        }
+        if (transition.history) {
+            newTransition.history = HistoryType.DEEP
+        }        
+    }
 
     protected def processPackBody(PackBody packBody, SCCharts scchartsProgram) {
 
@@ -276,21 +352,20 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected def Expression transformExpression(Expression kExpression, State state) {
         if (kExpression !== null) {
             if (kExpression instanceof OperatorExpression) {
-
-                var subExpressionList = new Stack<Expression>
+                val subExpressionList = new Stack<Expression>
                 for (var i = 0; i < kExpression.subExpressions.length; i++) {
                     var kSubExpression = kExpression.subExpressions.get(i)
                     var convertedKSubExpression = kSubExpression.transformExpression(state)
                     subExpressionList.push(convertedKSubExpression)
                 }
 
-                var OperatorExpression convertedExpression
+                var Expression convertedExpression
                 switch (kExpression.operator) {
-                    case CURRENT: {
-                        processCurrentExpression(kExpression, subExpressionList, state)
-                    }
                     case WHEN: {
                         processWhenExpression(kExpression, subExpressionList, state)
+                    }
+                    case CURRENT: {
+                        convertedExpression = createCurrentExpression(kExpression, subExpressionList, state)
                     }
                     case FBY: {
                         convertedExpression = createFollowedByExpression(subExpressionList)
@@ -315,8 +390,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                         convertedExpression = createPreCascadedExpression(subExpressionList.head)
                     }
                     default: {
-                        convertedExpression = createOperatorExpression(kExpression.operator)
-                        convertedExpression.subExpressions += subExpressionList
+                        convertedExpression = createOperatorExpression(kExpression.operator) => [
+                            subExpressions.addAll(subExpressionList)
+                        ]
                     }
                 }
                 return convertedExpression
@@ -392,7 +468,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         return null
     }
 
-    protected def processCurrentExpression(Expression kExpression, Stack<Expression> subExpressionList, State state) {
+    protected def createCurrentExpression(Expression kExpression, Stack<Expression> subExpressionList, State state) {
         // If it is a signal, take the value, else take the expression and do nothing
         val realExpression = subExpressionList.get(0)
 
@@ -409,33 +485,10 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     }
 
     protected def processReferenceCall(ReferenceCall kExpression, State state) {
-        var container = kExpression.eContainer
-        while (container instanceof Expression || container instanceof Parameter) {
-            container = container.eContainer
-        }
-
-        if (!(container instanceof Equation)) {
-            return null
-        }
-
-        val equation = container as Equation
-        var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
-
-        // ----- 1. Add a reference declaration for the calling expression
+        
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
-        if (!lustreStateToScchartsStateMap.containsKey(kExpression.valuedObject)) {
-            val calledValuedObject = createValuedObject => [
-                name = "_ref" + calledState.name
-                uniqueName
-            ]
-            lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
-            val referenceDeclaration = createReferenceDeclaration => [
-                reference = calledState
-                valuedObjects += calledValuedObject
-            ]
-            state.declarations += referenceDeclaration
-        }
-        val calledValuedObject = lustreToScchartsValuedObjectMap.get(kExpression.valuedObject)
+
+        addReferenceDeclaration(kExpression, state)
 
         // Extract inputs and outputs of the sccharts state
         var inputValuedObjects = new ArrayList<ValuedObject>
@@ -453,6 +506,36 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 }
             }
         }
+        
+        linkRefernceInput(kExpression, state, inputValuedObjects)
+        return linkReferenceOutput(kExpression, state, outputValuedObjects)
+    }
+    
+    protected def addReferenceDeclaration(ReferenceCall kExpression, State state) {
+        // ----- 1. Add a reference declaration for the calling expression
+        val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
+        if (!lustreStateToScchartsStateMap.containsKey(kExpression.valuedObject)) {
+            val calledValuedObject = createValuedObject => [
+                name = "_ref" + calledState.name
+                uniqueName
+            ]
+            lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
+            val referenceDeclaration = createReferenceDeclaration => [
+                reference = calledState
+                valuedObjects += calledValuedObject
+            ]
+            state.declarations += referenceDeclaration
+        }
+    }
+    
+    protected def linkRefernceInput(ReferenceCall kExpression, State state, ArrayList<ValuedObject> inputValuedObjects) {
+        
+        if (state.regions.filter[it instanceof DataflowRegion].isEmpty) {
+            state.regions += createDataflowRegion(DATAFLOW_REGION_PREFIX).uniqueName
+        }
+        var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
+        
+        val calledValuedObject = lustreToScchartsValuedObjectMap.get(kExpression.valuedObject)
 
         // ----- 2. Add equations feeding the reference declaration with the right input
         for (var i = 0; i < kExpression.parameters.length && i < inputValuedObjects.length; i++) {
@@ -461,7 +544,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
             val leftSideReference = calledValuedObject.reference
             leftSideReference.subReference = stateInput.reference
-            val rightSide = kExpressionParameter.expression.transformExpression(state)
+            val rightSide = kExpressionParameter.expression.transformExpression(dfRegion.eContainer as State)
 
             var dataflowAssignment = createAssignment => [
                 reference = leftSideReference
@@ -470,7 +553,24 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             ]
             dfRegion.equations += dataflowAssignment
         }
+    }
+    
+    protected def linkReferenceOutput(ReferenceCall kExpression, State state, ArrayList<ValuedObject> outputValuedObjects) {
+        val calledValuedObject = lustreToScchartsValuedObjectMap.get(kExpression.valuedObject)
+        var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
+        
+        // Extract containing equation of the expression
+        var container = kExpression.eContainer
+        while (container instanceof Expression || container instanceof Parameter) {
+            container = container.eContainer
+        }
 
+        if (!(container instanceof Equation)) {
+            return null
+        }
+
+        val equation = container as Equation
+        
         // ----- 3. Add equations linking the reference with outputs
         if (equation.references.empty) {
             // Only one output
@@ -501,6 +601,5 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
             }
         }
-        return null
     }
 }
