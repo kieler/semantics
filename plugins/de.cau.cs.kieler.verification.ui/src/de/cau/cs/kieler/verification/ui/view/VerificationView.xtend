@@ -28,12 +28,12 @@ import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.ui.SimulationUI
-import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
 import de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor
+import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
 import de.cau.cs.kieler.verification.ui.VerificationUiPlugin
 import java.io.File
 import java.util.List
@@ -70,7 +70,6 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
 
 /** 
  * @author aas
@@ -444,8 +443,7 @@ quit'''
             try {
                 // Start a simulation, and when the simulation is started, load the trace from the counterexample
                 val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
-                SimulationUI.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
-                SimulationUI.registerObserver(new SimulationListener() {
+                val addCounterexampleSimulationListener = new SimulationListener() {
                     
                     override update(SimulationContext ctx, SimulationEvent e) {
                         if(e instanceof SimulationControlEvent) {
@@ -453,7 +451,9 @@ quit'''
                                 val counterexampleLocation = property.counterexampleFile.location.toOSString
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
                                 SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true, true)
-                                DataPoolView.bringToTopIfOpen
+                                // The listener did what it should and must be removed now.
+                                // Otherwise it will add the counterexample to following simulations as well.
+                                SimulationUI.removeObserver(this)
                             }    
                         }
                     }
@@ -462,7 +462,9 @@ quit'''
                         return "Model Checking View"
                     }
                     
-                })
+                }
+                SimulationUI.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
+                SimulationUI.registerObserver(addCounterexampleSimulationListener)
 
             } catch (Exception e) {
                 e.showInDialog
