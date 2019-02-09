@@ -61,7 +61,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             try {
                 throwIfCanceled
                 property.modelCheckerModelFile = smvFile
-                property.status = VerificationPropertyStatus.RUNNING
+                property.runningTaskDescription = "Running model checker..."
                 compilationContext.notify(new VerificationPropertyChanged(property))
                 // Calling the model checker is possibly long running
                 val processOutput = runModelChecker(smvFile, property)
@@ -129,6 +129,8 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     
     private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
+        property.runningTaskDescription = "Parsing model checker output..."
+        compilationContext.notify(new VerificationPropertyChanged(property))
         val interpreter = new NuxmvOutputInterpreter(processOutput)
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head

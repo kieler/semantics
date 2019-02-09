@@ -19,11 +19,8 @@ import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
-import java.util.List
 import java.util.Map
 
 /**
@@ -66,6 +63,6 @@ class SmvCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
         val module = injector.getInstance(SmvCodeGeneratorModule)
         return module
     }
-
+    
 }
 

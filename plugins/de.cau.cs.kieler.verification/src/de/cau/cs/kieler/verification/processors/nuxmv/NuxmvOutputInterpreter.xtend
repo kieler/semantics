@@ -77,7 +77,7 @@ class NuxmvOutputInterpreter extends LineBasedParser {
                 parseTarget = ParseTarget.COUNTEREXAMPLE
             } else {
                 // This should never happen
-                throw new Exception('''Inconsistent specification result state (line: «line»)''')
+                throw new Exception('''Inconsistent specification result state (expected true or false, but got line: «line»)''')
             }
         } else if (parseTarget == ParseTarget.COUNTEREXAMPLE) {
             // Find the start of the next state

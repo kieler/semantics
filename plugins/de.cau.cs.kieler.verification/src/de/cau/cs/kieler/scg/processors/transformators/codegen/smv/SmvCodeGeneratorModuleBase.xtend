@@ -24,6 +24,10 @@ abstract class SmvCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
     public static val CONDITIONAL_GUARD_PREFIX = "_cg"
     public static val GO_GUARD = "_GO"
     
+    override String getLineCommentToken() {
+        return "--";
+    }
+    
     protected def boolean isGuard(ValuedObject valuedObject) {
         return valuedObject.name.startsWith(GUARD_PREFIX)
     }
@@ -34,9 +38,5 @@ abstract class SmvCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
 
     protected def boolean isPreGuard(ValuedObject valuedObject) {
         return valuedObject.name.startsWith(PRE_GUARD_PREFIX)
-    }
-    
-    override String getLineCommentToken() {
-        return "--";
     }
 }

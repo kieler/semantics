@@ -20,11 +20,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import java.util.List
-import org.eclipse.xtend.lib.annotations.Accessors
+
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.VerificationPropertyCodeGeneratorExtensions.*
 
 /**
  * Root SMV Code Generator Module
@@ -55,6 +56,12 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
         addPreGuardsToVariableStore
+        
+        // Update current task of verification properties
+        for(property : getVerificationProperties) {
+            property.runningTaskDescription = "Generating model checker code..."
+            processorInstance.compilationContext.notifyObservers(new VerificationPropertyChanged(property))
+        }
     }
     
     override generateInit() {

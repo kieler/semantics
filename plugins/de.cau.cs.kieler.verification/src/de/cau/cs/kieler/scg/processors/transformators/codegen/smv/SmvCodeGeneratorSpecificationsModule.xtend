@@ -12,14 +12,11 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.VerificationProperty
-import java.util.Comparator
-import de.cau.cs.kieler.verification.VerificationPropertyType
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
-import java.util.List
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.VerificationPropertyCodeGeneratorExtensions.*
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
 
 /**
  * @author aas
@@ -51,10 +48,6 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
     override generateDone() {
     }
 
-    private def List<VerificationProperty> getVerificationProperties() {
-        return processorInstance.compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
-    }
-    
     private def String getSmvSpecName(VerificationProperty property) {
         switch(property.type) {
             case INVARIANT : return "INVARSPEC NAME"

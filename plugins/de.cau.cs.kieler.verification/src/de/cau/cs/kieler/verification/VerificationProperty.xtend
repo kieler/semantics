@@ -25,6 +25,12 @@ class VerificationProperty {
     @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
     
     /**
+     * Description which task is currently performed for verification of this property.
+     * This values is only of interest when the status is RUNNING.
+     */
+    @Accessors private String runningTaskDescription = ""
+    
+    /**
      * Pointer to a ktrace file with the counterexample.
      * This is only relevant if the property has the status FAILED.
      */

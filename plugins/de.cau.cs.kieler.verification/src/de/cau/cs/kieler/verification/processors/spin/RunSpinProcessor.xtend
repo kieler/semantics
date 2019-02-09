@@ -66,7 +66,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         try {
             throwIfCanceled
             property.modelCheckerModelFile = pmlFile
-            property.status  = VerificationPropertyStatus.RUNNING
+            property.runningTaskDescription = "Running model checker..."
             compilationContext.notify(new VerificationPropertyChanged(property))
             // Calling the model checker is possibly long running
             val processOutput = runModelChecker(pmlFile, property)

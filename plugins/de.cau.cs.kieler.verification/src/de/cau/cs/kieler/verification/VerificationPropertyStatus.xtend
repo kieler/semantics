@@ -17,7 +17,6 @@ package de.cau.cs.kieler.verification
  */
 enum VerificationPropertyStatus {
     PENDING,
-    COMPILING,
     RUNNING,
     PASSED,
     FAILED,

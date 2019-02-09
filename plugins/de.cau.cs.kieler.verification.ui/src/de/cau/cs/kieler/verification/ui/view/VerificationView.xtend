@@ -303,8 +303,13 @@ quit'''
                 switch(property.status) {
                     case null,
                     case PENDING : return ""
-                    case COMPILING : return "Compiling..."
-                    case RUNNING : return "Running..."
+                    case RUNNING : {
+                        if(property.runningTaskDescription.isNullOrEmpty) {
+                            return "Running..."    
+                        } else {
+                            return property.runningTaskDescription
+                        }
+                    }
                     case FAILED : return "FAILED"
                     case PASSED : return "PASSED"
                     case EXCEPTION : {
@@ -529,6 +534,14 @@ quit'''
                 verificationContext = null
             }
         ]
+        
+        // Update task description of the properties 
+        for(property : verificationProperties) {
+            property.runningTaskDescription = "Compiling..."
+            property.status = VerificationPropertyStatus.RUNNING
+            viewer.update(property, null)
+        }
+        
         verificationContext.compileAsynchronously
     }
     
