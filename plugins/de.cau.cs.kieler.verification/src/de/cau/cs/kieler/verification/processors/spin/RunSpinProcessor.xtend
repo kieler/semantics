@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
+import de.cau.cs.kieler.verification.VerificationPropertyType
 
 /**
  * @author aas
@@ -82,7 +83,18 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     private def String runModelChecker(IFile pmlFile, VerificationProperty property) {
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(pmlFile.parent.location.toOSString))
-        val spinCommand = #["spin", "-run", "-a", pmlFile.name]
+        // Create spin command for the property.
+        // -bfs (breadth-first-search) cannot be used together with -a (search acceptance cycles, e.g. for liveness).
+        // Thus -bfs is used only for invariants.
+        // example: spin -run -a myfile.pml
+        val spinCommand = newArrayList("spin", "-run")
+        if(property.type == VerificationPropertyType.INVARIANT) {
+            spinCommand += "-bfs"    
+        } else if(property.type == VerificationPropertyType.LTL) {
+            spinCommand += "-a"    
+        }
+        spinCommand += pmlFile.name
+        
         processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
         val process = processBuilder.start
