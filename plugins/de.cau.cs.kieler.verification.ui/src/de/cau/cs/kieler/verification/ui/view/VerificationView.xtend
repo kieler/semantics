@@ -483,7 +483,7 @@ quit'''
         }
         startVerification(propertyAnalyzerContext.originalModel)
     }
-    
+     
     private def void startVerificationOfModelInDiagram() {
         val diagramModel = currentDiagramModel
         if(diagramModel === null || !(diagramModel instanceof EObject)) {
@@ -494,6 +494,16 @@ quit'''
     
     private def void stopVerification() {
         if(verificationContext !== null) {
+            if(viewer.input !== null) {
+                val properties = viewer.input as List<VerificationProperty>
+                for(property : properties) {
+                    if(property.status == VerificationPropertyStatus.RUNNING) {
+                        property.status = VerificationPropertyStatus.PENDING
+                        viewer.update(property, null)    
+                    }
+                }
+            }
+            
             verificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
             verificationContext = null
         }
@@ -529,7 +539,8 @@ quit'''
         verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_COMMANDS, customSmvCommandsList)
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
-                Display.getDefault().asyncExec([ viewer.update(arg.changedProperty, null) ])    
+                val property = arg.changedProperty
+                Display.getDefault().asyncExec([ viewer.update(property, null) ])    
             } else if(arg instanceof CompilationFinished) {
                 verificationContext = null
             }

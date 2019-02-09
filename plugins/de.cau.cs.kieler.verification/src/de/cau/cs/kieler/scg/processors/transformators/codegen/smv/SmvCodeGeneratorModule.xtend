@@ -60,7 +60,7 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
         // Update current task of verification properties
         for(property : getVerificationProperties) {
             property.runningTaskDescription = "Generating model checker code..."
-            processorInstance.compilationContext.notifyObservers(new VerificationPropertyChanged(property))
+            processorInstance.compilationContext.notify(new VerificationPropertyChanged(property))
         }
     }
     
