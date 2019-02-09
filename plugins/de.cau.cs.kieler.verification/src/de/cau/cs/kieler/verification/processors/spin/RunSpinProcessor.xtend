@@ -12,8 +12,11 @@
  */
  package de.cau.cs.kieler.verification.processors.spin
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -23,9 +26,6 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
-import com.google.common.io.Files
-import java.nio.charset.Charset
-import com.google.common.base.Charsets
 
 /**
  * @author aas
@@ -109,16 +109,20 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     
     private def void updateVerificationResult(IFile pmlFile, IFile processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
+        property.updateTaskDescriptionAndNotify("Parsing model checker output...")
         val spinOutputInterpreter = new SpinOutputInterpreter(processOutput)
         if(spinOutputInterpreter.wroteTrail) {
             val trailFile = getFileInTemporaryProject(getTrailFilePath(property))
             val trailOutput = runSpinTrailCommand(pmlFile, property, trailFile)
             property.processOutputFile = trailFile
+            property.updateTaskDescriptionAndNotify("Parsing model checker counterexample...")
             val trailInterpreter = new SpinTrailInterpreter(trailOutput)
             val counterexample = trailInterpreter.counterexample
             if(counterexample !== null) {
                 val store = VariableStore.get(compilationContext.startEnvironment)
-                val ktrace = counterexample.getKtrace(store)
+                property.updateTaskDescriptionAndNotify("Saving KTrace...")
+                val createCounterexampleWithOutputs = compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS)
+                val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
                 val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
                 property.fail(ktraceFile)
             } else {
@@ -140,5 +144,10 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     
     private def IPath getTrailFilePath(VerificationProperty property) {
         return getOutputFile(property, ".pml.trail.log")
+    }
+    
+    private def void updateTaskDescriptionAndNotify(VerificationProperty property, String description) {
+        property.runningTaskDescription = description
+        compilationContext.notify(new VerificationPropertyChanged(property))
     }
 }

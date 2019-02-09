@@ -35,7 +35,7 @@ public class VerificationPropertyCounterexample {
         this.spec = spec
     }
     
-    public def String getKtrace(VariableStore store) {
+    public def String getKtrace(VariableStore store, boolean includeOutputs) {
         val sb = new StringBuilder()
         for(stateIndexPair : states.indexed) {
             val index = stateIndexPair.key
@@ -48,7 +48,7 @@ public class VerificationPropertyCounterexample {
                 if(variable.isInput(store)) {
                     inputVariableMapping += '''«variable» = «expression.toKExpression» '''
                 }
-                if(variable.isOutput(store)) {
+                if(includeOutputs && variable.isOutput(store)) {
                     outputVariableMapping += '''«variable» = «expression.toKExpression» '''
                 }
             }
@@ -58,7 +58,7 @@ public class VerificationPropertyCounterexample {
             }
             sb.append(inputVariableMapping)
             if(!outputVariableMapping.isNullOrEmpty) {
-                sb.append("=> ").append(outputVariableMapping)
+                sb.append('''=> «outputVariableMapping»''')
             }
             if(loopStartStateIndex >= 0 && index == states.size - 1) {
                 sb.append('''goto «LOOP_START_KTRACE_LABEL_NAME»''')

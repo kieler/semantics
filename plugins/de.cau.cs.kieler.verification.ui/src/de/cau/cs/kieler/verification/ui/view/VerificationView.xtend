@@ -70,6 +70,7 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
+import org.eclipse.jface.preference.IPreferenceStore
 
 /** 
  * @author aas
@@ -91,6 +92,7 @@ class VerificationView extends ViewPart {
     private static val RUN_COUNTEREXAMPLE_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/rerunFailed.png")
     
     private static val CUSTOM_SMV_COMMANDS_PREF_STORE_ID = "customSmvCommands"
+    private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
     
     private var CompilationContext propertyAnalyzerContext
     private var CompilationContext verificationContext
@@ -188,7 +190,7 @@ quit'''
             }
         }
         
-        val menuHelpAction = new Action("Show Controls") {
+        val openHelpAction = new Action("Show Controls") {
             override run() {
                 val title = "Controls for the Verification View"
                 val message = "Space : Start/stop verification\n"
@@ -196,14 +198,22 @@ quit'''
                 dialog.open
             }
         }
-         
+        
+        val writeOutputsToCounterexampleAction = new Action("Create counterexamples with outputs", IAction.AS_CHECK_BOX) {
+            override run() {
+                setCreateCounterexamplesWithOutputs(isChecked)
+            }
+        }
+        writeOutputsToCounterexampleAction.checked = getCreateCounterexamplesWithOutputs
+        
         getViewSite().getActionBars().getMenuManager() => [
             add(openLogAction)
             add(openCounterexampleAction)
             add(openModelCheckerFileAction)
             add(startVerificationOfModelInDiagramAction)
             add(openEditSmvCommandsDialogAction)
-            add(menuHelpAction)
+            add(writeOutputsToCounterexampleAction)
+            add(openHelpAction)
         ]
     }
     
@@ -535,6 +545,7 @@ quit'''
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, modelFile)
+        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, getCreateCounterexamplesWithOutputs)
         val customSmvCommandsList = customSmvCommands.split("\n").toList
         verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_COMMANDS, customSmvCommandsList)
         verificationContext.addObserver[ Observable o, Object arg |
@@ -568,18 +579,22 @@ quit'''
     }
     
     private def void toggleVerificationStartStop() {
-        if(verificationContext !== null) {
-            stopVerification()    
-        } else {
-            startVerification()
-        }
+        startVerification()
+    }
+    
+    private def void setCreateCounterexamplesWithOutputs(boolean value) {
+        preferenceStore.setValue(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, value)
+    }
+    
+    private def boolean getCreateCounterexamplesWithOutputs() {
+        preferenceStore.setDefault(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
+        return preferenceStore.getBoolean(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID)
     }
     
     private def String getCustomSmvCommands() {
-        val store = VerificationUiPlugin.instance.preferenceStore
         val defaultCommands = RunNusmvProcessor.DEFAULT_INTERACTIVE_COMMANDS.join("\n")
-        store.setDefault(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, defaultCommands)
-        return store.getString(CUSTOM_SMV_COMMANDS_PREF_STORE_ID)
+        preferenceStore.setDefault(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, defaultCommands)
+        return preferenceStore.getString(CUSTOM_SMV_COMMANDS_PREF_STORE_ID)
     }
     
     private def void storeCustomSmvCommands(String customSmvCommands) {
@@ -591,5 +606,9 @@ quit'''
         e.printStackTrace
         StatusManager.getManager().handle(new Status(IStatus.ERROR,
             VerificationUiPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
+    }
+    
+    private def IPreferenceStore getPreferenceStore() {
+        return VerificationUiPlugin.instance.preferenceStore
     }
 }

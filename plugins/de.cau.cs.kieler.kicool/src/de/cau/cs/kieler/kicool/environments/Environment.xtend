@@ -117,9 +117,12 @@ class Environment extends EnvironmentPropertyHolder {
     
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_COMMANDS = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvCommands")
+        
+    public static val IProperty<Boolean> CREATE_COUNTEREXAMPLES_WITH_OUTPUTS =
+        new Property<Boolean>("de.cau.cs.kieler.kicool.createCounterexamplesWithOutputs")
     
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
-             
+    
     new() {
     }
     
@@ -182,6 +185,5 @@ class Environment extends EnvironmentPropertyHolder {
         }
         
         return text.toString
-    }    
-  
+    }
 }

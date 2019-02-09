@@ -129,14 +129,15 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     
     private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
-        property.runningTaskDescription = "Parsing model checker output..."
-        compilationContext.notify(new VerificationPropertyChanged(property))
+        property.updateTaskDescriptionAndNotify("Parsing model checker output...")
         val interpreter = new NuxmvOutputInterpreter(processOutput)
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
         if(counterexample !== null && property.matches(counterexample.spec)) {
             val store = VariableStore.get(compilationContext.startEnvironment)
-            val ktrace = counterexample.getKtrace(store)
+            property.updateTaskDescriptionAndNotify("Saving KTrace...")
+            val createCounterexampleWithOutputs = compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS)
+            val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
             val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
             property.fail(ktraceFile)    
         } else if(passedSpec !== null && property.matches(passedSpec)) {
@@ -170,5 +171,10 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             it.replace(PROPERTY_NAME_PLACEHOLDER, property.name.toIdentifier)
               .trim
         ]
+    }
+    
+    private def void updateTaskDescriptionAndNotify(VerificationProperty property, String description) {
+        property.runningTaskDescription = description
+        compilationContext.notify(new VerificationPropertyChanged(property))
     }
 }
