@@ -32,13 +32,13 @@ class NuxmvOutputInterpreter extends LineBasedParser {
     private NuxmvCounterexampleState currentCounterexampleState
     private ParseTarget parseTarget = ParseTarget.SPEC_RESULT
 
-    private static val SPECIFICATION_RESULT_PATTERN = Pattern.compile('''-- (specification|invariant) (.*) is (true|false)''')
-    private static val STATE_PATTERN = Pattern.compile('''-> State:(.*)<-''')
-    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)''')
-    private static val LOOP_START_PATTERN = Pattern.compile('''-- Loop starts here''')
-    private static val ISSUE_IN_FILE_PATTERN = Pattern.compile('''(.*)file(.*): line (\d+):(.*)''')
-    private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile('''nuXmv terminated by a signal''')
-        
+    private static val SPECIFICATION_RESULT_PATTERN = Pattern.compile('''.*-- (specification|invariant) (.*) is (true|false)''')
+    private static val STATE_PATTERN = Pattern.compile('''.*-> State:(.*)<-''')
+    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''.*([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)''')
+    private static val LOOP_START_PATTERN = Pattern.compile('''.*-- Loop starts here''')
+    private static val ISSUE_IN_FILE_PATTERN = Pattern.compile('''.*(.*)file(.*): line (\d+):(.*)''')
+    private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile('''.*nuXmv terminated by a signal''')
+    
     private enum ParseTarget {
         SPEC_RESULT,
         COUNTEREXAMPLE
