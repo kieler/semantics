@@ -73,11 +73,7 @@ public class VerificationPropertyCounterexample {
         states.add(currentState)
         return currentState
     }
-    
-    public def void setCurrentStateAsLoopStart() {
-        loopStartStateIndex = states.size
-    }
-    
+        
     public def int size() {
         return states.size
     }

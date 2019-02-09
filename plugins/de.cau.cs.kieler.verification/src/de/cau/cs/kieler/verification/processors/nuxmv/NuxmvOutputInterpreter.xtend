@@ -92,9 +92,13 @@ class NuxmvOutputInterpreter extends LineBasedParser {
                 } else {
                     val loopStartMatcher = LOOP_START_PATTERN.matcher(trimmedLine)
                     if(loopStartMatcher.matches) {
-                        // In the nuXmv output, the label is added before the state that starts the counterexample.
-                        // Thus, the next state that will be created has to be prepended with the loop_start label in ktrace.
-                        currentCounterexample.setCurrentStateAsLoopStart 
+                        // From the NuSMV manual:
+                        // " In the case of a looping trace, if the next state to be printed is the same
+                        // as the last state in the trace,
+                        // a line is printed stating that this is the point where the loop begins. "
+                        // --> first and last state of loop are the same. Thus loop in ktrace must start one tick later.
+                        // --> The state after the next starts the loop in the ktrace.
+                        currentCounterexample.loopStartStateIndex = currentCounterexample.size+1 
                     }
                 }
             }

@@ -83,7 +83,8 @@ class SpinTrailInterpreter extends LineBasedParser {
         // Find start of loop
         val loopStartMatcher = LOOP_START_PATTERN.matcher(trimmedLine)
         if(loopStartMatcher.matches) {
-            counterexample.setCurrentStateAsLoopStart
+            // Next state starts the loop
+            counterexample.loopStartStateIndex = counterexample.size
         }
     }
 }
