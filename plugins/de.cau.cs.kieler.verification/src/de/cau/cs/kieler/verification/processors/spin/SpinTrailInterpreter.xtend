@@ -12,23 +12,21 @@
  */
  package de.cau.cs.kieler.verification.processors.spin
 
-import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGeneratorModuleBase
+import de.cau.cs.kieler.verification.VerificationPropertyCounterexample
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGeneratorModuleBase
 
 /**
  * @author aas
  */
 class SpinTrailInterpreter extends LineBasedParser {
     
-    @Accessors(PUBLIC_GETTER) private SpinCounterexample counterexample
+    @Accessors(PUBLIC_GETTER) private VerificationPropertyCounterexample counterexample
     
     @Accessors(PUBLIC_GETTER) private String formulaName
     @Accessors(PUBLIC_GETTER) private String failedAssertion
-    
-    private SpinCounterexampleState currentCounterexampleState
     
     private static val LTL_SPEC_PATTERN = Pattern.compile('''ltl (.*): (.*)''')
     private static val FAILED_ASSERTION_PATTERN = Pattern.compile('''.*text of failed assertion: assert\((.*)\)''')
@@ -68,78 +66,24 @@ class SpinTrailInterpreter extends LineBasedParser {
         val tickEndMatcher = TICK_END_PATTERN.matcher(trimmedLine)
         if(tickStartMatcher.matches) {
             if(counterexample === null) {
-                counterexample = new SpinCounterexample()
+                counterexample = new VerificationPropertyCounterexample()
             }
-            currentCounterexampleState = new SpinCounterexampleState
-            counterexample.states.add(currentCounterexampleState)
+            counterexample.createNextState
         } else if(tickEndMatcher.matches) {
-            currentCounterexampleState = null
-        } else if(currentCounterexampleState !== null) {
+            counterexample.currentState = null
+        } else if(counterexample !== null && counterexample.currentState !== null) {
             val variableAssignmentMatcher = VARIABLE_ASSIGNMENT_PATTERN.matcher(trimmedLine)
             if(variableAssignmentMatcher.matches) {
                 val variable = variableAssignmentMatcher.group(1)
                 val expression = variableAssignmentMatcher.group(2)
-                currentCounterexampleState.variableMappings.put(variable, expression)
+                counterexample.currentState.variableMappings.put(variable, expression)
             }
         }
         
         // Find start of loop
         val loopStartMatcher = LOOP_START_PATTERN.matcher(trimmedLine)
         if(loopStartMatcher.matches) {
-            val index = counterexample.states.size
-            counterexample.loopStartStateIndex = index
+            counterexample.setCurrentStateAsLoopStart
         }
-    }
-    
-    public static class SpinCounterexample {
-        private val states = <SpinCounterexampleState>newArrayList
-        private var int loopStartStateIndex = -1
-        
-        private static val LOOP_START_KTRACE_LABEL_NAME = "loop_start"
-        
-        public def String getKtrace(VariableStore store) {
-            val sb = new StringBuilder()
-            for(stateIndexPair : states.indexed) {
-                val index = stateIndexPair.key
-                val state = stateIndexPair.value
-                var inputVariableMapping = ""
-                var outputVariableMapping = ""
-                for(variableMapping : state.variableMappings.entrySet) {
-                    val variable = variableMapping.key
-                    val expression = variableMapping.value
-                    if(variable.isInput(store)) {
-                        inputVariableMapping += '''«variable» = «expression» '''
-                    }
-                    if(variable.isOutput(store)) {
-                        outputVariableMapping += '''«variable» = «expression» '''
-                    }
-                }
-                
-                if(loopStartStateIndex >= 0 && index == loopStartStateIndex) {
-                    sb.append('''«LOOP_START_KTRACE_LABEL_NAME»:''').append("\n")
-                }
-                sb.append(inputVariableMapping)
-                if(!outputVariableMapping.isNullOrEmpty) {
-                    sb.append("=> ").append(outputVariableMapping)
-                }
-                if(loopStartStateIndex >= 0 && index == states.size - 1) {
-                    sb.append('''goto «LOOP_START_KTRACE_LABEL_NAME»''')
-                }
-                sb.append(";\n")
-            }
-            return sb.toString
-        }
-        
-        private static def boolean isInput(String variable, VariableStore store) {
-            return store?.variables?.get(variable)?.head?.isInput
-        }
-        
-        private static def boolean isOutput(String variable, VariableStore store) {
-            return store?.variables?.get(variable)?.head?.isOutput
-        }
-    }
-    
-    private static class SpinCounterexampleState {
-        private val variableMappings = <String,String>newHashMap
     }
 }

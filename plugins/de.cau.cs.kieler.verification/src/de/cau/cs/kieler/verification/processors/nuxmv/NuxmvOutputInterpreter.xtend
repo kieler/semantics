@@ -12,13 +12,13 @@
  */
  package de.cau.cs.kieler.verification.processors.nuxmv
 
-import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions
+import de.cau.cs.kieler.verification.VerificationPropertyCounterexample
+import de.cau.cs.kieler.verification.VerificationPropertyCounterexampleState
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
-
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toKExpression
 
 /**
  * @author aas
@@ -29,7 +29,6 @@ class NuxmvOutputInterpreter extends LineBasedParser {
     @Accessors(PUBLIC_GETTER) private val List<String> passedSpecs = newArrayList
     
     private NuxmvCounterexample currentCounterexample
-    private NuxmvCounterexampleState currentCounterexampleState
     private ParseTarget parseTarget = ParseTarget.SPEC_RESULT
 
     private static val SPECIFICATION_RESULT_PATTERN = Pattern.compile('''.*-- (specification|invariant) (.*) is (true|false)''')
@@ -65,7 +64,6 @@ class NuxmvOutputInterpreter extends LineBasedParser {
             // a specification result ends the last counterexample
             parseTarget = ParseTarget.SPEC_RESULT
             currentCounterexample = null
-            currentCounterexampleState = null
             
             val formula = specificationResultMatcher.group(2)
             val trueOrFalse = specificationResultMatcher.group(3)
@@ -83,21 +81,20 @@ class NuxmvOutputInterpreter extends LineBasedParser {
             // Find the start of the next state
             val stateMatcher = STATE_PATTERN.matcher(trimmedLine)
             if(stateMatcher.matches) {
-                currentCounterexampleState = new NuxmvCounterexampleState()
-                currentCounterexample.states.add(currentCounterexampleState)
+                currentCounterexample.createNextState
             } else {
                 val variableAssignmentMatcher = VARIABLE_ASSIGNMENT_PATTERN.matcher(trimmedLine)
                 if(variableAssignmentMatcher.matches) {
                     // Add this variable assignment to the current counterexample state
                     val variable = variableAssignmentMatcher.group(1)
                     val expression = variableAssignmentMatcher.group(2)
-                    currentCounterexampleState.variableMappings.put(variable, expression)
+                    currentCounterexample.currentState.variableMappings.put(variable, expression)
                 } else {
                     val loopStartMatcher = LOOP_START_PATTERN.matcher(trimmedLine)
                     if(loopStartMatcher.matches) {
                         // In the nuXmv output, the label is added before the state that starts the counterexample.
-                        // Thus, the next state that will be created has to be prepended with the loop_start label in ktrace. 
-                        currentCounterexample.loopStartStateIndex = currentCounterexample.states.size
+                        // Thus, the next state that will be created has to be prepended with the loop_start label in ktrace.
+                        currentCounterexample.setCurrentStateAsLoopStart 
                     }
                 }
             }
@@ -108,60 +105,14 @@ class NuxmvOutputInterpreter extends LineBasedParser {
         return counterexamples.map[it.spec].toList
     }
     
-    public static class NuxmvCounterexample {
-        @Accessors(PUBLIC_GETTER) private val String spec
-        private val states = <NuxmvCounterexampleState>newArrayList
-        private var int loopStartStateIndex = -1
-        
-        private static val LOOP_START_KTRACE_LABEL_NAME = "loop_start"
-        
-        new(String spec) {
-            this.spec = spec
-        }
-        
-        public def String getKtrace(VariableStore store) {
-            val sb = new StringBuilder()
-            for(stateIndexPair : states.indexed) {
-                val index = stateIndexPair.key
-                val state = stateIndexPair.value
-                var inputVariableMapping = ""
-                var outputVariableMapping = ""
-                for(variableMapping : state.variableMappings.entrySet) {
-                    val variable = variableMapping.key
-                    val expression = variableMapping.value
-                    if(variable.isInput(store)) {
-                        inputVariableMapping += '''«variable» = «expression.toKExpression» '''
-                    }
-                    if(variable.isOutput(store)) {
-                        outputVariableMapping += '''«variable» = «expression.toKExpression» '''
-                    }
-                }
-                
-                if(loopStartStateIndex >= 0 && index == loopStartStateIndex) {
-                    sb.append('''«LOOP_START_KTRACE_LABEL_NAME»:''').append("\n")
-                }
-                sb.append(inputVariableMapping)
-                if(!outputVariableMapping.isNullOrEmpty) {
-                    sb.append("=> ").append(outputVariableMapping)
-                }
-                if(loopStartStateIndex >= 0 && index == states.size - 1) {
-                    sb.append('''goto «LOOP_START_KTRACE_LABEL_NAME»''')
-                }
-                sb.append(";\n")
-            }
-            return sb.toString
-        }
-        
-        private static def boolean isInput(String variable, VariableStore store) {
-            return store?.variables?.get(variable)?.head?.isInput
-        }
-        
-        private static def boolean isOutput(String variable, VariableStore store) {
-            return store?.variables?.get(variable)?.head?.isOutput
-        }
-    }
+    public static class NuxmvCounterexample extends VerificationPropertyCounterexample{
     
-    private static class NuxmvCounterexampleState {
-        private val variableMappings = <String,String>newHashMap
+        new(String spec) {
+            super(spec)
+        }
+        
+        override toKExpression(String exp) {
+            return SmvCodeGeneratorExtensions.toKExpression(exp)
+        }
     }
 }
