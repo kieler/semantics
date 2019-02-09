@@ -12,8 +12,20 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.promela
 
+import com.google.inject.Inject
 import com.google.inject.Singleton
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
 
 /**
@@ -22,6 +34,55 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHR
  */
 @Singleton
 class PromelaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
+    
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExtDeclarationExtensions
+    
+    override dispatch CharSequence serializeHR(Assignment assignment) {
+        // TODO: only handling of ASSIGNOR and ASSIGNAND is different from base class. Is it possible to override smarter?
+        if (assignment.valuedObject !== null) {
+            var CharSequence assignmentText = ""
+            if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
+                assignmentText = serializeHR(assignment.expression)
+            }
+            var valuedObjectName = valuedObjectPrefix + assignment.valuedObject.name
+            if (!assignment.indices.nullOrEmpty) {
+                valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
+            }
+            if (assignment.expression instanceof TextExpression) {
+                assignmentText = (assignment.expression as TextExpression).serializeHR
+            }
+            var String assignmentStr
+            val isComplex = assignment.expression instanceof OperatorExpression
+            if (assignment.operator == AssignOperator::ASSIGNMIN) {
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = valuedObjectName + " = (" + valuedObjectName + " < " + assignmentText + ") ? " + valuedObjectName + " : " + assignmentText
+            } else if (assignment.operator == AssignOperator::ASSIGNMAX) {
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = valuedObjectName + " = (" + valuedObjectName + " > " + assignmentText + ") ? " + valuedObjectName + " : " + assignmentText
+            } else if (assignment.operator == AssignOperator::ASSIGNOR){
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = '''«valuedObjectName» = «valuedObjectName» || «assignmentText»''' 
+            } else if (assignment.operator == AssignOperator::ASSIGNAND){
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = '''«valuedObjectName» = «valuedObjectName» && «assignmentText»''' 
+            } else {
+                assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
+            }
+            return assignmentStr
+        } else if (assignment.expression instanceof TextExpression) {
+            return (assignment.expression as TextExpression).text
+        } else if (assignment.expression instanceof FunctionCall) {
+            return serialize(assignment.expression) 
+        }
+        else if (assignment.expression instanceof ReferenceCall) {
+            return (assignment.expression as ReferenceCall).serializeHR
+        } else if (assignment.expression instanceof PrintCall) {
+            return (assignment.expression as PrintCall).serializeHR
+        }
+    }
     
     override dispatch CharSequence serialize(ValueType valueType) {
         return valueType.literal
