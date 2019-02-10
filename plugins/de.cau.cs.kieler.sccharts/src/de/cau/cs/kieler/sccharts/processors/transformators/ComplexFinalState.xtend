@@ -209,6 +209,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
 
         // Modify all termination transitions by weak aborts
         for (termination : state.outgoingTransitions.filter[ isTermination ].toList) {
+            termination.setImmediate(termination.implicitlyImmediate)
             termination.setTypeWeakAbort
             termination.addTerminationCheck(termVariables)
         }

@@ -37,6 +37,7 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.DelayType
 
 /**
  * SCCharts Termination Transformation.
@@ -210,18 +211,18 @@ class Termination extends SCChartsProcessor implements Traceable {
         for (terminationTransition : terminationTransitions) {
             terminationTransition.setDefaultTrace
             
-            terminationTransition.preemption = PreemptionType::WEAKABORT
-            
-            // TODO: check if optimization is correct in all cases!
-            // We should NOT do this for conditional terminations!
-            if (terminationTransition.trigger === null) {
-                terminationTransition.setImmediate(true);
-            } else {
-                // A normal termination should immediately be trigger-able! (test 145) 
-                // if not a delayed-conditional termination!
-                terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
+            // Special handling of delay type.
+            // If the delay type is explicitly given it should be obeyed
+            // An undefined value results in an immediate transition if no trigger is given or
+            // a delayed transition if a trigger is present because condiontion are be default checked delayed
+            // See KISEMA-1314
+            if (terminationTransition.trigger === null && terminationTransition.delay === DelayType.DELAYED) {
+                // Delayed transiotins w/o trigger need one to be handeled correctly by the weak abort transformation
+                terminationTransition.trigger = TRUE
             }
+            terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
 
+            terminationTransition.setTypeWeakAbort
             terminationTransition.addTerminationCheck(termVariables)
         }
     }
