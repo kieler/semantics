@@ -72,7 +72,7 @@ class SCTXAnnotateDependenciesHandler extends AbstractHandler {
                 filter(DataDependency).toList
             
             // Remove previous test annotations and update the editor to avoid unnecessary blank lines.     
-            model.rootStates.head.annotations.removeIf[ name.equals(DEPENDENCY_TEST_ANNOTATION) ]
+            model.rootStates.head.annotations.removeIf[ name !== null && name.equals(DEPENDENCY_TEST_ANNOTATION) ]
             xtextEditor.updateEditor(model)
                             
             model.annotateSCCharts(dataDependencies)    
