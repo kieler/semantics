@@ -41,7 +41,7 @@ class PromelaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     @Inject extension KExtDeclarationExtensions
     
     override dispatch CharSequence serializeHR(Assignment assignment) {
-        // TODO: only handling of ASSIGNOR and ASSIGNAND is different from base class. Is it possible to override smarter?
+        // TODO: only handling of some operators is different from base class. Is it possible to override smarter?
         if (assignment.valuedObject !== null) {
             var CharSequence assignmentText = ""
             if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
@@ -68,6 +68,18 @@ class PromelaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
             } else if (assignment.operator == AssignOperator::ASSIGNAND){
                 if (isComplex) assignmentText = "(" + assignmentText + ")"
                 assignmentStr = '''«valuedObjectName» = «valuedObjectName» && «assignmentText»''' 
+            } else if (assignment.operator == AssignOperator::ASSIGNADD){
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = '''«valuedObjectName» = «valuedObjectName» + «assignmentText»''' 
+            } else if (assignment.operator == AssignOperator::ASSIGNSUB){
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = '''«valuedObjectName» = «valuedObjectName» - «assignmentText»''' 
+            } else if (assignment.operator == AssignOperator::ASSIGNMUL){
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = '''«valuedObjectName» = «valuedObjectName» * «assignmentText»''' 
+            } else if (assignment.operator == AssignOperator::ASSIGNDIV){
+                if (isComplex) assignmentText = "(" + assignmentText + ")"
+                assignmentStr = '''«valuedObjectName» = «valuedObjectName» / «assignmentText»''' 
             } else {
                 assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
             }
