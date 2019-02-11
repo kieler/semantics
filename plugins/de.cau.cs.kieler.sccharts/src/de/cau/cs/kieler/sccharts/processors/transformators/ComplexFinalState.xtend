@@ -38,6 +38,7 @@ import java.util.ArrayList
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.processors.transformators.Termination.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -90,6 +91,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsTransformationExtension
     @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
@@ -179,6 +181,12 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
             if (!allStatesFinal) {
                 val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
                 voStore.update(termVariable, SCCHARTS_GENERATED)
+                
+                // If no final state is immediatly reachable this term variable is never set in the first tick and the abort can be delayed
+                if (!region.states.filter[final].exists[immediatelyReachable]) {
+                    termVariable.addTagAnnotation(ANNOTATION_TERMINATION_DELAYED)
+                }
+                
                 state.createEntryAction.addAssignment(termVariable.createAssignment(FALSE))    
                 //termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
