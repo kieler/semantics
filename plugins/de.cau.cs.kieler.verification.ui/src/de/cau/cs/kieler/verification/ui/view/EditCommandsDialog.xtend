@@ -24,7 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 /** 
  * @author aas
  */
-class EditSmvCommandsDialog extends InputDialog {
+class EditCommandsDialog extends InputDialog {
     
     @Accessors SelectionListener selectionListener
     

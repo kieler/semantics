@@ -88,10 +88,17 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         // Thus -bfs is used only for invariants.
         // example: spin -run -a myfile.pml
         val spinCommand = newArrayList("spin", "-run")
-        if(property.type == VerificationPropertyType.INVARIANT) {
-            spinCommand += "-bfs"    
-        } else if(property.type == VerificationPropertyType.LTL) {
-            spinCommand += "-a"    
+        if(property.type == VerificationPropertyType.LTL) {
+            spinCommand += "-a"
+        }
+        
+        val customSpinCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_SPIN_COMMANDS)
+        if(!customSpinCommands.isNullOrEmpty) {
+            spinCommand.addAll(customSpinCommands.filter[!it.isNullOrEmpty])
+        }
+        if(property.type == VerificationPropertyType.LTL) {
+            // -bfs option is not allowed together with -a option, which is needed for LTL
+            spinCommand.remove("-bfs")
         }
         spinCommand += pmlFile.name
         

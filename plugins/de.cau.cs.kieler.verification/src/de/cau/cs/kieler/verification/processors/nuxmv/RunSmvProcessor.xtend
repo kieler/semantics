@@ -106,7 +106,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         process.waitForOutput([ return isCanceled() ])
         throwIfCanceled
         outputBuffer.append(process.readInputStream)
-        for(command : interactiveCommands) {
+        for(command : interactiveCommands.filter[!it.isNullOrEmpty]) {
             // Send command to the process
             val commandWithNewline = command+"\n"
             process.outputStream.write(commandWithNewline.bytes)
