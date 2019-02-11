@@ -44,11 +44,20 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     }
 
     override generate() {
-        incIndentationLevel
-        appendIndentedLine("VAR")
-        // Add inputs of model
         assumptions = processorInstance.compilationContext.startEnvironment
-            .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>  
+            .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
+              
+        val useIVARinSmvModels = processorInstance.compilationContext.startEnvironment
+            .getProperty(Environment.SMV_USE_IVAR) 
+      
+        incIndentationLevel
+        if(useIVARinSmvModels) {
+            appendIndentedLine("IVAR")
+        } else {
+            appendIndentedLine("VAR")
+        }
+        
+        // Add inputs of model
         for (decl : scg.declarations) {
             for (valuedObject : decl.valuedObjects) {
                 if (decl instanceof VariableDeclaration) {
@@ -60,9 +69,15 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
                 }
             }
         }
-        appendIndentedLine("_GO : boolean;");
         
         // Add pre guards
+        if(useIVARinSmvModels) {
+            appendIndentedLine("VAR")
+        } else {
+            // The VAR keyword was already added for the input variables
+        }
+        
+        appendIndentedLine("_GO : boolean;");
         val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
             val variableInformation = entry.value

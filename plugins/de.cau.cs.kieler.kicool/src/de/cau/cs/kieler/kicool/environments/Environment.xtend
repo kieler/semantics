@@ -117,7 +117,10 @@ class Environment extends EnvironmentPropertyHolder {
     
     public static val IProperty<Boolean> CREATE_COUNTEREXAMPLES_WITH_OUTPUTS =
         new Property<Boolean>("de.cau.cs.kieler.kicool.createCounterexamplesWithOutputs")
-        
+       
+    public static val IProperty<Boolean> SMV_USE_IVAR =
+        new Property<Boolean>("de.cau.cs.kieler.kicool.useIVARinSmvModels")
+         
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_COMMANDS = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvCommands")
         
