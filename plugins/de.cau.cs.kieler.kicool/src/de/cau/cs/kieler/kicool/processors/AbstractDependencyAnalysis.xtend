@@ -66,7 +66,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
 
     public static val IProperty<Boolean> ALLOW_OLD_SC_SYNTAX = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.oldSCSyntax", false)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.oldSCSyntax", true)
 
     public static val IProperty<Boolean> ALLOW_MULTIPLE_RELATIVE_READERS = 
         new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.multipleRelativeReaders", false)
@@ -166,7 +166,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
                         priority = GLOBAL_RELATIVE_WRITE
                     } else {
-                        if (readVOIs.filter[it == writeVOI].size == 1) {
+                        if (readVOIs.filter[it == writeVOI].size == 1 && assignment.operator == AssignOperator.ASSIGN) {
                             priority = GLOBAL_RELATIVE_WRITE    
                         }
                     }
