@@ -21,7 +21,7 @@ import com.google.inject.Injector
  */
 class LustreStandaloneSetup extends LustreStandaloneSetupGenerated {
 
-    static Injector injector
+    protected static Injector injector
     
 	def static doSetup() {
 	    if (injector === null) {

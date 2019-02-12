@@ -19,7 +19,7 @@ import com.google.inject.Injector
  */
 class EsterelStandaloneSetup extends EsterelStandaloneSetupGenerated {
     
-    static Injector injector
+    protected static Injector injector
 
     def static doSetup() {
         if (injector === null) {

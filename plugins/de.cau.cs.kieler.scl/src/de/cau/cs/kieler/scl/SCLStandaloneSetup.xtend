@@ -21,7 +21,7 @@ import com.google.inject.Injector
  */
 class SCLStandaloneSetup extends SCLStandaloneSetupGenerated {
     
-    static Injector injector
+    protected static Injector injector
 
 	def static doSetup() {
 	    if (injector === null) {
