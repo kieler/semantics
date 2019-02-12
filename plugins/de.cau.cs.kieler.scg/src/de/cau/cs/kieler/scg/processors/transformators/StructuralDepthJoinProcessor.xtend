@@ -168,8 +168,9 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                 
                 for (sNode : schizoNodes) {
                     // If the node is not reachable by the control flow, clean up all traces of it.
-                    if (sNode.incomingLinks.filter(ControlFlow).empty) {
+                    if (sNode.unreachableSchizo) {
                         sNode.dependencies.immutableCopy.forEach[ it.target = null it.remove ]
+                        sNode.incomingLinks.filter(DataDependency).toList.forEach[ it.target = null it.remove ]
                         sNode.eContents.filter(ControlFlow).toList.forEach[ it.target = null it.remove]
                         sNode.remove
                     }
@@ -321,5 +322,23 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                 nextNodes.forEach[ searchStack.push(it) ]
             }
         }        
+    }
+    
+    protected def boolean unreachableSchizo(Node sNode) {
+        val incoming = <Node> newLinkedList
+        val visited = <Node> newHashSet => [ it += sNode ]
+        
+        incoming += sNode.incomingLinks.filter(ControlFlow).map[ eContainer ].filter(Node).filter[ !visited.contains(it) ].toList
+        
+        while (!incoming.empty) {
+            val node = incoming.pop
+            
+            if (!node.schizophrenic)
+                return false;
+            
+            incoming += node.incomingLinks.filter(ControlFlow).map[ eContainer ].filter(Node).filter[ !visited.contains(it) ].toList
+        }   
+        
+        return true       
     }
 }
