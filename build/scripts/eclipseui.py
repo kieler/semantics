@@ -16,11 +16,11 @@
 
 from __future__ import print_function # python3 print
 
+import os
 import sys
 import re
 import argparse
-from os.path import isfile, isdir, join, abspath, relpath, normpath, dirname
-from reuse import *
+from os.path import isfile, isdir, join, abspath, relpath, normpath
 
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 DEP_FILE = 'dependencies.txt'
@@ -32,7 +32,7 @@ def main(args):
     print('-- Checking plugin dependencies --')
 
     failed = []
-    plugins = join(args.path, 'plugins')
+    plugins = args.path
     if not isdir(plugins):
         stop('%s is not a directory' % plugins)
 
@@ -115,8 +115,8 @@ def errPrint(*args, **kwargs):
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser(description='This script checks plugins and produces error if non eclipse-ui plugins use banned eclipse features or have dependencies to eclipse-ui plugins.')
-    argParser.add_argument('path', type=repository, nargs='?', default=normpath(join(dirname(abspath(sys.argv[0])),'../..')), help='path to the project repository directory')
     argParser.add_argument('-w' , '--warn', dest='warn', action="store_true", help='produce only warings instead of errors')
+    argParser.add_argument('path', help='path to the folder containing the plugins to check')
     try:
         main(argParser.parse_args())
     except KeyboardInterrupt:
